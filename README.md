@@ -3,8 +3,11 @@ Phase0(tasks):
 Github, Github issue, UML
 ---------------------------
 ---------------------------
-amirhossein koochakian(400105199)
+Amirhossein Koochakian(400105199)
 Phase0(tasks):
 UML
 ---------------------------
 ---------------------------
+Kian Izadpanah(400104783)
+Phase0(tasks):
+UML
