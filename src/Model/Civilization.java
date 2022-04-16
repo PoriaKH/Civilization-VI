@@ -15,5 +15,5 @@ public class Civilization {
     private HashMap<Civilization,Resource> trades;
 
     private Technology workingOn;//if == null -> have to choose
-    private HashMap<Technology,int> technologyEarnedPercent;
+    private HashMap<Technology, Integer> technologyEarnedPercent;
 }

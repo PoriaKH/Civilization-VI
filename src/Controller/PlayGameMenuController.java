@@ -5,6 +5,7 @@ import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -15,248 +16,253 @@ public class PlayGameMenuController {
 
         return matcher;
     }
+    public ArrayList<Tile> mapCreator(int numOfTiles){
+        ArrayList<Tile> map = new ArrayList<>();
 
-    public StringBuilder showMap(Civilization civilization){
+
+        return map;
+    }
+    public StringBuilder showMap(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder researchInformation(Civilization civilization){
+    public StringBuilder researchInformation(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder unitPanel(Civilization civilization){
+    public StringBuilder unitPanel(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder cityPanel(Civilization civilization){
+    public StringBuilder cityPanel(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder diplomaticInformation(Civilization civilization){
+    public StringBuilder diplomaticInformation(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder victoryImprovement(Civilization civilization){
+    public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder demographics(Civilization civilization){   //Jamiat shenasi
+    public StringBuilder demographics(Civilization civilization,ArrayList<Tile> map){   //Jamiat shenasi
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder historyInformation(Civilization civilization){
+    public StringBuilder historyInformation(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder generalUnitReview(Civilization civilization){
+    public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder economicalReview(Civilization civilization){
+    public StringBuilder economicalReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder diplomaticReview(Civilization civilization){
+    public StringBuilder diplomaticReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder tradeHistory(Civilization civilization){
+    public StringBuilder tradeHistory(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public String tradeResource(Civilization civilization1, Civilization civilization2, Tile originTile, Resource originResource,Resource neededResource){
+    public String tradeResource(Civilization civilization1, Civilization civilization2, Tile originTile, Resource originResource,Resource neededResource,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String moveUnit(Civilization civilization, Tile origin, Tile destination){
+    public String moveUnit(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String createUnit(Civilization civilization, City city, Unit unit){
+    public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String purchaseUnit(Civilization civilization, City city, Unit unit){
+    public String purchaseUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String createCity(Civilization civilization, Civilian civilian){
+    public String createCity(Civilization civilization, Civilian civilian,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String attackTile(Civilization civilization, Warrior warrior,Tile destination){
+    public String attackTile(Civilization civilization, Warrior warrior,Tile destination,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String sleepUnit(Civilization civilization, Unit unit){
+    public String sleepUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String WarFootingUnit(Civilization civilization, Unit unit){
+    public String WarFootingUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String boostUnit(Civilization civilization, Unit unit){
+    public String boostUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String boostTillRecoverUnit(Civilization civilization, Unit unit){
+    public String boostTillRecoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String deploymentUnit(Civilization civilization, Unit unit){
+    public String deploymentUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String readyForRangedBattleUnit(Civilization civilization, Unit unit){
+    public String readyForRangedBattleUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String lootTile(Civilization civilization, Warrior warrior, Tile destination){
+    public String lootTile(Civilization civilization, Warrior warrior, Tile destination,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String cancelCommand(Civilization civilization, Unit unit){
+    public String cancelCommand(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String wakeUpUnit(Civilization civilization, Unit unit){
+    public String wakeUpUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String deleteUnit(Civilization civilization, Unit unit){
+    public String deleteUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String recoverUnit(Civilization civilization, Unit unit){
+    public String recoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String lockCitizen(Civilization civilization, Citizen citizen, Tile tile){
+    public String lockCitizen(Civilization civilization, Citizen citizen, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String unLockCitizen(Civilization civilization, Citizen citizen){
+    public String unLockCitizen(Civilization civilization, Citizen citizen,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String purchaseTile(Civilization civilization, Tile tile){
+    public String purchaseTile(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public StringBuilder showProductionsInProcess(Civilization civilization){
+    public StringBuilder showProductionsInProcess(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder showTechnologyMenu(Civilization civilization){
+    public StringBuilder showTechnologyMenu(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public String chooseTechnologyToLearn(Civilization civilization, Technology technology){
+    public String chooseTechnologyToLearn(Civilization civilization, Technology technology,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String changeTechnologyToLearn(Civilization civilization, Technology newTechnology){
+    public String changeTechnologyToLearn(Civilization civilization, Technology newTechnology,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String workOnTile(Civilization civilization, City city, Citizen citizen){
+    public String workOnTile(Civilization civilization, City city, Citizen citizen,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String createImprovement(Civilization civilization, Civilian civilian, Tile tile,Improvement improvement){
+    public String createImprovement(Civilization civilization, Civilian civilian, Tile tile,Improvement improvement,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String createRoad(Civilization civilization,Civilian civilian, Tile tile){
+    public String createRoad(Civilization civilization,Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String createRailRoad(Civilization civilization, Civilian civilian, Tile tile){
+    public String createRailRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String removeImprovement(Civilization civilization, Civilian civilian, Tile tile){
+    public String removeImprovement(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String removeRoad(Civilization civilization, Civilian civilian, Tile tile){
+    public String removeRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String removeRailRoad(Civilization civilization, Civilian civilian, Tile tile){
+    public String removeRailRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String cancelImprovementOnProcess(Civilization civilization,Tile tile){
+    public String cancelImprovementOnProcess(Civilization civilization,Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String repairRoad(Civilization civilization, Civilian civilian, Tile tile){
+    public String repairRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String repairImprovement(Civilization civilization, Civilian civilian, Tile tile){
+    public String repairImprovement(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String repairWholeTile(Civilization civilization,Civilian civilian, Tile tile){
+    public String repairWholeTile(Civilization civilization,Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public String updateWarrior(Civilization civilization, Warrior warrior, Warrior newWarrior){
+    public String updateWarrior(Civilization civilization, Warrior warrior, Warrior newWarrior,ArrayList<Tile> map){
         String str;
 
         return str;
     }
-    public StringBuilder showCurrentScore(Civilization civilization){
+    public StringBuilder showCurrentScore(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
         return stringBuilder;
