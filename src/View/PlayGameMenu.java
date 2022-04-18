@@ -12,7 +12,7 @@ public class PlayGameMenu {
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
 
         ArrayList<Tile> map = new ArrayList<>();
-        map = playGameMenuController.mapCreator(18);
+        map = playGameMenuController.mapCreator(32);
 
         String command;
         command = scan.nextLine();

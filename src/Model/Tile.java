@@ -6,23 +6,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tile {
-    private boolean isDesert;
-    private boolean isMeadow;//Alafzar
-    private boolean isHill;//Tape
-    private boolean isMountain;
-    private boolean isOcean;
-    private boolean isPlain;
-    private boolean isSnow;
-    private boolean isTundra;
+    private boolean isDesert;                   //Smooth
+    private boolean isMeadow;//Alafzar          //Smooth
+    private boolean isHill;//Tape               //2             //isBlocker
+    private boolean isMountain;                 //NA            //isBlocker
+    private boolean isOcean;                    //NA
+    private boolean isPlain;                    //Smooth
+    private boolean isSnow;                     //Smooth
+    private boolean isTundra;                   //Smooth
+    private boolean isBlocker;
 
     private int food;
     private int production;
     private int gold;
     private int combatChange;
     private int mpCost;
+    private int tileNumber;
 
-    float x,y;
-    int radius;
+    private float x,y;
+    private int radius;
     private ArrayList<Unit> units;
     private ArrayList<Resource> resources;
     private ArrayList<Attribute> attributes;
