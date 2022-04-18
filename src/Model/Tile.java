@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tile {
+
+
     private boolean isDesert;                   //Smooth
     private boolean isMeadow;//Alafzar          //Smooth
     private boolean isHill;//Tape               //2             //isBlocker
@@ -31,7 +33,7 @@ public class Tile {
     private ArrayList<Improvement> improvements;
 
     private Improvement workingOnImprovement;//if == null -> null
-    private HashMap<Improvement,int> ImprovementEarnedPercent;
+    private HashMap<Improvement, Integer> ImprovementEarnedPercent;
 
     private boolean doesHaveRoad;
     private boolean doesHaveRailWay;

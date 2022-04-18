@@ -15,7 +15,7 @@ public class LoginMenuController {
     public String createUser(String command){
 
     }
-    public String login(){
+    public String login(String command){
 
     }
 }

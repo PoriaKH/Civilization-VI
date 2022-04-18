@@ -11,22 +11,27 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class PlayGameMenuController {
-    public Matcher matcher(String regex,String command){
-        Matcher matcher;
 
-        return matcher;
-    }
-    public ArrayList<Tile> mapCreator(int numOfTiles){
+    public ArrayList<Tile> mapCreator(int numOfCivilizations,ArrayList<Member> members){//tik
+        const int numOfTiles = 32;
         ArrayList<Tile> map = new ArrayList<>();
-
+        map.add(new Tile())
 
         return map;
     }
-    public StringBuilder showMap(Civilization civilization,ArrayList<Tile> map){
+    public StringBuilder showMap(Civilization civilization,ArrayList<Tile> map){//tik
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
+    public ArrayList<Integer> statusChecker(Civilization civilization,ArrayList<Tile> map){
+        //TODO... return ArrayList<Integer> with 1 or -1(all fields)
+    }
+    public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now){
+        //TODO... if(now == fog of war && old == vazeh -> now = moshakhas)
+        //TODO... return now;
+    }
+
     public StringBuilder researchInformation(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
