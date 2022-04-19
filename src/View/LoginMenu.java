@@ -4,11 +4,12 @@ import Controller.LoginMenuController;
 import Controller.MainMenuController;
 import Model.Member;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class LoginMenu {
-    public void run(Scanner scan){
+    public void run(Scanner scan) throws IOException {
         Member loggedInMember = new Member();
 
         LoginMenuController loginMenuController = new LoginMenuController();
