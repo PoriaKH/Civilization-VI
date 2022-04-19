@@ -1,11 +1,15 @@
 package Controller;
 
+import Model.Member;
+
 import java.io.*;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginMenuController {
+    private Member loggedInMember;
+
     public Matcher getMatcher(String command,String regex){
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(command);
@@ -64,10 +68,45 @@ public class LoginMenuController {
 
         bufferedWriter.close();
 
-        return "user created successfully";
+        return "user created successfully!";
     }
 
-    public String login(String command){
+    public String login(String command, String regex) throws IOException {
+        if(this.loggedInMember != null)
+            return "you are already logged in";
 
+        Matcher matcher = getMatcher(command,regex);
+        matcher.find();
+
+        String username = matcher.group("username");
+        String password = matcher.group("password");
+
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+)";
+        File file = new File("users.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null)
+        {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            String filePassword = fileMatcher.group("password");
+
+            if(Objects.equals(fileUsername, username)){
+                if(Objects.equals(filePassword, password)){
+                    int score = Integer.parseInt(fileMatcher.group("score"));
+                    this.loggedInMember = new Member(username, password, score);
+                    return "user logged in successfully!";
+                }
+                return "Username and password didn’t match!";
+            }
+
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+
+        return "Username and password didn’t match!";
     }
 }

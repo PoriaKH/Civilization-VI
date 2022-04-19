@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class ProfileMenu {
     private Member loggedInMember;
+
     public ProfileMenu(Member loggedInMember){
         this.loggedInMember = loggedInMember;
     }
