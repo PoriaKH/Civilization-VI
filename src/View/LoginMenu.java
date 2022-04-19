@@ -24,7 +24,6 @@ public class LoginMenu {
         String userLoginRegex1 = "(user login --username )(?<username>.*) --password (?<password>.*)";
         String userLoginRegex2 = "(user login --password )(?<password>.*) --username (?<username>.*)";
         String userLoginRegex3 = "(user login -u )(?<username>.*) -p (?<password>.*)";
-        String enterMainMenuRegex = "";
 
         String command;
         command = scan.nextLine();
@@ -48,14 +47,16 @@ public class LoginMenu {
             }
             else if(command.matches(userLoginRegex1) || command.matches(userLoginRegex2) || command.matches(userLoginRegex3)){
                 if(command.matches(userLoginRegex1))
-                    System.out.println(loginMenuController.login(command,userLoginRegex1));
+                    System.out.println(loginMenuController.login(command,userLoginRegex1,scan));
                 else if(command.matches(userLoginRegex2))
-                    System.out.println(loginMenuController.login(command,userLoginRegex2));
+                    System.out.println(loginMenuController.login(command,userLoginRegex2,scan));
                 else if(command.matches(userLoginRegex3))
-                    System.out.println(loginMenuController.login(command,userLoginRegex3));
+                    System.out.println(loginMenuController.login(command,userLoginRegex3,scan));
             }
             else if(command.matches(menuShowCurrentRegex))
                 System.out.println("Login Menu");
+            else
+                System.out.println("invalid command");
 
             command = scan.nextLine();
         }

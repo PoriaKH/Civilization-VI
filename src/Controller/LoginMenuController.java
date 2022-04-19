@@ -1,9 +1,11 @@
 package Controller;
 
 import Model.Member;
+import View.MainMenu;
 
 import java.io.*;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,9 +17,6 @@ public class LoginMenuController {
         Matcher matcher = pattern.matcher(command);
 
         return matcher;
-    }
-    public boolean userExist(String command){
-
     }
     public String createUser(String command, String regex) throws IOException {
         Matcher matcher = getMatcher(command,regex);
@@ -71,7 +70,7 @@ public class LoginMenuController {
         return "user created successfully!";
     }
 
-    public String login(String command, String regex) throws IOException {
+    public String login(String command, String regex, Scanner scan) throws IOException {
         if(this.loggedInMember != null)
             return "you are already logged in";
 
@@ -98,7 +97,10 @@ public class LoginMenuController {
                 if(Objects.equals(filePassword, password)){
                     int score = Integer.parseInt(fileMatcher.group("score"));
                     this.loggedInMember = new Member(username, password, score);
-                    return "user logged in successfully!";
+                    MainMenu mainMenu = new MainMenu(loggedInMember);
+                    mainMenu.run(scan);
+                    this.loggedInMember = null;
+                    return "user logged out successfully!";
                 }
                 return "Username and password didn’t match!";
             }
