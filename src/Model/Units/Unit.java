@@ -17,6 +17,16 @@ public class Unit {
     private boolean isOnBoost;
     private boolean isOnBoostTillRecover;
     private boolean isOnDeployment;//esteghrar dar shahr
+    private boolean isCivilian;
+
 
     private Tile destination;//if == null -> null
+
+    public int getGoldCost() {
+        return goldCost;
+    }
+
+    public boolean isCivilian() {
+        return isCivilian;
+    }
 }

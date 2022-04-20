@@ -16,4 +16,8 @@ public class Civilization {
 
     private Technology workingOn;//if == null -> have to choose
     private HashMap<Technology, Integer> technologyEarnedPercent;
+
+    public ArrayList<Technology> getTechnologies() {
+        return technologies;
+    }
 }

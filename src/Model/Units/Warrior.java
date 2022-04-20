@@ -31,4 +31,96 @@ public class Warrior extends Unit{
     private boolean isTank;
 
     private boolean isReadyForRangedBattle;
+
+    public boolean isScout() {
+        return isScout;
+    }
+
+    public boolean isWarrior() {
+        return isWarrior;
+    }
+
+    public boolean isArcher() {
+        return isArcher;
+    }
+
+    public boolean isChariotArcher() {
+        return isChariotArcher;
+    }
+
+    public boolean isSpearman() {
+        return isSpearman;
+    }
+
+    public boolean isCatapult() {
+        return isCatapult;
+    }
+
+    public boolean isHorseMan() {
+        return isHorseMan;
+    }
+
+    public boolean isSwordsMan() {
+        return isSwordsMan;
+    }
+
+    public boolean isCrossbowMan() {
+        return isCrossbowMan;
+    }
+
+    public boolean isKnight() {
+        return isKnight;
+    }
+
+    public boolean isLongswordMan() {
+        return isLongswordMan;
+    }
+
+    public boolean isPikeMan() {
+        return isPikeMan;
+    }
+
+    public boolean isTrebuchet() {
+        return isTrebuchet;
+    }
+
+    public boolean isCanon() {
+        return isCanon;
+    }
+
+    public boolean isCavalry() {
+        return isCavalry;
+    }
+
+    public boolean isLancer() {
+        return isLancer;
+    }
+
+    public boolean isMusketMan() {
+        return isMusketMan;
+    }
+
+    public boolean isRifleMan() {
+        return isRifleMan;
+    }
+
+    public boolean isAntiTankGun() {
+        return isAntiTankGun;
+    }
+
+    public boolean isArtillery() {
+        return isArtillery;
+    }
+
+    public boolean isInfantry() {
+        return isInfantry;
+    }
+
+    public boolean isPanzer() {
+        return isPanzer;
+    }
+
+    public boolean isTank() {
+        return isTank;
+    }
 }

@@ -97,9 +97,186 @@ public class PlayGameMenuController {
 
         return str;
     }
+
+    public boolean checkTechnology (ArrayList<Technology> technologies, String name) {
+        for (int i = 0; i < technologies.size(); i++) {
+            if (technologies.get(i).getName().equals(name)) return false;
+        }
+        return true;
+    }
+
+    public boolean isTechnologyAvailableForUnit (Unit unit, Civilization civilization) {
+        Warrior warrior = (Warrior) unit;
+        ArrayList<Technology> technologies = civilization.getTechnologies();
+        if (warrior.isArcher()) {
+            if (checkTechnology(technologies, "Archery")) return false;
+        }
+        else if (warrior.isChariotArcher()) {
+            if (checkTechnology(technologies, "The Wheel")) return false;
+        }
+        else if (warrior.isScout()) return true;
+        else if (warrior.isSpearman()) {
+            if (checkTechnology(technologies, "Bronze Working")) return false;
+        }
+        else if (warrior.isWarrior()) return true;
+        else if (warrior.isCatapult()) {
+            if (checkTechnology(technologies, "Mathematics")) return false;
+        }
+        else if (warrior.isHorseMan()) {
+            if (checkTechnology(technologies, "Horseback Riding")) return false;
+        }
+        else if (warrior.isSwordsMan()) {
+            if (checkTechnology(technologies, "Iron Working")) return false;
+        }
+        else if (warrior.isCrossbowMan()) {
+            if (checkTechnology(technologies, "Machinery")) return false;
+        }
+        else if (warrior.isKnight()) {
+            if (checkTechnology(technologies, "Chivalry")) return false;
+        }
+        else if (warrior.isLongswordMan()) {
+            if (checkTechnology(technologies, "Steel")) return false;
+        }
+        else if (warrior.isPikeMan()) {
+            if (checkTechnology(technologies, "Civil Service")) return false;
+        }
+        else if (warrior.isTrebuchet()) {
+            if (checkTechnology(technologies, "Physics")) return false;
+        }
+        else if (warrior.isCanon()) {
+            if (checkTechnology(technologies, "Chemistry")) return false;
+        }
+        else if (warrior.isCavalry()) {
+            if (checkTechnology(technologies, "Military Science")) return false;
+        }
+        else if (warrior.isLancer()) {
+            if (checkTechnology(technologies, "Metallurgy")) return false;
+        }
+        else if (warrior.isMusketMan()) {
+            if (checkTechnology(technologies, "Gunpowder")) return false;
+        }
+        else if (warrior.isRifleMan()) {
+            if (checkTechnology(technologies, "Rifling")) return false;
+        }
+        else if (warrior.isAntiTankGun()) {
+            if (checkTechnology(technologies, "Replaceable Parts")) return false;
+        }
+        else if (warrior.isArtillery()) {
+            if (checkTechnology(technologies, "Dynamite")) return false;
+        }
+        else if (warrior.isInfantry()) {
+            if (checkTechnology(technologies, "Replaceable Parts")) return false;
+        }
+        else if (warrior.isPanzer()) {
+            if (checkTechnology(technologies, "Combustion")) return false;
+        }
+        else if (warrior.isTank()) {
+            if (checkTechnology(technologies, "Combustion")) return false;
+        }
+        return true;
+    }
+
+    public boolean isResourceAvailableForUnit (Unit unit, City city) {
+        Warrior warrior = (Warrior) unit;
+        ArrayList<Tile> tiles = city.getTiles();
+        for (int i = 0; i < tiles.size(); i++) {
+            ArrayList<Resource> resources = tiles.get(i).getResources();
+
+            for (int i1 = 0; i1 < resources.size(); i1++) {
+                if (warrior.isArcher()) return true;
+                else if (warrior.isChariotArcher()) {
+                    if (resources.get(i1).isHorse()) return true;
+                }
+                else if (warrior.isScout()) return true;
+                else if (warrior.isSpearman()) return true;
+                else if (warrior.isWarrior()) return true;
+
+                else if (warrior.isCatapult()) {
+                    if (resources.get(i1).isMetal()) return true;
+                }
+                else if (warrior.isHorseMan()) {
+                    if (resources.get(i1).isHorse()) return true;
+                }
+                else if (warrior.isSwordsMan()) {
+                    if (resources.get(i1).isMetal()) return true;
+                }
+                else if (warrior.isCrossbowMan()) return true;
+                else if (warrior.isKnight()) {
+                    if (resources.get(i1).isHorse()) return true;
+                }
+                else if (warrior.isLongswordMan()) {
+                    if (resources.get(i1).isMetal()) return true;
+                }
+                else if (warrior.isPikeMan()) return true;
+                else if (warrior.isTrebuchet()) {
+                    if (resources.get(i1).isMetal()) return true;
+                }
+                else if (warrior.isCanon()) return true;
+                else if (warrior.isCavalry()) {
+                    if (resources.get(i1).isHorse()) return true;
+                }
+                else if (warrior.isLancer()) {
+                    if (resources.get(i1).isHorse()) return true;
+                }
+                else if (warrior.isMusketMan()) return true;
+                else if (warrior.isRifleMan()) return true;
+                else if (warrior.isAntiTankGun()) return true;
+                else if (warrior.isArtillery()) return true;
+                else if (warrior.isInfantry()) return true;
+                else if (warrior.isPanzer()) return true;
+                else if (warrior.isTank()) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isUnitWarrior (Tile cityCenter) {
+        ArrayList<Unit> units = cityCenter.getUnits();
+        for (int i = 0; i < units.size(); i++) {
+            if (!units.get(i).isCivilian()) return true;
+        }
+        return false;
+    }
+
+    public boolean isUnitCivilian (Tile cityCenter) {
+        ArrayList<Unit> units = cityCenter.getUnits();
+        for (int i = 0; i < units.size(); i++) {
+            if (units.get(i).isCivilian()) return true;
+        }
+        return false;
+    }
+
     public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map){
         String str;
 
+        if (unit.getGoldCost() > city.getGold()) {
+            str = "your gold is not enough !";
+            return str;
+        }
+
+        if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
+            str = "you don't have necessary technology !";
+            return str;
+        }
+
+        if (!unit.isCivilian() && !isResourceAvailableForUnit (unit, city)) {
+            str = "you don't have necessary resource !";
+            return str;
+        }
+
+        Tile centerTile = city.getCenterTile();
+        if (!unit.isCivilian() && isUnitWarrior (centerTile)) {
+            str = "there is a military unit !";
+            return str;
+        }
+
+        if (unit.isCivilian() && isUnitCivilian (centerTile)) {
+            str = "there is a civilian unit !";
+            return str;
+        }
+
+        centerTile.addUnit(unit);
+        str = "unit created !";
         return str;
     }
     public String purchaseUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map){

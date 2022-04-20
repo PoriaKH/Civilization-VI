@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tile {
-
-
     private boolean isDesert;                   //Smooth
     private boolean isMeadow;//Alafzar          //Smooth
     private boolean isHill;//Tape               //2             //isBlocker
@@ -37,4 +35,16 @@ public class Tile {
 
     private boolean doesHaveRoad;
     private boolean doesHaveRailWay;
+
+    public ArrayList<Resource> getResources() {
+        return resources;
+    }
+
+    public ArrayList<Unit> getUnits() {
+        return units;
+    }
+
+    public void addUnit (Unit unit) {
+        units.add(unit);
+    }
 }

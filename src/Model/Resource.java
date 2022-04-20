@@ -12,6 +12,87 @@ public class Resource {
     private boolean isWheat;
     private boolean isCoal;
     private boolean isHorse;
+
+    public int getFood() {
+        return food;
+    }
+
+    public boolean isBanana() {
+        return isBanana;
+    }
+
+    public boolean isCow() {
+        return isCow;
+    }
+
+    public boolean isGazelle() {
+        return isGazelle;
+    }
+
+    public boolean isShip() {
+        return isShip;
+    }
+
+    public boolean isWheat() {
+        return isWheat;
+    }
+
+    public boolean isCoal() {
+        return isCoal;
+    }
+
+    public boolean isHorse() {
+        return isHorse;
+    }
+
+    public boolean isMetal() {
+        return isMetal;
+    }
+
+    public boolean isCotton() {
+        return isCotton;
+    }
+
+    public boolean isColor() {
+        return isColor;
+    }
+
+    public boolean isFur() {
+        return isFur;
+    }
+
+    public boolean isGem() {
+        return isGem;
+    }
+
+    public boolean isGold() {
+        return isGold;
+    }
+
+    public boolean isGas() {
+        return isGas;
+    }
+
+    public boolean isTusk() {
+        return isTusk;
+    }
+
+    public boolean isMarble() {
+        return isMarble;
+    }
+
+    public boolean isSilk() {
+        return isSilk;
+    }
+
+    public boolean isSilver() {
+        return isSilver;
+    }
+
+    public boolean isSugar() {
+        return isSugar;
+    }
+
     private boolean isMetal;
     private boolean isCotton;//panbe
     private boolean isColor;
