@@ -12,35 +12,43 @@ public class MainMenu {
     public MainMenu(Member loggedInMember){
         this.loggedInMember = loggedInMember;
     }
-    public void run(Scanner scan){
+    public void run(Scanner scan, LoginMenu loginMenu){
         System.out.println("user logged in successfully!");
-
         MainMenuController mainMenuController = new MainMenuController();
         PlayGameMenu playGameMenu = new PlayGameMenu();
         ProfileMenu profileMenu = new ProfileMenu(loggedInMember);
-
-        String playGameRegex = "";
-
+        String exitMenuRegex = "\\s*menu\\s+exit\\s*";
+        String showCurrentMenuRegex = "\\s*menu\\s+show-current\\s*";
+        String logoutRegex = "\\s*user\\s+logout\\s*";
+        String playGameRegex = "\\s*play\\s+game\\s+(--player\\d{1,}\\s+?<username>){1,}";
         String command;
-        command = scan.nextLine();
 
-        while(!Objects.equals(command, "menu exit") && !Objects.equals(command, "user logout")){
-            //TODO...
-
-            if(command.matches(playGameRegex)){
+        while(true){
+            command = scan.nextLine();
+            if (mainMenuController.getMatcher(exitMenuRegex, command) != null)
+                break;
+            else if (mainMenuController.getMatcher(logoutRegex, command) != null){
+                System.out.println("user logged out successfully!");
+                break;
+            }
+            else if (mainMenuController.getMatcher(showCurrentMenuRegex, command) != null)
+                System.out.println("Main Menu");
+            else if(mainMenuController.getMatcher(playGameRegex, command) != null) {
                 int numOfPlayers;
                 ArrayList<Member> members = new ArrayList<>();
                 ArrayList<String> userNames = new ArrayList<>();
-                for(int i = 0; i < numOfPlayers; i++){
+                for (int i = 0; i < numOfPlayers; i++) {
                     String nameInFile = "";
-                    if(Objects.equals(userNames.get(i), nameInFile)){
+                    if (Objects.equals(userNames.get(i), nameInFile)) {
                         Member newMember = new Member();
                         members.add(newMember);
                     }
                 }
-                playGameMenu.run(scan,numOfPlayers,members);
+                playGameMenu.run(scan, numOfPlayers, members);
             }
-            command = scan.nextLine();
+            else
+                System.out.println("invalid command");
         }
+
     }
 }

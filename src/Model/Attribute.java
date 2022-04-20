@@ -8,7 +8,7 @@ public class Attribute {
     private int mpCost;
 
     private boolean isPlat;//Jolge
-    private boolean isJungle;               //isBlocker
+    private boolean isJungle;//isBlocker
     private boolean isIce;
     private boolean isRainForest;
     private boolean isMarsh;//Mordab
