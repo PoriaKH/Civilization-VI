@@ -294,9 +294,17 @@ public class PlayGameMenuController {
 
         return str;
     }
-    public String sleepUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
+    // sleepUnit, .... civilization baraye playeri hast ke alan dare dastor mide
+    public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map, Tile selected){
         String str;
 
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+
+        unit.setOnSleep(true);
+        str = "selected unit is sleeping";
         return str;
     }
     public String WarFootingUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
@@ -336,7 +344,13 @@ public class PlayGameMenuController {
     }
     public String wakeUpUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
 
+        unit.setOnSleep(false);
+        str = "selected unit is awake";
         return str;
     }
     public String deleteUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
