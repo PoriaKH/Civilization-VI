@@ -42,7 +42,7 @@ public class LoginMenuController {
         String line = bufferedReader.readLine();
 
         String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+)";
-        while (line != null) {
+        while (line != null && !line.equals("")) {
             Matcher fileMatcher = getMatcher(line, fileRegex);
             fileMatcher.find();
             String fileUsername = fileMatcher.group("username");
@@ -79,14 +79,14 @@ public class LoginMenuController {
 
         String username = matcher.group("username");
         String password = matcher.group("password");
-
+        //
         String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+)";
         File file = new File("users.txt");
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line;
         line = bufferedReader.readLine();
-        while(line != null)
+        while(line != null && !line.equals(""))
         {
             Matcher fileMatcher = getMatcher(line, fileRegex);
             fileMatcher.find();
@@ -109,7 +109,7 @@ public class LoginMenuController {
             line = bufferedReader.readLine();
         }
         fileReader.close();
-
+        //
         return "Username and password didn’t match!";
     }
 }

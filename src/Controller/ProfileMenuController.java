@@ -45,7 +45,7 @@ public class ProfileMenuController {
         String line = bufferedReader.readLine();
 
         String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+)";
-        while (line != null) {
+        while (line != null && !line.equals("")) {
             Matcher fileMatcher = getMatcher(line, fileRegex);
             fileMatcher.find();
             String fileUsername = fileMatcher.group("username");
@@ -107,7 +107,7 @@ public class ProfileMenuController {
         String line = bufferedReader.readLine();
 
         String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+)";
-        while (line != null) {
+        while (line != null && !line.equals("")) {
             Matcher fileMatcher = getMatcher(line, fileRegex);
             fileMatcher.find();
             String fileUsername = fileMatcher.group("username");
