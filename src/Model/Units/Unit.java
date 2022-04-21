@@ -29,6 +29,22 @@ public class Unit {
         return goldCost;
     }
 
+    public void setOnBoostTillRecover(boolean onBoostTillRecover) {
+        isOnBoostTillRecover = onBoostTillRecover;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setOnBoost(boolean onBoost) {
+        isOnBoost = onBoost;
+    }
+
     public boolean isCivilian() {
         return isCivilian;
     }

@@ -98,13 +98,13 @@ public class PlayGameMenuController {
         return str;
     }
 
+    // check the necessary technologies for unit
     public boolean checkTechnology (ArrayList<Technology> technologies, String name) {
         for (int i = 0; i < technologies.size(); i++) {
             if (technologies.get(i).getName().equals(name)) return false;
         }
         return true;
     }
-
     public boolean isTechnologyAvailableForUnit (Unit unit, Civilization civilization) {
         Warrior warrior = (Warrior) unit;
         ArrayList<Technology> technologies = civilization.getTechnologies();
@@ -175,7 +175,7 @@ public class PlayGameMenuController {
         }
         return true;
     }
-
+    //check the necessary resources for unit
     public boolean isResourceAvailableForUnit (Unit unit, City city) {
         Warrior warrior = (Warrior) unit;
         ArrayList<Tile> tiles = city.getTiles();
@@ -229,7 +229,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-
+    // if unit is a warrior return true
     public boolean isUnitWarrior (Tile cityCenter) {
         ArrayList<Unit> units = cityCenter.getUnits();
         for (int i = 0; i < units.size(); i++) {
@@ -237,7 +237,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-
+    //if unit is a civilian return true
     public boolean isUnitCivilian (Tile cityCenter) {
         ArrayList<Unit> units = cityCenter.getUnits();
         for (int i = 0; i < units.size(); i++) {
@@ -315,11 +315,38 @@ public class PlayGameMenuController {
     public String boostUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        if (unit.isCivilian()) {
+            str = "this unit isn't trooper !";
+            return str;
+        }
+
+        Warrior warrior = (Warrior) unit;
+        int newDamage = warrior.getDamage() + 1;
+        warrior.setDamage(newDamage);
+        warrior.setOnBoost(true);
+        str = "booster has been activated for this unit !";
         return str;
     }
     public String boostTillRecoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        if (unit.isCivilian()) {
+            str = "this unit isn't trooper !";
+            return str;
+        }
 
+        Warrior warrior = (Warrior) unit;
+        int newHealth = warrior.getHealth() + 1;
+        warrior.setHealth(newHealth);
+        warrior.setOnBoostTillRecover(true);
+        str = "booster until full recovery has been activated for this unit !";
         return str;
     }
     public String deploymentUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){

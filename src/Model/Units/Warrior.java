@@ -123,4 +123,16 @@ public class Warrior extends Unit{
     public boolean isTank() {
         return isTank;
     }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getRange() {
+        return range;
+    }
 }
