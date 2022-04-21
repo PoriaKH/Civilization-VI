@@ -102,8 +102,8 @@ public class Tile {
     private boolean doesHaveRoad;
     private boolean doesHaveRailWay;
 
-    public ArrayList<Resource> getResources() {
-        return resources;
+    public Resource getResource() {
+        return resource;
     }
 
     public ArrayList<Unit> getUnits() {
