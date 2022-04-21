@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 public class PlayGameMenuController {
 
     public ArrayList<Tile> mapCreator(int numOfCivilizations,ArrayList<Member> members){//tik
-        const int numOfTiles = 32;
+        int numOfTiles = 50;
         ArrayList<Tile> map = new ArrayList<>();
         map.add(new Tile())
 
