@@ -4,6 +4,7 @@ import Model.Units.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Tile {
     private boolean isDesert;                   //Smooth
@@ -54,26 +55,76 @@ public class Tile {
         this.combatChange = 0;
         this.mpCost = 0;
 
-        if(tileNumber == 19 || tileNumber == 20){
-            attribute = new Attribute();
+        if(tileNumber == 17 || tileNumber == 13 || tileNumber == 19 || tileNumber == 20 || tileNumber == 22){
+            this.attribute = new Attribute(true,false,false,false,false,false);
         }
         //
         if(isDesert){
             combatChange -= 33;
             mpCost += 1;
+
+            if(this.attribute == null) {
+                Random rand = new Random();
+                int number = rand.nextInt(2);
+
+                if (number == 1) {//Attribute exists
+                    number = rand.nextInt(2);
+
+                    if (number == 0) {//not Oasis
+                        number = rand.nextInt(2);
+                        if (number == 0) {//Ice
+                            this.attribute = new Attribute(false, false, true, false, false, false);
+                        } else {//Marsh
+                            this.attribute = new Attribute(false, false, false, false, true, false);
+                        }
+                    } else {//Oasis
+                        this.attribute = new Attribute(false, false, false, false, false, true);
+                    }
+                }
+            }
         }
         else if(isMeadow){
             food += 2;
             combatChange -= 33;
             mpCost += 1;
+
+            if(this.attribute == null) {
+                Random rand = new Random();
+                int number = rand.nextInt(2);
+
+                if (number == 1) {//Attribute exists
+                    number = rand.nextInt(2);
+                    if (number == 0) {//RainForest
+                        this.attribute = new Attribute(false, false, false, true, false, false);
+                    } else {//Marsh
+                        this.attribute = new Attribute(false, false, false, false, true, false);
+                    }
+                }
+            }
         }
         else if(isHill){
             production += 2;
             combatChange += 25;
             mpCost += 2;
+
+            if(this.attribute == null){
+                Random rand = new Random();
+                int number = rand.nextInt(2);
+
+                if(number == 1){
+                    number = rand.nextInt(2);
+                    if(number == 1){//Marsh
+                        this.attribute = new Attribute(false,false,false,false,true,false);
+                    }
+                    else {//Ice
+                        this.attribute = new Attribute(false,false,true,false,false,false);
+                    }
+                }
+            }
         }
         else if(isMountain){
             mpCost = 100000000;
+            this.attribute = new Attribute(false,true,false,false,false,false);
         }
         else if(isOcean){
             mpCost = 100000000;
@@ -83,15 +134,60 @@ public class Tile {
             production += 1;
             combatChange -= 33;
             mpCost += 1;
+
+            if(this.attribute == null){
+                Random rand = new Random();
+                int number = rand.nextInt(2);
+
+                if(number == 1){
+                    number = rand.nextInt(3);
+                    if(number == 0){//Ice
+                        this.attribute = new Attribute(false,false,true,false,false,false);
+                    }
+                    else if(number == 1){//RainForest
+                        this.attribute = new Attribute(false,false,false,true,false,false);
+                    }
+                    else {//Marsh
+                        this.attribute = new Attribute(false,false,false,false,true,false);
+                    }
+                }
+            }
         }
         else if(isSnow){
             combatChange -= 33;
             mpCost += 1;
+
+            if(this.attribute == null){
+                Random rand = new Random();
+                int number = rand.nextInt(2);
+
+                if(number == 1){//Ice
+                    this.attribute = new Attribute(false,false,true,false,false,false);
+                }
+            }
         }
         else if(isTundra){
             food += 1;
             combatChange -= 33;
             mpCost += 1;
+
+            if(this.attribute == null){
+                Random rand = new Random();
+                int number = rand.nextInt(2);
+
+                if(number == 1){
+                    number = rand.nextInt(3);
+                    if(number == 0){//Ice
+                        this.attribute = new Attribute(false,false,true,false,false,false);
+                    }
+                    else if(number == 1){//RainForest
+                        this.attribute = new Attribute(false,false,false,true,false,false);
+                    }
+                    else {//Marsh
+                        this.attribute = new Attribute(false,false,false,false,true,false);
+                    }
+                }
+            }
         }
         //
     }
