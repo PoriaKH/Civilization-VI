@@ -22,8 +22,9 @@ public class MainMenu {
         String exitMenuRegex = "\\s*menu\\s+exit\\s*";
         String showCurrentMenuRegex = "\\s*menu\\s+show-current\\s*";
         String logoutRegex = "\\s*user\\s+logout\\s*";
-        String playGameRegex = "\\s*play\\s+game\\s+(--player\\d{1,}\\s+?<username>){1,}";
+        String playGameRegex = "\\s*play\\s+game\\s+--player1\\s+(?<username>\\S+)";
         String command;
+        ArrayList<Member> allMembers = mainMenuController.getAllMembers();
 
         while(true){
             command = scan.nextLine();
@@ -36,17 +37,25 @@ public class MainMenu {
             else if (mainMenuController.getMatcher(showCurrentMenuRegex, command) != null)
                 System.out.println("Main Menu");
             else if(mainMenuController.getMatcher(playGameRegex, command) != null) {
-                int numOfPlayers;
-                ArrayList<Member> members = new ArrayList<>();
                 ArrayList<String> userNames = new ArrayList<>();
+                String[] commandSplit = command.split("\\s+");
+                for (int i = 3; i < commandSplit.length; i += 2)
+                    userNames.add(commandSplit[i]);
+                int numOfPlayers = userNames.size();
+                ArrayList<Member> players = new ArrayList<>();
                 for (int i = 0; i < numOfPlayers; i++) {
-                    String nameInFile = "";
-                    if (Objects.equals(userNames.get(i), nameInFile)) {
-                        Member newMember = new Member();
-                        members.add(newMember);
+                    boolean exist = false;
+                    for (int j = 0; j < allMembers.size(); j++) {
+                        if (allMembers.get(j).getUsername().equals(userNames.get(i))){
+                            players.add(allMembers.get(j));
+                            exist = true;
+                            break;
+                        }
                     }
+                    if (!exist)
+                        System.out.println("user with this username doesn't exist!");
                 }
-                playGameMenu.run(scan, numOfPlayers, members);
+                playGameMenu.run(scan, numOfPlayers, players);
             }
             else if(command.matches(enterProfileMenuRegex))
                 profileMenu.run(scan);
