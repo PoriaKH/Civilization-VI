@@ -19,7 +19,12 @@ public class Unit {
     private boolean isOnWarFooting;//Amade bash
     private boolean isOnBoost;
     private boolean isOnBoostTillRecover;
-    private boolean isOnDeployment;//esteghrar dar shahr
+
+    public Tile getOrigin() {
+        return origin;
+    }
+
+    private boolean isOnDeployment;//esteghrar dar shahr //TODO... agar isOndeployment true bashe moghe defa ghodrat ziad mishe
     private boolean isCivilian;
 
 
@@ -27,6 +32,10 @@ public class Unit {
 
     public int getGoldCost() {
         return goldCost;
+    }
+
+    public void setOnWarFooting(boolean onWarFooting) {
+        isOnWarFooting = onWarFooting;
     }
 
     public void setOnBoostTillRecover(boolean onBoostTillRecover) {
@@ -55,5 +64,9 @@ public class Unit {
 
     public void setOnSleep(boolean onSleep) {
         isOnSleep = onSleep;
+    }
+
+    public void setOnDeployment(boolean onDeployment) {
+        isOnDeployment = onDeployment;
     }
 }
