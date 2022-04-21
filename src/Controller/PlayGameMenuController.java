@@ -194,6 +194,9 @@ public class PlayGameMenuController {
 
         return map;
     }
+    public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations){
+
+    }
     public StringBuilder showMap(Civilization civilization,ArrayList<Tile> map){//tik
         StringBuilder stringBuilder;
 

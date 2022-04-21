@@ -19,14 +19,13 @@ public class PlayGameMenu {
     }
 
     public void run(Scanner scan, int numOfCivilizations, ArrayList<Member> members){
-        ArrayList<Civilization> civilizations = new ArrayList<>();
-        for(int i = 0; i < numOfCivilizations; i++){
-
-        }
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
 
         ArrayList<Tile> map = new ArrayList<>();
+
         map = playGameMenuController.mapCreator(numOfCivilizations,members);
+        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(numOfCivilizations);
+
         //1 -> vazeh   0 -> moshakhas   -1 -> fog of war
         ArrayList<Integer> civilization1 = new ArrayList<>();
         ArrayList<Integer> civilization2 = new ArrayList<>();   ///   ----> -1 , 0, 1
