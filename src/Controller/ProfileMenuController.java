@@ -31,7 +31,7 @@ public class ProfileMenuController {
         if(!newNickname.matches(nicknameRegex))
             return "invalid nickname";
         if(newNickname.equals(loggedInMember.getNickname()))
-            return "choose another nickname";
+            return "please enter a new nickname";
 
         String username = loggedInMember.getUsername();
 
@@ -79,7 +79,58 @@ public class ProfileMenuController {
         loggedInMember.setNickname(newNickname);
         return "nickname changed successfully!";
     }
-    public String profileChangePassword(String command, String regex){
+    public String profileChangePassword(String command, String regex) throws IOException {
+        Matcher matcher = getMatcher(command, regex);
+        matcher.find();
 
+        String newPassword = matcher.group("newPassword");
+        String oldPassword = matcher.group("oldPassword");
+
+        String passwordRegex = "[^ \\t]+";
+        if(!newPassword.matches(passwordRegex))
+            return "invalid password type";
+
+        if(!Objects.equals(oldPassword, loggedInMember.getPassword()))
+            return "current password is invalid";
+
+        if(Objects.equals(oldPassword, loggedInMember.getPassword()) && Objects.equals(oldPassword, newPassword))
+            return "please enter a new password";
+
+
+        String username = loggedInMember.getUsername();
+        //
+        File file = new File("users.txt");
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+)";
+        while (line != null) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            String fileNickname = fileMatcher.group("nickname");
+
+            if(!Objects.equals(fileUsername, username)) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            line = bufferedReader.readLine();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+        bufferedWriter.write(String.valueOf(stringBuilder));
+        bufferedWriter.write(loggedInMember.getUsername() + " " + loggedInMember.getNickname() + " " + newPassword + " " + loggedInMember.getScore());
+
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+        //
+
+        loggedInMember.setPassword(newPassword);
+        return "password changed successfully!";
     }
 }

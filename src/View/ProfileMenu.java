@@ -14,6 +14,8 @@ public class ProfileMenu {
         this.loggedInMember = loggedInMember;
     }
     public void run(Scanner scan) throws IOException {
+        System.out.println("entered Profile Menu!");
+
         ProfileMenuController profileMenuController = new ProfileMenuController(loggedInMember);
 
         String changeNicknameRegex1 = "(profile change --nickname )(?<nickname>.*)";
@@ -26,7 +28,7 @@ public class ProfileMenu {
         String command;
         command = scan.nextLine();
 
-        while(!Objects.equals(command, "exit menu")){
+        while(!Objects.equals(command, "menu exit")){
             //TODO...
             if(command.matches(changeNicknameRegex1) || command.matches(changeNicknameRegex2)){
                 if(command.matches(changeNicknameRegex1))
