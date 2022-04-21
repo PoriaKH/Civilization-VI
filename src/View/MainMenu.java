@@ -3,6 +3,7 @@ package View;
 import Controller.MainMenuController;
 import Model.Member;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -12,11 +13,12 @@ public class MainMenu {
     public MainMenu(Member loggedInMember){
         this.loggedInMember = loggedInMember;
     }
-    public void run(Scanner scan, LoginMenu loginMenu){
+    public void run(Scanner scan, LoginMenu loginMenu) throws IOException {
         System.out.println("user logged in successfully!");
         MainMenuController mainMenuController = new MainMenuController();
         PlayGameMenu playGameMenu = new PlayGameMenu();
         ProfileMenu profileMenu = new ProfileMenu(loggedInMember);
+        String enterProfileMenuRegex = "menu enter Profile Menu";
         String exitMenuRegex = "\\s*menu\\s+exit\\s*";
         String showCurrentMenuRegex = "\\s*menu\\s+show-current\\s*";
         String logoutRegex = "\\s*user\\s+logout\\s*";
@@ -46,6 +48,8 @@ public class MainMenu {
                 }
                 playGameMenu.run(scan, numOfPlayers, members);
             }
+            else if(command.matches(enterProfileMenuRegex))
+                profileMenu.run(scan);
             else
                 System.out.println("invalid command");
         }
