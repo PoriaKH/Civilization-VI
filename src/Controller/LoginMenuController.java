@@ -25,7 +25,7 @@ public class LoginMenuController {
         String nickname = matcher.group("nickname");
         String password = matcher.group("password");
 
-        String theRegex = "[^ \\t]*";
+        String theRegex = "[^ \\t]+";
         if(!username.matches(theRegex))
             return "invalid username";
         if(!nickname.matches(theRegex))
@@ -92,11 +92,12 @@ public class LoginMenuController {
             fileMatcher.find();
             String fileUsername = fileMatcher.group("username");
             String filePassword = fileMatcher.group("password");
+            String fileNickname = fileMatcher.group("nickname");
 
             if(Objects.equals(fileUsername, username)){
                 if(Objects.equals(filePassword, password)){
                     int score = Integer.parseInt(fileMatcher.group("score"));
-                    this.loggedInMember = new Member(username, password, score);
+                    this.loggedInMember = new Member(username, password, fileNickname, score);
                     MainMenu mainMenu = new MainMenu(loggedInMember);
                     mainMenu.run(scan);
                     this.loggedInMember = null;
