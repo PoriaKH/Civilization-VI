@@ -60,6 +60,10 @@ public class Warrior extends Unit{
         return isHorseMan;
     }
 
+    public void setReadyForRangedBattle(boolean readyForRangedBattle) {
+        isReadyForRangedBattle = readyForRangedBattle;
+    }
+
     public boolean isSwordsMan() {
         return isSwordsMan;
     }

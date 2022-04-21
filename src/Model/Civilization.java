@@ -20,4 +20,8 @@ public class Civilization {
     public ArrayList<Technology> getTechnologies() {
         return technologies;
     }
+
+    public ArrayList<City> getCities() {
+        return cities;
+    }
 }

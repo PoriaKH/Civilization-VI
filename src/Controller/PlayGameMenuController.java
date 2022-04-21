@@ -295,6 +295,7 @@ public class PlayGameMenuController {
         return str;
     }
     // sleepUnit, .... civilization baraye playeri hast ke alan dare dastor mide
+    //TODO ... bayad function marboot be darkhast amaliat va royat doshman dar atraf baraye behavior ha piyade shavad
     public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map, Tile selected){
         String str;
 
@@ -309,7 +310,17 @@ public class PlayGameMenuController {
     }
     public String WarFootingUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        if (unit.isCivilian()) {
+            str = "this unit isn't trooper !";
+            return str;
+        }
 
+        unit.setOnWarFooting(true);
+        str = "this unit is on standby !";
         return str;
     }
     public String boostUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
@@ -349,14 +360,47 @@ public class PlayGameMenuController {
         str = "booster until full recovery has been activated for this unit !";
         return str;
     }
+
+    //if unit tile is city center (tile) return true
+    public boolean isTileCityCenter (Civilization civilization, Unit unit) {
+        ArrayList<City> cities = civilization.getCities();
+        Tile tile = unit.getOrigin();
+        for (int i = 0; i < cities.size(); i++) {
+            if (tile.equals(cities.get(i).getCenterTile())) return true;
+        }
+        return false;
+    }
     public String deploymentUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        if (unit.isCivilian()) {
+            str = "this unit isn't trooper !";
+            return str;
+        }
+        if (!isTileCityCenter(civilization, unit)) {
+            str = "this unit isn't in the city !";
+            return str;
+        }
 
+        unit.setOnDeployment(true);
+        str = "the unit is deployed in city !";
         return str;
     }
     public String readyForRangedBattleUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
-
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        if (unit.isCivilian()) {
+            str = "this unit isn't trooper !";
+            return str;
+        }
+        ((Warrior)unit).setReadyForRangedBattle(true);
+        str = "the unit is ready for ranged battle !";
         return str;
     }
     public String lootTile(Civilization civilization, Warrior warrior, Tile destination,ArrayList<Tile> map){
