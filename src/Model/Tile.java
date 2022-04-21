@@ -26,12 +26,13 @@ public class Tile {
     private int tileNumber;
     private float x,y;
     private int radius;
+    private double h;
 
     private ArrayList<Unit> units;
     private Resource resource;
     private Attribute attribute;
     private ArrayList<Improvement> improvements;
-    public Tile(boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, int tileNumber, float x, float y){
+    public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
         this.isDesert = isDesert;
         this.isMeadow = isMeadow;
         this.isHill = isHill;
@@ -48,6 +49,7 @@ public class Tile {
         this.x = x;
         this.y = y;
         this.radius = 5;
+        this.h = radius * Math.sqrt(3) / 2;
 
         this.food = 0;
         this.production = 0;
@@ -209,4 +211,105 @@ public class Tile {
     public void addUnit (Unit unit) {
         units.add(unit);
     }
+
+    public boolean isDesert() {
+        return isDesert;
+    }
+
+    public boolean isMeadow() {
+        return isMeadow;
+    }
+
+    public boolean isHill() {
+        return isHill;
+    }
+
+    public boolean isMountain() {
+        return isMountain;
+    }
+
+    public boolean isOcean() {
+        return isOcean;
+    }
+
+    public boolean isPlain() {
+        return isPlain;
+    }
+
+    public boolean isSnow() {
+        return isSnow;
+    }
+
+    public boolean isTundra() {
+        return isTundra;
+    }
+
+    public boolean isBlocker() {
+        return isBlocker;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getProduction() {
+        return production;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getCombatChange() {
+        return combatChange;
+    }
+
+    public int getMpCost() {
+        return mpCost;
+    }
+
+    public int getTileNumber() {
+        return tileNumber;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public double getH() {
+        return h;
+    }
+
+    public Attribute getAttribute() {
+        return attribute;
+    }
+
+    public ArrayList<Improvement> getImprovements() {
+        return improvements;
+    }
+
+    public Improvement getWorkingOnImprovement() {
+        return workingOnImprovement;
+    }
+
+    public HashMap<Improvement, Integer> getImprovementEarnedPercent() {
+        return ImprovementEarnedPercent;
+    }
+
+    public boolean isDoesHaveRoad() {
+        return doesHaveRoad;
+    }
+
+    public boolean isDoesHaveRailWay() {
+        return doesHaveRailWay;
+    }
+
 }
