@@ -7,7 +7,10 @@ public class Unit {
     private Civilization civilization;
     private Tile origin;
     private int health;
-    private int mp;
+    private int MP;   // it shows mp for a unit and its final.
+    private int mp;  // it changes every time unit moves.
+
+
     private int duration;
     private int goldCost;
     private int movesLeft;
@@ -28,5 +31,13 @@ public class Unit {
 
     public boolean isCivilian() {
         return isCivilian;
+    }
+
+    public Civilization getCivilization() {
+        return civilization;
+    }
+
+    public void setOnSleep(boolean onSleep) {
+        isOnSleep = onSleep;
     }
 }
