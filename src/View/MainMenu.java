@@ -13,7 +13,7 @@ public class MainMenu {
     public MainMenu(Member loggedInMember){
         this.loggedInMember = loggedInMember;
     }
-    public void run(Scanner scan, LoginMenu loginMenu) throws IOException {
+    public void run(Scanner scan) throws IOException {
         System.out.println("user logged in successfully!");
         MainMenuController mainMenuController = new MainMenuController();
         PlayGameMenu playGameMenu = new PlayGameMenu();
