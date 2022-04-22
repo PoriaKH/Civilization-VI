@@ -1,3 +1,4 @@
+
 package Controller;
 
 import Model.*;
@@ -202,9 +203,33 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    public ArrayList<Integer> statusChecker(Civilization civilization,ArrayList<Tile> map){
-        //TODO... return ArrayList<Integer> with 1 or -1(all fields)
+    private boolean isNeighbor(float x1, float y1, float x2, float y2, float radius){
+        float distance = (float) Math.pow(0.5, (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
+        if (radius * (float)Math.pow(0.5, 3) < distance && distance < 3 * radius * (float)Math.pow(0.5, 3))
+            return true;
+        return false;
     }
+    public ArrayList<Integer> statusChecker(Civilization civilization, ArrayList<Tile> map){
+        ArrayList<Integer> civilizationTiles  = new ArrayList<>();
+        ArrayList<City> cities = civilization.getCities();
+        for (int i = 0; i < map.size(); i++) {
+            boolean neighbor = false;
+            for (int j = 0; j < cities.size(); j++) {
+                ArrayList<Tile> cityTiles = cities.get(j).getTiles();
+                for (int k = 0; k < cityTiles.size(); k++) {
+                    if (isNeighbor(cityTiles.get(k).getX(), cityTiles.get(k).getY(), map.get(i).getX(), map.get(i).getY(), cityTiles.get(k).getRadius())) {
+                        civilizationTiles.add(1);
+                        neighbor = true;
+                        break;
+                    }
+                }
+            }
+            if (!neighbor)
+                civilizationTiles.add(-1);
+        }
+        return civilizationTiles;
+    }
+    //two neighbor tiles has (2rad3 * radius) distance
     public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now){
         //TODO... if(now == fog of war && old == vazeh -> now = moshakhas)
         //TODO... return now;

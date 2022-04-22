@@ -27,9 +27,9 @@ public class PlayGameMenu {
         ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(numOfCivilizations);
 
         //1 -> vazeh   0 -> moshakhas   -1 -> fog of war
-        ArrayList<Integer> civilization1 = new ArrayList<>();
-        ArrayList<Integer> civilization2 = new ArrayList<>();   ///   ----> -1 , 0, 1
-        ArrayList<Integer> civilization3 = new ArrayList<>();
+        ArrayList<Integer> tileStatusOfCivilization1 = new ArrayList<>();
+        ArrayList<Integer> tileStatusOfCivilization2 = new ArrayList<>();   ///   ----> -1 , 0, 1
+        ArrayList<Integer> tileStatusOfCivilization3 = new ArrayList<>();
         //TODO... Calling statusChecker Function 3 times
         String command;
         command = scan.nextLine();
