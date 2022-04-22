@@ -21,8 +21,7 @@ public class ProfileMenuController {
         return matcher;
     }
 
-    public String profileChangeNickname(String command, String regex)
-    {
+    public String profileChangeNickname(String command, String regex) throws IOException {
         Matcher matcher = getMatcher(command,regex);
         matcher.find();
 

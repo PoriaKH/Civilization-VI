@@ -15,7 +15,6 @@ public class Attribute {
     private boolean isOasis;//Vahhe
     private boolean isBlocker;
 
-
     public Attribute(boolean isPlat, boolean isJungle, boolean isIce, boolean isRainForest, boolean isMarsh, boolean isOasis){
         this.isPlat = isPlat;
         this.isJungle = isJungle;

@@ -9,7 +9,6 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         LoginMenu loginMenu = new LoginMenu();
         loginMenu.run(scan);
-	// write your code here
+        // write your code here
     }
 }
-

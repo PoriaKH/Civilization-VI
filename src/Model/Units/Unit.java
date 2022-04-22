@@ -3,7 +3,6 @@ package Model.Units;
 import Model.Civilization;
 import Model.Tile;
 
-
 public class Unit {
     private Civilization civilization;
     private Tile origin;

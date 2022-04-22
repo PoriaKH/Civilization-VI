@@ -16,4 +16,3 @@ public class Improvement {
     private boolean isTradingPost;
     private boolean isLaboratory;
 }
-

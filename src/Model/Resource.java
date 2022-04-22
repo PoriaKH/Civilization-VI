@@ -13,7 +13,6 @@ public class Resource {
     private boolean isCoal;
     private boolean isHorse;
 
-
     public int getFood() {
         return food;
     }

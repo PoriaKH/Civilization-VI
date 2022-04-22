@@ -74,7 +74,6 @@ public class LoginMenuController {
         if(this.loggedInMember != null)
             return "you are already logged in";
 
-
         Matcher matcher = getMatcher(command,regex);
         matcher.find();
 
