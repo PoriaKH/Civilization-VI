@@ -9,13 +9,15 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayGameMenu {
 
     public Matcher matcher(String regex, String command){
-        Matcher matcher;
-
-        return matcher;
+        Matcher matcher = Pattern.compile(regex).matcher(command);
+        if (matcher.matches())
+            return matcher;
+        return null;
     }
 
     public void run(Scanner scan, int numOfCivilizations, ArrayList<Member> members){
@@ -27,9 +29,12 @@ public class PlayGameMenu {
         ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(numOfCivilizations);
 
         //1 -> vazeh   0 -> moshakhas   -1 -> fog of war
-        ArrayList<Integer> civilization1 = new ArrayList<>();
-        ArrayList<Integer> civilization2 = new ArrayList<>();   ///   ----> -1 , 0, 1
-        ArrayList<Integer> civilization3 = new ArrayList<>();
+        ArrayList<Integer> tileStatusOfCivilization1 = new ArrayList<>();
+        tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), map);
+        ArrayList<Integer> tileStatusOfCivilization2 = new ArrayList<>();
+        tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), map);///   ----> -1 , 1
+        ArrayList<Integer> tileStatusOfCivilization3 = new ArrayList<>();
+        tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), map);
         //TODO... Calling statusChecker Function 3 times
         String command;
         command = scan.nextLine();
@@ -43,12 +48,17 @@ public class PlayGameMenu {
             command = scan.nextLine();
 
             ArrayList<Integer> civilization1new = new ArrayList<>();
-            ArrayList<Integer> civilization2new = new ArrayList<>();   ///---> -1  ,   1
+            ArrayList<Integer> civilization2new = new ArrayList<>();   ///---> -1, 1
             ArrayList<Integer> civilization3new = new ArrayList<>();
             //TODO... Calling statusChecker Function 3 times
-
+            civilization1new = playGameMenuController.statusChecker(civilizations.get(0), map);
+            civilization2new = playGameMenuController.statusChecker(civilizations.get(1), map);
+            civilization3new = playGameMenuController.statusChecker(civilizations.get(2), map);
 
             //TODO... Calling statusComparator Function -> civilization1 = statusComparator(civilization1,civilization1new)
+            tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new);
+            tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new);
+            tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new);
 
         }
     }

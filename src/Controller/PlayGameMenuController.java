@@ -202,12 +202,48 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    public ArrayList<Integer> statusChecker(Civilization civilization,ArrayList<Tile> map){
-        //TODO... return ArrayList<Integer> with 1 or -1(all fields)
+    // if distance between two tile center is (2rad3 * radius) they're neighbor
+    private boolean isNeighbor(float x1, float y1, float x2, float y2, float radius){
+        float distance = (float) Math.pow(0.5, (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
+        if (radius * (float)Math.pow(0.5, 3) < distance && distance < 3 * radius * (float)Math.pow(0.5, 3))
+            return true;
+        return false;
     }
+    // 1 -> vazeh, -1 -> fog
+    public ArrayList<Integer> statusChecker(Civilization civilization, ArrayList<Tile> map){
+        ArrayList<Integer> civilizationTiles  = new ArrayList<>();
+        ArrayList<City> cities = civilization.getCities();
+        for (int i = 0; i < map.size(); i++) {
+            boolean neighbor = false;
+            for (int j = 0; j < cities.size(); j++) {
+                ArrayList<Tile> cityTiles = cities.get(j).getTiles();
+                for (int k = 0; k < cityTiles.size(); k++) {
+                    if (isNeighbor(cityTiles.get(k).getX(), cityTiles.get(k).getY(), map.get(i).getX(), map.get(i).getY(), cityTiles.get(k).getRadius())) {
+                        civilizationTiles.add(1);
+                        neighbor = true;
+                        break;
+                    }
+                }
+            }
+            if (!neighbor)
+                civilizationTiles.add(-1);
+        }
+        return civilizationTiles;
+    }
+    // -1 -> fog, 0  -> moshakhas, 1 -> vazeh
     public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now){
         //TODO... if(now == fog of war && old == vazeh -> now = moshakhas)
         //TODO... return now;
+        ArrayList<Integer> finalTileStatus = new ArrayList<>();
+        for (int i = 0; i < old.size(); i++) {
+            if (now.get(i) == 1)
+                finalTileStatus.add(1);
+            else if (now.get(i) == -1 && old.get(i) == 1)
+                finalTileStatus.add(0);
+            else
+                finalTileStatus.add(-1);
+        }
+        return finalTileStatus;
     }
 
     public StringBuilder researchInformation(Civilization civilization,ArrayList<Tile> map){
