@@ -4,275 +4,440 @@ import Model.*;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import Model.Node;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
+
 
 public class PlayGameMenuController {
 
-    public ArrayList<Tile> mapCreator(int numOfCivilizations,ArrayList<Member> members){//tik
+    public ArrayList<Tile> mapCreator(int numOfCivilizations, ArrayList<Member> members) {//tik
         int numOfTiles = 72;
         ArrayList<Tile> map = new ArrayList<>();
         float x0 = 10;
         float y0 = 10;
 
-        Tile t0 = new Tile(0,false,false,false,true,false,false,false,false,x0,y0);
-        float h = (float)t0.getH();
+        Tile t0 = new Tile(0, false, false, false, true, false, false, false, false, x0, y0);
+        float h = (float) t0.getH();
         float radius = t0.getRadius();
 
         map.add(t0);
         float x = x0;
         float y = y0 + 2 * h;
-        map.add(new Tile(1,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(1, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(2,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(2, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(3,false,false,false,false,true,false,false,false,x,y));
+        map.add(new Tile(3, false, false, false, false, true, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(4,false,false,false,false,true,false,false,false,x,y));
+        map.add(new Tile(4, false, false, false, false, true, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(5,false,false,false,false,true,false,false,false,x,y));
+        map.add(new Tile(5, false, false, false, false, true, false, false, false, x, y));
 
         x = x0 + 3 * radius / 2;
         y = y0 + h;
-        map.add(new Tile(6,false,false,false,false,false,true,false,false,x,y));
+        map.add(new Tile(6, false, false, false, false, false, true, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(7,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(7, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(8,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(8, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(9,false,false,false,false,false,true,false,false,x,y));
+        map.add(new Tile(9, false, false, false, false, false, true, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(10,false,false,false,false,true,false,false,false,x,y));
+        map.add(new Tile(10, false, false, false, false, true, false, false, false, x, y));
 
         x += 3 * radius / 2;
         y = y0;
-        map.add(new Tile(11,false,false,true,false,false,false,false,false,x,y));
+        map.add(new Tile(11, false, false, true, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(12,false,false,true,false,false,false,false,false,x,y));
+        map.add(new Tile(12, false, false, true, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(13,false,false,false,true,false,false,false,false,x,y));
+        map.add(new Tile(13, false, false, false, true, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(14,false,false,true,false,false,false,false,false,x,y));
+        map.add(new Tile(14, false, false, true, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(15,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(15, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(16,false,false,false,false,false,false,true,false,x,y));
+        map.add(new Tile(16, false, false, false, false, false, false, true, false, x, y));
 
         x += 3 * radius / 2;
         y = y0 + h;
-        map.add(new Tile(17,false,false,true,false,false,false,false,false,x,y));
+        map.add(new Tile(17, false, false, true, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(18,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(18, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(19,false,false,true,false,false,false,false,false,x,y));
+        map.add(new Tile(19, false, false, true, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(20,false,false,false,false,false,true,false,false,x,y));
+        map.add(new Tile(20, false, false, false, false, false, true, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(21,false,false,false,false,true,false,false,false,x,y));
+        map.add(new Tile(21, false, false, false, false, true, false, false, false, x, y));
 
         x += 3 * radius / 2;
         y = y0;
-        map.add(new Tile(22,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(22, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(23,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(23, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(24,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(24, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(25,false,false,false,false,false,false,true,false,x,y));
+        map.add(new Tile(25, false, false, false, false, false, false, true, false, x, y));
         y += 2 * h;
-        map.add(new Tile(26,false,false,false,false,false,false,true,false,x,y));
+        map.add(new Tile(26, false, false, false, false, false, false, true, false, x, y));
         y += 2 * h;
-        map.add(new Tile(27,false,false,false,false,true,false,false,false,x,y));
+        map.add(new Tile(27, false, false, false, false, true, false, false, false, x, y));
 
         x += 3 * radius / 2;
         y = y0 + h;
-        map.add(new Tile(28,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(28, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(29,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(29, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(30,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(30, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(31,false,false,false,false,false,false,true,false,x,y));
+        map.add(new Tile(31, false, false, false, false, false, false, true, false, x, y));
         y += 2 * h;
-        map.add(new Tile(32,false,false,false,false,true,false,false,false,x,y));
+        map.add(new Tile(32, false, false, false, false, true, false, false, false, x, y));
 
         x += 3 * radius / 2;
         y = y0;
-        map.add(new Tile(33,false,false,false,true,false,false,false,false,x,y));
+        map.add(new Tile(33, false, false, false, true, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(34,false,false,false,true,false,false,false,false,x,y));
+        map.add(new Tile(34, false, false, false, true, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(35,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(35, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(36,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(36, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(37,false,false,false,false,true,false,false,false,x,y));
+        map.add(new Tile(37, false, false, false, false, true, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(38,false,false,false,false,true,false,false,false,x,y));
+        map.add(new Tile(38, false, false, false, false, true, false, false, false, x, y));
 
         x += 3 * radius / 2;
         y = y0 + h;
-        map.add(new Tile(39,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(39, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(40,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(40, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(41,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(41, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(42,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(42, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(43,false,false,false,false,false,false,true,false,x,y));
+        map.add(new Tile(43, false, false, false, false, false, false, true, false, x, y));
 
         x += 3 * radius / 2;
         y = y0;
-        map.add(new Tile(44,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(44, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(45,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(45, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(46,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(46, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(47,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(47, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(48,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(48, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(49,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(49, true, false, false, false, false, false, false, false, x, y));
 
         x += 3 * radius / 2;
         y = y0 + h;
-        map.add(new Tile(50,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(50, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(51,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(51, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(52,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(52, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(53,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(53, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(54,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(54, true, false, false, false, false, false, false, false, x, y));
 
         x += 3 * radius / 2;
         y = y0;
-        map.add(new Tile(55,false,false,false,false,false,false,true,false,x,y));
+        map.add(new Tile(55, false, false, false, false, false, false, true, false, x, y));
         y += 2 * h;
-        map.add(new Tile(56,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(56, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(57,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(57, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(58,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(58, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(59,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(59, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(60,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(60, false, false, false, false, false, false, false, true, x, y));
 
         x += 3 * radius / 2;
         y = y0 + h;
-        map.add(new Tile(61,false,true,false,false,false,false,false,false,x,y));
+        map.add(new Tile(61, false, true, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(62,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(62, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(63,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(63, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(64,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(64, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(65,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(65, false, false, false, false, false, false, false, true, x, y));
 
         x += 3 * radius / 2;
         y = y0;
-        map.add(new Tile(66,false,false,false,true,false,false,false,false,x,y));
+        map.add(new Tile(66, false, false, false, true, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(67,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(67, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(68,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(68, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(69,true,false,false,false,false,false,false,false,x,y));
+        map.add(new Tile(69, true, false, false, false, false, false, false, false, x, y));
         y += 2 * h;
-        map.add(new Tile(70,false,false,false,false,false,false,false,true,x,y));
+        map.add(new Tile(70, false, false, false, false, false, false, false, true, x, y));
         y += 2 * h;
-        map.add(new Tile(71,false,false,false,true,false,false,false,false,x,y));
+        map.add(new Tile(71, false, false, false, true, false, false, false, false, x, y));
 
 
         return map;
     }
-    public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations){
+
+    public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations) {
 
     }
-    public StringBuilder showMap(Civilization civilization,ArrayList<Tile> map){//tik
+
+    public StringBuilder showMap(Civilization civilization, ArrayList<Tile> map) {//tik
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public ArrayList<Integer> statusChecker(Civilization civilization,ArrayList<Tile> map){
+
+    public ArrayList<Integer> statusChecker(Civilization civilization, ArrayList<Tile> map) {
         //TODO... return ArrayList<Integer> with 1 or -1(all fields)
     }
-    public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now){
+
+    public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now) {
         //TODO... if(now == fog of war && old == vazeh -> now = moshakhas)
         //TODO... return now;
     }
 
-    public StringBuilder researchInformation(Civilization civilization,ArrayList<Tile> map){
+    public StringBuilder researchInformation(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder unitPanel(Civilization civilization,ArrayList<Tile> map){
+
+    public StringBuilder unitPanel(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder cityPanel(Civilization civilization,ArrayList<Tile> map){
+
+    public StringBuilder cityPanel(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder diplomaticInformation(Civilization civilization,ArrayList<Tile> map){
+
+    public StringBuilder diplomaticInformation(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
+
+    public StringBuilder victoryImprovement(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder demographics(Civilization civilization,ArrayList<Tile> map){   //Jamiat shenasi
+
+    public StringBuilder demographics(Civilization civilization, ArrayList<Tile> map) {   //Jamiat shenasi
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder historyInformation(Civilization civilization,ArrayList<Tile> map){
+
+    public StringBuilder historyInformation(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
+
+    public StringBuilder generalUnitReview(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder economicalReview(Civilization civilization,ArrayList<Tile> map){
+
+    public StringBuilder economicalReview(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder diplomaticReview(Civilization civilization,ArrayList<Tile> map){
+
+    public StringBuilder diplomaticReview(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public StringBuilder tradeHistory(Civilization civilization,ArrayList<Tile> map){
+
+    public StringBuilder tradeHistory(Civilization civilization, ArrayList<Tile> map) {
         StringBuilder stringBuilder;
 
         return stringBuilder;
     }
-    public String tradeResource(Civilization civilization1, Civilization civilization2, Tile originTile, Resource originResource,Resource neededResource,ArrayList<Tile> map){
+
+    public String tradeResource(Civilization civilization1, Civilization civilization2, Tile originTile, Resource originResource, Resource neededResource, ArrayList<Tile> map) {
         String str;
 
         return str;
     }
-    public String moveUnit(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map){
-        String str;
 
+    // finds all  the neighbours of a node (tile)
+    public void findAllNeighbours(Node[] graph) {
+        int column = 0;
+        int counter = 0;
+        for (int i = 0; i < graph.length; i++) {
+            if (column % 2 == 0 && counter == 6) {
+                counter = 0;
+                column++;
+            }
+            if (column % 2 != 0 && counter == 5) {
+                counter = 0;
+                column++;
+            }
+            if (i - 1 >= 0 && counter != 0) {
+                graph[i].neighbours.add(graph[i - 1]);
+            }
+            if (counter != 5 && counter != 4) {
+                graph[i].neighbours.add(graph[i + 1]);
+            }
+            if (i - 6 >= 0 && (counter != 0 || column % 2 != 0)) {
+                graph[i].neighbours.add(graph[i - 6]);
+            }
+            if (i - 5 >= 0 && counter != 5) {
+                graph[i].neighbours.add(graph[i - 5]);
+            }
+            if (i + 6 <= 71 && counter != 5) {
+                graph[i].neighbours.add(graph[i + 6]);
+            }
+            if (i + 5 <= 71 && (counter != 0 || column % 2 != 0)) {
+                graph[i].neighbours.add(graph[i + 5]);
+            }
+            counter++;
+        }
+    }
+
+    // set distance of two node (tile) based on destination mp.
+    public int distanceOfTwoNode(Node node) {
+        Tile tile = node.tile;
+        if (tile.isMountain() || tile.isOcean() || tile.getAttribute().isIce()) {
+            return 100000;
+        }
+        return tile.getMpCost();
+    }
+    // chase an algorithm based on graphs to find the shortest way.
+    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode) {
+        while (unreached.size() > 0) {
+            Node minimumBranch = null;
+            for (int i = 0; i < unreached.size(); i++) {
+                if (minimumBranch == null ||
+                        distanceFromNode.get(unreached.get(i)) < distanceFromNode.get(minimumBranch)) {
+                    minimumBranch = unreached.get(i);
+                    unreached.remove(i);
+                }
+            }
+            if (minimumBranch.equals(destinationNode)) break;
+
+            for (int i = 0; i < minimumBranch.neighbours.size(); ++i) {
+                Node neighbourOfBranch = minimumBranch.neighbours.get(i);
+                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch);
+                if (mpCost < distanceFromNode.get(neighbourOfBranch)) {
+                    distanceFromNode.replace(neighbourOfBranch, mpCost);
+                    previousNode.replace(neighbourOfBranch, minimumBranch);
+                }
+            }
+        }
+    }
+    // find the shortest way from origin to destination based on mp.
+    public void findTheShortestPath (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit) {
+        unit.setPath (null);
+        Node[] graph = new Node[72];
+        for (int i = 0; i < graph.length; i++) {
+            graph[i] = new Node();
+            graph[i].tile = map.get(i);
+        }
+        findAllNeighbours (graph);
+        HashMap<Node, Integer> distanceFromNode = new HashMap<>();
+        HashMap<Node, Node> previousNode = new HashMap<>();
+        ArrayList<Node> unreached = new ArrayList<>();
+        int originIndex = map.indexOf(origin);
+        int destinationIndex = map.indexOf(destination);
+
+        Node originNode = graph[originIndex];
+        Node destinationNode = graph[destinationIndex];
+
+        distanceFromNode.put(originNode, 0);
+        previousNode.put(originNode, null);
+
+        for (int i = 0; i < graph.length; i++) {
+            if (!graph[i].equals(originNode)) {
+                distanceFromNode.put(graph[i] ,100000);
+                previousNode.put(graph[i], null);
+            }
+            unreached.add(graph[i]);
+        }
+        findThePath(previousNode, distanceFromNode, unreached, destinationNode);
+
+        if (previousNode.get(destinationNode) == null) {
+            unit.setPath(null);
+            return;
+        }
+
+        ArrayList<Node> path = new ArrayList<>();
+        Node currentNode = new Node();
+        while (currentNode != null) {
+            path.add(currentNode);
+            currentNode = previousNode.get(currentNode);
+        }
+
+        Collections.reverse(path);
+        unit.setPath(path);
+    }
+
+    public String moveUnit(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
+        String str;
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        if (destination.isMountain() || destination.isOcean() || destination.getAttribute().isIce()) {
+            str = "destination is unreachable !";
+            return str;
+        }
+        findTheShortestPath (civilization, origin, destination, map, unit);
+        if (unit.getPath() == null) {
+            str = "there is no way to the destination !";
+            return str;
+        }
+        int i = 0;
+        while (true) {
+            if (i == unit.getPath().size() - 1) {
+                unit.setMp(unit.getConstantMP());
+                unit.setPath(null);
+                str = "unit reached the destination !";
+                break;
+            }
+
+            Tile originTile = unit.getPath().get(i).tile;
+            Tile destinationTile = unit.getPath().get(i + 1).tile;
+
+            if (unit.getMp() >= destinationTile.getMpCost()) {
+                originTile.removeUnit(unit);
+                destinationTile.addUnit(unit);
+                int newMP = unit.getMp() - destinationTile.getMpCost();
+                unit.getPath().remove(i);
+                unit.setMp(newMP);
+                i++;
+            }
+            else {
+                str = "unit mp isn't enough, wait until next turn !";
+                break;
+            }
+        }
         return str;
     }
 

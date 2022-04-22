@@ -2,6 +2,9 @@ package Model.Units;
 
 import Model.Civilization;
 import Model.Tile;
+import Model.Node;
+
+import java.util.ArrayList;
 
 public class Unit {
     private Civilization civilization;
@@ -19,6 +22,31 @@ public class Unit {
     private boolean isOnWarFooting;//Amade bash
     private boolean isOnBoost;
     private boolean isOnBoostTillRecover;
+    private ArrayList<Node> path = new ArrayList<>(); //the shortest way, it also contains origin and destination
+
+    public int getConstantMP() {
+        return MP;
+    }
+
+    public void setConstantMP(int MP) {
+        this.MP = MP;
+    }
+
+    public int getMp() {
+        return mp;
+    }
+
+    public void setMp(int mp) {
+        this.mp = mp;
+    }
+
+    public void setPath(ArrayList<Node> path) {
+        this.path = path;
+    }
+
+    public ArrayList<Node> getPath() {
+        return path;
+    }
 
     public Tile getOrigin() {
         return origin;

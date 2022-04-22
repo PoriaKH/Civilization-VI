@@ -65,4 +65,8 @@ public class Attribute {
         }
         //
     }
+
+    public boolean isIce() {
+        return isIce;
+    }
 }

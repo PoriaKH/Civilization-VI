@@ -32,6 +32,7 @@ public class Tile {
     private Resource resource;
     private Attribute attribute;
     private ArrayList<Improvement> improvements;
+
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
         this.isDesert = isDesert;
         this.isMeadow = isMeadow;
@@ -194,6 +195,10 @@ public class Tile {
         //
     }
 
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
+
     private Improvement workingOnImprovement;//if == null -> null
     private HashMap<Improvement, Integer> ImprovementEarnedPercent;
 
@@ -311,5 +316,16 @@ public class Tile {
     public boolean isDoesHaveRailWay() {
         return doesHaveRailWay;
     }
+
+    public void removeUnit (Unit unit) {
+        for (int i = 0; i < units.size(); i++) {
+            if (units.get(i).equals(unit)) {
+                units.remove(i);
+                break;
+            }
+        }
+    }
+
+
 
 }

@@ -35,6 +35,7 @@ public class PlayGameMenu {
         command = scan.nextLine();
 
         while(!Objects.equals(command, "exit menu")){
+            //TODO... check is there any unit with move left (harekat chand noobati)
 
 
             //TODO... Calling functions
