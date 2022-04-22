@@ -25,7 +25,7 @@ public class Tile {
 
     private int tileNumber;
     private float x,y;
-    private int radius;
+    private float radius;
     private double h;
 
     private ArrayList<Unit> units;
@@ -285,7 +285,7 @@ public class Tile {
         return y;
     }
 
-    public int getRadius() {
+    public float getRadius() {
         return radius;
     }
 

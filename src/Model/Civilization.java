@@ -17,6 +17,17 @@ public class Civilization {
     private Technology workingOn;//if == null -> have to choose
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
+    public Civilization(Member member, City capital){
+        this.member = member;
+        this.capital = capital;
+        cities = new ArrayList<>();
+        cities.add(capital);
+        this.science = 0;
+        technologies = new ArrayList<>();
+        trades = new HashMap<>();
+        technologyEarnedPercent = new HashMap<>();
+    }
+
     public ArrayList<Technology> getTechnologies() {
         return technologies;
     }
