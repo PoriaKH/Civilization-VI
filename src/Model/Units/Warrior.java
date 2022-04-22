@@ -1,5 +1,6 @@
 package Model.Units;
 
+
 public class Warrior extends Unit{
     private int xp;
     private int damage;

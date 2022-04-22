@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+
 public class MainMenu {
     private Member loggedInMember;
     public MainMenu(Member loggedInMember){

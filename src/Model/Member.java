@@ -6,6 +6,7 @@ public class Member {
     private String nickname;
     private int score;
 
+
     public Member(String username, String password, String nickname, int score){
         this.username = username;
         this.password = password;

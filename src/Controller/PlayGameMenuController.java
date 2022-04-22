@@ -210,6 +210,7 @@ public class PlayGameMenuController {
         //TODO... return now;
     }
 
+
     public StringBuilder researchInformation(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
