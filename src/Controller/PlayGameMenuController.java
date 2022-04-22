@@ -195,8 +195,35 @@ public class PlayGameMenuController {
 
         return map;
     }
-    public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations){
-
+    public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for(int i = 0; i < numOfCivilizations; i++){
+            if(i == 0){
+                Member member1 = members.get(0);
+                City city1 = new City(map.get(7), map);
+                civilizations.add(new Civilization(member1, city1));
+            }
+            else if(i == 1){
+                Member member2 = members.get(1);
+                City city2 = new City(map.get(48), map);
+                civilizations.add(new Civilization(member2, city2));
+            }
+            else if(i == 2){
+                Member member3 = members.get(2);
+                City city3 = new City(map.get(62), map);
+                civilizations.add(new Civilization(member3, city3));
+            }
+            else if(i == 3){
+                Member member4 = members.get(3);
+                City city4 = new City(map.get(45), map);
+                civilizations.add(new Civilization(member4, city4));
+            }
+            else if(i == 4){
+                Member member5 = members.get(4);
+                City city5 = new City(map.get(30), map);
+                civilizations.add(new Civilization(member5, city5));
+            }
+        }
     }
     public StringBuilder showMap(Civilization civilization,ArrayList<Tile> map){//tik
         StringBuilder stringBuilder;

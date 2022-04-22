@@ -31,7 +31,7 @@ public class PlayGameMenu {
         HashMap<Integer, Tile> zeroStatusTilesCivilisation4 = new HashMap<>();
         HashMap<Integer, Tile> zeroStatusTilesCivilisation5 = new HashMap<>();
         map = playGameMenuController.mapCreator(numOfCivilizations,members);
-        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(numOfCivilizations);
+        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(numOfCivilizations, map, members);
         Civilization playingCivilization; // the civilization which is playing now
         int counter = 0;
         playingCivilization = civilizations.get(counter);
