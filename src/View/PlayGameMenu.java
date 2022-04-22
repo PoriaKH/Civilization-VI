@@ -32,6 +32,11 @@ public class PlayGameMenu {
         HashMap<Integer, Tile> zeroStatusTilesCivilisation5 = new HashMap<>();
         map = playGameMenuController.mapCreator(numOfCivilizations,members);
         ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(numOfCivilizations);
+        Civilization playingCivilization; // the civilization which is playing now
+        int counter = 0;
+        playingCivilization = civilizations.get(counter);
+
+
         ArrayList<Integer> tileStatusOfCivilization1 = new ArrayList<>();
         ArrayList<Integer> tileStatusOfCivilization2 = new ArrayList<>();
         ArrayList<Integer> tileStatusOfCivilization3 = new ArrayList<>();
@@ -67,7 +72,12 @@ public class PlayGameMenu {
         while(!Objects.equals(command, "exit menu")){
 
 
-            //TODO... Calling functions
+
+
+            //TODO... Calling functions using regex ( if(command.matches(regex) -> func(civ,map,...) )
+
+
+
 
 
             command = scan.nextLine();
