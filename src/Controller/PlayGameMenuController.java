@@ -6,6 +6,7 @@ import Model.Units.Unit;
 import Model.Units.Warrior;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -249,17 +250,28 @@ public class PlayGameMenuController {
         return civilizationTiles;
     }
     // -1 -> fog, 0  -> moshakhas, 1 -> vazeh
-    public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now){
+    public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now, HashMap<Integer, Tile> zeroStatusTiles, ArrayList<Tile> map){
         //TODO... if(now == fog of war && old == vazeh -> now = moshakhas)
         //TODO... return now;
-        ArrayList<Integer> finalTileStatus = new ArrayList<>();
+        ArrayList<Integer> finalTileStatus = new ArrayList<>(72);
+        for (int i = 0; i < finalTileStatus.size(); i++)
+            finalTileStatus.set(i, -1);
         for (int i = 0; i < old.size(); i++) {
             if (now.get(i) == 1)
-                finalTileStatus.add(1);
-            else if (now.get(i) == -1 && old.get(i) == 1)
-                finalTileStatus.add(0);
-            else
-                finalTileStatus.add(-1);
+                finalTileStatus.set(i, 1);
+            else if (now.get(i) == -1 && old.get(i) == 1) {
+                finalTileStatus.set(i, 0);
+                boolean exist = false;
+                for (int j = 0; j < zeroStatusTiles.size(); j++) {
+                    if (zeroStatusTiles.containsKey(i)) {
+                        zeroStatusTiles.replace(i, map.get(i));
+                        exist = true;
+                        break;
+                    }
+                }
+                if (!exist)
+                    zeroStatusTiles.put(i, map.get(i));
+            }
         }
         return finalTileStatus;
     }
