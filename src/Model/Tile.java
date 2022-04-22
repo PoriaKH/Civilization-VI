@@ -47,4 +47,16 @@ public class Tile {
     public void addUnit (Unit unit) {
         units.add(unit);
     }
+
+    public float getY() {
+        return y;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public float getX() {
+        return x;
+    }
 }
