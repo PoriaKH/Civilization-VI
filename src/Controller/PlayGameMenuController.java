@@ -598,43 +598,42 @@ public class PlayGameMenuController {
         Warrior warrior = (Warrior) unit;
         ArrayList<Tile> tiles = city.getTiles();
         for (int i = 0; i < tiles.size(); i++) {
-            ArrayList<Resource> resources = tiles.get(i).getResources();
+           Resource resource = tiles.get(i).getResource();
 
-            for (int i1 = 0; i1 < resources.size(); i1++) {
                 if (warrior.isArcher()) return true;
                 else if (warrior.isChariotArcher()) {
-                    if (resources.get(i1).isHorse()) return true;
+                    if (resource.isHorse()) return true;
                 }
                 else if (warrior.isScout()) return true;
                 else if (warrior.isSpearman()) return true;
                 else if (warrior.isWarrior()) return true;
 
                 else if (warrior.isCatapult()) {
-                    if (resources.get(i1).isMetal()) return true;
+                    if (resource.isMetal()) return true;
                 }
                 else if (warrior.isHorseMan()) {
-                    if (resources.get(i1).isHorse()) return true;
+                    if (resource.isHorse()) return true;
                 }
                 else if (warrior.isSwordsMan()) {
-                    if (resources.get(i1).isMetal()) return true;
+                    if (resource.isMetal()) return true;
                 }
                 else if (warrior.isCrossbowMan()) return true;
                 else if (warrior.isKnight()) {
-                    if (resources.get(i1).isHorse()) return true;
+                    if (resource.isHorse()) return true;
                 }
                 else if (warrior.isLongswordMan()) {
-                    if (resources.get(i1).isMetal()) return true;
+                    if (resource.isMetal()) return true;
                 }
                 else if (warrior.isPikeMan()) return true;
                 else if (warrior.isTrebuchet()) {
-                    if (resources.get(i1).isMetal()) return true;
+                    if (resource.isMetal()) return true;
                 }
                 else if (warrior.isCanon()) return true;
                 else if (warrior.isCavalry()) {
-                    if (resources.get(i1).isHorse()) return true;
+                    if (resource.isHorse()) return true;
                 }
                 else if (warrior.isLancer()) {
-                    if (resources.get(i1).isHorse()) return true;
+                    if (resource.isHorse()) return true;
                 }
                 else if (warrior.isMusketMan()) return true;
                 else if (warrior.isRifleMan()) return true;
@@ -643,7 +642,6 @@ public class PlayGameMenuController {
                 else if (warrior.isInfantry()) return true;
                 else if (warrior.isPanzer()) return true;
                 else if (warrior.isTank()) return true;
-            }
         }
         return false;
     }
