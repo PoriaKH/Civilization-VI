@@ -5,10 +5,7 @@ import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 
 public class PlayGameMenuController {
@@ -363,9 +360,159 @@ public class PlayGameMenuController {
 
         return str;
     }
-    public String moveUnit(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map){
-        String str;
+    // finds all  the neighbours of a node (tile)
+    public void findAllNeighbours(Node[] graph) {
+        int column = 0;
+        int counter = 0;
+        for (int i = 0; i < graph.length; i++) {
+            if (column % 2 == 0 && counter == 6) {
+                counter = 0;
+                column++;
+            }
+            if (column % 2 != 0 && counter == 5) {
+                counter = 0;
+                column++;
+            }
+            if (i - 1 >= 0 && counter != 0) {
+                graph[i].neighbours.add(graph[i - 1]);
+            }
+            if (counter != 5 && counter != 4) {
+                graph[i].neighbours.add(graph[i + 1]);
+            }
+            if (i - 6 >= 0 && (counter != 0 || column % 2 != 0)) {
+                graph[i].neighbours.add(graph[i - 6]);
+            }
+            if (i - 5 >= 0 && counter != 5) {
+                graph[i].neighbours.add(graph[i - 5]);
+            }
+            if (i + 6 <= 71 && counter != 5) {
+                graph[i].neighbours.add(graph[i + 6]);
+            }
+            if (i + 5 <= 71 && (counter != 0 || column % 2 != 0)) {
+                graph[i].neighbours.add(graph[i + 5]);
+            }
+            counter++;
+        }
+    }
 
+    // set distance of two node (tile) based on destination mp.
+    public int distanceOfTwoNode(Node node) {
+        Tile tile = node.tile;
+        if (tile.isMountain() || tile.isOcean() || tile.getAttribute().isIce()) {
+            return 100000;
+        }
+        return tile.getMpCost();
+    }
+    // chase an algorithm based on graphs to find the shortest way.
+    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode) {
+        while (unreached.size() > 0) {
+            Node minimumBranch = null;
+            for (int i = 0; i < unreached.size(); i++) {
+                if (minimumBranch == null ||
+                        distanceFromNode.get(unreached.get(i)) < distanceFromNode.get(minimumBranch)) {
+                    minimumBranch = unreached.get(i);
+                    unreached.remove(i);
+                }
+            }
+            if (minimumBranch.equals(destinationNode)) break;
+
+            for (int i = 0; i < minimumBranch.neighbours.size(); ++i) {
+                Node neighbourOfBranch = minimumBranch.neighbours.get(i);
+                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch);
+                if (mpCost < distanceFromNode.get(neighbourOfBranch)) {
+                    distanceFromNode.replace(neighbourOfBranch, mpCost);
+                    previousNode.replace(neighbourOfBranch, minimumBranch);
+                }
+            }
+        }
+    }
+    // find the shortest way from origin to destination based on mp.
+    public void findTheShortestPath (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit) {
+        unit.setPath (null);
+        Node[] graph = new Node[72];
+        for (int i = 0; i < graph.length; i++) {
+            graph[i] = new Node();
+            graph[i].tile = map.get(i);
+        }
+        findAllNeighbours (graph);
+        HashMap<Node, Integer> distanceFromNode = new HashMap<>();
+        HashMap<Node, Node> previousNode = new HashMap<>();
+        ArrayList<Node> unreached = new ArrayList<>();
+        int originIndex = map.indexOf(origin);
+        int destinationIndex = map.indexOf(destination);
+
+        Node originNode = graph[originIndex];
+        Node destinationNode = graph[destinationIndex];
+
+        distanceFromNode.put(originNode, 0);
+        previousNode.put(originNode, null);
+
+        for (int i = 0; i < graph.length; i++) {
+            if (!graph[i].equals(originNode)) {
+                distanceFromNode.put(graph[i] ,100000);
+                previousNode.put(graph[i], null);
+            }
+            unreached.add(graph[i]);
+        }
+        findThePath(previousNode, distanceFromNode, unreached, destinationNode);
+
+        if (previousNode.get(destinationNode) == null) {
+            unit.setPath(null);
+            return;
+        }
+
+        ArrayList<Node> path = new ArrayList<>();
+        Node currentNode = new Node();
+        while (currentNode != null) {
+            path.add(currentNode);
+            currentNode = previousNode.get(currentNode);
+        }
+
+        Collections.reverse(path);
+        unit.setPath(path);
+    }
+    public String moveUnit(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
+        String str;
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        if (destination.isMountain() || destination.isOcean() || destination.getAttribute().isIce()) {
+            str = "destination is unreachable !";
+            return str;
+        }
+        if (unit.getPath() == null) {
+            findTheShortestPath(civilization, origin, destination, map, unit);
+        }
+        if (unit.getPath() == null) {
+            str = "there is no way to the destination !";
+            return str;
+        }
+        int i = 0;
+        while (true) {
+            if (i == unit.getPath().size() - 1) {
+                unit.setMp(unit.getConstantMP());
+                unit.setPath(null);
+                str = "unit reached the destination !";
+                break;
+            }
+
+            Tile originTile = unit.getPath().get(i).tile;
+            Tile destinationTile = unit.getPath().get(i + 1).tile;
+
+            if (unit.getMp() >= destinationTile.getMpCost()) {
+                originTile.removeUnit(unit);
+                destinationTile.addUnit(unit);
+                int newMP = unit.getMp() - destinationTile.getMpCost();
+                unit.getPath().remove(i);
+                unit.setMp(newMP);
+                i++;
+            }
+            else {
+                str = "unit mp isn't enough, wait until next turn !";
+                break;
+            }
+        }
         return str;
     }
 
