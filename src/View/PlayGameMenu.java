@@ -151,10 +151,12 @@ public class PlayGameMenu {
         //TODO... Calling statusChecker Function 3 times
         String command;
         command = scan.nextLine();
-//TODO check she regex ha....
+
         String showCurrentMenuRegex = "menu show-current";
-        String createUnitRegex1 = "^create --unit (?<unitName>.+) in --coordinate x: (?<x>//d+) y: (?<y>//d+)$";
-        String createUnitRegex2 = "^create in --coordinate x: (?<x>//d+) y: (?<y>//d+) --unit (?<unitName>.+)$";
+        String createUnitRegex1 = "^create --unit (?<unitName>.+) tile --number (?<number>\\d+)$";
+        String createUnitRegex2 = "^create tile --number (?<number>\\d+) --unit (?<unitName>.+)$";
+        String moveUnitRegex1 = "^move --unit (?<unitName>.+) --path (?<numberO>\\d+ to ?<numberD>\\d+)$";
+        String moveUnitRegex2 = "^move --path (?<numberO>\\d+ to ?<numberD>\\d+) --unit (?<unitName>.+)$";
 
         playGameMenuController.showMap(ANSI_COLORS);
         while(!Objects.equals(command, "exit menu")) {
@@ -165,10 +167,16 @@ public class PlayGameMenu {
 
             //TODO... Calling functions using regex ( if(command.matches(regex) -> func(civ,map,...) )
             if (command.matches(createUnitRegex1)) {
-               playGameMenuController.preUnitMaker (matcher(createUnitRegex1, command), playingCivilization, map);
+                System.out.println(playGameMenuController.preUnitMaker (matcher(createUnitRegex1, command), playingCivilization, map));
             }
             else if (command.matches(createUnitRegex2)) {
-                playGameMenuController.preUnitMaker (matcher(createUnitRegex1, command), playingCivilization, map);
+                System.out.println(playGameMenuController.preUnitMaker (matcher(createUnitRegex2, command), playingCivilization, map));
+            }
+            else if (command.matches(moveUnitRegex1)) {
+                System.out.println(playGameMenuController.preMoveUnit(matcher(moveUnitRegex1, command), playingCivilization, map));
+            }
+            else if (command.matches(moveUnitRegex2)) {
+                System.out.println(playGameMenuController.preMoveUnit(matcher(moveUnitRegex2, command), playingCivilization, map));
             }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");

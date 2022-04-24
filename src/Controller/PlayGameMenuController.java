@@ -627,8 +627,130 @@ public class PlayGameMenuController {
         Collections.reverse(path);
         unit.setPath(path);
     }
-    public String moveUnit(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
+    public String preMoveUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
+        int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
+        int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
+        String unitName = matcher.group("unitName").toLowerCase();
+
+        Tile origin = map.get(numberOfOrigin);
+        Tile destination = map.get(numberOfDestination);
+        ArrayList<Unit> units = origin.getUnits();
+        Unit unit = getUnitInTile(units, unitName);
+        return moveUnit(civilization, origin, destination, map, unit);
+    }
+    public Unit getUnitInTile (ArrayList<Unit> units, String unitName) {
+        for (int i = 0; i < units.size(); i++) {
+            if (unitName.equals("archer") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isArcher()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("chariot archer") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isChariotArcher()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("scout") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isScout()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("settler") && units.get(i).isCivilian()) {
+                if (((Civilian) units.get(i)).isSettler()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("worker") && units.get(i).isCivilian()) {
+                if (((Civilian) units.get(i)).isWorker()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("spearman") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isSpearman()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("warrior") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isWarrior()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("catapult") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isCatapult()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("horseman") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isHorseMan()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("swordsman") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isSwordsMan()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("crossbowman") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isCrossbowMan()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("knight") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isKnight()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("longswordsman") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isLongswordMan()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("pikeman") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isPikeMan()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("trebuchet") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isTrebuchet()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("canon") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isCanon()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("cavalry") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isCavalry()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("lancer") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isLancer()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("musketman") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isMusketMan()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("rifleman") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isRifleMan()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("anti-tank gun") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isAntiTankGun()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("artillery") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isArtillery()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("infantry") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isInfantry()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("panzer") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isPanzer()) {
+                    return units.get(i);
+                }
+            } else if (unitName.equals("tank") && !units.get(i).isCivilian()) {
+                if (((Warrior) units.get(i)).isTank()) {
+                    return units.get(i);
+                }
+            }
+        }
+            return null;
+    }
+
+    public String moveUnit (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
         String str;
+        if (unit == null) {
+            str = "there is no unit with this name !";
+            return str;
+        }
         if (!unit.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
             return str;
@@ -818,34 +940,37 @@ public class PlayGameMenuController {
         return false;
     }
 
-    public City findTile (float x, float y, ArrayList<Tile> map, Civilization civilization) {
+    public City findTile (int index, ArrayList<Tile> map, Civilization civilization) {
+        Tile tile = map.get(index);
         ArrayList<City> cities = civilization.getCities();
         for (int i = 0; i < cities.size(); i++) {
           ArrayList<Tile> tiles = cities.get(i).getTiles();
             for (int i1 = 0; i1 < tiles.size(); i1++) {
-                if (tiles.get(i1).getX() == x &&
-                        tiles.get(i1).getY() == y ) {
+                if (tiles.get(i1).equals(tile)) {
                     return cities.get(i);
                 }
             }
         }
         return null;
     }
-// TODO ... duration dorost set nashode 100 gozashtam felan
-    public void preUnitMaker (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
+
+    public String preUnitMaker (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
         matcher.find();
         String unitName = matcher.group("unitName").toLowerCase();
-        float x = Float.parseFloat(matcher.group("x"));
-        float y = Float.parseFloat(matcher.group("y"));
-        City city = findTile(x, y, map, civilization);
-
+        int index = Integer.parseInt(matcher.group("number"));
+        City city = findTile(index, map, civilization);
+        Unit unit = makeUnit(civilization, city, map, unitName);
+        return createUnit(civilization, city, unit, map);
+    }
+    // TODO ... duration dorost set nashode 100 gozashtam felan
+    public Unit makeUnit (Civilization civilization, City city, ArrayList<Tile> map, String unitName) {
         if (unitName.equals("archer")) {
            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 70, false
                    , 0, 4, 2, 6, false, false, true, false,
                    false, false, false, false, false, false, false,
                    false, false, false, false, false, false, false,
                    false, false, false, false, false);
-           createUnit(civilization, city, warrior, map);
+          return warrior;
         }
         else if (unitName.equals("chariot archer")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 4, 4, 100, 60, false
@@ -853,7 +978,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("scout")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 25, false
@@ -861,15 +986,15 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("settler")) {
             Civilian civilian = new Civilian(civilization, city.getCenterTile(), 10, 2, 2, 100, 89, true, false, true);
-            createUnit(civilization, city, civilian, map);
+           return civilian;
         }
         else if (unitName.equals("worker")) {
             Civilian civilian = new Civilian(civilization, city.getCenterTile(), 10, 2, 2, 100, 70, true, true, false);
-            createUnit(civilization, city, civilian, map);
+           return civilian;
         }
         else if (unitName.equals("spearman")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 50, false
@@ -877,7 +1002,7 @@ public class PlayGameMenuController {
                     true, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("warrior")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 40, false
@@ -885,7 +1010,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("catapult")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 100, false
@@ -893,7 +1018,7 @@ public class PlayGameMenuController {
                     false, true, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("horseman")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 4, 4, 100, 80, false
@@ -901,7 +1026,7 @@ public class PlayGameMenuController {
                     false, false, true, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("swordsman")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 80, false
@@ -909,7 +1034,7 @@ public class PlayGameMenuController {
                     false, false, false, true, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("crossbowman")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 120, false
@@ -917,7 +1042,7 @@ public class PlayGameMenuController {
                     false, false, false, false, true, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("knight")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 3, 3, 100, 150, false
@@ -925,7 +1050,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, true, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("longswordsman")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 3, 3, 100, 150, false
@@ -933,7 +1058,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, true,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("pikeman")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 100, false
@@ -941,7 +1066,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     true, false, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("trebuchet")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 170, false
@@ -949,7 +1074,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, true, false, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("canon")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 250, false
@@ -957,7 +1082,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, true, false, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("cavalry")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 3, 3, 100, 260, false
@@ -965,7 +1090,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, true, false, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("lancer")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 4, 4, 100, 220, false
@@ -973,7 +1098,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, true, false, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("musketman")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 120, false
@@ -981,7 +1106,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, true, false,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("rifleman")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 200, false
@@ -989,7 +1114,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, true,
                     false, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("anti-tank gun")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 300, false
@@ -997,7 +1122,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     true, false, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("artillery")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 420, false
@@ -1005,7 +1130,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, true, false, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("infantry")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 300, false
@@ -1013,7 +1138,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, true, false, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("panzer")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 5, 5, 100, 450, false
@@ -1021,7 +1146,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, true, false);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
         else if (unitName.equals("tank")) {
             Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 4, 4, 100, 450, false
@@ -1029,11 +1154,9 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, true);
-            createUnit(civilization, city, warrior, map);
+           return warrior;
         }
-        else {
-            createUnit(civilization, city, null, map);
-        }
+           return null;
     }
 
     public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map){
