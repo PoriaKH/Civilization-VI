@@ -834,9 +834,9 @@ public class PlayGameMenuController {
 // TODO ... duration dorost set nashode 100 gozashtam felan
     public void preUnitMaker (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
         matcher.find();
-        String unitName = matcher.group(unitName).toLowerCase();
-        float x = Float.parseFloat(matcher.group(x));
-        float y = Float.parseFloat(matcher.group(y));
+        String unitName = matcher.group("unitName").toLowerCase();
+        float x = Float.parseFloat(matcher.group("x"));
+        float y = Float.parseFloat(matcher.group("y"));
         City city = findTile(x, y, map, civilization);
 
         if (unitName.equals("archer")) {

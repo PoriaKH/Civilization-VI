@@ -170,6 +170,8 @@ public class PlayGameMenu {
             else if (command.matches(createUnitRegex2)) {
                 playGameMenuController.preUnitMaker (matcher(createUnitRegex1, command), playingCivilization, map);
             }
+            else if(command.matches(showCurrentMenuRegex))
+                System.out.println("Play Game Menu");
 
 
 
