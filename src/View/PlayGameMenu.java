@@ -164,10 +164,10 @@ public class PlayGameMenu {
 
 
             //TODO... Calling functions using regex ( if(command.matches(regex) -> func(civ,map,...) )
-            if (matcher(createUnitRegex1, command) != null) {
+            if (command.matches(createUnitRegex1)) {
                playGameMenuController.preUnitMaker (matcher(createUnitRegex1, command), playingCivilization, map);
             }
-            else if (matcher(createUnitRegex2, command) != null) {
+            else if (command.matches(createUnitRegex2)) {
                 playGameMenuController.preUnitMaker (matcher(createUnitRegex1, command), playingCivilization, map);
             }
 
