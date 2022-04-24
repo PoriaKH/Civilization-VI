@@ -18,7 +18,7 @@ public class MainMenu {
         MainMenuController mainMenuController = new MainMenuController();
         PlayGameMenu playGameMenu = new PlayGameMenu();
         ProfileMenu profileMenu = new ProfileMenu(loggedInMember);
-        String enterProfileMenuRegex = "menu enter Profile Menu";
+        String enterProfileMenuRegex = "\\s*menu\\s+enter\\s+Profile\\s+Menu\\s*";
         String exitMenuRegex = "\\s*menu\\s+exit\\s*";
         String showCurrentMenuRegex = "\\s*menu\\s+show-current\\s*";
         String logoutRegex = "\\s*user\\s+logout\\s*";
@@ -57,7 +57,7 @@ public class MainMenu {
                 }
                 playGameMenu.run(scan, numOfPlayers, players);
             }
-            else if(command.matches(enterProfileMenuRegex))
+            else if(mainMenuController.getMatcher(enterProfileMenuRegex, command) != null)
                 profileMenu.run(scan);
             else
                 System.out.println("invalid command");
