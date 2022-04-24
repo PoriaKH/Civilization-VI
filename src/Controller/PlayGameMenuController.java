@@ -221,9 +221,61 @@ public class PlayGameMenuController {
                 civilizations.add(new Civilization(member5, city5));
             }
         }
+        return civilizations;
     }
-    public String[] setTileColors(Civilization civilization, ArrayList<Tile> map){
-
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String BLACK = "\033[0;30m";
+    public static final String YELLOW = "\u001B[33m";// --> dessert
+    public static final String DARK_GREEN = "\u001b[32m";// --> meadow
+    public static final String LIGHT_GREEN = "\u001b[32;1m";// --> plain
+    public static final String BLUE = "\u001B[34m";// --> ocean
+    public static final String BROWN = "\u001B[34m";// --> mountain
+    public static final String PURPLE = "\u001B[35m";// --> tundra
+    public static final String SNOW = "\u001B[37m";// --> ice
+    public static final String CYAN = "\033[0;36m";// --> hill
+    public String[] setTileColors(ArrayList<Integer> tileStatusOfCivilization, ArrayList<Tile> map, HashMap<Integer, Tile> zeroStatusTilesCivilisation, String[] oldTileColors){
+        String[] tileColors = new String[72];
+        for (int i = 0; i < map.size(); i++) {
+            if (tileStatusOfCivilization.get(i) == -1)
+                tileColors[i]  = BLACK;
+            else if (tileStatusOfCivilization.get(i) == 1){
+                if (map.get(i).isDesert())
+                    tileColors[i] = YELLOW;
+                else if (map.get(i).isMeadow())
+                    tileColors[i] = DARK_GREEN;
+                else if (map.get(i).isPlain())
+                    tileColors[i] = LIGHT_GREEN;
+                else if (map.get(i).isOcean())
+                    tileColors[i] = BLUE;
+                else if (map.get(i).isMountain())
+                    tileColors[i] = BROWN;
+                else if (map.get(i).isTundra())
+                    tileColors[i] = PURPLE;
+                else if (map.get(i).isSnow())
+                    tileColors[i] = SNOW;
+                else if (map.get(i).isHill())
+                    tileColors[i] = CYAN;
+            }
+            else {
+                if (zeroStatusTilesCivilisation.get(i).isDesert())
+                    tileColors[i] = oldTileColors[i];
+                else if (zeroStatusTilesCivilisation.get(i).isMeadow())
+                    tileColors[i] = oldTileColors[i];
+                else if (zeroStatusTilesCivilisation.get(i).isPlain())
+                    tileColors[i] = oldTileColors[i];
+                else if (zeroStatusTilesCivilisation.get(i).isOcean())
+                    tileColors[i] = oldTileColors[i];
+                else if (zeroStatusTilesCivilisation.get(i).isMountain())
+                    tileColors[i] = oldTileColors[i];
+                else if (zeroStatusTilesCivilisation.get(i).isTundra())
+                    tileColors[i] = oldTileColors[i];
+                else if (zeroStatusTilesCivilisation.get(i).isSnow())
+                    tileColors[i] = oldTileColors[i];
+                else if (zeroStatusTilesCivilisation.get(i).isHill())
+                    tileColors[i] = oldTileColors[i];
+            }
+        }
+        return tileColors;
     }
     public void showMap(String ANSI_COLORS[]){//tik
         char block = '\u2588';

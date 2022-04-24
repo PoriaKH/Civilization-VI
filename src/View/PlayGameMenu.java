@@ -156,7 +156,7 @@ public class PlayGameMenu {
         String createUnitRegex1 = "^create --unit (?<unitName>.+) in --coordinate x: (?<x>//d+) y: (?<y>//d+)$";
         String createUnitRegex2 = "^create in --coordinate x: (?<x>//d+) y: (?<y>//d+) --unit (?<unitName>.+)$";
 
-
+        playGameMenuController.showMap(ANSI_COLORS);
         while(!Objects.equals(command, "exit menu")) {
             //TODO... check is there any unit with move left (harekat chand noobati)
 
@@ -231,6 +231,8 @@ public class PlayGameMenu {
                 tileStatusOfCivilization4 = playGameMenuController.statusComparator(tileStatusOfCivilization4, civilization4new, zeroStatusTilesCivilisation4, map);
                 tileStatusOfCivilization5 = playGameMenuController.statusComparator(tileStatusOfCivilization5, civilization5new, zeroStatusTilesCivilisation5, map);
             }
+            ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization1, map, zeroStatusTilesCivilisation1, ANSI_COLORS);
+            playGameMenuController.showMap(ANSI_COLORS);
         }
     }
 }
