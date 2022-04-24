@@ -222,10 +222,114 @@ public class PlayGameMenuController {
             }
         }
     }
-    public StringBuilder showMap(Civilization civilization,ArrayList<Tile> map){//tik
-        StringBuilder stringBuilder;
+    public String[] setTileColors(Civilization civilization, ArrayList<Tile> map){
 
-        return stringBuilder;
+    }
+    public void showMap(String ANSI_COLORS[]){//tik
+        char block = '\u2588';
+        String block1 = "   /" + block + block + block + block + block + block + "\\";
+        String block2 = "  /" + block + block + block + block + block + block + block + block + "\\";
+        String block3 = " /" + block + block + block + block + block + block + block + block + block + block + "\\";
+        String block4 = "|" + block + block + block + block + block + block + block + block + block + block + block + block + "|";
+        String block5 = " \\" + block + block + block + block + block + block + block + block + block + block + "/";
+        String block6 = "  \\" + block + block + block + block + block + block + block + block + "/";
+        String block7 = "   \\" + block + block + block + block + block + block + "/";
+
+
+        System.out.println( ANSI_COLORS[0] + block1 + "   " +  ANSI_COLORS[11] + block1 + "   " + ANSI_COLORS[22] + block1 + "   " + ANSI_COLORS[33] + block1 + "   " + ANSI_COLORS[44] + block1 + "   " + ANSI_COLORS[55] + block1 + "   " + ANSI_COLORS[66] + block1 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[0] + block2 + "  " +  ANSI_COLORS[11] + block2 + "  " + ANSI_COLORS[22] + block2 + "  " + ANSI_COLORS[33] + block2 + "  " + ANSI_COLORS[44] + block2 + "  " + ANSI_COLORS[55] + block2 + "  " + ANSI_COLORS[66] + block2 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[0] + block3 + " " +  ANSI_COLORS[11] + block3 +  " " + ANSI_COLORS[22] + block3 + " " + ANSI_COLORS[33] + block3 + " " + ANSI_COLORS[44] + block3 + " " + ANSI_COLORS[55] + block3 + " " + ANSI_COLORS[66] + block3 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[0] + block4 +  ANSI_COLORS[11] + block4 + ANSI_COLORS[22] +  block4 + ANSI_COLORS[33] + block4 + ANSI_COLORS[44] + block4 + ANSI_COLORS[55] + block4 + ANSI_COLORS[66] + block4 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[0] + block5 + " " +  ANSI_COLORS[11] + block5 +  " " + ANSI_COLORS[22] + block5 + " " + ANSI_COLORS[33] + block5 + " " + ANSI_COLORS[44] + block5 + " " + ANSI_COLORS[55] + block5 + " " + ANSI_COLORS[66] + block5 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[0] + block6 + "  " +  ANSI_COLORS[11] + block6 + "  " + ANSI_COLORS[22] + block6 + "  " + ANSI_COLORS[33] + block6 + "  " + ANSI_COLORS[44] + block6 + "  " + ANSI_COLORS[55] + block6 + "  " + ANSI_COLORS[66] + block6 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[0] + block7 + "   " +  ANSI_COLORS[11] + block7 +  "   " + ANSI_COLORS[22] + block7 + "   " + ANSI_COLORS[33] + block7 + "   " + ANSI_COLORS[44] + block7 + "   " + ANSI_COLORS[55] + block7 + "   " + ANSI_COLORS[66] + block7 + ANSI_RESET);
+
+        System.out.println(ANSI_COLORS[6] + "       " + block1 + ANSI_COLORS[17] + "   " + block1 + ANSI_COLORS[28] + "   " + block1 + ANSI_COLORS[39] + "   " + block1 + ANSI_COLORS[50] + "   " + block1 + ANSI_COLORS[61] + "   " + block1 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[6] + "       " + block2 + ANSI_COLORS[17] + "  " + block2 + ANSI_COLORS[28] + "  " + block2 + ANSI_COLORS[39] + "  " + block2 + ANSI_COLORS[50] + "  " + block2 + ANSI_COLORS[61] + "  " + block2 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[6] + "       " + block3 + ANSI_COLORS[17] + " " + block3 + ANSI_COLORS[28] +  " " + block3 + ANSI_COLORS[39] + " " + block3 + ANSI_COLORS[50] + " " + block3 + ANSI_COLORS[61] + " " + block3 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[6] + "       " + block4 + ANSI_COLORS[17] + block4 + ANSI_COLORS[28] +  block4 + ANSI_COLORS[39] + block4 + ANSI_COLORS[50] + block4 + ANSI_COLORS[61] + block4 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[6] + "       " + block5 + ANSI_COLORS[17] + " " + block5 + ANSI_COLORS[28] +  " " + block5 + ANSI_COLORS[39] + " " + block5 + ANSI_COLORS[50] + " " + block5 +  ANSI_COLORS[61] + " " + block5 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[6] + "       " + block6 + ANSI_COLORS[17] + "  " + block6 + ANSI_COLORS[28] + "  " + block6 + ANSI_COLORS[39] + "  " + block6 + ANSI_COLORS[50] + "  " + block6 + ANSI_COLORS[61] + "  " + block6 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[6] + "       " + block7 + ANSI_COLORS[17] + "   " + block7 + ANSI_COLORS[28] +  "   " + block7 + ANSI_COLORS[39] + "   " + block7 + ANSI_COLORS[50] + "   " + block7 + ANSI_COLORS[61] + "   " + block7 + ANSI_RESET);
+
+
+
+        System.out.println( ANSI_COLORS[1] + block1 + "   " +  ANSI_COLORS[12] + block1 + "   " + ANSI_COLORS[23] + block1 + "   " + ANSI_COLORS[34] + block1 + "   " + ANSI_COLORS[45] + block1 + "   " + ANSI_COLORS[56] + block1 + "   " + ANSI_COLORS[67] + block1 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[1] + block2 + "  " +  ANSI_COLORS[12] + block2 + "  " + ANSI_COLORS[23] + block2 + "  " + ANSI_COLORS[34] + block2 + "  " + ANSI_COLORS[45] + block2 + "  " + ANSI_COLORS[56] + block2 + "  " + ANSI_COLORS[67] + block2 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[1] + block3 + " " +  ANSI_COLORS[12] + block3 +  " " + ANSI_COLORS[23] + block3 + " " + ANSI_COLORS[34] + block3 + " " + ANSI_COLORS[45] + block3 + " " + ANSI_COLORS[56] + block3 + " " + ANSI_COLORS[67] + block3 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[1] + block4 +  ANSI_COLORS[12] + block4 + ANSI_COLORS[23] +  block4 + ANSI_COLORS[34] + block4 + ANSI_COLORS[45] + block4 + ANSI_COLORS[56] + block4 + ANSI_COLORS[67] + block4 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[1] + block5 + " " +  ANSI_COLORS[12] + block5 +  " " + ANSI_COLORS[23] + block5 + " " + ANSI_COLORS[34] + block5 + " " + ANSI_COLORS[45] + block5 + " " + ANSI_COLORS[56] + block5 + " " + ANSI_COLORS[67] + block5 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[1] + block6 + "  " +  ANSI_COLORS[12] + block6 + "  " + ANSI_COLORS[23] + block6 + "  " + ANSI_COLORS[34] + block6 + "  " + ANSI_COLORS[45] + block6 + "  " + ANSI_COLORS[56] + block6 + "  " + ANSI_COLORS[67] + block6 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[1] + block7 + "   " +  ANSI_COLORS[12] + block7 +  "   " + ANSI_COLORS[23] + block7 + "   " + ANSI_COLORS[34] + block7 + "   " + ANSI_COLORS[45] + block7 + "   " + ANSI_COLORS[56] + block7 + "   " + ANSI_COLORS[67] + block7 + ANSI_RESET);
+
+        System.out.println(ANSI_COLORS[7] + "       " + block1 + ANSI_COLORS[18] + "   " + block1 + ANSI_COLORS[29] + "   " + block1 + ANSI_COLORS[40] + "   " + block1 + ANSI_COLORS[51] + "   " + block1 + ANSI_COLORS[62] + "   " + block1 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[7] + "       " + block2 + ANSI_COLORS[18] + "  " + block2 + ANSI_COLORS[29] + "  " + block2 + ANSI_COLORS[40] + "  " + block2 + ANSI_COLORS[51] + "  " + block2 + ANSI_COLORS[62] + "  " + block2 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[7] + "       " + block3 + ANSI_COLORS[18] + " " + block3 + ANSI_COLORS[29] +  " " + block3 + ANSI_COLORS[40] + " " + block3 + ANSI_COLORS[51] + " " + block3 + ANSI_COLORS[62] + " " + block3 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[7] + "       " + block4 + ANSI_COLORS[18] + block4 + ANSI_COLORS[29] +  block4 + ANSI_COLORS[40] + block4 + ANSI_COLORS[51] + block4 + ANSI_COLORS[62] + block4 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[7] + "       " + block5 + ANSI_COLORS[18] + " " + block5 + ANSI_COLORS[29] +  " " + block5 + ANSI_COLORS[40] + " " + block5 + ANSI_COLORS[51] + " " + block5 +  ANSI_COLORS[62] + " " + block5 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[7] + "       " + block6 + ANSI_COLORS[18] + "  " + block6 + ANSI_COLORS[29] + "  " + block6 + ANSI_COLORS[40] + "  " + block6 + ANSI_COLORS[51] + "  " + block6 + ANSI_COLORS[62] + "  " + block6 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[7] + "       " + block7 + ANSI_COLORS[18] + "   " + block7 + ANSI_COLORS[29] +  "   " + block7 + ANSI_COLORS[40] + "   " + block7 + ANSI_COLORS[51] + "   " + block7 + ANSI_COLORS[62] + "   " + block7 + ANSI_RESET);
+
+
+        System.out.println( ANSI_COLORS[2] + block1 + "   " +  ANSI_COLORS[13] + block1 + "   " + ANSI_COLORS[24] + block1 + "   " + ANSI_COLORS[35] + block1 + "   " + ANSI_COLORS[46] + block1 + "   " + ANSI_COLORS[57] + block1 + "   " + ANSI_COLORS[68] + block1 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[2] + block2 + "  " +  ANSI_COLORS[13] + block2 + "  " + ANSI_COLORS[24] + block2 + "  " + ANSI_COLORS[35] + block2 + "  " + ANSI_COLORS[46] + block2 + "  " + ANSI_COLORS[57] + block2 + "  " + ANSI_COLORS[68] + block2 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[2] + block3 + " " +  ANSI_COLORS[13] + block3 +  " " + ANSI_COLORS[24] + block3 + " " + ANSI_COLORS[35] + block3 + " " + ANSI_COLORS[46] + block3 + " " + ANSI_COLORS[57] + block3 + " " + ANSI_COLORS[68] + block3 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[2] + block4 +  ANSI_COLORS[13] + block4 + ANSI_COLORS[24] +  block4 + ANSI_COLORS[35] + block4 + ANSI_COLORS[46] + block4 + ANSI_COLORS[57] + block4 + ANSI_COLORS[68] + block4 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[2] + block5 + " " +  ANSI_COLORS[13] + block5 +  " " + ANSI_COLORS[24] + block5 + " " + ANSI_COLORS[35] + block5 + " " + ANSI_COLORS[46] + block5 + " " + ANSI_COLORS[57] + block5 + " " + ANSI_COLORS[68] + block5 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[2] + block6 + "  " +  ANSI_COLORS[13] + block6 + "  " + ANSI_COLORS[24] + block6 + "  " + ANSI_COLORS[35] + block6 + "  " + ANSI_COLORS[46] + block6 + "  " + ANSI_COLORS[57] + block6 + "  " + ANSI_COLORS[68] + block6 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[2] + block7 + "   " +  ANSI_COLORS[13] + block7 +  "   " + ANSI_COLORS[24] + block7 + "   " + ANSI_COLORS[35] + block7 + "   " + ANSI_COLORS[46] + block7 + "   " + ANSI_COLORS[57] + block7 + "   " + ANSI_COLORS[68] + block7 + ANSI_RESET);
+
+        System.out.println(ANSI_COLORS[8] + "       " + block1 + ANSI_COLORS[19] + "   " + block1 + ANSI_COLORS[30] + "   " + block1 + ANSI_COLORS[41] + "   " + block1 + ANSI_COLORS[52] + "   " + block1 + ANSI_COLORS[63] + "   " + block1 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[8] + "       " + block2 + ANSI_COLORS[19] + "  " + block2 + ANSI_COLORS[30] + "  " + block2 + ANSI_COLORS[41] + "  " + block2 + ANSI_COLORS[52] + "  " + block2 + ANSI_COLORS[63] + "  " + block2 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[8] + "       " + block3 + ANSI_COLORS[19] + " " + block3 + ANSI_COLORS[30] +  " " + block3 + ANSI_COLORS[41] + " " + block3 + ANSI_COLORS[52] + " " + block3 + ANSI_COLORS[63] + " " + block3 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[8] + "       " + block4 + ANSI_COLORS[19] + block4 + ANSI_COLORS[30] +  block4 + ANSI_COLORS[41] + block4 + ANSI_COLORS[52] + block4 + ANSI_COLORS[63] + block4 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[8] + "       " + block5 + ANSI_COLORS[19] + " " + block5 + ANSI_COLORS[30] +  " " + block5 + ANSI_COLORS[41] + " " + block5 + ANSI_COLORS[52] + " " + block5 +  ANSI_COLORS[63] + " " + block5 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[8] + "       " + block6 + ANSI_COLORS[19] + "  " + block6 + ANSI_COLORS[30] + "  " + block6 + ANSI_COLORS[41] + "  " + block6 + ANSI_COLORS[52] + "  " + block6 + ANSI_COLORS[63] + "  " + block6 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[8] + "       " + block7 + ANSI_COLORS[19] + "   " + block7 + ANSI_COLORS[30] +  "   " + block7 + ANSI_COLORS[41] + "   " + block7 + ANSI_COLORS[52] + "   " + block7 + ANSI_COLORS[63] + "   " + block7 + ANSI_RESET);
+
+
+        System.out.println( ANSI_COLORS[3] + block1 + "   " +  ANSI_COLORS[14] + block1 + "   " + ANSI_COLORS[25] + block1 + "   " + ANSI_COLORS[36] + block1 + "   " + ANSI_COLORS[47] + block1 + "   " + ANSI_COLORS[58] + block1 + "   " + ANSI_COLORS[69] + block1 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[3] + block2 + "  " +  ANSI_COLORS[14] + block2 + "  " + ANSI_COLORS[25] + block2 + "  " + ANSI_COLORS[36] + block2 + "  " + ANSI_COLORS[47] + block2 + "  " + ANSI_COLORS[58] + block2 + "  " + ANSI_COLORS[69] + block2 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[3] + block3 + " " +  ANSI_COLORS[14] + block3 +  " " + ANSI_COLORS[25] + block3 + " " + ANSI_COLORS[36] + block3 + " " + ANSI_COLORS[47] + block3 + " " + ANSI_COLORS[58] + block3 + " " + ANSI_COLORS[69] + block3 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[3] + block4 +  ANSI_COLORS[14] + block4 + ANSI_COLORS[25] +  block4 + ANSI_COLORS[36] + block4 + ANSI_COLORS[47] + block4 + ANSI_COLORS[58] + block4 + ANSI_COLORS[69] + block4 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[3] + block5 + " " +  ANSI_COLORS[14] + block5 +  " " + ANSI_COLORS[25] + block5 + " " + ANSI_COLORS[36] + block5 + " " + ANSI_COLORS[47] + block5 + " " + ANSI_COLORS[58] + block5 + " " + ANSI_COLORS[69] + block5 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[3] + block6 + "  " +  ANSI_COLORS[14] + block6 + "  " + ANSI_COLORS[25] + block6 + "  " + ANSI_COLORS[36] + block6 + "  " + ANSI_COLORS[47] + block6 + "  " + ANSI_COLORS[58] + block6 + "  " + ANSI_COLORS[69] + block6 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[3] + block7 + "   " +  ANSI_COLORS[14] + block7 +  "   " + ANSI_COLORS[25] + block7 + "   " + ANSI_COLORS[36] + block7 + "   " + ANSI_COLORS[47] + block7 + "   " + ANSI_COLORS[58] + block7 + "   " + ANSI_COLORS[69] + block7 + ANSI_RESET);
+
+        System.out.println(ANSI_COLORS[9] + "       " + block1 + ANSI_COLORS[20] + "   " + block1 + ANSI_COLORS[31] + "   " + block1 + ANSI_COLORS[42] + "   " + block1 + ANSI_COLORS[53] + "   " + block1 + ANSI_COLORS[64] + "   " + block1 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[9] + "       " + block2 + ANSI_COLORS[20] + "  " + block2 + ANSI_COLORS[31] + "  " + block2 + ANSI_COLORS[42] + "  " + block2 + ANSI_COLORS[53] + "  " + block2 + ANSI_COLORS[64] + "  " + block2 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[9] + "       " + block3 + ANSI_COLORS[20] + " " + block3 + ANSI_COLORS[31] +  " " + block3 + ANSI_COLORS[42] + " " + block3 + ANSI_COLORS[53] + " " + block3 + ANSI_COLORS[64] + " " + block3 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[9] + "       " + block4 + ANSI_COLORS[20] + block4 + ANSI_COLORS[31] +  block4 + ANSI_COLORS[42] + block4 + ANSI_COLORS[53] + block4 + ANSI_COLORS[64] + block4 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[9] + "       " + block5 + ANSI_COLORS[20] + " " + block5 + ANSI_COLORS[31] +  " " + block5 + ANSI_COLORS[42] + " " + block5 + ANSI_COLORS[53] + " " + block5 +  ANSI_COLORS[64] + " " + block5 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[9] + "       " + block6 + ANSI_COLORS[20] + "  " + block6 + ANSI_COLORS[31] + "  " + block6 + ANSI_COLORS[42] + "  " + block6 + ANSI_COLORS[53] + "  " + block6 + ANSI_COLORS[64] + "  " + block6 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[9] + "       " + block7 + ANSI_COLORS[20] + "   " + block7 + ANSI_COLORS[31] +  "   " + block7 + ANSI_COLORS[42] + "   " + block7 + ANSI_COLORS[53] + "   " + block7 + ANSI_COLORS[64] + "   " + block7 + ANSI_RESET);
+
+
+        System.out.println( ANSI_COLORS[4] + block1 + "   " +  ANSI_COLORS[15] + block1 + "   " + ANSI_COLORS[26] + block1 + "   " + ANSI_COLORS[37] + block1 + "   " + ANSI_COLORS[48] + block1 + "   " + ANSI_COLORS[59] + block1 + "   " + ANSI_COLORS[70] + block1 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[4] + block2 + "  " +  ANSI_COLORS[15] + block2 + "  " + ANSI_COLORS[26] + block2 + "  " + ANSI_COLORS[37] + block2 + "  " + ANSI_COLORS[48] + block2 + "  " + ANSI_COLORS[59] + block2 + "  " + ANSI_COLORS[70] + block2 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[4] + block3 + " " +  ANSI_COLORS[15] + block3 +  " " + ANSI_COLORS[26] + block3 + " " + ANSI_COLORS[37] + block3 + " " + ANSI_COLORS[48] + block3 + " " + ANSI_COLORS[59] + block3 + " " + ANSI_COLORS[70] + block3 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[4] + block4 +  ANSI_COLORS[15] + block4 + ANSI_COLORS[26] +  block4 + ANSI_COLORS[37] + block4 + ANSI_COLORS[48] + block4 + ANSI_COLORS[59] + block4 + ANSI_COLORS[70] + block4 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[4] + block5 + " " +  ANSI_COLORS[15] + block5 +  " " + ANSI_COLORS[26] + block5 + " " + ANSI_COLORS[37] + block5 + " " + ANSI_COLORS[48] + block5 + " " + ANSI_COLORS[59] + block5 + " " + ANSI_COLORS[70] + block5 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[4] + block6 + "  " +  ANSI_COLORS[15] + block6 + "  " + ANSI_COLORS[26] + block6 + "  " + ANSI_COLORS[37] + block6 + "  " + ANSI_COLORS[48] + block6 + "  " + ANSI_COLORS[59] + block6 + "  " + ANSI_COLORS[70] + block6 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[4] + block7 + "   " +  ANSI_COLORS[15] + block7 +  "   " + ANSI_COLORS[26] + block7 + "   " + ANSI_COLORS[37] + block7 + "   " + ANSI_COLORS[48] + block7 + "   " + ANSI_COLORS[59] + block7 + "   " + ANSI_COLORS[70] + block7 + ANSI_RESET);
+
+        System.out.println(ANSI_COLORS[10] + "       " + block1 + ANSI_COLORS[21] + "   " + block1 + ANSI_COLORS[32] + "   " + block1 + ANSI_COLORS[43] + "   " + block1 + ANSI_COLORS[54] + "   " + block1 + ANSI_COLORS[65] + "   " + block1 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[10] + "       " + block2 + ANSI_COLORS[21] + "  " + block2 + ANSI_COLORS[32] + "  " + block2 + ANSI_COLORS[43] + "  " + block2 + ANSI_COLORS[54] + "  " + block2 + ANSI_COLORS[65] + "  " + block2 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[10] + "       " + block3 + ANSI_COLORS[21] + " " + block3 + ANSI_COLORS[32] +  " " + block3 + ANSI_COLORS[43] + " " + block3 + ANSI_COLORS[54] + " " + block3 + ANSI_COLORS[65] + " " + block3 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[10] + "       " + block4 + ANSI_COLORS[21] + block4 + ANSI_COLORS[32] +  block4 + ANSI_COLORS[43] + block4 + ANSI_COLORS[54] + block4 + ANSI_COLORS[65] + block4 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[10] + "       " + block5 + ANSI_COLORS[21] + " " + block5 + ANSI_COLORS[32] +  " " + block5 + ANSI_COLORS[43] + " " + block5 + ANSI_COLORS[54] + " " + block5 +  ANSI_COLORS[65] + " " + block5 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[10] + "       " + block6 + ANSI_COLORS[21] + "  " + block6 + ANSI_COLORS[32] + "  " + block6 + ANSI_COLORS[43] + "  " + block6 + ANSI_COLORS[54] + "  " + block6 + ANSI_COLORS[65] + "  " + block6 + ANSI_RESET);
+        System.out.println(ANSI_COLORS[10] + "       " + block7 + ANSI_COLORS[21] + "   " + block7 + ANSI_COLORS[32] +  "   " + block7 + ANSI_COLORS[43] + "   " + block7 + ANSI_COLORS[54] + "   " + block7 + ANSI_COLORS[65] + "   " + block7 + ANSI_RESET);
+
+
+        System.out.println( ANSI_COLORS[5] + block1 + "   " +  ANSI_COLORS[16] + block1 + "   " + ANSI_COLORS[27] + block1 + "   " + ANSI_COLORS[38] + block1 + "   " + ANSI_COLORS[49] + block1 + "   " + ANSI_COLORS[60] + block1 + "   " + ANSI_COLORS[71] + block1 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[5] + block2 + "  " +  ANSI_COLORS[16] + block2 + "  " + ANSI_COLORS[27] + block2 + "  " + ANSI_COLORS[38] + block2 + "  " + ANSI_COLORS[49] + block2 + "  " + ANSI_COLORS[60] + block2 + "  " + ANSI_COLORS[71] + block2 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[5] + block3 + " " +  ANSI_COLORS[16] + block3 +  " " + ANSI_COLORS[27] + block3 + " " + ANSI_COLORS[38] + block3 + " " + ANSI_COLORS[49] + block3 + " " + ANSI_COLORS[60] + block3 + " " + ANSI_COLORS[71] + block3 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[5] + block4 +  ANSI_COLORS[16] + block4 + ANSI_COLORS[27] +  block4 + ANSI_COLORS[38] + block4 + ANSI_COLORS[49] + block4 + ANSI_COLORS[60] + block4 + ANSI_COLORS[71] + block4 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[5] + block5 + " " +  ANSI_COLORS[16] + block5 +  " " + ANSI_COLORS[27] + block5 + " " + ANSI_COLORS[38] + block5 + " " + ANSI_COLORS[49] + block5 + " " + ANSI_COLORS[60] + block5 + " " + ANSI_COLORS[71] + block5 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[5] + block6 + "  " +  ANSI_COLORS[16] + block6 + "  " + ANSI_COLORS[27] + block6 + "  " + ANSI_COLORS[38] + block6 + "  " + ANSI_COLORS[49] + block6 + "  " + ANSI_COLORS[60] + block6 + "  " + ANSI_COLORS[71] + block6 + ANSI_RESET);
+        System.out.println( ANSI_COLORS[5] + block7 + "   " +  ANSI_COLORS[16] + block7 +  "   " + ANSI_COLORS[27] + block7 + "   " + ANSI_COLORS[38] + block7 + "   " + ANSI_COLORS[49] + block7 + "   " + ANSI_COLORS[60] + block7 + "   " + ANSI_COLORS[71] + block7 + ANSI_RESET);
+
     }
     // if distance between two tile center is (2rad3 * radius) they're neighbor
     private boolean isCityNeighbor(float x1, float y1, float x2, float y2, float radius){
