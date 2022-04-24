@@ -69,4 +69,24 @@ public class Attribute {
     public boolean isIce() {
         return isIce;
     }
+
+    public boolean isJungle() {
+        return isJungle;
+    }
+
+    public boolean isMarsh() {
+        return isMarsh;
+    }
+
+    public boolean isOasis() {
+        return isOasis;
+    }
+
+    public boolean isPlat() {
+        return isPlat;
+    }
+
+    public boolean isRainForest() {
+        return isRainForest;
+    }
 }

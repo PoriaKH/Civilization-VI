@@ -107,6 +107,21 @@ public class PlayGameMenu {
         ANSI_COLORS[69] = YELLOW;
         ANSI_COLORS[70] = PURPLE;
         ANSI_COLORS[71] = BROWN;
+        String number[] = {" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71"};
+        String types[] = new String[72];
+        for (int i = 0; i < 72; i++)
+            types[i] = "\u2588";
+        //jungle -> j, plat -> p, vahhe(oasis) -> v, marsh --> m, rainforest --> r, ice --> i
+        types[0] = "j";
+        types[13] = "p";
+        types[17] = "p";
+        types[19] = "p";
+        types[20] = "p";
+        types[22] = "p";
+        types[33] = "j";
+        types[34] = "j";
+        types[66] = "j";
+        types[71] = "j";
         ArrayList<Tile> map = new ArrayList<>();
         HashMap<Integer, Tile> zeroStatusTilesCivilisation1 = new HashMap<>();
         HashMap<Integer, Tile> zeroStatusTilesCivilisation2 = new HashMap<>();
@@ -158,7 +173,7 @@ public class PlayGameMenu {
         String moveUnitRegex1 = "^move --unit (?<unitName>.+) --path (?<numberO>\\d+ to ?<numberD>\\d+)$";
         String moveUnitRegex2 = "^move --path (?<numberO>\\d+ to ?<numberD>\\d+) --unit (?<unitName>.+)$";
 
-        playGameMenuController.showMap(ANSI_COLORS);
+        playGameMenuController.showMap(ANSI_COLORS, number, types);
         while(!Objects.equals(command, "exit menu")) {
 
 
@@ -245,7 +260,8 @@ public class PlayGameMenu {
                 tileStatusOfCivilization5 = playGameMenuController.statusComparator(tileStatusOfCivilization5, civilization5new, zeroStatusTilesCivilisation5, map);
             }
             ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization1, map, zeroStatusTilesCivilisation1, ANSI_COLORS);
-            playGameMenuController.showMap(ANSI_COLORS);
+            types = playGameMenuController.setTileType(map);
+            playGameMenuController.showMap(ANSI_COLORS, number, types);
         }
     }
 }
