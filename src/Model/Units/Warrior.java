@@ -1,5 +1,8 @@
 package Model.Units;
 
+import Model.Civilization;
+import Model.Tile;
+
 public class Warrior extends Unit{
     private int xp;
     private int damage;
@@ -58,6 +61,37 @@ public class Warrior extends Unit{
 
     public boolean isHorseMan() {
         return isHorseMan;
+    }
+
+    public Warrior(Civilization civilization, Tile origin, int health, int MP, int mp, int duration, int goldCost, boolean isCivilian, int xp, int damage, int range, int rangedCombatDamage, boolean isScout, boolean isWarrior, boolean isArcher, boolean isChariotArcher, boolean isSpearman, boolean isCatapult, boolean isHorseMan, boolean isSwordsMan, boolean isCrossbowMan, boolean isKnight, boolean isLongswordMan, boolean isPikeMan, boolean isTrebuchet, boolean isCanon, boolean isCavalry, boolean isLancer, boolean isMusketMan, boolean isRifleMan, boolean isAntiTankGun, boolean isArtillery, boolean isInfantry, boolean isPanzer, boolean isTank) {
+        super(civilization, origin, health, MP, mp, duration, goldCost, isCivilian);
+        this.xp = xp;
+        this.damage = damage;
+        this.range = range;
+        this.rangedCombatDamage = rangedCombatDamage;
+        this.isScout = isScout;
+        this.isWarrior = isWarrior;
+        this.isArcher = isArcher;
+        this.isChariotArcher = isChariotArcher;
+        this.isSpearman = isSpearman;
+        this.isCatapult = isCatapult;
+        this.isHorseMan = isHorseMan;
+        this.isSwordsMan = isSwordsMan;
+        this.isCrossbowMan = isCrossbowMan;
+        this.isKnight = isKnight;
+        this.isLongswordMan = isLongswordMan;
+        this.isPikeMan = isPikeMan;
+        this.isTrebuchet = isTrebuchet;
+        this.isCanon = isCanon;
+        this.isCavalry = isCavalry;
+        this.isLancer = isLancer;
+        this.isMusketMan = isMusketMan;
+        this.isRifleMan = isRifleMan;
+        this.isAntiTankGun = isAntiTankGun;
+        this.isArtillery = isArtillery;
+        this.isInfantry = isInfantry;
+        this.isPanzer = isPanzer;
+        this.isTank = isTank;
     }
 
     public void setReadyForRangedBattle(boolean readyForRangedBattle) {

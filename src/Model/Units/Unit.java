@@ -24,6 +24,17 @@ public class Unit {
     private boolean isOnBoostTillRecover;
     private ArrayList<Node> path = new ArrayList<>(); //the shortest way, it also contains origin and destination
 
+    public Unit(Civilization civilization, Tile origin, int health, int MP, int mp, int duration, int goldCost, boolean isCivilian) {
+        this.civilization = civilization;
+        this.origin = origin;
+        this.health = health;
+        this.MP = MP;
+        this.mp = mp;
+        this.duration = duration;
+        this.goldCost = goldCost;
+        this.isCivilian = isCivilian;
+    }
+
     public int getConstantMP() {
         return MP;
     }

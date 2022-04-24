@@ -68,14 +68,25 @@ public class PlayGameMenu {
         //TODO... Calling statusChecker Function 3 times
         String command;
         command = scan.nextLine();
+//TODO check she regex ha....
+        String showCurrentMenuRegex = "menu show-current";
+        String createUnitRegex1 = "^create --unit (?<unitName>.+) in --coordinate x: (?<x>//d+) y: (?<y>//d+)$";
+        String createUnitRegex2 = "^create in --coordinate x: (?<x>//d+) y: (?<y>//d+) --unit (?<unitName>.+)$";
 
-        while(!Objects.equals(command, "exit menu")){
+
+        while(!Objects.equals(command, "exit menu")) {
             //TODO... check is there any unit with move left (harekat chand noobati)
 
 
 
 
             //TODO... Calling functions using regex ( if(command.matches(regex) -> func(civ,map,...) )
+            if (matcher(createUnitRegex1, command) != null) {
+               playGameMenuController.preUnitMaker (matcher(createUnitRegex1, command), playingCivilization, map);
+            }
+            else if (matcher(createUnitRegex2, command) != null) {
+                playGameMenuController.preUnitMaker (matcher(createUnitRegex1, command), playingCivilization, map);
+            }
 
 
 

@@ -662,8 +662,236 @@ public class PlayGameMenuController {
         return false;
     }
 
+    public City findTile (float x, float y, ArrayList<Tile> map, Civilization civilization) {
+        ArrayList<City> cities = civilization.getCities();
+        for (int i = 0; i < cities.size(); i++) {
+          ArrayList<Tile> tiles = cities.get(i).getTiles();
+            for (int i1 = 0; i1 < tiles.size(); i1++) {
+                if (tiles.get(i1).getX() == x &&
+                        tiles.get(i1).getY() == y ) {
+                    return cities.get(i);
+                }
+            }
+        }
+        return null;
+    }
+// TODO ... duration dorost set nashode 100 gozashtam felan
+    public void preUnitMaker (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
+        matcher.find();
+        String unitName = matcher.group(unitName).toLowerCase();
+        float x = Float.parseFloat(matcher.group(x));
+        float y = Float.parseFloat(matcher.group(y));
+        City city = findTile(x, y, map, civilization);
+
+        if (unitName.equals("archer")) {
+           Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 70, false
+                   , 0, 4, 2, 6, false, false, true, false,
+                   false, false, false, false, false, false, false,
+                   false, false, false, false, false, false, false,
+                   false, false, false, false, false);
+           createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("chariot archer")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 4, 4, 100, 60, false
+                    , 0, 3, 2, 6, false, false, false, true,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("scout")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 25, false
+                    , 0, 4, -1, -1, true, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("settler")) {
+            Civilian civilian = new Civilian(civilization, city.getCenterTile(), 10, 2, 2, 100, 89, true, false, true);
+            createUnit(civilization, city, civilian, map);
+        }
+        else if (unitName.equals("worker")) {
+            Civilian civilian = new Civilian(civilization, city.getCenterTile(), 10, 2, 2, 100, 70, true, true, false);
+            createUnit(civilization, city, civilian, map);
+        }
+        else if (unitName.equals("spearman")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 50, false
+                    , 0, 7, -1, -1, false, false, false, false,
+                    true, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("warrior")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 40, false
+                    , 0, 6, -1, -1, false, true, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("catapult")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 100, false
+                    , 0, 4, 2, 14, false, false, false, false,
+                    false, true, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("horseman")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 4, 4, 100, 80, false
+                    , 0, 12, -1, -1, false, false, false, false,
+                    false, false, true, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("swordsman")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 80, false
+                    , 0, 11, -1, -1, false, false, false, false,
+                    false, false, false, true, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("crossbowman")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 120, false
+                    , 0, 6, 2, 12, false, false, false, false,
+                    false, false, false, false, true, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("knight")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 3, 3, 100, 150, false
+                    , 0, 18, -1, -1, false, false, false, false,
+                    false, false, false, false, false, true, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("longswordsman")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 3, 3, 100, 150, false
+                    , 0, 18, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, true,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("pikeman")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 100, false
+                    , 0, 10, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    true, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("trebuchet")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 170, false
+                    , 0, 6, 2, 20, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, true, false, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("canon")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 250, false
+                    , 0, 10, 2, 26, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, true, false, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("cavalry")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 3, 3, 100, 260, false
+                    , 0, 25, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, true, false, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("lancer")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 4, 4, 100, 220, false
+                    , 0, 22, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, true, false, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("musketman")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 120, false
+                    , 0, 16, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, true, false,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("rifleman")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 200, false
+                    , 0, 25, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, true,
+                    false, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("anti-tank gun")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 300, false
+                    , 0, 32, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    true, false, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("artillery")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 420, false
+                    , 0, 16, 32, 3, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, true, false, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("infantry")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 300, false
+                    , 0, 36, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, true, false, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("panzer")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 5, 5, 100, 450, false
+                    , 0, 60, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, true, false);
+            createUnit(civilization, city, warrior, map);
+        }
+        else if (unitName.equals("tank")) {
+            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 4, 4, 100, 450, false
+                    , 0, 50, -1, -1, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, true);
+            createUnit(civilization, city, warrior, map);
+        }
+        else {
+            createUnit(civilization, city, null, map);
+        }
+    }
+
     public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map){
         String str;
+
+        if (unit == null) {
+            str = "this unit name does not exit !";
+            return str;
+        }
+
+        if (city == null) {
+            str = "this tile does not belong to your cities !";
+            return str;
+        }
 
         if (unit.getGoldCost() > city.getGold()) {
             str = "your gold is not enough !";
