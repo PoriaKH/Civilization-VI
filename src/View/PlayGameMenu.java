@@ -160,7 +160,7 @@ public class PlayGameMenu {
 
         playGameMenuController.showMap(ANSI_COLORS);
         while(!Objects.equals(command, "exit menu")) {
-            //TODO... check is there any unit with move left (harekat chand noobati)
+
 
 
 
@@ -180,6 +180,9 @@ public class PlayGameMenu {
             }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");
+
+            //TODO... check is there any unit with move left (harekat chand noobati)
+            playGameMenuController.moveUnitWithMovesLeft (playingCivilization, map);
 
 
 

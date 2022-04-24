@@ -108,4 +108,16 @@ public class Unit {
     public void setOnDeployment(boolean onDeployment) {
         isOnDeployment = onDeployment;
     }
+
+    public Tile getDestination() {
+        return destination;
+    }
+
+    public void setOrigin(Tile origin) {
+        this.origin = origin;
+    }
+
+    public void setDestination(Tile destination) {
+        this.destination = destination;
+    }
 }

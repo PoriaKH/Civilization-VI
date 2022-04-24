@@ -766,11 +766,15 @@ public class PlayGameMenuController {
             str = "there is no way to the destination !";
             return str;
         }
+        unit.setOrigin(origin);
+        unit.setDestination(destination);
         int i = 0;
         while (true) {
             if (i == unit.getPath().size() - 1) {
                 unit.setMp(unit.getConstantMP());
                 unit.setPath(null);
+                unit.setOrigin(destination);
+                unit.setDestination(null);
                 str = "unit reached the destination !";
                 break;
             }
@@ -792,6 +796,18 @@ public class PlayGameMenuController {
             }
         }
         return str;
+    }
+
+    public void moveUnitWithMovesLeft (Civilization playingCivilization, ArrayList<Tile> map) {
+        for (int i = 0; i < map.size(); i++) {
+            ArrayList<Unit> units = map.get(i).getUnits();
+            for (int i1 = 0; i1 < units.size(); i1++) {
+                if (units.get(i1).getCivilization().equals(playingCivilization) &&
+                        units.get(i1).getPath() != null ) {
+                    moveUnit(playingCivilization, units.get(i1).getOrigin(), units.get(i1).getDestination(), map, units.get(i1));
+                }
+            }
+        }
     }
 
     // check the necessary technologies for unit
