@@ -764,6 +764,21 @@ public class PlayGameMenuController {
             return null;
     }
 
+    public boolean checkPath (Unit unit) {
+        ArrayList<Node> nodes = unit.getPath();
+        for (int i = 1; i < nodes.size(); i++) {
+            ArrayList<Unit> units = nodes.get(i).tile.getUnits();
+            for (int i1 = 0; i1 < units.size(); i1++) {
+                if ((!units.get(i1).isCivilian() &&
+                        ((!unit.isCivilian()) || !units.get(i1).getCivilization().equals(unit.getCivilization()))) ||
+                        (units.get(i1).isCivilian() && unit.isCivilian())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public String moveUnit (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
         String str;
         if (unit == null) {
@@ -783,6 +798,13 @@ public class PlayGameMenuController {
         }
         if (unit.getPath() == null) {
             str = "there is no way to the destination !";
+            return str;
+        }
+        if (checkPath(unit)) {
+            unit.setOrigin(unit.getPath().get(0).tile);
+            unit.setDestination(null);
+            unit.setPath(null);
+            str = "there is another civilization on the way !";
             return str;
         }
         unit.setOrigin(origin);
