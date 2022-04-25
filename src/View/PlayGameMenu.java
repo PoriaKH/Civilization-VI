@@ -172,6 +172,20 @@ public class PlayGameMenu {
         String createUnitRegex2 = "^create tile --number (?<number>\\d+) --unit (?<unitName>.+)$";
         String moveUnitRegex1 = "^move --unit (?<unitName>.+) --path (?<numberO>\\d+ to ?<numberD>\\d+)$";
         String moveUnitRegex2 = "^move --path (?<numberO>\\d+ to ?<numberD>\\d+) --unit (?<unitName>.+)$";
+        String sleepUnitRegex1 = "^sleep --unit (?<unitName>.+) --tile (?<number>\\d+)$";
+        String sleepUnitRegex2 = "^sleep --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String alertUnitRegex1 = "^alert --unit (?<unitName>.+) --tile (?<number>\\d+)$";
+        String alertUnitRegex2 = "^alert --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String fortifyRegex1 = "^fortify --unit (?<unitName>.+) --tile (?<number>\\d+)$";
+        String fortifyRegex2 = "^fortify --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String healRegex1 = "^fortify heal --unit (?<unitName>.+) --tile (?<number>\\d+)$";
+        String healRegex2 = "^fortify heal --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String deployRegex1 = "^deploy --unit (?<unitName>.+) --tile (?<number>\\d+)$";
+        String deployRegex2 = "^deploy --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String rangedRegex1 = "^set up range --unit (?<unitName>.+) --tile (?<number>\\d+)$";
+        String rangedRegex2 = "^set up range --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String wakeUpRegex1 = "^wake --unit (?<unitName>.+) --tile (?<number>\\d+)$";
+        String wakeUpRegex2 = "^wake --tile (?<number>\\d+) --unit (?<unitName>.+)$";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
         while(!Objects.equals(command, "exit menu")) {
@@ -192,6 +206,48 @@ public class PlayGameMenu {
             }
             else if (command.matches(moveUnitRegex2)) {
                 System.out.println(playGameMenuController.preMoveUnit(matcher(moveUnitRegex2, command), playingCivilization, map));
+            }
+            else if (command.matches(sleepUnitRegex1)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(sleepUnitRegex1, command), playingCivilization, map, "sleep"));
+            }
+            else if (command.matches(sleepUnitRegex2)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(sleepUnitRegex2, command), playingCivilization, map, "sleep"));
+            }
+            else if (command.matches(alertUnitRegex1)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(alertUnitRegex1,command), playingCivilization, map, "alert"));
+            }
+            else if (command.matches(alertUnitRegex2)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(alertUnitRegex2,command), playingCivilization, map, "alert"));
+            }
+            else if (command.matches(fortifyRegex1)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(fortifyRegex1,command),playingCivilization,map,"fortify"));
+            }
+            else if (command.matches(fortifyRegex2)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(fortifyRegex2,command),playingCivilization,map,"fortify"));
+            }
+            else if (command.matches(healRegex1)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(healRegex1,command),playingCivilization,map,"heal"));
+            }
+            else if (command.matches(healRegex2)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(healRegex2,command),playingCivilization,map,"heal"));
+            }
+            else if (command.matches(deployRegex1)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(deployRegex1,command),playingCivilization,map,"deploy"));
+            }
+            else if (command.matches(deployRegex2)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(deployRegex2,command),playingCivilization,map,"deploy"));
+            }
+            else if (command.matches(rangedRegex1)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(rangedRegex1,command),playingCivilization,map,"range"));
+            }
+            else if (command.matches(rangedRegex2)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(rangedRegex2,command),playingCivilization,map,"range"));
+            }
+            else if (command.matches(wakeUpRegex1)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(wakeUpRegex1,command),playingCivilization,map,"wake"));
+            }
+            else if (command.matches(wakeUpRegex2)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(wakeUpRegex2,command),playingCivilization,map,"wake"));
             }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");

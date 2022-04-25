@@ -646,6 +646,7 @@ public class PlayGameMenuController {
         Collections.reverse(path);
         unit.setPath(path);
     }
+    // create parameters like unit or origin or destination for moveUnit function
     public String preMoveUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
         int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
         int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
@@ -657,6 +658,7 @@ public class PlayGameMenuController {
         Unit unit = getUnitInTile(units, unitName);
         return moveUnit(civilization, origin, destination, map, unit);
     }
+    //return a unit from specific tile
     public Unit getUnitInTile (ArrayList<Unit> units, String unitName) {
         for (int i = 0; i < units.size(); i++) {
             if (unitName.equals("archer") && !units.get(i).isCivilian()) {
@@ -763,7 +765,7 @@ public class PlayGameMenuController {
         }
             return null;
     }
-
+    // check the road for units
     public boolean checkPath (Unit unit) {
         ArrayList<Node> nodes = unit.getPath();
         for (int i = 1; i < nodes.size(); i++) {
@@ -838,7 +840,7 @@ public class PlayGameMenuController {
         }
         return str;
     }
-
+    // more than one turn moving function for units of playing civilization
     public void moveUnitWithMovesLeft (Civilization playingCivilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> units = map.get(i).getUnits();
@@ -996,7 +998,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-
+    // return a city that contains specific tile
     public City findTile (int index, ArrayList<Tile> map, Civilization civilization) {
         Tile tile = map.get(index);
         ArrayList<City> cities = civilization.getCities();
@@ -1010,7 +1012,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-
+    // it makes parameters for unit maker such as unit or city
     public String preUnitMaker (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
         matcher.find();
         String unitName = matcher.group("unitName").toLowerCase();
@@ -1274,10 +1276,47 @@ public class PlayGameMenuController {
 
         return str;
     }
+    // makes parameters for unit behaviours functions
+    public String preUnitBehaviour (Matcher matcher, Civilization civilization, ArrayList<Tile> map, String command) {
+        String unitName = matcher.group("unitName");
+        int index = Integer.parseInt(matcher.group("number"));
+        Tile tile = map.get(index);
+        ArrayList<Unit> units = tile.getUnits();
+        Unit unit = getUnitInTile(units, unitName);
+
+        if (command.equals("sleep")) {
+          return  sleepUnit(civilization, unit, map);
+        }
+        else if (command.equals("alert")) {
+            return WarFootingUnit(civilization, unit, map);
+        }
+        else if (command.equals("fortify")) {
+            return boostUnit(civilization, unit, map);
+        }
+        else if (command.equals("heal")) {
+            return boostTillRecoverUnit(civilization, unit, map);
+        }
+        else if (command.equals("deploy")) {
+            return deploymentUnit(civilization, unit, map);
+        }
+        else if (command.equals("range")) {
+            return readyForRangedBattleUnit(civilization, unit, map);
+        }
+        else if (command.equals("wake")) {
+            return wakeUpUnit(civilization, unit, map);
+        }
+        return "";
+    }
+
     // sleepUnit, .... civilization baraye playeri hast ke alan dare dastor mide
     //TODO ... bayad function marboot be darkhast amaliat va royat doshman dar atraf baraye behavior ha piyade shavad
-    public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map, Tile selected){
+    public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map){
         String str;
+
+        if (unit == null) {
+            str = "there is no unit with this name in selected tile !";
+            return str;
+        }
 
         if (!unit.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
@@ -1290,6 +1329,11 @@ public class PlayGameMenuController {
     }
     public String WarFootingUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+        if (unit == null) {
+            str = "there is no unit with this name in selected tile !";
+            return str;
+        }
+
         if (!unit.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
             return str;
@@ -1305,6 +1349,11 @@ public class PlayGameMenuController {
     }
     public String boostUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+
+        if (unit == null) {
+            str = "there is no unit with this name in selected tile !";
+            return str;
+        }
 
         if (!unit.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
@@ -1324,6 +1373,11 @@ public class PlayGameMenuController {
     }
     public String boostTillRecoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+        if (unit == null) {
+            str = "there is no unit with this name in selected tile !";
+            return str;
+        }
+
         if (!unit.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
             return str;
@@ -1352,6 +1406,11 @@ public class PlayGameMenuController {
     }
     public String deploymentUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+        if (unit == null) {
+            str = "there is no unit with this name in selected tile !";
+            return str;
+        }
+
         if (!unit.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
             return str;
@@ -1371,6 +1430,10 @@ public class PlayGameMenuController {
     }
     public String readyForRangedBattleUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+        if (unit == null) {
+            str = "there is no unit with this name in selected tile !";
+            return str;
+        }
         if (!unit.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
             return str;
@@ -1395,6 +1458,10 @@ public class PlayGameMenuController {
     }
     public String wakeUpUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
+        if (unit == null) {
+            str = "there is no unit with this name in selected tile !";
+            return str;
+        }
         if (!unit.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
             return str;
