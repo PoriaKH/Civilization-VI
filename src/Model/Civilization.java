@@ -28,6 +28,42 @@ public class Civilization {
         technologyEarnedPercent = new HashMap<>();
     }
 
+    public Member getMember() {
+        return member;
+    }
+
+    public City getCapital() {
+        return capital;
+    }
+
+    public int getScience() {
+        return science;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getGoldPerTurn() {
+        return goldPerTurn;
+    }
+
+    public int getHappiness() {
+        return happiness;
+    }
+
+    public HashMap<Civilization, Resource> getTrades() {
+        return trades;
+    }
+
+    public Technology getWorkingOn() {
+        return workingOn;
+    }
+
+    public HashMap<Technology, Integer> getTechnologyEarnedPercent() {
+        return technologyEarnedPercent;
+    }
+
     public ArrayList<Technology> getTechnologies() {
         return technologies;
     }

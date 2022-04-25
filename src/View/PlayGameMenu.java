@@ -131,7 +131,7 @@ public class PlayGameMenu {
         map = playGameMenuController.mapCreator(numOfCivilizations,members);
         ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(numOfCivilizations, map, members);
         Civilization playingCivilization; // the civilization which is playing now
-        int counter = 0;
+        int counter = 0; //count 0 to numOfCivilizations - 1
         playingCivilization = civilizations.get(counter);
 
 
@@ -186,6 +186,9 @@ public class PlayGameMenu {
         String rangedRegex2 = "^set up range --tile (?<number>\\d+) --unit (?<unitName>.+)$";
         String wakeUpRegex1 = "^wake --unit (?<unitName>.+) --tile (?<number>\\d+)$";
         String wakeUpRegex2 = "^wake --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+
+
+        String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
         while(!Objects.equals(command, "exit menu")) {
@@ -248,6 +251,18 @@ public class PlayGameMenu {
             }
             else if (command.matches(wakeUpRegex2)) {
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(wakeUpRegex2,command),playingCivilization,map,"wake"));
+            }
+            else if(command.matches(nextTurnRegex)){
+                String result = playGameMenuController.nextTurn(playingCivilization);
+
+                if(!Objects.equals(result, "done"))
+                    System.out.println(result);
+                else {
+                    counter++;
+                    counter %= numOfCivilizations;
+                    playingCivilization = civilizations.get(counter);
+                    System.out.println("Civilization " + playingCivilization.getMember().getUsername() + " is playing!");
+                }
             }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");

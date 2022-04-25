@@ -1587,9 +1587,9 @@ public class PlayGameMenuController {
 
     }
      */
-    public StringBuilder nextTurn(Civilization civilization){
-        StringBuilder stringBuilder;
+    public String nextTurn(Civilization civilization){
+        String str;
 
-        return stringBuilder;
+        return str;
     }
 }

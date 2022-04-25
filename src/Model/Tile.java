@@ -33,7 +33,12 @@ public class Tile {
     private Attribute attribute;
     private ArrayList<Improvement> improvements;
 
+    private ArrayList<Tile> roads;
+    private ArrayList<Tile> railRoads;
+
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
+        this.roads = new ArrayList<>();
+        this.railRoads = new ArrayList<>();
         this.units = new ArrayList<>();
         this.improvements = new ArrayList<>();
         this.isDesert = isDesert;
