@@ -34,6 +34,8 @@ public class Tile {
     private ArrayList<Improvement> improvements;
 
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
+        this.units = new ArrayList<>();
+        this.improvements = new ArrayList<>();
         this.isDesert = isDesert;
         this.isMeadow = isMeadow;
         this.isHill = isHill;
