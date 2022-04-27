@@ -1266,10 +1266,34 @@ public class PlayGameMenuController {
 
         return str;
     }
-    public String createCity(Civilization civilization, Civilian civilian,ArrayList<Tile> map){
-        String str;
+    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map){
+        if(tileNumber < 0 || tileNumber >= 72)
+            return "invalid tile number";
 
-        return str;
+        for(City city : civilization.getCities()){
+            for(Tile tile : city.getTiles()){
+                if(tile.getTileNumber() == tileNumber){
+                    for(Unit unit : tile.getUnits()){
+                        if(unit.getCivilization() == civilization){
+                            if(unit.isCivilian()){
+                                Civilian civilian = (Civilian) unit;
+                                if(civilian.isSettler()){
+                                    if(checkNeighboursForCreateCity(tile)){
+                                        //TODO... create the city
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return "you can't create city here";
+    }
+    public boolean checkNeighboursForCreateCity(Tile tile){
+        //TODO... check the neighbour tiles
     }
     public String attackTile(Civilization civilization, Warrior warrior,Tile destination,ArrayList<Tile> map){
         String str;

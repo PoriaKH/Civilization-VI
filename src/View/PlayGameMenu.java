@@ -186,6 +186,7 @@ public class PlayGameMenu {
         String rangedRegex2 = "^set up range --tile (?<number>\\d+) --unit (?<unitName>.+)$";
         String wakeUpRegex1 = "^wake --unit (?<unitName>.+) --tile (?<number>\\d+)$";
         String wakeUpRegex2 = "^wake --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String createCityRegex = "create city (?<tile>\\d+)";
 
 
         String nextTurnRegex = "";
@@ -263,6 +264,12 @@ public class PlayGameMenu {
                     playingCivilization = civilizations.get(counter);
                     System.out.println("Civilization " + playingCivilization.getMember().getUsername() + " is playing!");
                 }
+            }
+            else if(command.matches(createCityRegex)) {
+                Matcher matcher = matcher(createCityRegex, command);
+                matcher.find();
+                int tileNumber = Integer.parseInt(matcher.group("tile"));
+                System.out.println(playGameMenuController.createCity(playingCivilization,tileNumber,map));
             }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");
