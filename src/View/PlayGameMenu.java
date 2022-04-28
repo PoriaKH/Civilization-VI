@@ -1,9 +1,11 @@
 package View;
 
 import Controller.PlayGameMenuController;
+import Model.City;
 import Model.Civilization;
 import Model.Member;
 import Model.Tile;
+import Model.Units.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -186,6 +188,7 @@ public class PlayGameMenu {
         String rangedRegex2 = "^set up range --tile (?<number>\\d+) --unit (?<unitName>.+)$";
         String wakeUpRegex1 = "^wake --unit (?<unitName>.+) --tile (?<number>\\d+)$";
         String wakeUpRegex2 = "^wake --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String purchaseUnitRegex = "^purchase --unit (?<unitName>.+) --tile (?<tileNumber>\\d+)$";
 
 
         String nextTurnRegex = "";
@@ -266,6 +269,9 @@ public class PlayGameMenu {
             }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");
+            else if (command.matches(purchaseUnitRegex)){
+                playGameMenuController.purchaseUnit(playingCivilization, map, this.matcher(purchaseUnitRegex, command));
+            }
 
             //TODO... check is there any unit with move left (harekat chand noobati)
             playGameMenuController.moveUnitWithMovesLeft (playingCivilization, map);

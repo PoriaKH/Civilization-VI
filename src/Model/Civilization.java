@@ -1,5 +1,9 @@
 package Model;
 
+import Model.Units.Civilian;
+import Model.Units.Unit;
+import Model.Units.Warrior;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,11 +17,15 @@ public class Civilization {
     private int happiness;
     private ArrayList<City> cities;
     private HashMap<Civilization,Resource> trades;
+    private ArrayList<Warrior> warriors;
+    private ArrayList<Civilian> civilians;
 
     private Technology workingOn;//if == null -> have to choose
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
+        this.warriors = new ArrayList<>();
+        this.civilians = new ArrayList<>();
         this.member = member;
         this.capital = capital;
         cities = new ArrayList<>();
@@ -70,5 +78,11 @@ public class Civilization {
 
     public ArrayList<City> getCities() {
         return cities;
+    }
+    public void addWarrior(Warrior warrior){
+        this.warriors.add(warrior);
+    }
+    public void addCivilian(Civilian civilian){
+        this.civilians.add(civilian);
     }
 }

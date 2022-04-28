@@ -1,6 +1,7 @@
 package Model.Units;
 
 import Model.Civilization;
+import Model.Technology;
 import Model.Tile;
 import Model.Node;
 

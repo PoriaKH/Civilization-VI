@@ -1,5 +1,7 @@
 package Model;
 
+import Model.Units.Unit;
+
 import java.util.ArrayList;
 
 public class City {
@@ -42,5 +44,8 @@ public class City {
 
     public int getGold() {
         return gold;
+    }
+    public void setGold(int gold){
+        this.gold = gold;
     }
 }
