@@ -1573,11 +1573,6 @@ public class PlayGameMenuController {
         }
         return "tiles are not belong to your civilization !";
     }
-    public String unLockCitizen(Civilization civilization, Citizen citizen,ArrayList<Tile> map){
-        String str;
-
-        return str;
-    }
     public String purchaseTile(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
 
