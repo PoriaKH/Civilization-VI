@@ -1266,6 +1266,11 @@ public class PlayGameMenuController {
 
         return str;
     }
+    public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map){
+        matcher.find();
+        int tileNumber = Integer.parseInt(matcher.group("tile"));
+        return createCity(civilization,tileNumber,map);
+    }
     public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map){
         if(tileNumber < 0 || tileNumber >= 72)
             return "invalid tile number";
@@ -1532,7 +1537,7 @@ public class PlayGameMenuController {
 
         return str;
     }
-    public String lockCitizen(Civilization civilization, Citizen citizen, Tile tile,ArrayList<Tile> map){
+    public String lockCitizen(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map){//move citizen from origin to destination
         String str;
 
         return str;
