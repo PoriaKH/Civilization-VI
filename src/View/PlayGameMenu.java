@@ -256,11 +256,11 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(wakeUpRegex2,command),playingCivilization,map,"wake"));
             }
             else if(command.matches(createCityRegex))
-                System.out.println(playGameMenuController.preCreateCity(matcher(createCityRegex,command),playingCivilization,map));
+                System.out.println(playGameMenuController.preCreateCity(matcher(createCityRegex,command),playingCivilization,map,civilizations));
             else if(command.matches(lockCitizenRegex))
                 System.out.println(playGameMenuController.preLockCitizen(matcher(lockCitizenRegex,command),playingCivilization,map));
             else if(command.matches(purchaseTileRegex))
-                System.out.println(playGameMenuController.prePurchaseTile(matcher(purchaseTileRegex,command),playingCivilization,map));
+                System.out.println(playGameMenuController.prePurchaseTile(matcher(purchaseTileRegex,command),playingCivilization,map,civilizations));
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization);
 

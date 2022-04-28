@@ -71,4 +71,8 @@ public class Civilization {
     public ArrayList<City> getCities() {
         return cities;
     }
+
+    public void addGold(int gold) {
+        this.gold += gold;
+    }
 }
