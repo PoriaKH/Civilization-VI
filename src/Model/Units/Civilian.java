@@ -7,6 +7,16 @@ public class Civilian extends Unit{
     private boolean isWorker;
     private boolean isSettler;
 
+    private Tile workingTile; // tile e ke dare roosh kar mikone ro neshoon mide age null bashe mitoone move va ... kone
+
+    public Tile getWorkingTile() {
+        return workingTile;
+    }
+
+    public void setWorkingTile(Tile workingTile) {
+        this.workingTile = workingTile;
+    }
+
     public boolean isWorker() {
         return isWorker;
     }
