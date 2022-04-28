@@ -1537,10 +1537,41 @@ public class PlayGameMenuController {
 
         return str;
     }
-    public String lockCitizen(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map){//move citizen from origin to destination
-        String str;
+    public String preLockCitizen(Matcher matcher,Civilization civilization, ArrayList<Tile> map){
+        matcher.find();
+        int originTileNumber = Integer.parseInt(matcher.group("origin"));
+        int destinationTileNumber = Integer.parseInt(matcher.group("destination"));
+        if(originTileNumber >= 72 || originTileNumber < 0 || destinationTileNumber >= 72 || destinationTileNumber < 0)
+            return "invalid number";
+        if(originTileNumber == destinationTileNumber)
+            return "numbers are equal";
 
-        return str;
+        Tile origin = map.get(originTileNumber);
+        Tile destination = map.get(destinationTileNumber);
+        return lockCitizen(civilization,origin,destination,map);
+    }
+    public String lockCitizen(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map){//move citizen from origin to destination
+        for(City city : civilization.getCities()){
+            for(Tile tile1 : city.getTiles()){
+                if(tile1 == origin){
+                    for(Tile tile2 : city.getTiles()){
+                        if(tile2 == destination){
+                            if(tile2.getCitizen() == null){
+                                if(tile1.getCitizen() != null){
+                                    tile2.setCitizen(tile1.getCitizen());
+                                    tile1.setCitizen(null);
+                                    return "citizen has been locked successfully";
+                                }
+                                return "origin tile doesn't have any citizen !";
+                            }
+                            return "destination tile already has a citizen !";
+                        }
+                    }
+                    return "tiles are not belong to one city !";
+                }
+            }
+        }
+        return "tiles are not belong to your civilization !";
     }
     public String unLockCitizen(Civilization civilization, Citizen citizen,ArrayList<Tile> map){
         String str;

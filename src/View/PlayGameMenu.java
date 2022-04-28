@@ -256,6 +256,8 @@ public class PlayGameMenu {
             }
             else if(command.matches(createCityRegex))
                 System.out.println(playGameMenuController.preCreateCity(matcher(createCityRegex,command),playingCivilization,map));
+            else if(command.matches(lockCitizenRegex))
+                System.out.println(playGameMenuController.preLockCitizen(matcher(lockCitizenRegex,command),playingCivilization,map));
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization);
 
