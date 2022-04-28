@@ -1279,7 +1279,12 @@ public class PlayGameMenuController {
                                 Civilian civilian = (Civilian) unit;
                                 if(civilian.isSettler()){
                                     if(checkNeighboursForCreateCity(tile,map)){
-                                        //TODO... create the city
+                                        while(tile.getUnits().size() > 0) {
+                                            tile.getUnits().remove(0);
+                                        }
+                                        City city1 = new City(tile,map);
+                                        civilization.getCities().add(city1);
+                                        return "city has been created successfully";
                                     }
                                 }
                             }
@@ -1288,7 +1293,6 @@ public class PlayGameMenuController {
                 }
             }
         }
-
 
         return "you can't create city here";
     }
