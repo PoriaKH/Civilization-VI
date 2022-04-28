@@ -1,5 +1,6 @@
 package Model;
 
+import Model.Units.Civilian;
 import Model.Units.Unit;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Tile {
     private Resource resource;
     private Attribute attribute;
     private ArrayList<Improvement> improvements;
+
 
     private ArrayList<Tile> roads;
     private ArrayList<Tile> railRoads;
@@ -212,6 +214,28 @@ public class Tile {
 
     private boolean doesHaveRoad;
     private boolean doesHaveRailWay;
+    private HashMap<Unit, Integer> workingOnRoadUntilFinish;
+    private HashMap<Unit, Integer> workingOnRailUntilFinish;
+
+    public void assignWorkerToRoad (Unit unit, Integer turn) {
+        workingOnRoadUntilFinish.put(unit, turn);
+    }
+    public void assignWorkerToRail (Unit unit, Integer turn) {
+        workingOnRailUntilFinish.put(unit, turn);
+    }
+    public Integer getNumberOfTurnsRail (Unit unit) {
+        return workingOnRailUntilFinish.get(unit);
+    }
+    public Integer getNumberOfTurnsRoad (Unit unit) {
+        return workingOnRoadUntilFinish.get(unit);
+    }
+    public void setNewNumberForTurnRoad (Unit unit, Integer turn) {
+        workingOnRoadUntilFinish.replace(unit, turn);
+    }
+    public void setNewNumberForTurnRail (Unit unit, Integer turn) {
+        workingOnRailUntilFinish.replace(unit, turn);
+    }
+
 
     public Resource getResource() {
         return resource;

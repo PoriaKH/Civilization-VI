@@ -262,7 +262,7 @@ public class PlayGameMenu {
             else if(command.matches(purchaseTileRegex))
                 System.out.println(playGameMenuController.prePurchaseTile(matcher(purchaseTileRegex,command),playingCivilization,map,civilizations));
             else if(command.matches(nextTurnRegex)){
-                String result = playGameMenuController.nextTurn(playingCivilization);
+                String result = playGameMenuController.nextTurn(playingCivilization, map);
 
                 if(!Objects.equals(result, "done"))
                     System.out.println(result);

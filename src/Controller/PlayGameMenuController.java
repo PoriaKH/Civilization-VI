@@ -1647,14 +1647,74 @@ public class PlayGameMenuController {
 
         return str;
     }
-    public String createRoad(Civilization civilization,Civilian civilian, Tile tile,ArrayList<Tile> map){
+    public Unit getWorker (Tile tile) {
+        ArrayList<Unit> units = tile.getUnits();
+        for (int i = 0; i < units.size(); i++) {
+            if (units.get(i).isCivilian()) {
+                    return units.get(i);
+            }
+        }
+        return null;
+    }
+    public String createRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
+        Unit unit = getWorker(tile);
+        if (unit == null) {
+            str = "this tile doesn't have any worker !";
+            return str;
+        }
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this worker does not belong to you !";
+            return str;
+        }
+        if (!((Civilian)unit).isWorker()) {
+            str = "this unit is not worker !";
+            return str;
+        }
+        if (tile.isDoesHaveRoad()) {
+            str = "there is already a road on this tile !";
+            return str;
+        }
+        if (((Civilian)unit).getWorkingTile() != null) {
+            str = "worker is working on something else !";
+            return str;
+        }
 
+        tile.assignWorkerToRoad(unit, 3);
+        ((Civilian)unit).setWorkingTile(tile);
+        str = "the road will be ready in 3 turns";
+        //TODO ... make does have road way = true
         return str;
     }
+
     public String createRailRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
+        Unit unit = getWorker(tile);
+        if (unit == null) {
+            str = "this tile doesn't have any worker !";
+            return str;
+        }
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this worker does not belong to you !";
+            return str;
+        }
+        if (!((Civilian)unit).isWorker()) {
+            str = "this unit is not worker !";
+            return str;
+        }
+        if (tile.isDoesHaveRailWay()) {
+            str = "there is already a rail way on this tile !";
+            return str;
+        }
+        if (((Civilian)unit).getWorkingTile() != null) {
+            str = "worker is working on something else !";
+            return str;
+        }
 
+        tile.assignWorkerToRail(unit, 3);
+        ((Civilian)unit).setWorkingTile(tile);
+        str = "the rail way will be ready in 3 turns";
+        //TODO ... make does have rail way = true
         return str;
     }
     public String removeImprovement(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
@@ -1708,8 +1768,9 @@ public class PlayGameMenuController {
 
     }
      */
-    public String nextTurn(Civilization civilization){
+    public String nextTurn(Civilization civilization, ArrayList<Tile> map){
         String str;
+
 
         return str;
     }
