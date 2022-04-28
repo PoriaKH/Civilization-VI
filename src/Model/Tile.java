@@ -28,6 +28,7 @@ public class Tile {
     private float radius;
     private double h;
 
+    private Citizen citizen;
     private ArrayList<Unit> units;
     private Resource resource;
     private Attribute attribute;
@@ -322,6 +323,22 @@ public class Tile {
 
     public boolean isDoesHaveRailWay() {
         return doesHaveRailWay;
+    }
+
+    public ArrayList<Tile> getRoads() {
+        return roads;
+    }
+
+    public ArrayList<Tile> getRailRoads() {
+        return railRoads;
+    }
+
+    public Citizen getCitizen() {
+        return citizen;
+    }
+
+    public void setCitizen(Citizen citizen) {
+        this.citizen = citizen;
     }
 
     public void removeUnit (Unit unit) {

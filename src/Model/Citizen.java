@@ -5,5 +5,6 @@ public class Citizen {
 
     public Citizen(Tile tile){
         this.tile = tile;
+        tile.setCitizen(this);
     }
 }

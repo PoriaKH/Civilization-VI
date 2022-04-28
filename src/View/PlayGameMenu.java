@@ -1,11 +1,9 @@
 package View;
 
 import Controller.PlayGameMenuController;
-import Model.City;
 import Model.Civilization;
 import Model.Member;
 import Model.Tile;
-import Model.Units.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -188,7 +186,9 @@ public class PlayGameMenu {
         String rangedRegex2 = "^set up range --tile (?<number>\\d+) --unit (?<unitName>.+)$";
         String wakeUpRegex1 = "^wake --unit (?<unitName>.+) --tile (?<number>\\d+)$";
         String wakeUpRegex2 = "^wake --tile (?<number>\\d+) --unit (?<unitName>.+)$";
-        String purchaseUnitRegex = "^purchase --unit (?<unitName>.+) --tile (?<tileNumber>\\d+)$";
+        String createCityRegex = "create city (?<tile>\\d+)";
+        String lockCitizenRegex = "lock citizen (?<origin>\\d+) (?<destination>\\d+)";//move citizen from origin to destination
+        String purchaseTileRegex = "purchase tile (?<tile>\\d+)";
 
 
         String nextTurnRegex = "";
@@ -255,6 +255,12 @@ public class PlayGameMenu {
             else if (command.matches(wakeUpRegex2)) {
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(wakeUpRegex2,command),playingCivilization,map,"wake"));
             }
+            else if(command.matches(createCityRegex))
+                System.out.println(playGameMenuController.preCreateCity(matcher(createCityRegex,command),playingCivilization,map,civilizations));
+            else if(command.matches(lockCitizenRegex))
+                System.out.println(playGameMenuController.preLockCitizen(matcher(lockCitizenRegex,command),playingCivilization,map));
+            else if(command.matches(purchaseTileRegex))
+                System.out.println(playGameMenuController.prePurchaseTile(matcher(purchaseTileRegex,command),playingCivilization,map,civilizations));
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization);
 
@@ -269,9 +275,6 @@ public class PlayGameMenu {
             }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");
-            else if (command.matches(purchaseUnitRegex)){
-                playGameMenuController.purchaseUnit(playingCivilization, map, this.matcher(purchaseUnitRegex, command));
-            }
 
             //TODO... check is there any unit with move left (harekat chand noobati)
             playGameMenuController.moveUnitWithMovesLeft (playingCivilization, map);

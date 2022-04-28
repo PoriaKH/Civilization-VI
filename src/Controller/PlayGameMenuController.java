@@ -1462,10 +1462,68 @@ public class PlayGameMenuController {
             return "no unit with this name exists!";
         return this.createUnit(civilization, city, unit, map);
     }
-    public String createCity(Civilization civilization, Civilian civilian,ArrayList<Tile> map){
-        String str;
+    public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
+        matcher.find();
+        int tileNumber = Integer.parseInt(matcher.group("tile"));
+        return createCity(civilization,tileNumber,map,civilizations);
+    }
+    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
+        if(tileNumber < 0 || tileNumber >= 72)
+            return "invalid tile number";
 
-        return str;
+        for(City city : civilization.getCities()){
+            for(Tile tile : city.getTiles()){
+                if(tile.getTileNumber() == tileNumber){
+                    for(Unit unit : tile.getUnits()){
+                        if(unit.getCivilization() == civilization){
+                            if(unit.isCivilian()){
+                                Civilian civilian = (Civilian) unit;
+                                if(civilian.isSettler()){
+                                    if(checkNeighboursForCreateCity(tile,map,civilizations)){
+                                        while(tile.getUnits().size() > 0) {
+                                            tile.getUnits().remove(0);
+                                        }
+                                        City city1 = new City(tile,map);
+                                        civilization.getCities().add(city1);
+                                        return "city has been created successfully";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return "you can't create city here";
+    }
+    public boolean checkNeighboursForCreateCity(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
+        for(Tile tempTile : map){
+            if(tempTile == tile){
+                if(tile.getUnits().size() != 1)
+                    return false;
+            }
+            if(areTilesNeighbour(tile,tempTile)){
+                if(tempTile.getUnits().size() > 0)
+                    return false;
+                if(tempTile.getImprovements().size() > 0)
+                    return false;
+                if(tempTile.getRailRoads().size() > 0)
+                    return false;
+                if(tempTile.getRoads().size() > 0)
+                    return false;
+                if(doesTileBelongToAnyCivilization(tempTile,map,civilizations))
+                    return false;
+            }
+        }
+        return true;
+    }
+    public boolean areTilesNeighbour(Tile tile1, Tile tile2){
+        float distance = (float)Math.sqrt(Math.pow(tile1.getX() - tile2.getX(), 2) + Math.pow(tile1.getY() - tile2.getY(), 2));
+        if(distance <= tile1.getRadius() * Math.sqrt(3))
+            return true;
+
+        return false;
     }
     public String attackTile(Civilization civilization, Warrior warrior,Tile destination,ArrayList<Tile> map){
         String str;
@@ -1677,20 +1735,83 @@ public class PlayGameMenuController {
 
         return str;
     }
-    public String lockCitizen(Civilization civilization, Citizen citizen, Tile tile,ArrayList<Tile> map){
-        String str;
+    public String preLockCitizen(Matcher matcher,Civilization civilization, ArrayList<Tile> map){
+        matcher.find();
+        int originTileNumber = Integer.parseInt(matcher.group("origin"));
+        int destinationTileNumber = Integer.parseInt(matcher.group("destination"));
+        if(originTileNumber >= 72 || originTileNumber < 0 || destinationTileNumber >= 72 || destinationTileNumber < 0)
+            return "invalid number";
+        if(originTileNumber == destinationTileNumber)
+            return "numbers are equal";
 
-        return str;
+        Tile origin = map.get(originTileNumber);
+        Tile destination = map.get(destinationTileNumber);
+        return lockCitizen(civilization,origin,destination,map);
     }
-    public String unLockCitizen(Civilization civilization, Citizen citizen,ArrayList<Tile> map){
-        String str;
-
-        return str;
+    public String lockCitizen(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map){//move citizen from origin to destination
+        for(City city : civilization.getCities()){
+            for(Tile tile1 : city.getTiles()){
+                if(tile1 == origin){
+                    for(Tile tile2 : city.getTiles()){
+                        if(tile2 == destination){
+                            if(tile2.getCitizen() == null){
+                                if(tile1.getCitizen() != null){
+                                    tile2.setCitizen(tile1.getCitizen());
+                                    tile1.setCitizen(null);
+                                    return "citizen has been locked successfully";
+                                }
+                                return "origin tile doesn't have any citizen !";
+                            }
+                            return "destination tile already has a citizen !";
+                        }
+                    }
+                    return "tiles do not belong to one city !";
+                }
+            }
+        }
+        return "tiles do not belong to your civilization !";
     }
-    public String purchaseTile(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
+    public String prePurchaseTile(Matcher matcher, Civilization civilization, ArrayList<Tile> map,ArrayList<Civilization> civilizations){
+        matcher.find();
+        int tileNumber = Integer.parseInt(matcher.group("tile"));
+        if(tileNumber < 0 || tileNumber >= 72)
+            return "invalid number";
 
-        return str;
+        Tile tile = map.get(tileNumber);
+        return purchaseTile(civilization,tile,map,civilizations);
+    }
+    public String purchaseTile(Civilization civilization, Tile tile,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
+        for(City city : civilization.getCities()){
+            for(Tile tempTile : city.getTiles()){
+                if(areTilesNeighbour(tile,tempTile)){
+                    if(tile == tempTile)
+                        return "this tile is already yours";
+                    if(!doesTileBelongToAnyCivilization(tile,map,civilizations)){
+                        if(tile.getUnits().size() == 0 && tile.getImprovements().size() == 0){
+                            if(civilization.getGold() >= 50){
+                                civilization.addGold(-50);
+                                city.getTiles().add(tile);
+                                return "purchase tile was successful";
+                            }
+                            return "you don't have enough gold";
+                        }
+                    }
+                    return "you can't purchase this tile";
+                }
+            }
+        }
+        return "this tile isn't neighbour with any of your cities";
+    }
+    public boolean doesTileBelongToAnyCivilization(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
+        for(Civilization civilization : civilizations){
+            for(City city : civilization.getCities()){
+                for(Tile tempTile : city.getTiles()){
+                    if(tile == tempTile)
+                        return true;//it belongs
+                }
+            }
+        }
+        return false;//it doesn't
     }
     public StringBuilder showProductionsInProcess(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
