@@ -1278,7 +1278,7 @@ public class PlayGameMenuController {
                             if(unit.isCivilian()){
                                 Civilian civilian = (Civilian) unit;
                                 if(civilian.isSettler()){
-                                    if(checkNeighboursForCreateCity(tile)){
+                                    if(checkNeighboursForCreateCity(tile,map)){
                                         //TODO... create the city
                                     }
                                 }
@@ -1292,8 +1292,31 @@ public class PlayGameMenuController {
 
         return "you can't create city here";
     }
-    public boolean checkNeighboursForCreateCity(Tile tile){
-        //TODO... check the neighbour tiles
+    public boolean checkNeighboursForCreateCity(Tile tile, ArrayList<Tile> map){
+        for(Tile tempTile : map){
+            if(tempTile == tile){
+                if(tile.getUnits().size() != 1)
+                    return false;
+            }
+            if(areTilesNeighbour(tile,tempTile)){
+                if(tempTile.getUnits().size() > 0)
+                    return false;
+                if(tempTile.getImprovements().size() > 0)
+                    return false;
+                if(tempTile.getRailRoads().size() > 0)
+                    return false;
+                if(tempTile.getRoads().size() > 0)
+                    return false;
+            }
+        }
+        return true;
+    }
+    public boolean areTilesNeighbour(Tile tile1, Tile tile2){
+        float distance = (float)Math.sqrt(Math.pow(tile1.getX() - tile2.getX(), 2) + Math.pow(tile1.getY() - tile2.getY(), 2));
+        if(distance <= tile1.getRadius() * Math.sqrt(3))
+            return true;
+
+        return false;
     }
     public String attackTile(Civilization civilization, Warrior warrior,Tile destination,ArrayList<Tile> map){
         String str;

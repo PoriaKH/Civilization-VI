@@ -324,6 +324,14 @@ public class Tile {
         return doesHaveRailWay;
     }
 
+    public ArrayList<Tile> getRoads() {
+        return roads;
+    }
+
+    public ArrayList<Tile> getRailRoads() {
+        return railRoads;
+    }
+
     public void removeUnit (Unit unit) {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).equals(unit)) {
