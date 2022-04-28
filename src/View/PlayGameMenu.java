@@ -188,6 +188,7 @@ public class PlayGameMenu {
         String wakeUpRegex2 = "^wake --tile (?<number>\\d+) --unit (?<unitName>.+)$";
         String createCityRegex = "create city (?<tile>\\d+)";
         String lockCitizenRegex = "lock citizen (?<origin>\\d+) (?<destination>\\d+)";//move citizen from origin to destination
+        String purchaseTileRegex = "purchase tile (?<tile>\\d+)";
 
 
         String nextTurnRegex = "";
@@ -258,6 +259,8 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.preCreateCity(matcher(createCityRegex,command),playingCivilization,map));
             else if(command.matches(lockCitizenRegex))
                 System.out.println(playGameMenuController.preLockCitizen(matcher(lockCitizenRegex,command),playingCivilization,map));
+            else if(command.matches(purchaseTileRegex))
+                System.out.println(playGameMenuController.prePurchaseTile(matcher(purchaseTileRegex,command),playingCivilization,map));
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization);
 

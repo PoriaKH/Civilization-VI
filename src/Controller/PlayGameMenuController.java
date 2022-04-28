@@ -1573,6 +1573,9 @@ public class PlayGameMenuController {
         }
         return "tiles are not belong to your civilization !";
     }
+    public String prePurchaseTile(Matcher matcher, Civilization civilization, ArrayList<Tile> map){
+
+    }
     public String purchaseTile(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
 
