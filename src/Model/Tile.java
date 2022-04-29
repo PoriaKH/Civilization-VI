@@ -210,7 +210,7 @@ public class Tile {
     }
 
     private Improvement workingOnImprovement;//if == null -> null
-    private HashMap<Improvement, Integer> ImprovementEarnedPercent;
+    private HashMap<Improvement, Integer> improvementEarnedPercent;
 
     private boolean doesHaveRoad;
     private boolean doesHaveRailWay;
@@ -359,7 +359,7 @@ public class Tile {
     }
 
     public HashMap<Improvement, Integer> getImprovementEarnedPercent() {
-        return ImprovementEarnedPercent;
+        return improvementEarnedPercent;
     }
 
     public boolean isDoesHaveRoad() {
@@ -393,5 +393,19 @@ public class Tile {
                 break;
             }
         }
+    }
+    public void addImprovement (Improvement improvement){
+        this.improvements.add(improvement);
+    }
+    public void addToImprovementEarnedPercent(Improvement improvement, Integer roundLeft){
+        this.improvementEarnedPercent.put(improvement, roundLeft);
+    }
+    public void reduceImprovementRound(){
+        Integer roundLeft = this.improvementEarnedPercent.get(this.workingOnImprovement) - 1;
+        if (roundLeft == 0) {
+            this.improvementEarnedPercent.remove(this.workingOnImprovement);
+            this.addImprovement(this.workingOnImprovement);
+        }
+        this.improvementEarnedPercent.replace(this.workingOnImprovement, roundLeft);
     }
 }

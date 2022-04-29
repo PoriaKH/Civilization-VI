@@ -1868,8 +1868,47 @@ public class PlayGameMenuController {
         else
             return "this tile isn't your city tiles or city neighbors";
     }
-    public String createImprovement(Civilization civilization, Civilian civilian, Tile tile, Improvement improvement, ArrayList<Tile> map){
+    public String createImprovement(Civilization civilization, Civilian civilian, int tileNumber, String improvementName, ArrayList<Tile> map){
         String str;
+        Tile tile = map.get(tileNumber);
+        if (improvementName.equals("camp")){
+            Improvement improvement = new Improvement(true, false, false, false, false, false, false, false, false);
+            tile.addImprovement(improvement);
+        }
+        else if (improvementName.equals("farm")){
+            Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false);
+            tile.addImprovement(improvement);
+        }
+        else if (improvementName.equals("lumberMill")){
+            Improvement improvement = new Improvement(false, false, true, false, false, false, false, false, false);
+            tile.addImprovement(improvement);
+        }
+        else if (improvementName.equals("mine")){
+            Improvement improvement = new Improvement(false, false, false, true, false, false, false, false, false);
+            tile.addImprovement(improvement);
+        }
+        else if (improvementName.equals("paddock")){
+            Improvement improvement = new Improvement(false, false, false, false, true, false, false, false, false);
+            tile.addImprovement(improvement);
+        }
+        else if (improvementName.equals("agriculture")){
+            Improvement improvement = new Improvement(false, false, false, false, false, true, false, false, false);
+            tile.addImprovement(improvement);
+        }
+        else if (improvementName.equals("stoneMine")){
+            Improvement improvement = new Improvement(false, false, false, false, false, false, true, false, false);
+            tile.addImprovement(improvement);
+        }
+        else if (improvementName.equals("tradingPost")){
+            Improvement improvement = new Improvement(false, false, false, false, false, false, false, true, false);
+            tile.addImprovement(improvement);
+        }
+        else if (improvementName.equals("laboratory")){
+            Improvement improvement = new Improvement(false, false, false, false, false, false, false, false, true);
+            tile.addImprovement(improvement);
+        }
+        else
+            return "no improvement with this name exists!";
         return str;
     }
     // after every turn check for road or rail making in your civilization
@@ -2024,7 +2063,6 @@ public class PlayGameMenuController {
      */
     public String nextTurn(Civilization civilization, ArrayList<Tile> map){
         String str;
-
 
         return str;
     }
