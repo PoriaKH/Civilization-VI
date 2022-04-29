@@ -48,4 +48,8 @@ public class City {
     public void setGold(int gold){
         this.gold = gold;
     }
+
+    public ArrayList<Citizen> getCitizens() {
+        return citizens;
+    }
 }

@@ -7,4 +7,9 @@ public class Citizen {
         this.tile = tile;
         tile.setCitizen(this);
     }
+
+    public void setTile(Tile tile) {
+        this.tile = tile;
+        tile.setCitizen(this);
+    }
 }

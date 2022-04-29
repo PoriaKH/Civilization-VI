@@ -189,6 +189,8 @@ public class PlayGameMenu {
         String createCityRegex = "create city (?<tile>\\d+)";
         String lockCitizenRegex = "lock citizen (?<origin>\\d+) (?<destination>\\d+)";//move citizen from origin to destination
         String purchaseTileRegex = "purchase tile (?<tile>\\d+)";
+        String workOnTileRegex = "city (?<cityNumber>\\d+) citizen (?<citizenNumber>\\d+) work on --tile (?<tileNumber>\\d+)";
+        String createImprovement = "create improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+)";
 
 
         String nextTurnRegex = "";

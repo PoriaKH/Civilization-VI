@@ -1833,14 +1833,43 @@ public class PlayGameMenuController {
 
         return str;
     }
-    public String workOnTile(Civilization civilization, City city, Citizen citizen,ArrayList<Tile> map){
-        String str;
-
-        return str;
+    public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int citizenNumber, ArrayList<Tile> map){
+        City city = civilization.getCities().get(cityNumber);
+        ArrayList<Tile> cityTiles = city.getTiles();
+        Tile chosenTile = map.get(tileNumber);
+        boolean isInRange = false;
+        for (int i = 0; i < cityTiles.size(); i++) {
+            if (cityTiles.get(i).equals(chosenTile)){
+                cityTiles.get(i).setCitizen(city.getCitizens().get(citizenNumber));
+                city.getCitizens().get(citizenNumber).setTile(chosenTile);
+                isInRange = true;
+                break;
+            }
+            else{
+                float x1 = cityTiles.get(i).getX();
+                float y1 = cityTiles.get(i).getY();
+                float x2 = chosenTile.getX();
+                float y2 = chosenTile.getY();
+                //9rad3
+                if (Math.pow(2, (x2 - x1)) + Math.pow(2, (y2 - y1)) <= 243){
+                    if (chosenTile.getCitizen() == null) {
+                        city.getCitizens().get(citizenNumber).setTile(chosenTile);
+                        chosenTile.setCitizen(city.getCitizens().get(citizenNumber));
+                        isInRange = true;
+                        break;
+                    }
+                    else
+                        return "there are already a unit in this tile";
+                }
+            }
+        }
+        if (isInRange)
+            return "citizen is set to work on chosen tile";
+        else
+            return "this tile isn't your city tiles or city neighbors";
     }
-    public String createImprovement(Civilization civilization, Civilian civilian, Tile tile,Improvement improvement,ArrayList<Tile> map){
+    public String createImprovement(Civilization civilization, Civilian civilian, Tile tile, Improvement improvement, ArrayList<Tile> map){
         String str;
-
         return str;
     }
     public Unit getWorker (Tile tile) {
