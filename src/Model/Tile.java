@@ -223,6 +223,12 @@ public class Tile {
     public void assignWorkerToRail (Unit unit, Integer turn) {
         workingOnRailUntilFinish.put(unit, turn);
     }
+    public int sizeOfHashMapRoad () {
+        return workingOnRoadUntilFinish.size();
+    }
+    public int sizeOfHashMapRail () {
+        return workingOnRailUntilFinish.size();
+    }
     public Integer getNumberOfTurnsRail (Unit unit) {
         return workingOnRailUntilFinish.get(unit);
     }
@@ -234,6 +240,21 @@ public class Tile {
     }
     public void setNewNumberForTurnRail (Unit unit, Integer turn) {
         workingOnRailUntilFinish.replace(unit, turn);
+    }
+    public void removeWorkerFromRoad (Unit unit) {
+        workingOnRoadUntilFinish.remove(unit);
+    }
+
+    public void setDoesHaveRoad(boolean doesHaveRoad) {
+        this.doesHaveRoad = doesHaveRoad;
+    }
+
+    public void setDoesHaveRailWay(boolean doesHaveRailWay) {
+        this.doesHaveRailWay = doesHaveRailWay;
+    }
+
+    public void removeWorkerFromRail (Unit unit) {
+        workingOnRailUntilFinish.remove(unit);
     }
 
 

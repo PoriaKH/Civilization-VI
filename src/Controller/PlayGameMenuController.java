@@ -1872,6 +1872,37 @@ public class PlayGameMenuController {
         String str;
         return str;
     }
+    // after every turn check for road or rail making in your civilization
+    public void consumeTurnForRoadMaking (Civilization civilization, ArrayList<Tile> map) {
+        for (int i = 0; i < map.size(); i++) {
+            ArrayList<Unit> units = map.get(i).getUnits();
+            for (int i1 = 0; i1 < units.size(); i1++) {
+                if (units.get(i1).getCivilization().equals(civilization) && units.get(i1).isCivilian()) {
+                    if (((Civilian) units.get(i1)).isWorker() && map.get(i).sizeOfHashMapRoad() != 0) {
+                        int newTurn = map.get(i).getNumberOfTurnsRoad(units.get(i1)) - 1;
+                        if (newTurn == 0) {
+                            map.get(i).removeWorkerFromRoad(units.get(i1));
+                            ((Civilian) units.get(i1)).setWorkingTile(null);
+                            map.get(i).setDoesHaveRoad(true);
+                        } else {
+                            map.get(i).setNewNumberForTurnRoad(units.get(i1), newTurn);
+                        }
+                    }
+                        if (((Civilian) units.get(i1)).isWorker() && map.get(i).sizeOfHashMapRail() != 0) {
+                            int newTurn = map.get(i).getNumberOfTurnsRail(units.get(i1)) - 1;
+                            if (newTurn == 0) {
+                                map.get(i).removeWorkerFromRail(units.get(i1));
+                                ((Civilian) units.get(i1)).setWorkingTile(null);
+                                map.get(i).setDoesHaveRailWay(true);
+                            } else {
+                                map.get(i).setNewNumberForTurnRail(units.get(i1), newTurn);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     public Unit getWorker (Tile tile) {
         ArrayList<Unit> units = tile.getUnits();
         for (int i = 0; i < units.size(); i++) {
@@ -1908,7 +1939,6 @@ public class PlayGameMenuController {
         tile.assignWorkerToRoad(unit, 3);
         ((Civilian)unit).setWorkingTile(tile);
         str = "the road will be ready in 3 turns";
-        //TODO ... make does have road way = true
         return str;
     }
 
@@ -1939,7 +1969,6 @@ public class PlayGameMenuController {
         tile.assignWorkerToRail(unit, 3);
         ((Civilian)unit).setWorkingTile(tile);
         str = "the rail way will be ready in 3 turns";
-        //TODO ... make does have rail way = true
         return str;
     }
     public String removeImprovement(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
