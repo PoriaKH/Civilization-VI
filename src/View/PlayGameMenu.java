@@ -194,7 +194,8 @@ public class PlayGameMenu {
         String workOnTileRegex = "city (?<cityNumber>\\d+) citizen (?<citizenNumber>\\d+) work on --tile (?<tileNumber>\\d+)";
         String createImprovementRegex = "create improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+) --civilian (?<civilianNumber>\\d+)";
         String removeImprovementRegex = "remove improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+)";
-
+        String createRoadRegex = "^create road on --tile (?<number>\\d+)$";
+        String createRailwayRegex = "^create rail way on --tile (?<number>\\d+)$";
 
         String nextTurnRegex = "";
 
@@ -266,6 +267,12 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.preLockCitizen(matcher(lockCitizenRegex,command),playingCivilization,map));
             else if(command.matches(purchaseTileRegex))
                 System.out.println(playGameMenuController.prePurchaseTile(matcher(purchaseTileRegex,command),playingCivilization,map,civilizations));
+            else if (command.matches(createRoadRegex)) {
+                System.out.println(playGameMenuController.createRoad(playingCivilization, map.get(Integer.parseInt(matcher(createRoadRegex,command).group("number"))),map));
+            }
+            else if (command.matches(createRailwayRegex)) {
+                System.out.println(playGameMenuController.createRailRoad(playingCivilization, map.get(Integer.parseInt(matcher(createRailwayRegex,command).group("number"))),map));
+            }
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
 
