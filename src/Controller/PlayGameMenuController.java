@@ -830,7 +830,7 @@ public class PlayGameMenuController {
                 destinationTile.addUnit(unit);
                 int newMP;
                 if (unit.getMp() >= destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) {
-                    newMP = unit.getMp() - destinationTile.getMpCost();
+                    newMP = unit.getMp() - destinationTile.getMpCost() - destinationTile.getAttribute().getMpCost();
                 }
                 else {
                     newMP = 0;
