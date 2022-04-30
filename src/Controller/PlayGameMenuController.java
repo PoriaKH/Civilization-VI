@@ -2039,7 +2039,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    public String createRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
+    public String createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -2069,7 +2069,7 @@ public class PlayGameMenuController {
         return str;
     }
 
-    public String createRailRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
+    public String createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
