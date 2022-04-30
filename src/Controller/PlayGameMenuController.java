@@ -866,14 +866,21 @@ public class PlayGameMenuController {
                 originTile.removeUnit(unit);
                 destinationTile.addUnit(unit);
                 int newMP;
+
                 if (!isRiverOnWay(originTile, destinationTile, map)) {
                     if (unit.getMp() >= destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) {
-                        newMP = unit.getMp() - destinationTile.getMpCost() - destinationTile.getAttribute().getMpCost();
+                        if (isThereRoadOrRail(originTile, destinationTile)) {
+                            newMP = unit.getMp() - (destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) / 2;
+                        }
+                        else {
+                            newMP = unit.getMp() - (destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost());
+                        }
                     }
                     else {
                         newMP = 0;
                     }
                 }
+
                 else {
                     if (isThereRoadOrRail(originTile, destinationTile)) {
                         if (isTechnologyAvailable(civilization, "construction")) {
@@ -891,6 +898,7 @@ public class PlayGameMenuController {
                 unit.getPath().remove(i);
                 unit.setMp(newMP);
             }
+
             else {
                 str = "unit mp isn't enough, wait until next turn !";
                 break;
