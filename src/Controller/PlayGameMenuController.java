@@ -1991,8 +1991,8 @@ public class PlayGameMenuController {
         else
             return "only workers can work on improvements";
     }
-    // after every turn check for road or rail making in your civilization
-    public void consumeTurnForRoadMaking (Civilization civilization, ArrayList<Tile> map) {
+    // after every turn check for road or rail making in your civilization,,, if work is making ->true if it is removing->false
+    public void consumeTurnForRoadMaking (Civilization civilization, ArrayList<Tile> map, boolean typeOfWork) {
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> units = map.get(i).getUnits();
             for (int i1 = 0; i1 < units.size(); i1++) {
@@ -2002,7 +2002,7 @@ public class PlayGameMenuController {
                         if (newTurn == 0) {
                             map.get(i).removeWorkerFromRoad(units.get(i1));
                             ((Civilian) units.get(i1)).setWorkingTile(null);
-                            map.get(i).setDoesHaveRoad(true);
+                            map.get(i).setDoesHaveRoad(typeOfWork);
                         } else {
                             map.get(i).setNewNumberForTurnRoad(units.get(i1), newTurn);
                         }
@@ -2012,7 +2012,7 @@ public class PlayGameMenuController {
                             if (newTurn == 0) {
                                 map.get(i).removeWorkerFromRail(units.get(i1));
                                 ((Civilian) units.get(i1)).setWorkingTile(null);
-                                map.get(i).setDoesHaveRailWay(true);
+                                map.get(i).setDoesHaveRailWay(typeOfWork);
                             } else {
                                 map.get(i).setNewNumberForTurnRail(units.get(i1), newTurn);
                             }
@@ -2141,12 +2141,60 @@ public class PlayGameMenuController {
     }
     public String removeRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
+        Unit unit = getWorker(tile);
+        if (unit == null) {
+            str = "this tile doesn't have any worker !";
+            return str;
+        }
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this worker does not belong to you !";
+            return str;
+        }
+        if (!((Civilian)unit).isWorker()) {
+            str = "this unit is not worker !";
+            return str;
+        }
+        if (!tile.isDoesHaveRoad()) {
+            str = "there is no road on this tile !";
+            return str;
+        }
+        if (((Civilian)unit).getWorkingTile() != null) {
+            str = "worker is working on something else !";
+            return str;
+        }
 
+        tile.assignWorkerToRoad(unit, 3);
+        ((Civilian)unit).setWorkingTile(tile);
+        str = "the road will be removed in 3 turns";
         return str;
     }
     public String removeRailRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
+        Unit unit = getWorker(tile);
+        if (unit == null) {
+            str = "this tile doesn't have any worker !";
+            return str;
+        }
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this worker does not belong to you !";
+            return str;
+        }
+        if (!((Civilian)unit).isWorker()) {
+            str = "this unit is not worker !";
+            return str;
+        }
+        if (!tile.isDoesHaveRailWay()) {
+            str = "there is no rail way on this tile !";
+            return str;
+        }
+        if (((Civilian)unit).getWorkingTile() != null) {
+            str = "worker is working on something else !";
+            return str;
+        }
 
+        tile.assignWorkerToRail(unit, 3);
+        ((Civilian)unit).setWorkingTile(tile);
+        str = "the rail way will be removed in 3 turns";
         return str;
     }
     public String cancelImprovementOnProcess(Civilization civilization,Tile tile,ArrayList<Tile> map){
