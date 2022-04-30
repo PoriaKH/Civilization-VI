@@ -780,6 +780,42 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // return the index of specific tile
+    public int getTileIndex (Tile tile, ArrayList<Tile> map) {
+        for (int i = 0; i < map.size(); i++) {
+            if (map.get(i).equals(tile)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+    // check the way for river
+    public boolean isRiverOnWay (Tile origin, Tile destination, ArrayList<Tile> map) {
+        int originIndex = getTileIndex(origin, map);
+        int destinationIndex = getTileIndex(destination, map);
+        if ((originIndex <= 21 && originIndex >= 17) && (destinationIndex >= 22 && destinationIndex <= 27)) {
+            return true;
+        }
+        if ((destinationIndex <= 21 && destinationIndex >= 17) && (originIndex >= 22 && originIndex <= 27)) {
+            return true;
+        }
+        return false;
+    }
+
+    // check the technology's name in civilization array of technology if it contains return true
+    public boolean isTechnologyAvailable (Civilization civilization, String techName) {
+        ArrayList<Technology> technologies = civilization.getTechnologies();
+        for (int i = 0; i < technologies.size(); i++) {
+            if (technologies.get(i).getName().toLowerCase().equals(techName)) return true;
+        }
+        return false;
+    }
+    // check origin and destination tiles , if both have same type of way(rail/road) return true
+    public boolean isThereRoadOrRail (Tile origin, Tile destination) {
+        if (origin.isDoesHaveRoad() && destination.isDoesHaveRoad()) return true;
+        if (origin.isDoesHaveRailWay() && destination.isDoesHaveRailWay()) return true;
+        return false;
+    }
 
     public String moveUnit (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
         String str;
@@ -825,16 +861,33 @@ public class PlayGameMenuController {
             Tile originTile = unit.getPath().get(i).tile;
             Tile destinationTile = unit.getPath().get(i + 1).tile;
 
+
             if (unit.getMp() >= 1) {
                 originTile.removeUnit(unit);
                 destinationTile.addUnit(unit);
                 int newMP;
-                if (unit.getMp() >= destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) {
-                    newMP = unit.getMp() - destinationTile.getMpCost() - destinationTile.getAttribute().getMpCost();
+                if (!isRiverOnWay(originTile, destinationTile, map)) {
+                    if (unit.getMp() >= destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) {
+                        newMP = unit.getMp() - destinationTile.getMpCost() - destinationTile.getAttribute().getMpCost();
+                    }
+                    else {
+                        newMP = 0;
+                    }
                 }
                 else {
-                    newMP = 0;
+                    if (isThereRoadOrRail(originTile, destinationTile)) {
+                        if (isTechnologyAvailable(civilization, "construction")) {
+                            newMP = unit.getMp() - (destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) / 2;
+                        }
+                        else {
+                            newMP = unit.getMp() - (destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) / 2 + 1;
+                        }
+                    }
+                    else {
+                        newMP = 0;
+                    }
                 }
+                if (newMP < 0) newMP = 0;
                 unit.getPath().remove(i);
                 unit.setMp(newMP);
             }
