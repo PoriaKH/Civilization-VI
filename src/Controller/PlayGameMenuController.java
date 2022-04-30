@@ -2139,7 +2139,7 @@ public class PlayGameMenuController {
             }
         return "no such improvement exists!";
     }
-    public String removeRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
+    public String removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -2168,7 +2168,7 @@ public class PlayGameMenuController {
         str = "the road will be removed in 3 turns";
         return str;
     }
-    public String removeRailRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
+    public String removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
