@@ -1868,136 +1868,128 @@ public class PlayGameMenuController {
         else
             return "this tile isn't your city tiles or city neighbors";
     }
+    public Unit preCreateImprovement(int civilianNumber, Civilization civilization){
+        ArrayList<City> cities = civilization.getCities();
+        ArrayList<Tile> cityTiles = new ArrayList<>();
+        for (int i = 0; i < cities.size(); i++) {
+            ArrayList<Tile> tiles = cities.get(i).getTiles();
+            for (int j = 0; j < tiles.size(); j++)
+                cityTiles.add(tiles.get(j));
+        }
+        ArrayList<Unit> allUnits = new ArrayList<>();
+        for (int i = 0; i < cities.size(); i++) {
+            ArrayList<Unit> units = cityTiles.get(i).getUnits();
+            for (int j = 0; j < units.size(); j++)
+                allUnits.add(units.get(j));
+        }
+        return allUnits.get(civilianNumber);
+    }
     public String createImprovement(Civilization civilization, Civilian civilian, int tileNumber, String improvementName, ArrayList<Tile> map){
-        Tile tile = map.get(tileNumber);
-        ArrayList<Technology> techs = civilization.getTechnologies();
-        ArrayList<String> technologies = new ArrayList<>();
-        for (int i = 0; i < techs.size(); i++)
-            technologies.add(techs.get(i).getName());
-        if (improvementName.equals("camp")){//camp duration = 5
-            if (tile.getAttribute().isJungle() || tile.isTundra() || tile.isHill() || tile.isDesert()) {
-                if (technologies.contains("trapping")) {
-                    Improvement improvement = new Improvement(true, false, false, false, false, false, false, false, false, 0, 0, 0);
-                    tile.addToImprovementEarnedPercent(improvement, 5);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else
-                return "camp can't be build in this tile";
-        }
-        else if (improvementName.equals("farm")){
-            if (tile.getAttribute().isRainForest()) {
-                if (technologies.contains("mining tech")) {
-                    Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
-                    tile.addToImprovementEarnedPercent(improvement, 10);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else if (tile.getAttribute().isJungle()) {
-                if (technologies.contains("bronze working tech")){
-                    Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
-                    tile.addToImprovementEarnedPercent(improvement, 13);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else if (tile.getAttribute().isMarsh()) {
-                if (technologies.contains("masonry tech")){
-                    Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
-                    tile.addToImprovementEarnedPercent(improvement, 12);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else
-                return "farm can't be build in this tile";
-        }
-        else if (improvementName.equals("lumberMill")){     //duration = 7
-            if (tile.getAttribute().isJungle()) {
-                if (technologies.contains("building")) {
-                    Improvement improvement = new Improvement(false, false, true, false, false, false, false, false, false, 0, 1, 0);
-                    tile.addToImprovementEarnedPercent(improvement, 7);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else
-                return "lumberMill can't be build in this tile";
-        }
-        else if (improvementName.equals("mine")){       //duration = 14
-            if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow() || tile.isHill() || tile.getAttribute().isJungle() || tile.getAttribute().isRainForest() || tile.getAttribute().isMarsh()) {
-                if (technologies.contains("mining tech")) {
-                    Improvement improvement = new Improvement(false, false, false, true, false, false, false, false, false, 0, 1, 0);
-                    tile.addToImprovementEarnedPercent(improvement, 14);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else
-                return "mine can't be build in this tile";
-        }
-        else if (improvementName.equals("paddock")){        //duration = 8
-            if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isHill()) {
-                Improvement improvement = new Improvement(false, false, false, false, true, false, false, false, false, 0, 0, 0);
-                tile.addToImprovementEarnedPercent(improvement, 8);
-            }
-            else
-                return "paddock can't be build in this tile";
-        }
-        else if (improvementName.equals("agriculture")){
-            if (tile.isPlain() || tile.isMeadow() || tile.getAttribute().isJungle() || tile.getAttribute().isRainForest() || tile.getAttribute().isMarsh() || tile.getAttribute().isPlat()) {
-                if (technologies.contains("date")) {        //duration = 5
-                    Improvement improvement = new Improvement(false, false, false, false, false, true, false, false, false, 0, 0, 0);
-                    tile.addToImprovementEarnedPercent(improvement, 5);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else
-                return "agriculture can't be build in this tile";
-        }
-        else if (improvementName.equals("stoneMine")){      //duration = 15
-            if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isHill()) {
-                if (technologies.contains("stone mining tech")) {
-                    Improvement improvement = new Improvement(false, false, false, false, false, false, true, false, false, 0, 0, 0);
-                    tile.addToImprovementEarnedPercent(improvement, 15);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else
-                return "stoneMine can't be build in this tile";
-        }
-        else if (improvementName.equals("tradingPost")){        //duration = 10
-            if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra()) {
-                if (technologies.contains("trapping")) {
-                    Improvement improvement = new Improvement(false, false, false, false, false, false, false, true, false, 0, 0, 1);
-                    tile.addToImprovementEarnedPercent(improvement, 10);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else
-                return "tradingPost can't be build in this tile";
-        }
-        else if (improvementName.equals("laboratory")){     //duration = 20
-            //plain, dessert, meadow, tundra, snow
-            if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow()) {
-                if (technologies.contains("engineering")) {
-                    Improvement improvement = new Improvement(false, false, false, false, false, false, false, false, true, 0, 2, 0);
-                    tile.addToImprovementEarnedPercent(improvement, 20);
-                }
-                else
-                    return "you don't have the prerequisite technology";
-            }
-            else
-                return "laboratory can't be build in this tile";
+        if (civilian.isWorker()) {
+            Tile tile = map.get(tileNumber);
+            ArrayList<Technology> techs = civilization.getTechnologies();
+            ArrayList<String> technologies = new ArrayList<>();
+            for (int i = 0; i < techs.size(); i++)
+                technologies.add(techs.get(i).getName());
+            if (improvementName.equals("camp")) {//camp duration = 5
+                if (tile.getAttribute().isJungle() || tile.isTundra() || tile.isHill() || tile.isDesert()) {
+                    if (technologies.contains("trapping")) {
+                        Improvement improvement = new Improvement(true, false, false, false, false, false, false, false, false, 0, 0, 0);
+                        tile.addToImprovementEarnedPercent(improvement, 5);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else
+                    return "camp can't be build in this tile";
+            } else if (improvementName.equals("farm")) {
+                if (tile.getAttribute().isRainForest()) {
+                    if (technologies.contains("mining tech")) {
+                        Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
+                        tile.addToImprovementEarnedPercent(improvement, 10);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else if (tile.getAttribute().isJungle()) {
+                    if (technologies.contains("bronze working tech")) {
+                        Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
+                        tile.addToImprovementEarnedPercent(improvement, 13);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else if (tile.getAttribute().isMarsh()) {
+                    if (technologies.contains("masonry tech")) {
+                        Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
+                        tile.addToImprovementEarnedPercent(improvement, 12);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else
+                    return "farm can't be build in this tile";
+            } else if (improvementName.equals("lumberMill")) {     //duration = 7
+                if (tile.getAttribute().isJungle()) {
+                    if (technologies.contains("building")) {
+                        Improvement improvement = new Improvement(false, false, true, false, false, false, false, false, false, 0, 1, 0);
+                        tile.addToImprovementEarnedPercent(improvement, 7);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else
+                    return "lumberMill can't be build in this tile";
+            } else if (improvementName.equals("mine")) {       //duration = 14
+                if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow() || tile.isHill() || tile.getAttribute().isJungle() || tile.getAttribute().isRainForest() || tile.getAttribute().isMarsh()) {
+                    if (technologies.contains("mining tech")) {
+                        Improvement improvement = new Improvement(false, false, false, true, false, false, false, false, false, 0, 1, 0);
+                        tile.addToImprovementEarnedPercent(improvement, 14);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else
+                    return "mine can't be build in this tile";
+            } else if (improvementName.equals("paddock")) {        //duration = 8
+                if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isHill()) {
+                    Improvement improvement = new Improvement(false, false, false, false, true, false, false, false, false, 0, 0, 0);
+                    tile.addToImprovementEarnedPercent(improvement, 8);
+                } else
+                    return "paddock can't be build in this tile";
+            } else if (improvementName.equals("agriculture")) {
+                if (tile.isPlain() || tile.isMeadow() || tile.getAttribute().isJungle() || tile.getAttribute().isRainForest() || tile.getAttribute().isMarsh() || tile.getAttribute().isPlat()) {
+                    if (technologies.contains("date")) {        //duration = 5
+                        Improvement improvement = new Improvement(false, false, false, false, false, true, false, false, false, 0, 0, 0);
+                        tile.addToImprovementEarnedPercent(improvement, 5);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else
+                    return "agriculture can't be build in this tile";
+            } else if (improvementName.equals("stoneMine")) {      //duration = 15
+                if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isHill()) {
+                    if (technologies.contains("stone mining tech")) {
+                        Improvement improvement = new Improvement(false, false, false, false, false, false, true, false, false, 0, 0, 0);
+                        tile.addToImprovementEarnedPercent(improvement, 15);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else
+                    return "stoneMine can't be build in this tile";
+            } else if (improvementName.equals("tradingPost")) {        //duration = 10
+                if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra()) {
+                    if (technologies.contains("trapping")) {
+                        Improvement improvement = new Improvement(false, false, false, false, false, false, false, true, false, 0, 0, 1);
+                        tile.addToImprovementEarnedPercent(improvement, 10);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else
+                    return "tradingPost can't be build in this tile";
+            } else if (improvementName.equals("laboratory")) {     //duration = 20
+                //plain, dessert, meadow, tundra, snow
+                if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow()) {
+                    if (technologies.contains("engineering")) {
+                        Improvement improvement = new Improvement(false, false, false, false, false, false, false, false, true, 0, 2, 0);
+                        tile.addToImprovementEarnedPercent(improvement, 20);
+                    } else
+                        return "you don't have the prerequisite technology";
+                } else
+                    return "laboratory can't be build in this tile";
+            } else
+                return "no improvement with this name exists!";
+            civilian.setWorkingTile(tile);
+            tile.addUnit(civilian);
+            return "improvement created successfully";
         }
         else
-            return "no improvement with this name exists!";
-        return "improvement created successfully";
+            return "only workers can work on improvements";
     }
     // after every turn check for road or rail making in your civilization
     public void consumeTurnForRoadMaking (Civilization civilization, ArrayList<Tile> map) {
@@ -2098,10 +2090,54 @@ public class PlayGameMenuController {
         str = "the rail way will be ready in 3 turns";
         return str;
     }
-    public String removeImprovement(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
-        String str;
-
-        return str;
+    public Improvement preRemoveImprovement(String improvementName){
+        if (improvementName.equals("camp"))
+            return new Improvement(true, false, false, false, false, false, false, false, false, 0, 0, 0);
+        else if (improvementName.equals("farm"))
+            return new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
+        else if (improvementName.equals("lumberMill"))
+            return new Improvement(false, false, true, false, false, false, false, false, false, 0, 1, 0);
+        else if (improvementName.equals("mine"))
+            return new Improvement(false, false, false, true, false, false, false, false, false, 0, 1, 0);
+        else if (improvementName.equals("paddock"))
+            return new Improvement(false, false, false, false, true, false, false, false, false, 0, 0, 0);
+        else if (improvementName.equals("agriculture"))
+            return new Improvement(false, false, false, false, false, true, false, false, false, 0, 0, 0);
+        else if (improvementName.equals("stoneMine"))
+            return new Improvement(false, false, false, false, false, false, true, false, false, 0, 0, 0);
+        else if (improvementName.equals("tradingPost"))
+            return new Improvement(false, false, false, false, false, false, false, true, false, 0, 0, 1);
+        else if (improvementName.equals("laboratory"))
+           return new Improvement(false, false, false, false, false, false, false, false, true, 0, 2, 0);
+        else
+            return null;
+    }
+    public String removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map){
+        ArrayList<City> cities = civilization.getCities();
+        ArrayList<Tile> cityTiles = new ArrayList<>();
+        for (int i = 0; i < cities.size(); i++) {
+            ArrayList<Tile> tiles = cities.get(i).getTiles();
+            for (int j = 0; j < tiles.size(); j++)
+                cityTiles.add(tiles.get(j));
+        }
+        Tile tile = map.get(tileNumber);
+        boolean isOurs = false;
+        for (int i = 0; i < cityTiles.size(); i++) {
+            if (cityTiles.get(i).equals(tile)) {
+                isOurs = true;
+                break;
+            }
+        }
+        if (!isOurs)
+            return "this tile doesn't belong to your civilization";
+        ArrayList<Improvement> improvements = tile.getImprovements();
+        for (int i = 0; i < improvements.size(); i++)
+            if (improvements.get(i).equals(improvement)){
+                improvements.remove(i);
+                tile.setImprovements(improvements);
+                return "improvement deleted successfully";
+            }
+        return "no such improvement exists!";
     }
     public String removeRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
