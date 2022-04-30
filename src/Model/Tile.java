@@ -398,7 +398,8 @@ public class Tile {
         this.improvements.add(improvement);
     }
     public void addToImprovementEarnedPercent(Improvement improvement, Integer roundLeft){
-        this.improvementEarnedPercent.put(improvement, roundLeft);
+        if (!this.improvementEarnedPercent.containsKey(improvement))
+            this.improvementEarnedPercent.put(improvement, roundLeft);
         this.workingOnImprovement = improvement;
     }
     public void reduceImprovementRound(){
@@ -408,5 +409,8 @@ public class Tile {
             this.addImprovement(this.workingOnImprovement);
         }
         this.improvementEarnedPercent.replace(this.workingOnImprovement, roundLeft);
+    }
+    public void setImprovements (ArrayList<Improvement> improvements){
+        this.improvements = improvements;
     }
 }

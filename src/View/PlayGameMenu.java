@@ -2,8 +2,10 @@ package View;
 
 import Controller.PlayGameMenuController;
 import Model.Civilization;
+import Model.Improvement;
 import Model.Member;
 import Model.Tile;
+import Model.Units.Civilian;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -190,7 +192,8 @@ public class PlayGameMenu {
         String lockCitizenRegex = "lock citizen (?<origin>\\d+) (?<destination>\\d+)";//move citizen from origin to destination
         String purchaseTileRegex = "purchase tile (?<tile>\\d+)";
         String workOnTileRegex = "city (?<cityNumber>\\d+) citizen (?<citizenNumber>\\d+) work on --tile (?<tileNumber>\\d+)";
-        String createImprovement = "create improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+)";
+        String createImprovementRegex = "create improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+) --civilian (?<civilianNumber>\\d+)";
+        String removeImprovementRegex = "remove improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+)";
 
 
         String nextTurnRegex = "";
@@ -274,6 +277,31 @@ public class PlayGameMenu {
                     playingCivilization = civilizations.get(counter);
                     System.out.println("Civilization " + playingCivilization.getMember().getUsername() + " is playing!");
                 }
+            }
+            else if (command.matches(workOnTileRegex)){
+                Matcher matcher = Pattern.compile(workOnTileRegex).matcher(command);
+                int cityNumber = Integer.parseInt(matcher.group("cityNumber"));
+                int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
+                int citizenNumber = Integer.parseInt(matcher.group("citizenNumber"));
+                System.out.println(playGameMenuController.workOnTile(playingCivilization, cityNumber, tileNumber, citizenNumber, map));
+            }
+            else if (command.matches(createImprovementRegex)){
+                Matcher matcher = Pattern.compile(createImprovementRegex).matcher(command);
+                int civilianNumber = Integer.parseInt(matcher.group("civilianNumber"));
+                int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
+                String improvementName = matcher.group("improvementName");
+                Civilian civilian = (Civilian) playGameMenuController.preCreateImprovement(civilianNumber, playingCivilization);
+                System.out.println(playGameMenuController.createImprovement(playingCivilization, civilian, tileNumber, improvementName, map));
+            }
+            else if (command.matches(removeImprovementRegex)){
+                Matcher matcher = Pattern.compile(removeImprovementRegex).matcher(command);
+                String improvementName = matcher.group("improvementName");
+                int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
+                Improvement improvement = playGameMenuController.preRemoveImprovement(improvementName);
+                if (improvement == null)
+                    System.out.println("no such improvement exists!");
+                else
+                    System.out.println(playGameMenuController.removeImprovement(playingCivilization, improvement, tileNumber, map));
             }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");
