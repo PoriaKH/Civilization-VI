@@ -825,13 +825,18 @@ public class PlayGameMenuController {
             Tile originTile = unit.getPath().get(i).tile;
             Tile destinationTile = unit.getPath().get(i + 1).tile;
 
-            if (unit.getMp() >= destinationTile.getMpCost()) {
+            if (unit.getMp() >= 1) {
                 originTile.removeUnit(unit);
                 destinationTile.addUnit(unit);
-                int newMP = unit.getMp() - destinationTile.getMpCost();
+                int newMP;
+                if (unit.getMp() >= destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) {
+                    newMP = unit.getMp() - destinationTile.getMpCost();
+                }
+                else {
+                    newMP = 0;
+                }
                 unit.getPath().remove(i);
                 unit.setMp(newMP);
-                i++;
             }
             else {
                 str = "unit mp isn't enough, wait until next turn !";

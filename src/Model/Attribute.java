@@ -66,6 +66,14 @@ public class Attribute {
         //
     }
 
+    public int getMpCost() {
+        return mpCost;
+    }
+
+    public void setMpCost(int mpCost) {
+        this.mpCost = mpCost;
+    }
+
     public boolean isIce() {
         return isIce;
     }
