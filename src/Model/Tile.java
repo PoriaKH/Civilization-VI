@@ -399,6 +399,7 @@ public class Tile {
     }
     public void addToImprovementEarnedPercent(Improvement improvement, Integer roundLeft){
         this.improvementEarnedPercent.put(improvement, roundLeft);
+        this.workingOnImprovement = improvement;
     }
     public void reduceImprovementRound(){
         Integer roundLeft = this.improvementEarnedPercent.get(this.workingOnImprovement) - 1;

@@ -15,7 +15,8 @@ public class Improvement {
     private boolean isStoneMine;
     private boolean isTradingPost;
     private boolean isLaboratory;
-    public Improvement(boolean isCamp, boolean isFarm, boolean isLumberMill, boolean isMine, boolean isPaddock, boolean isAgriculture, boolean isStoneMine, boolean isTradingPost, boolean isLaboratory){
+    public Improvement(boolean isCamp, boolean isFarm, boolean isLumberMill, boolean isMine, boolean isPaddock,
+                       boolean isAgriculture, boolean isStoneMine, boolean isTradingPost, boolean isLaboratory, int food, int production, int gold){
         this.isCamp = isCamp;
         this.isFarm = isFarm;
         this.isLumberMill = isLumberMill;
@@ -25,6 +26,10 @@ public class Improvement {
         this.isStoneMine = isStoneMine;
         this.isTradingPost = isTradingPost;
         this.isLaboratory = isLaboratory;
+        this.isWorking = true;
+        this.food = food;
+        this.production = production;
+        this.gold = gold;
     }
 
     public int getFood() {
