@@ -1096,9 +1096,10 @@ public class PlayGameMenuController {
         int index = Integer.parseInt(matcher.group("number"));
         City city = findTile(index, map, civilization);
         Unit unit = makeUnit(civilization, city, map, unitName);
-        return createUnit(civilization, city, unit, map);
+        int turn = 1;//TODO ... calculate the turn
+        return createUnit(civilization, city, unit, map, turn);
     }
-    // TODO ... duration dorost set nashode 100 gozashtam felan
+
     public Unit makeUnit (Civilization civilization, City city, ArrayList<Tile> map, String unitName) {
         if (unitName.equals("archer")) {
            Warrior warrior = new Warrior(civilization, city.getCenterTile(), 10, 2, 2, 100, 70, false
@@ -1312,7 +1313,7 @@ public class PlayGameMenuController {
         }
     }
 
-    public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map){
+    public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map, int turn){
         String str;
 
         if (unit == null) {
@@ -1351,7 +1352,7 @@ public class PlayGameMenuController {
             return str;
         }
 
-        centerTile.addUnitToMakingProgress(unit, unit.getDuration());
+        centerTile.addUnitToMakingProgress(unit, turn);
         str = "unit will be created soon !";
         return str;
     }
@@ -1554,7 +1555,7 @@ public class PlayGameMenuController {
         }
         else
             return "no unit with this name exists!";
-        return this.createUnit(civilization, city, unit, map);
+        return this.createUnit(civilization, city, unit, map, 1);
     }
     public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         matcher.find();
