@@ -812,8 +812,11 @@ public class PlayGameMenuController {
     }
     // check origin and destination tiles , if both have same type of way(rail/road) return true
     public boolean isThereRoadOrRail (Tile origin, Tile destination) {
-        if (origin.isDoesHaveRoad() && destination.isDoesHaveRoad()) return true;
-        if (origin.isDoesHaveRailWay() && destination.isDoesHaveRailWay()) return true;
+        if (origin.isDoesHaveRoad() && destination.isDoesHaveRoad() &&
+                !origin.isRoadDamaged() && !destination.isRoadDamaged())
+            return true;
+        if (origin.isDoesHaveRailWay() && destination.isDoesHaveRailWay() &&
+        !origin.isRailDamaged() && !destination.isRailDamaged()) return true;
         return false;
     }
     // reset the mp of your civilization units
