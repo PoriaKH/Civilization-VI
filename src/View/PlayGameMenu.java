@@ -198,6 +198,8 @@ public class PlayGameMenu {
         String createRailwayRegex = "^create rail way on --tile (?<number>\\d+)$";
         String removeRoadRegex = "^remove road on --tile (?<number>\\d+)$";
         String removeRailwayRegex = "^remove rail way on --tile (?<number>\\d+)$";
+        String repairRoadRegex = "^repair road on --tile (?<number>\\d+)$";
+        String repairRailRegex = "^repair rail on --tile (?<number>\\d+)$";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -279,6 +281,12 @@ public class PlayGameMenu {
             }
             else if (command.matches(removeRailwayRegex)) {
                 System.out.println(playGameMenuController.removeRailRoad(playingCivilization, map.get(Integer.parseInt(matcher(removeRailwayRegex,command).group("number"))),map));
+            }
+            else if (command.matches(repairRoadRegex)) {
+                System.out.println(playGameMenuController.repairRoad(playingCivilization,map.get(Integer.parseInt(matcher(repairRoadRegex,command).group("number"))),map));
+            }
+            else if (command.matches(repairRailRegex)) {
+                System.out.println(playGameMenuController.repairRail(playingCivilization,map.get(Integer.parseInt(matcher(repairRailRegex,command).group("number"))),map));
             }
 
                 else if(command.matches(nextTurnRegex)){

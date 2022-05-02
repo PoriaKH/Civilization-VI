@@ -2306,7 +2306,7 @@ public class PlayGameMenuController {
 
         return str;
     }
-    public String repairRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
+    public String repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
 
         Unit unit = getWorker(tile);
@@ -2322,7 +2322,11 @@ public class PlayGameMenuController {
             str = "this unit is not worker !";
             return str;
         }
-        if (!tile.isRoadDamaged()) {
+        if (!tile.isDoesHaveRoad()) {
+            str = "there is no road way on this tile !";
+            return str;
+        }
+        if (tile.isDoesHaveRoad() && !tile.isRoadDamaged()) {
             str = "this road doesn't need repair!";
             return str;
         }
@@ -2336,7 +2340,7 @@ public class PlayGameMenuController {
         str = "the road way will be repaired in 3 turns";
         return str;
     }
-    public String repairRail(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
+    public String repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -2351,7 +2355,11 @@ public class PlayGameMenuController {
             str = "this unit is not worker !";
             return str;
         }
-        if (!tile.isRailDamaged()) {
+        if (!tile.isDoesHaveRailWay()) {
+            str = "there is no rail way on this tile !";
+            return str;
+        }
+        if (tile.isDoesHaveRailWay() && !tile.isRailDamaged()) {
             str = "this rail road doesn't need repair!";
             return str;
         }
