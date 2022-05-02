@@ -1294,6 +1294,23 @@ public class PlayGameMenuController {
         }
            return null;
     }
+    // every turn check city center for making new turn
+    public void checkForUnitMaking (Civilization civilization) {
+        ArrayList<City> cities = civilization.getCities();
+        for (int i = 0; i < cities.size(); i++) {
+            HashMap<Unit, Integer> units = cities.get(i).getCenterTile().getTurnForUnitMaking();
+           for (Map.Entry<Unit, Integer> entry : units.entrySet()) {
+               int turn = entry.getValue() - 1;
+               if (turn == 0) {
+                   cities.get(i).getCenterTile().addUnit(entry.getKey());
+                   cities.get(i).getCenterTile().removeUnitFromMakingProgress(entry.getKey());
+               }
+               else {
+                   cities.get(i).getCenterTile().setTurnForUnit(entry.getKey(), turn);
+               }
+           }
+        }
+    }
 
     public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map){
         String str;
@@ -1334,8 +1351,8 @@ public class PlayGameMenuController {
             return str;
         }
 
-        centerTile.addUnit(unit);
-        str = "unit created successfully!";
+        centerTile.addUnitToMakingProgress(unit, unit.getDuration());
+        str = "unit will be created soon !";
         return str;
     }
     public String purchaseUnit(Civilization civilization, ArrayList<Tile> map, Matcher matcher){

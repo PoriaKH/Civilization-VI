@@ -31,9 +31,10 @@ public class Tile {
 
     private Citizen citizen;
     private ArrayList<Unit> units;
+    private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
     private Resource resource;
     private Attribute attribute;
-    private ArrayList<Improvement> improvements;
+    private ArrayList<Improvement> improvements = new ArrayList<>();
 
 
     private ArrayList<Tile> roads;
@@ -210,12 +211,12 @@ public class Tile {
     }
 
     private Improvement workingOnImprovement;//if == null -> null
-    private HashMap<Improvement, Integer> improvementEarnedPercent;
+    private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
 
     private boolean doesHaveRoad;
     private boolean doesHaveRailWay;
-    private HashMap<Unit, Integer> workingOnRoadUntilFinish;
-    private HashMap<Unit, Integer> workingOnRailUntilFinish;
+    private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
+    private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
 
     public void assignWorkerToRoad (Unit unit, Integer turn) {
         workingOnRoadUntilFinish.put(unit, turn);
@@ -412,5 +413,19 @@ public class Tile {
     }
     public void setImprovements (ArrayList<Improvement> improvements){
         this.improvements = improvements;
+    }
+
+    public void setTurnForUnit (Unit unit, int turn) {
+        turnForUnitMaking.replace(unit, turn);
+    }
+    public void removeUnitFromMakingProgress(Unit unit) {
+        turnForUnitMaking.remove(unit);
+    }
+    public void addUnitToMakingProgress (Unit unit, int turn) {
+        turnForUnitMaking.put(unit, turn);
+    }
+
+    public HashMap<Unit, Integer> getTurnForUnitMaking() {
+        return turnForUnitMaking;
     }
 }

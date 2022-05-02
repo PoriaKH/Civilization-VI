@@ -20,6 +20,11 @@ public class Unit {
     private int movesLeft;
 
     private boolean isOnSleep;
+
+    public int getDuration() {
+        return duration;
+    }
+
     private boolean isOnWarFooting;//Amade bash
     private boolean isOnBoost;
     private boolean isOnBoostTillRecover;
