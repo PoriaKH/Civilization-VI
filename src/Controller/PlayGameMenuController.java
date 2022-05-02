@@ -2098,6 +2098,9 @@ public class PlayGameMenuController {
                             map.get(i).removeWorkerFromRoad(units.get(i1));
                             ((Civilian) units.get(i1)).setWorkingTile(null);
                             map.get(i).setDoesHaveRoad(typeOfWork);
+                            if (map.get(i).isRoadDamaged()) {
+                                map.get(i).setRoadDamaged(false);
+                            }
                         } else {
                             map.get(i).setNewNumberForTurnRoad(units.get(i1), newTurn);
                         }
@@ -2108,6 +2111,9 @@ public class PlayGameMenuController {
                                 map.get(i).removeWorkerFromRail(units.get(i1));
                                 ((Civilian) units.get(i1)).setWorkingTile(null);
                                 map.get(i).setDoesHaveRailWay(typeOfWork);
+                                if (map.get(i).isRailDamaged()) {
+                                    map.get(i).setRailDamaged(false);
+                                }
                             } else {
                                 map.get(i).setNewNumberForTurnRail(units.get(i1), newTurn);
                             }
@@ -2300,6 +2306,60 @@ public class PlayGameMenuController {
     public String repairRoad(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
+        Unit unit = getWorker(tile);
+        if (unit == null) {
+            str = "this tile doesn't have any worker !";
+            return str;
+        }
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this worker does not belong to you !";
+            return str;
+        }
+        if (!((Civilian)unit).isWorker()) {
+            str = "this unit is not worker !";
+            return str;
+        }
+        if (!tile.isRoadDamaged()) {
+            str = "this road doesn't need repair!";
+            return str;
+        }
+        if (((Civilian)unit).getWorkingTile() != null) {
+            str = "worker is working on something else !";
+            return str;
+        }
+
+        tile.assignWorkerToRoad(unit, 3);
+        ((Civilian)unit).setWorkingTile(tile);
+        str = "the road way will be repaired in 3 turns";
+        return str;
+    }
+    public String repairRail(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
+        String str;
+        Unit unit = getWorker(tile);
+        if (unit == null) {
+            str = "this tile doesn't have any worker !";
+            return str;
+        }
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this worker does not belong to you !";
+            return str;
+        }
+        if (!((Civilian)unit).isWorker()) {
+            str = "this unit is not worker !";
+            return str;
+        }
+        if (!tile.isRailDamaged()) {
+            str = "this rail road doesn't need repair!";
+            return str;
+        }
+        if (((Civilian)unit).getWorkingTile() != null) {
+            str = "worker is working on something else !";
+            return str;
+        }
+
+        tile.assignWorkerToRail(unit, 3);
+        ((Civilian)unit).setWorkingTile(tile);
+        str = "the rail way will be repaired in 3 turns";
         return str;
     }
     public String repairImprovement(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){

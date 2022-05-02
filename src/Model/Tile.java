@@ -215,6 +215,27 @@ public class Tile {
 
     private boolean doesHaveRoad;
     private boolean doesHaveRailWay;
+    private boolean isRoadDamaged; // if a unit attack to road/rail it is true
+    private boolean isRailDamaged;
+    public void setDesert(boolean desert) {
+        isDesert = desert;
+    }
+
+    public boolean isRoadDamaged() {
+        return isRoadDamaged;
+    }
+
+    public void setRoadDamaged(boolean roadDamaged) {
+        isRoadDamaged = roadDamaged;
+    }
+
+    public boolean isRailDamaged() {
+        return isRailDamaged;
+    }
+
+    public void setRailDamaged(boolean railDamaged) {
+        isRailDamaged = railDamaged;
+    }
     private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
     private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
 
