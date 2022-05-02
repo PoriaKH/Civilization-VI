@@ -816,6 +816,17 @@ public class PlayGameMenuController {
         if (origin.isDoesHaveRailWay() && destination.isDoesHaveRailWay()) return true;
         return false;
     }
+    // reset the mp of your civilization units
+    public void addMpEveryTurn(Civilization civilization, ArrayList<Tile> map) {
+        for (int i = 0; i < map.size(); i++) {
+            ArrayList<Unit> units = map.get(i).getUnits();
+            for (int i1 = 0; i1 < units.size(); i1++) {
+                if (units.get(i1).getCivilization().equals(civilization)) {
+                    units.get(i1).setMp(units.get(i1).getConstantMP());
+                }
+            }
+        }
+    }
 
     public String moveUnit (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
         String str;
