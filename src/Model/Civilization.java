@@ -13,11 +13,13 @@ public class Civilization {
     private int happiness;
     private ArrayList<City> cities;
     private HashMap<Civilization,Resource> trades;
+    private ArrayList<String> messages; // (int)turn : message
 
     private Technology workingOn;//if == null -> have to choose
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
+        messages = new ArrayList<>();
         this.member = member;
         this.capital = capital;
         cities = new ArrayList<>();

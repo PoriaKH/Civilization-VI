@@ -5,7 +5,7 @@ import Model.Units.Unit;
 import java.util.ArrayList;
 
 public class City {
-    private int gold;
+//    private int gold;
     private ArrayList<Citizen> citizens;
     private Tile centerTile;
     private ArrayList<Tile> tiles;
@@ -24,7 +24,7 @@ public class City {
             }
         }
 
-        this.gold = 0;
+//        this.gold = 0;
     }
 
     public boolean areTilesNeighbour(Tile tile1, Tile tile2){
@@ -42,12 +42,12 @@ public class City {
         return tiles;
     }
 
-    public int getGold() {
-        return gold;
-    }
-    public void setGold(int gold){
-        this.gold = gold;
-    }
+//    public int getGold() {
+//        return gold;
+//    }
+//    public void setGold(int gold){
+//        this.gold = gold;
+//    }
 
     public ArrayList<Citizen> getCitizens() {
         return citizens;
