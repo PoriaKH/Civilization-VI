@@ -203,6 +203,7 @@ public class PlayGameMenu {
         String deleteUnitRegex1 = "^delete --tile (?<number>\\d+) --unit (?<unitName>.+)$";
         String deleteUnitRegex2 = "^delete --unit (?<unitName>.+) --tile (?<number>\\d+)$";
         String unitPanelRegex = "^unit panel$";
+        String unitGeneralPanelRegex = "^unit general panel$";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -299,6 +300,9 @@ public class PlayGameMenu {
             }
             else if (command.matches(unitPanelRegex)) {
                 System.out.println(playGameMenuController.unitPanel(playingCivilization, map));
+            }
+            else if (command.matches(unitGeneralPanelRegex)) {
+                System.out.println(playGameMenuController.generalUnitReview(playingCivilization, map));
             }
 
                 else if(command.matches(nextTurnRegex)){
