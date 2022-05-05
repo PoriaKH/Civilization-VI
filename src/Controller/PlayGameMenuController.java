@@ -1776,6 +1776,9 @@ public class PlayGameMenuController {
         else if (command.equals("delete")) {
             return deleteUnit(civilization, unit, map, tile);
         }
+        else if (command.equals("recover")) {
+            return recoverUnit(civilization, unit, map, tile);
+        }
         return "";
     }
 
@@ -1956,9 +1959,43 @@ public class PlayGameMenuController {
         str = "the unit deleted successfully !";
         return str;
     }
-    public String recoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
-        String str;
 
+    public boolean tileIsForCity (Civilization civilization, Tile tile) {
+        ArrayList<City> cities = civilization.getCities();
+        for (int i = 0; i < cities.size(); i++) {
+            ArrayList<Tile> tiles = cities.get(i).getTiles();
+            for (int i1 = 0; i1 < tiles.size(); i1++) {
+                if (tiles.get(i1).equals(tile)) return true;
+            }
+        }
+        return false;
+    }
+    public String recoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map, Tile tile){
+        String str;
+        if (unit == null) {
+            str = "there is no unit with this name in selected tile !";
+            return str;
+        }
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        if (unit.getHealth() == 10) {
+            str = "this unit is fully healthy !";
+            return str;
+        }
+        //TODO ... agar dar navahi dostane bashad 2 afzayesh joon darad
+        int health = unit.getHealth();
+        if (tileIsForCity(civilization, tile)) {
+            health += 3;
+            if (health > 10) health = 10;
+        }
+        else {
+            health += 1;
+            if (health > 10) health = 10;
+        }
+        unit.setHealth(health);
+        str = "unit health increased !";
         return str;
     }
     public String preLockCitizen(Matcher matcher,Civilization civilization, ArrayList<Tile> map){
