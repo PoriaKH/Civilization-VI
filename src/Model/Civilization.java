@@ -14,6 +14,9 @@ public class Civilization {
     private ArrayList<City> cities;
     private HashMap<Civilization,Resource> trades;
     private ArrayList<String> messages; // (int)turn : message
+    private HashMap<Civilization, Integer> winsInUnitsWar; // tamadon shekast khorde va tedad bakht haye on ra neshan mide
+    private HashMap<Civilization, Integer> lossesInUnitsWar; // tamadon pirooz va tedad bord haye on ra neshan mide
+
 
     private Technology workingOn;//if == null -> have to choose
     private HashMap<Technology, Integer> technologyEarnedPercent;
@@ -76,5 +79,32 @@ public class Civilization {
 
     public void addGold(int gold) {
         this.gold += gold;
+    }
+
+    public void updateCountOfUnitWin (Civilization civilization, int count) {
+        winsInUnitsWar.replace(civilization, count);
+    }
+    public void updateCountOfUnitLose (Civilization civilization, int count) {
+        lossesInUnitsWar.replace(civilization, count);
+    }
+    public Integer getCountOfWins (Civilization civilization) {
+        return winsInUnitsWar.get(civilization);
+    }
+    public Integer getCountOfLosses (Civilization civilization) {
+        return lossesInUnitsWar.get(civilization);
+    }
+    public void addCivilizationToWinsUnit (Civilization civilization) {
+        winsInUnitsWar.put(civilization, 0);
+    }
+    public void addCivilizationToLossesUnit (Civilization civilization) {
+        lossesInUnitsWar.put(civilization, 0);
+    }
+
+    public HashMap<Civilization, Integer> getWinsInUnitsWar() {
+        return winsInUnitsWar;
+    }
+
+    public HashMap<Civilization, Integer> getLossesInUnitsWar() {
+        return lossesInUnitsWar;
     }
 }

@@ -587,8 +587,17 @@ public class PlayGameMenuController {
         return stringBuilder;
     }
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
-
+        StringBuilder stringBuilder = new StringBuilder();
+        HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();
+        HashMap<Civilization, Integer> losses = civilization.getLossesInUnitsWar();
+        stringBuilder.append("wins :" + "\n");
+        for(Map.Entry<Civilization, Integer> entry : wins.entrySet()) {
+            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + " number of wins : " + entry.getValue() + "\n");
+        }
+        stringBuilder.append("losses :" + "\n");
+        for(Map.Entry<Civilization, Integer> entry : losses.entrySet()) {
+            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + " number of losses : " + entry.getValue() + "\n");
+        }
         return stringBuilder;
     }
     public StringBuilder demographics(Civilization civilization,ArrayList<Tile> map){   //Jamiat shenasi
