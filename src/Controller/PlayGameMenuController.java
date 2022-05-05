@@ -480,9 +480,100 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
+    // return name of current unit
+    public String getUnitsName (Unit unit) {
+        if (unit.isCivilian()) {
+            if (((Civilian)unit).isWorker()) {
+                return "worker";
+            }
+            else {
+                return "settler";
+            }
+        }
+        else {
+            if (((Warrior)unit).isTank()) {
+                return "tank";
+            }
+            else if (((Warrior)unit).isPanzer()) {
+                return "panzer";
+            }
+            else if (((Warrior)unit).isWarrior()) {
+                return "warrior";
+            }
+            else if (((Warrior)unit).isInfantry()) {
+                return "infantry";
+            }
+            else if (((Warrior)unit).isArtillery()) {
+                return "artillery";
+            }
+            else if (((Warrior)unit).isArcher()) {
+                return "archer";
+            }
+            else if (((Warrior)unit).isChariotArcher()) {
+                return "chariot archer";
+            }
+            else if (((Warrior)unit).isScout()) {
+                return "scout";
+            }
+            else if (((Warrior)unit).isSpearman()) {
+                return "spearman";
+            }
+            else if (((Warrior)unit).isCatapult()) {
+                return "catapult";
+            }
+            else if (((Warrior)unit).isHorseMan()) {
+                return "horseman";
+            }
+            else if (((Warrior)unit).isSwordsMan()) {
+                return "swordsman";
+            }
+            else if (((Warrior)unit).isCrossbowMan()) {
+                return "crossbowman";
+            }
+            else if (((Warrior)unit).isKnight()) {
+                return "knight";
+            }
+            else if (((Warrior)unit).isLongswordMan()) {
+                return "longsword man";
+            }
+            else if (((Warrior)unit).isPikeMan()) {
+                return "pike man";
+            }
+            else if (((Warrior)unit).isTrebuchet()) {
+                return "trebuchet";
+            }
+            else if (((Warrior)unit).isCanon()) {
+                return "canon";
+            }
+            else if (((Warrior)unit).isCavalry()) {
+                return "cavalry";
+            }
+            else if (((Warrior)unit).isLancer()) {
+                return "lancer";
+            }
+            else if (((Warrior)unit).isMusketMan()) {
+                return "musket man";
+            }
+            else if (((Warrior)unit).isRifleMan()) {
+                return "rifle man";
+            }
+            else if (((Warrior)unit).isAntiTankGun()) {
+                return "anti tank gun";
+            }
+        }
+        return "";
+    }
     public StringBuilder unitPanel(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
-
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < map.size(); i++) {
+            ArrayList<Unit> unitsOfTile = map.get(i).getUnits();
+            for (int i1 = 0; i1 < unitsOfTile.size(); i1++) {
+                if (unitsOfTile.get(i1).getCivilization().equals(civilization)) {
+                    String name = getUnitsName(unitsOfTile.get(i1));
+                    stringBuilder.append("unit " + name + " health : " + unitsOfTile.get(i1).getHealth() + " on tile number: " + i + "\n");
+                }
+            }
+        }
         return stringBuilder;
     }
     public StringBuilder cityPanel(Civilization civilization,ArrayList<Tile> map){
