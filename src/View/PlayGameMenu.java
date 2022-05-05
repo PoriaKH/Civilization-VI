@@ -215,6 +215,8 @@ public class PlayGameMenu {
         String unitPanelRegex = "^unit panel$";
         String unitGeneralPanelRegex = "^unit general panel$";
         String victoryImprovementRegex = "^victory improvement$";
+        String recoverUnitRegex1 = "^recover --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String recoverUnitRegex2 = "^recover --unit (?<unitName>.+) --tile (?<number>\\d+)$";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -317,6 +319,12 @@ public class PlayGameMenu {
             }
             else if (command.matches(victoryImprovementRegex)) {
                 System.out.println(playGameMenuController.victoryImprovement(playingCivilization, map));
+            }
+            else if (command.matches(recoverUnitRegex1)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(recoverUnitRegex1,command),playingCivilization,map,"recover"));
+            }
+            else if (command.matches(recoverUnitRegex2)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(recoverUnitRegex2,command),playingCivilization,map,"recover"));
             }
 
                 else if(command.matches(nextTurnRegex)){
