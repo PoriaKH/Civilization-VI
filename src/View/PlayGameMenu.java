@@ -217,6 +217,12 @@ public class PlayGameMenu {
         String victoryImprovementRegex = "^victory improvement$";
         String recoverUnitRegex1 = "^recover --tile (?<number>\\d+) --unit (?<unitName>.+)$";
         String recoverUnitRegex2 = "^recover --unit (?<unitName>.+) --tile (?<number>\\d+)$";
+        String updateUnitRegex1 = "^update warrior --tile (?<number>\\d+) --oldUnit (?<oldUnitName>.+) --newUnit (?<newUnitName>.+)$";
+        String updateUnitRegex2 = "^update warrior --tile (?<number>\\d+) --newUnit (?<newUnitName>.+) --oldUnit (?<oldUnitName>.+)$";
+        String updateUnitRegex3 = "^update warrior --oldUnit (?<oldUnitName>.+) --tile (?<number>\\d+) --newUnit (?<newUnitName>.+)$";
+        String updateUnitRegex4 = "^update warrior --oldUnit (?<oldUnitName>.+) --newUnit (?<newUnitName>.+) --tile (?<number>\\d+)$";
+        String updateUnitRegex5 = "^update warrior --newUnit (?<newUnitName>.+) --tile (?<number>\\d+) --oldUnit (?<oldUnitName>.+)$";
+        String updateUnitRegex6 = "^update warrior --newUnit (?<newUnitName>.+) --oldUnit (?<oldUnitName>.+) --tile (?<number>\\d+)$";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -326,7 +332,24 @@ public class PlayGameMenu {
             else if (command.matches(recoverUnitRegex2)) {
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(recoverUnitRegex2,command),playingCivilization,map,"recover"));
             }
-
+            else if (command.matches(updateUnitRegex1)) {
+                System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex1,command),playingCivilization,map));
+            }
+            else if (command.matches(updateUnitRegex2)) {
+                System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex2,command),playingCivilization,map));
+            }
+            else if (command.matches(updateUnitRegex3)) {
+                System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex3,command),playingCivilization,map));
+            }
+            else if (command.matches(updateUnitRegex4)) {
+                System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex4,command),playingCivilization,map));
+            }
+            else if (command.matches(updateUnitRegex5)) {
+                System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex5,command),playingCivilization,map));
+            }
+            else if (command.matches(updateUnitRegex6)) {
+                System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex6,command),playingCivilization,map));
+            }
                 else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
 
