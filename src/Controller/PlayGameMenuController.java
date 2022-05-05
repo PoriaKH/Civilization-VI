@@ -1657,6 +1657,9 @@ public class PlayGameMenuController {
         else if (command.equals("wake")) {
             return wakeUpUnit(civilization, unit, map);
         }
+        else if (command.equals("delete")) {
+            return deleteUnit(civilization, unit, map, tile);
+        }
         return "";
     }
 
@@ -1823,9 +1826,18 @@ public class PlayGameMenuController {
         str = "selected unit is awake";
         return str;
     }
-    public String deleteUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
+    public String deleteUnit(Civilization civilization, Unit unit,ArrayList<Tile> map, Tile tile){
         String str;
-
+        if (unit == null) {
+            str = "there is no unit with this name in selected tile !";
+            return str;
+        }
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        tile.removeUnit(unit);
+        str = "the unit deleted successfully !";
         return str;
     }
     public String recoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
