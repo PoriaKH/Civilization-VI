@@ -170,6 +170,14 @@ public class Warrior extends Unit{
         return damage;
     }
 
+    public int getRangedCombatDamage() {
+        return rangedCombatDamage;
+    }
+
+    public void setRangedCombatDamage(int rangedCombatDamage) {
+        this.rangedCombatDamage = rangedCombatDamage;
+    }
+
     public int getRange() {
         return range;
     }

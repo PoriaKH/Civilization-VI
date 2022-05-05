@@ -602,8 +602,24 @@ public class PlayGameMenuController {
         return stringBuilder;
     }
     public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
-
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < map.size(); i++) {
+            ArrayList<Unit> unitsOfTile = map.get(i).getUnits();
+            for (int i1 = 0; i1 < unitsOfTile.size(); i1++) {
+                if (unitsOfTile.get(i1).getCivilization().equals(civilization)) {
+                    String name = getUnitsName(unitsOfTile.get(i1));
+                    stringBuilder.append("unit " + name + " health : " + unitsOfTile.get(i1).getHealth());
+                    if (unitsOfTile.get(i1).isCivilian()) {
+                        stringBuilder.append(" damage : N/A" + "\n");
+                    }
+                    else {
+                        stringBuilder.append(" damage: " + ((Warrior)unitsOfTile.get(i1)).getDamage() +
+                                " range: " + ((Warrior)unitsOfTile.get(i1)).getRange() + " range damage: " +
+                                ((Warrior)unitsOfTile.get(i1)).getRangedCombatDamage() + "\n");
+                    }
+                }
+            }
+        }
         return stringBuilder;
     }
     public StringBuilder economicalReview(Civilization civilization,ArrayList<Tile> map){
