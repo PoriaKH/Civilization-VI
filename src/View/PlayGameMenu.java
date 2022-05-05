@@ -200,6 +200,8 @@ public class PlayGameMenu {
         String removeRailwayRegex = "^remove rail way on --tile (?<number>\\d+)$";
         String repairRoadRegex = "^repair road on --tile (?<number>\\d+)$";
         String repairRailRegex = "^repair rail on --tile (?<number>\\d+)$";
+        String deleteUnitRegex1 = "^delete --tile (?<number>\\d+) --unit (?<unitName>.+)$";
+        String deleteUnitRegex2 = "^delete --unit (?<unitName>.+) --tile (?<number>\\d+)$";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -287,6 +289,12 @@ public class PlayGameMenu {
             }
             else if (command.matches(repairRailRegex)) {
                 System.out.println(playGameMenuController.repairRail(playingCivilization,map.get(Integer.parseInt(matcher(repairRailRegex,command).group("number"))),map));
+            }
+            else if (command.matches(deleteUnitRegex1)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(deleteUnitRegex1,command),playingCivilization,map,"delete"));
+            }
+            else if (command.matches(deleteUnitRegex2)) {
+                System.out.println(playGameMenuController.preUnitBehaviour(matcher(deleteUnitRegex2,command),playingCivilization,map,"delete"));
             }
 
                 else if(command.matches(nextTurnRegex)){
