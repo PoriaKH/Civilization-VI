@@ -576,8 +576,31 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    public StringBuilder cityPanel(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
+    public StringBuilder cityPanel(Civilization civilization,ArrayList<Tile> map,ArrayList<Civilization> civilizations){
+        StringBuilder stringBuilder = new StringBuilder("");//"Civilization name" :
+        //                             Capital : tile numbers
+        //                             City 2  : tile numbers
+        //                                      ...
+        //                             City n  : tile numbers
+
+        for(Civilization tempCivilization : civilizations){
+            stringBuilder.append(tempCivilization.getMember().getNickname()).append(" :\nCapital : ");
+            City capital = tempCivilization.getCapital();
+            for(Tile tile : capital.getTiles()){
+                stringBuilder.append(tile.getTileNumber()).append(" ");
+            }
+            stringBuilder.append("\n");
+            for(int i = 0; i < tempCivilization.getCities().size(); i++){
+                City tempCity = tempCivilization.getCities().get(i);
+                if(tempCity != tempCivilization.getCapital()){
+                    stringBuilder.append(tempCivilization.getMember().getNickname()).append(" : \n").append("City ").append(i + 2).append("  : ");
+                    for(Tile tile : tempCity.getTiles()){
+                        stringBuilder.append(tile.getTileNumber()).append(" ");
+                    }
+                    stringBuilder.append("\n");
+                }
+            }
+        }
 
         return stringBuilder;
     }
