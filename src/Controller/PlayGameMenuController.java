@@ -576,7 +576,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    public StringBuilder cityPanel(Civilization civilization,ArrayList<Tile> map,ArrayList<Civilization> civilizations){
+    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations){
         StringBuilder stringBuilder = new StringBuilder("");//"Civilization name" :
         //                             Capital : tile numbers
         //                             City 2  : tile numbers

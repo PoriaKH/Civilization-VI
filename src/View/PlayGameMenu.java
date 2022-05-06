@@ -223,6 +223,7 @@ public class PlayGameMenu {
         String updateUnitRegex4 = "^update warrior --oldUnit (?<oldUnitName>.+) --newUnit (?<newUnitName>.+) --tile (?<number>\\d+)$";
         String updateUnitRegex5 = "^update warrior --newUnit (?<newUnitName>.+) --tile (?<number>\\d+) --oldUnit (?<oldUnitName>.+)$";
         String updateUnitRegex6 = "^update warrior --newUnit (?<newUnitName>.+) --oldUnit (?<oldUnitName>.+) --tile (?<number>\\d+)$";
+        String cityPanelRegex = "city panel";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -349,6 +350,9 @@ public class PlayGameMenu {
             }
             else if (command.matches(updateUnitRegex6)) {
                 System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex6,command),playingCivilization,map));
+            }
+            else if(command.matches(cityPanelRegex)){
+                System.out.println(playGameMenuController.cityPanel(map,civilizations));
             }
                 else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
