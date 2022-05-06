@@ -655,7 +655,19 @@ public class PlayGameMenuController {
         return stringBuilder;
     }
     public StringBuilder economicalReview(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
+        StringBuilder stringBuilder = new StringBuilder("");
+        stringBuilder.append("Number of cities : ").append(civilization.getCities().size()).append("-----------------------").append("\n");
+        for(int i = 0; i < civilization.getCities().size(); i++){
+            City city = civilization.getCities().get(i);
+            stringBuilder.append("City ").append(i).append(" :\n");
+            stringBuilder.append("Population : ").append(city.getCitizens().size()).append("\n");
+            stringBuilder.append("Defence Strength : ").append(city.getDefenceStrength()).append("\n");
+            stringBuilder.append("Food per Turn : ").append(city.getFood()).append("\n");
+            stringBuilder.append("Science per Turn : ").append(city.getSciencePerTurn()).append("\n");
+            stringBuilder.append("Gold per Turn : ").append(city.getGold()).append("\n");
+            stringBuilder.append("Production per Turn : ").append(city.getProduction());
+            stringBuilder.append("-----------------------")
+        }
 
         return stringBuilder;
     }
