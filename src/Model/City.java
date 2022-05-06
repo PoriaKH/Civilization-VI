@@ -1,6 +1,7 @@
 package Model;
 
 import Model.Units.Unit;
+import Model.Units.Warrior;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,29 @@ public class City {
         }
 
 //        this.gold = 0;
+    }
+    public int getDefenceStrength(){
+        this.defenceStrength = 0;
+        //every tile adds +3 point
+        this.defenceStrength += 3 * tiles.size();
+
+        //add units strength
+        for(Tile tile : getTiles()){
+            for(Unit unit : tile.getUnits()){
+                if(!unit.isCivilian()){
+                    Warrior warrior = (Warrior) unit;
+                    this.defenceStrength += warrior.getCombatStrength();
+                }
+            }
+        }
+        return this.defenceStrength;
+    }
+
+    public int getSciencePerTurn() {
+        //every citizen adds +10 point
+        this.sciencePerTurn += 10 * citizens.size();
+
+        return sciencePerTurn;
     }
 
     public boolean areTilesNeighbour(Tile tile1, Tile tile2){

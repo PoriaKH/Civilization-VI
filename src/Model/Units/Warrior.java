@@ -184,4 +184,20 @@ public class Warrior extends Unit{
     public int getRange() {
         return range;
     }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public boolean isReadyForRangedBattle() {
+        return isReadyForRangedBattle;
+    }
+
+    public int getCombatStrength() {
+        return combatStrength;
+    }
+
+    public int getRangedCombatStrength() {
+        return rangedCombatStrength;
+    }
 }
