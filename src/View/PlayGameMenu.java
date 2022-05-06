@@ -226,6 +226,7 @@ public class PlayGameMenu {
         String cityPanelRegex = "city panel";
         String economicalReviewRegex = "economical review";
         String demographicsRegex = "demographics";
+        String showCurrentScoreRegex = "show score";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -361,6 +362,9 @@ public class PlayGameMenu {
             }
             else if(command.matches(demographicsRegex)){
                 System.out.println(playGameMenuController.demographics(civilizations,map));
+            }
+            else if(command.matches(showCurrentScoreRegex)){
+                System.out.println(playGameMenuController.showCurrentScore(civilizations));
             }
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
