@@ -32,7 +32,6 @@ public class Warrior extends Unit{
     private boolean isInfantry;
     private boolean isPanzer;
     private boolean isTank;
-
     private boolean isReadyForRangedBattle;
 
     public boolean isScout() {
@@ -63,6 +62,10 @@ public class Warrior extends Unit{
         return isHorseMan;
     }
 
+
+    private int combatStrength;
+    private int rangedCombatStrength;
+    //TODO... set combatStrength and rangedCombatStrength at constructor
     public Warrior(Civilization civilization, Tile origin, int health, int MP, int mp, int duration, int goldCost, boolean isCivilian, int xp, int damage, int range, int rangedCombatDamage, boolean isScout, boolean isWarrior, boolean isArcher, boolean isChariotArcher, boolean isSpearman, boolean isCatapult, boolean isHorseMan, boolean isSwordsMan, boolean isCrossbowMan, boolean isKnight, boolean isLongswordMan, boolean isPikeMan, boolean isTrebuchet, boolean isCanon, boolean isCavalry, boolean isLancer, boolean isMusketMan, boolean isRifleMan, boolean isAntiTankGun, boolean isArtillery, boolean isInfantry, boolean isPanzer, boolean isTank) {
         super(civilization, origin, health, MP, mp, duration, goldCost, isCivilian);
         this.xp = xp;
