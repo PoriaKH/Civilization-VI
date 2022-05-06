@@ -6,7 +6,9 @@ import Model.Units.Warrior;
 import java.util.ArrayList;
 
 public class City {
-//    private int gold;
+    private int gold;
+    private int food;
+
     private ArrayList<Citizen> citizens;
     private Tile centerTile;
     private ArrayList<Tile> tiles;
@@ -25,10 +27,12 @@ public class City {
             }
         }
 
-//        this.gold = 0;
+        this.gold = 0;
+        this.sciencePerTurn = 0;
+        this.defenceStrength = 0;
+        this.food = 0;
     }
     public int getDefenceStrength(){
-        this.defenceStrength = 0;
         //every tile adds +3 point
         this.defenceStrength += 3 * tiles.size();
 
@@ -51,6 +55,14 @@ public class City {
         return sciencePerTurn;
     }
 
+    public int getGold(){
+        for(Tile tile : tiles){
+            if(tile.getCitizen() != null){
+
+            }
+        }
+    }
+
     public boolean areTilesNeighbour(Tile tile1, Tile tile2){
         float distance = (float)Math.sqrt(Math.pow(tile1.getX() - tile2.getX(), 2) + Math.pow(tile1.getY() - tile2.getY(), 2));
         if(distance <= tile1.getRadius() * Math.sqrt(3))
@@ -66,12 +78,6 @@ public class City {
         return tiles;
     }
 
-//    public int getGold() {
-//        return gold;
-//    }
-//    public void setGold(int gold){
-//        this.gold = gold;
-//    }
 
     public ArrayList<Citizen> getCitizens() {
         return citizens;

@@ -97,4 +97,24 @@ public class Attribute {
     public boolean isRainForest() {
         return isRainForest;
     }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getProduction() {
+        return production;
+    }
+
+    public int getCombatChange() {
+        return combatChange;
+    }
+
+    public boolean isBlocker() {
+        return isBlocker;
+    }
 }

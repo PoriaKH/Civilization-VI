@@ -204,6 +204,14 @@ public class Tile {
             }
         }
         //
+        if(this.attribute != null) {
+            this.food += this.attribute.getFood();
+            this.production += this.attribute.getProduction();
+            this.gold += this.attribute.getGold();
+            this.combatChange += this.attribute.getCombatChange();
+            this.mpCost += this.attribute.getMpCost();
+            this.combatChange += this.attribute.getCombatChange();
+        }
     }
 
     public void setResource(Resource resource) {
