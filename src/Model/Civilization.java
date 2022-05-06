@@ -16,6 +16,7 @@ public class Civilization {
     private ArrayList<String> messages; // (int)turn : message
     private HashMap<Civilization, Integer> winsInUnitsWar; // tamadon shekast khorde va tedad bakht haye on ra neshan mide
     private HashMap<Civilization, Integer> lossesInUnitsWar; // tamadon pirooz va tedad bord haye on ra neshan mide
+    private int point;//to compare civilizations
 
 
     private Technology workingOn;//if == null -> have to choose
@@ -106,5 +107,21 @@ public class Civilization {
 
     public HashMap<Civilization, Integer> getLossesInUnitsWar() {
         return lossesInUnitsWar;
+    }
+
+    public int getPoint(){//set and get
+        this.point = 0;
+        //every tile adds 5 point
+        //every unit adds 15 points;
+        for(City city : cities){
+            for(Tile tile : city.getTiles()){
+                point += 15 * tile.getUnits().size();//for units
+                point += 5;//for tile
+            }
+        }
+        //each science adds 2 points
+        point += 2 * science;
+        //TODO... building points
+        return point;
     }
 }

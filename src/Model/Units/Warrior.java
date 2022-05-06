@@ -188,12 +188,4 @@ public class Warrior extends Unit{
     public boolean isReadyForRangedBattle() {
         return isReadyForRangedBattle;
     }
-
-    public int getCombatStrength() {
-        return combatStrength;
-    }
-
-    public int getRangedCombatStrength() {
-        return rangedCombatStrength;
-    }
 }

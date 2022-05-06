@@ -666,6 +666,7 @@ public class PlayGameMenuController {
             stringBuilder.append("Science per Turn : ").append(city.getSciencePerTurn()).append("\n");
             stringBuilder.append("Gold per Turn : ").append(city.getGold()).append("\n");
             stringBuilder.append("Production per Turn : ").append(city.getProduction());
+            //TODO... add units(koochak) and buildings duration to create
             stringBuilder.append("-----------------------")
         }
 

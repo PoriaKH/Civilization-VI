@@ -45,7 +45,7 @@ public class City {
             for(Unit unit : tile.getUnits()){
                 if(!unit.isCivilian()){
                     Warrior warrior = (Warrior) unit;
-                    this.defenceStrength += warrior.getCombatStrength();
+                    this.defenceStrength += warrior.getDamage();
                 }
             }
         }
