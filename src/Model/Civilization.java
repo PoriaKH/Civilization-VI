@@ -111,11 +111,13 @@ public class Civilization {
 
     public int getPoint(){//set and get
         this.point = 0;
+        //every city adds 15
+        point += cities.size();
         //every tile adds 5 point
-        //every unit adds 15 points;
+        //every unit adds 10 points;
         for(City city : cities){
             for(Tile tile : city.getTiles()){
-                point += 15 * tile.getUnits().size();//for units
+                point += 10 * tile.getUnits().size();//for units
                 point += 5;//for tile
             }
         }
