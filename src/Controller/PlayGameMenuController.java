@@ -654,7 +654,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    public StringBuilder economicalReview(Civilization civilization,ArrayList<Tile> map){
+    public StringBuilder economicalReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("Number of cities : ").append(civilization.getCities().size()).append("-----------------------").append("\n");
         for(int i = 0; i < civilization.getCities().size(); i++){
