@@ -2673,8 +2673,48 @@ public class PlayGameMenuController {
         str = "unit upgraded successfully !";
         return str;
     }
-    public StringBuilder showCurrentScore(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
+    public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations){
+        StringBuilder stringBuilder = new StringBuilder("");
+        int[] sortFlag = new int[civilizations.size()];
+        Civilization chosenCivilization = null;
+        int index = 0;
+
+        int Number = 1;
+        for(int i = 0; i < civilizations.size(); i++){
+            boolean theFlag = true;
+            for(int j = 0; j < civilizations.size(); j++){
+                if(sortFlag[j] == 1)
+                    continue;
+                if(theFlag) {
+                    chosenCivilization = civilizations.get(j);
+                    theFlag = false;
+                }
+                Civilization tempCivilization = civilizations.get(j);
+                if(tempCivilization.getPoint() > chosenCivilization.getPoint()){
+                    chosenCivilization = tempCivilization;
+                    index = j;
+                }
+            }
+            sortFlag[index] = 1;
+            int numOfTiles = 0;
+            for(City city : chosenCivilization.getCities()){
+                for(Tile tile : city.getTiles()){
+                    numOfTiles++;
+                }
+            }
+            int numOfUnits = 0;
+            for(Tile tile : map){
+                for(Unit unit : tile.getUnits()){
+                    if(unit.getCivilization() == chosenCivilization)
+                        numOfUnits++;
+                }
+            }
+            stringBuilder.append(chosenCivilization.getMember().getNickname()).append(" : \n");
+            stringBuilder.append("Rank : ").append(Number).append("\n");
+            stringBuilder.append("Points : ").append(chosenCivilization.getPoint()).append("\n");
+            stringBuilder.append("----------\n");
+            Number++;
+        }
 
         return stringBuilder;
     }
