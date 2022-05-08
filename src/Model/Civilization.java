@@ -67,7 +67,7 @@ public class Civilization {
     }
 
     public Technology getWorkingOn() {
-        return workingOn;
+        return workingOnTechnology;
     }
 
     public HashMap<Technology, Integer> getTechnologyEarnedPercent() {

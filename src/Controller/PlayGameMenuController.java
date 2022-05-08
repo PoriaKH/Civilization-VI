@@ -2199,9 +2199,208 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    public String chooseTechnologyToLearn(Civilization civilization, Technology technology,ArrayList<Tile> map){
+    public Technology preChooseTechnologyToLearn(String name){
+        if (name.equals("Agriculture")) {
+            Technology technology = new Technology(true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("AnimalHusbandry")) {
+            Technology technology = new Technology(false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Archery")) {
+            Technology technology = new Technology(false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("BronzeWorking")) {
+            Technology technology = new Technology(false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Calendar")) {
+            Technology technology = new Technology(false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Masonry")) {
+            Technology technology = new Technology(false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Mining")) {
+            Technology technology = new Technology(false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Pottery")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("TheWheel")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Trapping")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Writing")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Construction")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("HorsebackRiding")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("IronWorking")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Mathematics")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Philosophy")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Chivalry")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("CivilService")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Currency")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Education")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Engineering")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Machinery")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("MetalCasting")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Physics")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Steel")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Theology")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Acoustics")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Archaeology")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Banking")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Chemistry")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Economics")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Fertilizer")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Gunpowder")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Metallurgy")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("MilitaryScience")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("PrintingPress")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Rifling")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("ScientificTheory")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Biology")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Combustion")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Dynamite")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Electricity")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Radio")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Railroad")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Replaceable")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false);
+            return technology;
+        }
+        else if (name.equals("Parts")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false);
+            return technology;
+        }
+        else if (name.equals("SteamPower")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false);
+            return technology;
+        }
+        else if (name.equals("Telegraph")) {
+            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true);
+            return technology;
+        }
+        return null;
+    }
+    public String chooseTechnologyToLearn(Civilization civilization, String technologyName, ArrayList<Tile> map){
         String str;
-
+        Technology technology = preChooseTechnologyToLearn(technologyName);
+        if (technology == null)
+            return "no technology with this name exists";
+        if (civilization.getScience() < technology.getCost())
+            return "you don't have the needed amount of science";
         return str;
     }
     public String changeTechnologyToLearn(Civilization civilization, Technology newTechnology,ArrayList<Tile> map){

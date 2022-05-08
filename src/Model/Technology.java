@@ -51,7 +51,7 @@ public class Technology {
     private boolean isTelegraph;
     private int cost;
 
-    Technology(boolean isAgriculture, boolean isAnimalHusbandry, boolean isArchery, boolean isBronzeWorking,
+    public Technology(boolean isAgriculture, boolean isAnimalHusbandry, boolean isArchery, boolean isBronzeWorking,
                boolean isCalendar, boolean isMasonry, boolean isMining, boolean isPottery, boolean isTheWheel,
                boolean isTrapping, boolean isWriting, boolean isConstruction, boolean isHorsebackRiding,
                boolean isIronWorking, boolean isMathematics, boolean isPhilosophy, boolean isChivalry,
