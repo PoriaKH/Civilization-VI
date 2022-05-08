@@ -259,6 +259,7 @@ public class Tile {
     public int sizeOfHashMapRail () {
         return workingOnRailUntilFinish.size();
     }
+
     public Integer getNumberOfTurnsRail (Unit unit) {
         return workingOnRailUntilFinish.get(unit);
     }
