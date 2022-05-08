@@ -154,7 +154,7 @@ public class Civilization {
     public void reduceTechnologyRound(){
         if (workingOnTechnology  == null)
             return;
-        Integer roundLeft = this.technologyEarnedPercent.get(this.workingOnTechnology) - 1;
+        int roundLeft = this.technologyEarnedPercent.get(this.workingOnTechnology) - 1;
         if (roundLeft == 0) {
             this.technologyEarnedPercent.remove(this.workingOnTechnology);
             this.addTechnology(this.workingOnTechnology);

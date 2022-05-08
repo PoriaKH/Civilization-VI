@@ -2376,12 +2376,8 @@ public class PlayGameMenuController {
             Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false);
             return technology;
         }
-        else if (name.equals("Replaceable")) {
+        else if (name.equals("ReplaceableParts")) {
             Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false);
-            return technology;
-        }
-        else if (name.equals("Parts")) {
-            Technology technology = new Technology(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false);
             return technology;
         }
         else if (name.equals("SteamPower")) {
@@ -2394,14 +2390,473 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    public String chooseTechnologyToLearn(Civilization civilization, String technologyName, ArrayList<Tile> map){
+    public boolean hasPrerequisiteTechs(ArrayList<Technology> allTechnologies, String name){
+        if (name.equals("Agriculture"))
+            return true;
+        else if (name.equals("AnimalHusbandry")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isAgriculture())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Archery")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isAgriculture())
+                    return true;
+            return false;
+        }
+        else if (name.equals("BronzeWorking")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isMining())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Calendar")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isPottery())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Masonry")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isMining())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Mining")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isAgriculture())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Pottery")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isAgriculture())
+                    return true;
+            return false;
+        }
+        else if (name.equals("TheWheel")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isAnimalHusbandry())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Trapping")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isAnimalHusbandry())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Writing")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isPottery())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Construction")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isMasonry())
+                    return true;
+            return false;
+        }
+        else if (name.equals("HorsebackRiding")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isTheWheel())
+                    return true;
+            return false;
+        }
+        else if (name.equals("IronWorking")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isBronzeWorking())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Mathematics")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isTheWheel()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isArchery()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Philosophy")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isWriting())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Chivalry")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isCivilService()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isHorsebackRiding()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isCurrency()) {
+                    x++;
+                    break;
+                }
+            if (x == 3)
+                return true;
+            return false;
+        }
+        else if (name.equals("CivilService")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isPhilosophy()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isTrapping()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Currency")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isMathematics())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Education")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isTheology())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Engineering")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isMathematics()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isConstruction()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Machinery")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isEngineering())
+                    return true;
+            return false;
+        }
+        else if (name.equals("MetalCasting")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isIronWorking())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Physics")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isEngineering()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isMetalCasting()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Steel")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isMetalCasting())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Theology")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isCalendar()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isPhilosophy()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Acoustics")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isEducation())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Archaeology")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isAcoustics())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Banking")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isEducation()){
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isChivalry()){
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Chemistry")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isGunpowder())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Economics")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isBanking()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isPrintingPress()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Fertilizer")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isChemistry())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Gunpowder")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isPhysics()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isSteel()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Metallurgy")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isGunpowder())
+                    return true;
+            return false;
+        }
+        else if (name.equals("MilitaryScience")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isEconomics()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isChemistry()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("PrintingPress")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isMachinery()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isPhysics()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Rifling")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isMetallurgy())
+                    return true;
+            return false;
+        }
+        else if (name.equals("ScientificTheory")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isAcoustics())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Biology")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isArchaeology()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isScientificTheory()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Combustion")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isReplaceableParts()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isRailroad()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isDynamite()) {
+                    x++;
+                    break;
+                }
+            if (x == 3)
+                return true;
+            return false;
+        }
+        else if (name.equals("Dynamite")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isFertilizer()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isRifling()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Electricity")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isBiology()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isSteamPower()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Radio")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isElectricity())
+                    return true;
+            return false;
+        }
+        else if (name.equals("Railroad")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isSteamPower())
+                    return true;
+            return false;
+        }
+        else if (name.equals("ReplaceableParts")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isSteamPower())
+                    return true;
+            return false;
+        }
+        else if (name.equals("SteamPower")) {
+            int x = 0;
+            for (Technology technology : allTechnologies)
+                if (technology.isScientificTheory()) {
+                    x++;
+                    break;
+                }
+            for (Technology technology : allTechnologies)
+                if (technology.isMilitaryScience()) {
+                    x++;
+                    break;
+                }
+            if (x == 2)
+                return true;
+            return false;
+        }
+        else if (name.equals("Telegraph")) {
+            for (Technology technology : allTechnologies)
+                if (technology.isElectricity())
+                    return true;
+            return false;
+        }
+        return false;
+    }
+    public String chooseTechnologyToLearn(Civilization civilization, String technologyName){
         String str;
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
             return "no technology with this name exists";
         if (civilization.getScience() < technology.getCost())
             return "you don't have the needed amount of science";
-        return str;
+        ArrayList<Technology> allTechnologies = civilization.getTechnologies();
+        boolean hasPrerequisiteTechs = false;
+        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
+            return "you don't have the prerequisite techs to learn this technology";
+        if (technology.getCost() > 99)
+            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 100) + 2);
+        else
+            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
+        return "technology has been added to the learning technologies";
     }
     public String changeTechnologyToLearn(Civilization civilization, Technology newTechnology,ArrayList<Tile> map){
         String str;

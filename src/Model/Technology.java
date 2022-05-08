@@ -45,7 +45,7 @@ public class Technology {
     private boolean isElectricity;
     private boolean isRadio;
     private boolean isRailroad;
-    private boolean isReplaceable;
+    private boolean isReplaceableParts;
     private boolean isParts;
     private boolean isSteamPower;
     private boolean isTelegraph;
@@ -107,7 +107,7 @@ public class Technology {
         this.isElectricity = isElectricity;
         this.isRadio = isRadio;
         this.isRailroad = isRailroad;
-        this.isReplaceable = isReplaceable;
+        this.isReplaceableParts = isReplaceable;
         this.isParts = isParts;
         this.isSteamPower = isSteamPower;
         this.isTelegraph = isTelegraph;
@@ -383,12 +383,8 @@ public class Technology {
         return isRailroad;
     }
 
-    public boolean isReplaceable() {
-        return isReplaceable;
-    }
-
-    public boolean isParts() {
-        return isParts;
+    public boolean isReplaceableParts() {
+        return isReplaceableParts;
     }
 
     public boolean isSteamPower() {
