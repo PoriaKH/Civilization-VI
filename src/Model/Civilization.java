@@ -149,8 +149,6 @@ public class Civilization {
     public void addToTechnologyEarnedPercent(Technology technology, Integer roundLeft){
         if (!this.technologyEarnedPercent.containsKey(technology))
             this.technologyEarnedPercent.put(technology, roundLeft);
-        else
-            this.science += technology.getCost();
         this.workingOnTechnology = technology;
     }
     public void reduceTechnologyRound(){

@@ -50,6 +50,7 @@ public class Technology {
     private boolean isSteamPower;
     private boolean isTelegraph;
     private int cost;
+    private String name;
 
     public Technology(boolean isAgriculture, boolean isAnimalHusbandry, boolean isArchery, boolean isBronzeWorking,
                boolean isCalendar, boolean isMasonry, boolean isMining, boolean isPottery, boolean isTheWheel,
@@ -111,100 +112,198 @@ public class Technology {
         this.isParts = isParts;
         this.isSteamPower = isSteamPower;
         this.isTelegraph = isTelegraph;
-        if (isAgriculture)
+        if (isAgriculture) {
             this.cost = 20;
-        else if (isAnimalHusbandry)
+            this.name = "Agriculture";
+        }
+        else if (isAnimalHusbandry) {
             this.cost = 35;
-        else if (isArchery)
+            this.name = "";
+        }
+        else if (isArchery) {
             this.cost = 35;
-        else if (isBronzeWorking)
+            this.name = "AnimalHusbandry";
+        }
+        else if (isBronzeWorking) {
             this.cost = 55;
-        else if (isCalendar)
+            this.name = "";
+        }
+        else if (isCalendar) {
             this.cost = 70;
-        else if (isMasonry)
+            this.name = "BronzeWorking";
+        }
+        else if (isMasonry) {
             this.cost = 55;
-        else if (isMining)
+            this.name = "";
+        }
+        else if (isMining) {
             this.cost = 35;
-        else if (isPottery)
+            this.name = "Masonry";
+        }
+        else if (isPottery) {
             this.cost = 35;
-        else if (isTheWheel)
+            this.name = "Pottery";
+        }
+        else if (isTheWheel) {
             this.cost = 55;
-        else if (isTrapping)
+            this.name = "TheWheel";
+        }
+        else if (isTrapping) {
             this.cost = 55;
-        else if (isWriting)
+            this.name = "";
+        }
+        else if (isWriting) {
             this.cost = 55;
-        else if (isConstruction)
+            this.name = "Trapping";
+        }
+        else if (isConstruction) {
             this.cost = 100;
-        else if (isHorsebackRiding)
+            this.name = "Construction";
+        }
+        else if (isHorsebackRiding) {
             this.cost = 100;
-        else if (isIronWorking)
+            this.name = "HorsebackRiding";
+        }
+        else if (isIronWorking) {
             this.cost = 150;
-        else if (isMathematics)
+            this.name = "IronWorking";
+        }
+        else if (isMathematics) {
             this.cost = 100;
-        else if (isPhilosophy)
+            this.name = "Mathematics";
+        }
+        else if (isPhilosophy) {
             this.cost = 100;
-        else if (isChivalry)
+            this.name = "Philosophy";
+        }
+        else if (isChivalry) {
             this.cost = 440;
-        else if (isCivilService)
+            this.name = "Chivalry";
+        }
+        else if (isCivilService) {
             this.cost = 400;
-        else if (isCurrency)
+            this.name = "CivilService";
+        }
+        else if (isCurrency) {
             this.cost = 250;
-        else if (isEducation)
+            this.name = "Currency";
+        }
+        else if (isEducation) {
             this.cost = 440;
-        else if (isEngineering)
+            this.name = "Education";
+        }
+        else if (isEngineering) {
             this.cost = 250;
-        else if (isMachinery)
+            this.name = "Engineering";
+        }
+        else if (isMachinery) {
             this.cost = 440;
-        else if (isMetalCasting)
+            this.name = "Machinery";
+        }
+        else if (isMetalCasting) {
             this.cost = 240;
-        else if (isPhysics)
+            this.name = "MetalCasting";
+        }
+        else if (isPhysics) {
             this.cost = 440;
-        else if (isSteel)
+            this.name = "Physics";
+        }
+        else if (isSteel) {
             this.cost = 440;
-        else if (isTheology)
+            this.name = "Steel";
+        }
+        else if (isTheology) {
             this.cost = 250;
-        else if (isAcoustics)
+            this.name = "Theology";
+        }
+        else if (isAcoustics) {
             this.cost = 650;
-        else if (isArchaeology)
+            this.name = "Acoustics";
+        }
+        else if (isArchaeology) {
             this.cost = 1300;
-        else if (isBanking)
+            this.name = "Archaeology";
+        }
+        else if (isBanking) {
             this.cost = 650;
-        else if (isChemistry)
+            this.name = "Banking";
+        }
+        else if (isChemistry) {
             this.cost = 900;
-        else if (isEconomics)
+            this.name = "Chemistry";
+        }
+        else if (isEconomics) {
             this.cost = 900;
-        else if (isFertilizer)
+            this.name = "Economics";
+        }
+        else if (isFertilizer) {
             this.cost = 1300;
-        else if (isGunpowder)
+            this.name = "Fertilizer";
+        }
+        else if (isGunpowder) {
             this.cost = 680;
-        else if (isMetallurgy)
+            this.name = "Gunpowder";
+        }
+        else if (isMetallurgy) {
             this.cost = 900;
-        else if (isMilitaryScience)
+            this.name = "Metallurgy";
+        }
+        else if (isMilitaryScience) {
             this.cost = 1300;
-        else if (isPrintingPress)
+            this.name = "MilitaryScience";
+        }
+        else if (isPrintingPress) {
             this.cost = 650;
-        else if (isRifling)
+            this.name = "PrintingPress";
+        }
+        else if (isRifling) {
             this.cost = 1425;
-        else if (isScientificTheory)
+            this.name = "Rifling";
+        }
+        else if (isScientificTheory) {
             this.cost = 1300;
-        else if (isBiology)
+            this.name = "ScientificTheory";
+        }
+        else if (isBiology) {
             this.cost = 1680;
-        else if (isCombustion)
+            this.name = "Biology";
+        }
+        else if (isCombustion) {
             this.cost = 2200;
-        else if (isDynamite)
+            this.name = "Combustion";
+        }
+        else if (isDynamite) {
             this.cost = 1900;
-        else if (isElectricity)
+            this.name = "Dynamite";
+        }
+        else if (isElectricity) {
             this.cost = 1900;
-        else if (isRadio)
+            this.name = "Electricity";
+        }
+        else if (isRadio) {
             this.cost = 2200;
-        else if (isRailroad)
+            this.name = "Radio";
+        }
+        else if (isRailroad) {
             this.cost = 1900;
-        else if (isReplaceable)
+            this.name = "Railroad";
+        }
+        else if (isReplaceable) {
             this.cost = 1900;
-        else if (isSteamPower)
+            this.name = "ReplaceableParts";
+        }
+        else if (isSteamPower) {
             this.cost = 1680;
-        else if (isTelegraph)
+            this.name = "SteamPower";
+        }
+        else if (isTelegraph) {
             this.cost = 2200;
+            this.name = "Telegraph";
+        }
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isAgriculture() {
@@ -385,6 +484,10 @@ public class Technology {
 
     public boolean isReplaceableParts() {
         return isReplaceableParts;
+    }
+
+    public boolean isParts() {
+        return isParts;
     }
 
     public boolean isSteamPower() {

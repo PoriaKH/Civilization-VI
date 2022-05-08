@@ -2194,9 +2194,17 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    public StringBuilder showTechnologyMenu(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
-
+    public StringBuilder showTechnologyMenu(Civilization civilization){
+        StringBuilder stringBuilder = new StringBuilder();
+        ArrayList<Technology> allTechnologies = civilization.getTechnologies();
+        stringBuilder.append("technologies that have been learnt:\n");
+        for (Technology technology : allTechnologies)
+            stringBuilder.append(technology.getName() + "\n");
+        HashMap<Technology, Integer> technologyEarnedPercent = civilization.getTechnologyEarnedPercent();
+        stringBuilder.append("technologies that you haven't been learnt completely:\n");
+        for (Map.Entry<Technology, Integer> technology: technologyEarnedPercent.entrySet()){
+            stringBuilder.append(technology.getKey().getName() + "\t" + technology.getValue().toString() + "\n");
+        }
         return stringBuilder;
     }
     public Technology preChooseTechnologyToLearn(String name){
@@ -2860,6 +2868,7 @@ public class PlayGameMenuController {
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
             return "no technology with this name exists";
+        civilization.setScience(technology.getCost());
         if (civilization.getScience() < technology.getCost())
             return "you don't have the needed amount of science";
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();

@@ -236,6 +236,7 @@ public class PlayGameMenu {
         String lootTileRegex = "loot tile (?<tileNumber>\\d+) unit (?<unitNumber>\\d+)";
         String chooseTechnologyToLearnRegex = "learn technology (?<technologyName>.+)";
         String changeTechnologyToLearnRegex = "change technology to learn (?<technologyName>.+)";
+        String showTechnologyMenuRegex = "show technology menu";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -460,6 +461,8 @@ public class PlayGameMenu {
                 String technologyName = matcher.group("technologyName");
                 System.out.println(playGameMenuController.changeTechnologyToLearn(playingCivilization, technologyName));
             }
+            else if (command.matches(showTechnologyMenuRegex))
+                System.out.println(playGameMenuController.showTechnologyMenu(playingCivilization));
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
 
