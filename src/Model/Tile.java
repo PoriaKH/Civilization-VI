@@ -34,7 +34,7 @@ public class Tile {
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
     private Resource resource;
     private Attribute attribute;
-    private ArrayList<Improvement> improvements = new ArrayList<>();
+    private ArrayList<Improvement> improvements;
 
 
     private ArrayList<Tile> roads;
@@ -437,8 +437,14 @@ public class Tile {
         if (roundLeft == 0) {
             this.improvementEarnedPercent.remove(this.workingOnImprovement);
             this.addImprovement(this.workingOnImprovement);
+            workingOnImprovement = null;
         }
         this.improvementEarnedPercent.replace(this.workingOnImprovement, roundLeft);
+    }
+    public void cancelImprovementOnProcess(){
+        if (workingOnImprovement == null)
+            return;
+        workingOnImprovement = null;
     }
     public void setImprovements (ArrayList<Improvement> improvements){
         this.improvements = improvements;

@@ -2568,10 +2568,11 @@ public class PlayGameMenuController {
         str = "the rail way will be removed in 3 turns";
         return str;
     }
-    public String cancelImprovementOnProcess(Civilization civilization,Tile tile,ArrayList<Tile> map){
-        String str;
-
-        return str;
+    public String cancelImprovementOnProcess(Civilization civilization, Tile tile){
+        if (tile.getWorkingOnImprovement() == null)
+            return "this tile isn't working on any improvement";
+        tile.cancelImprovementOnProcess();
+        return "Improvement canceled successfully";
     }
     public String repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;

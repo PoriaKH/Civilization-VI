@@ -231,6 +231,7 @@ public class PlayGameMenu {
         String cheatIncreaseFoodRegex = "cheat increase food (?<amount>\\d+)";
         String cheatIncreaseTechnologyRegex = "cheat increase technology (?<amount>\\d+)";
         String cheatIncreaseHappinessRegex = "cheat increase happiness (?<amount>\\d+)";
+        String cancelImprovementOnProcessRegex = "cancel improvement on tile (?<tileNumber> \\d+)";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -372,6 +373,7 @@ public class PlayGameMenu {
             }
             else if (command.matches(workOnTileRegex)){
                 Matcher matcher = Pattern.compile(workOnTileRegex).matcher(command);
+                matcher.find();
                 int cityNumber = Integer.parseInt(matcher.group("cityNumber"));
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
                 int citizenNumber = Integer.parseInt(matcher.group("citizenNumber"));
@@ -379,6 +381,7 @@ public class PlayGameMenu {
             }
             else if (command.matches(createImprovementRegex)){
                 Matcher matcher = Pattern.compile(createImprovementRegex).matcher(command);
+                matcher.find();
                 int civilianNumber = Integer.parseInt(matcher.group("civilianNumber"));
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
                 String improvementName = matcher.group("improvementName");
@@ -387,7 +390,7 @@ public class PlayGameMenu {
             }
             else if (command.matches(removeImprovementRegex)){
                 Matcher matcher = Pattern.compile(removeImprovementRegex).matcher(command);
-                //TODO...Kian fix matcher.find()
+                matcher.find();
                 String improvementName = matcher.group("improvementName");
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
                 Improvement improvement = playGameMenuController.preRemoveImprovement(improvementName);
@@ -419,6 +422,13 @@ public class PlayGameMenu {
                 matcher.find();
                 int amount = Integer.parseInt(matcher.group("amount"));
                 System.out.println(playGameMenuController.cheatIncreaseHappiness(playingCivilization,amount));
+            }
+            else if (command.matches(cancelImprovementOnProcessRegex)){
+                Matcher matcher = Pattern.compile(cancelImprovementOnProcessRegex).matcher(command);
+                matcher.find();
+                int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
+                Tile tile = map.get(tileNumber);
+                System.out.println(playGameMenuController.cancelImprovementOnProcess(playingCivilization, tile));
             }
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
