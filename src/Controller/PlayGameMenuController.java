@@ -1080,7 +1080,7 @@ public class PlayGameMenuController {
         unit.setDestination(destination);
         int i = 0;
         while (true) {
-            if (i == unit.getPath().size() - 1) {
+            if (i == unit.getPath().size() - 1 || (unit.getPath().size() >= 1 && unit.getPath().get(0).tile.equals(destination))) {
                 unit.setMp(unit.getConstantMP());
                 unit.setPath(null);
                 unit.setOrigin(destination);
@@ -2357,7 +2357,7 @@ public class PlayGameMenuController {
             return "only workers can work on improvements";
     }
     // after every turn check for road or rail making in your civilization,,, if work is making ->true if it is removing->false
-    public void consumeTurnForRoadMaking (Civilization civilization, ArrayList<Tile> map, boolean typeOfWork) {
+    public void consumeTurnForRoadMaking (Civilization civilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> units = map.get(i).getUnits();
             for (int i1 = 0; i1 < units.size(); i1++) {
@@ -2367,7 +2367,13 @@ public class PlayGameMenuController {
                         if (newTurn == 0) {
                             map.get(i).removeWorkerFromRoad(units.get(i1));
                             ((Civilian) units.get(i1)).setWorkingTile(null);
-                            map.get(i).setDoesHaveRoad(typeOfWork);
+                            if (map.get(i).isDoesHaveRoad()) {
+                                map.get(i).setDoesHaveRoad(false);
+                            }
+                            else {
+                                map.get(i).setDoesHaveRoad(true);
+                            }
+
                             if (map.get(i).isRoadDamaged()) {
                                 map.get(i).setRoadDamaged(false);
                             }
@@ -2380,7 +2386,12 @@ public class PlayGameMenuController {
                             if (newTurn == 0) {
                                 map.get(i).removeWorkerFromRail(units.get(i1));
                                 ((Civilian) units.get(i1)).setWorkingTile(null);
-                                map.get(i).setDoesHaveRailWay(typeOfWork);
+                                if (map.get(i).isDoesHaveRailWay()) {
+                                    map.get(i).setDoesHaveRailWay(false);
+                                }
+                                else {
+                                    map.get(i).setDoesHaveRailWay(true);
+                                }
                                 if (map.get(i).isRailDamaged()) {
                                     map.get(i).setRailDamaged(false);
                                 }
@@ -2759,8 +2770,9 @@ public class PlayGameMenuController {
 
         improveImprovementsNextTurn(civilization,map);
         checkForUnitMaking(civilization);
-        consumeTurnForRoadMaking(civilization,map,true);
-        consumeTurnForRoadMaking(civilization,map,false);
+        consumeTurnForRoadMaking(civilization,map);
+        moveUnitWithMovesLeft(civilization,map);
+        addMpEveryTurn(civilization,map);
         increaseGoldCivilizationNextTurn(civilization,map);
         increaseFoodCitiesNextTurn(civilization,map);
         increaseProductionCitiesNextTurn(civilization,map);
