@@ -2856,7 +2856,7 @@ public class PlayGameMenuController {
             civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
         return "technology has been added to the learning technologies";
     }
-    public String changeTechnologyToLearn(Civilization civilization, String technologyName,ArrayList<Tile> map){
+    public String changeTechnologyToLearn(Civilization civilization, String technologyName){
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
             return "no technology with this name exists";
