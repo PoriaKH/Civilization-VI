@@ -20,7 +20,7 @@ public class Civilization {
 
     private ArrayList<Civilization> friends;
 
-    private Technology workingOn;//if == null -> have to choose
+    private Technology workingOnTechnology;//if == null -> have to choose
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
@@ -140,5 +140,31 @@ public class Civilization {
 
     public void setScience(int science) {
         this.science += science;
+    }
+
+    public void addTechnology (Technology technology){
+        this.technologies.add(technology);
+    }
+
+    public void addToTechnologyEarnedPercent(Technology technology, Integer roundLeft){
+        if (!this.technologyEarnedPercent.containsKey(technology))
+            this.technologyEarnedPercent.put(technology, roundLeft);
+        this.workingOnTechnology = technology;
+    }
+    public void reduceTechnologyRound(){
+        if (workingOnTechnology  == null)
+            return;
+        Integer roundLeft = this.technologyEarnedPercent.get(this.workingOnTechnology) - 1;
+        if (roundLeft == 0) {
+            this.technologyEarnedPercent.remove(this.workingOnTechnology);
+            this.addTechnology(this.workingOnTechnology);
+            workingOnTechnology = null;
+        }
+        this.technologyEarnedPercent.replace(this.workingOnTechnology, roundLeft);
+    }
+    public void cancelTechnologyOnProcess(){
+        if (workingOnTechnology == null)
+            return;
+        workingOnTechnology = null;
     }
 }

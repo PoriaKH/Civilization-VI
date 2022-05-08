@@ -440,6 +440,8 @@ public class Tile {
         this.workingOnImprovement = improvement;
     }
     public void reduceImprovementRound(){//TODO... Kian
+        if (workingOnImprovement  == null)
+            return;
         Integer roundLeft = this.improvementEarnedPercent.get(this.workingOnImprovement) - 1;
         if (roundLeft == 0) {
             this.improvementEarnedPercent.remove(this.workingOnImprovement);
