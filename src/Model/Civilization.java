@@ -24,6 +24,7 @@ public class Civilization {
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
+        this.happiness = 10;
         friends = new ArrayList<>();
         messages = new ArrayList<>();
         this.member = member;
@@ -34,6 +35,7 @@ public class Civilization {
         technologies = new ArrayList<>();
         trades = new HashMap<>();
         technologyEarnedPercent = new HashMap<>();
+        this.gold = 10;
     }
 
     public Member getMember() {
@@ -127,5 +129,16 @@ public class Civilization {
         point += 2 * science;
         //TODO... building points
         return point;
+    }
+    public void setGold(int amount){
+        this.gold += amount;
+    }
+
+    public void setHappiness(int amount) {
+        this.happiness += amount;
+    }
+
+    public void setScience(int science) {
+        this.science += science;
     }
 }

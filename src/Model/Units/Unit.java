@@ -18,8 +18,18 @@ public class Unit {
     private int duration;
     private int goldCost;
     private int movesLeft;
-
+    //TODO... for nextTurn
+    private boolean hasOrdered;
+    //
     private boolean isOnSleep;
+
+    public boolean getHasOrdered() {
+        return hasOrdered;
+    }
+
+    public boolean getIsOnSleep() {
+        return isOnSleep;
+    }
 
     public int getDuration() {
         return duration;
@@ -31,6 +41,10 @@ public class Unit {
     private ArrayList<Node> path = new ArrayList<>(); //the shortest way, it also contains origin and destination
 
     public Unit(Civilization civilization, Tile origin, int health, int MP, int mp, int duration, int goldCost, boolean isCivilian) {
+        this.hasOrdered = false;
+        if(isCivilian)
+            hasOrdered = true;
+
         this.civilization = civilization;
         this.origin = origin;
         this.health = health;

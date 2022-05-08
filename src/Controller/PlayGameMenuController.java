@@ -193,6 +193,25 @@ public class PlayGameMenuController {
 
         return map;
     }
+    public String cheatIncreaseGold(Civilization civilization,int amount){
+        civilization.setGold(amount);
+        return "cheat code activated successfully";
+    }
+    public String cheatIncreaseFood(Civilization civilization,int amount){
+        for(City city : civilization.getCities()){
+            city.setTotalFood(amount);
+        }
+        return "cheat code activated successfully";
+    }
+    public String cheatIncreaseTechnology(Civilization civilization,int amount){
+        civilization.setScience(amount);
+        return "cheat code activated successfully";
+    }
+    public String cheatIncreaseHappiness(Civilization civilization, int amount){
+        civilization.setHappiness(amount);
+        return "cheat code activated successfully";
+    }
+    //TODO...Koochak one cheat Code
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for(int i = 0; i < numOfCivilizations; i++){
@@ -1515,6 +1534,7 @@ public class PlayGameMenuController {
     }
 
     public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map, int turn){
+        //TODO...Koochak Happiness
         String str;
 
         if (unit == null) {
@@ -2725,9 +2745,98 @@ public class PlayGameMenuController {
     }
      */
     public String nextTurn(Civilization civilization, ArrayList<Tile> map){
-        String str;
+        //unit actions check
+        int tileNumber = unitActionsNextTurnCheck(civilization,map);
+        if(tileNumber != -1)
+            return "order unit in tile number : " + tileNumber;
+        //
+
+        //TODO...Kian Technology actions
+
+        //
+//-----------------------------------------------------------------------------------
+
+        improveImprovementsNextTurn(civilization,map);
+        checkForUnitMaking(civilization);
+        consumeTurnForRoadMaking(civilization,map,true);
+        consumeTurnForRoadMaking(civilization,map,false);
+        increaseGoldCivilizationNextTurn(civilization,map);
+        increaseFoodCitiesNextTurn(civilization,map);
+        increaseProductionCitiesNextTurn(civilization,map);
+        increasePopulationNextTurn(civilization,map);
+
+
+        //TODO...Koochak moveUnit
+        //TODO...Kian Technology
+
 
         //TODO...  also complete historyInformation and showProductionsInProcess
-        return str;
+        return "done";
     }
+    public void increasePopulationNextTurn(Civilization civilization,ArrayList<Tile> map){
+        if(civilization.getHappiness() < 0)
+            return;
+
+        for(City city : civilization.getCities()){
+            if(city.getTotalFood() >= 5){
+                for(Tile tile : city.getTiles()){
+                    if(tile.getCitizen() == null){
+                        Citizen citizen = new Citizen(tile);
+                        civilization.setHappiness(-1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    public int unitActionsNextTurnCheck(Civilization civilization,ArrayList<Tile> map){
+        for(Tile tile : map){
+            for(Unit unit : tile.getUnits()){
+                if(unit.getCivilization() == civilization){
+                    if(!unit.getIsOnSleep()){
+                        if(!unit.getHasOrdered()){
+                            return tile.getTileNumber();
+                        }
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+    public void improveImprovementsNextTurn(Civilization civilization,ArrayList<Tile> map){
+        //TODO... Kian
+    }
+    public void increaseGoldCivilizationNextTurn(Civilization civilization,ArrayList<Tile> map){
+        int finalAsset = 0;
+        for(City city : civilization.getCities()){
+            finalAsset += city.getGold();
+        }
+        for(Tile tile : map){
+            for(Unit unit : tile.getUnits()){
+                if(unit.getCivilization() == civilization){
+                    if(!unit.isCivilian()){
+                        finalAsset--;
+                    }
+                }
+            }
+        }
+        //TODO... Buildings cost
+        civilization.setGold(finalAsset);
+    }
+    public void increaseFoodCitiesNextTurn(Civilization civilization,ArrayList<Tile> map){
+        for(City city : civilization.getCities()){
+            int finalAsset = 0;
+            finalAsset += city.getFood();
+            finalAsset -= (int) (city.getCitizens().size() / 2);
+            city.setTotalFood(finalAsset);
+        }
+    }
+    public void increaseProductionCitiesNextTurn(Civilization civilization,ArrayList<Tile> map){
+        for(City city : civilization.getCities()){
+            int finalAsset = 0;
+            finalAsset += city.getProduction();
+            city.setProduction(finalAsset);
+        }
+    }
+
 }

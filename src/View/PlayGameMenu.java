@@ -227,6 +227,10 @@ public class PlayGameMenu {
         String economicalReviewRegex = "economical review";
         String demographicsRegex = "demographics";
         String showCurrentScoreRegex = "show score";
+        String cheatIncreaseGoldRegex = "cheat increase gold (?<amount>\\d+)";
+        String cheatIncreaseFoodRegex = "cheat increase food (?<amount>\\d+)";
+        String cheatIncreaseTechnologyRegex = "cheat increase technology (?<amount>\\d+)";
+        String cheatIncreaseHappinessRegex = "cheat increase happiness (?<amount>\\d+)";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -383,6 +387,7 @@ public class PlayGameMenu {
             }
             else if (command.matches(removeImprovementRegex)){
                 Matcher matcher = Pattern.compile(removeImprovementRegex).matcher(command);
+                //TODO...Kian fix matcher.find()
                 String improvementName = matcher.group("improvementName");
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
                 Improvement improvement = playGameMenuController.preRemoveImprovement(improvementName);
@@ -390,6 +395,30 @@ public class PlayGameMenu {
                     System.out.println("no such improvement exists!");
                 else
                     System.out.println(playGameMenuController.removeImprovement(playingCivilization, improvement, tileNumber, map));
+            }
+            else if(command.matches(cheatIncreaseGoldRegex)){
+                Matcher matcher = Pattern.compile(cheatIncreaseGoldRegex).matcher(command);
+                matcher.find();
+                int amount = Integer.parseInt(matcher.group("amount"));
+                System.out.println(playGameMenuController.cheatIncreaseGold(playingCivilization,amount));
+            }
+            else if(command.matches(cheatIncreaseFoodRegex)){
+                Matcher matcher = Pattern.compile(cheatIncreaseFoodRegex).matcher(command);
+                matcher.find();
+                int amount = Integer.parseInt(matcher.group("amount"));
+                System.out.println(playGameMenuController.cheatIncreaseFood(playingCivilization,amount));
+            }
+            else if(command.matches(cheatIncreaseTechnologyRegex)){
+                Matcher matcher = Pattern.compile(cheatIncreaseTechnologyRegex).matcher(command);
+                matcher.find();
+                int amount = Integer.parseInt(matcher.group("amount"));
+                System.out.println(playGameMenuController.cheatIncreaseTechnology(playingCivilization,amount));
+            }
+            else if(command.matches(cheatIncreaseHappinessRegex)){
+                Matcher matcher = Pattern.compile(cheatIncreaseHappinessRegex).matcher(command);
+                matcher.find();
+                int amount = Integer.parseInt(matcher.group("amount"));
+                System.out.println(playGameMenuController.cheatIncreaseHappiness(playingCivilization,amount));
             }
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);

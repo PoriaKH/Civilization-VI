@@ -6,9 +6,13 @@ import Model.Units.Warrior;
 import java.util.ArrayList;
 
 public class City {
+    //perTurn
     private int gold;
     private int food;
     private int production;
+    //perTurn
+
+    private int totalFood;
 
     private ArrayList<Citizen> citizens;
     private Tile centerTile;
@@ -17,6 +21,7 @@ public class City {
     private int sciencePerTurn;
 
     public City(Tile centerTile, ArrayList<Tile> map){
+        this.totalFood = 5;
         this.centerTile = centerTile;
         citizens = new ArrayList<>();
         citizens.add(new Citizen(centerTile));
@@ -106,5 +111,15 @@ public class City {
 
     public ArrayList<Citizen> getCitizens() {
         return citizens;
+    }
+
+    public void setTotalFood(int amount){
+        this.totalFood += amount;
+    }
+    public int getTotalFood(){
+        return totalFood;
+    }
+    public void setProduction(int amount){
+        production += amount;
     }
 }
