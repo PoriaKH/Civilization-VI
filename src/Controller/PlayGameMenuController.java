@@ -713,7 +713,7 @@ public class PlayGameMenuController {
             stringBuilder.append("Gold per Turn : ").append(city.getGold()).append("\n");
             stringBuilder.append("Production per Turn : ").append(city.getProduction());
             //TODO... add units(koochak) and buildings duration to create
-            stringBuilder.append("-----------------------\n")
+            stringBuilder.append("-----------------------\n");
         }
 
         return stringBuilder;
@@ -2673,7 +2673,7 @@ public class PlayGameMenuController {
         str = "unit upgraded successfully !";
         return str;
     }
-    public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations){
+    public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
         Civilization chosenCivilization = null;
@@ -2726,6 +2726,7 @@ public class PlayGameMenuController {
      */
     public String nextTurn(Civilization civilization, ArrayList<Tile> map){
         String str;
+
         //TODO...  also complete historyInformation and showProductionsInProcess
         return str;
     }

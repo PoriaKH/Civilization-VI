@@ -364,19 +364,7 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.demographics(civilizations,map));
             }
             else if(command.matches(showCurrentScoreRegex)){
-                System.out.println(playGameMenuController.showCurrentScore(civilizations));
-            }
-            else if(command.matches(nextTurnRegex)){
-                String result = playGameMenuController.nextTurn(playingCivilization, map);
-
-                if(!Objects.equals(result, "done"))
-                    System.out.println(result);
-                else {
-                    counter++;
-                    counter %= numOfCivilizations;
-                    playingCivilization = civilizations.get(counter);
-                    System.out.println("Civilization " + playingCivilization.getMember().getUsername() + " is playing!");
-                }
+                System.out.println(playGameMenuController.showCurrentScore(civilizations,map));
             }
             else if (command.matches(workOnTileRegex)){
                 Matcher matcher = Pattern.compile(workOnTileRegex).matcher(command);
@@ -403,8 +391,22 @@ public class PlayGameMenu {
                 else
                     System.out.println(playGameMenuController.removeImprovement(playingCivilization, improvement, tileNumber, map));
             }
+            else if(command.matches(nextTurnRegex)){
+                String result = playGameMenuController.nextTurn(playingCivilization, map);
+
+                if(!Objects.equals(result, "done"))
+                    System.out.println(result);
+                else {
+                    counter++;
+                    counter %= numOfCivilizations;
+                    playingCivilization = civilizations.get(counter);
+                    System.out.println("Civilization " + playingCivilization.getMember().getUsername() + " is playing!");
+                }
+            }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");
+            else
+                System.out.println("invalid command !");
 
             //TODO... check is there any unit with move left (harekat chand noobati)
             playGameMenuController.moveUnitWithMovesLeft (playingCivilization, map);

@@ -18,11 +18,13 @@ public class Civilization {
     private HashMap<Civilization, Integer> lossesInUnitsWar; // tamadon pirooz va tedad bord haye on ra neshan mide
     private int point;//to compare civilizations
 
+    private ArrayList<Civilization> friends;
 
     private Technology workingOn;//if == null -> have to choose
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
+        friends = new ArrayList<>();
         messages = new ArrayList<>();
         this.member = member;
         this.capital = capital;
