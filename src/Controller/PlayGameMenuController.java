@@ -2842,14 +2842,12 @@ public class PlayGameMenuController {
         return false;
     }
     public String chooseTechnologyToLearn(Civilization civilization, String technologyName){
-        String str;
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
             return "no technology with this name exists";
         if (civilization.getScience() < technology.getCost())
             return "you don't have the needed amount of science";
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
-        boolean hasPrerequisiteTechs = false;
         if (!hasPrerequisiteTechs(allTechnologies, technologyName))
             return "you don't have the prerequisite techs to learn this technology";
         if (technology.getCost() > 99)
@@ -2858,10 +2856,20 @@ public class PlayGameMenuController {
             civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
         return "technology has been added to the learning technologies";
     }
-    public String changeTechnologyToLearn(Civilization civilization, Technology newTechnology,ArrayList<Tile> map){
-        String str;
-
-        return str;
+    public String changeTechnologyToLearn(Civilization civilization, String technologyName,ArrayList<Tile> map){
+        Technology technology = preChooseTechnologyToLearn(technologyName);
+        if (technology == null)
+            return "no technology with this name exists";
+        if (civilization.getScience() < technology.getCost())
+            return "you don't have the needed amount of science";
+        ArrayList<Technology> allTechnologies = civilization.getTechnologies();
+        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
+            return "you don't have the prerequisite techs to learn this technology";
+        if (technology.getCost() > 99)
+            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 100) + 2);
+        else
+            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
+        return "technology has been changed successfully";
     }
     public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int citizenNumber, ArrayList<Tile> map){
         City city = civilization.getCities().get(cityNumber);
