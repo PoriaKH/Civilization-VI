@@ -83,4 +83,7 @@ public class Improvement {
     public boolean isWorking() {
         return isWorking;
     }
+    public void setIsWorking(boolean isWorking){
+        this.isWorking = isWorking;
+    }
 }

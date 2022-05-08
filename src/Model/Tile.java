@@ -35,12 +35,18 @@ public class Tile {
     private Resource resource;
     private Attribute attribute;
     private ArrayList<Improvement> improvements;
+    private boolean isWorking;
+    private boolean isOnRepair;
+    private int repairNeedImprovement;
 
 
     private ArrayList<Tile> roads;
     private ArrayList<Tile> railRoads;
 
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
+        this.isWorking = false;
+        this.isOnRepair = false;
+        this.repairNeedImprovement = 0;
         this.roads = new ArrayList<>();
         this.railRoads = new ArrayList<>();
         this.units = new ArrayList<>();
@@ -447,10 +453,48 @@ public class Tile {
             return;
         workingOnImprovement = null;
     }
+
+    public boolean isOnRepair() {
+        return isOnRepair;
+    }
+
+    public void setIsOnRepair(boolean isOnRepair){
+        this.isOnRepair = isOnRepair;
+    }
+
     public void setImprovements (ArrayList<Improvement> improvements){
         this.improvements = improvements;
     }
 
+    public boolean isWorking() {
+        return isWorking;
+    }
+    public void Loot(){
+        isWorking = false;
+        for (Improvement improvement: improvements)
+            improvement.setIsWorking(false);
+    }
+
+    public void setRepairNeedImprovement(int repairNeedImprovement) {
+        this.repairNeedImprovement = repairNeedImprovement;
+    }
+
+    public void repairAllImprovements(){
+        if (repairNeedImprovement == 0 && !isWorking){
+            this.isWorking = true;
+            this.isOnRepair = false;
+            for (Improvement improvement: improvements) {
+                improvement.setIsWorking(true);
+            }
+        }
+    }
+
+    public void reduceRepairNeedImprovementTurn(){
+        if (!isWorking && isOnRepair) {
+            setRepairNeedImprovement(this.repairNeedImprovement--);
+            repairAllImprovements();
+        }
+    }
     public void setTurnForUnit (Unit unit, int turn) {
         turnForUnitMaking.replace(unit, turn);
     }

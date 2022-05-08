@@ -2022,10 +2022,21 @@ public class PlayGameMenuController {
         str = "the unit is ready for ranged battle !";
         return str;
     }
-    public String lootTile(Civilization civilization, Warrior warrior, Tile destination,ArrayList<Tile> map){
+    public String lootTile(Civilization civilization, int warriorNumber, int destinationTileNumber, ArrayList<Tile> map){
         String str;
-
-        return str;
+        ArrayList<Unit> units = new ArrayList<>();
+        for (Tile tile: map) {
+            for (int i = 0; i < tile.getUnits().size(); i++)
+                if (tile.getUnits().get(i).getCivilization() == civilization)
+                    units.add(tile.getUnits().get(i));
+        }
+        Unit unit = units.get(warriorNumber);
+        if (unit.isCivilian())
+            return "only warriors can loot a tile";
+        Warrior warrior = (Warrior) unit;
+        Tile tile = map.get(destinationTileNumber);
+        tile.Loot();
+        return "tile has been looted successfully";
     }
     public String cancelCommand(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
@@ -2652,10 +2663,28 @@ public class PlayGameMenuController {
         str = "the rail way will be repaired in 3 turns";
         return str;
     }
-    public String repairImprovement(Civilization civilization, Civilian civilian, Tile tile,ArrayList<Tile> map){
-        String str;
-
-        return str;
+    public String repairImprovement(Civilization civilization, int civilianNumber, int tileNumber, ArrayList<Tile> map){
+        ArrayList<Unit> units = new ArrayList<>();
+        for (Tile tile: map) {
+            for (int i = 0; i < tile.getUnits().size(); i++)
+                if (tile.getUnits().get(i).getCivilization() == civilization)
+                    units.add(tile.getUnits().get(i));
+        }
+        Unit unit = units.get(civilianNumber);
+        if (!unit.isCivilian())
+            return "only workers can work on repairments";
+        Civilian civilian = (Civilian) unit;
+        if (civilian.isSettler())
+            return "only workers can work on repairments";
+        Tile tile = map.get(tileNumber);
+        civilian.setWorkingTile(tile);
+        if (!tile.isWorking()) {
+            int repairNeedTurn = tile.getImprovements().size() * 3;
+            tile.setRepairNeedImprovement(repairNeedTurn);
+            tile.setIsOnRepair(true);
+            return "repair Process has been started";
+        }
+        return "tile hasn't been looted or has been repaired completely";
     }
     public String repairWholeTile(Civilization civilization,Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
@@ -2777,7 +2806,7 @@ public class PlayGameMenuController {
         increaseFoodCitiesNextTurn(civilization,map);
         increaseProductionCitiesNextTurn(civilization,map);
         increasePopulationNextTurn(civilization,map);
-
+        reduceRepairNeedImprovementTurnNextTurn(map);
 
         //TODO...Koochak moveUnit
         //TODO...Kian Technology
@@ -2818,6 +2847,10 @@ public class PlayGameMenuController {
     }
     public void improveImprovementsNextTurn(Civilization civilization,ArrayList<Tile> map){
         //TODO... Kian
+    }
+    public void reduceRepairNeedImprovementTurnNextTurn(ArrayList<Tile> map){
+        for (Tile tile: map)
+            tile.reduceRepairNeedImprovementTurn();
     }
     public void increaseGoldCivilizationNextTurn(Civilization civilization,ArrayList<Tile> map){
         int finalAsset = 0;

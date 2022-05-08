@@ -232,6 +232,8 @@ public class PlayGameMenu {
         String cheatIncreaseTechnologyRegex = "cheat increase technology (?<amount>\\d+)";
         String cheatIncreaseHappinessRegex = "cheat increase happiness (?<amount>\\d+)";
         String cancelImprovementOnProcessRegex = "cancel improvement on tile (?<tileNumber> \\d+)";
+        String repairImprovementRegex = "repair improvements in tile (?<tileNumber>\\d+) unit (?<unitNumber>\\d+)";
+        String lootTileRegex = "loot tile (?<tileNumber>\\d+) unit (?<unitNumber>\\d+)";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -429,6 +431,20 @@ public class PlayGameMenu {
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
                 Tile tile = map.get(tileNumber);
                 System.out.println(playGameMenuController.cancelImprovementOnProcess(playingCivilization, tile));
+            }
+            else if (command.matches(repairImprovementRegex)){
+                Matcher matcher = Pattern.compile(repairImprovementRegex).matcher(command);
+                matcher.find();
+                int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
+                int civilianNumber = Integer.parseInt(matcher.group("unitNumber"));
+                System.out.println(playGameMenuController.repairImprovement(playingCivilization, civilianNumber, tileNumber, map));
+            }
+            else if (command.matches(lootTileRegex)){
+                Matcher matcher = Pattern.compile(lootTileRegex).matcher(command);
+                matcher.find();
+                int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
+                int warriorNumber = Integer.parseInt(matcher.group("unitNumber"));
+                System.out.println(playGameMenuController.lootTile(playingCivilization, warriorNumber, tileNumber, map));
             }
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
