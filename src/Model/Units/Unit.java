@@ -133,6 +133,18 @@ public class Unit {
         return destination;
     }
 
+    public void setCivilization(Civilization civilization) {
+        this.civilization = civilization;
+    }
+
+    public boolean isHasOrdered() {
+        return hasOrdered;
+    }
+
+    public void setHasOrdered(boolean hasOrdered) {
+        this.hasOrdered = hasOrdered;
+    }
+
     public void setOrigin(Tile origin) {
         this.origin = origin;
     }

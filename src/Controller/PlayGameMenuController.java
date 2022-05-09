@@ -1841,9 +1841,237 @@ public class PlayGameMenuController {
 
         return false;
     }
-    public String attackTile(Civilization civilization, Warrior warrior,Tile destination,ArrayList<Tile> map){
+    // return a warrior unit from specific tile
+    public Unit getWarriorUnit (int index, ArrayList<Tile> map) {
+        ArrayList<Unit> units = map.get(index).getUnits();
+        for (int i = 0; i < units.size(); i++) {
+            if (!units.get(i).isCivilian()) return units.get(i);
+        }
+        return null;
+    }
+    // get all indexes that are between attackers and defenders
+    public void getAllIndexes(int originIndex, int destinationIndex, ArrayList<Integer> indexOfTiles) {
+        if (originIndex < destinationIndex) {
+            int delta = destinationIndex - originIndex;
+            int growth = 0;
+            if (delta == 1) {
+                growth = 1;
+                if (originIndex == 5 || originIndex == 16 || originIndex == 27 || originIndex == 38 ||
+                        originIndex == 49 || originIndex == 60 || originIndex == 71) {
+                    return;
+                }
+            }
+            else  if (delta % 5 == 0) {
+                growth = 5;
+            }
+            else if (delta % 6 == 0) {
+                growth = 6;
+            }
+            for (int i = originIndex; i <= destinationIndex; i+=growth) {
+                indexOfTiles.add(i);
+            }
+        }
+        else {
+            int delta = originIndex - destinationIndex;
+            int growth = 0;
+            if (delta == 1) {
+                growth = 1;
+                if (originIndex == 0 || originIndex == 11 || originIndex == 22 || originIndex == 33 ||
+                        originIndex == 44 || originIndex == 55 || originIndex == 66) {
+                    return;
+                }
+            }
+            else  if (delta % 5 == 0) {
+                growth = 5;
+            }
+            else if (delta % 6 == 0) {
+                growth = 6;
+            }
+            for (int i = originIndex; i <= destinationIndex; i-=growth) {
+                indexOfTiles.add(i);
+            }
+        }
+    }
+    // if blockers block attackers vision return true
+    public boolean checkTheBlocks (ArrayList<Tile> map, ArrayList<Integer> indexOfTiles) {
+        for (int i = 1; i < indexOfTiles.size() - 1; i++) {
+            if (map.get(indexOfTiles.get(i)).isOcean() || map.get(indexOfTiles.get(i)).isMountain() ||
+                    map.get(indexOfTiles.get(i)).isHill()) return true;
+        }
+        return false;
+    }
+    // is attacker range enough for distance ?
+    public boolean isRangeEnough(Warrior warrior, ArrayList<Integer> indexOfTiles) {
+        int distance = indexOfTiles.size() - 1;
+        if (warrior.getRange() == -1 && distance > 1) return false;
+        if (warrior.getRange() != -1 && distance > warrior.getRange()) return false;
+        return true;
+    }
+    // return civilian unit from specific tile
+    public Unit getCivilianUnit (int index, ArrayList<Tile> map) {
+        ArrayList<Unit> units = map.get(index).getUnits();
+        for (int i = 0; i < units.size(); i++) {
+            if (units.get(i).isCivilian()) return units.get(i);
+        }
+        return null;
+    }
+    // remove a civilization from friends list
+    public void addToEnemy (Civilization civilization, Civilization enemy) {
+       ArrayList<Civilization> friends = civilization.getFriends();
+        for (int i = 0; i < friends.size(); i++) {
+            if (friends.get(i).equals(enemy)) {
+                civilization.removeFriend (enemy);
+                enemy.removeFriend (civilization);
+                break;
+            }
+        }
+    }
+    // prepare some parameters and return some string
+    public String preAttackTile (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
+        int originIndex = Integer.parseInt(matcher.group("origin"));
+        int destinationIndex = Integer.parseInt(matcher.group("destination"));
+
+        Unit attacker = getWarriorUnit(originIndex, map);
+        Unit defender = getWarriorUnit(destinationIndex, map);
+
+        if (attacker == null) {
+            return "your unit is not military !";
+        }
+        if (!attacker.getCivilization().equals(civilization)) {
+            return "this is not your unit !";
+        }
+        if (defender.getCivilization().equals(civilization)) {
+            return "you can't attack your own unit !";
+        }
+        if (attacker.getIsOnSleep()) {
+            return "this unit is not awake !";
+        }
+        if (((Warrior)attacker).getRange() != -1) {
+            return "this unit is not set up for range attack !";
+        }
+        ArrayList<Integer> indexOfTiles = new ArrayList<>();
+        getAllIndexes(originIndex,destinationIndex,indexOfTiles);
+        if (indexOfTiles.size() == 0) {
+            return "this distance is too long for attack !";
+        }
+        if (!isRangeEnough((Warrior)attacker, indexOfTiles)) {
+            return "unit 's range is not enough !";
+        }
+        if (checkTheBlocks(map,indexOfTiles)) {
+            return "your unit vision is blocked !";
+        }
+        addToEnemy(civilization, defender.getCivilization());
+        if (defender == null) {
+            defender = getCivilianUnit(destinationIndex, map);
+            if (defender == null) return "there is no unit on destination !";
+
+            defender.setCivilization(civilization);
+            if (((Warrior)attacker).getRange() == -1)
+            attacker.setOrigin(map.get(destinationIndex));
+        }
+        if (((Warrior)attacker).getRange() == -1)
+           return attackTileFromGround(civilization, attacker, defender, originIndex, destinationIndex, map);
+        else
+           return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);
+    }
+
+    public String attackTileFromGround(Civilization civilization, Unit attacker, Unit defender, int originIndex, int destinationIndex,ArrayList<Tile> map){
+        String str = "";
+        int combatChange = map.get(destinationIndex).getCombatChange() + map.get(destinationIndex).getAttribute().getCombatChange();
+
+        int powerOfAttacker = ((Warrior)attacker).getDamage();
+        int healthOfAttacker = ((Warrior)attacker).getHealth();
+        powerOfAttacker = powerOfAttacker * healthOfAttacker / 10;
+        int powerOfDefender = ((Warrior)defender).getDamage();
+        int healthOfDefender = ((Warrior)defender).getHealth();
+        powerOfDefender = powerOfDefender * healthOfDefender / 10;
+        powerOfDefender = powerOfDefender + powerOfDefender * combatChange / 100;
+
+        healthOfAttacker = healthOfAttacker - powerOfDefender;
+        healthOfDefender = healthOfDefender - powerOfAttacker;
+
+        attacker.setHealth(healthOfAttacker);
+        defender.setHealth(healthOfDefender);
+
+        if (healthOfDefender <= 0 && healthOfAttacker > 0) {
+                attacker.setOrigin(map.get(destinationIndex));
+                attacker.setMp(0);
+                int count1 = civilization.getCountOfWins(defender.getCivilization());
+                count1 ++;
+                int count2 = defender.getCivilization().getCountOfLosses(civilization);
+                count2 ++;
+                civilization.updateCountOfUnitWin(defender.getCivilization(), count1);
+                defender.getCivilization().updateCountOfUnitLose(civilization, count2);
+                int xp = ((Warrior) attacker).getXp();
+                xp ++;
+                ((Warrior) attacker).setXp(xp);
+                str = "you won this attack !";
+                defender = null;
+        }
+        if (healthOfDefender > 0 && healthOfAttacker <= 0) {
+                defender.setOrigin(map.get(originIndex));
+                defender.setMp(0);
+                int count1 = civilization.getCountOfLosses(defender.getCivilization());
+                count1 ++;
+                int count2 = defender.getCivilization().getCountOfWins(civilization);
+                count2 ++;
+                civilization.updateCountOfUnitLose(defender.getCivilization(), count1);
+                defender.getCivilization().updateCountOfUnitWin(civilization, count2);
+                int xp = ((Warrior) defender).getXp();
+                 xp ++;
+                ((Warrior) defender).setXp(xp);
+                str = "you lost this attack !";
+                attacker = null;
+        }
+        if (healthOfAttacker <= 0 && healthOfDefender <= 0) {
+            attacker = null;
+            defender = null;
+            str = "your unit died !";
+        }
+        if (healthOfAttacker > 0 && healthOfDefender > 0) {
+            int xp1 = ((Warrior) attacker).getXp();
+            xp1 ++;
+            ((Warrior) attacker).setXp(xp1);
+            int xp2 = ((Warrior) defender).getXp();
+            xp2 ++;
+            ((Warrior) defender).setXp(xp2);
+            str = "nobody died !";
+        }
+        return str;
+    }
+    public String attackTileFromAir(Civilization civilization, Unit attacker, Unit defender, int originIndex, int destinationIndex,ArrayList<Tile> map){
         String str;
 
+        int powerOfAttacker = ((Warrior)attacker).getRangedCombatDamage();
+        int healthOfAttacker = ((Warrior)attacker).getHealth();
+        powerOfAttacker = powerOfAttacker * healthOfAttacker / 10;
+
+        int healthOfDefender = ((Warrior)defender).getHealth();
+
+        healthOfDefender = healthOfDefender - powerOfAttacker;
+        defender.setHealth(healthOfDefender);
+        if (healthOfDefender <= 0) {
+            int xp1 = ((Warrior) attacker).getXp();
+            xp1 ++;
+            ((Warrior) attacker).setXp(xp1);
+            int count1 = civilization.getCountOfWins(defender.getCivilization());
+            count1 ++;
+            int count2 = defender.getCivilization().getCountOfLosses(civilization);
+            count2 ++;
+            civilization.updateCountOfUnitWin(defender.getCivilization(), count1);
+            defender.getCivilization().updateCountOfUnitLose(civilization, count2);
+            str = "you won the attack !";
+            defender = null;
+        }
+        else {
+            int xp1 = ((Warrior) attacker).getXp();
+            xp1 ++;
+            ((Warrior) attacker).setXp(xp1);
+            int xp2 = ((Warrior) defender).getXp();
+            xp2 ++;
+            ((Warrior) defender).setXp(xp2);
+            str = "nobody died !";
+        }
         return str;
     }
     // makes parameters for unit behaviours functions
@@ -3479,7 +3707,6 @@ public class PlayGameMenuController {
         increasePopulationNextTurn(civilization,map);
         reduceRepairNeedImprovementTurnNextTurn(map);
 
-        //TODO...Koochak moveUnit
         //TODO...Kian Technology
 
 

@@ -105,6 +105,10 @@ public class Civilization {
         lossesInUnitsWar.put(civilization, 0);
     }
 
+    public ArrayList<Civilization> getFriends() {
+        return friends;
+    }
+
     public HashMap<Civilization, Integer> getWinsInUnitsWar() {
         return winsInUnitsWar;
     }
@@ -166,5 +170,14 @@ public class Civilization {
         if (workingOnTechnology == null)
             return;
         workingOnTechnology = null;
+    }
+
+    public void removeFriend (Civilization civilization) {
+        for (int i = 0; i < friends.size(); i++) {
+            if (friends.get(i).equals(civilization)) {
+                friends.remove(i);
+                break;
+            }
+        }
     }
 }
