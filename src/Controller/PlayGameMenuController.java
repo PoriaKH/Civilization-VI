@@ -3304,7 +3304,7 @@ public class PlayGameMenuController {
                 technologies.add(techs.get(i).getName());
             if (improvementName.equals("camp")) {//camp duration = 5
                 if (tile.getAttribute().isJungle() || tile.isTundra() || tile.isHill() || tile.isDesert()) {
-                    if (technologies.contains("trapping")) {
+                    if (technologies.contains("Trapping")) {
                         Improvement improvement = new Improvement(true, false, false, false, false, false, false, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 5);
                     } else
@@ -3313,19 +3313,19 @@ public class PlayGameMenuController {
                     return "camp can't be build in this tile";
             } else if (improvementName.equals("farm")) {
                 if (tile.getAttribute().isRainForest()) {
-                    if (technologies.contains("mining tech")) {
+                    if (technologies.contains("Mining")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 10);
                     } else
                         return "you don't have the prerequisite technology";
                 } else if (tile.getAttribute().isJungle()) {
-                    if (technologies.contains("bronze working tech")) {
+                    if (technologies.contains("BronzeWorking")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 13);
                     } else
                         return "you don't have the prerequisite technology";
                 } else if (tile.getAttribute().isMarsh()) {
-                    if (technologies.contains("masonry tech")) {
+                    if (technologies.contains("Masonry")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 12);
                     } else
@@ -3334,7 +3334,7 @@ public class PlayGameMenuController {
                     return "farm can't be build in this tile";
             } else if (improvementName.equals("lumberMill")) {     //duration = 7
                 if (tile.getAttribute().isJungle()) {
-                    if (technologies.contains("building")) {
+                    if (technologies.contains("Construction")) {
                         Improvement improvement = new Improvement(false, false, true, false, false, false, false, false, false, 0, 1, 0);
                         tile.addToImprovementEarnedPercent(improvement, 7);
                     } else
@@ -3343,7 +3343,7 @@ public class PlayGameMenuController {
                     return "lumberMill can't be build in this tile";
             } else if (improvementName.equals("mine")) {       //duration = 14
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow() || tile.isHill() || tile.getAttribute().isJungle() || tile.getAttribute().isRainForest() || tile.getAttribute().isMarsh()) {
-                    if (technologies.contains("mining tech")) {
+                    if (technologies.contains("Mining")) {
                         Improvement improvement = new Improvement(false, false, false, true, false, false, false, false, false, 0, 1, 0);
                         tile.addToImprovementEarnedPercent(improvement, 14);
                     } else
@@ -3358,7 +3358,7 @@ public class PlayGameMenuController {
                     return "paddock can't be build in this tile";
             } else if (improvementName.equals("agriculture")) {
                 if (tile.isPlain() || tile.isMeadow() || tile.getAttribute().isJungle() || tile.getAttribute().isRainForest() || tile.getAttribute().isMarsh() || tile.getAttribute().isPlat()) {
-                    if (technologies.contains("date")) {        //duration = 5
+                    if (technologies.contains("Calendar")) {        //duration = 5
                         Improvement improvement = new Improvement(false, false, false, false, false, true, false, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 5);
                     } else
@@ -3367,7 +3367,7 @@ public class PlayGameMenuController {
                     return "agriculture can't be build in this tile";
             } else if (improvementName.equals("stoneMine")) {      //duration = 15
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isHill()) {
-                    if (technologies.contains("stone mining tech")) {
+                    if (technologies.contains("Masonry")) {
                         Improvement improvement = new Improvement(false, false, false, false, false, false, true, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 15);
                     } else
@@ -3376,7 +3376,7 @@ public class PlayGameMenuController {
                     return "stoneMine can't be build in this tile";
             } else if (improvementName.equals("tradingPost")) {        //duration = 10
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra()) {
-                    if (technologies.contains("trapping")) {
+                    if (technologies.contains("Trapping")) {
                         Improvement improvement = new Improvement(false, false, false, false, false, false, false, true, false, 0, 0, 1);
                         tile.addToImprovementEarnedPercent(improvement, 10);
                     } else
@@ -3386,7 +3386,7 @@ public class PlayGameMenuController {
             } else if (improvementName.equals("laboratory")) {     //duration = 20
                 //plain, dessert, meadow, tundra, snow
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow()) {
-                    if (technologies.contains("engineering")) {
+                    if (technologies.contains("Engineering")) {
                         Improvement improvement = new Improvement(false, false, false, false, false, false, false, false, true, 0, 2, 0);
                         tile.addToImprovementEarnedPercent(improvement, 20);
                     } else
@@ -3825,14 +3825,11 @@ public class PlayGameMenuController {
         int tileNumber = unitActionsNextTurnCheck(civilization,map);
         if(tileNumber != -1)
             return "order unit in tile number : " + tileNumber;
-        //
-
-        //TODO...Kian Technology actions
-
-        //
+        if (civilization.getWorkingOnTechnology() == null)
+            return "choose a technology to learn";
 //-----------------------------------------------------------------------------------
 
-        improveImprovementsNextTurn(civilization,map);
+        improveImprovementsNextTurn(map);
         checkForUnitMaking(civilization);
         consumeTurnForRoadMaking(civilization,map);
         moveUnitWithMovesLeft(civilization,map);
@@ -3843,8 +3840,7 @@ public class PlayGameMenuController {
         increasePopulationNextTurn(civilization,map);
         reduceRepairNeedImprovementTurnNextTurn(map);
         resetHasOrdered(civilization,map);
-
-        //TODO...Kian Technology
+        civilization.reduceTechnologyRound();
 
 
         //TODO...  also complete historyInformation and showProductionsInProcess
@@ -3895,8 +3891,9 @@ public class PlayGameMenuController {
             }
         }
     }
-    public void improveImprovementsNextTurn(Civilization civilization,ArrayList<Tile> map){
-        //TODO... Kian
+    public void improveImprovementsNextTurn(ArrayList<Tile> map){
+        for (Tile tile : map)
+            tile.reduceImprovementRound();
     }
     public void reduceRepairNeedImprovementTurnNextTurn(ArrayList<Tile> map){
         for (Tile tile: map)

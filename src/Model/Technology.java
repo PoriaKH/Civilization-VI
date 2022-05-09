@@ -118,27 +118,27 @@ public class Technology {
         }
         else if (isAnimalHusbandry) {
             this.cost = 35;
-            this.name = "";
+            this.name = "AnimalHusbandry";
         }
         else if (isArchery) {
             this.cost = 35;
-            this.name = "AnimalHusbandry";
+            this.name = "Archery";
         }
         else if (isBronzeWorking) {
             this.cost = 55;
-            this.name = "";
+            this.name = "BronzeWorking";
         }
         else if (isCalendar) {
             this.cost = 70;
-            this.name = "BronzeWorking";
+            this.name = "Calendar";
         }
         else if (isMasonry) {
             this.cost = 55;
-            this.name = "";
+            this.name = "Masonry";
         }
         else if (isMining) {
             this.cost = 35;
-            this.name = "Masonry";
+            this.name = "Mining";
         }
         else if (isPottery) {
             this.cost = 35;
@@ -150,11 +150,11 @@ public class Technology {
         }
         else if (isTrapping) {
             this.cost = 55;
-            this.name = "";
+            this.name = "Trapping";
         }
         else if (isWriting) {
             this.cost = 55;
-            this.name = "Trapping";
+            this.name = "Writing";
         }
         else if (isConstruction) {
             this.cost = 100;

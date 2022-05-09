@@ -440,10 +440,10 @@ public class Tile {
             this.improvementEarnedPercent.put(improvement, roundLeft);
         this.workingOnImprovement = improvement;
     }
-    public void reduceImprovementRound(){//TODO... Kian
+    public void reduceImprovementRound(){
         if (workingOnImprovement  == null)
             return;
-        Integer roundLeft = this.improvementEarnedPercent.get(this.workingOnImprovement) - 1;
+        int roundLeft = this.improvementEarnedPercent.get(this.workingOnImprovement) - 1;
         if (roundLeft == 0) {
             this.improvementEarnedPercent.remove(this.workingOnImprovement);
             this.addImprovement(this.workingOnImprovement);
@@ -494,7 +494,7 @@ public class Tile {
 
     public void reduceRepairNeedImprovementTurn(){
         if (!isWorking && isOnRepair) {
-            setRepairNeedImprovement(this.repairNeedImprovement--);
+            setRepairNeedImprovement(this.repairNeedImprovement - 1);
             repairAllImprovements();
         }
     }

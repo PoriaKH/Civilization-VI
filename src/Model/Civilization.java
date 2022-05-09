@@ -66,7 +66,7 @@ public class Civilization {
         return trades;
     }
 
-    public Technology getWorkingOn() {
+    public Technology getWorkingOnTechnology() {
         return workingOnTechnology;
     }
 
@@ -165,11 +165,6 @@ public class Civilization {
             workingOnTechnology = null;
         }
         this.technologyEarnedPercent.replace(this.workingOnTechnology, roundLeft);
-    }
-    public void cancelTechnologyOnProcess(){
-        if (workingOnTechnology == null)
-            return;
-        workingOnTechnology = null;
     }
 
     public void removeFriend (Civilization civilization) {
