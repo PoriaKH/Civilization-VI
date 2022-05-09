@@ -1544,7 +1544,6 @@ public class PlayGameMenuController {
     }
 
     public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map, int turn){
-        //TODO...Koochak Happiness
         String str;
 
         if (unit == null) {
@@ -1989,14 +1988,19 @@ public class PlayGameMenuController {
     public String attackTileFromGround(Civilization civilization, Unit attacker, Unit defender, int originIndex, int destinationIndex,ArrayList<Tile> map){
         String str = "";
         int combatChange = map.get(destinationIndex).getCombatChange() + map.get(destinationIndex).getAttribute().getCombatChange();
-
         int powerOfAttacker = ((Warrior)attacker).getDamage();
         int healthOfAttacker = ((Warrior)attacker).getHealth();
         powerOfAttacker = powerOfAttacker * healthOfAttacker / 10;
+        if (civilization.getHappiness() < 0) {
+            powerOfAttacker = powerOfAttacker - powerOfAttacker / 4;
+        }
         int powerOfDefender = ((Warrior)defender).getDamage();
         int healthOfDefender = ((Warrior)defender).getHealth();
         powerOfDefender = powerOfDefender * healthOfDefender / 10;
         powerOfDefender = powerOfDefender + powerOfDefender * combatChange / 100;
+        if (defender.getCivilization().getHappiness() < 0) {
+            powerOfDefender = powerOfDefender - powerOfDefender / 4;
+        }
 
         healthOfAttacker = healthOfAttacker - powerOfDefender;
         healthOfDefender = healthOfDefender - powerOfAttacker;
@@ -2056,6 +2060,9 @@ public class PlayGameMenuController {
         int powerOfAttacker = ((Warrior)attacker).getRangedCombatDamage();
         int healthOfAttacker = ((Warrior)attacker).getHealth();
         powerOfAttacker = powerOfAttacker * healthOfAttacker / 10;
+        if (civilization.getHappiness() < 0) {
+            powerOfAttacker = powerOfAttacker - powerOfAttacker / 4;
+        }
 
         int healthOfDefender = ((Warrior)defender).getHealth();
 
