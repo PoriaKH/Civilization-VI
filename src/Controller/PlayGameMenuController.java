@@ -535,9 +535,20 @@ public class PlayGameMenuController {
         return finalTileStatus;
     }
 
-    public StringBuilder researchInformation(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
-
+    public StringBuilder researchInformation(Civilization civilization){
+        StringBuilder stringBuilder = new StringBuilder();
+        ArrayList<Technology> allTechnologies = civilization.getTechnologies();
+        stringBuilder.append("technologies that have been learnt:\n");
+        for (Technology technology : allTechnologies)
+            stringBuilder.append(technology.getName() + "\n");
+        HashMap<Technology, Integer> technologyEarnedPercent = civilization.getTechnologyEarnedPercent();
+        stringBuilder.append("technologies that you haven't been learnt completely:\n");
+        if (technologyEarnedPercent.size() == 0){
+            stringBuilder.append("nothing\n");
+            return stringBuilder;
+        }
+        for (Map.Entry<Technology, Integer> technology: technologyEarnedPercent.entrySet())
+            stringBuilder.append(technology.getKey().getName() + "\trounds left: " + technology.getValue().toString() + "\n");
         return stringBuilder;
     }
     // return name of current unit
@@ -2487,16 +2498,77 @@ public class PlayGameMenuController {
         return stringBuilder;
     }
     public StringBuilder showTechnologyMenu(Civilization civilization){
-        StringBuilder stringBuilder = new StringBuilder();
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
-        stringBuilder.append("technologies that have been learnt:\n");
-        for (Technology technology : allTechnologies)
-            stringBuilder.append(technology.getName() + "\n");
+        ArrayList<String> technologyNames = new ArrayList<>();
+        technologyNames.add("Agriculture");
+        technologyNames.add("AnimalHusbandry");
+        technologyNames.add("Archery");
+        technologyNames.add("BronzeWorking");
+        technologyNames.add("Calendar");
+        technologyNames.add("Masonry");
+        technologyNames.add("Mining");
+        technologyNames.add("Pottery");
+        technologyNames.add("TheWheel");
+        technologyNames.add("Trapping");
+        technologyNames.add("Writing");
+        technologyNames.add("Construction");
+        technologyNames.add("HorsebackRiding");
+        technologyNames.add("IronWorking");
+        technologyNames.add("Mathematics");
+        technologyNames.add("Philosophy");
+        technologyNames.add("Chivalry");
+        technologyNames.add("CivilService");
+        technologyNames.add("Currency");
+        technologyNames.add("Education");
+        technologyNames.add("Engineering");
+        technologyNames.add("Machinery");
+        technologyNames.add("MetalCasting");
+        technologyNames.add("Physics");
+        technologyNames.add("Steel");
+        technologyNames.add("Theology");
+        technologyNames.add("Acoustics");
+        technologyNames.add("Archaeology");
+        technologyNames.add("Banking");
+        technologyNames.add("Chemistry");
+        technologyNames.add("Economics");
+        technologyNames.add("Fertilizer");
+        technologyNames.add("Gunpowder");
+        technologyNames.add("Metallurgy");
+        technologyNames.add("MilitaryScience");
+        technologyNames.add("PrintingPress");
+        technologyNames.add("Rifling");
+        technologyNames.add("ScientificTheory");
+        technologyNames.add("Biology");
+        technologyNames.add("Combustion");
+        technologyNames.add("Dynamite");
+        technologyNames.add("Electricity");
+        technologyNames.add("Radio");
+        technologyNames.add("Railroad");
+        technologyNames.add("ReplaceableParts");
+        technologyNames.add("Parts");
+        technologyNames.add("SteamPower");
+        technologyNames.add("Telegraph");
+        ArrayList<String> possibleTechnologies = new ArrayList<>();
+        for (int i = 0; i < technologyNames.size(); i++)
+            if (hasPrerequisiteTechs(allTechnologies, technologyNames.get(i)))
+                possibleTechnologies.add(technologyNames.get(i));
+        StringBuilder stringBuilder = new StringBuilder();
         HashMap<Technology, Integer> technologyEarnedPercent = civilization.getTechnologyEarnedPercent();
         stringBuilder.append("technologies that you haven't been learnt completely:\n");
-        for (Map.Entry<Technology, Integer> technology: technologyEarnedPercent.entrySet()){
-            stringBuilder.append(technology.getKey().getName() + "\t" + technology.getValue().toString() + "\n");
+        if (technologyEarnedPercent.size() == 0)
+            stringBuilder.append("nothing\n");
+        else {
+            for (Map.Entry<Technology, Integer> technology : technologyEarnedPercent.entrySet()) {
+                stringBuilder.append(technology.getKey().getName() + "\trounds left: " + technology.getValue().toString() + "\n");
+            }
         }
+        stringBuilder.append("technologies that you have its prerequisite techs:\n");
+        if (possibleTechnologies.size() == 0){
+            stringBuilder.append("nothing\n");
+            return stringBuilder;
+        }
+        for (int i = 0; i < possibleTechnologies.size(); i++)
+            stringBuilder.append(possibleTechnologies.get(i) + "\n");
         return stringBuilder;
     }
     public Technology preChooseTechnologyToLearn(String name){

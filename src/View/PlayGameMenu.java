@@ -237,6 +237,7 @@ public class PlayGameMenu {
         String chooseTechnologyToLearnRegex = "learn technology (?<technologyName>.+)";
         String changeTechnologyToLearnRegex = "change technology to learn (?<technologyName>.+)";
         String showTechnologyMenuRegex = "show technology menu";
+        String researchInformationRegex = "show research information";
         String attackTileRegex1 = "attackTile --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
         String attackTileRegex2 = "attackTile to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
         String cancelCommandRegex = "cancel unit making on --tile (?<number>\\d+) --type (?<type>.+)";
@@ -489,6 +490,8 @@ public class PlayGameMenu {
             }
             else if (command.matches(showTechnologyMenuRegex))
                 System.out.println(playGameMenuController.showTechnologyMenu(playingCivilization));
+            else if (command.matches(researchInformationRegex))
+                System.out.println(playGameMenuController.researchInformation(playingCivilization));
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
 
