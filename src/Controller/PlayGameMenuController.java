@@ -211,7 +211,47 @@ public class PlayGameMenuController {
         civilization.setHappiness(amount);
         return "cheat code activated successfully";
     }
-    //TODO...Koochak one cheat Code
+    public String cheatTeleportUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
+            String str;
+            int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
+            int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
+            String unitName = matcher.group("unitName").toLowerCase();
+
+            Tile origin = map.get(numberOfOrigin);
+            Tile destination = map.get(numberOfDestination);
+            ArrayList<Unit> units = origin.getUnits();
+            Unit unit = getUnitInTile(units, unitName);
+
+        if (unit == null) {
+            str = "there is no unit with this name !";
+            return str;
+        }
+        if (unit.getIsOnSleep()) {
+            str = "this unit is sleeping !";
+            return str;
+        }
+        if (!unit.getCivilization().equals(civilization)) {
+            str = "this unit is for another civilization !";
+            return str;
+        }
+        if (unit.getPath() != null) {
+            str = "this unit has another path !";
+            return str;
+        }
+        ArrayList<Unit> unitsDestination = destination.getUnits();
+        for (int i = 0; i < unitsDestination.size(); i++) {
+            if (unitsDestination.get(i).isCivilian() == unit.isCivilian()) {
+                str = "there is another unit with this type in the tile !";
+                return str;
+            }
+        }
+        destination.addUnit(unit);
+        origin.removeUnit(unit);
+        unit.setOrigin(destination);
+        unit.setHasOrdered(true);
+        str = "unit teleported to destination !";
+        return str;
+    }
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for(int i = 0; i < numOfCivilizations; i++){
