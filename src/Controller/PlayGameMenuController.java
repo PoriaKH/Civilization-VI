@@ -675,10 +675,32 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    public StringBuilder diplomaticInformation(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
+    public String diplomaticInformation(Civilization civilization,ArrayList<Tile> map){
+        int point = civilization.getPoint();
 
-        return stringBuilder;
+        return "your point is : " + point;
+    }
+    public String sendFriendlyRequestDiplomatic(Civilization civilization,ArrayList<Civilization> civilizations,String name){
+        if(Objects.equals(name, civilization.getMember().getNickname()))
+            return "cant send request to yourself";
+
+        for(Civilization destCivilization : civilizations){
+            if(Objects.equals(destCivilization.getMember().getNickname(), name)){
+                for(Civilization tempCiv : destCivilization.getFriendlyRequests()){
+                    if(tempCiv == civilization) {
+                        return "you have already sent this request";
+                    }
+                }
+                for(Civilization tempCiv : destCivilization.getFriends()){
+                    if(tempCiv == civilization){
+                        return "this civilization is already your allie";
+                    }
+                }
+                destCivilization.getFriendlyRequests().add(civilization);
+                return "your request has been sent successfully";
+            }
+        }
+        return "there is no civilization with this name";
     }
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();

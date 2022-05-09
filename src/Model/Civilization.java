@@ -18,6 +18,7 @@ public class Civilization {
     private HashMap<Civilization, Integer> lossesInUnitsWar; // tamadon pirooz va tedad bord haye on ra neshan mide
     private int point;//to compare civilizations
 
+    private ArrayList<Civilization> friendlyRequests;
     private ArrayList<Civilization> friends;
 
     private Technology workingOnTechnology;//if == null -> have to choose
@@ -25,6 +26,7 @@ public class Civilization {
 
     public Civilization(Member member, City capital){
         this.happiness = 10;
+        friendlyRequests = new ArrayList<>();
         friends = new ArrayList<>();
         messages = new ArrayList<>();
         this.member = member;
@@ -174,5 +176,13 @@ public class Civilization {
                 break;
             }
         }
+    }
+
+    public ArrayList<String> getMessages() {
+        return messages;
+    }
+
+    public ArrayList<Civilization> getFriendlyRequests() {
+        return friendlyRequests;
     }
 }
