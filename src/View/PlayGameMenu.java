@@ -237,6 +237,8 @@ public class PlayGameMenu {
         String chooseTechnologyToLearnRegex = "learn technology (?<technologyName>.+)";
         String changeTechnologyToLearnRegex = "change technology to learn (?<technologyName>.+)";
         String showTechnologyMenuRegex = "show technology menu";
+        String attackTileRegex1 = "attackTile --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
+        String attackTileRegex2 = "attackTile to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -375,6 +377,12 @@ public class PlayGameMenu {
             }
             else if(command.matches(showCurrentScoreRegex)){
                 System.out.println(playGameMenuController.showCurrentScore(civilizations,map));
+            }
+            else if (command.matches(attackTileRegex1)) {
+                System.out.println(playGameMenuController.preAttackTile(matcher(attackTileRegex1,command),playingCivilization,map));
+            }
+            else if (command.matches(attackTileRegex2)) {
+                System.out.println(playGameMenuController.preAttackTile(matcher(attackTileRegex2,command),playingCivilization,map));
             }
             else if (command.matches(workOnTileRegex)){
                 Matcher matcher = Pattern.compile(workOnTileRegex).matcher(command);
