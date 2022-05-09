@@ -240,6 +240,8 @@ public class PlayGameMenu {
         String attackTileRegex1 = "attackTile --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
         String attackTileRegex2 = "attackTile to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
         String cancelCommandRegex = "cancel unit making on --tile (?<number>\\d+) --type (?<type>.+)";
+        String cheatCodeMoveUnitRegex1 = "^cheat code move --unit (?<unitName>.+) --path (?<numberO>\\d+ to ?<numberD>\\d+)$";
+        String cheatCodeMoveUnitRegex2 = "^cheat code move --path (?<numberO>\\d+ to ?<numberD>\\d+) --unit (?<unitName>.+)$";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -393,6 +395,12 @@ public class PlayGameMenu {
                 if (matcher.group("type").equals("civilian")) isCivilian = true;
                 else isCivilian = false;
                 System.out.println(playGameMenuController.cancelCommand(playingCivilization,isCivilian,map,map.get(index)));
+            }
+            else if (command.matches(cheatCodeMoveUnitRegex1)) {
+                System.out.println(playGameMenuController.cheatTeleportUnit(matcher(cheatCodeMoveUnitRegex1,command),playingCivilization,map));
+            }
+            else if (command.matches(cheatCodeMoveUnitRegex2)) {
+                System.out.println(playGameMenuController.cheatTeleportUnit(matcher(cheatCodeMoveUnitRegex2,command),playingCivilization,map));
             }
             else if (command.matches(workOnTileRegex)){
                 Matcher matcher = Pattern.compile(workOnTileRegex).matcher(command);
