@@ -239,6 +239,7 @@ public class PlayGameMenu {
         String showTechnologyMenuRegex = "show technology menu";
         String attackTileRegex1 = "attackTile --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
         String attackTileRegex2 = "attackTile to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
+        String cancelCommandRegex = "cancel unit making on --tile (?<number>\\d+) --type (?<type>.+)";
         String nextTurnRegex = "";
 
         playGameMenuController.showMap(ANSI_COLORS, number, types);
@@ -383,6 +384,15 @@ public class PlayGameMenu {
             }
             else if (command.matches(attackTileRegex2)) {
                 System.out.println(playGameMenuController.preAttackTile(matcher(attackTileRegex2,command),playingCivilization,map));
+            }
+            else if (command.matches(cancelCommandRegex)) {
+                Matcher matcher = Pattern.compile(cancelCommandRegex).matcher(command);
+                matcher.find();
+                int index = Integer.parseInt(matcher.group("number"));
+                boolean isCivilian;
+                if (matcher.group("type").equals("civilian")) isCivilian = true;
+                else isCivilian = false;
+                System.out.println(playGameMenuController.cancelCommand(playingCivilization,isCivilian,map,map.get(index)));
             }
             else if (command.matches(workOnTileRegex)){
                 Matcher matcher = Pattern.compile(workOnTileRegex).matcher(command);
