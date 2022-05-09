@@ -731,7 +731,12 @@ public class PlayGameMenuController {
             stringBuilder.append("Science per Turn : ").append(city.getSciencePerTurn()).append("\n");
             stringBuilder.append("Gold per Turn : ").append(city.getGold()).append("\n");
             stringBuilder.append("Production per Turn : ").append(city.getProduction());
-            //TODO... add units(koochak) and buildings duration to create
+            HashMap<Unit,Integer> unit = city.getCenterTile().getTurnForUnitMaking();
+            for(Map.Entry<Unit,Integer> entry : unit.entrySet()) {
+              String name = getUnitsName(entry.getKey());
+              stringBuilder.append(name + ": " + entry.getValue() + "\n");
+            }
+            //TODO...  buildings duration to create
             stringBuilder.append("-----------------------\n");
         }
 
