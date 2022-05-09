@@ -1059,6 +1059,10 @@ public class PlayGameMenuController {
             str = "there is no unit with this name !";
             return str;
         }
+        if (unit.getIsOnSleep()) {
+            str = "this unit is sleeping !";
+            return str;
+        }
         if (!unit.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
             return str;
@@ -1081,6 +1085,7 @@ public class PlayGameMenuController {
             str = "there is another civilization on the way !";
             return str;
         }
+        unit.setHasOrdered(true);
         unit.setOrigin(origin);
         unit.setDestination(destination);
         int i = 0;
@@ -1965,6 +1970,7 @@ public class PlayGameMenuController {
         if (checkTheBlocks(map,indexOfTiles)) {
             return "your unit vision is blocked !";
         }
+        attacker.setHasOrdered(true);
         addToEnemy(civilization, defender.getCivilization());
         if (defender == null) {
             defender = getCivilianUnit(destinationIndex, map);
@@ -3717,6 +3723,7 @@ public class PlayGameMenuController {
         increaseProductionCitiesNextTurn(civilization,map);
         increasePopulationNextTurn(civilization,map);
         reduceRepairNeedImprovementTurnNextTurn(map);
+        resetHasOrdered(civilization,map);
 
         //TODO...Kian Technology
 
@@ -3745,7 +3752,7 @@ public class PlayGameMenuController {
             for(Unit unit : tile.getUnits()){
                 if(unit.getCivilization() == civilization){
                     if(!unit.getIsOnSleep()){
-                        if(!unit.getHasOrdered()){
+                        if(!unit.isCivilian() && !unit.getHasOrdered()){
                             return tile.getTileNumber();
                         }
                     }
@@ -3753,6 +3760,21 @@ public class PlayGameMenuController {
             }
         }
         return -1;
+    }
+    public void resetHasOrdered(Civilization civilization, ArrayList<Tile> map) {
+        for (int i = 0; i < map.size(); i++) {
+            Tile tile = map.get(i);
+            ArrayList<Unit> units = tile.getUnits();
+            for (int i1 = 0; i1 < units.size(); i1++) {
+                if(units.get(i1).getCivilization() == civilization){
+                    if(!units.get(i1).getIsOnSleep()){
+                        if(!units.get(i1).isCivilian() && !units.get(i1).getHasOrdered()){
+                            units.get(i1).setHasOrdered(false);
+                        }
+                    }
+                }
+            }
+        }
     }
     public void improveImprovementsNextTurn(Civilization civilization,ArrayList<Tile> map){
         //TODO... Kian
