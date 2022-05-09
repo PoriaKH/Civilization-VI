@@ -111,8 +111,16 @@ public class PlayGameMenu {
         ANSI_COLORS[71] = BROWN;
         String number[] = {" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71"};
         String types[] = new String[72];
-        for (int i = 0; i < 72; i++)
+        String cv[] = new String[72];
+        String unit1[] = new String[72];
+        String unit2[] = new String[72];
+        String mapString[] = new String[72];
+        for (int i = 0; i < 72; i++){
             types[i] = "\u2588";
+            unit1[i] = "\u2588" + "\u2588";
+            unit2[i] = "\u2588" + "\u2588";
+            cv[i] = "\u2588";
+        }
         //jungle -> j, plat -> p, vahhe(oasis) -> v, marsh --> m, rainforest --> r, ice --> i
         types[0] = "j";
         types[13] = "p";
@@ -247,7 +255,10 @@ public class PlayGameMenu {
         String sendFriendlyRequestDiplomaticRegex = "send friendly request to (?<civilization>.*)";
         String nextTurnRegex = "";
 
-        playGameMenuController.showMap(ANSI_COLORS, number, types);
+        mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
+        for (int i = 0; i < 72; i++)
+            System.out.println(mapString[i]);
+
         while(!Objects.equals(command, "exit menu")) {
 
 
@@ -584,7 +595,12 @@ public class PlayGameMenu {
             }
             ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization1, map, zeroStatusTilesCivilisation1, ANSI_COLORS);
             types = playGameMenuController.setTileType(map);
-            playGameMenuController.showMap(ANSI_COLORS, number, types);
+            cv = playGameMenuController.cvMaker(map, playingCivilization);
+            unit1 = playGameMenuController.unitMaker(map, 0);
+            unit2 = playGameMenuController.unitMaker(map, 1);
+            mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
+            for (int i = 0; i < 72; i++)
+                System.out.println(mapString[i]);
         }
     }
 }

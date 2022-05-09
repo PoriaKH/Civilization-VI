@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class Civilization {
     private Member member;
+    private String name;
     private City capital;
     private int science;
     private ArrayList<Technology> technologies;
@@ -25,6 +26,7 @@ public class Civilization {
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
+        this.name = member.getUsername().substring(0, 1);
         this.happiness = 10;
         friendlyRequests = new ArrayList<>();
         friends = new ArrayList<>();
@@ -38,6 +40,10 @@ public class Civilization {
         trades = new HashMap<>();
         technologyEarnedPercent = new HashMap<>();
         this.gold = 10;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Member getMember() {
