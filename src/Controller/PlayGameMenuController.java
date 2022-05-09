@@ -2266,9 +2266,15 @@ public class PlayGameMenuController {
         tile.Loot();
         return "tile has been looted successfully";
     }
-    public String cancelCommand(Civilization civilization, Unit unit,ArrayList<Tile> map){
+    public String cancelCommand(Civilization civilization, boolean isCivilian,ArrayList<Tile> map, Tile tile){
         String str;
-
+        Unit unit = tile.getUnitInUnitMakingProgress(isCivilian);
+        if (unit == null) {
+            str = "this type of unit is not on unit making progress !";
+            return str;
+        }
+        tile.removeUnitFromMakingProgress(unit);
+        str = "unit making has been canceled !";
         return str;
     }
     public String wakeUpUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){

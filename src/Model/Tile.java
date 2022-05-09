@@ -5,6 +5,7 @@ import Model.Units.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Tile {
@@ -509,5 +510,12 @@ public class Tile {
 
     public HashMap<Unit, Integer> getTurnForUnitMaking() {
         return turnForUnitMaking;
+    }
+
+    public Unit getUnitInUnitMakingProgress (boolean isCivilian) {
+        for(Map.Entry<Unit, Integer> entry : turnForUnitMaking.entrySet()) {
+            if (entry.getKey().isCivilian() == isCivilian) return entry.getKey();
+        }
+        return null;
     }
 }
