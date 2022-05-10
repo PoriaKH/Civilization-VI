@@ -750,6 +750,15 @@ public class PlayGameMenuController {
         }
         return "there is no friendly request with this name";
     }
+    public String breakTheOath(Civilization civilization,String name){//this will cut the friendship between you and your allie
+        for(Civilization tempCivilization : civilization.getFriendlyRequests()){
+            if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
+                civilization.breakTheOath(tempCivilization);
+                return "you broke the the oath !";
+            }
+        }
+        return "you don't have an allie with this name";
+    }
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();

@@ -54,7 +54,12 @@ public class Civilization {
         String message = this.name + " : denied your friendly request !";
         civilization.addMessage(message);
     }
-
+    public void breakTheOath(Civilization civilization){
+        this.friends.remove(civilization);
+        civilization.friends.remove(this);
+        String message = this.name + " : broke the oath, now you are enemies";
+        civilization.messages.add(message);
+    }
     public void addMessage(String message){
         this.messages.add(message);
     }
