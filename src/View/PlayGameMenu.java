@@ -254,6 +254,8 @@ public class PlayGameMenu {
         String diplomaticInformationRegex = "diplomatic information";
         String sendFriendlyRequestDiplomaticRegex = "send friendly request to (?<civilization>.*)";
         String showFriendlyRequestsRegex = "show friendly requests";
+        String acceptFriendlyRequest = "accept friendly request (?<name>.*)";
+        String denyFriendlyRequest = "deny friendly request (?<name>.*)";
         String nextTurnRegex = "";
 
         mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
@@ -516,6 +518,18 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.diplomaticInformation(playingCivilization,map));
             else if(command.matches(showFriendlyRequestsRegex))
                 System.out.println(playGameMenuController.showFriendlyRequests(playingCivilization));
+            else if(command.matches(acceptFriendlyRequest)) {
+                Matcher matcher = Pattern.compile(acceptFriendlyRequest).matcher(command);
+                matcher.find();
+                String name = matcher.group("name");
+                System.out.println(playGameMenuController.acceptFriendlyRequest(playingCivilization,name));
+            }
+            else if(command.matches(denyFriendlyRequest)){
+                Matcher matcher = Pattern.compile(denyFriendlyRequest).matcher(command);
+                matcher.find();
+                String name = matcher.group("name");
+                System.out.println(playGameMenuController.denyFriendlyRequest(playingCivilization,name));
+            }
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
 

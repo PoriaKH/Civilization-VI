@@ -732,6 +732,24 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
+    public String acceptFriendlyRequest(Civilization civilization,String name){
+        for(Civilization tempCivilization : civilization.getFriendlyRequests()){
+            if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
+                civilization.acceptFriendlyRequest(tempCivilization);
+                return "you accepted the request";
+            }
+        }
+        return "there is no friendly request with this name";
+    }
+    public String denyFriendlyRequest(Civilization civilization,String name){
+        for(Civilization tempCivilization : civilization.getFriendlyRequests()){
+            if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
+                civilization.denyFriendlyRequest(tempCivilization);
+                return "you denied the request";
+            }
+        }
+        return "there is no friendly request with this name";
+    }
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();

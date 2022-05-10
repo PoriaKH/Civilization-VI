@@ -42,6 +42,23 @@ public class Civilization {
         this.gold = 10;
     }
 
+    public void acceptFriendlyRequest(Civilization civilization){
+        this.friendlyRequests.remove(civilization);
+        this.friends.add(civilization);
+        civilization.friends.add(this);
+        String message = this.name + " : accepted your friendly request, now you are allies";
+        civilization.addMessage(message);
+    }
+    public void denyFriendlyRequest(Civilization civilization){
+        this.friendlyRequests.remove(civilization);
+        String message = this.name + " : denied your friendly request !";
+        civilization.addMessage(message);
+    }
+
+    public void addMessage(String message){
+        this.messages.add(message);
+    }
+
     public String getName() {
         return name;
     }
