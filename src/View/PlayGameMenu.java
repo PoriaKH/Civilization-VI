@@ -253,6 +253,7 @@ public class PlayGameMenu {
         String cheatCodeMoveUnitRegex2 = "^cheat code move --path (?<numberO>\\d+ to ?<numberD>\\d+) --unit (?<unitName>.+)$";
         String diplomaticInformationRegex = "diplomatic information";
         String sendFriendlyRequestDiplomaticRegex = "send friendly request to (?<civilization>.*)";
+        String showFriendlyRequestsRegex = "show friendly requests";
         String nextTurnRegex = "";
 
         mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
@@ -512,7 +513,9 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.sendFriendlyRequestDiplomatic(playingCivilization,civilizations,name));
             }
             else if(command.matches(diplomaticInformationRegex))
-                System.out.println(playGameMenuController.diplomaticInformation(civilizations,map));
+                System.out.println(playGameMenuController.diplomaticInformation(playingCivilization,map));
+            else if(command.matches(showFriendlyRequestsRegex))
+                System.out.println(playGameMenuController.showFriendlyRequests(playingCivilization));
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
 

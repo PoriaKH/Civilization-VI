@@ -723,6 +723,15 @@ public class PlayGameMenuController {
         }
         return "there is no civilization with this name";
     }
+    public StringBuilder showFriendlyRequests(Civilization civilization){
+        StringBuilder stringBuilder = new StringBuilder("");
+        int i = 1;
+        for(Civilization tempCivilization : civilization.getFriendlyRequests()){
+            stringBuilder.append(i).append(" : ").append(tempCivilization.getMember().getNickname()).append("\n");
+            i++;
+        }
+        return stringBuilder;
+    }
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();
