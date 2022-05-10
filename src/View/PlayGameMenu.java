@@ -25,6 +25,7 @@ public class PlayGameMenu {
     public static final String PURPLE = "\u001B[35m";// --> thundra
     public static final String ICY = "\u001B[37m";// --> ice
     public static final String CYAN = "\033[0;36m";// --> hill
+    public static final String BACKGROUND_BLUE = "\u001b[44;1m";// --> river
 
 
     public Matcher matcher(String regex, String command){
@@ -36,7 +37,7 @@ public class PlayGameMenu {
 
     public void run(Scanner scan, int numOfCivilizations, ArrayList<Member> members){
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-        String ANSI_COLORS[] = new String[72];
+        String ANSI_COLORS[] = new String[73];
         ANSI_COLORS[0] = BROWN;
         ANSI_COLORS[1] = DARK_GREEN;
         ANSI_COLORS[2] = DARK_GREEN;
@@ -109,6 +110,7 @@ public class PlayGameMenu {
         ANSI_COLORS[69] = YELLOW;
         ANSI_COLORS[70] = PURPLE;
         ANSI_COLORS[71] = BROWN;
+        ANSI_COLORS[72] = BACKGROUND_BLUE;
         String number[] = {" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71"};
         String types[] = new String[72];
         String cv[] = new String[72];
