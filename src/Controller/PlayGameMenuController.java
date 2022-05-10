@@ -872,9 +872,13 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    public StringBuilder diplomaticReview(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
-
+    public StringBuilder diplomaticReview(Civilization civilization){
+        StringBuilder stringBuilder = new StringBuilder("");
+        stringBuilder.append("your friends :\n");
+        for(Civilization tempCiv : civilization.getFriends()){
+            stringBuilder.append(tempCiv.getName()).append("\n");
+        }
+        stringBuilder.append("other civilizations are your enemy");
         return stringBuilder;
     }
     public StringBuilder tradeHistory(Civilization civilization,ArrayList<Tile> map){

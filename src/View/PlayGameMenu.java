@@ -257,6 +257,7 @@ public class PlayGameMenu {
         String acceptFriendlyRequestRegex = "accept friendly request (?<name>.*)";
         String denyFriendlyRequestRegex = "deny friendly request (?<name>.*)";
         String breakOathRegex = "break oath with (?<name>.*)";
+        String diplomaticReviewRegex = "diplomatic review";
         String nextTurnRegex = "";
 
         mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
@@ -536,6 +537,8 @@ public class PlayGameMenu {
                 String name = matcher.group("name");
                 System.out.println(playGameMenuController.breakTheOath(playingCivilization,name));
             }
+            else if(command.matches(diplomaticReviewRegex))
+                System.out.println(playGameMenuController.diplomaticReview(playingCivilization));
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
 
