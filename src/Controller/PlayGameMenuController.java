@@ -757,7 +757,7 @@ public class PlayGameMenuController {
                 return "you broke the the oath !";
             }
         }
-        return "you don't have an allie with this name";
+        return "you don't have any allie with this name";
     }
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
