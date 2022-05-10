@@ -2029,6 +2029,14 @@ public class PlayGameMenuController {
             }
         }
     }
+    // if civilization2 is friend return true
+    public boolean isFriend(Civilization civilization1, Civilization civilization2) {
+        ArrayList<Civilization> friends = civilization1.getFriends();
+        for (int i = 0; i < friends.size(); i++) {
+            if (friends.get(i).equals(civilization2)) return true;
+        }
+        return false;
+    }
     // prepare some parameters and return some string
     public String preAttackTile (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
         int originIndex = Integer.parseInt(matcher.group("origin"));
@@ -2063,8 +2071,10 @@ public class PlayGameMenuController {
         if (checkTheBlocks(map,indexOfTiles)) {
             return "your unit vision is blocked !";
         }
+        if (isFriend(civilization, defender.getCivilization())) {
+            addToEnemy(civilization, defender.getCivilization());
+        }
         attacker.setHasOrdered(true);
-        addToEnemy(civilization, defender.getCivilization());
         if (defender == null) {
             defender = getCivilianUnit(destinationIndex, map);
             if (defender == null) return "there is no unit on destination !";
