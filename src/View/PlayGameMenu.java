@@ -210,7 +210,7 @@ public class PlayGameMenu {
         String lockCitizenRegex = "lock citizen (?<origin>\\d+) (?<destination>\\d+)";//move citizen from origin to destination
         String purchaseTileRegex = "purchase tile (?<tile>\\d+)";
         String workOnTileRegex = "city (?<cityNumber>\\d+) citizen (?<citizenNumber>\\d+) work on --tile (?<tileNumber>\\d+)";
-        String createImprovementRegex = "create improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+) --civilian (?<civilianNumber>\\d+)";
+        String createImprovementRegex = "create improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+) unit in --tile (?<tileUnitNumber>\\d+)";
         String removeImprovementRegex = "remove improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+)";
         String createRoadRegex = "^create road on --tile (?<number>\\d+)$";
         String createRailwayRegex = "^create rail way on --tile (?<number>\\d+)$";
@@ -240,8 +240,8 @@ public class PlayGameMenu {
         String cheatIncreaseTechnologyRegex = "cheat increase technology (?<amount>\\d+)";
         String cheatIncreaseHappinessRegex = "cheat increase happiness (?<amount>\\d+)";
         String cancelImprovementOnProcessRegex = "cancel improvement on tile (?<tileNumber> \\d+)";
-        String repairImprovementRegex = "repair improvements in tile (?<tileNumber>\\d+) unit (?<unitNumber>\\d+)";
-        String lootTileRegex = "loot tile (?<tileNumber>\\d+) unit (?<unitNumber>\\d+)";
+        String repairImprovementRegex = "repair improvements in tile (?<tileNumber>\\d+) unit in tile (?<unitTileNumber>\\d+)";
+        String lootTileRegex = "loot --tile (?<lootTileNumber>\\d+) unit in --tile (?<tileUnitNumber>\\d+)";
         String chooseTechnologyToLearnRegex = "learn technology (?<technologyName>.+)";
         String changeTechnologyToLearnRegex = "change technology to learn (?<technologyName>.+)";
         String showTechnologyMenuRegex = "show technology menu";
@@ -432,11 +432,10 @@ public class PlayGameMenu {
             else if (command.matches(createImprovementRegex)){
                 Matcher matcher = Pattern.compile(createImprovementRegex).matcher(command);
                 matcher.find();
-                int civilianNumber = Integer.parseInt(matcher.group("civilianNumber"));
+                int tileUnitNumber = Integer.parseInt(matcher.group("tileUnitNumber"));
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
                 String improvementName = matcher.group("improvementName");
-                Civilian civilian = (Civilian) playGameMenuController.preCreateImprovement(civilianNumber, playingCivilization);
-                System.out.println(playGameMenuController.createImprovement(playingCivilization, civilian, tileNumber, improvementName, map));
+                System.out.println(playGameMenuController.createImprovement(playingCivilization, tileUnitNumber, tileNumber, improvementName, map));
             }
             else if (command.matches(removeImprovementRegex)){
                 Matcher matcher = Pattern.compile(removeImprovementRegex).matcher(command);
@@ -484,15 +483,15 @@ public class PlayGameMenu {
                 Matcher matcher = Pattern.compile(repairImprovementRegex).matcher(command);
                 matcher.find();
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
-                int civilianNumber = Integer.parseInt(matcher.group("unitNumber"));
-                System.out.println(playGameMenuController.repairImprovement(playingCivilization, civilianNumber, tileNumber, map));
+                int tileUnitNumber = Integer.parseInt(matcher.group("tileUnitNumber"));
+                System.out.println(playGameMenuController.repairImprovement(playingCivilization, tileUnitNumber, tileNumber, map));
             }
             else if (command.matches(lootTileRegex)){
                 Matcher matcher = Pattern.compile(lootTileRegex).matcher(command);
                 matcher.find();
-                int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
-                int warriorNumber = Integer.parseInt(matcher.group("unitNumber"));
-                System.out.println(playGameMenuController.lootTile(playingCivilization, warriorNumber, tileNumber, map));
+                int lootTileNumber = Integer.parseInt(matcher.group("lootTileNumber"));
+                int tileUnitNumber = Integer.parseInt(matcher.group("tileUnitNumber"));
+                System.out.println(playGameMenuController.lootTile(playingCivilization, tileUnitNumber, lootTileNumber, map));
             }
             else if (command.matches(chooseTechnologyToLearnRegex)){
                 Matcher matcher = Pattern.compile(chooseTechnologyToLearnRegex).matcher(command);

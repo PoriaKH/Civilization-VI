@@ -2412,19 +2412,28 @@ public class PlayGameMenuController {
         str = "the unit is ready for ranged battle !";
         return str;
     }
-    public String lootTile(Civilization civilization, int warriorNumber, int destinationTileNumber, ArrayList<Tile> map){
-        String str;
-        ArrayList<Unit> units = new ArrayList<>();
-        for (Tile tile: map) {
-            for (int i = 0; i < tile.getUnits().size(); i++)
-                if (tile.getUnits().get(i).getCivilization() == civilization)
-                    units.add(tile.getUnits().get(i));
-        }
-        Unit unit = units.get(warriorNumber);
-        if (unit.isCivilian())
+    public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map){
+        ArrayList<Unit> allUnits = map.get(tileNumber).getUnits();
+        if (allUnits.size() == 0)
+            return "there is no unit in this tile";
+        boolean isThereAnyRelatedUnit = false;
+        for (Unit unit : allUnits)
+            if (unit.getCivilization() == civilization) {
+                isThereAnyRelatedUnit = true;
+                break;
+            }
+        if (!isThereAnyRelatedUnit)
+            return "units in this tile doesn't belong to you";
+        Unit lootUnit = null;
+        for (Unit unit : allUnits)
+            if (!unit.isCivilian()) {
+                lootUnit = unit;
+                break;
+            }
+        if (lootUnit == null)
             return "only warriors can loot a tile";
-        Warrior warrior = (Warrior) unit;
         Tile tile = map.get(destinationTileNumber);
+        moveUnit(civilization, map.get(tileNumber), tile, map, lootUnit);
         tile.Loot();
         return "tile has been looted successfully";
     }
@@ -3372,23 +3381,23 @@ public class PlayGameMenuController {
         else
             return "this tile isn't your city tiles or city neighbors";
     }
-    public Unit preCreateImprovement(int civilianNumber, Civilization civilization){
-        ArrayList<City> cities = civilization.getCities();
-        ArrayList<Tile> cityTiles = new ArrayList<>();
-        for (int i = 0; i < cities.size(); i++) {
-            ArrayList<Tile> tiles = cities.get(i).getTiles();
-            for (int j = 0; j < tiles.size(); j++)
-                cityTiles.add(tiles.get(j));
-        }
-        ArrayList<Unit> allUnits = new ArrayList<>();
-        for (int i = 0; i < cities.size(); i++) {
-            ArrayList<Unit> units = cityTiles.get(i).getUnits();
-            for (int j = 0; j < units.size(); j++)
-                allUnits.add(units.get(j));
-        }
-        return allUnits.get(civilianNumber);
-    }
-    public String createImprovement(Civilization civilization, Civilian civilian, int tileNumber, String improvementName, ArrayList<Tile> map){
+    public String createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map){
+        ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
+        if (allUnits.size() == 0)
+            return "there is no unit in this tile";
+        boolean isThereAnyRelatedUnit = false;
+        Unit creatorUnit = null;
+        for (Unit unit : allUnits)
+            if (unit.getCivilization() == civilization) {
+                isThereAnyRelatedUnit = true;
+                creatorUnit = unit;
+                break;
+            }
+        if (!isThereAnyRelatedUnit)
+            return "units in this tile doesn't belong to you";
+        if (!creatorUnit.isCivilian())
+            return "only workers can work on improvements";
+        Civilian civilian = (Civilian) creatorUnit;
         if (civilian.isWorker()) {
             Tile tile = map.get(tileNumber);
             ArrayList<Technology> techs = civilization.getTechnologies();
@@ -3791,22 +3800,32 @@ public class PlayGameMenuController {
         str = "the rail way will be repaired in 3 turns";
         return str;
     }
-    public String repairImprovement(Civilization civilization, int civilianNumber, int tileNumber, ArrayList<Tile> map){
-        ArrayList<Unit> units = new ArrayList<>();
-        for (Tile tile: map) {
-            for (int i = 0; i < tile.getUnits().size(); i++)
-                if (tile.getUnits().get(i).getCivilization() == civilization)
-                    units.add(tile.getUnits().get(i));
+    public String repairImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, ArrayList<Tile> map){
+        ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
+        if (allUnits.size() == 0)
+            return "there is no unit in this tile";
+        boolean isThereAnyRelatedUnit = false;
+        for (Unit unit : allUnits)
+            if (unit.getCivilization() == civilization) {
+                isThereAnyRelatedUnit = true;
+                break;
+            }
+        if (!isThereAnyRelatedUnit)
+            return "units in this tile doesn't belong to you";
+        Unit repairUnit = null;
+        Civilian civilian = null;
+        for (Unit unit: allUnits) {
+            if (!unit.isCivilian()){
+                civilian = (Civilian) unit;
+                if (civilian.isWorker())
+                    repairUnit = unit;
+            }
         }
-        Unit unit = units.get(civilianNumber);
-        if (!unit.isCivilian())
-            return "only workers can work on repairments";
-        Civilian civilian = (Civilian) unit;
-        if (civilian.isSettler())
+        if (repairUnit == null)
             return "only workers can work on repairments";
         Tile tile = map.get(tileNumber);
-        civilian.setWorkingTile(tile);
         if (!tile.isWorking()) {
+            civilian.setWorkingTile(tile);
             int repairNeedTurn = tile.getImprovements().size() * 3;
             tile.setRepairNeedImprovement(repairNeedTurn);
             tile.setIsOnRepair(true);
