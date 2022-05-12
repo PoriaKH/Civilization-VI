@@ -296,8 +296,9 @@ public class PlayGameMenuController {
     public static final String PURPLE = "\u001B[35m";// --> tundra
     public static final String SNOW = "\u001B[37m";// --> ice
     public static final String CYAN = "\033[0;36m";// --> hill
+    public static final String BACKGROUND_BLUE = "\u001b[44;1m";// --> river
     public String[] setTileColors(ArrayList<Integer> tileStatusOfCivilization, ArrayList<Tile> map, HashMap<Integer, Tile> zeroStatusTilesCivilisation, String[] oldTileColors){
-        String[] tileColors = new String[72];
+        String[] tileColors = new String[73];
         for (int i = 0; i < map.size(); i++) {
             if (tileStatusOfCivilization.get(i) == -1)
                 tileColors[i]  = BLACK;
@@ -338,6 +339,7 @@ public class PlayGameMenuController {
                     tileColors[i] = oldTileColors[i];
             }
         }
+        tileColors[72] = BACKGROUND_BLUE;
         return tileColors;
     }
     public String[] setTileType(ArrayList<Tile> map){
