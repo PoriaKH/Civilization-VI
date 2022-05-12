@@ -833,11 +833,6 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    public StringBuilder historyInformation(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
-
-        return stringBuilder;
-    }
     public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
@@ -891,6 +886,8 @@ public class PlayGameMenuController {
         stringBuilder.append("other civilizations are your enemy");
         return stringBuilder;
     }
+    //TODO for next phase ...
+    /*
     public StringBuilder tradeHistory(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder;
 
@@ -901,6 +898,7 @@ public class PlayGameMenuController {
 
         return str;
     }
+    */
     // finds all  the neighbours of a node (tile)
     public void findAllNeighbours(Node[] graph) {
         int column = 0;
@@ -2783,11 +2781,6 @@ public class PlayGameMenuController {
         }
         return false;//it doesn't
     }
-    public StringBuilder showProductionsInProcess(Civilization civilization,ArrayList<Tile> map){
-        StringBuilder stringBuilder;
-
-        return stringBuilder;
-    }
     public StringBuilder showTechnologyMenu(Civilization civilization){
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         ArrayList<String> technologyNames = new ArrayList<>();
@@ -4022,11 +4015,15 @@ public class PlayGameMenuController {
         }
         return "tile hasn't been looted or has been repaired completely";
     }
+    //TODO... or not at all
+    /*
     public String repairWholeTile(Civilization civilization,Civilian civilian, Tile tile,ArrayList<Tile> map){
         String str;
 
         return str;
     }
+     */
+
     // get necessary parameters for update warrior
     public String preUpgradeUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
         matcher.find();
