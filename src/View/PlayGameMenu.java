@@ -260,6 +260,8 @@ public class PlayGameMenu {
         String denyFriendlyRequestRegex = "deny friendly request (?<name>.*)";
         String breakOathRegex = "break oath with (?<name>.*)";
         String diplomaticReviewRegex = "diplomatic review";
+        String attackCityRegex1 = "attackCity --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
+        String attackCityRegex2 = "attackCity to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
         String nextTurnRegex = "";
 
         mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
@@ -540,6 +542,12 @@ public class PlayGameMenu {
             }
             else if(command.matches(diplomaticReviewRegex))
                 System.out.println(playGameMenuController.diplomaticReview(playingCivilization));
+            else if (command.matches(attackCityRegex1)) {
+                System.out.println(playGameMenuController.preAttackCity(matcher(attackCityRegex1,command),playingCivilization,map,civilizations));
+            }
+            else if (command.matches(attackCityRegex2)) {
+                System.out.println(playGameMenuController.preAttackCity(matcher(attackCityRegex2,command),playingCivilization,map,civilizations));
+            }
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
 

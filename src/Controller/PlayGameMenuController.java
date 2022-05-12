@@ -2339,7 +2339,7 @@ public class PlayGameMenuController {
                 str = "you won this attack !";
                 defender = null;
         }
-        if (healthOfDefender > 0 && healthOfAttacker <= 0) {
+       else if (healthOfDefender > 0 && healthOfAttacker <= 0) {
                 defender.setOrigin(map.get(originIndex));
                 defender.setMp(0);
                 int count1 = civilization.getCountOfLosses(defender.getCivilization());
@@ -2357,14 +2357,14 @@ public class PlayGameMenuController {
                 str = "you lost this attack !";
                 attacker = null;
         }
-        if (healthOfAttacker <= 0 && healthOfDefender <= 0) {
+       else if (healthOfAttacker <= 0 && healthOfDefender <= 0) {
             map.get(originIndex).removeUnit(attacker);
             map.get(destinationIndex).removeUnit(defender);
             attacker = null;
             defender = null;
             str = "your unit died !";
         }
-        if (healthOfAttacker > 0 && healthOfDefender > 0) {
+       else if (healthOfAttacker > 0 && healthOfDefender > 0) {
             int xp1 = ((Warrior) attacker).getXp();
             xp1 ++;
             ((Warrior) attacker).setXp(xp1);
