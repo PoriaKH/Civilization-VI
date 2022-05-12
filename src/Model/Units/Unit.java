@@ -83,7 +83,12 @@ public class Unit {
         return origin;
     }
 
-    private boolean isOnDeployment;//esteghrar dar shahr //TODO... agar isOndeployment true bashe moghe defa ghodrat ziad mishe
+    private boolean isOnDeployment;
+
+    public boolean isOnDeployment() {
+        return isOnDeployment;
+    }
+
     private boolean isCivilian;
 
 

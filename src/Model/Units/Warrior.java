@@ -94,7 +94,7 @@ public class Warrior extends Unit{
     }
 
     public void setReadyForRangedBattle(boolean readyForRangedBattle) {
-        isReadyForRangedBattle = readyForRangedBattle;
+        this.isReadyForRangedBattle = readyForRangedBattle;
     }
 
     public boolean isSwordsMan() {

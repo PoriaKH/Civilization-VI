@@ -66,6 +66,7 @@ public class City {
                 if(!unit.isCivilian()){
                     Warrior warrior = (Warrior) unit;
                     this.defenceStrength += warrior.getDamage();
+                    if (warrior.isOnDeployment()) this.defenceStrength ++;
                 }
             }
         }
