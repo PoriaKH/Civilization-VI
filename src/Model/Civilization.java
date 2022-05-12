@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.PlayGameMenuController;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,18 +48,18 @@ public class Civilization {
         this.friendlyRequests.remove(civilization);
         this.friends.add(civilization);
         civilization.friends.add(this);
-        String message = this.name + " : accepted your friendly request, now you are allies";
+        String message = PlayGameMenuController.turn + " : " + this.name + " : accepted your friendly request, now you are allies";
         civilization.addMessage(message);
     }
     public void denyFriendlyRequest(Civilization civilization){
         this.friendlyRequests.remove(civilization);
-        String message = this.name + " : denied your friendly request !";
+        String message = PlayGameMenuController.turn + " : " + this.name + " : denied your friendly request !";
         civilization.addMessage(message);
     }
     public void breakTheOath(Civilization civilization){
         this.friends.remove(civilization);
         civilization.friends.remove(this);
-        String message = this.name + " : broke the oath, now you are enemies";
+        String message = PlayGameMenuController.turn + " : " + this.name + " : broke the oath, now you are enemies";
         civilization.messages.add(message);
     }
     public void addMessage(String message){

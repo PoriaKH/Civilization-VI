@@ -262,6 +262,7 @@ public class PlayGameMenu {
         String diplomaticReviewRegex = "diplomatic review";
         String attackCityRegex1 = "attackCity --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
         String attackCityRegex2 = "attackCity to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
+        String showMessagesRegex = "show messages";
         String nextTurnRegex = "";
 
         mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
@@ -548,6 +549,9 @@ public class PlayGameMenu {
             else if (command.matches(attackCityRegex2)) {
                 System.out.println(playGameMenuController.preAttackCity(matcher(attackCityRegex2,command),playingCivilization,map,civilizations));
             }
+            else if(command.matches(showMessagesRegex)){
+                System.out.println(playGameMenuController.showMessages(playingCivilization));
+            }
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);
 
@@ -557,6 +561,8 @@ public class PlayGameMenu {
                     counter++;
                     counter %= numOfCivilizations;
                     playingCivilization = civilizations.get(counter);
+                    if(counter == 0)
+                        PlayGameMenuController.turn++;
                     System.out.println("Civilization " + playingCivilization.getMember().getUsername() + " is playing!");
                 }
             }

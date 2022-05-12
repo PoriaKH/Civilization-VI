@@ -9,6 +9,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 
 public class PlayGameMenuController {
+    public static int turn;
+    {
+        turn = 0;
+    }
 
     public ArrayList<Tile> mapCreator(int numOfCivilizations,ArrayList<Member> members){//tik
         int numOfTiles = 72;
@@ -721,6 +725,13 @@ public class PlayGameMenuController {
             }
         }
         return "there is no civilization with this name";
+    }
+    public StringBuilder showMessages(Civilization civilization){
+        StringBuilder stringBuilder = new StringBuilder("");
+        for(String string : civilization.getMessages()){
+            stringBuilder.append(string).append("\n");
+        }
+        return stringBuilder;
     }
     public StringBuilder showFriendlyRequests(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
