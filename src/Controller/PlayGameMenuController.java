@@ -2127,6 +2127,7 @@ public class PlayGameMenuController {
         else
            return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);
     }
+    // if a city contain that tile , return the city
     public City getCityFromTile (Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
             for (City city : civilization.getCities()) {
@@ -2137,14 +2138,14 @@ public class PlayGameMenuController {
         }
         return null;
     }
-
+    // if city is for your civilization return true
     public boolean isCityForCivilization (City city, Civilization civilization) {
         for (City city1 : civilization.getCities()) {
             if (city.equals(city1)) return true;
         }
         return false;
     }
-
+    // return the civilization of city
     public Civilization getCivilizationFromCity(City city, ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
             for (City city1 : civilization.getCities()) {
@@ -4130,6 +4131,7 @@ public class PlayGameMenuController {
         reduceRepairNeedImprovementTurnNextTurn(map);
         resetHasOrdered(civilization,map);
         civilization.reduceTechnologyRound();
+        increaseCityDamagePoint(civilization);
 
 
         //TODO...  also complete historyInformation and showProductionsInProcess
@@ -4218,6 +4220,15 @@ public class PlayGameMenuController {
             int finalAsset = 0;
             finalAsset += city.getProduction();
             city.setProduction(finalAsset);
+        }
+    }
+    // increase damage point of your cities by 1 every turn
+    public void increaseCityDamagePoint (Civilization civilization) {
+        ArrayList<City> cities = civilization.getCities();
+        for (int i = 0; i < cities.size(); i++) {
+            int newDamagePoint = cities.get(i).getDamagePoint() + 1;
+            if (newDamagePoint > 20) newDamagePoint = 20;
+            cities.get(i).setDamagePoint(newDamagePoint);
         }
     }
 
