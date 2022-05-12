@@ -2332,6 +2332,9 @@ public class PlayGameMenuController {
                 int xp = ((Warrior) attacker).getXp();
                 xp ++;
                 ((Warrior) attacker).setXp(xp);
+                map.get(originIndex).removeUnit(attacker);
+                map.get(destinationIndex).removeUnit(defender);
+                map.get(destinationIndex).addUnit(attacker);
                 str = "you won this attack !";
                 defender = null;
         }
@@ -2347,10 +2350,15 @@ public class PlayGameMenuController {
                 int xp = ((Warrior) defender).getXp();
                  xp ++;
                 ((Warrior) defender).setXp(xp);
+                map.get(originIndex).removeUnit(attacker);
+                map.get(destinationIndex).removeUnit(defender);
+                map.get(originIndex).addUnit(defender);
                 str = "you lost this attack !";
                 attacker = null;
         }
         if (healthOfAttacker <= 0 && healthOfDefender <= 0) {
+            map.get(originIndex).removeUnit(attacker);
+            map.get(destinationIndex).removeUnit(defender);
             attacker = null;
             defender = null;
             str = "your unit died !";
@@ -2390,6 +2398,7 @@ public class PlayGameMenuController {
             count2 ++;
             civilization.updateCountOfUnitWin(defender.getCivilization(), count1);
             defender.getCivilization().updateCountOfUnitLose(civilization, count2);
+            map.get(destinationIndex).removeUnit(defender);
             str = "you won the attack !";
             defender = null;
         }
