@@ -85,6 +85,22 @@ public class Unit {
 
     private boolean isOnDeployment;
 
+    public boolean isOnSleep() {
+        return isOnSleep;
+    }
+
+    public boolean isOnWarFooting() {
+        return isOnWarFooting;
+    }
+
+    public boolean isOnBoost() {
+        return isOnBoost;
+    }
+
+    public boolean isOnBoostTillRecover() {
+        return isOnBoostTillRecover;
+    }
+
     public boolean isOnDeployment() {
         return isOnDeployment;
     }

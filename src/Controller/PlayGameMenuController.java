@@ -2093,8 +2093,8 @@ public class PlayGameMenuController {
         if (defender.getCivilization().equals(civilization)) {
             return "you can't attack your own unit !";
         }
-        if (attacker.getIsOnSleep()) {
-            return "this unit is not awake !";
+        if (attacker.getIsOnSleep()|| attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
+            return "this unit is not active !";
         }
         if (((Warrior)attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
@@ -2174,8 +2174,8 @@ public class PlayGameMenuController {
         if (isCityForCivilization (defenderCity, civilization)) {
             return "this city is for your civilization !";
         }
-        if (attacker.getIsOnSleep()) {
-            return "this unit is not awake !";
+        if (attacker.getIsOnSleep() || attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
+            return "this unit is not active !";
         }
         if (((Warrior)attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
