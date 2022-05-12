@@ -25,7 +25,7 @@ public class PlayGameMenu {
     public static final String PURPLE = "\u001B[35m";// --> thundra
     public static final String ICY = "\u001B[37m";// --> ice
     public static final String CYAN = "\033[0;36m";// --> hill
-    public static final String BACKGROUND_BLUE = "\u001b[44;1m";// --> river
+    public static final String BACKGROUND_BLUE = "\u001b[34m";// --> river
 
 
     public Matcher matcher(String regex, String command){
@@ -116,7 +116,7 @@ public class PlayGameMenu {
         String cv[] = new String[72];
         String unit1[] = new String[72];
         String unit2[] = new String[72];
-        String mapString[] = new String[72];
+        String mapString[] = new String[77];
         for (int i = 0; i < 72; i++){
             types[i] = "\u2588";
             unit1[i] = "\u2588" + "\u2588";
@@ -185,6 +185,12 @@ public class PlayGameMenu {
                 }
             }
         }
+        cv = playGameMenuController.cvMaker(map, playingCivilization);
+        unit1 = playGameMenuController.unitMaker(map, 0);
+        unit2 = playGameMenuController.unitMaker(map, 1);
+        mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
+        for (int i = 0; i < 77; i++)
+            System.out.println(mapString[i]);
 
         String command;
         command = scan.nextLine();
@@ -264,10 +270,6 @@ public class PlayGameMenu {
         String attackCityRegex2 = "attackCity to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
         String showMessagesRegex = "show messages";
         String nextTurnRegex = "";
-
-        mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
-        for (int i = 0; i < 72; i++)
-            System.out.println(mapString[i]);
 
         while(!Objects.equals(command, "exit menu")) {
 
@@ -640,7 +642,7 @@ public class PlayGameMenu {
             unit1 = playGameMenuController.unitMaker(map, 0);
             unit2 = playGameMenuController.unitMaker(map, 1);
             mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
-            for (int i = 0; i < 72; i++)
+            for (int i = 0; i < 77; i++)
                 System.out.println(mapString[i]);
         }
     }

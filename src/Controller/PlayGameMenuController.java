@@ -296,7 +296,7 @@ public class PlayGameMenuController {
     public static final String PURPLE = "\u001B[35m";// --> tundra
     public static final String SNOW = "\u001B[37m";// --> ice
     public static final String CYAN = "\033[0;36m";// --> hill
-    public static final String BACKGROUND_BLUE = "\u001b[44;1m";// --> river
+    public static final String BACKGROUND_BLUE = "\u001b[34m";// --> river
     public String[] setTileColors(ArrayList<Integer> tileStatusOfCivilization, ArrayList<Tile> map, HashMap<Integer, Tile> zeroStatusTilesCivilisation, String[] oldTileColors){
         String[] tileColors = new String[73];
         for (int i = 0; i < map.size(); i++) {
@@ -365,7 +365,7 @@ public class PlayGameMenuController {
     public String[] unitMaker(ArrayList<Tile> map, int index){
         String unit1[] = new String[72];
         for (int i = 0; i < 72; i++)
-            unit1[i] = "\\u2588" + "\\u2588";
+            unit1[i] = "\u2588" + "\u2588";
         for (int i = 0; i < map.size(); i++) {
             if (map.get(i).getUnits().size() > 0) {
                 Unit unit = map.get(i).getUnits().get(index);
@@ -381,7 +381,7 @@ public class PlayGameMenuController {
     public String[] cvMaker(ArrayList<Tile> map, Civilization civilization){
         String cv[] = new String[72];
         for (int i = 0; i < 72; i++)
-            cv[i] = "\\u2588";
+            cv[i] = "\u2588";
         ArrayList<City> cities = civilization.getCities();
         ArrayList<Tile> cvTiles = new ArrayList<>();
         for (int i = 0; i < cities.size(); i++) {
@@ -399,7 +399,7 @@ public class PlayGameMenuController {
         String block6 = "  \\" + block + block + block + block + block + block + block + block + "/";
         String block7 = "   \\" + block + block + block + block + block + block + "/";
         String[] map = new String[77];
-        map[0] = ANSI_COLORS[0] + "   /" + block + block + block + block + block + block + "\\" + "   " +  ANSI_COLORS[11] + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "   " + ANSI_COLORS[22] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[33] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[44] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[55] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[66] + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
+        map[0] = ANSI_COLORS[0] + "   /" + block + block + block + block + block + block + "\\" + "   " +  ANSI_COLORS[11] + "   /" + block + block + block + block + block + block + "\\" +ANSI_RESET + ANSI_COLORS[72] + block + ANSI_RESET + "   " + ANSI_COLORS[22] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[33] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[44] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[55] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[66] + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
         map[1] = ANSI_COLORS[0] + "  /" + block + block + block + block + cv[0] + block + block + block + "\\" + "  " +  ANSI_COLORS[11] + "  /" + block + block + block + block + cv[11] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[22] + "  /" + block + block + block + block + cv[22] + block + block + block + "\\" + "  " + ANSI_COLORS[33] + "  /" + block + block + block + block + cv[33] + block + block + block + "\\" + "  " + ANSI_COLORS[44] + "  /" + block + block + block + block + cv[44] + block + block + block + "\\" + "  " + ANSI_COLORS[55] + "  /" + block + block + block + block + cv[55] + block + block + block + "\\" + "  " + ANSI_COLORS[66] + "  /" + block + block + block + block + cv[66] + block + block + block + "\\" + ANSI_RESET;
         map[2] = ANSI_COLORS[0] + " /" + block + block + unit1[0] + block + block + unit2[0] + block + block + "\\" + " " +  ANSI_COLORS[11] + " /" + block + block + unit1[11] + block + block + unit2[11] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[22] + " /" + block + block + unit1[22] + block + block + unit2[22] + block + block + "\\" + " " + ANSI_COLORS[33] + " /" + block + block + unit1[33] + block + block + unit2[33] + block + block + "\\" + " " + ANSI_COLORS[44] + " /" + block + block + unit1[44] + block + block + unit2[44] + block + block + "\\" + " " + ANSI_COLORS[55] + " /" + block + block + unit1[55] + block + block + unit2[55] + block + block + "\\" + " " + ANSI_COLORS[66] + " /" + block + block + unit1[66] + block + block + unit2[66] + block + block + "\\" + ANSI_RESET;
         map[3] = ANSI_COLORS[0] + "|" + block + block + block + block + number[0] + block + types[0] + block + block + block + block + "|" +  ANSI_COLORS[11] + "|" + block + block + block + block + number[11] + block + types[11] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[22] +  "|" + block + block + block + block + number[22] + block + types[22] + block + block + block + block + "|" + ANSI_COLORS[33] + "|" + block + block + block + block + number[33] + block + types[33] + block + block + block + block + "|" + ANSI_COLORS[44] + "|" + block + block + block + block + number[44] + block + types[44] + block + block + block + block + "|" + ANSI_COLORS[55] +"|" + block + block + block + block + number[55] + block + types[55] + block + block + block + block + "|" + ANSI_COLORS[66] + "|" + block + block + block + block + number[66] + block + types[66] + block + block + block + block + "|" + ANSI_RESET;
