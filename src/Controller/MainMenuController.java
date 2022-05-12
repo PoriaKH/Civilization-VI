@@ -15,9 +15,11 @@ import java.util.regex.Pattern;
 public class MainMenuController {
     public Matcher getMatcher(String regex, String command){
         Matcher matcher = Pattern.compile(regex).matcher(command);
-        if (matcher.matches())
+
+        if(command.matches(regex))
             return matcher;
-        return null;
+        else
+            return null;
     }
     public void playGame(String command){
 
@@ -33,7 +35,7 @@ public class MainMenuController {
         line = bufferedReader.readLine();
         while(line != null && !line.equals(""))
         {
-            Matcher fileMatcher = getMatcher(line, fileRegex);
+            Matcher fileMatcher = getMatcher(fileRegex, line);
             fileMatcher.find();
             String fileUsername = fileMatcher.group("username");
             String fileNickname = fileMatcher.group("nickname");

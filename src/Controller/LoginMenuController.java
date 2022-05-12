@@ -103,7 +103,7 @@ public class LoginMenuController {
                     this.loggedInMember = null;
                     return "user logged out successfully!";
                 }
-                return "Username and password didn’t match!";
+                return "Username and password did not match!";
             }
 
             line = bufferedReader.readLine();

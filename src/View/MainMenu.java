@@ -28,10 +28,10 @@ public class MainMenu {
 
         while(true){
             command = scan.nextLine();
-            if (mainMenuController.getMatcher(exitMenuRegex, command) != null)
+            if (mainMenuController.getMatcher(exitMenuRegex, command) != null) {
                 break;
+            }
             else if (mainMenuController.getMatcher(logoutRegex, command) != null){
-                System.out.println("user logged out successfully!");
                 break;
             }
             else if (mainMenuController.getMatcher(showCurrentMenuRegex, command) != null)
@@ -43,6 +43,7 @@ public class MainMenu {
                     userNames.add(commandSplit[i]);
                 int numOfPlayers = userNames.size();
                 ArrayList<Member> players = new ArrayList<>();
+                boolean ourBool = true;
                 for (int i = 0; i < numOfPlayers; i++) {
                     boolean exist = false;
                     for (int j = 0; j < allMembers.size(); j++) {
@@ -52,10 +53,14 @@ public class MainMenu {
                             break;
                         }
                     }
-                    if (!exist)
+                    if (!exist) {
                         System.out.println("user with this username doesn't exist!");
+                        ourBool = false;
+                        break;
+                    }
                 }
-                playGameMenu.run(scan, numOfPlayers, players);
+                if(ourBool)
+                    playGameMenu.run(scan, numOfPlayers, players);
             }
             else if(mainMenuController.getMatcher(enterProfileMenuRegex, command) != null)
                 profileMenu.run(scan);
