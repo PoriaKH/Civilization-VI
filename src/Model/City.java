@@ -18,6 +18,7 @@ public class City {
     private Tile centerTile;
     private ArrayList<Tile> tiles;
     private int defenceStrength;
+    private int damagePoint; // emtiaz zarbe har shahr
     private int sciencePerTurn;
 
     public City(Tile centerTile, ArrayList<Tile> map){
@@ -33,6 +34,7 @@ public class City {
             }
         }
 
+        this.damagePoint = 20;
         this.gold = 0;
         this.sciencePerTurn = 0;
         this.defenceStrength = 0;
@@ -40,6 +42,19 @@ public class City {
         this.production = 0;
 
     }
+
+    public void setDefenceStrength(int defenceStrength) {
+        this.defenceStrength = defenceStrength;
+    }
+
+    public int getDamagePoint() {
+        return damagePoint;
+    }
+
+    public void setDamagePoint(int damagePoint) {
+        this.damagePoint = damagePoint;
+    }
+
     public int getDefenceStrength(){//set and get
         this.defenceStrength = 0;
         //every tile adds +3 point

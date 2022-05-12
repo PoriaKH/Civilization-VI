@@ -518,4 +518,12 @@ public class Tile {
         }
         return null;
     }
+
+    public void removeAllUnitFromMakingProgress () {
+        for(Map.Entry<Unit, Integer> entry : turnForUnitMaking.entrySet()) {
+            Unit unit = entry.getKey();
+            unit = null;
+            turnForUnitMaking.remove(entry.getKey());
+        }
+    }
 }

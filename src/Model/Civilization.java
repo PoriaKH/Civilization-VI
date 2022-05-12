@@ -213,4 +213,17 @@ public class Civilization {
     public ArrayList<Civilization> getFriendlyRequests() {
         return friendlyRequests;
     }
+
+    public void addCity (City city) {
+        cities.add(city);
+    }
+
+    public void removeCity(City city) {
+        for (int i = 0; i < cities.size(); i++) {
+            if (cities.get(i).equals(city)) {
+                cities.remove(i);
+                break;
+            }
+        }
+    }
 }
