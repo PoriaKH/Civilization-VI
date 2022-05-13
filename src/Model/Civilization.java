@@ -20,6 +20,7 @@ public class Civilization {
     private HashMap<Civilization, Integer> winsInUnitsWar = new HashMap<>(); // tamadon shekast khorde va tedad bakht haye on ra neshan mide
     private HashMap<Civilization, Integer> lossesInUnitsWar = new HashMap<>(); // tamadon pirooz va tedad bord haye on ra neshan mide
     private int point;//to compare civilizations
+    private boolean isLearningTechnology = false;
 
     private ArrayList<Civilization> friendlyRequests;
     private ArrayList<Civilization> friends;
@@ -183,8 +184,12 @@ public class Civilization {
     }
 
     public void addToTechnologyEarnedPercent(Technology technology, Integer roundLeft){
+        if (isLearningTechnology){
+            System.out.println("you are learning a technology");
+            return;
+        }
         for (int i = 0; i < this.technologies.size(); i++) {
-            if (technologies.get(i).getName().equals(technology.getClass())){
+            if (technologies.get(i).getName().equals(technology.getName())){
                 System.out.println("you already have this technology");
                 return;
             }
