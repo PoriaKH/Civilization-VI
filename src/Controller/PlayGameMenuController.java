@@ -3506,7 +3506,7 @@ public class PlayGameMenuController {
         if (!hasPrerequisiteTechs(allTechnologies, technologyName))
             return "you don't have the prerequisite techs to learn this technology";
         if (technology.getCost() > 99)
-            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 100) + 2);
+            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
         else
             civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
         return "technology has been added to the learning technologies";
@@ -3516,8 +3516,8 @@ public class PlayGameMenuController {
         if (technology == null)
             return "no technology with this name exists";
         civilization.setScience(technology.getCost());
-        if (civilization.getScience() < technology.getCost())
-            return "you don't have the needed amount of science";
+//        if (civilization.getScience() < technology.getCost())
+//            return "you don't have the needed amount of science";
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         if (!hasPrerequisiteTechs(allTechnologies, technologyName))
             return "you don't have the prerequisite techs to learn this technology";

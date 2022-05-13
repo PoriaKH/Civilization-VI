@@ -192,6 +192,7 @@ public class Civilization {
         if (!this.technologyEarnedPercent.containsKey(technology))
             this.technologyEarnedPercent.put(technology, roundLeft);
         this.workingOnTechnology = technology;
+        setScience(roundLeft / 4);
     }
     public void reduceTechnologyRound(){
         if (workingOnTechnology  == null)
