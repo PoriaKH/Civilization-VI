@@ -183,21 +183,27 @@ public class Civilization {
         this.technologies.add(technology);
     }
 
+    public boolean isLearningTechnology() {
+        return isLearningTechnology;
+    }
+    public void setIsLearningTechnology(boolean isLearningTechnology){
+        this.isLearningTechnology = isLearningTechnology;
+    }
+
     public void addToTechnologyEarnedPercent(Technology technology, Integer roundLeft){
         if (isLearningTechnology){
-            System.out.println("you are learning a technology");
             return;
         }
         for (int i = 0; i < this.technologies.size(); i++) {
             if (technologies.get(i).getName().equals(technology.getName())){
                 System.out.println("you already have this technology");
+                isLearningTechnology = false;
                 return;
             }
         }
         if (!this.technologyEarnedPercent.containsKey(technology))
             this.technologyEarnedPercent.put(technology, roundLeft);
         this.workingOnTechnology = technology;
-        isLearningTechnology = true;
         setScience(roundLeft / 4);
     }
     public void reduceTechnologyRound(){

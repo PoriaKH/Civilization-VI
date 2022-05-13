@@ -3512,7 +3512,11 @@ public class PlayGameMenuController {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
         else
             civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
-        return "technology has been added to the learning technologies";
+        if (!civilization.isLearningTechnology()) {
+            civilization.setIsLearningTechnology(true);
+            return "technology has been added to the learning technologies";
+        }
+        return "you are learning a technology";
     }
     public String changeTechnologyToLearn(Civilization civilization, String technologyName){
         Technology technology = preChooseTechnologyToLearn(technologyName);
