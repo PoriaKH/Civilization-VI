@@ -183,6 +183,12 @@ public class Civilization {
     }
 
     public void addToTechnologyEarnedPercent(Technology technology, Integer roundLeft){
+        for (int i = 0; i < this.technologies.size(); i++) {
+            if (technologies.get(i).getName().equals(technology.getClass())){
+                System.out.println("you already have this technology");
+                return;
+            }
+        }
         if (!this.technologyEarnedPercent.containsKey(technology))
             this.technologyEarnedPercent.put(technology, roundLeft);
         this.workingOnTechnology = technology;
