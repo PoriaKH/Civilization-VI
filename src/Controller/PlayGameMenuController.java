@@ -345,6 +345,8 @@ public class PlayGameMenuController {
     public String[] setTileType(ArrayList<Tile> map){
         String tileType[] = new String[72];
         for (int i = 0; i < map.size(); i++) {
+            if (map.get(i).getAttribute() == null)
+                break;
             if (map.get(i).getAttribute().isIce())
                 tileType[i] = "i";
             else if (map.get(i).getAttribute().isMarsh())
@@ -538,9 +540,9 @@ public class PlayGameMenuController {
     public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now, HashMap<Integer, Tile> zeroStatusTiles, ArrayList<Tile> map){
         //TODO... if(now == fog of war && old == vazeh -> now = moshakhas)
         //TODO... return now;
-        ArrayList<Integer> finalTileStatus = new ArrayList<>(72);
-        for (int i = 0; i < finalTileStatus.size(); i++)
-            finalTileStatus.set(i, -1);
+        ArrayList<Integer> finalTileStatus = new ArrayList<>();
+        for (int i = 0; i < 72; i++)
+            finalTileStatus.add(-1);
         for (int i = 0; i < old.size(); i++) {
             if (now.get(i) == 1)
                 finalTileStatus.set(i, 1);
