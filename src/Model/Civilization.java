@@ -17,8 +17,8 @@ public class Civilization {
     private ArrayList<City> cities;
     private HashMap<Civilization,Resource> trades;
     private ArrayList<String> messages; // (int)turn : message
-    private HashMap<Civilization, Integer> winsInUnitsWar; // tamadon shekast khorde va tedad bakht haye on ra neshan mide
-    private HashMap<Civilization, Integer> lossesInUnitsWar; // tamadon pirooz va tedad bord haye on ra neshan mide
+    private HashMap<Civilization, Integer> winsInUnitsWar = new HashMap<>(); // tamadon shekast khorde va tedad bakht haye on ra neshan mide
+    private HashMap<Civilization, Integer> lossesInUnitsWar = new HashMap<>(); // tamadon pirooz va tedad bord haye on ra neshan mide
     private int point;//to compare civilizations
 
     private ArrayList<Civilization> friendlyRequests;
