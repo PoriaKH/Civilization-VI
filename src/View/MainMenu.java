@@ -43,6 +43,7 @@ public class MainMenu {
                     userNames.add(commandSplit[i]);
                 int numOfPlayers = userNames.size();
                 ArrayList<Member> players = new ArrayList<>();
+                players.add(loggedInMember);
                 boolean ourBool = true;
                 for (int i = 0; i < numOfPlayers; i++) {
                     boolean exist = false;
@@ -60,7 +61,7 @@ public class MainMenu {
                     }
                 }
                 if(ourBool)
-                    playGameMenu.run(scan, numOfPlayers, players);
+                    playGameMenu.run(scan, players.size(), players);
             }
             else if(mainMenuController.getMatcher(enterProfileMenuRegex, command) != null)
                 profileMenu.run(scan);

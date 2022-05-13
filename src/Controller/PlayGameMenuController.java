@@ -503,9 +503,9 @@ public class PlayGameMenuController {
     }
     // 1 -> vazeh, -1 -> fog
     public ArrayList<Integer> statusChecker(Civilization civilization, ArrayList<Tile> map){
-        ArrayList<Integer> civilizationTiles  = new ArrayList<>(72);
-        for (int i = 0; i < civilizationTiles.size(); i++)
-            civilizationTiles.set(i, -1);
+        ArrayList<Integer> civilizationTiles  = new ArrayList<>();
+        for (int i = 0; i < 72; i++)
+            civilizationTiles.add(-1);
         ArrayList<City> cities = civilization.getCities();
         outerloop:
         for (int i = 0; i < map.size(); i++) {
@@ -3530,15 +3530,15 @@ public class PlayGameMenuController {
             civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
         return "technology has been changed successfully";
     }
-    public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int citizenNumber, ArrayList<Tile> map){
+    public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int tileUnitNumber, ArrayList<Tile> map){
+        if (tileNumber != tileUnitNumber || map.get(tileNumber).getCitizen() == null)
+            return "you should move your citizen to this tile first";
         City city = civilization.getCities().get(cityNumber);
         ArrayList<Tile> cityTiles = city.getTiles();
         Tile chosenTile = map.get(tileNumber);
         boolean isInRange = false;
         for (int i = 0; i < cityTiles.size(); i++) {
             if (cityTiles.get(i).equals(chosenTile)){
-                cityTiles.get(i).setCitizen(city.getCitizens().get(citizenNumber));
-                city.getCitizens().get(citizenNumber).setTile(chosenTile);
                 isInRange = true;
                 break;
             }
@@ -3549,24 +3549,22 @@ public class PlayGameMenuController {
                 float y2 = chosenTile.getY();
                 //9rad3
                 if (Math.pow(2, (x2 - x1)) + Math.pow(2, (y2 - y1)) <= 243){
-                    if (chosenTile.getCitizen() == null) {
-                        city.getCitizens().get(citizenNumber).setTile(chosenTile);
-                        chosenTile.setCitizen(city.getCitizens().get(citizenNumber));
-                        isInRange = true;
-                        break;
-                    }
-                    else
-                        return "there are already a unit in this tile";
+                    isInRange = true;
+                    break;
                 }
             }
         }
-        if (isInRange)
+        if (isInRange) {
+            chosenTile.getCitizen().setTile(chosenTile);
             return "citizen is set to work on chosen tile";
+        }
         else
             return "this tile isn't your city tiles or city neighbors";
     }
     public String createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map){
         ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
+        if (tileUnitNumber != tileNumber)
+            return "you should move your unit to this tile first";
         if (allUnits.size() == 0)
             return "there is no unit in this tile";
         boolean isThereAnyRelatedUnit = false;

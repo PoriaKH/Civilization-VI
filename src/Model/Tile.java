@@ -30,7 +30,7 @@ public class Tile {
     private float radius;
     private double h;
 
-    private Citizen citizen;
+    private Citizen citizen = null;
     private ArrayList<Unit> units;
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
     private Resource resource;

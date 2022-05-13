@@ -217,7 +217,7 @@ public class PlayGameMenu {
         String createCityRegex = "create city (?<tile>\\d+)";
         String lockCitizenRegex = "lock citizen (?<origin>\\d+) (?<destination>\\d+)";//move citizen from origin to destination
         String purchaseTileRegex = "purchase tile (?<tile>\\d+)";
-        String workOnTileRegex = "city (?<cityNumber>\\d+) citizen (?<citizenNumber>\\d+) work on --tile (?<tileNumber>\\d+)";
+        String workOnTileRegex = "city (?<cityNumber>\\d+) unit in --tile (?<tileUnitNumber>\\d+) work on --tile (?<tileNumber>\\d+)";
         String createImprovementRegex = "create improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+) unit in --tile (?<tileUnitNumber>\\d+)";
         String removeImprovementRegex = "remove improvement (?<improvementName>.+) --tile (?<tileNumber>\\d+)";
         String createRoadRegex = "^create road on --tile (?<number>\\d+)$";
@@ -433,8 +433,8 @@ public class PlayGameMenu {
                 matcher.find();
                 int cityNumber = Integer.parseInt(matcher.group("cityNumber"));
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
-                int citizenNumber = Integer.parseInt(matcher.group("citizenNumber"));
-                System.out.println(playGameMenuController.workOnTile(playingCivilization, cityNumber, tileNumber, citizenNumber, map));
+                int tileUnitNumber = Integer.parseInt(matcher.group("tileUnitNumber"));
+                System.out.println(playGameMenuController.workOnTile(playingCivilization, cityNumber, tileNumber, tileUnitNumber, map));
             }
             else if (command.matches(createImprovementRegex)){
                 Matcher matcher = Pattern.compile(createImprovementRegex).matcher(command);
@@ -580,8 +580,6 @@ public class PlayGameMenu {
 
 
 
-            command = scan.nextLine();
-
             ArrayList<Integer> civilization1new = new ArrayList<>();
             ArrayList<Integer> civilization2new = new ArrayList<>();   ///---> -1, 1
             ArrayList<Integer> civilization3new = new ArrayList<>();
@@ -644,6 +642,8 @@ public class PlayGameMenu {
             mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
             for (int i = 0; i < 77; i++)
                 System.out.println(mapString[i]);
+
+            command = scan.nextLine();
         }
     }
 }
