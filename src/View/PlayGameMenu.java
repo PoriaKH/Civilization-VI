@@ -702,7 +702,16 @@ public class PlayGameMenu {
                 tileStatusOfCivilization4 = playGameMenuController.statusComparator(tileStatusOfCivilization4, civilization4new, zeroStatusTilesCivilisation4, map);
                 tileStatusOfCivilization5 = playGameMenuController.statusComparator(tileStatusOfCivilization5, civilization5new, zeroStatusTilesCivilisation5, map);
             }
-            ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization1, map, zeroStatusTilesCivilisation1, ANSI_COLORS);
+            if (counter == 0)
+                ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization1, map, zeroStatusTilesCivilisation1, ANSI_COLORS);
+            else if (counter == 1)
+                ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization2, map, zeroStatusTilesCivilisation2, ANSI_COLORS);
+            else if (counter == 2)
+                ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization3, map, zeroStatusTilesCivilisation3, ANSI_COLORS);
+            else if (counter == 3)
+                ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization4, map, zeroStatusTilesCivilisation4, ANSI_COLORS);
+            else if (counter == 4)
+                ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization5, map, zeroStatusTilesCivilisation5, ANSI_COLORS);
             types = playGameMenuController.setTileType(map, ANSI_COLORS);
             cv = playGameMenuController.cvMaker(map, playingCivilization);
             unit1 = playGameMenuController.unitMaker(map, 0);
