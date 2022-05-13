@@ -321,21 +321,7 @@ public class PlayGameMenuController {
                     tileColors[i] = CYAN;
             }
             else {
-                if (zeroStatusTilesCivilisation.get(i).isDesert())
-                    tileColors[i] = oldTileColors[i];
-                else if (zeroStatusTilesCivilisation.get(i).isMeadow())
-                    tileColors[i] = oldTileColors[i];
-                else if (zeroStatusTilesCivilisation.get(i).isPlain())
-                    tileColors[i] = oldTileColors[i];
-                else if (zeroStatusTilesCivilisation.get(i).isOcean())
-                    tileColors[i] = oldTileColors[i];
-                else if (zeroStatusTilesCivilisation.get(i).isMountain())
-                    tileColors[i] = oldTileColors[i];
-                else if (zeroStatusTilesCivilisation.get(i).isTundra())
-                    tileColors[i] = oldTileColors[i];
-                else if (zeroStatusTilesCivilisation.get(i).isSnow())
-                    tileColors[i] = oldTileColors[i];
-                else if (zeroStatusTilesCivilisation.get(i).isHill())
+                if (zeroStatusTilesCivilisation.containsValue(map.get(i)))
                     tileColors[i] = oldTileColors[i];
             }
         }
@@ -490,15 +476,15 @@ public class PlayGameMenuController {
         map[76] = ANSI_COLORS[5] + block7 + "   " +  ANSI_COLORS[16] + block7 + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[27] + "\\" + block + block + block + block + block + block + "/" + "   " + ANSI_COLORS[38] + block7 + "   " + ANSI_COLORS[49] + block7 + "   " + ANSI_COLORS[60] + block7 + "   " + ANSI_COLORS[71] + block7 + ANSI_RESET;
         return map;
     }
-    // if distance between two tile center is (2rad3 * radius) they're neighbor
+    // if distance between two tile center is (rad3 * radius) they're neighbor
     private boolean isCityNeighbor(float x1, float y1, float x2, float y2, float radius){
-        double distance = (double) Math.sqrt((double) (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
+        double distance = Math.sqrt(Math.pow((double)x2 - (double)x1, 2) + Math.pow((double)y2 - (double) y1, 2));
         if (distance < 1.1 * (double)radius * Math.sqrt(3))
             return true;
         return false;
     }
     private boolean isUnitNeighbor(float x1, float y1, float x2, float y2, float radius){
-        double distance = (double) Math.sqrt((double) (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
+        double distance = Math.sqrt(Math.pow((double) x2 - (double) x1, 2) + Math.pow((double) y2 - (double) y1, 2));
         if (1.5 * radius * Math.sqrt(3) < distance && distance < 2.5 * radius * Math.sqrt(3))
             return true;
         return false;
@@ -517,6 +503,7 @@ public class PlayGameMenuController {
                 for (int k = 0; k < cityTiles.size(); k++) {
                     if (cityTiles.get(k).getUnits().size() == 0 && isCityNeighbor(cityTiles.get(k).getX(), cityTiles.get(k).getY(), map.get(i).getX(), map.get(i).getY(), cityTiles.get(k).getRadius())) {
                         civilizationTiles.set(i, 1);
+                        System.out.println(i + " is neighbor");
                         check = true;
                         break;
                     }
@@ -545,6 +532,7 @@ public class PlayGameMenuController {
                     break;
             }
         }
+        System.out.println();
         return civilizationTiles;
     }
     // -1 -> fog, 0  -> moshakhas, 1 -> vazeh
