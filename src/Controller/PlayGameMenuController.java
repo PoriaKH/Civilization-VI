@@ -493,13 +493,13 @@ public class PlayGameMenuController {
     // if distance between two tile center is (2rad3 * radius) they're neighbor
     private boolean isCityNeighbor(float x1, float y1, float x2, float y2, float radius){
         float distance = (float) Math.pow(0.5, (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
-        if (radius * (float)Math.pow(0.5, 3) < distance && distance < 3 * radius * (float)Math.pow(0.5, 3))
+        if (distance < 1.5 * radius * Math.pow(0.5, 3))
             return true;
         return false;
     }
     private boolean isUnitNeighbor(float x1, float y1, float x2, float y2, float radius){
         float distance = (float) Math.pow(0.5, (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
-        if (3 * radius * (float)Math.pow(0.5, 3) < distance && distance < 5 * radius * (float)Math.pow(0.5, 3))
+        if (radius * (float)Math.pow(0.5, 3) < distance && distance < 3 * radius * (float)Math.pow(0.5, 3))
             return true;
         return false;
     }
@@ -509,29 +509,40 @@ public class PlayGameMenuController {
         for (int i = 0; i < 72; i++)
             civilizationTiles.add(-1);
         ArrayList<City> cities = civilization.getCities();
-        outerloop:
+        boolean check = false;
         for (int i = 0; i < map.size(); i++) {
+            check = false;
             for (int j = 0; j < cities.size(); j++) {
                 ArrayList<Tile> cityTiles = cities.get(j).getTiles();
                 for (int k = 0; k < cityTiles.size(); k++) {
                     if (cityTiles.get(k).getUnits().size() == 0 && isCityNeighbor(cityTiles.get(k).getX(), cityTiles.get(k).getY(), map.get(i).getX(), map.get(i).getY(), cityTiles.get(k).getRadius())) {
                         civilizationTiles.set(i, 1);
-                        break outerloop;
+                        check = true;
+                        break;
                     }
                     if (cityTiles.get(k).getUnits().size() > 0 && isUnitNeighbor(cityTiles.get(k).getX(), cityTiles.get(k).getY(), map.get(i).getX(), map.get(i).getY(), cityTiles.get(k).getRadius())
                     && !cityTiles.get(k).isBlocker()) {
                         civilizationTiles.set(i, 1);
-                        break outerloop;
+                        check = true;
+                        break;
                     }
                     if (cityTiles.get(k).getUnits().size() > 0 && isCityNeighbor(cityTiles.get(k).getX(), cityTiles.get(k).getY(), map.get(i).getX(), map.get(i).getY(), cityTiles.get(k).getRadius())
                             && !cityTiles.get(k).isBlocker()) {
                         for (int l = 0; l < map.size(); l++)
-                            if (2 * map.get(l).getTileNumber() == cityTiles.get(k).getTileNumber() + map.get(i).getTileNumber() && map.get(l).isBlocker())
-                                break outerloop;
+                            if (2 * map.get(l).getTileNumber() == cityTiles.get(k).getTileNumber() + map.get(i).getTileNumber() && map.get(l).isBlocker()){
+                                civilizationTiles.set(i, -1);
+                                check = true;
+                                break;
+                            }
+                        if (check)
+                            break;
                         civilizationTiles.set(i, 1);
-                        break outerloop;
+                        check = true;
+                        break;
                     }
                 }
+                if (check)
+                    break;
             }
         }
         return civilizationTiles;
