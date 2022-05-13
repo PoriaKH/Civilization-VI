@@ -3592,10 +3592,17 @@ public class PlayGameMenuController {
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         if (!hasPrerequisiteTechs(allTechnologies, technologyName))
             return "you don't have the prerequisite techs to learn this technology";
-        if (technology.getCost() > 99)
-            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 100) + 2);
-        else
-            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
+        for (Technology technology1 : allTechnologies)
+            if (technology1.getName().equals(technologyName))
+                return "you already have this technology";
+        if (technology.getCost() > 99) {
+            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
+            civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
+        }
+        else {
+            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 2);
+            civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
+        }
         return "technology has been changed successfully";
     }
     public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int tileUnitNumber, ArrayList<Tile> map){
