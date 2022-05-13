@@ -944,7 +944,7 @@ public class PlayGameMenuController {
     // set distance of two node (tile) based on destination mp.
     public int distanceOfTwoNode(Node node) {
         Tile tile = node.tile;
-        if (tile.isMountain() || tile.isOcean() || tile.getAttribute().isIce()) {
+        if (tile.isMountain() || tile.isOcean() || (tile.getAttribute() != null && tile.getAttribute().isIce())) {
             return 100000;
         }
         return tile.getMpCost();
@@ -1205,6 +1205,11 @@ public class PlayGameMenuController {
         }
     }
 
+    public int mpOfAttribute (Attribute attribute) {
+        if (attribute == null) return 0;
+        return attribute.getMpCost();
+    }
+
     public String moveUnit (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
         String str;
         if (unit == null) {
@@ -1265,12 +1270,12 @@ public class PlayGameMenuController {
                 int newMP;
 
                 if (!isRiverOnWay(originTile, destinationTile, map)) {
-                    if (unit.getMp() >= destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) {
+                    if (unit.getMp() >= destinationTile.getMpCost() + mpOfAttribute(destinationTile.getAttribute())) {
                         if (isThereRoadOrRail(originTile, destinationTile)) {
-                            newMP = unit.getMp() - (destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) / 2;
+                            newMP = unit.getMp() - (destinationTile.getMpCost() + mpOfAttribute(destinationTile.getAttribute())) / 2;
                         }
                         else {
-                            newMP = unit.getMp() - (destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost());
+                            newMP = unit.getMp() - (destinationTile.getMpCost() + mpOfAttribute(destinationTile.getAttribute()));
                         }
                     }
                     else {
@@ -1281,10 +1286,10 @@ public class PlayGameMenuController {
                 else {
                     if (isThereRoadOrRail(originTile, destinationTile)) {
                         if (isTechnologyAvailable(civilization, "construction")) {
-                            newMP = unit.getMp() - (destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) / 2;
+                            newMP = unit.getMp() - (destinationTile.getMpCost() + mpOfAttribute(destinationTile.getAttribute())) / 2;
                         }
                         else {
-                            newMP = unit.getMp() - (destinationTile.getMpCost() + destinationTile.getAttribute().getMpCost()) / 2 + 1;
+                            newMP = unit.getMp() - (destinationTile.getMpCost() + mpOfAttribute(destinationTile.getAttribute())) / 2 + 1;
                         }
                     }
                     else {
@@ -2321,9 +2326,14 @@ public class PlayGameMenuController {
         return str;
     }
 
+    public int attributeCombatChange (Attribute attribute) {
+        if (attribute == null) return 0;
+        return attribute.getCombatChange();
+    }
+
     public String attackTileFromGround(Civilization civilization, Unit attacker, Unit defender, int originIndex, int destinationIndex,ArrayList<Tile> map){
         String str = "";
-        int combatChange = map.get(destinationIndex).getCombatChange() + map.get(destinationIndex).getAttribute().getCombatChange();
+        int combatChange = map.get(destinationIndex).getCombatChange() + attributeCombatChange(map.get(destinationIndex).getAttribute());
         int powerOfAttacker = ((Warrior)attacker).getDamage();
         int healthOfAttacker = ((Warrior)attacker).getHealth();
         powerOfAttacker = powerOfAttacker * healthOfAttacker / 10;
