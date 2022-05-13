@@ -197,6 +197,7 @@ public class Civilization {
         if (!this.technologyEarnedPercent.containsKey(technology))
             this.technologyEarnedPercent.put(technology, roundLeft);
         this.workingOnTechnology = technology;
+        isLearningTechnology = true;
         setScience(roundLeft / 4);
     }
     public void reduceTechnologyRound(){
@@ -204,6 +205,7 @@ public class Civilization {
             return;
         int roundLeft = this.technologyEarnedPercent.get(this.workingOnTechnology) - 1;
         if (roundLeft == 0) {
+            isLearningTechnology = false;
             this.technologyEarnedPercent.remove(this.workingOnTechnology);
             this.addTechnology(this.workingOnTechnology);
             String message = "you have learnt " + this.workingOnTechnology.getName();
