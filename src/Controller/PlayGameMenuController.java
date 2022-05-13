@@ -1295,8 +1295,7 @@ public class PlayGameMenuController {
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> units = map.get(i).getUnits();
             for (int i1 = 0; i1 < units.size(); i1++) {
-                if (units.get(i1).getCivilization().equals(playingCivilization) &&
-                        units.get(i1).getPath() != null ) {
+                if (units.get(i1).getCivilization().equals(playingCivilization) && units.get(i1).getPath().size() != 0 ) {
                     moveUnit(playingCivilization, units.get(i1).getOrigin(), units.get(i1).getDestination(), map, units.get(i1));
                 }
             }
