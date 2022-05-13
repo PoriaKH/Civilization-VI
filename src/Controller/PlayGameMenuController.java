@@ -356,12 +356,17 @@ public class PlayGameMenuController {
             unit1[i] = "\u2588" + "\u2588";
         for (int i = 0; i < map.size(); i++) {
             if (map.get(i).getUnits().size() > 0) {
-                Unit unit = map.get(i).getUnits().get(index);
-                if (unit.isCivilian())
-                    unit1[i] = "C";
-                else
-                    unit1[i] = "W";
-                unit1[i] += unit.getCivilization().getName();
+                if (map.get(i).getUnits().size() == 1 && index == 1){
+                    unit1[i] = "\u2588" + "\u2588";
+                }
+                else {
+                    Unit unit = map.get(i).getUnits().get(index);
+                    if (unit.isCivilian())
+                        unit1[i] = "C";
+                    else
+                        unit1[i] = "W";
+                    unit1[i] += unit.getCivilization().getName();
+                }
             }
         }
         return unit1;
