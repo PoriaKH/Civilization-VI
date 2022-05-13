@@ -1214,17 +1214,19 @@ public class PlayGameMenuController {
             str = "destination is unreachable !";
             return str;
         }
-        if (unit.getPath() == null) {
+        if (unit.getPath().size() == 0) {
             findTheShortestPath(civilization, origin, destination, map, unit);
         }
-        if (unit.getPath() == null) {
+        if (unit.getPath().size() == 0) {
             str = "there is no way to the destination !";
             return str;
         }
         if (checkPath(unit)) {
             unit.setOrigin(unit.getPath().get(0).tile);
             unit.setDestination(null);
-            unit.setPath(null);
+            for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
+                unit.getPath().remove(i1);
+            }
             str = "there is another civilization on the way !";
             return str;
         }
