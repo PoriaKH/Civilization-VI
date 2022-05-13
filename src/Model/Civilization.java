@@ -194,6 +194,8 @@ public class Civilization {
         if (roundLeft == 0) {
             this.technologyEarnedPercent.remove(this.workingOnTechnology);
             this.addTechnology(this.workingOnTechnology);
+            String message = "you have learnt " + this.workingOnTechnology.getName();
+            messages.add(message);
             workingOnTechnology = null;
         }
         this.technologyEarnedPercent.replace(this.workingOnTechnology, roundLeft);

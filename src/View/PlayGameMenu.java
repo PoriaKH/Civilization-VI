@@ -274,7 +274,7 @@ public class PlayGameMenu {
         String attackCityRegex1 = "attackCity --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
         String attackCityRegex2 = "attackCity to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
         String showMessagesRegex = "show messages";
-        String nextTurnRegex = "";
+        String nextTurnRegex = "next turn";
 
         while(!Objects.equals(command, "exit menu")) {
             boolean bool = true;

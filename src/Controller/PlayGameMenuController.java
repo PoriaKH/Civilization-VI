@@ -1702,11 +1702,6 @@ public class PlayGameMenuController {
             return str;
         }
 
-        if (unit.getGoldCost() > city.getGold()) {
-            str = "your gold is not enough!";
-            return str;
-        }
-
         if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
             str = "you don't have necessary technology!";
             return str;
@@ -3505,8 +3500,8 @@ public class PlayGameMenuController {
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
             return "no technology with this name exists";
-        if (civilization.getScience() < technology.getCost())
-            return "you don't have the needed amount of science";
+//        if (civilization.getScience() < technology.getCost())
+//            return "you don't have the needed amount of science";
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         if (!hasPrerequisiteTechs(allTechnologies, technologyName))
             return "you don't have the prerequisite techs to learn this technology";
