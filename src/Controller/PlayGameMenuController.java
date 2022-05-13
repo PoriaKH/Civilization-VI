@@ -1235,7 +1235,9 @@ public class PlayGameMenuController {
         while (true) {
             if (i == unit.getPath().size() - 1 || (unit.getPath().size() >= 1 && unit.getPath().get(0).tile.equals(destination))) {
                 unit.setMp(unit.getConstantMP());
-                unit.setPath(null);
+                for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
+                    unit.getPath().remove(i1);
+                }
                 unit.setOrigin(destination);
                 unit.setDestination(null);
                 str = "unit reached the destination !";
