@@ -77,6 +77,10 @@ public class Civilization {
         return member;
     }
 
+    public String getFirstLetterOfName() {
+        return firstLetterOfName;
+    }
+
     public City getCapital() {
         return capital;
     }

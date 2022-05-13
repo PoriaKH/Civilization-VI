@@ -384,7 +384,7 @@ public class PlayGameMenuController {
                 cvTiles.add(tiles.get(j));
         }
         for (int i = 0; i < cvTiles.size(); i++)
-            cv[cvTiles.get(i).getTileNumber()] = civilization.getName();
+            cv[cvTiles.get(i).getTileNumber()] = civilization.getFirstLetterOfName();
         return cv;
     }
     public String[] showMap(String ANSI_COLORS[], String number[], String types[], String unit1[], String unit2[], String cv[]){
