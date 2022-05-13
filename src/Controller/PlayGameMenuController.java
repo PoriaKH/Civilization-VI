@@ -1005,7 +1005,9 @@ public class PlayGameMenuController {
         findThePath(previousNode, distanceFromNode, unreached, destinationNode);
 
         if (previousNode.get(destinationNode) == null) {
-            unit.setPath(null);
+            for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
+                unit.getPath().remove(i1);
+            }
             return;
         }
 
