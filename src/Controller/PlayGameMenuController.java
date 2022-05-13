@@ -1255,6 +1255,8 @@ public class PlayGameMenuController {
                     unit.getPath().remove(i1);
                 }
                 unit.setOrigin(destination);
+                origin.removeUnit(unit);
+                destination.addUnit(unit);
                 unit.setDestination(null);
                 str = "unit reached the destination !";
                 break;
