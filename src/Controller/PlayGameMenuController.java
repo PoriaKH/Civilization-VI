@@ -3614,7 +3614,7 @@ public class PlayGameMenuController {
             for (int i = 0; i < techs.size(); i++)
                 technologies.add(techs.get(i).getName());
             if (improvementName.equals("camp")) {//camp duration = 5
-                if (tile.getAttribute().isJungle() || tile.isTundra() || tile.isHill() || tile.isDesert()) {
+                if ((tile.getAttribute() != null && tile.getAttribute().isJungle()) || tile.isTundra() || tile.isHill() || tile.isDesert()) {
                     if (technologies.contains("Trapping")) {
                         Improvement improvement = new Improvement(true, false, false, false, false, false, false, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 5);
@@ -3623,19 +3623,19 @@ public class PlayGameMenuController {
                 } else
                     return "camp can't be build in this tile";
             } else if (improvementName.equals("farm")) {
-                if (tile.getAttribute().isRainForest()) {
+                if (tile.getAttribute() != null && tile.getAttribute().isRainForest()) {
                     if (technologies.contains("Mining")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 10);
                     } else
                         return "you don't have the prerequisite technology";
-                } else if (tile.getAttribute().isJungle()) {
+                } else if (tile.getAttribute() != null && tile.getAttribute().isJungle()) {
                     if (technologies.contains("BronzeWorking")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 13);
                     } else
                         return "you don't have the prerequisite technology";
-                } else if (tile.getAttribute().isMarsh()) {
+                } else if (tile.getAttribute() != null && tile.getAttribute().isMarsh()) {
                     if (technologies.contains("Masonry")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 12);
@@ -3644,7 +3644,7 @@ public class PlayGameMenuController {
                 } else
                     return "farm can't be build in this tile";
             } else if (improvementName.equals("lumberMill")) {     //duration = 7
-                if (tile.getAttribute().isJungle()) {
+                if (tile.getAttribute() != null && tile.getAttribute().isJungle()) {
                     if (technologies.contains("Construction")) {
                         Improvement improvement = new Improvement(false, false, true, false, false, false, false, false, false, 0, 1, 0);
                         tile.addToImprovementEarnedPercent(improvement, 7);
@@ -3653,7 +3653,7 @@ public class PlayGameMenuController {
                 } else
                     return "lumberMill can't be build in this tile";
             } else if (improvementName.equals("mine")) {       //duration = 14
-                if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow() || tile.isHill() || tile.getAttribute().isJungle() || tile.getAttribute().isRainForest() || tile.getAttribute().isMarsh()) {
+                if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow() || tile.isHill() || (tile.getAttribute() != null && tile.getAttribute().isJungle()) || (tile.getAttribute() != null && tile.getAttribute().isRainForest()) || (tile.getAttribute() != null && tile.getAttribute().isMarsh())) {
                     if (technologies.contains("Mining")) {
                         Improvement improvement = new Improvement(false, false, false, true, false, false, false, false, false, 0, 1, 0);
                         tile.addToImprovementEarnedPercent(improvement, 14);
@@ -3668,7 +3668,7 @@ public class PlayGameMenuController {
                 } else
                     return "paddock can't be build in this tile";
             } else if (improvementName.equals("agriculture")) {
-                if (tile.isPlain() || tile.isMeadow() || tile.getAttribute().isJungle() || tile.getAttribute().isRainForest() || tile.getAttribute().isMarsh() || tile.getAttribute().isPlat()) {
+                if (tile.isPlain() || tile.isMeadow() || (tile.getAttribute() != null && tile.getAttribute().isJungle()) || (tile.getAttribute() != null && tile.getAttribute().isRainForest()) || (tile.getAttribute() != null && tile.getAttribute().isMarsh()) || (tile.getAttribute() != null && tile.getAttribute().isPlat())) {
                     if (technologies.contains("Calendar")) {        //duration = 5
                         Improvement improvement = new Improvement(false, false, false, false, false, true, false, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 5);
