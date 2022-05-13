@@ -203,8 +203,8 @@ public class PlayGameMenu {
         String showCurrentMenuRegex = "menu show-current";
         String createUnitRegex1 = "^create --unit (?<unitName>.+) tile --number (?<number>\\d+)$";
         String createUnitRegex2 = "^create tile --number (?<number>\\d+) --unit (?<unitName>.+)$";
-        String moveUnitRegex1 = "^move --unit (?<unitName>.+) --path (?<numberO>\\d+ to ?<numberD>\\d+)$";
-        String moveUnitRegex2 = "^move --path (?<numberO>\\d+ to ?<numberD>\\d+) --unit (?<unitName>.+)$";
+        String moveUnitRegex1 = "^move --unit (?<unitName>.+) --path (?<numberO>\\d+) to (?<numberD>\\d+)$";
+        String moveUnitRegex2 = "^move --path (?<numberO>\\d+) to (?<numberD>\\d+) --unit (?<unitName>.+)$";
         String sleepUnitRegex1 = "^sleep --unit (?<unitName>.+) --tile (?<number>\\d+)$";
         String sleepUnitRegex2 = "^sleep --tile (?<number>\\d+) --unit (?<unitName>.+)$";
         String alertUnitRegex1 = "^alert --unit (?<unitName>.+) --tile (?<number>\\d+)$";
@@ -262,8 +262,8 @@ public class PlayGameMenu {
         String attackTileRegex1 = "attackTile --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
         String attackTileRegex2 = "attackTile to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
         String cancelCommandRegex = "cancel unit making on --tile (?<number>\\d+) --type (?<type>.+)";
-        String cheatCodeMoveUnitRegex1 = "^cheat code move --unit (?<unitName>.+) --path (?<numberO>\\d+ to ?<numberD>\\d+)$";
-        String cheatCodeMoveUnitRegex2 = "^cheat code move --path (?<numberO>\\d+ to ?<numberD>\\d+) --unit (?<unitName>.+)$";
+        String cheatCodeMoveUnitRegex1 = "^cheat code move --unit (?<unitName>.+) --path (?<numberO>\\d+) to (?<numberD>\\d+)$";
+        String cheatCodeMoveUnitRegex2 = "^cheat code move --path (?<numberO>\\d+) to (?<numberD>\\d+) --unit (?<unitName>.+)$";
         String diplomaticInformationRegex = "diplomatic information";
         String sendFriendlyRequestDiplomaticRegex = "send friendly request to (?<civilization>.*)";
         String showFriendlyRequestsRegex = "show friendly requests";
