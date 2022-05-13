@@ -30,10 +30,14 @@ public class PlayGameMenu {
 
     public Matcher matcher(String regex, String command){
         Matcher matcher = Pattern.compile(regex).matcher(command);
-        if (matcher.matches())
-            return matcher;
-        return null;
+        return matcher;
     }
+//    public Matcher matcher(String regex, String command){
+//        Matcher matcher = Pattern.compile(regex).matcher(command);
+//        if (matcher.matches())
+//            return matcher;
+//        return null;
+//    }
 
     public void run(Scanner scan, int numOfCivilizations, ArrayList<Member> members){
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
@@ -273,8 +277,7 @@ public class PlayGameMenu {
         String nextTurnRegex = "";
 
         while(!Objects.equals(command, "exit menu")) {
-
-
+            boolean bool = true;
 
 
 
@@ -292,51 +295,67 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.preMoveUnit(matcher(moveUnitRegex2, command), playingCivilization, map));
             }
             else if (command.matches(sleepUnitRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(sleepUnitRegex1, command), playingCivilization, map, "sleep"));
             }
             else if (command.matches(sleepUnitRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(sleepUnitRegex2, command), playingCivilization, map, "sleep"));
             }
             else if (command.matches(alertUnitRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(alertUnitRegex1,command), playingCivilization, map, "alert"));
             }
             else if (command.matches(alertUnitRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(alertUnitRegex2,command), playingCivilization, map, "alert"));
             }
             else if (command.matches(fortifyRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(fortifyRegex1,command),playingCivilization,map,"fortify"));
             }
             else if (command.matches(fortifyRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(fortifyRegex2,command),playingCivilization,map,"fortify"));
             }
             else if (command.matches(healRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(healRegex1,command),playingCivilization,map,"heal"));
             }
             else if (command.matches(healRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(healRegex2,command),playingCivilization,map,"heal"));
             }
             else if (command.matches(deployRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(deployRegex1,command),playingCivilization,map,"deploy"));
             }
             else if (command.matches(deployRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(deployRegex2,command),playingCivilization,map,"deploy"));
             }
             else if (command.matches(rangedRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(rangedRegex1,command),playingCivilization,map,"range"));
             }
             else if (command.matches(rangedRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(rangedRegex2,command),playingCivilization,map,"range"));
             }
             else if (command.matches(wakeUpRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(wakeUpRegex1,command),playingCivilization,map,"wake"));
             }
             else if (command.matches(wakeUpRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(wakeUpRegex2,command),playingCivilization,map,"wake"));
             }
             else if(command.matches(createCityRegex))
                 System.out.println(playGameMenuController.preCreateCity(matcher(createCityRegex,command),playingCivilization,map,civilizations));
-            else if(command.matches(lockCitizenRegex))
-                System.out.println(playGameMenuController.preLockCitizen(matcher(lockCitizenRegex,command),playingCivilization,map));
+            else if(command.matches(lockCitizenRegex)) {
+                bool = false;
+                System.out.println(playGameMenuController.preLockCitizen(matcher(lockCitizenRegex, command), playingCivilization, map));
+            }
             else if(command.matches(purchaseTileRegex))
                 System.out.println(playGameMenuController.prePurchaseTile(matcher(purchaseTileRegex,command),playingCivilization,map,civilizations));
             else if (command.matches(createRoadRegex)) {
@@ -352,9 +371,11 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.removeRailRoad(playingCivilization, map.get(Integer.parseInt(matcher(removeRailwayRegex,command).group("number"))),map));
             }
             else if (command.matches(repairRoadRegex)) {
+                bool = false;
                 System.out.println(playGameMenuController.repairRoad(playingCivilization,map.get(Integer.parseInt(matcher(repairRoadRegex,command).group("number"))),map));
             }
             else if (command.matches(repairRailRegex)) {
+                bool = false;
                 System.out.println(playGameMenuController.repairRail(playingCivilization,map.get(Integer.parseInt(matcher(repairRailRegex,command).group("number"))),map));
             }
             else if (command.matches(deleteUnitRegex1)) {
@@ -364,48 +385,63 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(deleteUnitRegex2,command),playingCivilization,map,"delete"));
             }
             else if (command.matches(unitPanelRegex)) {
+                bool = false;
                 System.out.println(playGameMenuController.unitPanel(playingCivilization, map));
             }
             else if (command.matches(unitGeneralPanelRegex)) {
+                bool = false;
                 System.out.println(playGameMenuController.generalUnitReview(playingCivilization, map));
             }
             else if (command.matches(victoryImprovementRegex)) {
+                bool = false;
                 System.out.println(playGameMenuController.victoryImprovement(playingCivilization, map));
             }
             else if (command.matches(recoverUnitRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(recoverUnitRegex1,command),playingCivilization,map,"recover"));
             }
             else if (command.matches(recoverUnitRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(recoverUnitRegex2,command),playingCivilization,map,"recover"));
             }
             else if (command.matches(updateUnitRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex1,command),playingCivilization,map));
             }
             else if (command.matches(updateUnitRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex2,command),playingCivilization,map));
             }
             else if (command.matches(updateUnitRegex3)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex3,command),playingCivilization,map));
             }
             else if (command.matches(updateUnitRegex4)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex4,command),playingCivilization,map));
             }
             else if (command.matches(updateUnitRegex5)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex5,command),playingCivilization,map));
             }
             else if (command.matches(updateUnitRegex6)) {
+                bool = false;
                 System.out.println(playGameMenuController.preUpgradeUnit(matcher(updateUnitRegex6,command),playingCivilization,map));
             }
             else if(command.matches(cityPanelRegex)){
+                bool = false;
                 System.out.println(playGameMenuController.cityPanel(map,civilizations));
             }
             else if(command.matches(economicalReviewRegex)){
+                bool = false;
                 System.out.println(playGameMenuController.economicalReview(playingCivilization));
             }
             else if(command.matches(demographicsRegex)){
+                bool = false;
                 System.out.println(playGameMenuController.demographics(civilizations,map));
             }
             else if(command.matches(showCurrentScoreRegex)){
+                bool = false;
                 System.out.println(playGameMenuController.showCurrentScore(civilizations,map));
             }
             else if (command.matches(attackTileRegex1)) {
@@ -415,6 +451,7 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.preAttackTile(matcher(attackTileRegex2,command),playingCivilization,map));
             }
             else if (command.matches(cancelCommandRegex)) {
+                bool = false;
                 Matcher matcher = Pattern.compile(cancelCommandRegex).matcher(command);
                 matcher.find();
                 int index = Integer.parseInt(matcher.group("number"));
@@ -424,12 +461,15 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.cancelCommand(playingCivilization,isCivilian,map,map.get(index)));
             }
             else if (command.matches(cheatCodeMoveUnitRegex1)) {
+                bool = false;
                 System.out.println(playGameMenuController.cheatTeleportUnit(matcher(cheatCodeMoveUnitRegex1,command),playingCivilization,map));
             }
             else if (command.matches(cheatCodeMoveUnitRegex2)) {
+                bool = false;
                 System.out.println(playGameMenuController.cheatTeleportUnit(matcher(cheatCodeMoveUnitRegex2,command),playingCivilization,map));
             }
             else if (command.matches(workOnTileRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(workOnTileRegex).matcher(command);
                 matcher.find();
                 int cityNumber = Integer.parseInt(matcher.group("cityNumber"));
@@ -457,30 +497,35 @@ public class PlayGameMenu {
                     System.out.println(playGameMenuController.removeImprovement(playingCivilization, improvement, tileNumber, map));
             }
             else if(command.matches(cheatIncreaseGoldRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(cheatIncreaseGoldRegex).matcher(command);
                 matcher.find();
                 int amount = Integer.parseInt(matcher.group("amount"));
                 System.out.println(playGameMenuController.cheatIncreaseGold(playingCivilization,amount));
             }
             else if(command.matches(cheatIncreaseFoodRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(cheatIncreaseFoodRegex).matcher(command);
                 matcher.find();
                 int amount = Integer.parseInt(matcher.group("amount"));
                 System.out.println(playGameMenuController.cheatIncreaseFood(playingCivilization,amount));
             }
             else if(command.matches(cheatIncreaseTechnologyRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(cheatIncreaseTechnologyRegex).matcher(command);
                 matcher.find();
                 int amount = Integer.parseInt(matcher.group("amount"));
                 System.out.println(playGameMenuController.cheatIncreaseTechnology(playingCivilization,amount));
             }
             else if(command.matches(cheatIncreaseHappinessRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(cheatIncreaseHappinessRegex).matcher(command);
                 matcher.find();
                 int amount = Integer.parseInt(matcher.group("amount"));
                 System.out.println(playGameMenuController.cheatIncreaseHappiness(playingCivilization,amount));
             }
             else if (command.matches(cancelImprovementOnProcessRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(cancelImprovementOnProcessRegex).matcher(command);
                 matcher.find();
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
@@ -488,6 +533,7 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.cancelImprovementOnProcess(playingCivilization, tile));
             }
             else if (command.matches(repairImprovementRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(repairImprovementRegex).matcher(command);
                 matcher.find();
                 int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
@@ -495,6 +541,7 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.repairImprovement(playingCivilization, tileUnitNumber, tileNumber, map));
             }
             else if (command.matches(lootTileRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(lootTileRegex).matcher(command);
                 matcher.find();
                 int lootTileNumber = Integer.parseInt(matcher.group("lootTileNumber"));
@@ -502,50 +549,66 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.lootTile(playingCivilization, tileUnitNumber, lootTileNumber, map));
             }
             else if (command.matches(chooseTechnologyToLearnRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(chooseTechnologyToLearnRegex).matcher(command);
                 matcher.find();
                 String technologyName = matcher.group("technologyName");
                 System.out.println(playGameMenuController.chooseTechnologyToLearn(playingCivilization, technologyName));
             }
             else if (command.matches(chooseTechnologyToLearnRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(changeTechnologyToLearnRegex).matcher(command);
                 matcher.find();
                 String technologyName = matcher.group("technologyName");
                 System.out.println(playGameMenuController.changeTechnologyToLearn(playingCivilization, technologyName));
             }
-            else if (command.matches(showTechnologyMenuRegex))
+            else if (command.matches(showTechnologyMenuRegex)) {
+                bool = false;
                 System.out.println(playGameMenuController.showTechnologyMenu(playingCivilization));
-            else if (command.matches(researchInformationRegex))
+            }
+            else if (command.matches(researchInformationRegex)) {
                 System.out.println(playGameMenuController.researchInformation(playingCivilization));
+                bool = false;
+            }
             else if(command.matches(sendFriendlyRequestDiplomaticRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(sendFriendlyRequestDiplomaticRegex).matcher(command);
                 matcher.find();
                 String name = matcher.group("civilization");
                 System.out.println(playGameMenuController.sendFriendlyRequestDiplomatic(playingCivilization,civilizations,name));
             }
-            else if(command.matches(diplomaticInformationRegex))
-                System.out.println(playGameMenuController.diplomaticInformation(playingCivilization,map));
-            else if(command.matches(showFriendlyRequestsRegex))
+            else if(command.matches(diplomaticInformationRegex)) {
+                bool = false;
+                System.out.println(playGameMenuController.diplomaticInformation(playingCivilization, map));
+            }
+            else if(command.matches(showFriendlyRequestsRegex)) {
+                bool = false;
                 System.out.println(playGameMenuController.showFriendlyRequests(playingCivilization));
+            }
             else if(command.matches(acceptFriendlyRequestRegex)) {
+                bool = false;
                 Matcher matcher = Pattern.compile(acceptFriendlyRequestRegex).matcher(command);
                 matcher.find();
                 String name = matcher.group("name");
                 System.out.println(playGameMenuController.acceptFriendlyRequest(playingCivilization,name));
             }
             else if(command.matches(denyFriendlyRequestRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(denyFriendlyRequestRegex).matcher(command);
                 matcher.find();
                 String name = matcher.group("name");
                 System.out.println(playGameMenuController.denyFriendlyRequest(playingCivilization,name));
             }
             else if(command.matches(breakOathRegex)){
+                bool = false;
                 Matcher matcher = Pattern.compile(breakOathRegex).matcher(command);
                 String name = matcher.group("name");
                 System.out.println(playGameMenuController.breakTheOath(playingCivilization,name));
             }
-            else if(command.matches(diplomaticReviewRegex))
+            else if(command.matches(diplomaticReviewRegex)) {
+                bool = false;
                 System.out.println(playGameMenuController.diplomaticReview(playingCivilization));
+            }
             else if (command.matches(attackCityRegex1)) {
                 System.out.println(playGameMenuController.preAttackCity(matcher(attackCityRegex1,command),playingCivilization,map,civilizations));
             }
@@ -553,6 +616,7 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.preAttackCity(matcher(attackCityRegex2,command),playingCivilization,map,civilizations));
             }
             else if(command.matches(showMessagesRegex)){
+                bool = false;
                 System.out.println(playGameMenuController.showMessages(playingCivilization));
             }
             else if(command.matches(nextTurnRegex)){
@@ -571,8 +635,10 @@ public class PlayGameMenu {
             }
             else if(command.matches(showCurrentMenuRegex))
                 System.out.println("Play Game Menu");
-            else
+            else {
+                bool = false;
                 System.out.println("invalid command !");
+            }
 
             //TODO... check is there any unit with move left (harekat chand noobati)
             playGameMenuController.moveUnitWithMovesLeft (playingCivilization, map);
@@ -641,8 +707,10 @@ public class PlayGameMenu {
             unit1 = playGameMenuController.unitMaker(map, 0);
             unit2 = playGameMenuController.unitMaker(map, 1);
             mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
-            for (int i = 0; i < 77; i++)
-                System.out.println(mapString[i]);
+
+            if(bool)
+                for (int i = 0; i < 77; i++)
+                    System.out.println(mapString[i]);
 
             command = scan.nextLine();
         }
