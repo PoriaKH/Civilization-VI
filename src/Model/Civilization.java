@@ -30,7 +30,7 @@ public class Civilization {
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
-        this.name = member.getUsername();
+        this.name = member.getNickname();
         this.firstLetterOfName = name.substring(0, 1);
         this.happiness = 10;
         friendlyRequests = new ArrayList<>();

@@ -768,7 +768,7 @@ public class PlayGameMenuController {
         return "there is no friendly request with this name";
     }
     public String breakTheOath(Civilization civilization,String name){//this will cut the friendship between you and your allie
-        for(Civilization tempCivilization : civilization.getFriendlyRequests()){
+        for(Civilization tempCivilization : civilization.getFriends()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
                 civilization.breakTheOath(tempCivilization);
                 return "you broke the the oath !";
