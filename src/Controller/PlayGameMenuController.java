@@ -3566,15 +3566,21 @@ public class PlayGameMenuController {
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         if (!hasPrerequisiteTechs(allTechnologies, technologyName))
             return "you don't have the prerequisite techs to learn this technology";
-        if (technology.getCost() > 99)
+        for (Technology technology1 : allTechnologies)
+            if (technology1.getName().equals(technologyName))
+                return "you already have this technology";
+        if (civilization.isLearningTechnology())
+            return "you are learning a technology";
+        if (technology.getCost() > 99) {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
-        else
-            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 1);
-        if (!civilization.isLearningTechnology()) {
-            civilization.setIsLearningTechnology(true);
-            return "technology has been added to the learning technologies";
+            civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
         }
-        return "you are learning a technology";
+        else {
+            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 1);
+            civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
+        }
+        civilization.setIsLearningTechnology(true);
+        return "technology has been added to the learning technologies";
     }
     public String changeTechnologyToLearn(Civilization civilization, String technologyName){
         Technology technology = preChooseTechnologyToLearn(technologyName);

@@ -11,6 +11,7 @@ public class Civilization {
     private String name;
     private City capital;
     private int science;
+    private int sciencePerTurn;
     private ArrayList<Technology> technologies;
     private int gold;
     private int goldPerTurn;
@@ -131,6 +132,11 @@ public class Civilization {
     public void updateCountOfUnitLose (Civilization civilization, int count) {
         lossesInUnitsWar.replace(civilization, count);
     }
+
+    public void setSciencePerTurn(int sciencePerTurn) {
+        this.sciencePerTurn = sciencePerTurn;
+    }
+
     public Integer getCountOfWins (Civilization civilization) {
         return winsInUnitsWar.get(civilization);
     }
@@ -197,20 +203,9 @@ public class Civilization {
     }
 
     public void addToTechnologyEarnedPercent(Technology technology, Integer roundLeft){
-        if (isLearningTechnology){
-            return;
-        }
-        for (int i = 0; i < this.technologies.size(); i++) {
-            if (technologies.get(i).getName().equals(technology.getName())){
-                System.out.println("you already have this technology");
-                isLearningTechnology = false;
-                return;
-            }
-        }
         if (!this.technologyEarnedPercent.containsKey(technology))
             this.technologyEarnedPercent.put(technology, roundLeft);
         this.workingOnTechnology = technology;
-        setScience(roundLeft / 4);
     }
     public void reduceTechnologyRound(){
         if (workingOnTechnology  == null)
@@ -224,6 +219,7 @@ public class Civilization {
             messages.add(message);
             workingOnTechnology = null;
         }
+        setScience(sciencePerTurn / (roundLeft * 2));
         this.technologyEarnedPercent.replace(this.workingOnTechnology, roundLeft);
     }
 
