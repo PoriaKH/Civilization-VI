@@ -695,7 +695,7 @@ public class PlayGameMenuController {
             for(int i = 0; i < tempCivilization.getCities().size(); i++){
                 City tempCity = tempCivilization.getCities().get(i);
                 if(tempCity != tempCivilization.getCapital()){
-                    stringBuilder.append(tempCivilization.getMember().getNickname()).append(" : \n").append("City ").append(i + 2).append("  : ");
+                    stringBuilder.append("City ").append(i + 1).append("  : ");
                     for(Tile tile : tempCity.getTiles()){
                         stringBuilder.append(tile.getTileNumber()).append(" ");
                     }
@@ -1959,6 +1959,32 @@ public class PlayGameMenuController {
         if(tileNumber < 0 || tileNumber >= 72)
             return "invalid tile number";
 
+        for(Tile tile : map){
+            if(tile.getTileNumber() == tileNumber){
+                for(Unit unit : tile.getUnits()){
+                    if(unit.getCivilization() == civilization){
+                        if(unit.isCivilian()){
+                            Civilian civilian = (Civilian) unit;
+                            if(civilian.isSettler()){
+                                if(checkNeighboursForCreateCity(tile,map,civilizations)){
+                                    while(tile.getUnits().size() > 0) {
+                                        tile.getUnits().remove(0);
+                                    }
+                                    City city1 = new City(tile,map);
+                                    civilization.getCities().add(city1);
+                                    return "city has been created successfully";
+                                }
+                                return "5";
+                            }
+                            return "4";
+                        }
+                        return "3";
+                    }
+                    return "2";
+                }
+            }
+        }
+        /*
         for(City city : civilization.getCities()){
             for(Tile tile : city.getTiles()){
                 if(tile.getTileNumber() == tileNumber){
@@ -1975,14 +2001,19 @@ public class PlayGameMenuController {
                                         civilization.getCities().add(city1);
                                         return "city has been created successfully";
                                     }
+                                    return "5";
                                 }
+                                return "4";
                             }
+                            return "3";
                         }
+                        return "2";
                     }
                 }
+                return "1";
             }
         }
-
+*/
         return "you can't create city here";
     }
     public boolean checkNeighboursForCreateCity(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
@@ -1991,7 +2022,7 @@ public class PlayGameMenuController {
                 if(tile.getUnits().size() != 1)
                     return false;
             }
-            if(areTilesNeighbour(tile,tempTile)){
+            else if(areTilesNeighbour(tile,tempTile)){
                 if(tempTile.getUnits().size() > 0)
                     return false;
                 if(tempTile.getImprovements().size() > 0)
@@ -2007,8 +2038,8 @@ public class PlayGameMenuController {
         return true;
     }
     public boolean areTilesNeighbour(Tile tile1, Tile tile2){
-        float distance = (float)Math.sqrt(Math.pow(tile1.getX() - tile2.getX(), 2) + Math.pow(tile1.getY() - tile2.getY(), 2));
-        if(distance <= tile1.getRadius() * Math.sqrt(3))
+        double distance = (double)Math.sqrt(Math.pow(tile1.getX() - tile2.getX(), 2) + Math.pow(tile1.getY() - tile2.getY(), 2));
+        if(distance < 1.1 * tile1.getRadius() * Math.sqrt(3))
             return true;
 
         return false;
