@@ -503,7 +503,6 @@ public class PlayGameMenuController {
                 for (int k = 0; k < cityTiles.size(); k++) {
                     if (cityTiles.get(k).getUnits().size() == 0 && isCityNeighbor(cityTiles.get(k).getX(), cityTiles.get(k).getY(), map.get(i).getX(), map.get(i).getY(), cityTiles.get(k).getRadius())) {
                         civilizationTiles.set(i, 1);
-                        System.out.println(i + " is neighbor");
                         check = true;
                         break;
                     }
@@ -532,7 +531,6 @@ public class PlayGameMenuController {
                     break;
             }
         }
-        System.out.println();
         return civilizationTiles;
     }
     // -1 -> fog, 0  -> moshakhas, 1 -> vazeh
