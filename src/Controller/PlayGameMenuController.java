@@ -3538,7 +3538,7 @@ public class PlayGameMenuController {
         if (technology.getCost() > 99)
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
         else
-            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
+            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 1);
         if (!civilization.isLearningTechnology()) {
             civilization.setIsLearningTechnology(true);
             return "technology has been added to the learning technologies";
