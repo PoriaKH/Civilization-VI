@@ -492,14 +492,14 @@ public class PlayGameMenuController {
     }
     // if distance between two tile center is (2rad3 * radius) they're neighbor
     private boolean isCityNeighbor(float x1, float y1, float x2, float y2, float radius){
-        float distance = (float) Math.pow(0.5, (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
-        if (distance < 1.5 * radius * Math.pow(0.5, 3))
+        double distance = (double) Math.sqrt((double) (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
+        if (distance < 1.1 * (double)radius * Math.sqrt(3))
             return true;
         return false;
     }
     private boolean isUnitNeighbor(float x1, float y1, float x2, float y2, float radius){
-        float distance = (float) Math.pow(0.5, (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
-        if (radius * (float)Math.pow(0.5, 3) < distance && distance < 3 * radius * (float)Math.pow(0.5, 3))
+        double distance = (double) Math.sqrt((double) (Math.pow(2, x2 - x1) + Math.pow(2, y2 - y1)));
+        if (1.5 * radius * Math.sqrt(3) < distance && distance < 2.5 * radius * Math.sqrt(3))
             return true;
         return false;
     }

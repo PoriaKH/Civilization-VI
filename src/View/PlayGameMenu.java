@@ -188,6 +188,7 @@ public class PlayGameMenu {
         cv = playGameMenuController.cvMaker(map, playingCivilization);
         unit1 = playGameMenuController.unitMaker(map, 0);
         unit2 = playGameMenuController.unitMaker(map, 1);
+        ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization1, map, zeroStatusTilesCivilisation1, ANSI_COLORS);
         mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
         for (int i = 0; i < 77; i++)
             System.out.println(mapString[i]);
