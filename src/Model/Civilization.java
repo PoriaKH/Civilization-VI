@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class Civilization {
     private Member member;
+    private String firstLetterOfName;
     private String name;
     private City capital;
     private int science;
@@ -29,7 +30,8 @@ public class Civilization {
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
-        this.name = member.getUsername().substring(0, 1);
+        this.name = member.getUsername();
+        this.firstLetterOfName = name.substring(0, 1);
         this.happiness = 10;
         friendlyRequests = new ArrayList<>();
         friends = new ArrayList<>();
