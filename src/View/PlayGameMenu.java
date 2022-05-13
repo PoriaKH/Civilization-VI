@@ -602,6 +602,7 @@ public class PlayGameMenu {
             else if(command.matches(breakOathRegex)){
                 bool = false;
                 Matcher matcher = Pattern.compile(breakOathRegex).matcher(command);
+                matcher.find();
                 String name = matcher.group("name");
                 System.out.println(playGameMenuController.breakTheOath(playingCivilization,name));
             }

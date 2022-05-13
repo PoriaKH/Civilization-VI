@@ -216,6 +216,7 @@ public class PlayGameMenuController {
     }
     public String cheatTeleportUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
             String str;
+            matcher.find();
             int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
             int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
             String unitName = matcher.group("unitName").toLowerCase();
@@ -862,7 +863,7 @@ public class PlayGameMenuController {
     }
     public StringBuilder economicalReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
-        stringBuilder.append("Number of cities : ").append(civilization.getCities().size()).append("-----------------------").append("\n");
+        stringBuilder.append("Number of cities : ").append(civilization.getCities().size()).append("\n-----------------------").append("\n");
         for(int i = 0; i < civilization.getCities().size(); i++){
             City city = civilization.getCities().get(i);
             stringBuilder.append("City ").append(i).append(" :\n");
@@ -871,7 +872,7 @@ public class PlayGameMenuController {
             stringBuilder.append("Food per Turn : ").append(city.getFood()).append("\n");
             stringBuilder.append("Science per Turn : ").append(city.getSciencePerTurn()).append("\n");
             stringBuilder.append("Gold per Turn : ").append(city.getGold()).append("\n");
-            stringBuilder.append("Production per Turn : ").append(city.getProduction());
+            stringBuilder.append("Production per Turn : ").append(city.getProduction()).append("\n");
             HashMap<Unit,Integer> unit = city.getCenterTile().getTurnForUnitMaking();
             for(Map.Entry<Unit,Integer> entry : unit.entrySet()) {
               String name = getUnitsName(entry.getKey());
@@ -1020,6 +1021,7 @@ public class PlayGameMenuController {
     }
     // create parameters like unit or origin or destination for moveUnit function
     public String preMoveUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
+        matcher.find();
         int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
         int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
         String unitName = matcher.group("unitName").toLowerCase();
@@ -1217,7 +1219,7 @@ public class PlayGameMenuController {
             str = "this unit is for another civilization !";
             return str;
         }
-        if (destination.isMountain() || destination.isOcean() || destination.getAttribute().isIce()) {
+        if (destination.isMountain() || destination.isOcean() ||  (destination.getAttribute() != null && destination.getAttribute().isIce())) {
             str = "destination is unreachable !";
             return str;
         }
@@ -1738,6 +1740,7 @@ public class PlayGameMenuController {
         return str;
     }
     public String purchaseUnit(Civilization civilization, ArrayList<Tile> map, Matcher matcher){
+        matcher.find();
         String unitName = matcher.group("unitName");
         int tileNumber = Integer.parseInt(matcher.group("tileNumber"));
         City city = this.findTile(tileNumber, map, civilization);
@@ -2096,6 +2099,7 @@ public class PlayGameMenuController {
     }
     // prepare some parameters and return some string
     public String preAttackTile (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
+        matcher.find();
         int originIndex = Integer.parseInt(matcher.group("origin"));
         int destinationIndex = Integer.parseInt(matcher.group("destination"));
 
@@ -2174,6 +2178,7 @@ public class PlayGameMenuController {
     }
 
     public String preAttackCity (Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
+        matcher.find();
         int originIndex = Integer.parseInt(matcher.group("origin"));
         int destinationIndex = Integer.parseInt(matcher.group("destination"));
 
@@ -2434,6 +2439,7 @@ public class PlayGameMenuController {
     }
     // makes parameters for unit behaviours functions
     public String preUnitBehaviour (Matcher matcher, Civilization civilization, ArrayList<Tile> map, String command) {
+        matcher.find();
         String unitName = matcher.group("unitName");
         int index = Integer.parseInt(matcher.group("number"));
         Tile tile = map.get(index);
