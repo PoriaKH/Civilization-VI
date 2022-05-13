@@ -1468,6 +1468,9 @@ public class PlayGameMenuController {
         String unitName = matcher.group("unitName").toLowerCase();
         int index = Integer.parseInt(matcher.group("number"));
         City city = findTile(index, map, civilization);
+        if (city == null) {
+            return "there is no city !";
+        }
         Unit unit = makeUnit(civilization, city.getCenterTile(), map, unitName);
         int turn = unit.getDuration();
         return createUnit(civilization, city, unit, map, turn);
