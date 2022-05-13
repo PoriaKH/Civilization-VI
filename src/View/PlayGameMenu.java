@@ -677,6 +677,7 @@ public class PlayGameMenu {
                 civilization5new = playGameMenuController.statusChecker(civilizations.get(4), map);
             }
 
+
             //TODO... Calling statusComparator Function -> civilization1 = statusComparator(civilization1,civilization1new)
             if (numOfCivilizations == 2) {
                 tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, map);
