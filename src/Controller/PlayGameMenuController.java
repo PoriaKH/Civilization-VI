@@ -366,7 +366,7 @@ public class PlayGameMenuController {
                         unit1[i] = "C";
                     else
                         unit1[i] = "W";
-                    unit1[i] += unit.getCivilization().getName();
+                    unit1[i] += unit.getCivilization().getFirstLetterOfName();
                 }
             }
         }
