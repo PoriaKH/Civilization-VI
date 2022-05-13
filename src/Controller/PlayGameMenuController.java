@@ -342,12 +342,12 @@ public class PlayGameMenuController {
         tileColors[72] = BACKGROUND_BLUE;
         return tileColors;
     }
-    public String[] setTileType(ArrayList<Tile> map){
+    public String[] setTileType(ArrayList<Tile> map, String tilecolors[]) {
         String tileType[] = new String[72];
         for (int i = 0; i < map.size(); i++) {
-            if (map.get(i).getAttribute() == null)
-                break;
-            if (map.get(i).getAttribute().isIce())
+            if (map.get(i).getAttribute() == null || tilecolors[i] == BLACK)
+                tileType[i] = "\u2588";
+            else if (map.get(i).getAttribute().isIce())
                 tileType[i] = "i";
             else if (map.get(i).getAttribute().isMarsh())
                 tileType[i] = "m";

@@ -635,7 +635,7 @@ public class PlayGameMenu {
                 tileStatusOfCivilization5 = playGameMenuController.statusComparator(tileStatusOfCivilization5, civilization5new, zeroStatusTilesCivilisation5, map);
             }
             ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization1, map, zeroStatusTilesCivilisation1, ANSI_COLORS);
-            types = playGameMenuController.setTileType(map);
+            types = playGameMenuController.setTileType(map, ANSI_COLORS);
             cv = playGameMenuController.cvMaker(map, playingCivilization);
             unit1 = playGameMenuController.unitMaker(map, 0);
             unit2 = playGameMenuController.unitMaker(map, 1);
