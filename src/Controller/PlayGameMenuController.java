@@ -968,7 +968,9 @@ public class PlayGameMenuController {
     }
     // find the shortest way from origin to destination based on mp.
     public void findTheShortestPath (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit) {
-        unit.setPath (null);
+        for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
+            unit.getPath().remove(i1);
+        }
         Node[] graph = new Node[72];
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new Node();
