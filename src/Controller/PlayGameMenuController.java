@@ -2216,8 +2216,8 @@ public class PlayGameMenuController {
         else{
             delta = columnO - columnD;
         }
-        if (range == -1 && delta - 1 == 1) return  true;
-        else if (range > 0 && delta - 1 == range) return true;
+        if (range == -1 && delta - 1 <= 1) return  true;
+        else if (range > 0 && delta - 1 <= range) return true;
         return false;
     }
 
@@ -2247,7 +2247,7 @@ public class PlayGameMenuController {
         if (((Warrior)attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
         }
-        if (checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(),map))) {
+        if (!checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(),map))) {
             return "this distance is too long for attack !";
         }
         Civilization defenderCivilization = getCivilizationFromCity(defenderCity, civilizations);
