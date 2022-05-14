@@ -364,28 +364,28 @@ public class PlayGameMenu {
                 System.out.println(playGameMenuController.createRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(createRailwayRegex)) {
-                Matcher matcher1 = matcher(createRoadRegex, command);
+                Matcher matcher1 = matcher(createRailwayRegex, command);
                 matcher1.find();
                 System.out.println(playGameMenuController.createRailRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(removeRoadRegex)) {
-                Matcher matcher1 = matcher(createRoadRegex, command);
+                Matcher matcher1 = matcher(removeRoadRegex, command);
                 matcher1.find();
                 System.out.println(playGameMenuController.removeRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(removeRailwayRegex)) {
-                Matcher matcher1 = matcher(createRoadRegex, command);
+                Matcher matcher1 = matcher(removeRailwayRegex, command);
                 matcher1.find();
                 System.out.println(playGameMenuController.removeRailRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(repairRoadRegex)) {
-                Matcher matcher1 = matcher(createRoadRegex, command);
+                Matcher matcher1 = matcher(repairRoadRegex, command);
                 matcher1.find();
                 bool = false;
                 System.out.println(playGameMenuController.repairRoad(playingCivilization,map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(repairRailRegex)) {
-                Matcher matcher1 = matcher(createRoadRegex, command);
+                Matcher matcher1 = matcher(repairRailRegex, command);
                 matcher1.find();
                 bool = false;
                 System.out.println(playGameMenuController.repairRail(playingCivilization,map.get(Integer.parseInt(matcher1.group("number"))),map));
