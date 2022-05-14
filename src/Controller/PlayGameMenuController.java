@@ -1225,7 +1225,7 @@ public class PlayGameMenuController {
             str = "there is no unit with this name !";
             return str;
         }
-        if (unit.getIsOnSleep()) {
+        if (unit.getIsOnSleep() || unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
             str = "this unit is sleeping !";
             return str;
         }
