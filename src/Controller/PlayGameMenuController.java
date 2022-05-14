@@ -1367,11 +1367,10 @@ public class PlayGameMenuController {
         unit.setDestination(destination);
         int i = 0;
         while (true) {
-            if (i == unit.getPath().size() - 1 || (unit.getPath().size() >= 1 && unit.getPath().get(0).tile.equals(destination))) {
+            if (unit.getPath().size() == 1) {
                 for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
                     unit.getPath().remove(i1);
                 }
-                unit.setOrigin(destination);
                 unit.setDestination(null);
                 str = "unit reached the destination !";
                 break;
