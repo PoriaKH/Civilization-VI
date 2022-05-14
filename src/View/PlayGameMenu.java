@@ -653,11 +653,6 @@ public class PlayGameMenu {
                 System.out.println("invalid command !");
             }
 
-            //TODO... check is there any unit with move left (harekat chand noobati)
-            playGameMenuController.moveUnitWithMovesLeft (playingCivilization, map);
-
-
-
 
 
             ArrayList<Integer> civilization1new = new ArrayList<>();
