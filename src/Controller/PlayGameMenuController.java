@@ -772,7 +772,7 @@ public class PlayGameMenuController {
             for (int i1 = 0; i1 < unitsOfTile.size(); i1++) {
                 if (unitsOfTile.get(i1).getCivilization().equals(civilization)) {
                     String name = getUnitsName(unitsOfTile.get(i1));
-                    stringBuilder.append("unit " + name + " health : " + unitsOfTile.get(i1).getHealth() + " on tile number: " + i + "\n");
+                    stringBuilder.append("unit " + name +" mp : "+unitsOfTile.get(i1).getMp()+ " health : " + unitsOfTile.get(i1).getHealth() + " on tile number: " + i + "\n");
                 }
             }
         }
@@ -947,7 +947,14 @@ public class PlayGameMenuController {
             for (int i1 = 0; i1 < unitsOfTile.size(); i1++) {
                 if (unitsOfTile.get(i1).getCivilization().equals(civilization)) {
                     String name = getUnitsName(unitsOfTile.get(i1));
-                    stringBuilder.append("unit " + name + " health : " + unitsOfTile.get(i1).getHealth());
+                    String move ;
+                    if (unitsOfTile.get(i1).getPath().size() == 0) {
+                        move = "unit doesn't any path !";
+                    }
+                    else {
+                        move = "unit has path";
+                    }
+                    stringBuilder.append("unit " + name + " movement : "+ move + " health : " + unitsOfTile.get(i1).getHealth());
                     if (unitsOfTile.get(i1).isCivilian()) {
                         stringBuilder.append(" damage : N/A" + "\n");
                     }
