@@ -2265,6 +2265,9 @@ public class PlayGameMenuController {
         if (!attacker.getCivilization().equals(civilization)) {
             return "this is not your unit !";
         }
+        if (attacker.getPath().size() != 0) {
+            return "this unit is on moving !";
+        }
         if (defender.getCivilization().equals(civilization)) {
             return "you can't attack your own unit !";
         }
@@ -2285,7 +2288,7 @@ public class PlayGameMenuController {
         if (checkTheBlocks(map,indexOfTiles)) {
             return "your unit vision is blocked !";
         }
-        if (isFriend(civilization, defender.getCivilization())) {
+        if (defender != null && isFriend(civilization, defender.getCivilization())) {
             addToEnemy(civilization, defender.getCivilization());
         }
         attacker.setHasOrdered(true);
@@ -2383,6 +2386,9 @@ public class PlayGameMenuController {
         }
         if (!attacker.getCivilization().equals(civilization)) {
             return "this is not your unit !";
+        }
+        if (attacker.getPath().size() != 0) {
+            return "this unit is on moving !";
         }
         if (defenderCity == null) {
             return "this tile is not for any city !";
@@ -2684,6 +2690,11 @@ public class PlayGameMenuController {
             return str;
         }
 
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
+            return str;
+        }
+
         unit.setOnSleep(true);
         str = "selected unit is sleeping";
         return str;
@@ -2701,6 +2712,10 @@ public class PlayGameMenuController {
         }
         if (unit.isCivilian()) {
             str = "this unit isn't trooper !";
+            return str;
+        }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
             return str;
         }
 
@@ -2724,6 +2739,10 @@ public class PlayGameMenuController {
             str = "this unit isn't trooper !";
             return str;
         }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
+            return str;
+        }
 
         Warrior warrior = (Warrior) unit;
         int newDamage = warrior.getDamage() + 1;
@@ -2745,6 +2764,10 @@ public class PlayGameMenuController {
         }
         if (unit.isCivilian()) {
             str = "this unit isn't trooper !";
+            return str;
+        }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
             return str;
         }
 
@@ -2784,6 +2807,10 @@ public class PlayGameMenuController {
             str = "this unit isn't in the city !";
             return str;
         }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
+            return str;
+        }
 
         unit.setOnDeployment(true);
         str = "the unit is deployed in city !";
@@ -2801,6 +2828,10 @@ public class PlayGameMenuController {
         }
         if (unit.isCivilian()) {
             str = "this unit isn't trooper !";
+            return str;
+        }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
             return str;
         }
         ((Warrior)unit).setReadyForRangedBattle(true);
@@ -2854,6 +2885,10 @@ public class PlayGameMenuController {
             str = "this unit is for another civilization !";
             return str;
         }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
+            return str;
+        }
 
         unit.setOnSleep(false);
         unit.setOnBoost(false);
@@ -2899,6 +2934,10 @@ public class PlayGameMenuController {
         }
         if (unit.getHealth() == 10) {
             str = "this unit is fully healthy !";
+            return str;
+        }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
             return str;
         }
         //TODO ... agar dar navahi dostane bashad 2 afzayesh joon darad
@@ -3981,6 +4020,10 @@ public class PlayGameMenuController {
             str = "this worker does not belong to you !";
             return str;
         }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
+            return str;
+        }
         if (!((Civilian)unit).isWorker()) {
             str = "this unit is not worker !";
             return str;
@@ -4009,6 +4052,10 @@ public class PlayGameMenuController {
         }
         if (!unit.getCivilization().equals(civilization)) {
             str = "this worker does not belong to you !";
+            return str;
+        }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
             return str;
         }
         if (!((Civilian)unit).isWorker()) {
@@ -4089,6 +4136,10 @@ public class PlayGameMenuController {
             str = "this worker does not belong to you !";
             return str;
         }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
+            return str;
+        }
         if (!((Civilian)unit).isWorker()) {
             str = "this unit is not worker !";
             return str;
@@ -4116,6 +4167,10 @@ public class PlayGameMenuController {
         }
         if (!unit.getCivilization().equals(civilization)) {
             str = "this worker does not belong to you !";
+            return str;
+        }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
             return str;
         }
         if (!((Civilian)unit).isWorker()) {
@@ -4154,6 +4209,10 @@ public class PlayGameMenuController {
             str = "this worker does not belong to you !";
             return str;
         }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
+            return str;
+        }
         if (!((Civilian)unit).isWorker()) {
             str = "this unit is not worker !";
             return str;
@@ -4185,6 +4244,10 @@ public class PlayGameMenuController {
         }
         if (!unit.getCivilization().equals(civilization)) {
             str = "this worker does not belong to you !";
+            return str;
+        }
+        if (unit.getPath().size() != 0) {
+            str = "unit is on moving !";
             return str;
         }
         if (!((Civilian)unit).isWorker()) {
@@ -4278,6 +4341,10 @@ public class PlayGameMenuController {
         }
         if (!warrior.getCivilization().equals(civilization)) {
             str = "this unit is for another civilization !";
+            return str;
+        }
+        if (warrior.getPath().size() != 0) {
+            str = "unit is on moving !";
             return str;
         }
         if (warrior.isCivilian() || newWarrior.isCivilian()) {
