@@ -276,6 +276,7 @@ public class PlayGameMenu {
         String attackCityRegex1 = "attackCity --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
         String attackCityRegex2 = "attackCity to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
         String showMessagesRegex = "show messages";
+        String showRoadsRegex = "show ways";
         String nextTurnRegex = "next turn";
 
         while(!Objects.equals(command, "exit menu")) {
@@ -653,6 +654,10 @@ public class PlayGameMenu {
             else if(command.matches(diplomaticReviewRegex)) {
                 bool = false;
                 System.out.println(playGameMenuController.diplomaticReview(playingCivilization));
+            }
+            else if (command.matches(showRoadsRegex)) {
+                bool = false;
+                System.out.println(playGameMenuController.roadsInfo(map));
             }
             else if (command.matches(attackCityRegex1)) {
                 System.out.println(playGameMenuController.preAttackCity(matcher(attackCityRegex1,command),playingCivilization,map,civilizations));

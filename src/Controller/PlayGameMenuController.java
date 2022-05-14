@@ -968,6 +968,26 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
+    public StringBuilder roadsInfo (ArrayList<Tile> map) {
+        StringBuilder stringBuilder = new StringBuilder("");
+        stringBuilder.append("tiles with road : ");
+        StringBuilder stringBuilderRoad = new StringBuilder("");
+        StringBuilder stringBuilderRail = new StringBuilder("");
+        for (int i = 0; i < map.size(); i++) {
+            if (map.get(i).isDoesHaveRoad()) {
+                stringBuilderRoad.append(i + ", ");
+            }
+            if (map.get(i).isDoesHaveRailWay()) {
+                stringBuilderRail.append(i + ", ");
+            }
+        }
+        stringBuilderRoad.append("\n");
+        stringBuilderRail.append("\n");
+        stringBuilderRoad.append(stringBuilderRail);
+        stringBuilder.append(stringBuilderRoad);
+        return stringBuilder;
+    }
+
     public StringBuilder economicalReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("Number of cities : ").append(civilization.getCities().size()).append("\n-----------------------").append("\n");
