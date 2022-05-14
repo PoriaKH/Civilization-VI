@@ -2297,8 +2297,12 @@ public class PlayGameMenuController {
             if (defender == null) return "there is no unit on destination !";
 
             defender.setCivilization(civilization);
-            if (((Warrior)attacker).getRange() == -1)
+            if (((Warrior)attacker).getRange() == -1) {
                 attacker.setOrigin(map.get(destinationIndex));
+                map.get(destinationIndex).addUnit(attacker);
+                map.get(originIndex).removeUnit(attacker);
+            }
+            return "you captured civilians of enemy !";
         }
         if (((Warrior)attacker).getRange() == -1)
             return attackTileFromGround(civilization, attacker, defender, originIndex, destinationIndex, map);
@@ -2436,6 +2440,7 @@ public class PlayGameMenuController {
                     units.remove(i);
                 }
                 tile.removeAllUnitFromMakingProgress();
+                tile.removeRoadsMakingProgress();
             }
             defenderCivilization.removeCity(defenderCity);
             civilization.addCity(defenderCity);
@@ -2460,8 +2465,9 @@ public class PlayGameMenuController {
                     units.remove(i);
                 }
                 tile.removeAllUnitFromMakingProgress();
+                tile.removeRoadsMakingProgress();
             }
-            defenderCity.setDamagePoint(0);
+            defenderCity.setDamagePoint(1);
             map.get(originIndex).removeUnit(attacker);
             attacker = null;
             str = "your unit died and the city became ruin !";
