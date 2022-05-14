@@ -2094,7 +2094,7 @@ public class PlayGameMenuController {
             else if (delta % 6 == 0) {
                 growth = 6;
             }
-            for (int i = originIndex; i <= destinationIndex; i-=growth) {
+            for (int i = originIndex; i >= destinationIndex; i-=growth) {
                 indexOfTiles.add(i);
             }
         }
