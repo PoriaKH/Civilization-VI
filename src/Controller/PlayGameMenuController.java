@@ -1303,6 +1303,10 @@ public class PlayGameMenuController {
             str = "there is no unit with this name !";
             return str;
         }
+        if (destination == null || origin == null) {
+            str = "there is no origin/destination";
+            return str;
+        }
         if (unit.getIsOnSleep() || unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
             str = "this unit is sleeping !";
             return str;
@@ -1322,7 +1326,7 @@ public class PlayGameMenuController {
             str = "there is no way to the destination !";
             return str;
         }
-        if (checkPath(unit)) {
+        if (checkPath(unit) || isSameUnitOnMakingProgress(destination, unit)) {
             unit.setOrigin(unit.getPath().get(0).tile);
             unit.setDestination(null);
             for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
@@ -1798,8 +1802,8 @@ public class PlayGameMenuController {
         }
     }
 
-    public boolean isSameUnitOnMakingProgress (City city, Unit unit) {
-        HashMap<Unit, Integer> turns = city.getCenterTile().getTurnForUnitMaking();
+    public boolean isSameUnitOnMakingProgress (Tile tile, Unit unit) {
+        HashMap<Unit, Integer> turns = tile.getTurnForUnitMaking();
         for(Map.Entry<Unit,Integer> entry : turns.entrySet()) {
             if (unit.isCivilian() == entry.getKey().isCivilian()) return true;
         }
@@ -1819,7 +1823,7 @@ public class PlayGameMenuController {
             return str;
         }
 
-        if (isSameUnitOnMakingProgress(city, unit)) {
+        if (isSameUnitOnMakingProgress(city.getCenterTile(), unit)) {
             str = "this tile is making same type of unit !";
             return str;
         }
