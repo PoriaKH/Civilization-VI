@@ -2061,7 +2061,7 @@ public class PlayGameMenuController {
         if (originIndex < destinationIndex) {
             int delta = destinationIndex - originIndex;
             int growth = 0;
-            if (delta == 1) {
+            if (getColumn(originIndex) == getColumn(destinationIndex)) {
                 growth = 1;
                 if (originIndex == 5 || originIndex == 16 || originIndex == 27 || originIndex == 38 ||
                         originIndex == 49 || originIndex == 60 || originIndex == 71) {
@@ -2081,7 +2081,7 @@ public class PlayGameMenuController {
         } else {
             int delta = originIndex - destinationIndex;
             int growth = 0;
-            if (delta == 1) {
+            if (getColumn(originIndex) == getColumn(destinationIndex)) {
                 growth = 1;
                 if (originIndex == 0 || originIndex == 11 || originIndex == 22 || originIndex == 33 ||
                         originIndex == 44 || originIndex == 55 || originIndex == 66) {
