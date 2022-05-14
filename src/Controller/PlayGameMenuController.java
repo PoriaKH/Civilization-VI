@@ -1798,6 +1798,14 @@ public class PlayGameMenuController {
         }
     }
 
+    public boolean isSameUnitOnMakingProgress (City city, Unit unit) {
+        HashMap<Unit, Integer> turns = city.getCenterTile().getTurnForUnitMaking();
+        for(Map.Entry<Unit,Integer> entry : turns.entrySet()) {
+            if (unit.isCivilian() == entry.getKey().isCivilian()) return true;
+        }
+        return false;
+    }
+
     public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map, int turn){
         String str;
 
@@ -1808,6 +1816,11 @@ public class PlayGameMenuController {
 
         if (city == null) {
             str = "this tile does not belong to your cities!";
+            return str;
+        }
+
+        if (isSameUnitOnMakingProgress(city, unit)) {
+            str = "this tile is making same type of unit !";
             return str;
         }
 
