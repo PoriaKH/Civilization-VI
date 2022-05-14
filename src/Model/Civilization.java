@@ -219,7 +219,8 @@ public class Civilization {
             messages.add(message);
             workingOnTechnology = null;
         }
-        setScience(sciencePerTurn / (roundLeft * 2));
+        // TODO plus one
+        setScience(sciencePerTurn / (roundLeft * 2 + 1));
         this.technologyEarnedPercent.replace(this.workingOnTechnology, roundLeft);
     }
 

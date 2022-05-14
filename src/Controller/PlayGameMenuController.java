@@ -945,22 +945,28 @@ public class PlayGameMenuController {
     public int distanceOfTwoNode(Node node) {
         Tile tile = node.tile;
         if (tile.isMountain() || tile.isOcean() || (tile.getAttribute() != null && tile.getAttribute().isIce())) {
-            return 100000;
+            return 1000000;
         }
         return tile.getMpCost();
     }
     // chase an algorithm based on graphs to find the shortest way.
-    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode) {
+    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map) {
         while (unreached.size() > 0) {
-            Node minimumBranch = null;
+            Node minimumBranch;
+            int index = 0;
+            int min = 1000000;
             for (int i = 0; i < unreached.size(); i++) {
-                if (minimumBranch == null ||
-                        distanceFromNode.get(unreached.get(i)) < distanceFromNode.get(minimumBranch)) {
-                    minimumBranch = unreached.get(i);
-                    unreached.remove(i);
+                if (distanceFromNode.get(unreached.get(i)) < min) {
+                    index = i;
+                    min = distanceFromNode.get(unreached.get(i));
                 }
             }
+            minimumBranch = unreached.get(index);
+
             if (minimumBranch.equals(destinationNode)) break;
+
+            unreached.remove(index);
+
 
             for (int i = 0; i < minimumBranch.neighbours.size(); ++i) {
                 Node neighbourOfBranch = minimumBranch.neighbours.get(i);
@@ -986,8 +992,9 @@ public class PlayGameMenuController {
         HashMap<Node, Integer> distanceFromNode = new HashMap<>();
         HashMap<Node, Node> previousNode = new HashMap<>();
         ArrayList<Node> unreached = new ArrayList<>();
-        int originIndex = map.indexOf(origin);
-        int destinationIndex = map.indexOf(destination);
+
+        int originIndex = getTileIndex(origin, map);
+        int destinationIndex = getTileIndex(destination, map);
 
         Node originNode = graph[originIndex];
         Node destinationNode = graph[destinationIndex];
@@ -997,12 +1004,12 @@ public class PlayGameMenuController {
 
         for (int i = 0; i < graph.length; i++) {
             if (!graph[i].equals(originNode)) {
-                distanceFromNode.put(graph[i] ,100000);
+                distanceFromNode.put(graph[i] ,1000000);
                 previousNode.put(graph[i], null);
             }
             unreached.add(graph[i]);
         }
-        findThePath(previousNode, distanceFromNode, unreached, destinationNode);
+        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map);
 
         if (previousNode.get(destinationNode) == null) {
             for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
@@ -1012,7 +1019,7 @@ public class PlayGameMenuController {
         }
 
         ArrayList<Node> path = new ArrayList<>();
-        Node currentNode = new Node();
+        Node currentNode = destinationNode;
         while (currentNode != null) {
             path.add(currentNode);
             currentNode = previousNode.get(currentNode);
@@ -1256,8 +1263,6 @@ public class PlayGameMenuController {
                     unit.getPath().remove(i1);
                 }
                 unit.setOrigin(destination);
-                origin.removeUnit(unit);
-                destination.addUnit(unit);
                 unit.setDestination(null);
                 str = "unit reached the destination !";
                 break;
