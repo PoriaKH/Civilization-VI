@@ -1144,6 +1144,12 @@ public class PlayGameMenuController {
         Tile destination = map.get(numberOfDestination);
         ArrayList<Unit> units = origin.getUnits();
         Unit unit = getUnitInTile(units, unitName);
+        if (unit != null && unit.getPath().size() != 0) {
+            return "this unit is on moving !";
+        }
+        if (unit != null && ((Civilian)unit).getWorkingTile() != null) {
+            return "this civilian is working on something !";
+        }
         return moveUnit(civilization, origin, destination, map, unit);
     }
     //return a unit from specific tile
