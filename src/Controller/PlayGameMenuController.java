@@ -983,7 +983,7 @@ public class PlayGameMenuController {
             HashMap<Unit,Integer> unit = city.getCenterTile().getTurnForUnitMaking();
             for(Map.Entry<Unit,Integer> entry : unit.entrySet()) {
                 String name = getUnitsName(entry.getKey());
-                stringBuilder.append(name + ": " + entry.getValue() + "\n");
+                stringBuilder.append(name + ": turns => " + entry.getValue() + "\n");
             }
             //TODO...  buildings duration to create
             stringBuilder.append("-----------------------\n");
