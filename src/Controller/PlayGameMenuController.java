@@ -3335,6 +3335,9 @@ public class PlayGameMenuController {
         return null;
     }
     public boolean hasPrerequisiteTechs(ArrayList<Technology> allTechnologies, String name){
+        for (Technology technology : allTechnologies)
+            if (technology.getName().equals(name))
+                return false;
         if (name.equals("Agriculture"))
             return true;
         else if (name.equals("AnimalHusbandry")) {
@@ -3983,7 +3986,6 @@ public class PlayGameMenuController {
             } else
                 return "no improvement with this name exists!";
             civilian.setWorkingTile(tile);
-            tile.addUnit(civilian);
             return "improvement created successfully";
         }
         else
