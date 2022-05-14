@@ -2057,46 +2057,13 @@ public class PlayGameMenuController {
         return null;
     }
     // get all indexes that are between attackers and defenders
-    public void getAllIndexes(int originIndex, int destinationIndex, ArrayList<Integer> indexOfTiles) {
-        if (originIndex < destinationIndex) {
-            int delta = destinationIndex - originIndex;
-            int growth = 0;
-            if (delta == 1) {
-                growth = 1;
-                if (originIndex == 5 || originIndex == 16 || originIndex == 27 || originIndex == 38 ||
-                        originIndex == 49 || originIndex == 60 || originIndex == 71) {
-                    return;
-                }
-            }
-            else  if (delta % 5 == 0) {
-                growth = 5;
-            }
-            else if (delta % 6 == 0) {
-                growth = 6;
-            }
-            for (int i = originIndex; i <= destinationIndex; i+=growth) {
-                indexOfTiles.add(i);
-            }
+    public void getAllIndexes(Unit unit, ArrayList<Integer> indexOfTiles, ArrayList<Tile> map) {
+        for (int i = 0; i < unit.getPath().size(); i++) {
+            int index = getTileIndex(unit.getPath().get(i).tile,map);
+            indexOfTiles.add(index);
         }
-        else {
-            int delta = originIndex - destinationIndex;
-            int growth = 0;
-            if (delta == 1) {
-                growth = 1;
-                if (originIndex == 0 || originIndex == 11 || originIndex == 22 || originIndex == 33 ||
-                        originIndex == 44 || originIndex == 55 || originIndex == 66) {
-                    return;
-                }
-            }
-            else  if (delta % 5 == 0) {
-                growth = 5;
-            }
-            else if (delta % 6 == 0) {
-                growth = 6;
-            }
-            for (int i = originIndex; i >= destinationIndex; i-=growth) {
-                indexOfTiles.add(i);
-            }
+        for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
+            unit.getPath().remove(i1);
         }
     }
     // if blockers block attackers vision return true
@@ -2166,7 +2133,7 @@ public class PlayGameMenuController {
             return "this unit is not set up for range attack !";
         }
         ArrayList<Integer> indexOfTiles = new ArrayList<>();
-        getAllIndexes(originIndex,destinationIndex,indexOfTiles);
+        getAllIndexes(attacker, indexOfTiles, map);
         if (indexOfTiles.size() == 0) {
             return "this distance is too long for attack !";
         }
@@ -2221,6 +2188,39 @@ public class PlayGameMenuController {
         return null;
     }
 
+    public int getColumn (int index) {
+        if (0 <= index && index <= 5) return 0;
+        else if (6 <= index && index <= 10) return 1;
+        else if (11 <= index && index <= 16) return 2;
+        else if (17 <= index && index <= 21) return 3;
+        else if (22 <= index && index <= 27) return 4;
+        else if (28 <= index && index <= 32) return 5;
+        else if (33 <= index && index <= 38) return 6;
+        else if (39 <= index && index <= 43) return 7;
+        else if (44 <= index && index <= 49) return 8;
+        else if (50 <= index && index <= 54) return 9;
+        else if (55 <= index && index <= 60) return 10;
+        else if (61 <= index && index <= 65) return 11;
+        else if (66 <= index && index <= 71) return 12;
+        return 0;
+    }
+
+    public boolean checkDistance(Unit unit, int origin, int destination) {
+        int range = ((Warrior)unit).getRange();
+        int columnO = getColumn(origin);
+        int columnD = getColumn(destination);
+        int delta = 0;
+        if (columnD > columnO) {
+            delta = columnD - columnO;
+        }
+        else{
+            delta = columnO - columnD;
+        }
+        if (range == -1 && delta - 1 == 1) return  true;
+        else if (range > 0 && delta - 1 == range) return true;
+        return false;
+    }
+
     public String preAttackCity (Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
         matcher.find();
         int originIndex = Integer.parseInt(matcher.group("origin"));
@@ -2247,16 +2247,8 @@ public class PlayGameMenuController {
         if (((Warrior)attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
         }
-        ArrayList<Integer> indexOfTiles = new ArrayList<>();
-        getAllIndexes(originIndex,destinationIndex,indexOfTiles);
-        if (indexOfTiles.size() == 0) {
+        if (checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(),map))) {
             return "this distance is too long for attack !";
-        }
-        if (!isRangeEnough((Warrior)attacker, indexOfTiles)) {
-            return "unit 's range is not enough !";
-        }
-        if (checkTheBlocks(map,indexOfTiles)) {
-            return "your unit vision is blocked !";
         }
         Civilization defenderCivilization = getCivilizationFromCity(defenderCity, civilizations);
         attacker.setHasOrdered(true);
