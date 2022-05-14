@@ -1570,6 +1570,9 @@ public class PlayGameMenuController {
             return "there is no city !";
         }
         Unit unit = makeUnit(civilization, city.getCenterTile(), map, unitName);
+        if (unit == null) {
+            return "there is no unit with this name !";
+        }
         int turn = unit.getDuration();
         return createUnit(civilization, city, unit, map, turn);
     }
