@@ -215,16 +215,16 @@ public class PlayGameMenuController {
         return "cheat code activated successfully";
     }
     public String cheatTeleportUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
-            String str;
-            matcher.find();
-            int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
-            int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
-            String unitName = matcher.group("unitName").toLowerCase();
+        String str;
+        matcher.find();
+        int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
+        int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
+        String unitName = matcher.group("unitName").toLowerCase();
 
-            Tile origin = map.get(numberOfOrigin);
-            Tile destination = map.get(numberOfDestination);
-            ArrayList<Unit> units = origin.getUnits();
-            Unit unit = getUnitInTile(units, unitName);
+        Tile origin = map.get(numberOfOrigin);
+        Tile destination = map.get(numberOfDestination);
+        ArrayList<Unit> units = origin.getUnits();
+        Unit unit = getUnitInTile(units, unitName);
 
         if (unit == null) {
             str = "there is no unit with this name !";
@@ -321,18 +321,39 @@ public class PlayGameMenuController {
                 else if (map.get(i).isHill())
                     tileColors[i] = CYAN;
             }
-            else {
-                if (zeroStatusTilesCivilisation.containsValue(map.get(i)))
-                    tileColors[i] = oldTileColors[i];
-            }
+//            else {
+//                if (zeroStatusTilesCivilisation.containsValue(map.get(i)))
+//                    tileColors[i] = oldTileColors[i];
+//            }
+        }
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (Map.Entry<Integer, Tile> key : zeroStatusTilesCivilisation.entrySet())
+            tiles.add(key.getValue());
+        for (int i = 0; i < tiles.size(); i++) {
+            if (tiles.get(i).isDesert())
+                tileColors[tiles.get(i).getTileNumber()] = YELLOW;
+            else if (tiles.get(i).isMeadow())
+                tileColors[tiles.get(i).getTileNumber()] = DARK_GREEN;
+            else if (tiles.get(i).isPlain())
+                tileColors[tiles.get(i).getTileNumber()] = LIGHT_GREEN;
+            else if (tiles.get(i).isOcean())
+                tileColors[tiles.get(i).getTileNumber()] = BLUE;
+            else if (tiles.get(i).isMountain())
+                tileColors[tiles.get(i).getTileNumber()] = BROWN;
+            else if (tiles.get(i).isTundra())
+                tileColors[tiles.get(i).getTileNumber()] = PURPLE;
+            else if (tiles.get(i).isSnow())
+                tileColors[tiles.get(i).getTileNumber()] = SNOW;
+            else if (tiles.get(i).isHill())
+                tileColors[tiles.get(i).getTileNumber()] = CYAN;
         }
         tileColors[72] = BACKGROUND_BLUE;
         return tileColors;
     }
-    public String[] setTileType(ArrayList<Tile> map, String tilecolors[]) {
+    public String[] setTileType(ArrayList<Tile> map, String tilecolors[], HashMap<Integer, Tile> zeroStatusTilesCivilisation, ArrayList<Integer> tileStatusOfCivilization) {
         String tileType[] = new String[72];
         for (int i = 0; i < map.size(); i++) {
-            if (map.get(i).getAttribute() == null || tilecolors[i] == BLACK)
+            if (map.get(i).getAttribute() == null || tilecolors[i] == BLACK || tileStatusOfCivilization.get(map.get(i).getTileNumber()) == -1)
                 tileType[i] = "\u2588";
             else if (map.get(i).getAttribute().isIce())
                 tileType[i] = "i";
@@ -349,9 +370,30 @@ public class PlayGameMenuController {
             else
                 tileType[i] = "\u2588";
         }
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (Map.Entry<Integer, Tile> key : zeroStatusTilesCivilisation.entrySet())
+            tiles.add(key.getValue());
+        for (int i = 0; i < tiles.size(); i++) {
+            if (tiles.get(i).getAttribute() == null || tilecolors[i] == BLACK)
+                tileType[tiles.get(i).getTileNumber()] = "\u2588";
+            else if (tiles.get(i).getAttribute().isIce())
+                tileType[tiles.get(i).getTileNumber()] = "i";
+            else if (tiles.get(i).getAttribute().isMarsh())
+                tileType[tiles.get(i).getTileNumber()] = "m";
+            else if (tiles.get(i).getAttribute().isJungle())
+                tileType[tiles.get(i).getTileNumber()] = "j";
+            else if (tiles.get(i).getAttribute().isPlat())
+                tileType[tiles.get(i).getTileNumber()] = "p";
+            else if (tiles.get(i).getAttribute().isOasis())
+                tileType[tiles.get(i).getTileNumber()] = "v";
+            else if (tiles.get(i).getAttribute().isRainForest())
+                tileType[tiles.get(i).getTileNumber()] = "r";
+            else
+                tileType[tiles.get(i).getTileNumber()] = "\u2588";
+        }
         return tileType;
     }
-    public String[] unitMaker(ArrayList<Tile> map, int index){
+    public String[] unitMaker(ArrayList<Tile> map, int index, HashMap<Integer, Tile> zeroStatusTilesCivilisation, ArrayList<Integer> tileStatusOfCivilization){
         String unit1[] = new String[72];
         for (int i = 0; i < 72; i++)
             unit1[i] = "\u2588" + "\u2588";
@@ -369,6 +411,26 @@ public class PlayGameMenuController {
                     unit1[i] += unit.getCivilization().getFirstLetterOfName();
                 }
             }
+            if (tileStatusOfCivilization.get(map.get(i).getTileNumber()) == -1)
+                unit1[i] = "\u2588" + "\u2588";
+        }
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (Map.Entry<Integer, Tile> key : zeroStatusTilesCivilisation.entrySet())
+            tiles.add(key.getValue());
+        for (int i = 0; i < tiles.size(); i++){
+            if (tiles.get(i).getUnits().size() > 0) {
+                if (tiles.get(i).getUnits().size() == 1 && index == 1){
+                    unit1[tiles.get(i).getTileNumber()] = "\u2588" + "\u2588";
+                }
+                else {
+                    Unit unit = tiles.get(i).getUnits().get(index);
+                    if (unit.isCivilian())
+                        unit1[tiles.get(i).getTileNumber()] = "C";
+                    else
+                        unit1[tiles.get(i).getTileNumber()] = "W";
+                    unit1[tiles.get(i).getTileNumber()] += unit.getCivilization().getFirstLetterOfName();
+                }
+            }
         }
         return unit1;
     }
@@ -383,18 +445,28 @@ public class PlayGameMenuController {
             for (int j = 0; j < tiles.size(); j++)
                 cvTiles.add(tiles.get(j));
         }
-        for (int i = 0; i < cvTiles.size(); i++)
+        for (int i = 0; i < cvTiles.size(); i++) {
             cv[cvTiles.get(i).getTileNumber()] = civilization.getFirstLetterOfName();
+        }
         return cv;
     }
-    public String[] showMap(String ANSI_COLORS[], String number[], String types[], String unit1[], String unit2[], String cv[]){
+    public String[] cityCenterMaker(ArrayList<Tile> map, Civilization civilization){
+        String cityCenter[] = new String[72];
+        for (int i = 0; i < 72; i++)
+            cityCenter[i] = "\u2588";
+        ArrayList<City> cities = civilization.getCities();
+        for (City city : cities)
+            cityCenter[city.getCenterTile().getTileNumber()] = "*";
+        return cityCenter;
+    }
+    public String[] showMap(String ANSI_COLORS[], String number[], String types[], String unit1[], String unit2[], String cv[], String cityCenter[]){
         char block = '\u2588';
         String block5 = " \\" + block + block + block + block + block + block + block + block + block + block + "/";
         String block6 = "  \\" + block + block + block + block + block + block + block + block + "/";
         String block7 = "   \\" + block + block + block + block + block + block + "/";
         String[] map = new String[77];
-        map[0] = ANSI_COLORS[0] + "   /" + block + block + block + block + block + block + "\\" + "   " +  ANSI_COLORS[11] + "   /" + block + block + block + block + block + block + "\\" +ANSI_RESET + ANSI_COLORS[72] + block + ANSI_RESET + "   " + ANSI_COLORS[22] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[33] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[44] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[55] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[66] + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[1] = ANSI_COLORS[0] + "  /" + block + block + block + block + cv[0] + block + block + block + "\\" + "  " +  ANSI_COLORS[11] + "  /" + block + block + block + block + cv[11] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[22] + "  /" + block + block + block + block + cv[22] + block + block + block + "\\" + "  " + ANSI_COLORS[33] + "  /" + block + block + block + block + cv[33] + block + block + block + "\\" + "  " + ANSI_COLORS[44] + "  /" + block + block + block + block + cv[44] + block + block + block + "\\" + "  " + ANSI_COLORS[55] + "  /" + block + block + block + block + cv[55] + block + block + block + "\\" + "  " + ANSI_COLORS[66] + "  /" + block + block + block + block + cv[66] + block + block + block + "\\" + ANSI_RESET;
+        map[0] = ANSI_COLORS[0] + "   /" + block + block + block + block + block + block + "\\" + "   " +  ANSI_COLORS[11] + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "   " + ANSI_COLORS[22] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[33] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[44] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[55] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[66] + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
+        map[1] = ANSI_COLORS[0] + "  /" + block + block + block + cityCenter[0] + cv[0] + block + block + block + "\\" + "  " +  ANSI_COLORS[11] + "  /" + block + block + block + cityCenter[11] + cv[11] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[22] + "  /" + block + block + block + cityCenter[22] + cv[22] + block + block + block + "\\" + "  " + ANSI_COLORS[33] + "  /" + block + block + block + cityCenter[33] + cv[33] + block + block + block + "\\" + "  " + ANSI_COLORS[44] + "  /" + block + block + block + cityCenter[44] + cv[44] + block + block + block + "\\" + "  " + ANSI_COLORS[55] + "  /" + block + block + block + cityCenter[55] + cv[55] + block + block + block + "\\" + "  " + ANSI_COLORS[66] + "  /" + block + block + block + cityCenter[66] + cv[66] + block + block + block + "\\" + ANSI_RESET;
         map[2] = ANSI_COLORS[0] + " /" + block + block + unit1[0] + block + block + unit2[0] + block + block + "\\" + " " +  ANSI_COLORS[11] + " /" + block + block + unit1[11] + block + block + unit2[11] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[22] + " /" + block + block + unit1[22] + block + block + unit2[22] + block + block + "\\" + " " + ANSI_COLORS[33] + " /" + block + block + unit1[33] + block + block + unit2[33] + block + block + "\\" + " " + ANSI_COLORS[44] + " /" + block + block + unit1[44] + block + block + unit2[44] + block + block + "\\" + " " + ANSI_COLORS[55] + " /" + block + block + unit1[55] + block + block + unit2[55] + block + block + "\\" + " " + ANSI_COLORS[66] + " /" + block + block + unit1[66] + block + block + unit2[66] + block + block + "\\" + ANSI_RESET;
         map[3] = ANSI_COLORS[0] + "|" + block + block + block + block + number[0] + block + types[0] + block + block + block + block + "|" +  ANSI_COLORS[11] + "|" + block + block + block + block + number[11] + block + types[11] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[22] +  "|" + block + block + block + block + number[22] + block + types[22] + block + block + block + block + "|" + ANSI_COLORS[33] + "|" + block + block + block + block + number[33] + block + types[33] + block + block + block + block + "|" + ANSI_COLORS[44] + "|" + block + block + block + block + number[44] + block + types[44] + block + block + block + block + "|" + ANSI_COLORS[55] +"|" + block + block + block + block + number[55] + block + types[55] + block + block + block + block + "|" + ANSI_COLORS[66] + "|" + block + block + block + block + number[66] + block + types[66] + block + block + block + block + "|" + ANSI_RESET;
         map[4] = ANSI_COLORS[0] + block5 + " " +  ANSI_COLORS[11] + block5 + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[22] + block5 + " " + ANSI_COLORS[33] + block5 + " " + ANSI_COLORS[44] + block5 + " " + ANSI_COLORS[55] + block5 + " " + ANSI_COLORS[66] + block5 + ANSI_RESET;
@@ -402,7 +474,7 @@ public class PlayGameMenuController {
         map[6] = ANSI_COLORS[0] + block7 + "   " +  ANSI_COLORS[11] + block7 + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[22] + "\\" + block + block + block + block + block + block + "/" + "   " + ANSI_COLORS[33] + block7 + "   " + ANSI_COLORS[44] + block7 + "   " + ANSI_COLORS[55] + block7 + "   " + ANSI_COLORS[66] + block7 + ANSI_RESET;
 
         map[7] = ANSI_COLORS[6] + "       " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[17] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[28] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[39] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[50] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[61] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[8] = ANSI_COLORS[6] + "       " + "  /" + block + block + block + block + cv[6] + block + block + block + "\\" + ANSI_COLORS[17] + "  " + "  /" + block + block + block + block + cv[17] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[28] + "  " + "  /" + block + block + block + block + cv[28] + block + block + block + "\\" + ANSI_COLORS[39] + "  " + "  /" + block + block + block + block + cv[39] + block + block + block + "\\" + ANSI_COLORS[50] + "  " + "  /" + block + block + block + block + cv[50] + block + block + block + "\\" + ANSI_COLORS[61] + "  " + "  /" + block + block + block + block + cv[61] + block + block + block + "\\" + ANSI_RESET;
+        map[8] = ANSI_COLORS[6] + "       " + "  /" + block + block + block + cityCenter[6] + cv[6] + block + block + block + "\\" + ANSI_COLORS[17] + "  " + "  /" + block + block + block + cityCenter[17] + cv[17] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[28] + "  " + "  /" + block + block + block + cityCenter[28] + cv[28] + block + block + block + "\\" + ANSI_COLORS[39] + "  " + "  /" + block + block + block + cityCenter[39] + cv[39] + block + block + block + "\\" + ANSI_COLORS[50] + "  " + "  /" + block + block + block + cityCenter[50] + cv[50] + block + block + block + "\\" + ANSI_COLORS[61] + "  " + "  /" + block + block + block + cityCenter[61] + cv[61] + block + block + block + "\\" + ANSI_RESET;
         map[9] = ANSI_COLORS[6] + "       " + " /" + block + block + unit1[6] + block + block + unit2[6] + block + block + "\\" + ANSI_COLORS[17] + " " + " /" + block + block + unit1[17] + block + block + unit2[17] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET +  ANSI_COLORS[28] +  " " + " /" + block + block + unit1[28] + block + block + unit2[28] + block + block + "\\" + ANSI_COLORS[39] + " " + " /" + block + block + unit1[39] + block + block + unit2[39] + block + block + "\\" + ANSI_COLORS[50] + " " + " /" + block + block + unit1[50] + block + block + unit2[50] + block + block + "\\" + ANSI_COLORS[61] + " " + " /" + block + block + unit1[61] + block + block + unit2[61] + block + block + "\\" + ANSI_RESET;
         map[10] = ANSI_COLORS[6] + "       " + "|" + block + block + block + block + number[6] + block + types[6] + block + block + block + block + "|" + ANSI_COLORS[17] + "|" + block + block + block + block + number[17] + block + types[17] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[28] +  "|" + block + block + block + block + number[28] + block + types[28] + block + block + block + block + "|" + ANSI_COLORS[39] + "|" + block + block + block + block + number[39] + block + types[39] + block + block + block + block + "|" + ANSI_COLORS[50] + "|" + block + block + block + block + number[50] + block + types[50] + block + block + block + block + "|" + ANSI_COLORS[61] + "|" + block + block + block + block + number[61] + block + types[61] + block + block + block + block + "|" + ANSI_RESET;
         map[11] = ANSI_COLORS[6] + "       " + block5 + ANSI_COLORS[17] + " " + block5 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[28] +  " " + block5 + ANSI_COLORS[39] + " " + block5 + ANSI_COLORS[50] + " " + block5 +  ANSI_COLORS[61] + " " + block5 + ANSI_RESET;
@@ -410,7 +482,7 @@ public class PlayGameMenuController {
         map[13] = ANSI_COLORS[6] + "       " + block7 + ANSI_COLORS[17] + "   " + block7 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[28] +  "   " + block7 + ANSI_COLORS[39] + "   " + block7 + ANSI_COLORS[50] + "   " + block7 + ANSI_COLORS[61] + "   " + block7 + ANSI_RESET;
 
         map[14] = ANSI_COLORS[1] + "   /" + block + block + block + block + block + block + "\\" + "   " +  ANSI_COLORS[12] + "   /" + block + block + block + block + block + block + "\\" + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[23] + "/" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[34] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[45] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[56] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[67] + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[15] = ANSI_COLORS[1] + "  /" + block + block + block + block + cv[1] + block + block + block + "\\" + "  " +  ANSI_COLORS[12] + "  /" + block + block + block + block + cv[12] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[23] + "  /" + block + block + block + block + cv[23] + block + block + block + "\\" + "  " + ANSI_COLORS[34] + "  /" + block + block + block + block + cv[34] + block + block + block + "\\" + "  " + ANSI_COLORS[45] + "  /" + block + block + block + block + cv[45] + block + block + block + "\\" + "  " + ANSI_COLORS[56] + "  /" + block + block + block + block + cv[56] + block + block + block + "\\" + "  " + ANSI_COLORS[67] + "  /" + block + block + block + block + cv[67] + block + block + block + "\\" + ANSI_RESET;
+        map[15] = ANSI_COLORS[1] + "  /" + block + block + block + cityCenter[1] + cv[1] + block + block + block + "\\" + "  " +  ANSI_COLORS[12] + "  /" + block + block + block + cityCenter[12] + cv[12] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[23] + "  /" + block + block + block + cityCenter[23] + cv[23] + block + block + block + "\\" + "  " + ANSI_COLORS[34] + "  /" + block + block + block + cityCenter[34] + cv[34] + block + block + block + "\\" + "  " + ANSI_COLORS[45] + "  /" + block + block + block + cityCenter[45] + cv[45] + block + block + block + "\\" + "  " + ANSI_COLORS[56] + "  /" + block + block + block + cityCenter[56] + cv[56] + block + block + block + "\\" + "  " + ANSI_COLORS[67] + "  /" + block + block + block + cityCenter[67] + cv[67] + block + block + block + "\\" + ANSI_RESET;
         map[16] = ANSI_COLORS[1] + " /" + block + block + unit1[1] + block + block + unit2[1] + block + block + "\\" + " " +  ANSI_COLORS[12] + " /" + block + block + unit1[12] + block + block + unit2[12] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[23] + " /" + block + block + unit1[23] + block + block + unit2[23] + block + block + "\\" + " " + ANSI_COLORS[34] + " /" + block + block + unit1[34] + block + block + unit2[34] + block + block + "\\" + " " + ANSI_COLORS[45] + " /" + block + block + unit1[45] + block + block + unit2[45] + block + block + "\\" + " " + ANSI_COLORS[56] + " /" + block + block + unit1[56] + block + block + unit2[56] + block + block + "\\" + " " + ANSI_COLORS[67] + " /" + block + block + unit1[67] + block + block + unit2[67] + block + block + "\\" + ANSI_RESET;
         map[17] = ANSI_COLORS[1] + "|" + block + block + block + block + number[1] + block + types[1] + block + block + block + block + "|" +  ANSI_COLORS[12] + "|" + block + block + block + block + number[12] + block + types[12] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[23] +  "|" + block + block + block + block + number[23] + block + types[23] + block + block + block + block + "|" + ANSI_COLORS[34] + "|" + block + block + block + block + number[34] + block + types[34] + block + block + block + block + "|" + ANSI_COLORS[45] + "|" + block + block + block + block + number[45] + block + types[45] + block + block + block + block + "|" + ANSI_COLORS[56] + "|" + block + block + block + block + number[56] + block + types[56] + block + block + block + block + "|" + ANSI_COLORS[67] + "|" + block + block + block + block + number[67] + block + types[67] + block + block + block + block + "|" + ANSI_RESET;
         map[18] = ANSI_COLORS[1] + block5 + " " +  ANSI_COLORS[12] + block5 + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[23] + block5 + " " + ANSI_COLORS[34] + block5 + " " + ANSI_COLORS[45] + block5 + " " + ANSI_COLORS[56] + block5 + " " + ANSI_COLORS[67] + block5 + ANSI_RESET;
@@ -418,7 +490,7 @@ public class PlayGameMenuController {
         map[20] = ANSI_COLORS[1] + block7 + "   " +  ANSI_COLORS[12] + block7 + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[23] + "\\" + block + block + block + block + block + block + "/" + "   " + ANSI_COLORS[34] + block7 + "   " + ANSI_COLORS[45] + block7 + "   " + ANSI_COLORS[56] + block7 + "   " + ANSI_COLORS[67] + block7 + ANSI_RESET;
 
         map[21] = ANSI_COLORS[7] + "       " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[18] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[29] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[40] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[51] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[62] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[22] = ANSI_COLORS[7] + "       " + "  /" + block + block + block + block + cv[7] + block + block + block + "\\" + ANSI_COLORS[18] + "  " + "  /" + block + block + block + block + cv[18] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[29] + "  " + "  /" + block + block + block + block + cv[29] + block + block + block + "\\" + ANSI_COLORS[40] + "  " + "  /" + block + block + block + block + cv[40] + block + block + block + "\\" + ANSI_COLORS[51] + "  " + "  /" + block + block + block + block + cv[51] + block + block + block + "\\" + ANSI_COLORS[62] + "  " + "  /" + block + block + block + block + cv[62] + block + block + block + "\\" + ANSI_RESET;
+        map[22] = ANSI_COLORS[7] + "       " + "  /" + block + block + block + cityCenter[7] + cv[7] + block + block + block + "\\" + ANSI_COLORS[18] + "  " + "  /" + block + block + block + cityCenter[18] + cv[18] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[29] + "  " + "  /" + block + block + block + cityCenter[29] + cv[29] + block + block + block + "\\" + ANSI_COLORS[40] + "  " + "  /" + block + block + block + cityCenter[40] + cv[40] + block + block + block + "\\" + ANSI_COLORS[51] + "  " + "  /" + block + block + block + cityCenter[51] + cv[51] + block + block + block + "\\" + ANSI_COLORS[62] + "  " + "  /" + block + block + block + cityCenter[62] + cv[62] + block + block + block + "\\" + ANSI_RESET;
         map[23] = ANSI_COLORS[7] + "       " + " /" + block + block + unit1[7] + block + block + unit2[7] + block + block + "\\" + ANSI_COLORS[18] + " " + " /" + block + block + unit1[18] + block + block + unit2[18] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[29] +  " " + " /" + block + block + unit1[29] + block + block + unit2[29] + block + block + "\\" + ANSI_COLORS[40] + " " + " /" + block + block + unit1[40] + block + block + unit2[40] + block + block + "\\" + ANSI_COLORS[51] + " " + " /" + block + block + unit1[51] + block + block + unit2[51] + block + block + "\\" + ANSI_COLORS[62] + " " + " /" + block + block + unit1[62] + block + block + unit2[62] + block + block + "\\" + ANSI_RESET;
         map[24] = ANSI_COLORS[7] + "       " + "|" + block + block + block + block + number[7] + block + types[7] + block + block + block + block + "|" + ANSI_COLORS[18] + "|" + block + block + block + block + number[18] + block + types[18] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[29] +  "|" + block + block + block + block + number[29] + block + types[29] + block + block + block + block + "|" + ANSI_COLORS[40] + "|" + block + block + block + block + number[40] + block + types[40] + block + block + block + block + "|" + ANSI_COLORS[51] + "|" + block + block + block + block + number[51] + block + types[51] + block + block + block + block + "|" + ANSI_COLORS[62] + "|" + block + block + block + block + number[62] + block + types[62] + block + block + block + block + "|" + ANSI_RESET;
         map[25] = ANSI_COLORS[7] + "       " + block5 + ANSI_COLORS[18] + " " + block5 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[29] +  " " + block5 + ANSI_COLORS[40] + " " + block5 + ANSI_COLORS[51] + " " + block5 +  ANSI_COLORS[62] + " " + block5 + ANSI_RESET;
@@ -426,7 +498,7 @@ public class PlayGameMenuController {
         map[27] = ANSI_COLORS[7] + "       " + block7 + ANSI_COLORS[18] + "   " + block7 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[29] +  "   " + block7 + ANSI_COLORS[40] + "   " + block7 + ANSI_COLORS[51] + "   " + block7 + ANSI_COLORS[62] + "   " + block7 + ANSI_RESET;
 
         map[28] = ANSI_COLORS[2] + "   /" + block + block + block + block + block + block + "\\" + "   " +  ANSI_COLORS[13] + "   /" + block + block + block + block + block + block + "\\" + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[24] + "/" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[35] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[46] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[57] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[68] + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[29] = ANSI_COLORS[2] + "  /" + block + block + block + block + cv[2] + block + block + block + "\\" + "  " +  ANSI_COLORS[13] + "  /" + block + block + block + block + cv[13] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[24] + "  /" + block + block + block + block + cv[24] + block + block + block + "\\" + "  " + ANSI_COLORS[35] + "  /" + block + block + block + block + cv[35] + block + block + block + "\\" + "  " + ANSI_COLORS[46] + "  /" + block + block + block + block + cv[46] + block + block + block + "\\" + "  " + ANSI_COLORS[57] + "  /" + block + block + block + block + cv[57] + block + block + block + "\\" + "  " + ANSI_COLORS[68] + "  /" + block + block + block + block + cv[68] + block + block + block + "\\" + ANSI_RESET;
+        map[29] = ANSI_COLORS[2] + "  /" + block + block + block + cityCenter[2] + cv[2] + block + block + block + "\\" + "  " +  ANSI_COLORS[13] + "  /" + block + block + block + cityCenter[13] + cv[13] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[24] + "  /" + block + block + block + cityCenter[24] + cv[24] + block + block + block + "\\" + "  " + ANSI_COLORS[35] + "  /" + block + block + block + cityCenter[35] + cv[35] + block + block + block + "\\" + "  " + ANSI_COLORS[46] + "  /" + block + block + block + cityCenter[46] + cv[46] + block + block + block + "\\" + "  " + ANSI_COLORS[57] + "  /" + block + block + block + cityCenter[57] + cv[57] + block + block + block + "\\" + "  " + ANSI_COLORS[68] + "  /" + block + block + block + cityCenter[68] + cv[68] + block + block + block + "\\" + ANSI_RESET;
         map[30] = ANSI_COLORS[2] + " /" + block + block + unit1[2] + block + block + unit2[2] + block + block + "\\" + " " +  ANSI_COLORS[13] + " /" + block + block + unit1[13] + block + block + unit2[13] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[24] + " /" + block + block + unit1[24] + block + block + unit2[24] + block + block + "\\" + " " + ANSI_COLORS[35] + " /" + block + block + unit1[35] + block + block + unit2[35] + block + block + "\\" + " " + ANSI_COLORS[46] + " /" + block + block + unit1[46] + block + block + unit2[46] + block + block + "\\" + " " + ANSI_COLORS[57] + " /" + block + block + unit1[57] + block + block + unit2[57] + block + block + "\\" + " " + ANSI_COLORS[68] + " /" + block + block + unit1[68] + block + block + unit2[68] + block + block + "\\" + ANSI_RESET;
         map[31] = ANSI_COLORS[2] + "|" + block + block + block + block + number[2] + block + types[2] + block + block + block + block + "|" +  ANSI_COLORS[13] + "|" + block + block + block + block + number[13] + block + types[13] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[24] +  "|" + block + block + block + block + number[24] + block + types[24] + block + block + block + block + "|" + ANSI_COLORS[35] + "|" + block + block + block + block + number[35] + block + types[35] + block + block + block + block + "|" + ANSI_COLORS[46] + "|" + block + block + block + block + number[46] + block + types[46] + block + block + block + block + "|" + ANSI_COLORS[57] + "|" + block + block + block + block + number[57] + block + types[57] + block + block + block + block + "|" + ANSI_COLORS[68] + "|" + block + block + block + block + number[68] + block + types[68] + block + block + block + block + "|" + ANSI_RESET;
         map[32] = ANSI_COLORS[2] + block5 + " " +  ANSI_COLORS[13] + block5 + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[24] + block5 + " " + ANSI_COLORS[35] + block5 + " " + ANSI_COLORS[46] + block5 + " " + ANSI_COLORS[57] + block5 + " " + ANSI_COLORS[68] + block5 + ANSI_RESET;
@@ -434,7 +506,7 @@ public class PlayGameMenuController {
         map[34] = ANSI_COLORS[2] + block7 + "   " +  ANSI_COLORS[13] + block7 + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[24] + "\\" + block + block + block + block + block + block + "/" + "   " + ANSI_COLORS[35] + block7 + "   " + ANSI_COLORS[46] + block7 + "   " + ANSI_COLORS[57] + block7 + "   " + ANSI_COLORS[68] + block7 + ANSI_RESET;
 
         map[35] = ANSI_COLORS[8] + "       " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[19] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[30] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[41] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[52] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[63] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[36] = ANSI_COLORS[8] + "       " + "  /" + block + block + block + block + cv[8] + block + block + block + "\\" + ANSI_COLORS[19] + "  " + "  /" + block + block + block + block + cv[19] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[30] + "  " + "  /" + block + block + block + block + cv[30] + block + block + block + "\\" + ANSI_COLORS[41] + "  " + "  /" + block + block + block + block + cv[41] + block + block + block + "\\" + ANSI_COLORS[52] + "  " + "  /" + block + block + block + block + cv[52] + block + block + block + "\\" + ANSI_COLORS[63] + "  " + "  /" + block + block + block + block + cv[63] + block + block + block + "\\" + ANSI_RESET;
+        map[36] = ANSI_COLORS[8] + "       " + "  /" + block + block + block + cityCenter[8] + cv[8] + block + block + block + "\\" + ANSI_COLORS[19] + "  " + "  /" + block + block + block + cityCenter[19] + cv[19] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[30] + "  " + "  /" + block + block + block + cityCenter[30] + cv[30] + block + block + block + "\\" + ANSI_COLORS[41] + "  " + "  /" + block + block + block + cityCenter[41] + cv[41] + block + block + block + "\\" + ANSI_COLORS[52] + "  " + "  /" + block + block + block + cityCenter[52] + cv[52] + block + block + block + "\\" + ANSI_COLORS[63] + "  " + "  /" + block + block + block + cityCenter[63] + cv[63] + block + block + block + "\\" + ANSI_RESET;
         map[37] = ANSI_COLORS[8] + "       " + " /" + block + block + unit1[8] + block + block + unit2[8] + block + block + "\\" + ANSI_COLORS[19] + " " + " /" + block + block + unit1[19] + block + block + unit2[19] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[30] +  " " + " /" + block + block + unit1[30] + block + block + unit2[30] + block + block + "\\" + ANSI_COLORS[41] + " " + " /" + block + block + unit1[41] + block + block + unit2[41] + block + block + "\\" + ANSI_COLORS[52] + " " + " /" + block + block + unit1[52] + block + block + unit2[52] + block + block + "\\" + ANSI_COLORS[63] + " " + " /" + block + block + unit1[63] + block + block + unit2[63] + block + block + "\\" + ANSI_RESET;
         map[38] = ANSI_COLORS[8] + "       " + "|" + block + block + block + block + number[8] + block + types[8] + block + block + block + block + "|" + ANSI_COLORS[19] + "|" + block + block + block + block + number[19] + block + types[19] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[30] +  "|" + block + block + block + block + number[30] + block + types[30] + block + block + block + block + "|" + ANSI_COLORS[41] + "|" + block + block + block + block + number[41] + block + types[41] + block + block + block + block + "|" + ANSI_COLORS[52] + "|" + block + block + block + block + number[52] + block + types[52] + block + block + block + block + "|" + ANSI_COLORS[63] + "|" + block + block + block + block + number[63] + block + types[63] + block + block + block + block + "|" + ANSI_RESET;
         map[39] = ANSI_COLORS[8] + "       " + block5 + ANSI_COLORS[19] + " " + block5 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[30] +  " " + block5 + ANSI_COLORS[41] + " " + block5 + ANSI_COLORS[52] + " " + block5 +  ANSI_COLORS[63] + " " + block5 + ANSI_RESET;
@@ -442,7 +514,7 @@ public class PlayGameMenuController {
         map[41] = ANSI_COLORS[8] + "       " + block7 + ANSI_COLORS[19] + "   " + block7 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[30] +  "   " + block7 + ANSI_COLORS[41] + "   " + block7 + ANSI_COLORS[52] + "   " + block7 + ANSI_COLORS[63] + "   " + block7 + ANSI_RESET;
 
         map[42] = ANSI_COLORS[3] + "   /" + block + block + block + block + block + block + "\\" + "   " +  ANSI_COLORS[14] + "   /" + block + block + block + block + block + block + "\\" + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[25] + "/" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[36] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[47] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[58] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[69] + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[43] = ANSI_COLORS[3] + "  /" + block + block + block + block + cv[3] + block + block + block + "\\" + "  " +  ANSI_COLORS[14] + "  /" + block + block + block + block + cv[14] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[25] + "  /" + block + block + block + block + cv[25] + block + block + block + "\\" + "  " + ANSI_COLORS[36] + "  /" + block + block + block + block + cv[36] + block + block + block + "\\" + "  " + ANSI_COLORS[47] + "  /" + block + block + block + block + cv[47] + block + block + block + "\\" + "  " + ANSI_COLORS[58] + "  /" + block + block + block + block + cv[58] + block + block + block + "\\" + "  " + ANSI_COLORS[69] + "  /" + block + block + block + block + cv[69] + block + block + block + "\\" + ANSI_RESET;
+        map[43] = ANSI_COLORS[3] + "  /" + block + block + block + cityCenter[3] + cv[3] + block + block + block + "\\" + "  " +  ANSI_COLORS[14] + "  /" + block + block + block + cityCenter[14] + cv[14] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[25] + "  /" + block + block + block + cityCenter[25] + cv[25] + block + block + block + "\\" + "  " + ANSI_COLORS[36] + "  /" + block + block + block + cityCenter[36] + cv[36] + block + block + block + "\\" + "  " + ANSI_COLORS[47] + "  /" + block + block + block + cityCenter[47] + cv[47] + block + block + block + "\\" + "  " + ANSI_COLORS[58] + "  /" + block + block + block + cityCenter[58] + cv[58] + block + block + block + "\\" + "  " + ANSI_COLORS[69] + "  /" + block + block + block + cityCenter[69] + cv[69] + block + block + block + "\\" + ANSI_RESET;
         map[44] = ANSI_COLORS[3] + " /" + block + block + unit1[3] + block + block + unit2[3] + block + block + "\\" + " " +  ANSI_COLORS[14] + " /" + block + block + unit1[14] + block + block + unit2[14] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[25] + " /" + block + block + unit1[25] + block + block + unit2[25] + block + block + "\\" + " " + ANSI_COLORS[36] + " /" + block + block + unit1[36] + block + block + unit2[36] + block + block + "\\" + " " + ANSI_COLORS[47] + " /" + block + block + unit1[47] + block + block + unit2[47] + block + block + "\\" + " " + ANSI_COLORS[58] + " /" + block + block + unit1[58] + block + block + unit2[58] + block + block + "\\" + " " + ANSI_COLORS[69] + " /" + block + block + unit1[69] + block + block + unit2[69] + block + block + "\\" + ANSI_RESET;
         map[45] = ANSI_COLORS[3] + "|" + block + block + block + block + number[3] + block + types[3] + block + block + block + block + "|" +  ANSI_COLORS[14] + "|" + block + block + block + block + number[14] + block + types[14] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[25] +  "|" + block + block + block + block + number[25] + block + types[25] + block + block + block + block + "|" + ANSI_COLORS[36] + "|" + block + block + block + block + number[36] + block + types[36] + block + block + block + block + "|" + ANSI_COLORS[47] + "|" + block + block + block + block + number[47] + block + types[47] + block + block + block + block + "|" + ANSI_COLORS[58] + "|" + block + block + block + block + number[58] + block + types[58] + block + block + block + block + "|" + ANSI_COLORS[69] + "|" + block + block + block + block + number[69] + block + types[69] + block + block + block + block + "|" + ANSI_RESET;
         map[46] = ANSI_COLORS[3] + block5 + " " +  ANSI_COLORS[14] + block5 + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[25] + block5 + " " + ANSI_COLORS[36] + block5 + " " + ANSI_COLORS[47] + block5 + " " + ANSI_COLORS[58] + block5 + " " + ANSI_COLORS[69] + block5 + ANSI_RESET;
@@ -450,7 +522,7 @@ public class PlayGameMenuController {
         map[48] = ANSI_COLORS[3] + block7 + "   " +  ANSI_COLORS[14] + block7 + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[25] + "\\" + block + block + block + block + block + block + "/" + "   " + ANSI_COLORS[36] + block7 + "   " + ANSI_COLORS[47] + block7 + "   " + ANSI_COLORS[58] + block7 + "   " + ANSI_COLORS[69] + block7 + ANSI_RESET;
 
         map[49] = ANSI_COLORS[9] + "       " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[20] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[31] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[42] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[53] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[64] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[50] = ANSI_COLORS[9] + "       " + "  /" + block + block + block + block + cv[9] + block + block + block + "\\" + ANSI_COLORS[20] + "  " + "  /" + block + block + block + block + cv[20] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[31] + "  " + "  /" + block + block + block + block + cv[31] + block + block + block + "\\" + ANSI_COLORS[42] + "  " + "  /" + block + block + block + block + cv[42] + block + block + block + "\\" + ANSI_COLORS[53] + "  " + "  /" + block + block + block + block + cv[53] + block + block + block + "\\" + ANSI_COLORS[64] + "  " + "  /" + block + block + block + block + cv[64] + block + block + block + "\\" + ANSI_RESET;
+        map[50] = ANSI_COLORS[9] + "       " + "  /" + block + block + block + cityCenter[9] + cv[9] + block + block + block + "\\" + ANSI_COLORS[20] + "  " + "  /" + block + block + block + cityCenter[20] + cv[20] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[31] + "  " + "  /" + block + block + block + cityCenter[31] + cv[31] + block + block + block + "\\" + ANSI_COLORS[42] + "  " + "  /" + block + block + block + cityCenter[42] + cv[42] + block + block + block + "\\" + ANSI_COLORS[53] + "  " + "  /" + block + block + block + cityCenter[53] + cv[53] + block + block + block + "\\" + ANSI_COLORS[64] + "  " + "  /" + block + block + block + cityCenter[64] + cv[64] + block + block + block + "\\" + ANSI_RESET;
         map[51] = ANSI_COLORS[9] + "       " + " /" + block + block + unit1[9] + block + block + unit2[9] + block + block + "\\" + ANSI_COLORS[20] + " " + " /" + block + block + unit1[20] + block + block + unit2[20] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[31] +  " " + " /" + block + block + unit1[31] + block + block + unit2[31] + block + block + "\\" + ANSI_COLORS[42] + " " + " /" + block + block + unit1[42] + block + block + unit2[42] + block + block + "\\" + ANSI_COLORS[53] + " " + " /" + block + block + unit1[53] + block + block + unit2[53] + block + block + "\\" + ANSI_COLORS[64] + " " + " /" + block + block + unit1[64] + block + block + unit2[64] + block + block + "\\" + ANSI_RESET;
         map[52] = ANSI_COLORS[9] + "       " + "|" + block + block + block + block + number[9] + block + types[9] + block + block + block + block + "|" + ANSI_COLORS[20] + "|" + block + block + block + block + number[20] + block + types[20] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[31] +  "|" + block + block + block + block + number[31] + block + types[31] + block + block + block + block + "|" + ANSI_COLORS[42] + "|" + block + block + block + block + number[42] + block + types[42] + block + block + block + block + "|" + ANSI_COLORS[53] + "|" + block + block + block + block + number[53] + block + types[53] + block + block + block + block + "|" + ANSI_COLORS[64] + "|" + block + block + block + block + number[64] + block + types[64] + block + block + block + block + "|" + ANSI_RESET;
         map[53] = ANSI_COLORS[9] + "       " + block5 + ANSI_COLORS[20] + " " + block5 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[31] +  " " + block5 + ANSI_COLORS[42] + " " + block5 + ANSI_COLORS[53] + " " + block5 +  ANSI_COLORS[64] + " " + block5 + ANSI_RESET;
@@ -458,7 +530,7 @@ public class PlayGameMenuController {
         map[55] = ANSI_COLORS[9] + "       " + block7 + ANSI_COLORS[20] + "   " + block7 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[31] +  "   " + block7 + ANSI_COLORS[42] + "   " + block7 + ANSI_COLORS[53] + "   " + block7 + ANSI_COLORS[64] + "   " + block7 + ANSI_RESET;
 
         map[56] = ANSI_COLORS[4] + "   /" + block + block + block + block + block + block + "\\" + "   " +  ANSI_COLORS[15] + "   /" + block + block + block + block + block + block + "\\" + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[26] + "/" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[37] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[48] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[59] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[70] + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[57] = ANSI_COLORS[4] + "  /" + block + block + block + block + cv[4] + block + block + block + "\\" + "  " +  ANSI_COLORS[15] + "  /" + block + block + block + block + cv[15] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[26] + "  /" + block + block + block + block + cv[26] + block + block + block + "\\" + "  " + ANSI_COLORS[37] + "  /" + block + block + block + block + cv[37] + block + block + block + "\\" + "  " + ANSI_COLORS[48] + "  /" + block + block + block + block + cv[48] + block + block + block + "\\" + "  " + ANSI_COLORS[59] + "  /" + block + block + block + block + cv[59] + block + block + block + "\\" + "  " + ANSI_COLORS[70] + "  /" + block + block + block + block + cv[70] + block + block + block + "\\" + ANSI_RESET;
+        map[57] = ANSI_COLORS[4] + "  /" + block + block + block + cityCenter[4] + cv[4] + block + block + block + "\\" + "  " +  ANSI_COLORS[15] + "  /" + block + block + block + cityCenter[15] + cv[15] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[26] + "  /" + block + block + block + cityCenter[26] + cv[26] + block + block + block + "\\" + "  " + ANSI_COLORS[37] + "  /" + block + block + block + cityCenter[37] + cv[37] + block + block + block + "\\" + "  " + ANSI_COLORS[48] + "  /" + block + block + block + cityCenter[48] + cv[48] + block + block + block + "\\" + "  " + ANSI_COLORS[59] + "  /" + block + block + block + cityCenter[59] + cv[59] + block + block + block + "\\" + "  " + ANSI_COLORS[70] + "  /" + block + block + block + cityCenter[70] + cv[70] + block + block + block + "\\" + ANSI_RESET;
         map[58] = ANSI_COLORS[4] + " /" + block + block + unit1[4] + block + block + unit2[4] + block + block + "\\" + " " +  ANSI_COLORS[15] + " /" + block + block + unit1[15] + block + block + unit2[15] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[26] + " /" + block + block + unit1[26] + block + block + unit2[26] + block + block + "\\" + " " + ANSI_COLORS[37] + " /" + block + block + unit1[37] + block + block + unit2[37] + block + block + "\\" + " " + ANSI_COLORS[48] + " /" + block + block + unit1[48] + block + block + unit2[48] + block + block + "\\" + " " + ANSI_COLORS[59] + " /" + block + block + unit1[59] + block + block + unit2[59] + block + block + "\\" + " " + ANSI_COLORS[70] + " /" + block + block + unit1[70] + block + block + unit2[70] + block + block + "\\" + ANSI_RESET;
         map[59] = ANSI_COLORS[4] + "|" + block + block + block + block + number[4] + block + types[4] + block + block + block + block + "|" +  ANSI_COLORS[15] + "|" + block + block + block + block + number[15] + block + types[15] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[26] +  "|" + block + block + block + block + number[26] + block + types[26] + block + block + block + block + "|" + ANSI_COLORS[37] + "|" + block + block + block + block + number[37] + block + types[37] + block + block + block + block + "|" + ANSI_COLORS[48] + "|" + block + block + block + block + number[48] + block + types[48] + block + block + block + block + "|" + ANSI_COLORS[59] + "|" + block + block + block + block + number[59] + block + types[59] + block + block + block + block + "|" + ANSI_COLORS[70] + "|" + block + block + block + block + number[70] + block + types[70] + block + block + block + block + "|" + ANSI_RESET;
         map[60] = ANSI_COLORS[4] + block5 + " " +  ANSI_COLORS[15] + block5 + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[26] + block5 + " " + ANSI_COLORS[37] + block5 + " " + ANSI_COLORS[48] + block5 + " " + ANSI_COLORS[59] + block5 + " " + ANSI_COLORS[70] + block5 + ANSI_RESET;
@@ -466,7 +538,7 @@ public class PlayGameMenuController {
         map[62] = ANSI_COLORS[4] + block7 + "   " +  ANSI_COLORS[15] + block7 + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[26] + "\\" + block + block + block + block + block + block + "/" + "   " + ANSI_COLORS[37] + block7 + "   " + ANSI_COLORS[48] + block7 + "   " + ANSI_COLORS[59] + block7 + "   " + ANSI_COLORS[70] + block7 + ANSI_RESET;
 
         map[63] = ANSI_COLORS[10] + "       " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[21] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[32] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[43] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[54] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_COLORS[65] + "   " + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[64] = ANSI_COLORS[10] + "       " + "  /" + block + block + block + block + cv[10] + block + block + block + "\\" + ANSI_COLORS[21] + "  " + "  /" + block + block + block + block + cv[21] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[32] + "  " + "  /" + block + block + block + block + cv[32] + block + block + block + "\\" + ANSI_COLORS[43] + "  " + "  /" + block + block + block + block + cv[43] + block + block + block + "\\" + ANSI_COLORS[54] + "  " + "  /" + block + block + block + block + cv[54] + block + block + block + "\\" + ANSI_COLORS[65] + "  " + "  /" + block + block + block + block + cv[65] + block + block + block + "\\" + ANSI_RESET;
+        map[64] = ANSI_COLORS[10] + "       " + "  /" + block + block + block + cityCenter[10] + cv[10] + block + block + block + "\\" + ANSI_COLORS[21] + "  " + "  /" + block + block + block + cityCenter[21] + cv[21] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[32] + "  " + "  /" + block + block + block + cityCenter[32] + cv[32] + block + block + block + "\\" + ANSI_COLORS[43] + "  " + "  /" + block + block + block + cityCenter[43] + cv[43] + block + block + block + "\\" + ANSI_COLORS[54] + "  " + "  /" + block + block + block + cityCenter[54] + cv[54] + block + block + block + "\\" + ANSI_COLORS[65] + "  " + "  /" + block + block + block + cityCenter[65] + cv[65] + block + block + block + "\\" + ANSI_RESET;
         map[65] = ANSI_COLORS[10] + "       " + " /" + block + block + unit1[10] + block + block + unit2[10] + block + block + "\\" + ANSI_COLORS[21] + " " + " /" + block + block + unit1[21] + block + block + unit2[21] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[32] +  " " + " /" + block + block + unit1[32] + block + block + unit2[32] + block + block + "\\" + ANSI_COLORS[43] + " " + " /" + block + block + unit1[43] + block + block + unit2[43] + block + block + "\\" + ANSI_COLORS[54] + " " + " /" + block + block + unit1[54] + block + block + unit2[54] + block + block + "\\" + ANSI_COLORS[65] + " " + " /" + block + block + unit1[65] + block + block + unit2[65] + block + block + "\\" + ANSI_RESET;
         map[66] = ANSI_COLORS[10] + "       " + "|" + block + block + block + block + number[10] + block + types[10] + block + block + block + block + "|" + ANSI_COLORS[21] + "|" + block + block + block + block + number[21] + block + types[21] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[32] +  "|" + block + block + block + block + number[32] + block + types[32] + block + block + block + block + "|" + ANSI_COLORS[43] + "|" + block + block + block + block + number[43] + block + types[43] + block + block + block + block + "|" + ANSI_COLORS[54] + "|" + block + block + block + block + number[54] + block + types[54] + block + block + block + block + "|" + ANSI_COLORS[65] + "|" + block + block + block + block + number[65] + block + types[65] + block + block + block + block + "|" + ANSI_RESET;
         map[67] = ANSI_COLORS[10] + "       " + block5 + ANSI_COLORS[21] + " " + block5 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[32] +  " " + block5 + ANSI_COLORS[43] + " " + block5 + ANSI_COLORS[54] + " " + block5 +  ANSI_COLORS[65] + " " + block5 + ANSI_RESET;
@@ -474,12 +546,13 @@ public class PlayGameMenuController {
         map[69] = ANSI_COLORS[10] + "       " + block7 + ANSI_COLORS[21] + "   " + block7 + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[32] +  "   " + block7 + ANSI_COLORS[43] + "   " + block7 + ANSI_COLORS[54] + "   " + block7 + ANSI_COLORS[65] + "   " + block7 + ANSI_RESET;
 
         map[70] = ANSI_COLORS[5] + "   /" + block + block + block + block + block + block + "\\" + "   " +  ANSI_COLORS[16] + "   /" + block + block + block + block + block + block + "\\" + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[27] + "/" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[38] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[49] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[60] + "   /" + block + block + block + block + block + block + "\\" + "   " + ANSI_COLORS[71] + "   /" + block + block + block + block + block + block + "\\" + ANSI_RESET;
-        map[71] = ANSI_COLORS[5] + "  /" + block + block + block + block + cv[5] + block + block + block + "\\" + "  " +  ANSI_COLORS[16] + "  /" + block + block + block + block + cv[16] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[27] + "  /" + block + block + block + block + cv[27] + block + block + block + "\\" + "  " + ANSI_COLORS[38] + "  /" + block + block + block + block + cv[38] + block + block + block + "\\" + "  " + ANSI_COLORS[49] + "  /" + block + block + block + block + cv[49] + block + block + block + "\\" + "  " + ANSI_COLORS[60] + "  /" + block + block + block + block + cv[60] + block + block + block + "\\" + "  " + ANSI_COLORS[71] + "  /" + block + block + block + block + cv[71] + block + block + block + "\\" + ANSI_RESET;
+        map[71] = ANSI_COLORS[5] + "  /" + block + block + block + cityCenter[5] + cv[5] + block + block + block + "\\" + "  " +  ANSI_COLORS[16] + "  /" + block + block + block + cityCenter[16] + cv[16] + block + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[27] + "  /" + block + block + block + cityCenter[27] + cv[27] + block + block + block + "\\" + "  " + ANSI_COLORS[38] + "  /" + block + block + block + cityCenter[38] + cv[38] + block + block + block + "\\" + "  " + ANSI_COLORS[49] + "  /" + block + block + block + cityCenter[49] + cv[49] + block + block + block + "\\" + "  " + ANSI_COLORS[60] + "  /" + block + block + block + cityCenter[60] + cv[60] + block + block + block + "\\" + "  " + ANSI_COLORS[71] + "  /" + block + block + block + cityCenter[71] + cv[71] + block + block + block + "\\" + ANSI_RESET;
         map[72] = ANSI_COLORS[5] + " /" + block + block + unit1[5] + block + block + unit2[5] + block + block + "\\" + " " +  ANSI_COLORS[16] + " /" + block + block + unit1[16] + block + block + unit2[16] + block + block + "\\" + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[27] + " /" + block + block + unit1[27] + block + block + unit2[27] + block + block + "\\" + " " + ANSI_COLORS[38] + " /" + block + block + unit1[38] + block + block + unit2[38] + block + block + "\\" + " " + ANSI_COLORS[49] + " /" + block + block + unit1[49] + block + block + unit2[49] + block + block + "\\" + " " + ANSI_COLORS[60] + " /" + block + block + unit1[60] + block + block + unit2[60] + block + block + "\\" + " " + ANSI_COLORS[71] + " /" + block + block + unit1[71] + block + block + unit2[71] + block + block + "\\" + ANSI_RESET;
         map[73] = ANSI_COLORS[5] + "|" + block + block + block + block + number[5] + block + types[5] + block + block + block + block + "|" +  ANSI_COLORS[16] + "|" + block + block + block + block + number[16] + block + types[16] + block + block + block + block + "|" + ANSI_COLORS[72] + block + ANSI_RESET + ANSI_COLORS[27] +  "|" + block + block + block + block + number[27] + block + types[27] + block + block + block + block + "|" + ANSI_COLORS[38] + "|" + block + block + block + block + number[38] + block + types[38] + block + block + block + block + "|" + ANSI_COLORS[49] + "|" + block + block + block + block + number[49] + block + types[49] + block + block + block + block + "|" + ANSI_COLORS[60] + "|" + block + block + block + block + number[60] + block + types[60] + block + block + block + block + "|" + ANSI_COLORS[71] + "|" + block + block + block + block + number[71] + block + types[71] + block + block + block + block + "|" + ANSI_RESET;
         map[74] = ANSI_COLORS[5] + block5 + " " +  ANSI_COLORS[16] + block5 + ANSI_COLORS[72] + block + ANSI_RESET +  " " + ANSI_COLORS[27] + block5 + " " + ANSI_COLORS[38] + block5 + " " + ANSI_COLORS[49] + block5 + " " + ANSI_COLORS[60] + block5 + " " + ANSI_COLORS[71] + block5 + ANSI_RESET;
         map[75] = ANSI_COLORS[5] + block6 + "  " +  ANSI_COLORS[16] + block6 + ANSI_COLORS[72] + block + ANSI_RESET + "  " + ANSI_COLORS[27] + block6 + "  " + ANSI_COLORS[38] + block6 + "  " + ANSI_COLORS[49] + block6 + "  " + ANSI_COLORS[60] + block6 + "  " + ANSI_COLORS[71] + block6 + ANSI_RESET;
         map[76] = ANSI_COLORS[5] + block7 + "   " +  ANSI_COLORS[16] + block7 + " " + ANSI_COLORS[72] + block + block + block + block + block + block + ANSI_RESET + ANSI_COLORS[27] + "\\" + block + block + block + block + block + block + "/" + "   " + ANSI_COLORS[38] + block7 + "   " + ANSI_COLORS[49] + block7 + "   " + ANSI_COLORS[60] + block7 + "   " + ANSI_COLORS[71] + block7 + ANSI_RESET;
+
         return map;
     }
     // if distance between two tile center is (rad3 * radius) they're neighbor
@@ -513,7 +586,7 @@ public class PlayGameMenuController {
                         break;
                     }
                     if (cityTiles.get(k).getUnits().size() > 0 && isUnitNeighbor(cityTiles.get(k).getX(), cityTiles.get(k).getY(), map.get(i).getX(), map.get(i).getY(), cityTiles.get(k).getRadius())
-                    && !cityTiles.get(k).isBlocker()) {
+                            && !cityTiles.get(k).isBlocker()) {
                         civilizationTiles.set(i, 1);
                         check = true;
                         break;
@@ -875,8 +948,8 @@ public class PlayGameMenuController {
             stringBuilder.append("Production per Turn : ").append(city.getProduction()).append("\n");
             HashMap<Unit,Integer> unit = city.getCenterTile().getTurnForUnitMaking();
             for(Map.Entry<Unit,Integer> entry : unit.entrySet()) {
-              String name = getUnitsName(entry.getKey());
-              stringBuilder.append(name + ": " + entry.getValue() + "\n");
+                String name = getUnitsName(entry.getKey());
+                stringBuilder.append(name + ": " + entry.getValue() + "\n");
             }
             //TODO...  buildings duration to create
             stringBuilder.append("-----------------------\n");
@@ -945,22 +1018,28 @@ public class PlayGameMenuController {
     public int distanceOfTwoNode(Node node) {
         Tile tile = node.tile;
         if (tile.isMountain() || tile.isOcean() || (tile.getAttribute() != null && tile.getAttribute().isIce())) {
-            return 100000;
+            return 1000000;
         }
         return tile.getMpCost();
     }
     // chase an algorithm based on graphs to find the shortest way.
-    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode) {
+    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map) {
         while (unreached.size() > 0) {
-            Node minimumBranch = null;
+            Node minimumBranch;
+            int index = 0;
+            int min = 1000000;
             for (int i = 0; i < unreached.size(); i++) {
-                if (minimumBranch == null ||
-                        distanceFromNode.get(unreached.get(i)) < distanceFromNode.get(minimumBranch)) {
-                    minimumBranch = unreached.get(i);
-                    unreached.remove(i);
+                if (distanceFromNode.get(unreached.get(i)) < min) {
+                    index = i;
+                    min = distanceFromNode.get(unreached.get(i));
                 }
             }
+            minimumBranch = unreached.get(index);
+
             if (minimumBranch.equals(destinationNode)) break;
+
+            unreached.remove(index);
+
 
             for (int i = 0; i < minimumBranch.neighbours.size(); ++i) {
                 Node neighbourOfBranch = minimumBranch.neighbours.get(i);
@@ -986,8 +1065,9 @@ public class PlayGameMenuController {
         HashMap<Node, Integer> distanceFromNode = new HashMap<>();
         HashMap<Node, Node> previousNode = new HashMap<>();
         ArrayList<Node> unreached = new ArrayList<>();
-        int originIndex = map.indexOf(origin);
-        int destinationIndex = map.indexOf(destination);
+
+        int originIndex = getTileIndex(origin, map);
+        int destinationIndex = getTileIndex(destination, map);
 
         Node originNode = graph[originIndex];
         Node destinationNode = graph[destinationIndex];
@@ -997,12 +1077,12 @@ public class PlayGameMenuController {
 
         for (int i = 0; i < graph.length; i++) {
             if (!graph[i].equals(originNode)) {
-                distanceFromNode.put(graph[i] ,100000);
+                distanceFromNode.put(graph[i] ,1000000);
                 previousNode.put(graph[i], null);
             }
             unreached.add(graph[i]);
         }
-        findThePath(previousNode, distanceFromNode, unreached, destinationNode);
+        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map);
 
         if (previousNode.get(destinationNode) == null) {
             for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
@@ -1012,7 +1092,7 @@ public class PlayGameMenuController {
         }
 
         ArrayList<Node> path = new ArrayList<>();
-        Node currentNode = new Node();
+        Node currentNode = destinationNode;
         while (currentNode != null) {
             path.add(currentNode);
             currentNode = previousNode.get(currentNode);
@@ -1139,7 +1219,7 @@ public class PlayGameMenuController {
                 }
             }
         }
-            return null;
+        return null;
     }
     // check the road for units
     public boolean checkPath (Unit unit) {
@@ -1192,7 +1272,7 @@ public class PlayGameMenuController {
                 !origin.isRoadDamaged() && !destination.isRoadDamaged())
             return true;
         if (origin.isDoesHaveRailWay() && destination.isDoesHaveRailWay() &&
-        !origin.isRailDamaged() && !destination.isRailDamaged()) return true;
+                !origin.isRailDamaged() && !destination.isRailDamaged()) return true;
         return false;
     }
     // reset the mp of your civilization units
@@ -1218,7 +1298,7 @@ public class PlayGameMenuController {
             str = "there is no unit with this name !";
             return str;
         }
-        if (unit.getIsOnSleep()) {
+        if (unit.getIsOnSleep() || unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
             str = "this unit is sleeping !";
             return str;
         }
@@ -1252,13 +1332,10 @@ public class PlayGameMenuController {
         int i = 0;
         while (true) {
             if (i == unit.getPath().size() - 1 || (unit.getPath().size() >= 1 && unit.getPath().get(0).tile.equals(destination))) {
-                unit.setMp(unit.getConstantMP());
                 for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
                     unit.getPath().remove(i1);
                 }
                 unit.setOrigin(destination);
-                origin.removeUnit(unit);
-                destination.addUnit(unit);
                 unit.setDestination(null);
                 str = "unit reached the destination !";
                 break;
@@ -1406,50 +1483,50 @@ public class PlayGameMenuController {
         Warrior warrior = (Warrior) unit;
         ArrayList<Tile> tiles = city.getTiles();
         for (int i = 0; i < tiles.size(); i++) {
-           Resource resource = tiles.get(i).getResource();
+            Resource resource = tiles.get(i).getResource();
 
-                if (warrior.isArcher()) return true;
-                else if (warrior.isChariotArcher()) {
-                    if (resource.isHorse()) return true;
-                }
-                else if (warrior.isScout()) return true;
-                else if (warrior.isSpearman()) return true;
-                else if (warrior.isWarrior()) return true;
+            if (warrior.isArcher()) return true;
+            else if (warrior.isChariotArcher()) {
+                if (resource.isHorse()) return true;
+            }
+            else if (warrior.isScout()) return true;
+            else if (warrior.isSpearman()) return true;
+            else if (warrior.isWarrior()) return true;
 
-                else if (warrior.isCatapult()) {
-                    if (resource.isMetal()) return true;
-                }
-                else if (warrior.isHorseMan()) {
-                    if (resource.isHorse()) return true;
-                }
-                else if (warrior.isSwordsMan()) {
-                    if (resource.isMetal()) return true;
-                }
-                else if (warrior.isCrossbowMan()) return true;
-                else if (warrior.isKnight()) {
-                    if (resource.isHorse()) return true;
-                }
-                else if (warrior.isLongswordMan()) {
-                    if (resource.isMetal()) return true;
-                }
-                else if (warrior.isPikeMan()) return true;
-                else if (warrior.isTrebuchet()) {
-                    if (resource.isMetal()) return true;
-                }
-                else if (warrior.isCanon()) return true;
-                else if (warrior.isCavalry()) {
-                    if (resource.isHorse()) return true;
-                }
-                else if (warrior.isLancer()) {
-                    if (resource.isHorse()) return true;
-                }
-                else if (warrior.isMusketMan()) return true;
-                else if (warrior.isRifleMan()) return true;
-                else if (warrior.isAntiTankGun()) return true;
-                else if (warrior.isArtillery()) return true;
-                else if (warrior.isInfantry()) return true;
-                else if (warrior.isPanzer()) return true;
-                else if (warrior.isTank()) return true;
+            else if (warrior.isCatapult()) {
+                if (resource.isMetal()) return true;
+            }
+            else if (warrior.isHorseMan()) {
+                if (resource.isHorse()) return true;
+            }
+            else if (warrior.isSwordsMan()) {
+                if (resource.isMetal()) return true;
+            }
+            else if (warrior.isCrossbowMan()) return true;
+            else if (warrior.isKnight()) {
+                if (resource.isHorse()) return true;
+            }
+            else if (warrior.isLongswordMan()) {
+                if (resource.isMetal()) return true;
+            }
+            else if (warrior.isPikeMan()) return true;
+            else if (warrior.isTrebuchet()) {
+                if (resource.isMetal()) return true;
+            }
+            else if (warrior.isCanon()) return true;
+            else if (warrior.isCavalry()) {
+                if (resource.isHorse()) return true;
+            }
+            else if (warrior.isLancer()) {
+                if (resource.isHorse()) return true;
+            }
+            else if (warrior.isMusketMan()) return true;
+            else if (warrior.isRifleMan()) return true;
+            else if (warrior.isAntiTankGun()) return true;
+            else if (warrior.isArtillery()) return true;
+            else if (warrior.isInfantry()) return true;
+            else if (warrior.isPanzer()) return true;
+            else if (warrior.isTank()) return true;
         }
         return false;
     }
@@ -1474,7 +1551,7 @@ public class PlayGameMenuController {
         Tile tile = map.get(index);
         ArrayList<City> cities = civilization.getCities();
         for (int i = 0; i < cities.size(); i++) {
-          ArrayList<Tile> tiles = cities.get(i).getTiles();
+            ArrayList<Tile> tiles = cities.get(i).getTiles();
             for (int i1 = 0; i1 < tiles.size(); i1++) {
                 if (tiles.get(i1).equals(tile)) {
                     return cities.get(i);
@@ -1499,12 +1576,12 @@ public class PlayGameMenuController {
 
     public Unit makeUnit (Civilization civilization, Tile tile, ArrayList<Tile> map, String unitName) {
         if (unitName.equals("archer")) {
-           Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 70, false
-                   , 0, 4, 2, 6, false, false, true, false,
-                   false, false, false, false, false, false, false,
-                   false, false, false, false, false, false, false,
-                   false, false, false, false, false);
-          return warrior;
+            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 70, false
+                    , 0, 4, 2, 6, false, false, true, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false,
+                    false, false, false, false, false);
+            return warrior;
         }
         else if (unitName.equals("chariot archer")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 1, 60, false
@@ -1512,7 +1589,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("scout")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 25, false
@@ -1520,15 +1597,15 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("settler")) {
             Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 89, true, false, true);
-           return civilian;
+            return civilian;
         }
         else if (unitName.equals("worker")) {
             Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 70, true, true, false);
-           return civilian;
+            return civilian;
         }
         else if (unitName.equals("spearman")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 50, false
@@ -1536,7 +1613,7 @@ public class PlayGameMenuController {
                     true, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("warrior")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 40, false
@@ -1544,7 +1621,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("catapult")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
@@ -1552,7 +1629,7 @@ public class PlayGameMenuController {
                     false, true, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("horseman")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 1, 80, false
@@ -1560,7 +1637,7 @@ public class PlayGameMenuController {
                     false, false, true, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("swordsman")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 80, false
@@ -1568,7 +1645,7 @@ public class PlayGameMenuController {
                     false, false, false, true, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("crossbowman")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 120, false
@@ -1576,7 +1653,7 @@ public class PlayGameMenuController {
                     false, false, false, false, true, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("knight")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 1, 150, false
@@ -1584,7 +1661,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, true, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("longswordsman")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 3, 150, false
@@ -1592,7 +1669,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, true,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("pikeman")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
@@ -1600,7 +1677,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     true, false, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("trebuchet")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 170, false
@@ -1608,7 +1685,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, true, false, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("canon")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 250, false
@@ -1616,7 +1693,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, true, false, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("cavalry")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 2, 260, false
@@ -1624,7 +1701,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, true, false, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("lancer")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 2, 220, false
@@ -1632,7 +1709,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, true, false, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("musketman")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 120, false
@@ -1640,7 +1717,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, true, false,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("rifleman")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 200, false
@@ -1648,7 +1725,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, true,
                     false, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("anti-tank gun")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 6, 300, false
@@ -1656,7 +1733,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     true, false, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("artillery")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 5, 420, false
@@ -1664,7 +1741,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, true, false, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("infantry")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 300, false
@@ -1672,7 +1749,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, true, false, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("panzer")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 5, 5, 3, 450, false
@@ -1680,7 +1757,7 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, true, false);
-           return warrior;
+            return warrior;
         }
         else if (unitName.equals("tank")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 8, 450, false
@@ -1688,25 +1765,25 @@ public class PlayGameMenuController {
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, true);
-           return warrior;
+            return warrior;
         }
-           return null;
+        return null;
     }
     // every turn check city center for making new turn
     public void checkForUnitMaking (Civilization civilization) {
         ArrayList<City> cities = civilization.getCities();
         for (int i = 0; i < cities.size(); i++) {
             HashMap<Unit, Integer> units = cities.get(i).getCenterTile().getTurnForUnitMaking();
-           for (Map.Entry<Unit, Integer> entry : units.entrySet()) {
-               int turn = entry.getValue() - 1;
-               if (turn == 0) {
-                   cities.get(i).getCenterTile().addUnit(entry.getKey());
-                   cities.get(i).getCenterTile().removeUnitFromMakingProgress(entry.getKey());
-               }
-               else {
-                   cities.get(i).getCenterTile().setTurnForUnit(entry.getKey(), turn);
-               }
-           }
+            for (Map.Entry<Unit, Integer> entry : units.entrySet()) {
+                int turn = entry.getValue() - 1;
+                if (turn == 0) {
+                    cities.get(i).getCenterTile().addUnit(entry.getKey());
+                    cities.get(i).getCenterTile().removeUnitFromMakingProgress(entry.getKey());
+                }
+                else {
+                    cities.get(i).getCenterTile().setTurnForUnit(entry.getKey(), turn);
+                }
+            }
         }
     }
 
@@ -2057,40 +2134,41 @@ public class PlayGameMenuController {
         if (originIndex < destinationIndex) {
             int delta = destinationIndex - originIndex;
             int growth = 0;
-            if (delta == 1) {
+            if (getColumn(originIndex) == getColumn(destinationIndex)) {
                 growth = 1;
                 if (originIndex == 5 || originIndex == 16 || originIndex == 27 || originIndex == 38 ||
                         originIndex == 49 || originIndex == 60 || originIndex == 71) {
                     return;
                 }
-            }
-            else  if (delta % 5 == 0) {
+            } else if (delta % 5 == 0) {
                 growth = 5;
-            }
-            else if (delta % 6 == 0) {
+            } else if (delta % 6 == 0) {
                 growth = 6;
             }
-            for (int i = originIndex; i <= destinationIndex; i+=growth) {
+            else if (delta % 11 == 0) {
+                growth = 11;
+            }
+            for (int i = originIndex; i <= destinationIndex; i += growth) {
                 indexOfTiles.add(i);
             }
-        }
-        else {
+        } else {
             int delta = originIndex - destinationIndex;
             int growth = 0;
-            if (delta == 1) {
+            if (getColumn(originIndex) == getColumn(destinationIndex)) {
                 growth = 1;
                 if (originIndex == 0 || originIndex == 11 || originIndex == 22 || originIndex == 33 ||
                         originIndex == 44 || originIndex == 55 || originIndex == 66) {
                     return;
                 }
-            }
-            else  if (delta % 5 == 0) {
+            } else if (delta % 5 == 0) {
                 growth = 5;
-            }
-            else if (delta % 6 == 0) {
+            } else if (delta % 6 == 0) {
                 growth = 6;
             }
-            for (int i = originIndex; i <= destinationIndex; i-=growth) {
+            else if (delta % 11 == 0) {
+                growth = 11;
+            }
+            for (int i = originIndex; i >= destinationIndex; i -= growth) {
                 indexOfTiles.add(i);
             }
         }
@@ -2120,7 +2198,7 @@ public class PlayGameMenuController {
     }
     // remove a civilization from friends list
     public void addToEnemy (Civilization civilization, Civilization enemy) {
-       ArrayList<Civilization> friends = civilization.getFriends();
+        ArrayList<Civilization> friends = civilization.getFriends();
         for (int i = 0; i < friends.size(); i++) {
             if (friends.get(i).equals(enemy)) {
                 civilization.removeFriend (enemy);
@@ -2162,7 +2240,7 @@ public class PlayGameMenuController {
             return "this unit is not set up for range attack !";
         }
         ArrayList<Integer> indexOfTiles = new ArrayList<>();
-        getAllIndexes(originIndex,destinationIndex,indexOfTiles);
+        getAllIndexes(originIndex, destinationIndex, indexOfTiles);
         if (indexOfTiles.size() == 0) {
             return "this distance is too long for attack !";
         }
@@ -2182,12 +2260,12 @@ public class PlayGameMenuController {
 
             defender.setCivilization(civilization);
             if (((Warrior)attacker).getRange() == -1)
-            attacker.setOrigin(map.get(destinationIndex));
+                attacker.setOrigin(map.get(destinationIndex));
         }
         if (((Warrior)attacker).getRange() == -1)
-           return attackTileFromGround(civilization, attacker, defender, originIndex, destinationIndex, map);
+            return attackTileFromGround(civilization, attacker, defender, originIndex, destinationIndex, map);
         else
-           return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);
+            return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);
     }
     // if a city contain that tile , return the city
     public City getCityFromTile (Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
@@ -2217,6 +2295,39 @@ public class PlayGameMenuController {
         return null;
     }
 
+    public int getColumn (int index) {
+        if (0 <= index && index <= 5) return 0;
+        else if (6 <= index && index <= 10) return 1;
+        else if (11 <= index && index <= 16) return 2;
+        else if (17 <= index && index <= 21) return 3;
+        else if (22 <= index && index <= 27) return 4;
+        else if (28 <= index && index <= 32) return 5;
+        else if (33 <= index && index <= 38) return 6;
+        else if (39 <= index && index <= 43) return 7;
+        else if (44 <= index && index <= 49) return 8;
+        else if (50 <= index && index <= 54) return 9;
+        else if (55 <= index && index <= 60) return 10;
+        else if (61 <= index && index <= 65) return 11;
+        else if (66 <= index && index <= 71) return 12;
+        return 0;
+    }
+
+    public boolean checkDistance(Unit unit, int origin, int destination) {
+        int range = ((Warrior)unit).getRange();
+        int columnO = getColumn(origin);
+        int columnD = getColumn(destination);
+        int delta = 0;
+        if (columnD > columnO) {
+            delta = columnD - columnO;
+        }
+        else{
+            delta = columnO - columnD;
+        }
+        if (range == -1 && delta - 1 <= 1) return  true;
+        else if (range > 0 && delta - 1 <= range) return true;
+        return false;
+    }
+
     public String preAttackCity (Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
         matcher.find();
         int originIndex = Integer.parseInt(matcher.group("origin"));
@@ -2243,16 +2354,8 @@ public class PlayGameMenuController {
         if (((Warrior)attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
         }
-        ArrayList<Integer> indexOfTiles = new ArrayList<>();
-        getAllIndexes(originIndex,destinationIndex,indexOfTiles);
-        if (indexOfTiles.size() == 0) {
+        if (!checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(),map))) {
             return "this distance is too long for attack !";
-        }
-        if (!isRangeEnough((Warrior)attacker, indexOfTiles)) {
-            return "unit 's range is not enough !";
-        }
-        if (checkTheBlocks(map,indexOfTiles)) {
-            return "your unit vision is blocked !";
         }
         Civilization defenderCivilization = getCivilizationFromCity(defenderCity, civilizations);
         attacker.setHasOrdered(true);
@@ -2300,7 +2403,7 @@ public class PlayGameMenuController {
             attacker = null;
             str = "your unit died !";
         }
-       else if (healthOfAttacker <= 0 && healthOfDefender <= 0) {
+        else if (healthOfAttacker <= 0 && healthOfDefender <= 0) {
             for (Tile tile : defenderCity.getTiles()) {
                 ArrayList<Unit> units = tile.getUnits();
                 for (int i = 0; i < units.size(); i++) {
@@ -2315,12 +2418,12 @@ public class PlayGameMenuController {
             attacker = null;
             str = "your unit died and the city became ruin !";
         }
-       else if (healthOfAttacker > 0 && healthOfDefender > 0) {
+        else if (healthOfAttacker > 0 && healthOfDefender > 0) {
             defenderCity.setDamagePoint(healthOfDefender);
             attacker.setHealth(healthOfAttacker);
             str = "the war is not over !";
         }
-       return str;
+        return str;
     }
     public String attackCityFromAir(Civilization civilization,Unit attacker, City defenderCity, int originIndex, ArrayList<Tile>map, Civilization defenderCivilization) {
         String str = "";
@@ -2390,49 +2493,49 @@ public class PlayGameMenuController {
         defender.setHealth(healthOfDefender);
 
         if (healthOfDefender <= 0 && healthOfAttacker > 0) {
-                attacker.setOrigin(map.get(destinationIndex));
-                attacker.setMp(0);
-                int count1 = civilization.getCountOfWins(defender.getCivilization());
-                count1 ++;
-                int count2 = defender.getCivilization().getCountOfLosses(civilization);
-                count2 ++;
-                civilization.updateCountOfUnitWin(defender.getCivilization(), count1);
-                defender.getCivilization().updateCountOfUnitLose(civilization, count2);
-                int xp = ((Warrior) attacker).getXp();
-                xp ++;
-                ((Warrior) attacker).setXp(xp);
-                map.get(originIndex).removeUnit(attacker);
-                map.get(destinationIndex).removeUnit(defender);
-                map.get(destinationIndex).addUnit(attacker);
-                str = "you won this attack !";
-                defender = null;
+            attacker.setOrigin(map.get(destinationIndex));
+            attacker.setMp(0);
+            int count1 = civilization.getCountOfWins(defender.getCivilization());
+            count1 ++;
+            int count2 = defender.getCivilization().getCountOfLosses(civilization);
+            count2 ++;
+            civilization.updateCountOfUnitWin(defender.getCivilization(), count1);
+            defender.getCivilization().updateCountOfUnitLose(civilization, count2);
+            int xp = ((Warrior) attacker).getXp();
+            xp ++;
+            ((Warrior) attacker).setXp(xp);
+            map.get(originIndex).removeUnit(attacker);
+            map.get(destinationIndex).removeUnit(defender);
+            map.get(destinationIndex).addUnit(attacker);
+            str = "you won this attack !";
+            defender = null;
         }
-       else if (healthOfDefender > 0 && healthOfAttacker <= 0) {
-                defender.setOrigin(map.get(originIndex));
-                defender.setMp(0);
-                int count1 = civilization.getCountOfLosses(defender.getCivilization());
-                count1 ++;
-                int count2 = defender.getCivilization().getCountOfWins(civilization);
-                count2 ++;
-                civilization.updateCountOfUnitLose(defender.getCivilization(), count1);
-                defender.getCivilization().updateCountOfUnitWin(civilization, count2);
-                int xp = ((Warrior) defender).getXp();
-                 xp ++;
-                ((Warrior) defender).setXp(xp);
-                map.get(originIndex).removeUnit(attacker);
-                map.get(destinationIndex).removeUnit(defender);
-                map.get(originIndex).addUnit(defender);
-                str = "you lost this attack !";
-                attacker = null;
+        else if (healthOfDefender > 0 && healthOfAttacker <= 0) {
+            defender.setOrigin(map.get(originIndex));
+            defender.setMp(0);
+            int count1 = civilization.getCountOfLosses(defender.getCivilization());
+            count1 ++;
+            int count2 = defender.getCivilization().getCountOfWins(civilization);
+            count2 ++;
+            civilization.updateCountOfUnitLose(defender.getCivilization(), count1);
+            defender.getCivilization().updateCountOfUnitWin(civilization, count2);
+            int xp = ((Warrior) defender).getXp();
+            xp ++;
+            ((Warrior) defender).setXp(xp);
+            map.get(originIndex).removeUnit(attacker);
+            map.get(destinationIndex).removeUnit(defender);
+            map.get(originIndex).addUnit(defender);
+            str = "you lost this attack !";
+            attacker = null;
         }
-       else if (healthOfAttacker <= 0 && healthOfDefender <= 0) {
+        else if (healthOfAttacker <= 0 && healthOfDefender <= 0) {
             map.get(originIndex).removeUnit(attacker);
             map.get(destinationIndex).removeUnit(defender);
             attacker = null;
             defender = null;
             str = "your unit died !";
         }
-       else if (healthOfAttacker > 0 && healthOfDefender > 0) {
+        else if (healthOfAttacker > 0 && healthOfDefender > 0) {
             int xp1 = ((Warrior) attacker).getXp();
             xp1 ++;
             ((Warrior) attacker).setXp(xp1);
@@ -2492,7 +2595,7 @@ public class PlayGameMenuController {
         Unit unit = getUnitInTile(units, unitName);
 
         if (command.equals("sleep")) {
-          return  sleepUnit(civilization, unit, map);
+            return  sleepUnit(civilization, unit, map);
         }
         else if (command.equals("alert")) {
             return WarFootingUnit(civilization, unit, map);
@@ -2660,6 +2763,8 @@ public class PlayGameMenuController {
         return str;
     }
     public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map){
+        if (tileNumber != destinationTileNumber)
+            return "you should move your unit first";
         ArrayList<Unit> allUnits = map.get(tileNumber).getUnits();
         if (allUnits.size() == 0)
             return "there is no unit in this tile";
@@ -2680,7 +2785,6 @@ public class PlayGameMenuController {
         if (lootUnit == null)
             return "only warriors can loot a tile";
         Tile tile = map.get(destinationTileNumber);
-        moveUnit(civilization, map.get(tileNumber), tile, map, lootUnit);
         tile.Loot();
         return "tile has been looted successfully";
     }
@@ -3566,15 +3670,21 @@ public class PlayGameMenuController {
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         if (!hasPrerequisiteTechs(allTechnologies, technologyName))
             return "you don't have the prerequisite techs to learn this technology";
-        if (technology.getCost() > 99)
+        for (Technology technology1 : allTechnologies)
+            if (technology1.getName().equals(technologyName))
+                return "you already have this technology";
+        if (civilization.isLearningTechnology())
+            return "you are learning a technology";
+        if (technology.getCost() > 99) {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
-        else
-            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 1);
-        if (!civilization.isLearningTechnology()) {
-            civilization.setIsLearningTechnology(true);
-            return "technology has been added to the learning technologies";
+            civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
         }
-        return "you are learning a technology";
+        else {
+            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 1);
+            civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
+        }
+        civilization.setIsLearningTechnology(true);
+        return "technology has been added to the learning technologies";
     }
     public String changeTechnologyToLearn(Civilization civilization, String technologyName){
         Technology technology = preChooseTechnologyToLearn(technologyName);
@@ -3586,10 +3696,17 @@ public class PlayGameMenuController {
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         if (!hasPrerequisiteTechs(allTechnologies, technologyName))
             return "you don't have the prerequisite techs to learn this technology";
-        if (technology.getCost() > 99)
-            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 100) + 2);
-        else
-            civilization.addToTechnologyEarnedPercent(technology, (int)(technology.getCost() / 10) - 2);
+        for (Technology technology1 : allTechnologies)
+            if (technology1.getName().equals(technologyName))
+                return "you already have this technology";
+        if (technology.getCost() > 99) {
+            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
+            civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
+        }
+        else {
+            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 2);
+            civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
+        }
         return "technology has been changed successfully";
     }
     public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int tileUnitNumber, ArrayList<Tile> map){
@@ -3773,34 +3890,34 @@ public class PlayGameMenuController {
                             map.get(i).setNewNumberForTurnRoad(units.get(i1), newTurn);
                         }
                     }
-                        if (((Civilian) units.get(i1)).isWorker() && map.get(i).sizeOfHashMapRail() != 0) {
-                            int newTurn = map.get(i).getNumberOfTurnsRail(units.get(i1)) - 1;
-                            if (newTurn == 0) {
-                                map.get(i).removeWorkerFromRail(units.get(i1));
-                                ((Civilian) units.get(i1)).setWorkingTile(null);
-                                if (map.get(i).isDoesHaveRailWay()) {
-                                    map.get(i).setDoesHaveRailWay(false);
-                                }
-                                else {
-                                    map.get(i).setDoesHaveRailWay(true);
-                                }
-                                if (map.get(i).isRailDamaged()) {
-                                    map.get(i).setRailDamaged(false);
-                                }
-                            } else {
-                                map.get(i).setNewNumberForTurnRail(units.get(i1), newTurn);
+                    if (((Civilian) units.get(i1)).isWorker() && map.get(i).sizeOfHashMapRail() != 0) {
+                        int newTurn = map.get(i).getNumberOfTurnsRail(units.get(i1)) - 1;
+                        if (newTurn == 0) {
+                            map.get(i).removeWorkerFromRail(units.get(i1));
+                            ((Civilian) units.get(i1)).setWorkingTile(null);
+                            if (map.get(i).isDoesHaveRailWay()) {
+                                map.get(i).setDoesHaveRailWay(false);
                             }
+                            else {
+                                map.get(i).setDoesHaveRailWay(true);
+                            }
+                            if (map.get(i).isRailDamaged()) {
+                                map.get(i).setRailDamaged(false);
+                            }
+                        } else {
+                            map.get(i).setNewNumberForTurnRail(units.get(i1), newTurn);
                         }
                     }
                 }
             }
         }
+    }
 
     public Unit getWorker (Tile tile) {
         ArrayList<Unit> units = tile.getUnits();
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).isCivilian()) {
-                    return units.get(i);
+                return units.get(i);
             }
         }
         return null;
@@ -3882,7 +3999,7 @@ public class PlayGameMenuController {
         else if (improvementName.equals("tradingPost"))
             return new Improvement(false, false, false, false, false, false, false, true, false, 0, 0, 1);
         else if (improvementName.equals("laboratory"))
-           return new Improvement(false, false, false, false, false, false, false, false, true, 0, 2, 0);
+            return new Improvement(false, false, false, false, false, false, false, false, true, 0, 2, 0);
         else
             return null;
     }
@@ -4192,8 +4309,8 @@ public class PlayGameMenuController {
         improveImprovementsNextTurn(map);
         checkForUnitMaking(civilization);
         consumeTurnForRoadMaking(civilization,map);
-        moveUnitWithMovesLeft(civilization,map);
         addMpEveryTurn(civilization,map);
+        moveUnitWithMovesLeft(civilization,map);
         increaseGoldCivilizationNextTurn(civilization,map);
         increaseFoodCitiesNextTurn(civilization,map);
         increaseProductionCitiesNextTurn(civilization,map);

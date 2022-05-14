@@ -120,6 +120,7 @@ public class PlayGameMenu {
         String cv[] = new String[72];
         String unit1[] = new String[72];
         String unit2[] = new String[72];
+        String cityCenter[] = new String[72];
         String mapString[] = new String[77];
         for (int i = 0; i < 72; i++){
             types[i] = "\u2588";
@@ -190,16 +191,16 @@ public class PlayGameMenu {
             }
         }
         cv = playGameMenuController.cvMaker(map, playingCivilization);
-        unit1 = playGameMenuController.unitMaker(map, 0);
-        unit2 = playGameMenuController.unitMaker(map, 1);
+        unit1 = playGameMenuController.unitMaker(map, 0, zeroStatusTilesCivilisation1, tileStatusOfCivilization1);
+        unit2 = playGameMenuController.unitMaker(map, 1, zeroStatusTilesCivilisation1, tileStatusOfCivilization1);
+        cityCenter = playGameMenuController.cityCenterMaker(map, playingCivilization);
         ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization1, map, zeroStatusTilesCivilisation1, ANSI_COLORS);
-        mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
+        mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv, cityCenter);
         for (int i = 0; i < 77; i++)
             System.out.println(mapString[i]);
 
         String command;
         command = scan.nextLine();
-
 
         String showCurrentMenuRegex = "menu show-current";
         String createUnitRegex1 = "^create --unit (?<unitName>.+) tile --number (?<number>\\d+)$";
@@ -360,24 +361,36 @@ public class PlayGameMenu {
             else if(command.matches(purchaseTileRegex))
                 System.out.println(playGameMenuController.prePurchaseTile(matcher(purchaseTileRegex,command),playingCivilization,map,civilizations));
             else if (command.matches(createRoadRegex)) {
-                System.out.println(playGameMenuController.createRoad(playingCivilization, map.get(Integer.parseInt(matcher(createRoadRegex,command).group("number"))),map));
+                Matcher matcher1 = matcher(createRoadRegex, command);
+                matcher1.find();
+                System.out.println(playGameMenuController.createRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(createRailwayRegex)) {
-                System.out.println(playGameMenuController.createRailRoad(playingCivilization, map.get(Integer.parseInt(matcher(createRailwayRegex,command).group("number"))),map));
+                Matcher matcher1 = matcher(createRailwayRegex, command);
+                matcher1.find();
+                System.out.println(playGameMenuController.createRailRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(removeRoadRegex)) {
-                System.out.println(playGameMenuController.removeRoad(playingCivilization, map.get(Integer.parseInt(matcher(removeRoadRegex,command).group("number"))),map));
+                Matcher matcher1 = matcher(removeRoadRegex, command);
+                matcher1.find();
+                System.out.println(playGameMenuController.removeRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(removeRailwayRegex)) {
-                System.out.println(playGameMenuController.removeRailRoad(playingCivilization, map.get(Integer.parseInt(matcher(removeRailwayRegex,command).group("number"))),map));
+                Matcher matcher1 = matcher(removeRailwayRegex, command);
+                matcher1.find();
+                System.out.println(playGameMenuController.removeRailRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(repairRoadRegex)) {
+                Matcher matcher1 = matcher(repairRoadRegex, command);
+                matcher1.find();
                 bool = false;
-                System.out.println(playGameMenuController.repairRoad(playingCivilization,map.get(Integer.parseInt(matcher(repairRoadRegex,command).group("number"))),map));
+                System.out.println(playGameMenuController.repairRoad(playingCivilization,map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(repairRailRegex)) {
+                Matcher matcher1 = matcher(repairRailRegex, command);
+                matcher1.find();
                 bool = false;
-                System.out.println(playGameMenuController.repairRail(playingCivilization,map.get(Integer.parseInt(matcher(repairRailRegex,command).group("number"))),map));
+                System.out.println(playGameMenuController.repairRail(playingCivilization,map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(deleteUnitRegex1)) {
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(deleteUnitRegex1,command),playingCivilization,map,"delete"));
@@ -642,11 +655,6 @@ public class PlayGameMenu {
                 System.out.println("invalid command !");
             }
 
-            //TODO... check is there any unit with move left (harekat chand noobati)
-            playGameMenuController.moveUnitWithMovesLeft (playingCivilization, map);
-
-
-
 
 
             ArrayList<Integer> civilization1new = new ArrayList<>();
@@ -704,21 +712,39 @@ public class PlayGameMenu {
                 tileStatusOfCivilization4 = playGameMenuController.statusComparator(tileStatusOfCivilization4, civilization4new, zeroStatusTilesCivilisation4, map);
                 tileStatusOfCivilization5 = playGameMenuController.statusComparator(tileStatusOfCivilization5, civilization5new, zeroStatusTilesCivilisation5, map);
             }
-            if (counter == 0)
+            if (counter == 0) {
                 ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization1, map, zeroStatusTilesCivilisation1, ANSI_COLORS);
-            else if (counter == 1)
+                types = playGameMenuController.setTileType(map, ANSI_COLORS, zeroStatusTilesCivilisation1, tileStatusOfCivilization1);
+                unit1 = playGameMenuController.unitMaker(map, 0, zeroStatusTilesCivilisation1, tileStatusOfCivilization1);
+                unit2 = playGameMenuController.unitMaker(map, 1, zeroStatusTilesCivilisation1, tileStatusOfCivilization1);
+            }
+            else if (counter == 1) {
                 ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization2, map, zeroStatusTilesCivilisation2, ANSI_COLORS);
-            else if (counter == 2)
+                types = playGameMenuController.setTileType(map, ANSI_COLORS, zeroStatusTilesCivilisation2, tileStatusOfCivilization2);
+                unit1 = playGameMenuController.unitMaker(map, 0, zeroStatusTilesCivilisation2, tileStatusOfCivilization2);
+                unit2 = playGameMenuController.unitMaker(map, 1, zeroStatusTilesCivilisation2, tileStatusOfCivilization2);
+            }
+            else if (counter == 2) {
                 ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization3, map, zeroStatusTilesCivilisation3, ANSI_COLORS);
-            else if (counter == 3)
+                types = playGameMenuController.setTileType(map, ANSI_COLORS, zeroStatusTilesCivilisation3, tileStatusOfCivilization3);
+                unit1 = playGameMenuController.unitMaker(map, 0, zeroStatusTilesCivilisation3, tileStatusOfCivilization3);
+                unit2 = playGameMenuController.unitMaker(map, 1, zeroStatusTilesCivilisation3, tileStatusOfCivilization3);
+            }
+            else if (counter == 3) {
                 ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization4, map, zeroStatusTilesCivilisation4, ANSI_COLORS);
-            else if (counter == 4)
+                types = playGameMenuController.setTileType(map, ANSI_COLORS, zeroStatusTilesCivilisation4, tileStatusOfCivilization4);
+                unit1 = playGameMenuController.unitMaker(map, 0, zeroStatusTilesCivilisation4, tileStatusOfCivilization4);
+                unit2 = playGameMenuController.unitMaker(map, 1, zeroStatusTilesCivilisation4, tileStatusOfCivilization4);
+            }
+            else if (counter == 4) {
                 ANSI_COLORS = playGameMenuController.setTileColors(tileStatusOfCivilization5, map, zeroStatusTilesCivilisation5, ANSI_COLORS);
-            types = playGameMenuController.setTileType(map, ANSI_COLORS);
+                types = playGameMenuController.setTileType(map, ANSI_COLORS, zeroStatusTilesCivilisation5, tileStatusOfCivilization5);
+                unit1 = playGameMenuController.unitMaker(map, 0, zeroStatusTilesCivilisation5, tileStatusOfCivilization5);
+                unit2 = playGameMenuController.unitMaker(map, 1, zeroStatusTilesCivilisation5, tileStatusOfCivilization5);
+            }
             cv = playGameMenuController.cvMaker(map, playingCivilization);
-            unit1 = playGameMenuController.unitMaker(map, 0);
-            unit2 = playGameMenuController.unitMaker(map, 1);
-            mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv);
+            cityCenter = playGameMenuController.cityCenterMaker(map, playingCivilization);
+            mapString = playGameMenuController.showMap(ANSI_COLORS, number, types, unit1, unit2, cv, cityCenter);
 
             if(bool)
                 for (int i = 0; i < 77; i++)

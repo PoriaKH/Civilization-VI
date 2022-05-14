@@ -19,7 +19,6 @@ public class Tile {
     private boolean isTundra;                   //Smooth
     private boolean isBlocker;
 
-
     private int food;
     private int production;
     private int gold;

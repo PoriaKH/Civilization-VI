@@ -13,7 +13,6 @@ public class Member {
         this.score = score;
     }
 
-
     public String getUsername() {
         return username;
     }

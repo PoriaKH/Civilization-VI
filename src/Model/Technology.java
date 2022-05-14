@@ -53,17 +53,17 @@ public class Technology {
     private String name;
 
     public Technology(boolean isAgriculture, boolean isAnimalHusbandry, boolean isArchery, boolean isBronzeWorking,
-               boolean isCalendar, boolean isMasonry, boolean isMining, boolean isPottery, boolean isTheWheel,
-               boolean isTrapping, boolean isWriting, boolean isConstruction, boolean isHorsebackRiding,
-               boolean isIronWorking, boolean isMathematics, boolean isPhilosophy, boolean isChivalry,
-               boolean isCivilService, boolean isCurrency, boolean isEducation, boolean isEngineering,
-               boolean isMachinery, boolean isMetalCasting, boolean isPhysics, boolean isSteel, boolean isTheology,
-               boolean isAcoustics, boolean isArchaeology, boolean isBanking, boolean isChemistry,
-               boolean isEconomics, boolean isFertilizer, boolean isGunpowder, boolean isMetallurgy,
-               boolean isMilitaryScience, boolean isPrintingPress, boolean isRifling, boolean isScientificTheory,
-               boolean isBiology, boolean isCombustion, boolean isDynamite, boolean isElectricity,
-               boolean isRadio, boolean isRailroad, boolean isReplaceable, boolean isParts, boolean isSteamPower,
-               boolean isTelegraph){
+                      boolean isCalendar, boolean isMasonry, boolean isMining, boolean isPottery, boolean isTheWheel,
+                      boolean isTrapping, boolean isWriting, boolean isConstruction, boolean isHorsebackRiding,
+                      boolean isIronWorking, boolean isMathematics, boolean isPhilosophy, boolean isChivalry,
+                      boolean isCivilService, boolean isCurrency, boolean isEducation, boolean isEngineering,
+                      boolean isMachinery, boolean isMetalCasting, boolean isPhysics, boolean isSteel, boolean isTheology,
+                      boolean isAcoustics, boolean isArchaeology, boolean isBanking, boolean isChemistry,
+                      boolean isEconomics, boolean isFertilizer, boolean isGunpowder, boolean isMetallurgy,
+                      boolean isMilitaryScience, boolean isPrintingPress, boolean isRifling, boolean isScientificTheory,
+                      boolean isBiology, boolean isCombustion, boolean isDynamite, boolean isElectricity,
+                      boolean isRadio, boolean isRailroad, boolean isReplaceable, boolean isParts, boolean isSteamPower,
+                      boolean isTelegraph){
         this.isAgriculture = isAgriculture;
         this.isAnimalHusbandry = isAnimalHusbandry;
         this.isArchery = isArchery;
@@ -120,7 +120,6 @@ public class Technology {
             this.cost = 35;
             this.name = "AnimalHusbandry";
         }
-
         else if (isArchery) {
             this.cost = 35;
             this.name = "Archery";

@@ -66,7 +66,6 @@ public class Attribute {
         //
     }
 
-
     public int getMpCost() {
         return mpCost;
     }

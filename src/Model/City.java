@@ -21,7 +21,6 @@ public class City {
     private int damagePoint; // emtiaz zarbe har shahr
     private int sciencePerTurn;
 
-
     public City(Tile centerTile, ArrayList<Tile> map){
         this.totalFood = 5;
         this.centerTile = centerTile;

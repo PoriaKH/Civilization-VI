@@ -93,6 +93,7 @@ public class LoginMenuController {
             String fileUsername = fileMatcher.group("username");
             String filePassword = fileMatcher.group("password");
             String fileNickname = fileMatcher.group("nickname");
+
             if(Objects.equals(fileUsername, username)){
                 if(Objects.equals(filePassword, password)){
                     int score = Integer.parseInt(fileMatcher.group("score"));

@@ -21,7 +21,6 @@ public class Resource {
         return isBanana;
     }
 
-
     public boolean isCow() {
         return isCow;
     }

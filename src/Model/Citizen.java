@@ -13,4 +13,3 @@ public class Citizen {
         tile.setCitizen(this);
     }
 }
-

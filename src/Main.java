@@ -11,4 +11,3 @@ public class Main {
         loginMenu.run(scan);
     }
 }
-
