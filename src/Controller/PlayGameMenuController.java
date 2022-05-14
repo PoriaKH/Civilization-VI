@@ -1252,7 +1252,6 @@ public class PlayGameMenuController {
         int i = 0;
         while (true) {
             if (i == unit.getPath().size() - 1 || (unit.getPath().size() >= 1 && unit.getPath().get(0).tile.equals(destination))) {
-                unit.setMp(unit.getConstantMP());
                 for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
                     unit.getPath().remove(i1);
                 }
@@ -4205,8 +4204,8 @@ public class PlayGameMenuController {
         improveImprovementsNextTurn(map);
         checkForUnitMaking(civilization);
         consumeTurnForRoadMaking(civilization,map);
-        moveUnitWithMovesLeft(civilization,map);
         addMpEveryTurn(civilization,map);
+        moveUnitWithMovesLeft(civilization,map);
         increaseGoldCivilizationNextTurn(civilization,map);
         increaseFoodCitiesNextTurn(civilization,map);
         increaseProductionCitiesNextTurn(civilization,map);
