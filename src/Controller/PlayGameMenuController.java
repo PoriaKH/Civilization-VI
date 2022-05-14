@@ -619,16 +619,22 @@ public class PlayGameMenuController {
             }
         }
         for (int i = 0; i < map.size(); i++) {
+            check = false;
             for (int l = 0; l < allUnits.size(); l++) {
                 if (isUnitNeighbor(allUnits.get(l).getOrigin().getX(), allUnits.get(l).getOrigin().getY(), map.get(i).getX(), map.get(i).getY(), map.get(i).getRadius())) {
                     for (int z = 0; z < map.size(); z++)
                         if (2 * map.get(z).getTileNumber() == allUnits.get(l).getOrigin().getTileNumber() + map.get(i).getTileNumber() && map.get(z).isBlocker()) {
                             civilizationTiles.set(i, -1);
+                            check = true;
                             break;
                         }
-                    civilizationTiles.set(i, 1);
-                    break;
+                    if (!check){
+                        civilizationTiles.set(i, 1);
+                        break;
+                    }
                 }
+                if (isCityNeighbor(allUnits.get(l).getOrigin().getX(), allUnits.get(l).getOrigin().getY(), map.get(i).getX(), map.get(i).getY(), map.get(i).getRadius()))
+                    civilizationTiles.set(i, 1);
             }
         }
         return civilizationTiles;
