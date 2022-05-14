@@ -610,6 +610,27 @@ public class PlayGameMenuController {
                     break;
             }
         }
+        ArrayList<Unit> allUnits = new ArrayList<>();
+        for (int i = 0; i < 72; i++) {
+            ArrayList<Unit> tileUnits = map.get(i).getUnits();
+            for (int j = 0; j < tileUnits.size(); j++) {
+                if (tileUnits.get(j).getCivilization() == civilization)
+                    allUnits.add(tileUnits.get(j));
+            }
+        }
+        for (int i = 0; i < map.size(); i++) {
+            for (int l = 0; l < allUnits.size(); l++) {
+                if (isUnitNeighbor(allUnits.get(l).getOrigin().getX(), allUnits.get(l).getOrigin().getY(), map.get(i).getX(), map.get(i).getY(), map.get(i).getRadius())) {
+                    for (int z = 0; z < map.size(); z++)
+                        if (2 * map.get(z).getTileNumber() == allUnits.get(l).getOrigin().getTileNumber() + map.get(i).getTileNumber() && map.get(z).isBlocker()) {
+                            civilizationTiles.set(i, -1);
+                            break;
+                        }
+                    civilizationTiles.set(i, 1);
+                    break;
+                }
+            }
+        }
         return civilizationTiles;
     }
     // -1 -> fog, 0  -> moshakhas, 1 -> vazeh
