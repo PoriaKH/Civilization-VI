@@ -2448,6 +2448,7 @@ public class PlayGameMenuController {
             attacker.setHealth(healthOfAttacker);
             map.get(originIndex).removeUnit(attacker);
             defenderCity.getCenterTile().addUnit(attacker);
+            attacker.setOrigin(defenderCity.getCenterTile());
             str = "your unit conquer the city !";
         }
         else if (healthOfDefender > 0 && healthOfAttacker <= 0) {
@@ -2561,6 +2562,7 @@ public class PlayGameMenuController {
             map.get(originIndex).removeUnit(attacker);
             map.get(destinationIndex).removeUnit(defender);
             map.get(destinationIndex).addUnit(attacker);
+            attacker.setOrigin(map.get(destinationIndex));
             str = "you won this attack !";
             defender = null;
         }
@@ -2579,6 +2581,7 @@ public class PlayGameMenuController {
             map.get(originIndex).removeUnit(attacker);
             map.get(destinationIndex).removeUnit(defender);
             map.get(originIndex).addUnit(defender);
+            defender.setOrigin(map.get(originIndex));
             str = "you lost this attack !";
             attacker = null;
         }
