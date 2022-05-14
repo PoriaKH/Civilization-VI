@@ -447,6 +447,9 @@ public class Tile {
         if (roundLeft == 0) {
             this.improvementEarnedPercent.remove(this.workingOnImprovement);
             this.addImprovement(this.workingOnImprovement);
+            this.food += workingOnImprovement.getFood();
+            this.gold += workingOnImprovement.getGold();
+            this.production += workingOnImprovement.getProduction();
             workingOnImprovement = null;
         }
         this.improvementEarnedPercent.replace(this.workingOnImprovement, roundLeft);
