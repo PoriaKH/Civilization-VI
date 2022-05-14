@@ -1378,6 +1378,8 @@ public class PlayGameMenuController {
             if (unit.getMp() >= 1) {
                 originTile.removeUnit(unit);
                 destinationTile.addUnit(unit);
+                unit.setOrigin(destinationTile);
+                unit.setDestination(null);
                 int newMP;
 
                 if (!isRiverOnWay(originTile, destinationTile, map)) {
