@@ -1107,7 +1107,12 @@ public class PlayGameMenuController {
         int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
         int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
         String unitName = matcher.group("unitName").toLowerCase();
-
+        if (numberOfOrigin < 0 || numberOfOrigin > 71) {
+            return "number of origin tile is invalid !";
+        }
+        if (numberOfDestination < 0 || numberOfDestination > 71) {
+            return "number of destination tile is invalid !";
+        }
         Tile origin = map.get(numberOfOrigin);
         Tile destination = map.get(numberOfDestination);
         ArrayList<Unit> units = origin.getUnits();
@@ -1565,6 +1570,9 @@ public class PlayGameMenuController {
         matcher.find();
         String unitName = matcher.group("unitName").toLowerCase();
         int index = Integer.parseInt(matcher.group("number"));
+        if (index < 0 || index > 71) {
+            return "number of origin tile is invalid !";
+        }
         City city = findTile(index, map, civilization);
         if (city == null) {
             return "there is no city !";
@@ -2224,6 +2232,13 @@ public class PlayGameMenuController {
         int originIndex = Integer.parseInt(matcher.group("origin"));
         int destinationIndex = Integer.parseInt(matcher.group("destination"));
 
+        if (originIndex < 0 || originIndex > 71) {
+            return "number of origin tile is invalid !";
+        }
+        if (destinationIndex < 0 || destinationIndex > 71) {
+            return "number of destination tile is invalid !";
+        }
+
         Unit attacker = getWarriorUnit(originIndex, map);
         Unit defender = getWarriorUnit(destinationIndex, map);
 
@@ -2335,6 +2350,13 @@ public class PlayGameMenuController {
         matcher.find();
         int originIndex = Integer.parseInt(matcher.group("origin"));
         int destinationIndex = Integer.parseInt(matcher.group("destination"));
+
+        if (originIndex < 0 || originIndex > 71) {
+            return "number of origin tile is invalid !";
+        }
+        if (destinationIndex < 0 || destinationIndex> 71) {
+            return "number of destination tile is invalid !";
+        }
 
         Unit attacker = getWarriorUnit(originIndex, map);
         City defenderCity = getCityFromTile (map.get(destinationIndex), map, civilizations);
@@ -2593,6 +2615,9 @@ public class PlayGameMenuController {
         matcher.find();
         String unitName = matcher.group("unitName");
         int index = Integer.parseInt(matcher.group("number"));
+        if (index < 0 || index > 71) {
+            return "number of origin tile is invalid !";
+        }
         Tile tile = map.get(index);
         ArrayList<Unit> units = tile.getUnits();
         Unit unit = getUnitInTile(units, unitName);
@@ -4212,6 +4237,9 @@ public class PlayGameMenuController {
         String previousUnitName = matcher.group("oldUnitName").toLowerCase();
         String newUnitName = matcher.group("newUnitName").toLowerCase();
         int index = Integer.parseInt(matcher.group("number"));
+        if (index < 0 || index > 71) {
+            return "number of tile is invalid !";
+        }
 
         Unit oldUnit = getUnitInTile(map.get(index).getUnits(), previousUnitName);
         Unit newUnit = makeUnit(civilization, map.get(index), map, newUnitName);
@@ -4222,6 +4250,10 @@ public class PlayGameMenuController {
         String str;
         if (warrior == null) {
             str = "there is no unit with this name in selected tile !";
+            return str;
+        }
+        if (newWarrior == null) {
+            str = "unit name is not correct !";
             return str;
         }
         if (!warrior.getCivilization().equals(civilization)) {
