@@ -230,8 +230,8 @@ public class PlayGameMenuController {
             str = "there is no unit with this name !";
             return str;
         }
-        if (unit.getIsOnSleep()) {
-            str = "this unit is sleeping !";
+        if (unit.getIsOnSleep()|| unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
+            str = "this unit is not active !";
             return str;
         }
         if (!unit.getCivilization().equals(civilization)) {
@@ -1308,7 +1308,7 @@ public class PlayGameMenuController {
             return str;
         }
         if (unit.getIsOnSleep() || unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
-            str = "this unit is sleeping !";
+            str = "this unit is not active !";
             return str;
         }
         if (!unit.getCivilization().equals(civilization)) {
@@ -2856,7 +2856,10 @@ public class PlayGameMenuController {
         }
 
         unit.setOnSleep(false);
-        str = "selected unit is awake";
+        unit.setOnBoost(false);
+        unit.setOnBoostTillRecover(false);
+        unit.setOnWarFooting(false);
+        str = "selected unit is active";
         return str;
     }
     public String deleteUnit(Civilization civilization, Unit unit,ArrayList<Tile> map, Tile tile){
