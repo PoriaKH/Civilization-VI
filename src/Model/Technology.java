@@ -120,6 +120,7 @@ public class Technology {
             this.cost = 35;
             this.name = "AnimalHusbandry";
         }
+
         else if (isArchery) {
             this.cost = 35;
             this.name = "Archery";

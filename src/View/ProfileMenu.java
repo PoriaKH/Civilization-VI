@@ -25,6 +25,7 @@ public class ProfileMenu {
         String changePasswordRegex3 = "(profile change --password -cp )(?<oldPassword>.*) -np (?<newPassword>.*)";
         String menuShowCurrentRegex = "menu show-current";
 
+
         String command;
         command = scan.nextLine();
 

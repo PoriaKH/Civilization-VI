@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainMenu {
     private Member loggedInMember;
@@ -24,10 +22,7 @@ public class MainMenu {
         String exitMenuRegex = "\\s*menu\\s+exit\\s*";
         String showCurrentMenuRegex = "\\s*menu\\s+show-current\\s*";
         String logoutRegex = "\\s*user\\s+logout\\s*";
-        String playGameRegex1 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)";
-        String playGameRegex2 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)\\s+--player2(?<username2>\\S+)";
-        String playGameRegex3 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)\\s+--player2(?<username2>\\S+)\\s+--player3(?<username3>\\S+)";
-        String playGameRegex4 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)\\s+--player2(?<username2>\\S+)\\s+--player3(?<username3>\\S+)\\s+--player4(?<username4>\\S+)";
+        String playGameRegex = "\\s*play\\s+game\\s+--player1\\s+(?<username>\\S+)";
         String command;
         ArrayList<Member> allMembers = mainMenuController.getAllMembers();
 
@@ -41,12 +36,12 @@ public class MainMenu {
             }
             else if (mainMenuController.getMatcher(showCurrentMenuRegex, command) != null)
                 System.out.println("Main Menu");
-            else if(command.matches(playGameRegex1)) {
-                Matcher matcher = Pattern.compile(playGameRegex1).matcher(command);
-                matcher.find();
+            else if(mainMenuController.getMatcher(playGameRegex, command) != null) {
                 ArrayList<String> userNames = new ArrayList<>();
-                userNames.add(matcher.group("username1"));
-                int numOfPlayers = 1;
+                String[] commandSplit = command.split("\\s+");
+                for (int i = 3; i < commandSplit.length; i += 2)
+                    userNames.add(commandSplit[i]);
+                int numOfPlayers = userNames.size();
                 ArrayList<Member> players = new ArrayList<>();
                 players.add(loggedInMember);
                 boolean ourBool = true;
@@ -59,93 +54,7 @@ public class MainMenu {
                             break;
                         }
                     }
-                    if (!exist) {
-                        System.out.println("user with this username doesn't exist!");
-                        ourBool = false;
-                        break;
-                    }
-                }
-                if(ourBool)
-                    playGameMenu.run(scan, players.size(), players);
-            }
-            else if(command.matches(playGameRegex2)) {
-                Matcher matcher = Pattern.compile(playGameRegex2).matcher(command);
-                matcher.find();
-                ArrayList<String> userNames = new ArrayList<>();
-                userNames.add(matcher.group("username1"));
-                userNames.add(matcher.group("username2"));
-                int numOfPlayers = 2;
-                ArrayList<Member> players = new ArrayList<>();
-                players.add(loggedInMember);
-                boolean ourBool = true;
-                for (int i = 0; i < numOfPlayers; i++) {
-                    boolean exist = false;
-                    for (int j = 0; j < allMembers.size(); j++) {
-                        if (allMembers.get(j).getUsername().equals(userNames.get(i))){
-                            players.add(allMembers.get(j));
-                            exist = true;
-                            break;
-                        }
-                    }
-                    if (!exist) {
-                        System.out.println("user with this username doesn't exist!");
-                        ourBool = false;
-                        break;
-                    }
-                }
-                if(ourBool)
-                    playGameMenu.run(scan, players.size(), players);
-            }
-            else if(command.matches(playGameRegex3)) {
-                Matcher matcher = Pattern.compile(playGameRegex1).matcher(command);
-                matcher.find();
-                ArrayList<String> userNames = new ArrayList<>();
-                userNames.add(matcher.group("username1"));
-                userNames.add(matcher.group("username2"));
-                userNames.add(matcher.group("username3"));
-                int numOfPlayers = 3;
-                ArrayList<Member> players = new ArrayList<>();
-                players.add(loggedInMember);
-                boolean ourBool = true;
-                for (int i = 0; i < numOfPlayers; i++) {
-                    boolean exist = false;
-                    for (int j = 0; j < allMembers.size(); j++) {
-                        if (allMembers.get(j).getUsername().equals(userNames.get(i))){
-                            players.add(allMembers.get(j));
-                            exist = true;
-                            break;
-                        }
-                    }
-                    if (!exist) {
-                        System.out.println("user with this username doesn't exist!");
-                        ourBool = false;
-                        break;
-                    }
-                }
-                if(ourBool)
-                    playGameMenu.run(scan, players.size(), players);
-            }
-            else if(command.matches(playGameRegex4)) {
-                Matcher matcher = Pattern.compile(playGameRegex1).matcher(command);
-                matcher.find();
-                ArrayList<String> userNames = new ArrayList<>();
-                userNames.add(matcher.group("username1"));
-                userNames.add(matcher.group("username2"));
-                userNames.add(matcher.group("username3"));
-                userNames.add(matcher.group("username4"));
-                int numOfPlayers = 4;
-                ArrayList<Member> players = new ArrayList<>();
-                players.add(loggedInMember);
-                boolean ourBool = true;
-                for (int i = 0; i < numOfPlayers; i++) {
-                    boolean exist = false;
-                    for (int j = 0; j < allMembers.size(); j++) {
-                        if (allMembers.get(j).getUsername().equals(userNames.get(i))){
-                            players.add(allMembers.get(j));
-                            exist = true;
-                            break;
-                        }
-                    }
+
                     if (!exist) {
                         System.out.println("user with this username doesn't exist!");
                         ourBool = false;

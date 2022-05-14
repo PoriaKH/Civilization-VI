@@ -28,6 +28,7 @@ public class LoginMenu {
         String command;
         command = scan.nextLine();
 
+
         while(!Objects.equals(command, "menu exit")){
             if(command.matches(userCreateRegex1) || command.matches(userCreateRegex2) || command.matches(userCreateRegex3) || command.matches(userCreateRegex4) || command.matches(userCreateRegex5) || command.matches(userCreateRegex6) || command.matches(userCreateRegex7)){
                 if(command.matches(userCreateRegex1))

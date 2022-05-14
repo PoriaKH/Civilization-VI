@@ -15,6 +15,7 @@ public class Improvement {
     private boolean isStoneMine;
     private boolean isTradingPost;
     private boolean isLaboratory;
+
     public Improvement(boolean isCamp, boolean isFarm, boolean isLumberMill, boolean isMine, boolean isPaddock,
                        boolean isAgriculture, boolean isStoneMine, boolean isTradingPost, boolean isLaboratory, int food, int production, int gold){
         this.isCamp = isCamp;

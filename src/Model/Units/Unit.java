@@ -15,6 +15,7 @@ public class Unit {
     private int mp;  // it changes every time unit moves.
 
 
+
     private int duration;
     private int goldCost;
     private int movesLeft;

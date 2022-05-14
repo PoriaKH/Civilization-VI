@@ -141,6 +141,7 @@ public class Warrior extends Unit{
         return isRifleMan;
     }
 
+
     public boolean isAntiTankGun() {
         return isAntiTankGun;
     }

@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class MainMenuController {
     public Matcher getMatcher(String regex, String command){
         Matcher matcher = Pattern.compile(regex).matcher(command);
