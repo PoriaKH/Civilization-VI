@@ -1022,7 +1022,7 @@ public class PlayGameMenuController {
             if (i - 1 >= 0 && counter != 0) {
                 graph[i].neighbours.add(graph[i - 1]);
             }
-            if (counter != 5 && counter != 4) {
+            if ((counter != 5 && column % 2 == 0) || (counter != 4 && column % 2 != 0)) {
                 graph[i].neighbours.add(graph[i + 1]);
             }
             if (i - 6 >= 0 && (counter != 0 || column % 2 != 0)) {
@@ -1367,11 +1367,10 @@ public class PlayGameMenuController {
         unit.setDestination(destination);
         int i = 0;
         while (true) {
-            if (i == unit.getPath().size() - 1 || (unit.getPath().size() >= 1 && unit.getPath().get(0).tile.equals(destination))) {
+            if (unit.getPath().size() == 1) {
                 for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
                     unit.getPath().remove(i1);
                 }
-                unit.setOrigin(destination);
                 unit.setDestination(null);
                 str = "unit reached the destination !";
                 break;
@@ -1385,7 +1384,7 @@ public class PlayGameMenuController {
                 originTile.removeUnit(unit);
                 destinationTile.addUnit(unit);
                 unit.setOrigin(destinationTile);
-                unit.setDestination(null);
+
                 int newMP;
 
                 if (!isRiverOnWay(originTile, destinationTile, map)) {
