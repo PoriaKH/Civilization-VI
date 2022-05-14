@@ -359,24 +359,36 @@ public class PlayGameMenu {
             else if(command.matches(purchaseTileRegex))
                 System.out.println(playGameMenuController.prePurchaseTile(matcher(purchaseTileRegex,command),playingCivilization,map,civilizations));
             else if (command.matches(createRoadRegex)) {
-                System.out.println(playGameMenuController.createRoad(playingCivilization, map.get(Integer.parseInt(matcher(createRoadRegex,command).group("number"))),map));
+                Matcher matcher1 = matcher(createRoadRegex, command);
+                matcher1.find();
+                System.out.println(playGameMenuController.createRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(createRailwayRegex)) {
-                System.out.println(playGameMenuController.createRailRoad(playingCivilization, map.get(Integer.parseInt(matcher(createRailwayRegex,command).group("number"))),map));
+                Matcher matcher1 = matcher(createRoadRegex, command);
+                matcher1.find();
+                System.out.println(playGameMenuController.createRailRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(removeRoadRegex)) {
-                System.out.println(playGameMenuController.removeRoad(playingCivilization, map.get(Integer.parseInt(matcher(removeRoadRegex,command).group("number"))),map));
+                Matcher matcher1 = matcher(createRoadRegex, command);
+                matcher1.find();
+                System.out.println(playGameMenuController.removeRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(removeRailwayRegex)) {
-                System.out.println(playGameMenuController.removeRailRoad(playingCivilization, map.get(Integer.parseInt(matcher(removeRailwayRegex,command).group("number"))),map));
+                Matcher matcher1 = matcher(createRoadRegex, command);
+                matcher1.find();
+                System.out.println(playGameMenuController.removeRailRoad(playingCivilization, map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(repairRoadRegex)) {
+                Matcher matcher1 = matcher(createRoadRegex, command);
+                matcher1.find();
                 bool = false;
-                System.out.println(playGameMenuController.repairRoad(playingCivilization,map.get(Integer.parseInt(matcher(repairRoadRegex,command).group("number"))),map));
+                System.out.println(playGameMenuController.repairRoad(playingCivilization,map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(repairRailRegex)) {
+                Matcher matcher1 = matcher(createRoadRegex, command);
+                matcher1.find();
                 bool = false;
-                System.out.println(playGameMenuController.repairRail(playingCivilization,map.get(Integer.parseInt(matcher(repairRailRegex,command).group("number"))),map));
+                System.out.println(playGameMenuController.repairRail(playingCivilization,map.get(Integer.parseInt(matcher1.group("number"))),map));
             }
             else if (command.matches(deleteUnitRegex1)) {
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(deleteUnitRegex1,command),playingCivilization,map,"delete"));
