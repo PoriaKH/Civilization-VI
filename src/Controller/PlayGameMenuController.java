@@ -3782,11 +3782,11 @@ public class PlayGameMenuController {
 //        if (civilization.getScience() < technology.getCost())
 //            return "you don't have the needed amount of science";
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
-        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
-            return "you don't have the prerequisite techs to learn this technology";
         for (Technology technology1 : allTechnologies)
             if (technology1.getName().equals(technologyName))
                 return "you already have this technology";
+        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
+            return "you don't have the prerequisite techs to learn this technology";
         if (civilization.isLearningTechnology())
             return "you are learning a technology";
         if (technology.getCost() > 99) {
