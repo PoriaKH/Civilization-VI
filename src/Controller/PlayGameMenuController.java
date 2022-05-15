@@ -4024,6 +4024,17 @@ public class PlayGameMenuController {
         else
             return "only workers can work on improvements";
     }
+    public StringBuilder showImprovements(ArrayList<Tile> map){
+        StringBuilder panel = new StringBuilder();
+        ArrayList<String> improvementPanel = new ArrayList<>();
+        for (int i = 0; i < map.size(); i++)
+            if (map.get(i).getImprovements().size() != 0)
+                for (int j = 0; j < map.get(i).getImprovements().size(); j++)
+                    improvementPanel.add(i + "\t" + map.get(i).getImprovements().get(j).getName() + "\n");
+        for (int i = 0; i < improvementPanel.size(); i++)
+            panel.append(improvementPanel.get(i));
+        return panel;
+    }
     // after every turn check for road or rail making in your civilization,,, if work is making ->true if it is removing->false
     public void consumeTurnForRoadMaking (Civilization civilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {

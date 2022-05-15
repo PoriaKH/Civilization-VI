@@ -255,6 +255,7 @@ public class PlayGameMenu {
         String cheatIncreaseTechnologyRegex = "cheat increase technology (?<amount>\\d+)";
         String cheatIncreaseHappinessRegex = "cheat increase happiness (?<amount>\\d+)";
         String cancelImprovementOnProcessRegex = "cancel improvement on tile (?<tileNumber> \\d+)";
+        String showImprovementsRegex = "show improvements";
         String repairImprovementRegex = "repair improvements in tile (?<tileNumber>\\d+) unit in tile (?<unitTileNumber>\\d+)";
         String lootTileRegex = "loot --tile (?<lootTileNumber>\\d+) unit in --tile (?<tileUnitNumber>\\d+)";
         String chooseTechnologyToLearnRegex = "learn technology (?<technologyName>.+)";
@@ -316,6 +317,10 @@ public class PlayGameMenu {
             else if (command.matches(fortifyRegex1)) {
                 bool = false;
                 System.out.println(playGameMenuController.preUnitBehaviour(matcher(fortifyRegex1,command),playingCivilization,map,"fortify"));
+            }
+            else if (command.matches(showImprovementsRegex)){
+                bool = false;
+                System.out.println(playGameMenuController.showImprovements(map));
             }
             else if (command.matches(fortifyRegex2)) {
                 bool = false;
