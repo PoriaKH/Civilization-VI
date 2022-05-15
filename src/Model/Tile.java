@@ -450,6 +450,14 @@ public class Tile {
             this.food += workingOnImprovement.getFood();
             this.gold += workingOnImprovement.getGold();
             this.production += workingOnImprovement.getProduction();
+            for (Unit unit : units)
+                if (unit.isCivilian()){
+                    Civilian civilian = (Civilian) unit;
+                    if (civilian.isWorker()){
+                        civilian.setWorkingTile(null);
+                        break;
+                    }
+                }
             workingOnImprovement = null;
         }
         this.improvementEarnedPercent.replace(this.workingOnImprovement, roundLeft);
