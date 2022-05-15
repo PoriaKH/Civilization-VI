@@ -220,7 +220,12 @@ public class PlayGameMenuController {
         int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
         int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
         String unitName = matcher.group("unitName").toLowerCase();
-
+        if (numberOfOrigin < 0 || numberOfOrigin > 71) {
+            return "number of origin is invalid !";
+        }
+        if (numberOfDestination < 0 || numberOfDestination > 71) {
+            return "number of destination is invalid !";
+        }
         Tile origin = map.get(numberOfOrigin);
         Tile destination = map.get(numberOfDestination);
         ArrayList<Unit> units = origin.getUnits();
@@ -238,7 +243,7 @@ public class PlayGameMenuController {
             str = "this unit is for another civilization !";
             return str;
         }
-        if (unit.getPath() != null) {
+        if (unit.getPath().size() != 0) {
             str = "this unit has another path !";
             return str;
         }
@@ -3808,11 +3813,11 @@ public class PlayGameMenuController {
 //        if (civilization.getScience() < technology.getCost())
 //            return "you don't have the needed amount of science";
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
-        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
-            return "you don't have the prerequisite techs to learn this technology";
         for (Technology technology1 : allTechnologies)
             if (technology1.getName().equals(technologyName))
                 return "you already have this technology";
+        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
+            return "you don't have the prerequisite techs to learn this technology";
         if (technology.getCost() > 99) {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
             civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
