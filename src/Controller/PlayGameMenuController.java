@@ -2493,15 +2493,11 @@ public class PlayGameMenuController {
         healthOfDefender = healthOfDefender - powerOfAttacker;
 
         if (healthOfDefender <= 0 && healthOfAttacker > 0) {
-            for (Tile tile : defenderCity.getTiles()) {
-                ArrayList<Unit> units = tile.getUnits();
-                for (int i = 0; i < units.size(); i++) {
-                    Unit temp = units.get(i);
-                    temp = null;
-                    units.remove(i);
-                }
-                tile.removeAllUnitFromMakingProgress();
-                tile.removeRoadsMakingProgress();
+            ArrayList<Tile> tiles = defenderCity.getTiles();
+            for (int i = 0; i < tiles.size(); i++) {
+                tiles.get(i).getUnits().clear();
+                tiles.get(i).removeAllUnitFromMakingProgress();
+                tiles.get(i).removeRoadsMakingProgress();
             }
             defenderCivilization.removeCity(defenderCity);
             civilization.addCity(defenderCity);
@@ -2519,15 +2515,11 @@ public class PlayGameMenuController {
             str = "your unit died !";
         }
         else if (healthOfAttacker <= 0 && healthOfDefender <= 0) {
-            for (Tile tile : defenderCity.getTiles()) {
-                ArrayList<Unit> units = tile.getUnits();
-                for (int i = 0; i < units.size(); i++) {
-                    Unit temp = units.get(i);
-                    temp = null;
-                    units.remove(i);
-                }
-                tile.removeAllUnitFromMakingProgress();
-                tile.removeRoadsMakingProgress();
+            ArrayList<Tile> tiles = defenderCity.getTiles();
+            for (int i = 0; i < tiles.size(); i++) {
+                tiles.get(i).getUnits().clear();
+                tiles.get(i).removeAllUnitFromMakingProgress();
+                tiles.get(i).removeRoadsMakingProgress();
             }
             defenderCity.setDamagePoint(1);
             map.get(originIndex).removeUnit(attacker);

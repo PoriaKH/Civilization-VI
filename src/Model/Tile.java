@@ -522,18 +522,10 @@ public class Tile {
         return null;
     }
     public void removeAllUnitFromMakingProgress () {
-        for(Map.Entry<Unit, Integer> entry : turnForUnitMaking.entrySet()) {
-            Unit unit = entry.getKey();
-            unit = null;
-            turnForUnitMaking.remove(entry.getKey());
-        }
+        turnForUnitMaking.clear();
     }
     public void removeRoadsMakingProgress () {
-        for(Map.Entry<Unit, Integer> entry : workingOnRoadUntilFinish.entrySet()) {
-            workingOnRoadUntilFinish.remove(entry.getKey());
-        }
-        for(Map.Entry<Unit, Integer> entry : workingOnRailUntilFinish.entrySet()) {
-            workingOnRailUntilFinish.remove(entry.getKey());
-        }
+        workingOnRoadUntilFinish.clear();
+        workingOnRailUntilFinish.clear();
     }
 }
