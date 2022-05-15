@@ -605,7 +605,7 @@ public class PlayGameMenu {
                 String technologyName = matcher.group("technologyName");
                 System.out.println(playGameMenuController.chooseTechnologyToLearn(playingCivilization, technologyName));
             }
-            else if (command.matches(chooseTechnologyToLearnRegex)){
+            else if (command.matches(changeTechnologyToLearnRegex)){
                 bool = false;
                 Matcher matcher = Pattern.compile(changeTechnologyToLearnRegex).matcher(command);
                 matcher.find();
