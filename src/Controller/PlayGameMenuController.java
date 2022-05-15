@@ -2136,46 +2136,12 @@ public class PlayGameMenuController {
                                     civilization.getCities().add(city1);
                                     return "city has been created successfully";
                                 }
-                                return "5";
                             }
-                            return "4";
                         }
-                        return "3";
                     }
-                    return "2";
                 }
             }
         }
-        /*
-        for(City city : civilization.getCities()){
-            for(Tile tile : city.getTiles()){
-                if(tile.getTileNumber() == tileNumber){
-                    for(Unit unit : tile.getUnits()){
-                        if(unit.getCivilization() == civilization){
-                            if(unit.isCivilian()){
-                                Civilian civilian = (Civilian) unit;
-                                if(civilian.isSettler()){
-                                    if(checkNeighboursForCreateCity(tile,map,civilizations)){
-                                        while(tile.getUnits().size() > 0) {
-                                            tile.getUnits().remove(0);
-                                        }
-                                        City city1 = new City(tile,map);
-                                        civilization.getCities().add(city1);
-                                        return "city has been created successfully";
-                                    }
-                                    return "5";
-                                }
-                                return "4";
-                            }
-                            return "3";
-                        }
-                        return "2";
-                    }
-                }
-                return "1";
-            }
-        }
-*/
         return "you can't create city here";
     }
     public boolean checkNeighboursForCreateCity(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
