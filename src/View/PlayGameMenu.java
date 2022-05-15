@@ -259,7 +259,7 @@ public class PlayGameMenu {
         String repairImprovementRegex = "repair improvements in tile (?<tileNumber>\\d+) unit in tile (?<unitTileNumber>\\d+)";
         String lootTileRegex = "loot --tile (?<lootTileNumber>\\d+) unit in --tile (?<tileUnitNumber>\\d+)";
         String chooseTechnologyToLearnRegex = "learn technology (?<technologyName>.+)";
-        String changeTechnologyToLearnRegex = "change technology to learn (?<technologyName>.+)";
+        String changeTechnologyToLearnRegex = "change technology to learn (?<technologyName>\\S+)";
         String showTechnologyMenuRegex = "show technology menu";
         String researchInformationRegex = "show research information";
         String attackTileRegex1 = "attackTile --tile (?<origin>\\d+) to --tile (?<destination>\\d+)";
