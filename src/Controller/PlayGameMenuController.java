@@ -2531,7 +2531,7 @@ public class PlayGameMenuController {
     }
     public String attackCityFromAir(Civilization civilization,Unit attacker, City defenderCity, int originIndex, ArrayList<Tile>map, Civilization defenderCivilization) {
         String str = "";
-        int powerOfAttacker = ((Warrior)attacker).getDamage();
+        int powerOfAttacker = ((Warrior)attacker).getRangedCombatDamage();
         int healthOfAttacker = ((Warrior)attacker).getHealth();
         powerOfAttacker = powerOfAttacker * healthOfAttacker / 10;
         if (civilization.getHappiness() < 0) {
