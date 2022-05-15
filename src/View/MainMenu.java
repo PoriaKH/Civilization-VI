@@ -25,9 +25,9 @@ public class MainMenu {
         String showCurrentMenuRegex = "\\s*menu\\s+show-current\\s*";
         String logoutRegex = "\\s*user\\s+logout\\s*";
         String playGameRegex1 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)";
-        String playGameRegex2 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)\\s+--player2(?<username2>\\S+)";
-        String playGameRegex3 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)\\s+--player2(?<username2>\\S+)\\s+--player3(?<username3>\\S+)";
-        String playGameRegex4 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)\\s+--player2(?<username2>\\S+)\\s+--player3(?<username3>\\S+)\\s+--player4(?<username4>\\S+)";
+        String playGameRegex2 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)\\s+--player2\\s+(?<username2>\\S+)";
+        String playGameRegex3 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)\\s+--player2\\s+(?<username2>\\S+)\\s+--player3\\s+(?<username3>\\S+)";
+        String playGameRegex4 = "\\s*play\\s+game\\s+--player1\\s+(?<username1>\\S+)\\s+--player2\\s+(?<username2>\\S+)\\s+--player3\\s+(?<username3>\\S+)\\s+--player4\\s+(?<username4>\\S+)";
         String command;
         ArrayList<Member> allMembers = mainMenuController.getAllMembers();
 

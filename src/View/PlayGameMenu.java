@@ -278,8 +278,8 @@ public class PlayGameMenu {
         String attackCityRegex2 = "attackCity to --tile (?<destination>\\d+) --tile (?<origin>\\d+)";
         String showMessagesRegex = "show messages";
         String showRoadsRegex = "show ways";
+        String showCitizensRegex = "show citizens";
         String nextTurnRegex = "next turn";
-
         while(!Objects.equals(command, "exit menu")) {
             boolean bool = true;
 
@@ -605,7 +605,7 @@ public class PlayGameMenu {
                 String technologyName = matcher.group("technologyName");
                 System.out.println(playGameMenuController.chooseTechnologyToLearn(playingCivilization, technologyName));
             }
-            else if (command.matches(chooseTechnologyToLearnRegex)){
+            else if (command.matches(changeTechnologyToLearnRegex)){
                 bool = false;
                 Matcher matcher = Pattern.compile(changeTechnologyToLearnRegex).matcher(command);
                 matcher.find();
@@ -673,6 +673,9 @@ public class PlayGameMenu {
             else if(command.matches(showMessagesRegex)){
                 bool = false;
                 System.out.println(playGameMenuController.showMessages(playingCivilization));
+            }
+            else if(command.matches(showCitizensRegex)){
+                System.out.println(playGameMenuController.showCitizens(playingCivilization));
             }
             else if(command.matches(nextTurnRegex)){
                 String result = playGameMenuController.nextTurn(playingCivilization, map);

@@ -3808,11 +3808,11 @@ public class PlayGameMenuController {
 //        if (civilization.getScience() < technology.getCost())
 //            return "you don't have the needed amount of science";
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
-        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
-            return "you don't have the prerequisite techs to learn this technology";
         for (Technology technology1 : allTechnologies)
             if (technology1.getName().equals(technologyName))
                 return "you already have this technology";
+        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
+            return "you don't have the prerequisite techs to learn this technology";
         if (technology.getCost() > 99) {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
             civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
@@ -4448,6 +4448,16 @@ public class PlayGameMenuController {
             Number++;
         }
 
+        return stringBuilder;
+    }
+    public StringBuilder showCitizens(Civilization civilization){
+        StringBuilder stringBuilder = new StringBuilder("");
+        for(City city : civilization.getCities()){
+            for(Tile tile : city.getTiles()){
+                if(tile.getCitizen() != null)
+                    stringBuilder.append(tile.getTileNumber()).append(" ");
+            }
+        }
         return stringBuilder;
     }
     //TODO
