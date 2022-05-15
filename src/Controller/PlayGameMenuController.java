@@ -4450,6 +4450,16 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
+    public StringBuilder showCitizens(Civilization civilization){
+        StringBuilder stringBuilder = new StringBuilder("");
+        for(City city : civilization.getCities()){
+            for(Tile tile : city.getTiles()){
+                if(tile.getCitizen() != null)
+                    stringBuilder.append(tile.getTileNumber()).append(" ");
+            }
+        }
+        return stringBuilder;
+    }
     //TODO
     /*
     public boolean winCheck(){
