@@ -220,7 +220,12 @@ public class PlayGameMenuController {
         int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
         int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
         String unitName = matcher.group("unitName").toLowerCase();
-
+        if (numberOfOrigin < 0 || numberOfOrigin > 71) {
+            return "number of origin is invalid !";
+        }
+        if (numberOfDestination < 0 || numberOfDestination > 71) {
+            return "number of destination is invalid !";
+        }
         Tile origin = map.get(numberOfOrigin);
         Tile destination = map.get(numberOfDestination);
         ArrayList<Unit> units = origin.getUnits();
@@ -238,7 +243,7 @@ public class PlayGameMenuController {
             str = "this unit is for another civilization !";
             return str;
         }
-        if (unit.getPath() != null) {
+        if (unit.getPath().size() != 0) {
             str = "this unit has another path !";
             return str;
         }
