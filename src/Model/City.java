@@ -59,9 +59,13 @@ public class City {
         this.defenceStrength = 0;
         //every tile adds +3 point
         this.defenceStrength += 3 * tiles.size();
-
+        // add strength if city has hill
+        int hillEffect = 0;
         //add units strength
         for(Tile tile : getTiles()){
+            if (tile.isHill()) {
+                hillEffect ++;
+            }
             for(Unit unit : tile.getUnits()){
                 if(!unit.isCivilian()){
                     Warrior warrior = (Warrior) unit;
@@ -70,7 +74,7 @@ public class City {
                 }
             }
         }
-        return this.defenceStrength;
+        return this.defenceStrength + hillEffect;
     }
 
     public int getSciencePerTurn() {//set and get
