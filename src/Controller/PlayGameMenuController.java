@@ -1389,9 +1389,7 @@ public class PlayGameMenuController {
         if (checkPath(unit) || isSameUnitOnMakingProgress(destination, unit)) {
             unit.setOrigin(unit.getPath().get(0).tile);
             unit.setDestination(null);
-            for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
-                unit.getPath().remove(i1);
-            }
+            unit.getPath().clear();
             str = "there is another civilization on the way !";
             return str;
         }
@@ -1401,9 +1399,7 @@ public class PlayGameMenuController {
         int i = 0;
         while (true) {
             if (unit.getPath().size() == 1) {
-                for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
-                    unit.getPath().remove(i1);
-                }
+                unit.getPath().clear();
                 unit.setDestination(null);
                 str = "unit reached the destination !";
                 break;
