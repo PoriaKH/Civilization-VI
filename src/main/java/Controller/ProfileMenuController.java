@@ -8,8 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ProfileMenuController {
-    private Member loggedInMember;
-
+    public static Member loggedInMember;
+/*
     public ProfileMenuController(Member loggedInMember){
         this.loggedInMember = loggedInMember;
     }
@@ -133,4 +133,5 @@ public class ProfileMenuController {
         loggedInMember.setPassword(newPassword);
         return "password changed successfully!";
     }
+ */
 }

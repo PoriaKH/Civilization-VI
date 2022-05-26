@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainMenuController {
+    /*
     public Matcher getMatcher(String regex, String command){
         Matcher matcher = Pattern.compile(regex).matcher(command);
 
@@ -20,9 +21,6 @@ public class MainMenuController {
             return matcher;
         else
             return null;
-    }
-    public void playGame(String command){
-
     }
     public ArrayList<Member> getAllMembers() throws IOException {
         ArrayList<Member> members = new ArrayList<>();
@@ -51,4 +49,5 @@ public class MainMenuController {
 
         return members;
     }
+     */
 }

@@ -32,12 +32,6 @@ public class PlayGameMenu {
         Matcher matcher = Pattern.compile(regex).matcher(command);
         return matcher;
     }
-//    public Matcher matcher(String regex, String command){
-//        Matcher matcher = Pattern.compile(regex).matcher(command);
-//        if (matcher.matches())
-//            return matcher;
-//        return null;
-//    }
 
     public void run(Scanner scan, int numOfCivilizations, ArrayList<Member> members){
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();

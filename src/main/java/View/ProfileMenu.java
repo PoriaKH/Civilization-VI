@@ -8,11 +8,12 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class ProfileMenu {
-    private Member loggedInMember;
+    private static Member loggedInMember;
 
-    public ProfileMenu(Member loggedInMember){
-        this.loggedInMember = loggedInMember;
-    }
+//    public ProfileMenu(Member loggedInMember){
+//        this.loggedInMember = loggedInMember;
+//    }
+    /*
     public void run(Scanner scan) throws IOException {
         System.out.println("entered Profile Menu!");
 
@@ -29,7 +30,6 @@ public class ProfileMenu {
         command = scan.nextLine();
 
         while(!Objects.equals(command, "menu exit")){
-            //TODO...
             if(command.matches(changeNicknameRegex1) || command.matches(changeNicknameRegex2)){
                 if(command.matches(changeNicknameRegex1))
                     System.out.println(profileMenuController.profileChangeNickname(command, changeNicknameRegex1));
@@ -52,4 +52,5 @@ public class ProfileMenu {
             command = scan.nextLine();
         }
     }
+     */
 }
