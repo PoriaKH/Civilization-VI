@@ -2,13 +2,32 @@ package View;
 
 import Controller.LoginMenuController;
 import Model.Member;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class LoginMenu {
+    public static URL mainMenuFxmlURL;
+    public Parent root;
+    public Stage stage;
+    public Scene scene;
 
+    public void buttonClicked(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(mainMenuFxmlURL);
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+/*
     public void run(Scanner scan) throws IOException {
 
         LoginMenuController loginMenuController = new LoginMenuController();
@@ -61,4 +80,5 @@ public class LoginMenu {
             command = scan.nextLine();
         }
     }
+    */
 }

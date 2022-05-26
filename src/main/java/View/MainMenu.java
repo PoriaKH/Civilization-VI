@@ -11,10 +11,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainMenu {
-    private Member loggedInMember;
-    public MainMenu(Member loggedInMember){
-        this.loggedInMember = loggedInMember;
-    }
+    public static Member loggedInMember;
+
+//    public MainMenu(Member loggedInMember){
+//        this.loggedInMember = loggedInMember;
+//    }
+    /*
     public void run(Scanner scan) throws IOException {
         System.out.println("user logged in successfully!");
         MainMenuController mainMenuController = new MainMenuController();
@@ -162,4 +164,5 @@ public class MainMenu {
         }
 
     }
+     */
 }

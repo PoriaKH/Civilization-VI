@@ -10,8 +10,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginMenuController {
-    private Member loggedInMember;
+    public static Member loggedInMember;
 
+    /*
     public Matcher getMatcher(String command,String regex){
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(command);
@@ -112,4 +113,5 @@ public class LoginMenuController {
         //
         return "Username and password didn’t match!";
     }
+     */
 }

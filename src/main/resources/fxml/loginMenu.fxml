@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="View.LoginMenu"
+            prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/style.css">
+    <center>
+        <VBox alignment="CENTER" spacing="5" maxWidth="350">
+            <Button text="button"  onAction="#buttonClicked"/>
+        </VBox>
+    </center>
+
+</BorderPane>

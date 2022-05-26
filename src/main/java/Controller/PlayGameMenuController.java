@@ -4592,5 +4592,4 @@ public class PlayGameMenuController {
             cities.get(i).setDamagePoint(newDamagePoint);
         }
     }
-
 }
