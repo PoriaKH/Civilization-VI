@@ -21,6 +21,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class LoginMenu {
     public static URL mainMenuFxmlURL;
     public static URL registerMenuFxmlURL;

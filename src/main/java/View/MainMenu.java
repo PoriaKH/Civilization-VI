@@ -4,6 +4,7 @@ import Controller.MainMenuController;
 import Model.Member;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -12,6 +13,7 @@ import java.util.regex.Pattern;
 
 public class MainMenu {
     public static Member loggedInMember;
+    public static URL scoreBoardFxmlURL;
 
 //    public MainMenu(Member loggedInMember){
 //        this.loggedInMember = loggedInMember;
