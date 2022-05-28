@@ -1,0 +1,35 @@
+Button{
+    -fx-pref-width: 250;
+    -fx-pref-height: 20;
+    -fx-effect: dropshadow( one-pass-box , #ff0000, 8 , 0.0 , 2 , 0 );
+    -fx-font-style: italic;
+    -fx-background-color: #45f10b;
+}
+Label{
+    -fx-font-size: 20;
+    -fx-font-family: "Rage Italic";
+    -fx-font-weight: bold;
+    -fx-effect: innershadow( three-pass-box , rgb(106, 0, 110), 6, 0.0 , 0 , 2 );
+}
+.Label{
+    -fx-font-size: 40;
+    -fx-font-family: "Rage Italic";
+    -fx-font-weight: bold;
+    -fx-effect: innershadow( three-pass-box , rgb(106, 0, 110), 6, 0.0 , 0 , 2 );
+}
+.BackGround {
+    -fx-background-image: url("../pictures/mainMenu.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 1280 720;
+}
+TextField{
+    -fx-max-height: 30;
+    -fx-max-width: 300;
+    -fx-background-color: #73c973;
+    -fx-arc-height: 20;
+    -fx-arc-width: 20;
+    -fx-border-color: #c25050;
+    -fx-text-fill: #f10b0b;
+    -fx-prompt-text-fill: #cc7171;
+}

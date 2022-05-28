@@ -13,8 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainMenuController {
-    /*
-    public Matcher getMatcher(String regex, String command){
+/*    public Matcher getMatcher(String regex, String command){
         Matcher matcher = Pattern.compile(regex).matcher(command);
 
         if(command.matches(regex))
@@ -48,6 +47,5 @@ public class MainMenuController {
         //
 
         return members;
-    }
-     */
+    }*/
 }
