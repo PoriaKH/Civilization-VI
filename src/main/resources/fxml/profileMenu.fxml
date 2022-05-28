@@ -16,10 +16,10 @@
     <center>
         <VBox alignment="CENTER" prefWidth="400" prefHeight="600" spacing="30">
             <Label text="PROFILE MENU" styleClass="label" />
-            <Button fx:id="changeProfilePic" text="change profile picture" styleClass="button" prefWidth="250" onMouseClicked="#changeProfilePicture"/>
-            <Button fx:id="changePassword" text="change password" styleClass="button" prefWidth="250" onMouseClicked="#changePassword"/>
-            <Button fx:id="changeNickname" text="change nickname" styleClass="button" prefWidth="250" onMouseClicked="#changeNickname"/>
-            <Button fx:id="mainMenu" text="main menu" styleClass="button" prefWidth="250" onMouseClicked="#switchToMainMenu"/>
+            <Button text="change profile picture" styleClass="button" prefWidth="250" onMouseClicked="#changeProfilePicture"/>
+            <Button text="change password" styleClass="button" prefWidth="250" onMouseClicked="#changePassword"/>
+            <Button text="change nickname" styleClass="button" prefWidth="250" onMouseClicked="#changeNickname"/>
+            <Button text="main menu" styleClass="button" prefWidth="250" onMouseClicked="#switchToMainMenu"/>
         </VBox>
     </center>
 

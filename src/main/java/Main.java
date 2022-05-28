@@ -24,6 +24,9 @@ public class Main extends Application {
         MainMenu.scoreBoardFxmlURL = new URL(Main.class.getResource("fxml/scoreBoard.fxml").toExternalForm());
         MainMenu.profileFxmlURL = new URL(Main.class.getResource("fxml/profileMenu.fxml").toExternalForm());
         ProfileMenu.mainMenuFxml = LoginMenu.mainMenuFxmlURL;
+        ProfileMenu.profileMenuFxml = MainMenu.profileFxmlURL;
+        ProfileMenu.changeNicknameFxml = new URL(Main.class.getResource("fxml/ChangeNickName.fxml").toExternalForm());
+        ProfileMenu.changePasswordFxml = new URL(Main.class.getResource("fxml/ChangePassword.fxml").toExternalForm());
 
 //        Scanner scan = new Scanner(System.in);
 //        LoginMenu loginMenu = new LoginMenu();

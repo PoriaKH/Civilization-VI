@@ -8,10 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Scanner;
@@ -19,25 +21,34 @@ import java.util.Scanner;
 public class ProfileMenu {
     public static Member loggedInMember;
     public static URL mainMenuFxml;
+    public static URL profileMenuFxml;
+    public static URL changeNicknameFxml;
+    public static URL changePasswordFxml;
     public Stage stage;
     public Scene scene;
     public Parent root;
     @FXML
-    private Button mainMenu;
+    private Label passwordLabel;
     @FXML
-    private Button changeNickname;
-    @FXML
-    private Button changePassword;
-    @FXML
-    private Button changeProfilePic;
+    private Label nicknameLabel;
 
     public void changeProfilePicture(MouseEvent mouseEvent) {
     }
 
-    public void changePassword(MouseEvent mouseEvent) {
+    public void changePassword(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(changePasswordFxml);
+        scene = new Scene(root);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void changeNickname(MouseEvent mouseEvent) {
+    public void changeNickname(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(changeNicknameFxml);
+        scene = new Scene(root);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void switchToMainMenu(MouseEvent mouseEvent) throws IOException {
@@ -47,6 +58,23 @@ public class ProfileMenu {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void changeNick(MouseEvent mouseEvent) throws IOException {
+
+    }
+
+    public void changePass(MouseEvent mouseEvent) {
+
+    }
+
+    public void switchToProfileMenu(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(profileMenuFxml);
+        scene = new Scene(root);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
 //    public ProfileMenu(Member loggedInMember){
 //        this.loggedInMember = loggedInMember;
