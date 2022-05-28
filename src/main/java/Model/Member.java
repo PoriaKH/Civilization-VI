@@ -5,12 +5,14 @@ public class Member {
     private String password;
     private String nickname;
     private int score;
+    private String date;
 
-    public Member(String username, String password, String nickname, int score){
+    public Member(String username, String nickname,String password, int score,String date){
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.score = score;
+        this.date = date;
     }
 
     public String getUsername() {

@@ -1,20 +1,195 @@
 package View;
 
-import Controller.PlayGameMenuController;
-import Model.Civilization;
-import Model.Improvement;
 import Model.Member;
-import Model.Tile;
-import Model.Units.Civilian;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 
+import javax.swing.plaf.metal.MetalMenuBarUI;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PlayGameMenu {
+    @FXML
+    private TextField user1;
+    @FXML
+    private TextField user2;
+    @FXML
+    private TextField user3;
+    @FXML
+    private TextField user4;
+    @FXML
+    private Button autoSaveButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button newGameButton;
+
+    public void newGame(MouseEvent mouseEvent) throws IOException {
+        ArrayList<Member> members = getMembers();
+        ArrayList<Member> players = new ArrayList<>();
+        boolean areUsersOk = true;
+        for (int i = 0; i < 4; ++i) {
+            if (i == 0) {
+                if (!user1.getText().equals("")) {
+                    Member member = getMember(user1.getText(), members);
+                    if (member == null) showAlert(i);
+                    else {
+                        if (isUserRepetitive (member, players)) {
+                            areUsersOk = false;
+                            showRepetitiveAlert(i);
+                        }
+                        else players.add(member);
+                    }
+                }
+            }
+            else if (i == 1) {
+                if (!user2.getText().equals("")) {
+                    Member member = getMember(user2.getText(), members);
+                    if (member == null) showAlert(i);
+                    else {
+                        if (isUserRepetitive (member, players)) {
+                            areUsersOk = false;
+                            showRepetitiveAlert(i);
+                        }
+                        else players.add(member);
+                    }
+                }
+            }
+            else if (i == 2) {
+                if (!user3.getText().equals("")) {
+                    Member member = getMember(user3.getText(), members);
+                    if (member == null) showAlert(i);
+                    else {
+                        if (isUserRepetitive (member, players)) {
+                            areUsersOk = false;
+                            showRepetitiveAlert(i);
+                        }
+                        else players.add(member);
+                    }
+                }
+            }
+            else if (i == 3) {
+                if (!user4.getText().equals("")) {
+                    Member member = getMember(user4.getText(), members);
+                    if (member == null) showAlert(i);
+                    else {
+                        if (isUserRepetitive (member, players)) {
+                            areUsersOk = false;
+                            showRepetitiveAlert(i);
+                        }
+                        else players.add(member);
+                    }
+                }
+            }
+        }
+        if (players.size() == 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("empty rivals");
+            alert.setHeaderText("result :");
+            alert.setContentText("do you want to play with yourself :)");
+            alert.showAndWait();
+            return;
+        }
+        players.add(MainMenu.loggedInMember);
+        if (areUsersOk) {
+            for (int i = 0; i < players.size(); i++) {
+                System.out.println( (i+1)+ players.get(i).getUsername());
+            }
+            System.out.println("ok");
+        }
+    }
+
+    private void showRepetitiveAlert(int i) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("repetitive username number :" + (i + 1));
+        alert.setHeaderText("result :");
+        alert.setContentText("this username is repetitive !");
+        alert.showAndWait();
+    }
+
+    private boolean isUserRepetitive(Member member, ArrayList<Member> players) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getUsername().equals(member.getUsername())) return true;
+        }
+        if (MainMenu.loggedInMember.getUsername().equals(member.getUsername())) return true;
+        return false;
+    }
+
+    private void showAlert(int i) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("wrong username" + (i + 1));
+        alert.setHeaderText("result :");
+        alert.setContentText("there is no username with this name");
+        alert.showAndWait();
+    }
+
+    private Member getMember(String username, ArrayList<Member> members) {
+        for (int i = 0; i < members.size(); i++) {
+            if (username.equals(members.get(i).getUsername())) return members.get(i);
+        }
+        return null;
+    }
+
+    public void saveGameContinue(MouseEvent mouseEvent) {
+    }
+
+    public void autoSaveGameContinue(MouseEvent mouseEvent) {
+    }
+
+    public void showAutoSaveInfo(MouseEvent mouseEvent) {
+        Tooltip tooltip = new Tooltip("you can continue from last auto save !");
+        autoSaveButton.setTooltip(tooltip);
+    }
+
+    public void showSaveInfo(MouseEvent mouseEvent) {
+        Tooltip tooltip = new Tooltip("you can continue from where the game has been stopped !");
+        saveButton.setTooltip(tooltip);
+    }
+
+    public void showStartGameInfo(MouseEvent mouseEvent) {
+        Tooltip tooltip = new Tooltip("start a new game with maximum 4 user \n" +
+                "enter their username from user 1 to user 4");
+        newGameButton.setTooltip(tooltip);
+    }
+
+    private Matcher getMatcher(String command, String regex) {
+        Matcher matcher = Pattern.compile(regex).matcher(command);
+        return matcher;
+    }
+
+    public ArrayList<Member> getMembers () throws IOException {
+        ArrayList<Member> members = new ArrayList<>();
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<date>.+)";
+        File file = new File("users.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            String fileNickname = fileMatcher.group("nickname");
+            String filePassword = fileMatcher.group("password");
+            int score = Integer.parseInt(fileMatcher.group("score"));
+            String fileDate = fileMatcher.group("date");
+
+            Member member = new Member(fileUsername, fileNickname, filePassword, score, fileDate);
+            members.add(member);
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        return members;
+    }
+
+    /*
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String BLACK = "\033[0;30m";
     public static final String YELLOW = "\u001B[33m";// --> dessert
@@ -789,5 +964,6 @@ public class PlayGameMenu {
 
             command = scan.nextLine();
         }
-    }
+    }*/
+
 }
