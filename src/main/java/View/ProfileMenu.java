@@ -3,8 +3,13 @@ package View;
 import Controller.ProfileMenuController;
 import Model.Member;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +19,9 @@ import java.util.Scanner;
 public class ProfileMenu {
     public static Member loggedInMember;
     public static URL mainMenuFxml;
+    public Stage stage;
+    public Scene scene;
+    public Parent root;
     @FXML
     private Button mainMenu;
     @FXML
@@ -32,7 +40,12 @@ public class ProfileMenu {
     public void changeNickname(MouseEvent mouseEvent) {
     }
 
-    public void switchToMainMenu(MouseEvent mouseEvent) {
+    public void switchToMainMenu(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(mainMenuFxml);
+        scene = new Scene(root);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
 //    public ProfileMenu(Member loggedInMember){

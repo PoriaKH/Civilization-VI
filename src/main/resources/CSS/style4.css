@@ -45,3 +45,8 @@
     -fx-font-weight: bold;
     -fx-effect: innershadow( three-pass-box , rgb(255, 0, 47), 6, 0.0 , 0 , 2 );
 }
+.background{
+    -fx-background-image: url("../pictures/profileMenuBackground.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
