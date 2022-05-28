@@ -84,7 +84,7 @@ public class LoginMenu {
     }
 
     public void loginMouseAction(ActionEvent event) throws IOException {
-        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<date>.+)";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
         File file = new File("users.txt");
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -98,12 +98,13 @@ public class LoginMenu {
             String fileNickname = fileMatcher.group("nickname");
             String filePassword = fileMatcher.group("password");
             String fileDate = fileMatcher.group("date");
+            int fileImage = Integer.parseInt(fileMatcher.group("image"));
 
             if(Objects.equals(fileUsername, usernameTF.getText())){
                 if(Objects.equals(filePassword, passwordTF.getText())){
                     int score = Integer.parseInt(fileMatcher.group("score"));
-                    changeDate(fileUsername,fileNickname,filePassword,score);
-                    MainMenu.loggedInMember = new Member(usernameTF.getText(),fileNickname,passwordTF.getText(),score,fileDate);
+                    changeDate(fileUsername,fileNickname,filePassword,score,fileImage);
+                    MainMenu.loggedInMember = new Member(usernameTF.getText(),fileNickname,passwordTF.getText(),score,fileImage,fileDate);
                     switchToMain(event);
                     message.setText("");
                 }
@@ -118,7 +119,7 @@ public class LoginMenu {
         message.setText("Username and password did not match!");
     }
 
-    private void changeDate(String fileUsername, String fileNickname, String filePassword, int score) throws IOException {
+    private void changeDate(String fileUsername, String fileNickname, String filePassword, int score, int imageNumber) throws IOException {
         File file = new File("users.txt");
 
         FileReader fileReader = new FileReader(file);
@@ -126,7 +127,7 @@ public class LoginMenu {
         StringBuilder stringBuilder = new StringBuilder("");
         String line = bufferedReader.readLine();
 
-        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<date>.+)";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
         while (line != null && !line.equals("")) {
             Matcher fileMatcher = getMatcher(line, fileRegex);
             fileMatcher.find();
@@ -146,7 +147,7 @@ public class LoginMenu {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        bufferedWriter.write(fileUsername + " " + fileNickname + " " + filePassword + " " + score + " " + dtf.format(now));
+        bufferedWriter.write(fileUsername + " " + fileNickname + " " + filePassword + " " + score + " " + imageNumber + " " + dtf.format(now));
 
         bufferedWriter.newLine();
 
@@ -159,9 +160,6 @@ public class LoginMenu {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-    public void switchToRegister(){
-
     }
 /*
     public void run(Scanner scan) throws IOException {
