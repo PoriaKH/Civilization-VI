@@ -33,6 +33,10 @@ public class Member {
         return score;
     }
 
+    public int getImageNumber() {
+        return imageNumber;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -47,5 +51,9 @@ public class Member {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setImageNumber(int imageNumber) {
+        this.imageNumber = imageNumber;
     }
 }
