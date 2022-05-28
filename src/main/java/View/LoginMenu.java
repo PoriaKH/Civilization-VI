@@ -1,6 +1,5 @@
 package View;
 
-import Controller.LoginMenuController;
 import Model.Member;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -9,15 +8,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -104,6 +102,7 @@ public class LoginMenu {
             if(Objects.equals(fileUsername, usernameTF.getText())){
                 if(Objects.equals(filePassword, passwordTF.getText())){
                     int score = Integer.parseInt(fileMatcher.group("score"));
+                    changeDate(fileUsername,fileNickname,filePassword,score);
                     MainMenu.loggedInMember = new Member(usernameTF.getText(),fileNickname,passwordTF.getText(),score,fileDate);
                     switchToMain(event);
                     message.setText("");
@@ -118,6 +117,42 @@ public class LoginMenu {
 
         message.setText("Username and password did not match!");
     }
+
+    private void changeDate(String fileUsername, String fileNickname, String filePassword, int score) throws IOException {
+        File file = new File("users.txt");
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<date>.+)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+
+            String username = fileMatcher.group("username");
+
+            if(!Objects.equals(fileUsername, username)) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            line = bufferedReader.readLine();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+        bufferedWriter.write(String.valueOf(stringBuilder));
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        bufferedWriter.write(fileUsername + " " + fileNickname + " " + filePassword + " " + score + " " + dtf.format(now));
+
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+    }
+
     public void switchToMain(javafx.event.ActionEvent event) throws IOException {
         root = FXMLLoader.load(mainMenuFxmlURL);
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
