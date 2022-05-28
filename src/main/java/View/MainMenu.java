@@ -43,6 +43,7 @@ public class MainMenu {
     }
 
     public void profileMenuSwitch(MouseEvent mouseEvent) throws IOException {
+        ProfileMenu.loggedInMember = MainMenu.loggedInMember;
         root = FXMLLoader.load(profileFxmlURL);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);

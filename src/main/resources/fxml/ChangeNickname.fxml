@@ -15,8 +15,8 @@
 
     <center>
         <VBox alignment="CENTER" maxWidth="300" maxHeight="300" spacing="30">
-            <Label text=" " fx:id="nicknameLabel"/>
-            <TextField promptText="enter your new nickname" styleClass="text-field" prefWidth="250" />
+            <Label text="" fx:id="nicknameLabel" styleClass="secondLabel"/>
+            <TextField promptText="enter your new nickname" styleClass="text-field" prefWidth="250" fx:id="nicknameTF"/>
             <Button text="change" styleClass="button" prefWidth="250" onMouseClicked="#changeNick"/>
             <Button text="profile menu" styleClass="button" prefWidth="250" onMouseClicked="#switchToProfileMenu"/>
         </VBox>

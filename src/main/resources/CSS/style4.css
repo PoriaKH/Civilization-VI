@@ -50,3 +50,10 @@
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
 }
+.secondLabel {
+    -fx-font-size: 16;
+    -fx-font-family: Ebrima;
+    -fx-text-fill: #84f384;
+    -fx-effect: none;
+    -fx-background-color: transparent !important;
+}
