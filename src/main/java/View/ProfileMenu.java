@@ -2,13 +2,38 @@ package View;
 
 import Controller.ProfileMenuController;
 import Model.Member;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class ProfileMenu {
-    private static Member loggedInMember;
+    public static Member loggedInMember;
+    public static URL mainMenuFxml;
+    @FXML
+    private Button mainMenu;
+    @FXML
+    private Button changeNickname;
+    @FXML
+    private Button changePassword;
+    @FXML
+    private Button changeProfilePic;
+
+    public void changeProfilePicture(MouseEvent mouseEvent) {
+    }
+
+    public void changePassword(MouseEvent mouseEvent) {
+    }
+
+    public void changeNickname(MouseEvent mouseEvent) {
+    }
+
+    public void switchToMainMenu(MouseEvent mouseEvent) {
+    }
 
 //    public ProfileMenu(Member loggedInMember){
 //        this.loggedInMember = loggedInMember;

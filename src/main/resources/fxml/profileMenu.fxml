@@ -6,9 +6,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="View.ProfileMenu"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="720.0" prefWidth="1280.0"
+            stylesheets="@../CSS/style4.css">
 
-</AnchorPane>
+    <center>
+        <VBox alignment="CENTER" prefWidth="400" prefHeight="600" spacing="30">
+            <Label text="PROFILE MENU" styleClass="label" />
+            <Button fx:id="changeProfilePic" text="change profile picture" styleClass="button" prefWidth="250" onMouseClicked="#changeProfilePicture"/>
+            <Button fx:id="changePassword" text="change password" styleClass="button" prefWidth="250" onMouseClicked="#changePassword"/>
+            <Button fx:id="changeNickname" text="change nickname" styleClass="button" prefWidth="250" onMouseClicked="#changeNickname"/>
+            <Button fx:id="mainMenu" text="main menu" styleClass="button" prefWidth="250" onMouseClicked="#switchToMainMenu"/>
+        </VBox>
+    </center>
+
+</BorderPane>
