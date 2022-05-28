@@ -18,8 +18,6 @@
             <Button text="Game menu" alignment="CENTER" onMouseClicked="#gameMenuSwitch"/>
             <Button text="Profile menu" alignment="CENTER" onMouseClicked="#profileMenuSwitch"/>
             <Button text="Scoreboard" alignment="CENTER" onMouseClicked="#scoreboardSwitch"/>
-            <Button text="Login menu" alignment="CENTER" onMouseClicked="#loginMenuSwitch"/>
-            <Button text="Register menu" alignment="CENTER" onMouseClicked="#registerMenuSwitch"/>
             <Button text="Logout" alignment="CENTER" onMouseClicked="#logout"/>
         </VBox>
     </center>

@@ -58,22 +58,6 @@ public class MainMenu {
         stage.show();
     }
 
-    public void loginMenuSwitch(MouseEvent mouseEvent) throws IOException {
-        root = FXMLLoader.load(RegisterMenu.loginMenuFxmlURL);
-        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void registerMenuSwitch(MouseEvent mouseEvent) throws IOException {
-        root = FXMLLoader.load(LoginMenu.registerMenuFxmlURL);
-        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
     public void logout(MouseEvent mouseEvent) throws IOException {
         loggedInMember = null;
         root = FXMLLoader.load(RegisterMenu.loginMenuFxmlURL);

@@ -34,33 +34,58 @@ public class PlayGameMenu {
     public void newGame(MouseEvent mouseEvent) throws IOException {
         ArrayList<Member> members = getMembers();
         ArrayList<Member> players = new ArrayList<>();
+        boolean areUsersOk = true;
         for (int i = 0; i < 4; ++i) {
             if (i == 0) {
                 if (!user1.getText().equals("")) {
                     Member member = getMember(user1.getText(), members);
                     if (member == null) showAlert(i);
-                    else players.add(member);
+                    else {
+                        if (isUserRepetitive (member, players)) {
+                            areUsersOk = false;
+                            showRepetitiveAlert(i);
+                        }
+                        else players.add(member);
+                    }
                 }
             }
             else if (i == 1) {
                 if (!user2.getText().equals("")) {
                     Member member = getMember(user2.getText(), members);
                     if (member == null) showAlert(i);
-                    else players.add(member);
+                    else {
+                        if (isUserRepetitive (member, players)) {
+                            areUsersOk = false;
+                            showRepetitiveAlert(i);
+                        }
+                        else players.add(member);
+                    }
                 }
             }
             else if (i == 2) {
                 if (!user3.getText().equals("")) {
                     Member member = getMember(user3.getText(), members);
                     if (member == null) showAlert(i);
-                    else players.add(member);
+                    else {
+                        if (isUserRepetitive (member, players)) {
+                            areUsersOk = false;
+                            showRepetitiveAlert(i);
+                        }
+                        else players.add(member);
+                    }
                 }
             }
             else if (i == 3) {
                 if (!user4.getText().equals("")) {
                     Member member = getMember(user4.getText(), members);
                     if (member == null) showAlert(i);
-                    else players.add(member);
+                    else {
+                        if (isUserRepetitive (member, players)) {
+                            areUsersOk = false;
+                            showRepetitiveAlert(i);
+                        }
+                        else players.add(member);
+                    }
                 }
             }
         }
@@ -73,9 +98,28 @@ public class PlayGameMenu {
             return;
         }
         players.add(MainMenu.loggedInMember);
-        if (players.size() > 1) {
+        if (areUsersOk) {
+            for (int i = 0; i < players.size(); i++) {
+                System.out.println( (i+1)+ players.get(i).getUsername());
+            }
             System.out.println("ok");
         }
+    }
+
+    private void showRepetitiveAlert(int i) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("repetitive username number :" + (i + 1));
+        alert.setHeaderText("result :");
+        alert.setContentText("this username is repetitive !");
+        alert.showAndWait();
+    }
+
+    private boolean isUserRepetitive(Member member, ArrayList<Member> players) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getUsername().equals(member.getUsername())) return true;
+        }
+        if (MainMenu.loggedInMember.getUsername().equals(member.getUsername())) return true;
+        return false;
     }
 
     private void showAlert(int i) {
