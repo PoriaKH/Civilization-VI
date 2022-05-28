@@ -2,6 +2,14 @@ package View;
 
 import Controller.MainMenuController;
 import Model.Member;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import sun.tools.jar.Main;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +22,68 @@ import java.util.regex.Pattern;
 public class MainMenu {
     public static Member loggedInMember;
     public static URL scoreBoardFxmlURL;
+
+    public static URL gameMenuFxmlURL;
+
+    public static URL profileFxmlURL;
+
+    public Parent root;
+
+    public Stage stage;
+
+    public Scene scene;
+
+
+    public void gameMenuSwitch(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(gameMenuFxmlURL);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void profileMenuSwitch(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(profileFxmlURL);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void scoreboardSwitch(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(scoreBoardFxmlURL);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void loginMenuSwitch(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(RegisterMenu.loginMenuFxmlURL);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void registerMenuSwitch(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(LoginMenu.registerMenuFxmlURL);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void logout(MouseEvent mouseEvent) throws IOException {
+        loggedInMember = null;
+        root = FXMLLoader.load(RegisterMenu.loginMenuFxmlURL);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
 
 //    public MainMenu(Member loggedInMember){
 //        this.loggedInMember = loggedInMember;
