@@ -6,13 +6,15 @@ public class Member {
     private String nickname;
     private int score;
     private String date;
+    private int imageNumber;
 
-    public Member(String username, String nickname,String password, int score,String date){
+    public Member(String username, String nickname,String password, int score,int imageNumber,String date){
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.score = score;
         this.date = date;
+        this.imageNumber = imageNumber;
     }
 
     public String getUsername() {
