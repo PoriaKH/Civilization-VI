@@ -8,7 +8,7 @@ public class Member {
     private String date;
     private int imageNumber;
 
-    public Member(String username, String nickname, String password, int score, int imageNumber, String date){
+    public Member(String username, String nickname,String password, int score,int imageNumber,String date){
         this.username = username;
         this.password = password;
         this.nickname = nickname;
@@ -29,10 +29,6 @@ public class Member {
         return nickname;
     }
 
-    public int getImageNumber() {
-        return imageNumber;
-    }
-
     public int getScore() {
         return score;
     }
@@ -51,9 +47,5 @@ public class Member {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setImageNumber(int imageNumber) {
-        this.imageNumber = imageNumber;
     }
 }
