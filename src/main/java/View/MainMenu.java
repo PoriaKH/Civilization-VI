@@ -36,6 +36,7 @@ public class MainMenu {
     public Scene scene;
     public static URL mediaURL;
     public static MediaPlayer mediaPlayer;
+
     public void gameMenuSwitch(MouseEvent mouseEvent) throws IOException {
         Media media = new Media(mediaURL.toExternalForm());
         mediaPlayer = new MediaPlayer(media);
