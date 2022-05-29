@@ -29,6 +29,7 @@ public class MainMenu {
 
     public static URL profileFxmlURL;
 
+
     public Parent root;
 
     public Stage stage;
