@@ -14,7 +14,7 @@
             styleClass="BackGround">
     <center>
         <VBox alignment="CENTER" spacing="20">
-            <Label text="Game menu" alignment="CENTER" styleClass="Label"/>
+            <Label text="GAME MENU" alignment="CENTER" styleClass="myLabel"/>
             <Label text="player 1" alignment="CENTER"/>
             <TextField promptText="player1's username" alignment="CENTER" fx:id="user1"/>
             <Label text="player 2" alignment="CENTER"/>

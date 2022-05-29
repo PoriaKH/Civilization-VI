@@ -37,3 +37,10 @@ TextField{
     -fx-text-fill: #f10b0b;
     -fx-prompt-text-fill: #cc7171;
 }
+
+.myLabel {
+    -fx-font-size: 50;
+    -fx-font-family: Ebrima;
+    -fx-font-weight: bold;
+    -fx-effect: innershadow( three-pass-box , rgb(255, 0, 47), 6, 0.0 , 0 , 2 );
+}

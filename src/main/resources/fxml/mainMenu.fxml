@@ -6,6 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="View.MainMenu"
@@ -14,7 +15,7 @@
             styleClass="BackGround">
     <center>
         <VBox alignment="CENTER" spacing="30">
-            <Label text="Main menu" alignment="CENTER"/>
+            <Label text="MAIN MENU" alignment="CENTER"/>
             <Button text="Game menu" alignment="CENTER" onMouseClicked="#gameMenuSwitch"/>
             <Button text="Profile menu" alignment="CENTER" onMouseClicked="#profileMenuSwitch"/>
             <Button text="Scoreboard" alignment="CENTER" onMouseClicked="#scoreboardSwitch"/>
