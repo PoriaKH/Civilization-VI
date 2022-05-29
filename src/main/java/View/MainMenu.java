@@ -34,13 +34,8 @@ public class MainMenu {
     public Stage stage;
 
     public Scene scene;
-    public static URL mediaURL;
-    public static MediaPlayer mediaPlayer;
 
     public void gameMenuSwitch(MouseEvent mouseEvent) throws IOException {
-        Media media = new Media(mediaURL.toExternalForm());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
         root = FXMLLoader.load(gameMenuFxmlURL);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
