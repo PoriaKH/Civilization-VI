@@ -32,6 +32,7 @@ public class Main extends Application {
         ProfileMenu.secondPic = new URL(Main.class.getResource("pictures/1.png").toExternalForm());
         ProfileMenu.thirdPic = new URL(Main.class.getResource("pictures/2.png").toExternalForm());
         ProfileMenu.forthPic = new URL(Main.class.getResource("pictures/3.png").toExternalForm());
+        MainMenu.mainMenuSoundURL = new URL(Main.class.getResource("music/1.mp3").toExternalForm());
 //        Scanner scan = new Scanner(System.in);
 //        LoginMenu loginMenu = new LoginMenu();
 //        loginMenu.run(scan);

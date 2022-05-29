@@ -11,11 +11,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sun.tools.jar.Main;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -28,6 +30,9 @@ public class MainMenu {
     public static URL gameMenuFxmlURL;
 
     public static URL profileFxmlURL;
+    public static URL mainMenuSoundURL;
+
+    public static MediaPlayer mediaPlayer;
 
 
     public Parent root;
@@ -35,6 +40,18 @@ public class MainMenu {
     public Stage stage;
 
     public Scene scene;
+
+    public void initialize(){
+        if(mediaPlayer != null){
+            mediaPlayer.play();
+        }
+        if(mediaPlayer == null) {
+            Media media = new Media(mainMenuSoundURL.toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        }
+    }
 
     public void gameMenuSwitch(MouseEvent mouseEvent) throws IOException {
         root = FXMLLoader.load(gameMenuFxmlURL);
@@ -63,6 +80,9 @@ public class MainMenu {
 
     public void logout(MouseEvent mouseEvent) throws IOException {
         loggedInMember = null;
+        mediaPlayer.stop();
+        mediaPlayer = null;
+
         root = FXMLLoader.load(RegisterMenu.loginMenuFxmlURL);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
