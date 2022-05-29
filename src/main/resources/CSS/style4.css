@@ -57,3 +57,7 @@
     -fx-effect: none;
     -fx-background-color: transparent !important;
 }
+.firstPic{
+    -fx-background-image: url("../pictures/0.png");
+    -fx-background-position: 100 20;
+}

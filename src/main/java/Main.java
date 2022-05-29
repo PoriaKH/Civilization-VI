@@ -27,7 +27,11 @@ public class Main extends Application {
         ProfileMenu.profileMenuFxml = MainMenu.profileFxmlURL;
         ProfileMenu.changeNicknameFxml = new URL(Main.class.getResource("fxml/ChangeNickName.fxml").toExternalForm());
         ProfileMenu.changePasswordFxml = new URL(Main.class.getResource("fxml/ChangePassword.fxml").toExternalForm());
-
+        ProfileMenu.changeProfilePicFxml = new URL(Main.class.getResource("fxml/ChangeProfilePicture.fxml").toExternalForm());
+        ProfileMenu.firstPic = new URL(Main.class.getResource("pictures/0.png").toExternalForm());
+        ProfileMenu.secondPic = new URL(Main.class.getResource("pictures/1.png").toExternalForm());
+        ProfileMenu.thirdPic = new URL(Main.class.getResource("pictures/2.png").toExternalForm());
+        ProfileMenu.forthPic = new URL(Main.class.getResource("pictures/3.png").toExternalForm());
 //        Scanner scan = new Scanner(System.in);
 //        LoginMenu loginMenu = new LoginMenu();
 //        loginMenu.run(scan);

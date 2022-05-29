@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import sun.tools.jar.Main;
 
@@ -32,7 +34,6 @@ public class MainMenu {
     public Stage stage;
 
     public Scene scene;
-
 
     public void gameMenuSwitch(MouseEvent mouseEvent) throws IOException {
         root = FXMLLoader.load(gameMenuFxmlURL);

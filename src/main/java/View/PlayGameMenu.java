@@ -2,11 +2,16 @@ package View;
 
 import Model.Member;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import javax.swing.plaf.metal.MetalMenuBarUI;
 import java.io.*;
@@ -16,6 +21,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PlayGameMenu {
+
+    public Parent root;
+
+    public Stage stage;
+
+    public Scene scene;
+
+    public Button backButton;
     @FXML
     private TextField user1;
     @FXML
@@ -188,6 +201,19 @@ public class PlayGameMenu {
         }
         fileReader.close();
         return members;
+    }
+
+    public void backInfo(MouseEvent mouseEvent) {
+        Tooltip tooltip = new Tooltip("back to main menu");
+        backButton.setTooltip(tooltip);
+    }
+
+    public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     /*
