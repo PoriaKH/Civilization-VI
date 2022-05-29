@@ -13,6 +13,10 @@ Label{
     -fx-text-fill: #000000;
     -fx-font-size: 15;
 }
+.Label3{
+    -fx-text-fill: #ecff00;
+    -fx-font-size: 20;
+}
 .Message{
     -fx-max-width: 0;
     -fx-max-height: 0;
@@ -51,6 +55,10 @@ Label{
     -fx-pref-width: 350;
     -fx-border-radius: 5;
 }
+.Text2{
+    -fx-font-size: 20;
+    -fx-fill: #ff0000;
+}
 #stack-pane{
     -fx-background-image: url("https://cdn.app.compendium.com/uploads/user/e7c690e8-6ff9-102a-ac6d-e4aebca50425/ed5569e8-c0dd-458c-8450-cde6300093bd/File/a5023b0f0fb67f59176a0499af9021ed/java_horz_clr.png");
     -fx-background-repeat: no-repeat;
@@ -70,4 +78,16 @@ Label{
     -fx-pref-width: 350;
     -fx-border-radius: 5;
     -fx-background-color: #4eb245;
+}
+.Label2{
+    -fx-font-size: 50;
+    -fx-font-family: Ebrima;
+    -fx-font-weight: bold;
+    -fx-effect: innershadow( three-pass-box , rgb(255, 0, 47), 6, 0.0 , 0 , 2 );
+}
+.BackGround {
+    -fx-background-image: url("../pictures/loginMenu.jpeg");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 1280 720;
 }
