@@ -209,6 +209,7 @@ public class PlayGameMenu {
     }
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
+        MainMenu.mediaPlayer.stop();
         root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);

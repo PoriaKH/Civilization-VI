@@ -16,6 +16,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        MainMenu.mediaURL = new URL(Main.class.getResource("musics/1-01 Opening Movie Music (1).mp3").toExternalForm());
         LoginMenu.mainMenuFxmlURL = new URL(Main.class.getResource("fxml/mainMenu.fxml").toExternalForm());
         LoginMenu.registerMenuFxmlURL = new URL(Main.class.getResource("fxml/registerMenu.fxml").toExternalForm());
         RegisterMenu.loginMenuFxmlURL = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
