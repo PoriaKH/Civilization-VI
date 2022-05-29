@@ -31,6 +31,8 @@
 
             <Button text="continue auto save game" alignment="CENTER" onMouseClicked="#autoSaveGameContinue"
                     onMouseEntered="#showAutoSaveInfo" fx:id="autoSaveButton"/>
+            <Button text="Back" alignment="CENTER" onMouseEntered="#backInfo"
+                    onMouseClicked="#backToMainMenu" fx:id="backButton"/>
         </VBox>
     </center>
 
