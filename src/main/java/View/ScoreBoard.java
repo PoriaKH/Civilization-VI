@@ -6,6 +6,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -75,6 +78,8 @@ public class ScoreBoard {
                 }
             }
             Text text = new Text(userCounter + "- " + nicknames.get(index) + " : " + points.get(index) + "  :          " + dates.get(index));
+            text.setFill(Paint.valueOf("#086400"));
+            text.setFont(Font.font("Verdana", FontWeight.BOLD, 23));
             list.getChildren().add(text);
             list.getChildren().add(new Text("--------------------------------------------------------------------------------------------------------------------------------"));
             users.remove(index);
