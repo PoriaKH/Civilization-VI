@@ -22,7 +22,7 @@ Label{
     -fx-effect: innershadow( three-pass-box , rgb(106, 0, 110), 6, 0.0 , 0 , 2 );
 }
 .BackGround {
-    -fx-background-image: url("../pictures/mainMenu.png");
+    -fx-background-image: url("../pictures/gameMenu.png");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-size: 1280 720;
