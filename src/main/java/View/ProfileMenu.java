@@ -10,7 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -30,6 +35,11 @@ public class ProfileMenu {
     public static URL profileMenuFxml;
     public static URL changeNicknameFxml;
     public static URL changePasswordFxml;
+    public static URL changeProfilePicFxml;
+    public static URL firstPic;
+    public static URL secondPic;
+    public static URL thirdPic;
+    public static URL forthPic;
     public Stage stage;
     public Scene scene;
     public Parent root;
@@ -42,7 +52,29 @@ public class ProfileMenu {
         return Pattern.compile(regex).matcher(command);
     }
 
-    public void changeProfilePicture(MouseEvent mouseEvent) {
+    public void changeProfilePicture(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(changeProfilePicFxml);
+//        VBox vbox = (VBox) root.getChildrenUnmodifiable().get(0);
+//        Rectangle first = new Rectangle();
+//        Rectangle second = new Rectangle();
+//        Rectangle third = new Rectangle();
+//        Rectangle forth = new Rectangle();
+//        first.setFill(new ImagePattern(new Image(firstPic.toExternalForm())));
+//        second.setFill(new ImagePattern(new Image(secondPic.toExternalForm())));
+//        third.setFill(new ImagePattern(new Image(thirdPic.toExternalForm())));
+//        forth.setFill(new ImagePattern(new Image(forthPic.toExternalForm())));
+//        HBox hbox1 = new HBox(50);
+//        HBox hbox2 = new HBox(50);
+//        hbox1.getChildren().add(first);
+//        hbox1.getChildren().add(second);
+//        hbox2.getChildren().add(third);
+//        hbox2.getChildren().add(forth);
+//        vbox.getChildren().add(hbox1);
+//        vbox.getChildren().add(hbox2);
+        scene = new Scene(root);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void changePassword(MouseEvent mouseEvent) throws IOException {
@@ -94,9 +126,9 @@ public class ProfileMenu {
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         StringBuilder stringBuilder = new StringBuilder("");
         String line = bufferedReader.readLine();
-        String date = "";
+        String date = "", image = "";
 
-        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<date>.+)";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
         while (line != null && !line.equals("")) {
             Matcher fileMatcher = getMatcher(line, fileRegex);
             fileMatcher.find();
@@ -118,9 +150,9 @@ public class ProfileMenu {
 
         bufferedWriter.write(String.valueOf(stringBuilder));
         if(!inUse)
-            bufferedWriter.write(loggedInMember.getUsername() + " " + newNickname + " " + loggedInMember.getPassword() + " " + loggedInMember.getScore() + " " + date);
+            bufferedWriter.write(loggedInMember.getUsername() + " " + newNickname + " " + loggedInMember.getPassword() + " " + loggedInMember.getScore() + " " + loggedInMember.getImageNumber() + " " + date);
         else
-            bufferedWriter.write(loggedInMember.getUsername() + " " + loggedInMember.getNickname() + " " + loggedInMember.getPassword() + " " + loggedInMember.getScore() + " " + date);
+            bufferedWriter.write(loggedInMember.getUsername() + " " + loggedInMember.getNickname() + " " + loggedInMember.getPassword() + " " + loggedInMember.getScore() + " " + loggedInMember.getImageNumber() + " " + date);
 
         bufferedWriter.newLine();
 
@@ -163,7 +195,7 @@ public class ProfileMenu {
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         StringBuilder stringBuilder = new StringBuilder("");
         String line = bufferedReader.readLine();
-        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<date>.+)";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
         while (line != null && !line.equals("")) {
             Matcher fileMatcher = getMatcher(line, fileRegex);
             fileMatcher.find();
@@ -179,7 +211,7 @@ public class ProfileMenu {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
         bufferedWriter.write(String.valueOf(stringBuilder));
-        bufferedWriter.write(loggedInMember.getUsername() + " " + loggedInMember.getNickname() + " " + newPassword + " " + loggedInMember.getScore() + " " + date);
+        bufferedWriter.write(loggedInMember.getUsername() + " " + loggedInMember.getNickname() + " " + newPassword + " " + loggedInMember.getScore() + " " + loggedInMember.getImageNumber() + " " + date);
         bufferedWriter.newLine();
         bufferedWriter.close();
         loggedInMember.setPassword(newPassword);
@@ -202,6 +234,56 @@ public class ProfileMenu {
         profileChangeNickname(mouseEvent);
     }
 
+
+    public void changeProf(int imageNumber, MouseEvent mouseEvent) throws IOException {
+        String username = loggedInMember.getUsername();
+        File file = new File("users.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+        String date = "";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            date = fileMatcher.group("date");
+
+            if(!Objects.equals(fileUsername, username)) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            line = bufferedReader.readLine();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+        bufferedWriter.write(String.valueOf(stringBuilder));
+        bufferedWriter.write(loggedInMember.getUsername() + " " + loggedInMember.getNickname() + " " + loggedInMember.getPassword() + " " + loggedInMember.getScore() + " " + imageNumber + " " + date);
+        bufferedWriter.newLine();
+        bufferedWriter.close();
+        switchToProfileMenu(mouseEvent);
+    }
+
+    public void setFirstPic(MouseEvent mouseEvent) throws IOException {
+        loggedInMember.setImageNumber(0);
+        changeProf(0, mouseEvent);
+    }
+
+    public void setSecondPic(MouseEvent mouseEvent) throws IOException {
+        loggedInMember.setImageNumber(1);
+        changeProf(1, mouseEvent);
+    }
+
+    public void setThirdPic(MouseEvent mouseEvent) throws IOException {
+        loggedInMember.setImageNumber(2);
+        changeProf(2, mouseEvent);
+    }
+
+    public void setForthPic(MouseEvent mouseEvent) throws IOException {
+        loggedInMember.setImageNumber(3);
+        changeProf(3, mouseEvent);
+    }
 
 //    public ProfileMenu(Member loggedInMember){
 //        this.loggedInMember = loggedInMember;

@@ -166,7 +166,7 @@ public class PlayGameMenu {
 
     public ArrayList<Member> getMembers () throws IOException {
         ArrayList<Member> members = new ArrayList<>();
-        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<date>.+)";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
         File file = new File("users.txt");
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -179,9 +179,10 @@ public class PlayGameMenu {
             String fileNickname = fileMatcher.group("nickname");
             String filePassword = fileMatcher.group("password");
             int score = Integer.parseInt(fileMatcher.group("score"));
+            int imageNumber = Integer.parseInt(fileMatcher.group("image"));
             String fileDate = fileMatcher.group("date");
 
-            Member member = new Member(fileUsername, fileNickname, filePassword, score, fileDate);
+            Member member = new Member(fileUsername, fileNickname, filePassword, score, imageNumber, fileDate);
             members.add(member);
             line = bufferedReader.readLine();
         }

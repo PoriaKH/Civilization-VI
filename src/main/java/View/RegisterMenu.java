@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,7 +51,7 @@ public class RegisterMenu {
         StringBuilder stringBuilder = new StringBuilder("");
         String line = bufferedReader.readLine();
 
-        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<date>.+)";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
         while (line != null && !line.equals("")) {
             Matcher fileMatcher = getMatcher(line, fileRegex);
             fileMatcher.find();
@@ -73,7 +74,11 @@ public class RegisterMenu {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 
-        bufferedWriter.write(usernameTF.getText() + " " + nicknameTF.getText() + " " + passwordTF.getText() + " 0 " + dtf.format(now));
+        Random rand = new Random();
+        int upperbound = 4;
+        int int_random = rand.nextInt(upperbound);
+
+        bufferedWriter.write(usernameTF.getText() + " " + nicknameTF.getText() + " " + passwordTF.getText() + " 0 " + int_random + " " + dtf.format(now));
         bufferedWriter.newLine();
 
         message.setText("user registered successfully");
