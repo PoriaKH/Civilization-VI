@@ -88,6 +88,8 @@ public class ScoreBoard {
             dates.remove(index);
             i = 0;
             userCounter++;
+            if(userCounter >= 8)
+                break;
         }
 
     }
