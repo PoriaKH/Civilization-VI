@@ -6,14 +6,17 @@ import java.util.Scanner;
 
 import Model.Member;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -21,12 +24,14 @@ import javafx.stage.Stage;
 
 public class ChatBox {
     public static URL chatCSS;
+    public static URL mainMenuFxmlURL;
     public static Member loggedInMember;
     public Pane root = new Pane();
     public Scene scene;
     public Stage stage;
 
     private final Button add = new Button("Add");
+    private final Button exit = new Button("Exit");
     private final VBox chatBox = new VBox(10);
     private final TextField textField = new TextField();
     private ArrayList<Label> messages = new ArrayList<>();
@@ -41,10 +46,12 @@ public class ChatBox {
         chatBox.setPadding(new Insets(0, 0, 0, 5));
         add.setTranslateX(50);
         add.setTranslateY(450);
+        exit.setTranslateX(500);
+        exit.setTranslateY(450);
         initChatBox();
         root.getStylesheets().add(chatCSS.toExternalForm());
         root.getChildren().add(textField);
-        root.getChildren().addAll(container, add);
+        root.getChildren().addAll(container, add, exit);
         scene = new Scene(root, 1280, 720);
         stage.setScene(scene);
         stage.show();
@@ -56,7 +63,19 @@ public class ChatBox {
         container.setContent(chatBox);
         chatBox.getStyleClass().add("chatBox");
         chatBox.setPadding(new Insets(10, 0, 0, 0));
+        container.vvalueProperty().bind(chatBox.heightProperty());
         fileReading();
+        exit.setOnMouseClicked(event -> {
+            try {
+                root = FXMLLoader.load(mainMenuFxmlURL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        });
         add.setOnAction(evt -> {
             String message = loggedInMember.getUsername() + " : " + textField.getText() + "\n";
             try {
@@ -73,6 +92,20 @@ public class ChatBox {
             editButtons.add(new Button("edit"));
             editButtons.get(index).setAlignment(Pos.CENTER_RIGHT);
             editButtons.get(index).getStyleClass().add("secondButton");
+            Button tmp = editButtons.get(index);
+            editButtons.get(index).setOnAction(event -> {
+                int j = 0;
+                for (int k = 0; k < editButtons.size(); k++)
+                    if (editButtons.get(k).equals(tmp)) {
+                        j = k;
+                        break;
+                    }
+                if (messages.get(j).getText().substring(0, messages.get(j).getText().indexOf(" :")).equals(loggedInMember.getUsername())) {
+                    int finalJ = j;
+                    messages.get(finalJ).setText(loggedInMember.getUsername() + " : " + textField.getText());
+                }
+                textField.clear();
+            });
             textField.clear();
             Group group = new Group();
             group.getChildren().add(messages.get(index));
@@ -108,6 +141,20 @@ public class ChatBox {
             editButtons.add(new Button("edit"));
             editButtons.get(index).setAlignment(Pos.CENTER_RIGHT);
             editButtons.get(index).getStyleClass().add("secondButton");
+            Button tmp = editButtons.get(index);
+            editButtons.get(index).setOnAction(event -> {
+                int j = 0;
+                for (int k = 0; k < editButtons.size(); k++)
+                    if (editButtons.get(k).equals(tmp)) {
+                        j = k;
+                        break;
+                    }
+                if (messages.get(j).getText().substring(0, messages.get(j).getText().indexOf(" :")).equals(loggedInMember.getUsername())) {
+                    int finalJ = j;
+                    messages.get(finalJ).setText(loggedInMember.getUsername() + " : " + textField.getText());
+                }
+                textField.clear();
+            });
             Group group = new Group();
             group.getChildren().add(messages.get(index));
             HBox temp = new HBox(50);
@@ -118,4 +165,23 @@ public class ChatBox {
         }
     }
 
+
+    private void edit(MouseEvent mouseEvent) {
+        double y = mouseEvent.getY();
+        int secondIndex = 0;
+        for (int i = 0; i < messages.size(); i++)
+            if (messages.get(i).getTranslateY() <= y && messages.get(i).getHeight() + messages.get(i).getTranslateY() >= y){
+                secondIndex = i;
+                System.out.println(secondIndex);
+                break;
+            }
+        int finalSecondIndex = secondIndex;
+        if (messages.get(finalSecondIndex).getText().substring(0, messages.get(finalSecondIndex).getText().indexOf(" :")).equals(loggedInMember.getUsername())) {
+            textField.setPromptText("enter your new message");
+            add.setOnMouseClicked(event -> {
+                messages.get(finalSecondIndex).setText(textField.getText());
+            });
+        }
+        textField.setPromptText("enter your message");
+    }
 }
