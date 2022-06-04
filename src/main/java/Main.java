@@ -31,6 +31,7 @@ public class Main extends Application {
         ProfileMenu.forthPic = new URL(Main.class.getResource("pictures/3.png").toExternalForm());
         MainMenu.mainMenuSoundURL = new URL(Main.class.getResource("music/1.mp3").toExternalForm());
         ChatBox.chatCSS = new URL(Main.class.getResource("CSS/chatBox.css").toExternalForm());
+        ChatBox.mainMenuFxmlURL = LoginMenu.mainMenuFxmlURL;
 //        Scanner scan = new Scanner(System.in);
 //        LoginMenu loginMenu = new LoginMenu();
 //        loginMenu.run(scan);
