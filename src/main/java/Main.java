@@ -1,7 +1,4 @@
-import View.LoginMenu;
-import View.MainMenu;
-import View.ProfileMenu;
-import View.RegisterMenu;
+import View.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,6 +30,7 @@ public class Main extends Application {
         ProfileMenu.thirdPic = new URL(Main.class.getResource("pictures/2.png").toExternalForm());
         ProfileMenu.forthPic = new URL(Main.class.getResource("pictures/3.png").toExternalForm());
         MainMenu.mainMenuSoundURL = new URL(Main.class.getResource("music/1.mp3").toExternalForm());
+        ChatBox.chatCSS = new URL(Main.class.getResource("CSS/chatBox.css").toExternalForm());
 //        Scanner scan = new Scanner(System.in);
 //        LoginMenu loginMenu = new LoginMenu();
 //        loginMenu.run(scan);

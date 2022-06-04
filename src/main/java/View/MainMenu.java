@@ -71,9 +71,9 @@ public class MainMenu {
         stage.show();
     }
 
-    public void chatBoxSwitch() throws FileNotFoundException {
+    public void chatBoxSwitch(MouseEvent mouseEvent) throws FileNotFoundException {
         ChatBox chatBox = new ChatBox();
-        chatBox.scene = this.scene;
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         chatBox.stage = this.stage;
         chatBox.run();
     }

@@ -1,5 +1,6 @@
 package View;
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,8 +20,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ChatBox {
+    public static URL chatCSS;
     public static Member loggedInMember;
-    private Pane root = new Pane();
+    public Pane root = new Pane();
     public Scene scene;
     public Stage stage;
 
@@ -40,9 +42,10 @@ public class ChatBox {
         add.setTranslateX(50);
         add.setTranslateY(450);
         initChatBox();
-        root.getStylesheets().add(getClass().getResource("CSS/chatBox.css").toExternalForm());
+        root.getStylesheets().add(chatCSS.toExternalForm());
         root.getChildren().add(textField);
         root.getChildren().addAll(container, add);
+        scene = new Scene(root, 1280, 720);
         stage.setScene(scene);
         stage.show();
     }
