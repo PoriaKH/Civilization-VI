@@ -41,7 +41,7 @@ public class ScoreBoard {
         ArrayList<String> nicknames = new ArrayList<>();
         ArrayList<String> dates = new ArrayList<>();
 
-        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<date>.+)";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
         File file = new File("users.txt");
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -88,6 +88,8 @@ public class ScoreBoard {
             dates.remove(index);
             i = 0;
             userCounter++;
+            if(userCounter >= 8)
+                break;
         }
 
     }
