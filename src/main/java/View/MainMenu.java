@@ -75,6 +75,7 @@ public class MainMenu {
         ChatBox chatBox = new ChatBox();
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         chatBox.stage = this.stage;
+        ChatBox.loggedInMember = MainMenu.loggedInMember;
         chatBox.run();
     }
 

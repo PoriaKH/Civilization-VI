@@ -10,23 +10,34 @@
     -fx-background-color: purple;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 15;
+    -fx-font-size: 18;
+}
+
+.secondLabel {
+    -fx-background-color: white;
+    -fx-text-fill: purple;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
 }
 
 .button {
 
     -fx-background-color:purple;
     -fx-text-fill:white;
-    -fx-pref-height:25px;
-    -fx-pref-width:50px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 50px;
 }
 
 .secondButton {
 
     -fx-background-color: #ffffff;
     -fx-text-fill: #030303;
-    -fx-pref-height:25px;
-    -fx-pref-width:50px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 50px;
 }
 
 .text-field {

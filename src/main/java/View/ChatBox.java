@@ -31,7 +31,7 @@ public class ChatBox {
     private final TextField textField = new TextField();
     private ArrayList<Label> messages = new ArrayList<>();
     private ArrayList<Button> editButtons = new ArrayList<>();
-    private ArrayList<TextField> oldMessage = new ArrayList<>();
+    private ArrayList<String> oldMessage = new ArrayList<>();
     private ScrollPane container = new ScrollPane();
     private int index = 0;
 
@@ -55,15 +55,17 @@ public class ChatBox {
         container.setPrefSize(1000, 400);
         container.setContent(chatBox);
         chatBox.getStyleClass().add("chatBox");
+        chatBox.setPadding(new Insets(10, 0, 0, 0));
         fileReading();
         add.setOnAction(evt -> {
-            String message = textField.getText() + "\n";
+            String message = loggedInMember.getUsername() + " : " + textField.getText() + "\n";
             try {
                 fileAdder(message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            messages.add(new Label(textField.getText()));
+            messages.add(new Label(loggedInMember.getUsername() + " : " + textField.getText()));
+            messages.get(index).getStyleClass().add("secondLabel");
             messages.get(index).setPadding(new Insets(0, 0, 0, 5));
             messages.get(index).setAlignment(Pos.CENTER_LEFT);
             messages.get(index).setWrapText(true);
@@ -76,6 +78,7 @@ public class ChatBox {
             group.getChildren().add(messages.get(index));
             HBox temp = new HBox(50);
             temp.setMaxWidth(1000);
+            temp.setPrefHeight(30);
             temp.getChildren().addAll(group, editButtons.get(index++));
             chatBox.getChildren().add(temp);
         });
@@ -92,10 +95,12 @@ public class ChatBox {
         File file = new File("src/main/resources/messageFile.txt");
         Scanner fileScanner = new Scanner(file);
         while (fileScanner.hasNextLine())
-            oldMessage.add(new TextField(fileScanner.nextLine()));
+            oldMessage.add(fileScanner.nextLine());
         fileScanner.close();
         for (int i = 0; i < oldMessage.size(); i++) {
-            messages.add(new Label(oldMessage.get(i).getText()));
+            messages.add(new Label(oldMessage.get(i)));
+            if (oldMessage.get(i).substring(0, oldMessage.get(i).indexOf(" :")).equals(loggedInMember.getUsername()))
+                messages.get(index).getStyleClass().add("secondLabel");
             messages.get(index).setWrapText(true);
             messages.get(index).setPrefWidth(800);
             messages.get(index).setPadding(new Insets(0, 0, 0, 5));
@@ -107,6 +112,7 @@ public class ChatBox {
             group.getChildren().add(messages.get(index));
             HBox temp = new HBox(50);
             temp.setMaxWidth(1000);
+            temp.setPrefHeight(30);
             temp.getChildren().addAll(group, editButtons.get(index++));
             chatBox.getChildren().add(temp);
         }
