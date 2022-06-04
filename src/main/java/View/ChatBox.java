@@ -29,6 +29,7 @@ public class ChatBox {
     public Pane root = new Pane();
     public Scene scene;
     public Stage stage;
+    public File file;
 
     private final Button add = new Button("Add");
     private final Button exit = new Button("Exit");
@@ -113,7 +114,7 @@ public class ChatBox {
     }
 
     private void fileReading() throws FileNotFoundException {
-        File file = new File("src/main/resources/messageFile.txt");
+        //File file = new File("src/main/resources/messageFile.txt");
         Scanner fileScanner = new Scanner(file);
         while (fileScanner.hasNextLine())
             oldMessage.add(fileScanner.nextLine());
@@ -155,7 +156,7 @@ public class ChatBox {
 
     private void addToFile(){
         try {
-            FileWriter writer = new FileWriter("src/main/resources/messageFile.txt", false);
+            FileWriter writer = new FileWriter(file, false);
             StringBuilder stringBuilder = new StringBuilder();
             for (Label label : messages)
                 stringBuilder.append(label.getText()).append("\n");
