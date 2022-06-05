@@ -71,12 +71,12 @@ public class MainMenu {
         stage.show();
     }
 
-    public void chatBoxSwitch(MouseEvent mouseEvent) throws FileNotFoundException {
-        ChatBox chatBox = new ChatBox();
+    public void chatBoxSwitch(MouseEvent mouseEvent) throws IOException {
+        PreChatBox preChatBox = new PreChatBox();
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        chatBox.stage = this.stage;
-        ChatBox.loggedInMember = MainMenu.loggedInMember;
-        chatBox.run();
+        preChatBox.stage = this.stage;
+        PreChatBox.loggedInMember = MainMenu.loggedInMember;
+        preChatBox.run();
     }
 
     public void scoreboardSwitch(MouseEvent mouseEvent) throws IOException {

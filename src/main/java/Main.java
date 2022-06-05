@@ -32,6 +32,8 @@ public class Main extends Application {
         MainMenu.mainMenuSoundURL = new URL(Main.class.getResource("music/1.mp3").toExternalForm());
         ChatBox.chatCSS = new URL(Main.class.getResource("CSS/chatBox.css").toExternalForm());
         ChatBox.mainMenuFxmlURL = LoginMenu.mainMenuFxmlURL;
+        PreChatBox.preChatFxmlURL = new URL(Main.class.getResource("fxml/PreChatBox.fxml").toExternalForm());
+        PreChatBox.mainMenuFxmlURL = LoginMenu.mainMenuFxmlURL;
 //        Scanner scan = new Scanner(System.in);
 //        LoginMenu loginMenu = new LoginMenu();
 //        loginMenu.run(scan);

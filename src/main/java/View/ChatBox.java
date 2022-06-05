@@ -29,6 +29,7 @@ public class ChatBox {
     public Pane root = new Pane();
     public Scene scene;
     public Stage stage;
+    public File file;
 
     private final Button add = new Button("Add");
     private final Button exit = new Button("Exit");
@@ -46,7 +47,7 @@ public class ChatBox {
         chatBox.setPadding(new Insets(0, 0, 0, 5));
         add.setTranslateX(50);
         add.setTranslateY(450);
-        exit.setTranslateX(500);
+        exit.setTranslateX(900);
         exit.setTranslateY(450);
         initChatBox();
         root.getStylesheets().add(chatCSS.toExternalForm());
@@ -66,6 +67,7 @@ public class ChatBox {
         container.vvalueProperty().bind(chatBox.heightProperty());
         fileReading();
         exit.setOnMouseClicked(event -> {
+            addToFile();
             try {
                 root = FXMLLoader.load(mainMenuFxmlURL);
             } catch (IOException e) {
@@ -77,12 +79,6 @@ public class ChatBox {
             stage.show();
         });
         add.setOnAction(evt -> {
-            String message = loggedInMember.getUsername() + " : " + textField.getText() + "\n";
-            try {
-                fileAdder(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             messages.add(new Label(loggedInMember.getUsername() + " : " + textField.getText()));
             messages.get(index).getStyleClass().add("secondLabel");
             messages.get(index).setPadding(new Insets(0, 0, 0, 5));
@@ -103,8 +99,8 @@ public class ChatBox {
                 if (messages.get(j).getText().substring(0, messages.get(j).getText().indexOf(" :")).equals(loggedInMember.getUsername())) {
                     int finalJ = j;
                     messages.get(finalJ).setText(loggedInMember.getUsername() + " : " + textField.getText());
+                    textField.clear();
                 }
-                textField.clear();
             });
             textField.clear();
             Group group = new Group();
@@ -117,15 +113,8 @@ public class ChatBox {
         });
     }
 
-    private void fileAdder(String message) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/messageFile.txt", true));
-        writer.write(message);
-        writer.close();
-    }
-
-
     private void fileReading() throws FileNotFoundException {
-        File file = new File("src/main/resources/messageFile.txt");
+        //File file = new File("src/main/resources/messageFile.txt");
         Scanner fileScanner = new Scanner(file);
         while (fileScanner.hasNextLine())
             oldMessage.add(fileScanner.nextLine());
@@ -152,8 +141,8 @@ public class ChatBox {
                 if (messages.get(j).getText().substring(0, messages.get(j).getText().indexOf(" :")).equals(loggedInMember.getUsername())) {
                     int finalJ = j;
                     messages.get(finalJ).setText(loggedInMember.getUsername() + " : " + textField.getText());
+                    textField.clear();
                 }
-                textField.clear();
             });
             Group group = new Group();
             group.getChildren().add(messages.get(index));
@@ -165,23 +154,16 @@ public class ChatBox {
         }
     }
 
-
-    private void edit(MouseEvent mouseEvent) {
-        double y = mouseEvent.getY();
-        int secondIndex = 0;
-        for (int i = 0; i < messages.size(); i++)
-            if (messages.get(i).getTranslateY() <= y && messages.get(i).getHeight() + messages.get(i).getTranslateY() >= y){
-                secondIndex = i;
-                System.out.println(secondIndex);
-                break;
-            }
-        int finalSecondIndex = secondIndex;
-        if (messages.get(finalSecondIndex).getText().substring(0, messages.get(finalSecondIndex).getText().indexOf(" :")).equals(loggedInMember.getUsername())) {
-            textField.setPromptText("enter your new message");
-            add.setOnMouseClicked(event -> {
-                messages.get(finalSecondIndex).setText(textField.getText());
-            });
+    private void addToFile(){
+        try {
+            FileWriter writer = new FileWriter(file, false);
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Label label : messages)
+                stringBuilder.append(label.getText()).append("\n");
+            writer.write(String.valueOf(stringBuilder));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        textField.setPromptText("enter your message");
     }
 }
