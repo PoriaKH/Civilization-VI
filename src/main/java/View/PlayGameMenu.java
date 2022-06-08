@@ -1,6 +1,7 @@
 package View;
 
 import Controller.PlayGameMenuController;
+import Model.Civilization;
 import Model.Member;
 import Model.Tile;
 import javafx.event.EventHandler;
@@ -15,9 +16,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.swing.plaf.metal.MetalMenuBarUI;
@@ -132,7 +135,19 @@ public class PlayGameMenu {
 
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
         ArrayList<Tile> tiles = playGameMenuController.mapCreator(members.size(),members);
+        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(members.size(), tiles, members);
+        Civilization playingCivilization = civilizations.get(0);
+        HBox hbox = new HBox(20);
+        Text text = new Text("G: " + playingCivilization.getGold() +
+                "  H: " + playingCivilization.getHappiness());
+        Text name = new Text(playingCivilization.getName());
+        hbox.getChildren().add(text);
+        hbox.getChildren().add(name);
 
+
+
+
+        root.getChildren().add(hbox);
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
