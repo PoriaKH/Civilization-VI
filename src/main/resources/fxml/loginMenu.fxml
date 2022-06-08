@@ -20,10 +20,10 @@
             <TextField fx:id="usernameTF" promptText="enter your username"/>
             <Label styleClass="Label3" text="Password"/>
             <PasswordField fx:id="passwordTF" promptText="enter your password"/>
-            <Button text ="Login" onAction="#loginMouseAction"/>
+            <Button text ="Login" styleClass="button" onAction="#loginMouseAction"/>
             <Text text=" "/>
             <Text text=" "/>
-            <Button styleClass="RegisterStyle" text ="Register" onAction="#registerMouseClicked"/>
+            <Button styleClass="button" text ="Register" onAction="#registerMouseClicked"/>
             <Text text=" "/>
             <Text styleClass="Text2" fx:id="message"/>
         </VBox>

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import sun.tools.jar.Main;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -68,6 +69,14 @@ public class MainMenu {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void chatBoxSwitch(MouseEvent mouseEvent) throws IOException {
+        PreChatBox preChatBox = new PreChatBox();
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        preChatBox.stage = this.stage;
+        PreChatBox.loggedInMember = MainMenu.loggedInMember;
+        preChatBox.run();
     }
 
     public void scoreboardSwitch(MouseEvent mouseEvent) throws IOException {
