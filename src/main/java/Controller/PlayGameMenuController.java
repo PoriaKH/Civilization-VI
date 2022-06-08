@@ -17,8 +17,8 @@ public class PlayGameMenuController {
     public ArrayList<Tile> mapCreator(int numOfCivilizations,ArrayList<Member> members){//tik
         int numOfTiles = 72;
         ArrayList<Tile> map = new ArrayList<>();
-        float x0 = 10;
-        float y0 = 10;
+        float x0 = 300;
+        float y0 = 300;
 
         Tile t0 = new Tile(0,false,false,false,true,false,false,false,false,x0,y0);
         float h = (float)t0.getH();
