@@ -2,13 +2,18 @@ package Model;
 
 import Model.Units.Civilian;
 import Model.Units.Unit;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Polygon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Tile {
+public class Tile extends Polygon {
+    public static Pane root;
+    public float cameraSpeed = 30;
+
     private boolean isDesert;                   //Smooth
     private boolean isMeadow;//Alafzar          //Smooth
     private boolean isHill;//Tape               //2             //isBlocker
@@ -67,7 +72,7 @@ public class Tile {
         this.tileNumber = tileNumber;
         this.x = x;
         this.y = y;
-        this.radius = 5;
+        this.radius = 200;
         this.h = radius * Math.sqrt(3) / 2;
 
         this.food = 0;
@@ -219,6 +224,39 @@ public class Tile {
             this.mpCost += this.attribute.getMpCost();
             this.combatChange += this.attribute.getCombatChange();
         }
+
+
+        double x1,y1;
+        double x2,y2;
+        double x3,y3;
+        double x4,y4;
+        double x5,y5;
+        double x6,y6;
+
+        y1 = y - h;
+        x1 = x - radius / 2;
+        x2 = radius + x1;
+        y2 = y1;
+        x3 = radius / 2 + x2;
+        y3 = radius * Math.sqrt(3) / 2 + y2;
+        x4 = x2;
+        y4 = radius * Math.sqrt(3) / 2 + y3;
+        x5 = x1;
+        y5 = y4;
+        x6 = x1 - radius/2;
+        y6 = y3;
+
+
+        this.getPoints().addAll(new Double[]{
+                x1, y1,
+                x2, y2,
+                x3, y3,
+                x4, y4,
+                x5, y5,
+                x6, y6,
+        });
+
+        root.getChildren().add(this);
     }
 
     public void setResource(Resource resource) {
@@ -535,5 +573,137 @@ public class Tile {
     public void removeRoadsMakingProgress () {
         workingOnRoadUntilFinish.clear();
         workingOnRailUntilFinish.clear();
+    }
+    public void moveRight(){
+        double x1,y1;
+        double x2,y2;
+        double x3,y3;
+        double x4,y4;
+        double x5,y5;
+        double x6,y6;
+
+        x += cameraSpeed;
+
+        y1 = y - h;
+        x1 = x - radius/2;
+
+        x2 = radius + x1;
+        y2 = y1;
+        x3 = radius / 2 + x2;
+        y3 = radius * Math.sqrt(3) / 2 + y2;
+        x4 = x2;
+        y4 = radius * Math.sqrt(3) / 2 + y3;
+        x5 = x1;
+        y5 = y4;
+        x6 = x1 - radius/2;
+        y6 = y3;
+
+        this.getPoints().setAll(new Double[]{
+                x1, y1,
+                x2, y2,
+                x3, y3,
+                x4, y4,
+                x5, y5,
+                x6, y6,
+        });
+    }
+    public void moveLeft(){
+        double x1,y1;
+        double x2,y2;
+        double x3,y3;
+        double x4,y4;
+        double x5,y5;
+        double x6,y6;
+
+        x -= cameraSpeed;
+
+        y1 = y - h;
+        x1 = x - radius/2;
+
+        x2 = radius + x1;
+        y2 = y1;
+        x3 = radius / 2 + x2;
+        y3 = radius * Math.sqrt(3) / 2 + y2;
+        x4 = x2;
+        y4 = radius * Math.sqrt(3) / 2 + y3;
+        x5 = x1;
+        y5 = y4;
+        x6 = x1 - radius/2;
+        y6 = y3;
+
+        this.getPoints().setAll(new Double[]{
+                x1, y1,
+                x2, y2,
+                x3, y3,
+                x4, y4,
+                x5, y5,
+                x6, y6,
+        });
+    }
+    public void moveUp(){
+        double x1,y1;
+        double x2,y2;
+        double x3,y3;
+        double x4,y4;
+        double x5,y5;
+        double x6,y6;
+
+        y -= cameraSpeed;
+
+        y1 = y - h;
+        x1 = x - radius/2;
+
+        x2 = radius + x1;
+        y2 = y1;
+        x3 = radius / 2 + x2;
+        y3 = radius * Math.sqrt(3) / 2 + y2;
+        x4 = x2;
+        y4 = radius * Math.sqrt(3) / 2 + y3;
+        x5 = x1;
+        y5 = y4;
+        x6 = x1 - radius/2;
+        y6 = y3;
+
+        this.getPoints().setAll(new Double[]{
+                x1, y1,
+                x2, y2,
+                x3, y3,
+                x4, y4,
+                x5, y5,
+                x6, y6,
+        });
+    }
+    public void moveDown(){
+        double x1,y1;
+        double x2,y2;
+        double x3,y3;
+        double x4,y4;
+        double x5,y5;
+        double x6,y6;
+
+        y += cameraSpeed;
+
+        y1 = y - h;
+        x1 = x - radius/2;
+
+        x2 = radius + x1;
+        y2 = y1;
+        x3 = radius / 2 + x2;
+        y3 = radius * Math.sqrt(3) / 2 + y2;
+        x4 = x2;
+        y4 = radius * Math.sqrt(3) / 2 + y3;
+        x5 = x1;
+        y5 = y4;
+        x6 = x1 - radius/2;
+        y6 = y3;
+
+        this.getPoints().setAll(new Double[]{
+                x1, y1,
+                x2, y2,
+                x3, y3,
+                x4, y4,
+                x5, y5,
+                x6, y6,
+        });
     }
 }

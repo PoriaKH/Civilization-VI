@@ -1,6 +1,9 @@
 package View;
 
+import Controller.PlayGameMenuController;
 import Model.Member;
+import Model.Tile;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,7 +13,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import javax.swing.plaf.metal.MetalMenuBarUI;
@@ -20,9 +27,12 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static View.GameMenu.gameMenuURL;
+import static View.MainMenu.gameMenuFxmlURL;
+
 public class PlayGameMenu {
 
-    public Parent root;
+    public Pane root;
 
     public Stage stage;
 
@@ -112,14 +122,67 @@ public class PlayGameMenu {
         }
         players.add(MainMenu.loggedInMember);
         if (areUsersOk) {
-            new GameMenu().run();
-            for (int i = 0; i < players.size(); i++) {
-                System.out.println( (i+1)+ players.get(i).getUsername());
-            }
-            System.out.println("ok");
+            MainMenu.mediaPlayer.stop();
+            switchToGame(mouseEvent,players);
         }
     }
+    public void switchToGame(MouseEvent mouseEvent,ArrayList<Member> members) throws IOException {
+        root = FXMLLoader.load(gameMenuURL);
+        Tile.root = root;
 
+        PlayGameMenuController playGameMenuController = new PlayGameMenuController();
+        ArrayList<Tile> tiles = playGameMenuController.mapCreator(members.size(),members);
+
+        root.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("x = " + event.getX() + "  y = " + event.getY());
+            }
+        });
+
+        root.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                String keyName = event.getCode().getName();
+                if(Objects.equals(keyName, "Up")){
+                    if(tiles.get(0).getY() <= 250) {
+                        for (Tile tile : tiles) {
+                            tile.moveDown();
+                        }
+                    }
+                }
+                if(Objects.equals(keyName, "Down")){
+                    if(tiles.get(5).getY() >= 500) {
+                        for (Tile tile : tiles) {
+                            tile.moveUp();
+                        }
+                    }
+                }
+                if(Objects.equals(keyName, "Left")){
+                    if(tiles.get(0).getX() <= 300) {
+                        for (Tile tile : tiles) {
+                            tile.moveRight();
+                        }
+                    }
+                }
+                if(Objects.equals(keyName, "Right")) {
+                    if (tiles.get(66).getX() >= 1000) {
+                        for (Tile tile : tiles) {
+                            tile.moveLeft();
+                        }
+                    }
+                }
+            }
+        });
+
+
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root,1280,720);
+        scene.getRoot().requestFocus();
+        stage.setScene(scene);
+        root.getChildren().get(0).requestFocus();
+        stage.show();
+    }
     private void showRepetitiveAlert(int i) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("repetitive username number :" + (i + 1));
