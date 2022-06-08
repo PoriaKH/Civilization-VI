@@ -112,6 +112,7 @@ public class PlayGameMenu {
         }
         players.add(MainMenu.loggedInMember);
         if (areUsersOk) {
+            new GameMenu().run();
             for (int i = 0; i < players.size(); i++) {
                 System.out.println( (i+1)+ players.get(i).getUsername());
             }
