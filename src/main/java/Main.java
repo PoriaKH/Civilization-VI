@@ -34,6 +34,7 @@ public class Main extends Application {
         ChatBox.mainMenuFxmlURL = LoginMenu.mainMenuFxmlURL;
         PreChatBox.preChatFxmlURL = new URL(Main.class.getResource("fxml/PreChatBox.fxml").toExternalForm());
         PreChatBox.mainMenuFxmlURL = LoginMenu.mainMenuFxmlURL;
+        GameMenu.gameMenuURL = new URL(Main.class.getResource("fxml/gameMenu.fxml").toExternalForm());
 //        Scanner scan = new Scanner(System.in);
 //        LoginMenu loginMenu = new LoginMenu();
 //        loginMenu.run(scan);
