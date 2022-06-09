@@ -123,7 +123,7 @@ public class PlayGameMenu {
             alert.showAndWait();
             return;
         }
-        players.add(MainMenu.loggedInMember);
+        players.add(0, MainMenu.loggedInMember);
         if (areUsersOk) {
             MainMenu.mediaPlayer.stop();
             switchToGame(mouseEvent,players);
