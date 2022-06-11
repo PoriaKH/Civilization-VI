@@ -264,11 +264,14 @@ public class PlayGameMenu {
                 }
             }
         });
-        //todo -> noe namayesh safhe
         infoPanelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                try {
+                    new InfoPanel().start(stage, scene);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         //todo -> kian
