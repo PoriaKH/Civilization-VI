@@ -15,23 +15,27 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class InfoPanel {
+    public static Stage stage;
+    public static Scene gameMenuScene;
+    public Scene infoPanelScene;
     public static URL infoPanelURL;
-    public void start (Stage stage, Scene gameMenuScene) throws IOException {
+
+    public void start () throws IOException {
+
+
         BorderPane borderPane = FXMLLoader.load(infoPanelURL);
-        Button backButton = new Button("Back");
-        backButton.setAlignment(Pos.CENTER);
-
-        backButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                stage.setScene(gameMenuScene);
-            }
-        });
-
-
-        borderPane.setCenter(backButton);
-        Scene scene = new Scene(borderPane);
-        stage.setScene(scene);
+        infoPanelScene = new Scene(borderPane);
+        stage.setScene(infoPanelScene);
         stage.show();
+    }
+
+    public void backClicked(MouseEvent mouseEvent) {
+        stage.setScene(gameMenuScene);
+    }
+
+    public void exampleClicked(MouseEvent mouseEvent) throws IOException {
+        ExamplePage.infoPanelScene = infoPanelScene;
+        ExamplePage.stage = stage;
+        new ExamplePage().start();
     }
 }

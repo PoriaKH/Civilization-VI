@@ -268,9 +268,11 @@ public class PlayGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    new InfoPanel().start(stage, scene);
+                    InfoPanel.stage = stage;
+                    InfoPanel.gameMenuScene = scene;
+                    new InfoPanel().start();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         });
