@@ -264,6 +264,20 @@ public class PlayGameMenu {
                 }
             }
         });
+        //todo -> noe namayesh safhe
+        infoPanelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
+        //todo -> kian
+        technologyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
 
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root,1280,720);
