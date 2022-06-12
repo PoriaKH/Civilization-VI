@@ -65,6 +65,10 @@ public class PlayGameMenu {
     @FXML
     private Button newGameButton;
 
+    private int playersCounter = 0;
+
+    private Civilization playingCivilization;
+
     public void newGame(MouseEvent mouseEvent) throws IOException {
         ArrayList<Member> members = getMembers();
         ArrayList<Member> players = new ArrayList<>();
@@ -134,24 +138,21 @@ public class PlayGameMenu {
         players.add(0, MainMenu.loggedInMember);
         if (areUsersOk) {
             MainMenu.mediaPlayer.stop();
-            switchToGame(mouseEvent,players);
+            root = FXMLLoader.load(gameMenuURL);
+            Tile.root = root;
+            PlayGameMenuController playGameMenuController = new PlayGameMenuController();
+            ArrayList<Tile> tiles = playGameMenuController.mapCreator(players.size(),players);
+            ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(players.size(), tiles, players);
+            playingCivilization = civilizations.get(0);
+            switchToGame(mouseEvent,players, playGameMenuController, civilizations, tiles);
         }
     }
-    public void switchToGame(MouseEvent mouseEvent,ArrayList<Member> members) throws IOException {
-        root = FXMLLoader.load(gameMenuURL);
-        Tile.root = root;
+    public void switchToGame(MouseEvent mouseEvent,ArrayList<Member> members, PlayGameMenuController playGameMenuController, ArrayList<Civilization> civilizations, ArrayList<Tile> tiles) throws IOException {
 
-        PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-        ArrayList<Tile> tiles = playGameMenuController.mapCreator(members.size(),members);
-        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(members.size(), tiles, members);
-
-        Civilization playingCivilization = civilizations.get(0);
-
-
-        Image image = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(33);
-        imageView.setPreserveRatio(true);
+        Image nextTurnImage = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
+        ImageView nextTurnImageView = new ImageView(nextTurnImage);
+        nextTurnImageView.setFitHeight(26);
+        nextTurnImageView.setPreserveRatio(true);
 
         Image goldImage = new Image(getClass().getResource("/pictures/Gold.png").toString());
         ImageView goldView = new ImageView(goldImage);
@@ -160,8 +161,11 @@ public class PlayGameMenu {
         Text goldAmount = new Text(" : " + playingCivilization.getGold());
         goldAmount.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 20));
         goldAmount.setFill(Color.RED);
-        Text spacing1 = new Text("                           ");
-        Text spacing2 = new Text("                            ");
+        Text spacing1 = new Text("                         ");
+        Text spacing2 = new Text("                                                                ");
+        Text spacing3 = new Text("                           ");
+        Text spacing4 = new Text("                           ");
+        Text spacing5 = new Text("                           ");
 
 
         Image happinessImage = new Image(getClass().getResource("/pictures/Happiness.png").toString());
@@ -176,8 +180,7 @@ public class PlayGameMenu {
         Text civName = new Text("civilization : " + playingCivilization.getName());
         civName.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 30));
         civName.setFill(Color.RED);
-        Text spacing3 = new Text("                       ");
-        Text spacing4 = new Text("             ");
+
 
 
         Button infoPanelButton = new Button("info panel");
@@ -205,7 +208,7 @@ public class PlayGameMenu {
         nextTurnButton.setShape(new Circle(20));
         nextTurnButton.setMinSize(40, 40);
         nextTurnButton.setMaxSize(40, 40);
-        nextTurnButton.setGraphic(imageView);
+        nextTurnButton.setGraphic(nextTurnImageView);
 
 
         HBox hBox = new HBox();
@@ -221,6 +224,8 @@ public class PlayGameMenu {
         hBox.getChildren().add(technologyButton);
         hBox.getChildren().add(spacing4);
         hBox.getChildren().add(infoPanelButton);
+        hBox.getChildren().add(spacing5);
+        hBox.getChildren().add(nextTurnButton);
 
         root.getChildren().add(hBox);
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -283,6 +288,20 @@ public class PlayGameMenu {
 
             }
         });
+        nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                playersCounter++;
+                if (playersCounter == civilizations.size()) {
+                    playersCounter = 0;
+                }
+                playingCivilization = civilizations.get(playersCounter);
+                civName.setText("civilization : " + playingCivilization.getName());
+            }
+        });
+
+
+
 
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root,1280,720);
