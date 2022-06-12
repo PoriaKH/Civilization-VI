@@ -13,6 +13,7 @@
     <center>
         <VBox spacing="5" alignment="CENTER" maxWidth="350">
             <Button text="Example" onMouseClicked="#exampleClicked"/>
+            <Button text="general unit panel" onMouseClicked="#unitPanelClicked"/>
             <Button text="back" onMouseClicked="#backClicked"/>
         </VBox>
     </center>

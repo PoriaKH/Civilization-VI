@@ -275,6 +275,9 @@ public class PlayGameMenu {
                 try {
                     InfoPanel.stage = stage;
                     InfoPanel.gameMenuScene = scene;
+                    InfoPanel.tiles = tiles;
+                    InfoPanel.currentCivilization = playingCivilization;
+                    InfoPanel.civilizations = civilizations;
                     new InfoPanel().start();
                 } catch (IOException e) {
                     e.printStackTrace();

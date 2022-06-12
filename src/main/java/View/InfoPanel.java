@@ -1,5 +1,7 @@
 package View;
 
+import Model.Civilization;
+import Model.Tile;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -11,14 +13,19 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class InfoPanel {
     public static Stage stage;
     public static Scene gameMenuScene;
     public Scene infoPanelScene;
     public static URL infoPanelURL;
+    public static ArrayList<Tile> tiles;
+    public static ArrayList<Civilization> civilizations;
+    public static Civilization currentCivilization;
 
     public void start () throws IOException {
 
@@ -37,5 +44,11 @@ public class InfoPanel {
         ExamplePage.infoPanelScene = infoPanelScene;
         ExamplePage.stage = stage;
         new ExamplePage().start();
+    }
+
+    public void unitPanelClicked(MouseEvent mouseEvent) throws IOException {
+        GeneralUnitPanel.infoPanelScene = infoPanelScene;
+        GeneralUnitPanel.stage = stage;
+        new GeneralUnitPanel().start();
     }
 }

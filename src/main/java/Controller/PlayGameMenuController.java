@@ -959,7 +959,7 @@ public class PlayGameMenuController {
                     else {
                         move = "unit has path";
                     }
-                    stringBuilder.append("unit " + name + " movement : "+ move + " health : " + unitsOfTile.get(i1).getHealth());
+                    stringBuilder.append("unit " + name + " movement : "+ move + " health : " + unitsOfTile.get(i1).getHealth() + " tile : " + i);
                     if (unitsOfTile.get(i1).isCivilian()) {
                         stringBuilder.append(" damage : N/A" + "\n");
                     }
