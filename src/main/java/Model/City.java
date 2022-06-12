@@ -44,7 +44,7 @@ public class City {
     }
 
     public void setDefenceStrength(int defenceStrength) {
-        this.defenceStrength = defenceStrength;
+        this.defenceStrength += defenceStrength;
     }
 
     public int getDamagePoint() {

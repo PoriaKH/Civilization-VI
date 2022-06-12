@@ -3810,8 +3810,6 @@ public class PlayGameMenuController {
         if (technology == null)
             return "no technology with this name exists";
         civilization.setScience(technology.getCost());
-//        if (civilization.getScience() < technology.getCost())
-//            return "you don't have the needed amount of science";
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         for (Technology technology1 : allTechnologies)
             if (technology1.getName().equals(technologyName))
