@@ -2271,6 +2271,11 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    public void sendMessageToDefender (Unit defender, Unit attacker) {
+        defender.getCivilization().addMessage("civilization :" + attacker.getCivilization() +
+                "attacked you at turn : " + turn);
+    }
+
     // prepare some parameters and return some string
     public String preAttackTile (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
         matcher.find();
@@ -2323,6 +2328,8 @@ public class PlayGameMenuController {
         if (defender == null) {
             defender = getCivilianUnit(destinationIndex, map);
             if (defender == null) return "there is no unit on destination !";
+
+        sendMessageToDefender(defender, attacker);
 
             defender.setCivilization(civilization);
             if (((Warrior)attacker).getRange() == -1) {
