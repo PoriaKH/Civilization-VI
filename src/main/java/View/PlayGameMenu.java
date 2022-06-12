@@ -138,16 +138,17 @@ public class PlayGameMenu {
         players.add(0, MainMenu.loggedInMember);
         if (areUsersOk) {
             MainMenu.mediaPlayer.stop();
-            root = FXMLLoader.load(gameMenuURL);
-            Tile.root = root;
-            PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-            ArrayList<Tile> tiles = playGameMenuController.mapCreator(players.size(),players);
-            ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(players.size(), tiles, players);
-            playingCivilization = civilizations.get(0);
-            switchToGame(mouseEvent,players, playGameMenuController, civilizations, tiles);
+            switchToGame(mouseEvent,players);
         }
     }
-    public void switchToGame(MouseEvent mouseEvent,ArrayList<Member> members, PlayGameMenuController playGameMenuController, ArrayList<Civilization> civilizations, ArrayList<Tile> tiles) throws IOException {
+    public void switchToGame(MouseEvent mouseEvent,ArrayList<Member> members) throws IOException {
+        root = FXMLLoader.load(gameMenuURL);
+        Tile.root = root;
+        PlayGameMenuController playGameMenuController = new PlayGameMenuController();
+        ArrayList<Tile> tiles = playGameMenuController.mapCreator(members.size(),members);
+        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(members.size(), tiles, members);
+        playingCivilization = civilizations.get(0);
+
 
         Image nextTurnImage = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
         ImageView nextTurnImageView = new ImageView(nextTurnImage);
