@@ -172,6 +172,9 @@ public class Warrior extends Unit{
     public void setXp(int xp) {
         this.xp = xp;
     }
+    public void increaseXp(int amount){
+        this.xp += amount;
+    }
 
     public int getRangedCombatDamage() {
         return rangedCombatDamage;
