@@ -28,8 +28,6 @@ public class InfoPanel {
     public static Civilization currentCivilization;
 
     public void start () throws IOException {
-
-
         BorderPane borderPane = FXMLLoader.load(infoPanelURL);
         infoPanelScene = new Scene(borderPane);
         stage.setScene(infoPanelScene);
@@ -50,5 +48,11 @@ public class InfoPanel {
         GeneralUnitPanel.infoPanelScene = infoPanelScene;
         GeneralUnitPanel.stage = stage;
         new GeneralUnitPanel().start();
+    }
+
+    public void victoryImprovementClicked(MouseEvent mouseEvent) throws IOException {
+        VictoryImprovement.infoPanelScene = infoPanelScene;
+        VictoryImprovement.stage = stage;
+        new VictoryImprovement().start();
     }
 }
