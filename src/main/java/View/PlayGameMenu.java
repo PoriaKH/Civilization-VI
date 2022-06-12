@@ -149,7 +149,7 @@ public class PlayGameMenu {
         ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(members.size(), tiles, members);
         playingCivilization = civilizations.get(0);
 
-
+        // Images for buttons and happiness and gold
         Image nextTurnImage = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
         ImageView nextTurnImageView = new ImageView(nextTurnImage);
         nextTurnImageView.setFitHeight(26);
@@ -162,12 +162,12 @@ public class PlayGameMenu {
         Text goldAmount = new Text(" : " + playingCivilization.getGold());
         goldAmount.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 20));
         goldAmount.setFill(Color.RED);
+        //making various space for vbox
         Text spacing1 = new Text("                         ");
         Text spacing2 = new Text("                                                                ");
         Text spacing3 = new Text("                           ");
         Text spacing4 = new Text("                           ");
         Text spacing5 = new Text("                           ");
-
 
         Image happinessImage = new Image(getClass().getResource("/pictures/Happiness.png").toString());
         ImageView happinessView = new ImageView(happinessImage);
@@ -177,13 +177,11 @@ public class PlayGameMenu {
         happinessAmount.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 20));
         happinessAmount.setFill(Color.RED);
 
-
+        // civilization name text
         Text civName = new Text("civilization : " + playingCivilization.getName());
         civName.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 30));
         civName.setFill(Color.RED);
-
-
-
+        // buttons
         Button infoPanelButton = new Button("info panel");
         infoPanelButton.setStyle( "-fx-pref-width: 150;\n" +
                 "-fx-pref-height: 20;\n" +
@@ -204,14 +202,13 @@ public class PlayGameMenu {
         technologyView.fitHeightProperty().bind(technologyButton.heightProperty());
         technologyButton.setGraphic(technologyView);
 
-
         Button nextTurnButton = new Button();
         nextTurnButton.setShape(new Circle(20));
         nextTurnButton.setMinSize(40, 40);
         nextTurnButton.setMaxSize(40, 40);
         nextTurnButton.setGraphic(nextTurnImageView);
 
-
+        // adding to vbox
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.BOTTOM_CENTER);
         hBox.getChildren().add(goldView);
@@ -229,6 +226,8 @@ public class PlayGameMenu {
         hBox.getChildren().add(nextTurnButton);
 
         root.getChildren().add(hBox);
+
+        // Event handlers
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -289,6 +288,7 @@ public class PlayGameMenu {
 
             }
         });
+        //TODO add conditions -> koochak
         nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
