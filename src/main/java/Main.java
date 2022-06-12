@@ -39,6 +39,7 @@ public class Main extends Application {
         PreChatBox.mainMenuFxmlURL = LoginMenu.mainMenuFxmlURL;
         GameMenu.gameMenuURL = new URL(Main.class.getResource("fxml/gameMenu.fxml").toExternalForm());
         ExamplePage.examplePageURL = new URL(Main.class.getResource("fxml/examplePage.fxml").toExternalForm());
+        BuildingsPage.buildingPageURL = new URL(Main.class.getResource("fxml/buildingsPage.fxml").toExternalForm());
 
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Parent root = FXMLLoader.load(address_login_page);

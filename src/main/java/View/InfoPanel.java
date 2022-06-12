@@ -55,4 +55,10 @@ public class InfoPanel {
         VictoryImprovement.stage = stage;
         new VictoryImprovement().start();
     }
+
+    public void buildingsClicked(MouseEvent mouseEvent) throws IOException {
+        BuildingsPage.infoPanelScene = infoPanelScene;
+        BuildingsPage.stage = stage;
+        new BuildingsPage().start();
+    }
 }

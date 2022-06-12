@@ -15,6 +15,7 @@
             <Button text="Example" onMouseClicked="#exampleClicked"/>
             <Button text="general unit panel" onMouseClicked="#unitPanelClicked"/>
             <Button text="victory improvement" onMouseClicked="#victoryImprovementClicked"/>
+            <Button text="Buildings" onMouseClicked="#buildingsClicked"/>
             <Button text="back" onMouseClicked="#backClicked"/>
         </VBox>
     </center>
