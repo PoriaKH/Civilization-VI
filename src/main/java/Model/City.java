@@ -148,4 +148,7 @@ public class City {
     public int getTotalFood(){
         return totalFood;
     }
+    public void setProduction(int amount){
+        production += amount;
+    }
 }
