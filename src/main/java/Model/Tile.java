@@ -2,6 +2,7 @@ package Model;
 
 import Model.Units.Civilian;
 import Model.Units.Unit;
+import Model.Units.Warrior;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 
@@ -37,6 +38,7 @@ public class Tile extends Polygon {
 
     private Citizen citizen = null;
     private ArrayList<Unit> units;
+    private Building building;
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
     private Resource resource;
     private Attribute attribute;
@@ -449,6 +451,29 @@ public class Tile extends Polygon {
     public ArrayList<Tile> getRoads() {
         return roads;
     }
+    public void addBuilding(Building building){
+        this.building = building;
+
+        building.getCivilization().setScience(building.getScience());
+        building.getCivilization().setHappiness(building.getHappiness());
+        for(City city : building.getCivilization().getCities()){
+            for(Tile tile : city.getTiles()){
+                for(Unit unit : tile.getUnits()){
+                    if(!unit.isCivilian()){
+                        Warrior warrior = (Warrior) unit;
+                        warrior.increaseXp(building.getXp());
+                    }
+                }
+            }
+        }
+        for(City city : building.getCivilization().getCities()){
+            for(Tile tile : city.getTiles()){
+                if(tile == building.getTile()){
+                    city.setTotalFood(building.getFood());
+                }
+            }
+        }
+    }
 
     public ArrayList<Tile> getRailRoads() {
         return railRoads;
@@ -573,6 +598,9 @@ public class Tile extends Polygon {
     public void removeRoadsMakingProgress () {
         workingOnRoadUntilFinish.clear();
         workingOnRailUntilFinish.clear();
+    }
+    public Building getBuilding(){
+        return this.building;
     }
     public void moveRight(){
         double x1,y1;

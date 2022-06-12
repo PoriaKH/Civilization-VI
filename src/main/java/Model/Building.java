@@ -1,6 +1,9 @@
 package Model;
 
 public class Building {
+    private Civilization civilization;
+    private Tile tile;
+
     private boolean isAncientEra = false;
     private boolean isClassicalEra = false;
     private boolean isMedievalEra = false;
@@ -14,13 +17,16 @@ public class Building {
 
     private int gold;//will add to civilization(setGold)
     private int science;//will add to civilization(setScience)
-    private int food;//will add to city (setTotalFood)
     private int happiness;//will add to civilization(setHappiness)
+    private int xp;//will add to all civilization Warrior units(increaseXp)
+    private int food;//will add to city (setTotalFood)
     private int defence;//will add to city (setDefenceStrength)
-    private int xp;//will add to all civilization units(increaseXp)
     private int production;//will add to city(setProduction)
 
-    public Building(String name){
+    public Building(String name,Civilization civilization,Tile tile){
+        this.civilization = civilization;
+        this.tile = tile;
+
         gold = 0;
         science = 0;
         food = 0;
@@ -269,4 +275,38 @@ public class Building {
         }
     }
 
+    public Civilization getCivilization() {
+        return civilization;
+    }
+    public Tile getTile(){
+        return this.tile;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getScience() {
+        return science;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getHappiness() {
+        return happiness;
+    }
+
+    public int getDefence() {
+        return defence;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public int getProduction() {
+        return production;
+    }
 }

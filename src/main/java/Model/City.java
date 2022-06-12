@@ -43,9 +43,6 @@ public class City {
 
     }
 
-    public void setDefenceStrength(int defenceStrength) {
-        this.defenceStrength += defenceStrength;
-    }
 
     public int getDamagePoint() {
         return damagePoint;
@@ -63,6 +60,9 @@ public class City {
         int hillEffect = 0;
         //add units strength
         for(Tile tile : getTiles()){
+            if(tile.getBuilding() != null){
+                this.defenceStrength += tile.getBuilding().getDefence();
+            }
             if (tile.isHill()) {
                 hillEffect ++;
             }
@@ -88,6 +88,9 @@ public class City {
     public int getGold(){//set and get
         this.gold = 0;
         for(Tile tile : tiles){
+            if(tile.getBuilding() != null){
+                this.gold += tile.getBuilding().getGold();
+            }
             if(tile.getCitizen() != null){
                 this.gold += tile.getGold();
             }
@@ -97,6 +100,9 @@ public class City {
     public int getFood(){//set and get
         this.food = 0;
         for(Tile tile : tiles){
+            if(tile.getBuilding() != null){
+                this.food += tile.getBuilding().getFood();
+            }
             if(tile.getCitizen() != null){
                 this.food += tile.getFood();
             }
@@ -106,6 +112,9 @@ public class City {
     public int getProduction(){//set and get
         this.production = 0;
         for(Tile tile : tiles){
+            if(tile.getBuilding() != null){
+                this.production += tile.getBuilding().getProduction();
+            }
             if(tile.getCitizen() != null){
                 this.production += tile.getProduction();
             }
@@ -138,8 +147,5 @@ public class City {
     }
     public int getTotalFood(){
         return totalFood;
-    }
-    public void setProduction(int amount){
-        production += amount;
     }
 }
