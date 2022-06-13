@@ -1,3 +1,4 @@
+import Model.Tile;
 import View.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -40,6 +41,7 @@ public class Main extends Application {
         GameMenu.gameMenuURL = new URL(Main.class.getResource("fxml/gameMenu.fxml").toExternalForm());
         ExamplePage.examplePageURL = new URL(Main.class.getResource("fxml/examplePage.fxml").toExternalForm());
         BuildingsPage.buildingPageURL = new URL(Main.class.getResource("fxml/buildingsPage.fxml").toExternalForm());
+        Tile.buildingURL = new URL(Main.class.getResource("pictures/building1.png").toExternalForm());
 
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Parent root = FXMLLoader.load(address_login_page);

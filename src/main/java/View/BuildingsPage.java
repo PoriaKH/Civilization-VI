@@ -10,6 +10,10 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -28,6 +32,8 @@ public class BuildingsPage {
 
     public Scene buildingPageScene;
 
+    @FXML
+    public Text gold;
     @FXML
     public TextField tileNumber;
     @FXML
@@ -107,6 +113,10 @@ public class BuildingsPage {
     public ArrayList<Button> buttons = new ArrayList<>();
 
     public void initialize(){
+        gold.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        gold.setFill(new Color(1,0.68,0,1));
+        gold.setText("Gold : " + String.valueOf(InfoPanel.currentCivilization.getGold()));
+
         buttons.add(Barracks);
         buttons.add(Granary);
         buttons.add(Library);
@@ -146,7 +156,6 @@ public class BuildingsPage {
         for(Button button : buttons){
             boolean technologyFlag = false;
             boolean goldFlag = false;
-
             Building building = new Building(button.getText(),null,null);
             if(building.getRequiredTechnology() == null)
                 technologyFlag = true;
@@ -365,6 +374,7 @@ public class BuildingsPage {
             InfoPanel.tiles.get(Integer.parseInt(tileNumber.getText())).addBuilding(building);
             buttons.get(selected).setDisable(false);
             selected = -1;
+            gold.setText("Gold : " + String.valueOf(InfoPanel.currentCivilization.getGold()));
             message.setText("purchase successful !");
         }
     }

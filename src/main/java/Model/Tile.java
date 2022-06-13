@@ -3,15 +3,20 @@ package Model;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 public class Tile extends Polygon {
+    public static URL buildingURL;
     public static Pane root;
     public float cameraSpeed = 30;
 
@@ -473,6 +478,14 @@ public class Tile extends Polygon {
                 }
             }
         }
+        double y1 = y - h;
+        double x1 = x - radius / 2;
+        building.setX(x1);
+        building.setY(y1);
+        building.setWidth(80);
+        building.setHeight(140);
+        building.setFill(new ImagePattern(new Image(String.valueOf(buildingURL))));
+        root.getChildren().add(building);
     }
 
     public ArrayList<Tile> getRailRoads() {
@@ -634,6 +647,11 @@ public class Tile extends Polygon {
                 x5, y5,
                 x6, y6,
         });
+
+        if(building != null) {
+            building.setX(x1);
+            building.setY(y1);
+        }
     }
     public void moveLeft(){
         double x1,y1;
@@ -667,6 +685,10 @@ public class Tile extends Polygon {
                 x5, y5,
                 x6, y6,
         });
+        if(building != null) {
+            building.setX(x1);
+            building.setY(y1);
+        }
     }
     public void moveUp(){
         double x1,y1;
@@ -700,6 +722,10 @@ public class Tile extends Polygon {
                 x5, y5,
                 x6, y6,
         });
+        if(building != null) {
+            building.setX(x1);
+            building.setY(y1);
+        }
     }
     public void moveDown(){
         double x1,y1;
@@ -733,5 +759,9 @@ public class Tile extends Polygon {
                 x5, y5,
                 x6, y6,
         });
+        if(building != null) {
+            building.setX(x1);
+            building.setY(y1);
+        }
     }
 }
