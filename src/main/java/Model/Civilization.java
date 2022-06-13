@@ -45,7 +45,10 @@ public class Civilization {
         technologies = new ArrayList<>();
         trades = new HashMap<>();
         technologyEarnedPercent = new HashMap<>();
-        this.gold = 10;
+//        this.gold = 10;
+        //temporary
+        this.gold = 1000;
+        //temporary
     }
 
     public void acceptFriendlyRequest(Civilization civilization){

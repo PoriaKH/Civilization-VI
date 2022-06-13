@@ -309,4 +309,12 @@ public class Building {
     public int getProduction() {
         return production;
     }
+
+    public Technology getRequiredTechnology() {
+        return technologyRequired;
+    }
+
+    public int getCost() {
+        return cost;
+    }
 }
