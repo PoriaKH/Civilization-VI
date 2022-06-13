@@ -1,12 +1,11 @@
 package View;
 
-import Model.Building;
-import Model.Civilization;
-import Model.Technology;
+import Model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class BuildingsPage {
-    private int selected = -1;
+    private int selected = -1;//  -1 means not selected
 
     public static URL buildingPageURL;
     public static Scene infoPanelScene;
@@ -29,6 +28,8 @@ public class BuildingsPage {
 
     public Scene buildingPageScene;
 
+    @FXML
+    public TextField tileNumber;
     @FXML
     public Text message;
 
@@ -323,12 +324,68 @@ public class BuildingsPage {
     }
 
     public void buildingClicked(int index) {
-        if(selected != -1)
+        if(selected != -1) {
             buttons.get(selected).setDisable(false);
+            selected = -1;
+        }
 
         if (buttons.get(index).getTooltip() == null) {
             selected = index;
             buttons.get(index).setDisable(true);
         }
+    }
+
+    public void purchaseClicked(MouseEvent mouseEvent) {
+        if(selected == -1){
+            message.setText("please first select a building");
+            return;
+        }
+        else if(tileNumber == null){
+            message.setText("invalid tile number");
+            return;
+        }
+        else if(!tileNumber.getText().matches("\\d+")){
+            message.setText("invalid tile number");
+            return;
+        }
+        else if(Integer.parseInt(tileNumber.getText()) > 71){
+            message.setText("invalid tile number");
+            return;
+        }
+        else if(!doesTileBelongToCivilization(Integer.parseInt(tileNumber.getText()))){
+            message.setText("this tile doesn't belong to your civilization !");
+            return;
+        }
+        else if(doesBuildingAlreadyExists(Integer.parseInt(tileNumber.getText()))){
+            message.setText("a building already exists in this tile");
+        }
+        else {
+            Building building = new Building(buttons.get(selected).getText(),InfoPanel.currentCivilization,InfoPanel.tiles.get(Integer.parseInt(tileNumber.getText())));
+            InfoPanel.currentCivilization.setGold(-building.getCost());
+            InfoPanel.tiles.get(Integer.parseInt(tileNumber.getText())).addBuilding(building);
+            buttons.get(selected).setDisable(false);
+            selected = -1;
+            message.setText("purchase successful !");
+        }
+    }
+
+    private boolean doesBuildingAlreadyExists(int number) {
+        for(Tile tile : InfoPanel.tiles){
+            if(tile.getTileNumber() == number){
+                if(tile.getBuilding() != null)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean doesTileBelongToCivilization(int number) {
+        for(City city : InfoPanel.currentCivilization.getCities()){
+            for(Tile tile : city.getTiles()){
+                if(tile.getTileNumber() == number)
+                    return true;
+            }
+        }
+        return false;
     }
 }

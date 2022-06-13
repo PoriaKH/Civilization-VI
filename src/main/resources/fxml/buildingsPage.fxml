@@ -13,12 +13,11 @@
             prefHeight="720.0" prefWidth="1280.0">
     <top>
         <HBox>
-            <Text text="                                                                                                                                                                             "/>
-            <VBox alignment = "CENTER" spacing="10" maxWidth="350">
+            <Text text="                                                                                                                                                            "/>
+            <VBox alignment = "CENTER" spacing="10" minWidth="280" maxWidth="280">
                 <Label text="Tile"/>
-                <TextField alignment="CENTER" promptText="enter tile number"/>
-                <Button text="purchase"/>
-                <Text text=" "/>
+                <TextField fx:id="tileNumber" alignment="CENTER" promptText="enter tile number"/>
+                <Button text="purchase" onMouseClicked="#purchaseClicked"/>
                 <Text fx:id="message" text=""/>
             </VBox>
         </HBox>
