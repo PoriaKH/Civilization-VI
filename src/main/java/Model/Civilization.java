@@ -49,6 +49,7 @@ public class Civilization {
         //temporary
         this.gold = 1000;
         //temporary
+        capital.getCenterTile().addBuilding(new Building("Castle",this,capital.getCenterTile()));
     }
 
     public void acceptFriendlyRequest(Civilization civilization){

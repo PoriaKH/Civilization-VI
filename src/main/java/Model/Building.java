@@ -6,11 +6,11 @@ public class Building extends Rectangle {
     private Civilization civilization;
     private Tile tile;
 
-    private boolean isAncientEra = false;
-    private boolean isClassicalEra = false;
-    private boolean isMedievalEra = false;
-    private boolean isRenaissanceEra = false;
-    private boolean isIndustrialEra = false;
+    public boolean isAncientEra = false;
+    public boolean isClassicalEra = false;
+    public boolean isMedievalEra = false;
+    public boolean isRenaissanceEra = false;
+    public boolean isIndustrialEra = false;
 
 
     private int cost;

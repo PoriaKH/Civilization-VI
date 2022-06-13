@@ -16,7 +16,12 @@ import java.util.Map;
 import java.util.Random;
 
 public class Tile extends Polygon {
-    public static URL buildingURL;
+    public static URL building1URL;
+    public static URL building2URL;
+    public static URL building3URL;
+    public static URL building4URL;
+    public static URL building5URL;
+
     public static Pane root;
     public float cameraSpeed = 30;
 
@@ -484,7 +489,18 @@ public class Tile extends Polygon {
         building.setY(y1);
         building.setWidth(80);
         building.setHeight(140);
-        building.setFill(new ImagePattern(new Image(String.valueOf(buildingURL))));
+
+        if(building.isAncientEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building1URL))));
+        else if(building.isClassicalEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building2URL))));
+        else if(building.isMedievalEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building3URL))));
+        else if(building.isRenaissanceEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building4URL))));
+        else if(building.isIndustrialEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building5URL))));
+
         root.getChildren().add(building);
     }
 
