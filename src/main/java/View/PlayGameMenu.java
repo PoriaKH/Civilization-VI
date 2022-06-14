@@ -68,6 +68,8 @@ public class PlayGameMenu {
     private int playersCounter = 0;
 
     private Civilization playingCivilization;
+    public Text goldAmount;
+    public Text happinessAmount;
 
     public void newGame(MouseEvent mouseEvent) throws IOException {
         ArrayList<Member> members = getMembers();
@@ -159,7 +161,7 @@ public class PlayGameMenu {
         ImageView goldView = new ImageView(goldImage);
         goldView.setFitWidth(25);
         goldView.setFitHeight(25);
-        Text goldAmount = new Text(" : " + playingCivilization.getGold());
+        goldAmount = new Text(" : " + playingCivilization.getGold());
         goldAmount.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 20));
         goldAmount.setFill(Color.RED);
         //making various space for vbox
@@ -173,7 +175,7 @@ public class PlayGameMenu {
         ImageView happinessView = new ImageView(happinessImage);
         happinessView.setFitWidth(25);
         happinessView.setFitHeight(25);
-        Text happinessAmount = new Text(" : " + playingCivilization.getHappiness());
+        happinessAmount = new Text(" : " + playingCivilization.getHappiness());
         happinessAmount.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 20));
         happinessAmount.setFill(Color.RED);
 
@@ -273,6 +275,8 @@ public class PlayGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
+                    InfoPanel.goldAmount = goldAmount;
+                    InfoPanel.happinessAmount = happinessAmount;
                     InfoPanel.stage = stage;
                     InfoPanel.gameMenuScene = scene;
                     InfoPanel.tiles = tiles;
@@ -301,6 +305,8 @@ public class PlayGameMenu {
                 }
                 playingCivilization = civilizations.get(playersCounter);
                 civName.setText("civilization : " + playingCivilization.getName());
+                goldAmount.setText(" : " + playingCivilization.getGold());
+                happinessAmount.setText(" : " + playingCivilization.getHappiness());
             }
         });
 

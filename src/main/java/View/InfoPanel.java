@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,6 +28,9 @@ public class InfoPanel {
     public static ArrayList<Civilization> civilizations;
     public static Civilization currentCivilization;
 
+    public static Text goldAmount;
+    public static Text happinessAmount;
+
     public void start () throws IOException {
         BorderPane borderPane = FXMLLoader.load(infoPanelURL);
         infoPanelScene = new Scene(borderPane);
@@ -35,6 +39,8 @@ public class InfoPanel {
     }
 
     public void backClicked(MouseEvent mouseEvent) {
+        goldAmount.setText(" : " + currentCivilization.getGold());
+        happinessAmount.setText(" : " + currentCivilization.getHappiness());
         stage.setScene(gameMenuScene);
     }
 
