@@ -2,20 +2,14 @@ package View;
 
 import Model.Civilization;
 import Model.Tile;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -73,5 +67,11 @@ public class InfoPanel {
         CheatMenu.stage = stage;
         CheatMenu.doesEnteredFromInfoPanel = true;
         new CheatMenu().start();
+    }
+
+    public void tradeClicked(MouseEvent mouseEvent) throws IOException {
+        TradePage.infoPanelScene = infoPanelScene;
+        TradePage.stage = stage;
+        new TradePage().start();
     }
 }

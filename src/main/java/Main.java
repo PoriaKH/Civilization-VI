@@ -7,9 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Scanner;
 
 public class Main extends Application {
 
@@ -54,6 +52,10 @@ public class Main extends Application {
             URL url = new URL(Main.class.getResource("pictures/" + Unit.unitsName.get(i) + ".png").toExternalForm());
             Unit.unitsURL.put(Unit.unitsName.get(i), url);
         }
+        TradePage.tradePageURL = new URL(Main.class.getResource("fxml/tradePage.fxml").toExternalForm());
+        SendTradeRequest.sendTradeRequestURL = new URL(Main.class.getResource("fxml/sendTradeRequest.fxml").toExternalForm());
+        TradeRequests.tradeRequestsURL = new URL(Main.class.getResource("fxml/tradeRequests.fxml").toExternalForm());
+
         Parent root = FXMLLoader.load(address_login_page);
         Scene scene = new Scene(root);
         stage.setScene(scene);

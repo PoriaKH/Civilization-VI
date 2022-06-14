@@ -17,6 +17,7 @@
             <Button text="victory improvement" onMouseClicked="#victoryImprovementClicked"/>
             <Button text="Buildings" onMouseClicked="#buildingsClicked"/>
             <Button text="Cheat menu" onMouseClicked="#cheatClicked"/>
+            <Button text="Trade" onMouseClicked="#tradeClicked"/>
             <Button text="back" onMouseClicked="#backClicked"/>
         </VBox>
     </center>

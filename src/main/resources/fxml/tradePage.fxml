@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="View.TradePage"
+            prefHeight="720.0" prefWidth="1280.0">
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+            <Button text="Send Request" onMouseClicked="#sendRequestClicked"/>
+            <Button text="Trade Requests" onMouseClicked="#tradeRequestsClicked"/>
+            <Button text="back" onMouseClicked="#backClicked"/>
+        </VBox>
+    </center>
+
+</BorderPane>
