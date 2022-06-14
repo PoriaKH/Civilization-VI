@@ -120,6 +120,34 @@ public class Tile extends Polygon {
                     }
                 }
             }
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(7);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Sheep");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Cotton");
+                        break;
+                    case 2:
+                        this.resource = new Resource("Gem");
+                        break;
+                    case 3:
+                        this.resource = new Resource("Gold");
+                        break;
+                    case 4:
+                        this.resource = new Resource("Gas");
+                        break;
+                    case 5:
+                        this.resource = new Resource("Marble");
+                        break;
+                    case 6:
+                        this.resource = new Resource("Silver");
+                        break;
+                }
+            }
         }
         else if(isMeadow){
             food += 2;
@@ -137,6 +165,43 @@ public class Tile extends Polygon {
                     } else {//Marsh
                         this.attribute = new Attribute(false, false, false, false, true, false);
                     }
+                }
+            }
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(10);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Banana");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Cow");
+                        break;
+                    case 2:
+                        this.resource = new Resource("Gazelle");
+                        break;
+                    case 3:
+                        this.resource = new Resource("Sheep");
+                        break;
+                    case 4:
+                        this.resource = new Resource("Cotton");
+                        break;
+                    case 5:
+                        this.resource = new Resource("Color");
+                        break;
+                    case 6:
+                        this.resource = new Resource("Fur");
+                        break;
+                    case 7:
+                        this.resource = new Resource("Gold");
+                        break;
+                    case 8:
+                        this.resource = new Resource("Marble");
+                        break;
+                    case 9:
+                        this.resource = new Resource("Silk");
+                        break;
                 }
             }
         }
@@ -159,10 +224,34 @@ public class Tile extends Polygon {
                     }
                 }
             }
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(4);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Gazelle");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Sheep");
+                        break;
+                    case 2:
+                        this.resource = new Resource("Gold");
+                        break;
+                    case 3:
+                        this.resource = new Resource("Silver");
+                        break;
+                }
+            }
         }
         else if(isMountain){
             mpCost = 100000000;
             this.attribute = new Attribute(false,true,false,false,false,false);
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){
+                this.resource = new Resource("Horse");
+            }
         }
         else if(isOcean){
             mpCost = 100000000;
@@ -190,6 +279,38 @@ public class Tile extends Polygon {
                     }
                 }
             }
+
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(8);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Wheat");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Cotton");
+                        break;
+                    case 2:
+                        this.resource = new Resource("Gem");
+                        break;
+                    case 3:
+                        this.resource = new Resource("Gold");
+                        break;
+                    case 4:
+                        this.resource = new Resource("Gas");
+                        break;
+                    case 5:
+                        this.resource = new Resource("Tusk");
+                        break;
+                    case 6:
+                        this.resource = new Resource("Marble");
+                        break;
+                    case 7:
+                        this.resource = new Resource("Coal");
+                        break;
+                }
+            }
         }
         else if(isSnow){
             combatChange -= 33;
@@ -201,6 +322,20 @@ public class Tile extends Polygon {
 
                 if(number == 1){//Ice
                     this.attribute = new Attribute(false,false,true,false,false,false);
+                }
+            }
+
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(2);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Sugar");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Metal");
+                        break;
                 }
             }
         }
@@ -226,6 +361,19 @@ public class Tile extends Polygon {
                     }
                 }
             }
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(2);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Fur");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Silver");
+                        break;
+                }
+            }
         }
         //
         if(this.attribute != null) {
@@ -235,6 +383,11 @@ public class Tile extends Polygon {
             this.combatChange += this.attribute.getCombatChange();
             this.mpCost += this.attribute.getMpCost();
             this.combatChange += this.attribute.getCombatChange();
+        }
+        if(this.resource != null){
+            this.food += this.resource.getFood();
+            this.gold += this.resource.getGold();
+            this.production += this.resource.getProduction();
         }
 
 

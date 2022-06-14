@@ -219,4 +219,31 @@ public class Resource {
         return isSugar;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isLuxury() {
+        return isLuxury;
+    }
+
+    public boolean isStrategic() {
+        return isStrategic;
+    }
+
+    public boolean isBonus() {
+        return isBonus;
+    }
+
+    public int getProduction() {
+        return production;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public boolean isSheep() {
+        return isSheep;
+    }
 }
