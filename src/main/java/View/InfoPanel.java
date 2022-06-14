@@ -67,4 +67,11 @@ public class InfoPanel {
         BuildingsPage.stage = stage;
         new BuildingsPage().start();
     }
+
+    public void cheatClicked(MouseEvent mouseEvent) throws IOException {
+        CheatMenu.infoPanelScene = infoPanelScene;
+        CheatMenu.stage = stage;
+        CheatMenu.doesEnteredFromInfoPanel = true;
+        new CheatMenu().start();
+    }
 }

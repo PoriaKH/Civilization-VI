@@ -15,6 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        CheatMenu.cheatMenuURL = new URL(Main.class.getResource("fxml/cheatMenu.fxml").toExternalForm());
         VictoryImprovement.victoryImprovementURL = new URL(Main.class.getResource("fxml/victoryImprovement.fxml").toExternalForm());
         GeneralUnitPanel.generalUnitPanelURL = new URL(Main.class.getResource("fxml/generalUnitPanel.fxml").toExternalForm());
         InfoPanel.infoPanelURL = new URL(Main.class.getResource("fxml/infoPanel.fxml").toExternalForm());
