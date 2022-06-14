@@ -1,7 +1,9 @@
 package View;
 
+import Model.City;
 import Model.Civilization;
 import Model.Technology;
+import Model.Tile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,11 +62,14 @@ public class SendTradeRequest {
     @FXML
     public TextField giveTextField;
 
+    private ArrayList<String> comboCivNames = new ArrayList<>();
+
 
     public void initialize(){
         for(Civilization civilization : InfoPanel.civilizations){
             if(civilization != InfoPanel.currentCivilization){
                 civilizationCombo.getItems().add(civilization.getName());
+                comboCivNames.add(civilization.getName());
             }
         }
 
@@ -105,6 +110,7 @@ public class SendTradeRequest {
     public void civilizationComboAction(ActionEvent event) {
         int selectedIndex = civilizationCombo.getSelectionModel().getSelectedIndex();
         selectedCivilization = selectedIndex;
+        selectedCivilizationName = comboCivNames.get(selectedIndex);
     }
 
     public void needComboAction(ActionEvent event) {
@@ -186,8 +192,8 @@ public class SendTradeRequest {
             }
             if(!flag) {
                 needError.setText("there is no luxury resource with this name");
+                return;
             }
-            return;
         }
         needError.setText("");
         if(selectedGive != 2){
@@ -215,12 +221,52 @@ public class SendTradeRequest {
         needError.setText("");
         giveError.setText("");
 
-        for(Civilization civilization : InfoPanel.civilizations){
-            if(civilization == InfoPanel.civilizations.get(selectedCivilization)){
-                civilization.getTrades().add(InfoPanel.currentCivilization.getName() + "- " + "Need : " + selectedNeedName + "(" + needTextField.getText() + ") Payment : " + selectedGiveName + "(" + giveTextField.getText() + ")");
-                System.out.println(civilization.getTrades().get(civilization.getTrades().size() - 1));
+        if(selectedGive == 0){//Food
+            int allFood = 0;
+            for(City city : InfoPanel.currentCivilization.getCities()){
+                allFood += city.getTotalFood();
+            }
+            if(allFood < Integer.parseInt(giveTextField.getText())){
+                giveError.setText("you don't have this much food!");
+                return;
             }
         }
+        if(selectedGive == 1){//Gold
+            if(InfoPanel.currentCivilization.getGold() < Integer.parseInt(giveTextField.getText())){
+                giveError.setText("you don't have this much gold!");
+                return;
+            }
+        }
+        if(selectedGive == 2){
+            boolean flag = false;
+
+            for(City city : InfoPanel.currentCivilization.getCities()){
+                for(Tile tile : city.getTiles()){
+                    if(tile.getResource() != null) {
+                        if (Objects.equals(tile.getResource().getName(), giveTextField.getText())) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(!flag){
+                giveError.setText("you don't have this resource!");
+                return;
+            }
+        }
+
+        //finding index
+        int index = 0;
+        for(int i = 0; i < InfoPanel.civilizations.size(); i++){
+            if(Objects.equals(InfoPanel.civilizations.get(i).getName(), selectedCivilizationName)){
+                index = i;
+                break;
+            }
+        }
+        //
+        InfoPanel.civilizations.get(index).getTrades().add(InfoPanel.currentCivilization.getName() + "- " + "Need : " + selectedNeedName + "(" + needTextField.getText() + ") Payment : " + selectedGiveName + "(" + giveTextField.getText() + ")");
+        System.out.println(InfoPanel.civilizations.get(index).getTrades().get(InfoPanel.civilizations.get(index).getTrades().size() - 1));
         finalMessage.setText("your request has been sent successfully");
 
         new TradePage().start();
