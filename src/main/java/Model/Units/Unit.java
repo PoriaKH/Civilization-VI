@@ -4,8 +4,11 @@ import Model.Civilization;
 import Model.Technology;
 import Model.Tile;
 import Model.Node;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +27,8 @@ public class Unit extends Rectangle {
     private boolean isOnSleep;
 
     //URL
-    static HashMap<String, URL> unitsURL = new HashMap<>();
-    static ArrayList<String> unitsName = new ArrayList<>();
+    public static HashMap<String, URL> unitsURL = new HashMap<>();
+    public static ArrayList<String> unitsName = new ArrayList<>();
     public static void setNames () {
         unitsName.add("Worker");
         unitsName.add("Warrior");

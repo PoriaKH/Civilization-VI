@@ -1,4 +1,5 @@
 import Model.Tile;
+import Model.Units.Unit;
 import View.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -47,6 +48,11 @@ public class Main extends Application {
         Tile.building4URL = new URL(Main.class.getResource("pictures/building4.png").toExternalForm());
         Tile.building5URL = new URL(Main.class.getResource("pictures/building5.png").toExternalForm());
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
+        Unit.setNames();
+        for (int i = 0; i < Unit.unitsName.size(); i++) {
+            URL url = new URL(Main.class.getResource("pictures/" + Unit.unitsName.get(i) + "png").toExternalForm());
+            Unit.unitsURL.put(Unit.unitsName.get(i), url);
+        }
         Parent root = FXMLLoader.load(address_login_page);
         Scene scene = new Scene(root);
         stage.setScene(scene);
