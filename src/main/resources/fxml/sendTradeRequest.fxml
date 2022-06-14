@@ -6,10 +6,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<?import javafx.scene.control.cell.ComboBoxListCell?>
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="View.SendTradeRequest"
             prefHeight="720.0" prefWidth="1280.0">
-    <Button text="back" onMouseClicked="#backClicked"/>
+    <bottom>
+        <Button text="back" onMouseClicked="#backClicked"/>
+    </bottom>
 
-</AnchorPane>
+    <center>
+        <VBox alignment="CENTER" spacing="10" maxHeight="350">
+            <Label text="choose the civilization you want to communicate"/>
+            <ComboBox fx:id="civilizationCombo" onAction="#civilizationComboAction"/>
+            <Text fx:id="civilizationError" text=" "/>
+            <Text text=" "/>
+            <Label text="what do you need"/>
+            <HBox alignment="CENTER" spacing="10" maxHeight="130">
+                <ComboBox fx:id="needCombo" onAction="#needComboAction"/>
+                <TextField fx:id="needTextField" promptText="enter the amount of ..." minWidth="200"/>
+            </HBox>
+            <Text fx:id="needError" text=" "/>
+            <Text text=" "/>
+            <Label text="what are you willing to pay"/>
+            <HBox alignment="CENTER" spacing="10" maxHeight="130">
+                <ComboBox fx:id="giveCombo" onAction="#giveComboAction"/>
+                <TextField fx:id="giveTextField" promptText="enter the amount of ..." minWidth="200"/>
+            </HBox>
+            <Text fx:id="giveError" text=" "/>
+            <Text text=" "/>
+            <Button fx:id="tradeButton" text="Send the request" onMouseClicked="#tradeClicked"/>
+            <Text fx:id="finalMessage" text=" "/>
+        </VBox>
+    </center>
+
+</BorderPane>

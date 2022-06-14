@@ -17,7 +17,7 @@ public class Civilization {
     private int goldPerTurn;
     private int happiness;
     private ArrayList<City> cities;
-    private HashMap<Civilization,Resource> trades;
+    private ArrayList<String> trades;
     private ArrayList<String> messages; // (int)turn : message
     private HashMap<Civilization, Integer> winsInUnitsWar = new HashMap<>(); // tamadon shekast khorde va tedad bakht haye on ra neshan mide
     private HashMap<Civilization, Integer> lossesInUnitsWar = new HashMap<>(); // tamadon pirooz va tedad bord haye on ra neshan mide
@@ -43,7 +43,7 @@ public class Civilization {
         cities.add(capital);
         this.science = 0;
         technologies = new ArrayList<>();
-        trades = new HashMap<>();
+        trades = new ArrayList<>();
         technologyEarnedPercent = new HashMap<>();
 //        this.gold = 10;
         //temporary
@@ -106,7 +106,7 @@ public class Civilization {
         return happiness;
     }
 
-    public HashMap<Civilization, Resource> getTrades() {
+    public ArrayList<String> getTrades() {
         return trades;
     }
 

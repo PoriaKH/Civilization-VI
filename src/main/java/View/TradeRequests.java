@@ -25,6 +25,7 @@ public class TradeRequests {
         stage.show();
     }
 
-    public void backClicked(MouseEvent mouseEvent) {
+    public void backClicked(MouseEvent mouseEvent) throws IOException {
+        new TradePage().start();
     }
 }

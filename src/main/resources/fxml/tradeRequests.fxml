@@ -6,11 +6,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="View.TradeRequests"
             prefHeight="720.0" prefWidth="1280.0">
 
-    <Button text="back" onMouseClicked="#backClicked"/>
+    <bottom>
+        <Button text="back" onMouseClicked="#backClicked"/>
+    </bottom>
 
-</AnchorPane>
+</BorderPane>
