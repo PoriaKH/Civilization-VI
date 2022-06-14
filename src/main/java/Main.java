@@ -50,7 +50,7 @@ public class Main extends Application {
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
         for (int i = 0; i < Unit.unitsName.size(); i++) {
-            URL url = new URL(Main.class.getResource("pictures/" + Unit.unitsName.get(i) + "png").toExternalForm());
+            URL url = new URL(Main.class.getResource("pictures/" + Unit.unitsName.get(i) + ".png").toExternalForm());
             Unit.unitsURL.put(Unit.unitsName.get(i), url);
         }
         Parent root = FXMLLoader.load(address_login_page);

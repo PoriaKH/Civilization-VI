@@ -361,7 +361,7 @@ public class Tile extends Polygon {
             unit.setY(this.y - h);
         }
         else {
-            unit.setX(this.x + 40);
+            unit.setX(this.x + 60);
             unit.setY(this.y - h + 90);
         }
         root.getChildren().add(unit);
@@ -684,7 +684,7 @@ public class Tile extends Polygon {
                 units.get(i).setY(this.y - h);
             }
             else {
-                units.get(i).setX(this.x + 40);
+                units.get(i).setX(this.x + 60);
                 units.get(i).setY(this.y - h + 90);
             }
         }
@@ -731,7 +731,7 @@ public class Tile extends Polygon {
                 units.get(i).setY(this.y - h);
             }
             else {
-                units.get(i).setX(this.x + 40);
+                units.get(i).setX(this.x + 60);
                 units.get(i).setY(this.y - h + 90);
             }
         }
@@ -778,7 +778,7 @@ public class Tile extends Polygon {
                 units.get(i).setY(this.y - h);
             }
             else {
-                units.get(i).setX(this.x + 40);
+                units.get(i).setX(this.x + 60);
                 units.get(i).setY(this.y - h + 90);
             }
         }
@@ -825,7 +825,7 @@ public class Tile extends Polygon {
                 units.get(i).setY(this.y - h);
             }
             else {
-                units.get(i).setX(this.x + 40);
+                units.get(i).setX(this.x + 60);
                 units.get(i).setY(this.y - h + 90);
             }
         }

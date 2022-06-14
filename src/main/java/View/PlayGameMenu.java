@@ -4,6 +4,8 @@ import Controller.PlayGameMenuController;
 import Model.Civilization;
 import Model.Member;
 import Model.Tile;
+import Model.Units.Civilian;
+import Model.Units.Warrior;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -268,6 +270,17 @@ public class PlayGameMenu {
                             tile.moveLeft();
                         }
                     }
+                }
+                // for unit testing
+                if (Objects.equals(keyName, "U")) {
+                    Warrior warrior = new Warrior(playingCivilization, tiles.get(0), 10, 2, 2, 1, 70, false
+                            , 0, 4, 2, 6, false, false, true, false,
+                            false, false, false, false, false, false, false,
+                            false, false, false, false, false, false, false,
+                            false, false, false, false, false);
+                    Civilian civilian = new Civilian(playingCivilization, tiles.get(0), 10, 2, 2, 1, 70, true, true, false);
+                    tiles.get(0).addUnit(warrior);
+                    tiles.get(0).addUnit(civilian);
                 }
             }
         });
