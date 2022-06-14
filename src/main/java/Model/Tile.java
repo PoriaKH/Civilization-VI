@@ -355,6 +355,7 @@ public class Tile extends Polygon {
     }
 
     public void addUnit (Unit unit) {
+        //TODO ... check shavad
         if (units.size() == 0) {
             unit.setX(this.x + 20);
             unit.setY(this.y - h);
@@ -677,6 +678,16 @@ public class Tile extends Polygon {
             building.setX(x1);
             building.setY(y1);
         }
+        for (int i = 0; i < units.size(); i++) {
+            if (i == 0) {
+                units.get(i).setX(this.x + 20);
+                units.get(i).setY(this.y - h);
+            }
+            else {
+                units.get(i).setX(this.x + 40);
+                units.get(i).setY(this.y - h + 90);
+            }
+        }
     }
     public void moveLeft(){
         double x1,y1;
@@ -713,6 +724,16 @@ public class Tile extends Polygon {
         if(building != null) {
             building.setX(x1);
             building.setY(y1);
+        }
+        for (int i = 0; i < units.size(); i++) {
+            if (i == 0) {
+                units.get(i).setX(this.x + 20);
+                units.get(i).setY(this.y - h);
+            }
+            else {
+                units.get(i).setX(this.x + 40);
+                units.get(i).setY(this.y - h + 90);
+            }
         }
     }
     public void moveUp(){
@@ -751,6 +772,16 @@ public class Tile extends Polygon {
             building.setX(x1);
             building.setY(y1);
         }
+        for (int i = 0; i < units.size(); i++) {
+            if (i == 0) {
+                units.get(i).setX(this.x + 20);
+                units.get(i).setY(this.y - h);
+            }
+            else {
+                units.get(i).setX(this.x + 40);
+                units.get(i).setY(this.y - h + 90);
+            }
+        }
     }
     public void moveDown(){
         double x1,y1;
@@ -787,6 +818,16 @@ public class Tile extends Polygon {
         if(building != null) {
             building.setX(x1);
             building.setY(y1);
+        }
+        for (int i = 0; i < units.size(); i++) {
+            if (i == 0) {
+                units.get(i).setX(this.x + 20);
+                units.get(i).setY(this.y - h);
+            }
+            else {
+                units.get(i).setX(this.x + 40);
+                units.get(i).setY(this.y - h + 90);
+            }
         }
     }
 }
