@@ -4,24 +4,54 @@ import Model.Civilization;
 import Model.Technology;
 import Model.Tile;
 import Model.Node;
+import javafx.scene.shape.Rectangle;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Unit {
+public class Unit extends Rectangle {
     private Civilization civilization;
     private Tile origin;
     private int health;
     private int MP;   // it shows mp for a unit and its final.
     private int mp;  // it changes every time unit moves.
-
-
     private int duration;
     private int goldCost;
     private int movesLeft;
-    //TODO... for nextTurn
+    // for nextTurn
     private boolean hasOrdered;
-    //
     private boolean isOnSleep;
+
+    //URL
+    static HashMap<String, URL> unitsURL = new HashMap<>();
+    static ArrayList<String> unitsName = new ArrayList<>();
+    public static void setNames () {
+        unitsName.add("Worker");
+        unitsName.add("Warrior");
+        unitsName.add("Trebuchet");
+        unitsName.add("Tank");
+        unitsName.add("Swordsman");
+        unitsName.add("Spearman");
+        unitsName.add("Settler");
+        unitsName.add("Scout");
+        unitsName.add("Rifleman");
+        unitsName.add("Pikeman");
+        unitsName.add("Panzer");
+        unitsName.add("Musketman");
+        unitsName.add("Longswordsman");
+        unitsName.add("Knight");
+        unitsName.add("Infantry");
+        unitsName.add("Horseman");
+        unitsName.add("Crossbowman");
+        unitsName.add("Chariot Archer");
+        unitsName.add("Cavalry");
+        unitsName.add("Catapult");
+        unitsName.add("Cannon");
+        unitsName.add("Artillery");
+        unitsName.add("Archer");
+        unitsName.add("Anti-Tank Gun");
+    }
 
     public boolean getHasOrdered() {
         return hasOrdered;
@@ -53,6 +83,8 @@ public class Unit {
         this.duration = duration;
         this.goldCost = goldCost;
         this.isCivilian = isCivilian;
+        this.setWidth(80);
+        this.setHeight(80);
     }
 
     public int getConstantMP() {

@@ -355,6 +355,15 @@ public class Tile extends Polygon {
     }
 
     public void addUnit (Unit unit) {
+        if (units.size() == 0) {
+            unit.setX(this.x + 20);
+            unit.setY(this.y - h);
+        }
+        else {
+            unit.setX(this.x + 40);
+            unit.setY(this.y - h + 90);
+        }
+        root.getChildren().add(unit);
         units.add(unit);
     }
 
