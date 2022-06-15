@@ -182,7 +182,14 @@ public class Civilization {
         }
         //each science adds 2 points
         point += 2 * science;
-        //TODO... building points
+        //each building adds 12 pts
+        for(City city : cities){
+            for(Tile tile : city.getTiles()){
+                if(tile.getBuilding() != null)
+                    point += 12;
+            }
+        }
+        //
         return point;
     }
     public void setGold(int amount){
