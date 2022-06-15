@@ -257,4 +257,8 @@ public class Civilization {
             }
         }
     }
+    public String toString(){
+
+        return this.name;
+    }
 }

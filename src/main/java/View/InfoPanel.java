@@ -88,4 +88,9 @@ public class InfoPanel {
         new CityPanel().start();
     }
 
+    public void diplomaticsClicked(MouseEvent mouseEvent) throws IOException {
+        Diplomatics.infoPanelScene = infoPanelScene;
+        Diplomatics.stage = stage;
+        new Diplomatics().start();
+    }
 }

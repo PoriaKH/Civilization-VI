@@ -812,7 +812,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    public String diplomaticInformation(Civilization civilization,ArrayList<Tile> map){
+    public String diplomaticInformation(Civilization civilization){
         int point = civilization.getPoint();
 
         return "your point is : " + point;
@@ -1023,7 +1023,6 @@ public class PlayGameMenuController {
         for(Civilization tempCiv : civilization.getFriends()){
             stringBuilder.append(tempCiv.getName()).append("\n");
         }
-        stringBuilder.append("other civilizations are your enemy");
         return stringBuilder;
     }
     //TODO for next phase ...

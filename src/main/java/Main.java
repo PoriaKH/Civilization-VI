@@ -65,6 +65,10 @@ public class Main extends Application {
         CityPage.flag3URL = new URL(Main.class.getResource("pictures/flags/3.png").toExternalForm());
         CityPage.flag4URL = new URL(Main.class.getResource("pictures/flags/4.png").toExternalForm());
         CityPage.flag5URL = new URL(Main.class.getResource("pictures/flags/5.png").toExternalForm());
+        Diplomatics.diplomaticsPageURL = new URL(Main.class.getResource("fxml/diplomatics.fxml").toExternalForm());
+        DiplomaticReview.diplomaticReviewURL = new URL(Main.class.getResource("fxml/diplomaticReview.fxml").toExternalForm());
+        DiplomaticInformation.diplomaticInfoURL = new URL(Main.class.getResource("fxml/diplomaticInformation.fxml").toExternalForm());
+        Diplomacy.diplomacyURL = new URL(Main.class.getResource("fxml/diplomacy.fxml").toExternalForm());
 
         Parent root = FXMLLoader.load(address_login_page);
         Scene scene = new Scene(root);
