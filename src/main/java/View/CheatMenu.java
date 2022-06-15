@@ -47,6 +47,7 @@ public class CheatMenu {
             int amount = Integer.parseInt(str);
             new PlayGameMenuController().cheatIncreaseGold(InfoPanel.currentCivilization, amount);
             if (doesEnteredFromInfoPanel) new InfoPanel().start();
+            else stage.setScene(infoPanelScene);
         }
         else showError("gold");
     }
@@ -57,6 +58,7 @@ public class CheatMenu {
             int amount = Integer.parseInt(str);
             new PlayGameMenuController().cheatIncreaseFood(InfoPanel.currentCivilization, amount);
             if (doesEnteredFromInfoPanel) new InfoPanel().start();
+            else stage.setScene(infoPanelScene);
         }
         else showError("food");
     }
@@ -67,6 +69,7 @@ public class CheatMenu {
             int amount = Integer.parseInt(str);
             new PlayGameMenuController().cheatIncreaseTechnology(InfoPanel.currentCivilization, amount);
             if (doesEnteredFromInfoPanel) new InfoPanel().start();
+            else stage.setScene(infoPanelScene);
         }
         else showError("science");
     }
@@ -77,12 +80,14 @@ public class CheatMenu {
             int amount = Integer.parseInt(str);
             new PlayGameMenuController().cheatIncreaseHappiness(InfoPanel.currentCivilization, amount);
             if (doesEnteredFromInfoPanel) new InfoPanel().start();
+            else stage.setScene(infoPanelScene);
         }
         else showError("happiness");
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) new InfoPanel().start();
+        else stage.setScene(infoPanelScene);
     }
 
     public void showError (String string) {

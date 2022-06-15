@@ -282,6 +282,16 @@ public class PlayGameMenu {
                     tiles.get(0).addUnit(warrior);
                     tiles.get(0).addUnit(civilian);
                 }
+                if (Objects.equals(keyName, "C")) {
+                    CheatMenu.infoPanelScene = scene;
+                    CheatMenu.stage = stage;
+                    CheatMenu.doesEnteredFromInfoPanel = false;
+                    try {
+                        new CheatMenu().start();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         });
         infoPanelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
