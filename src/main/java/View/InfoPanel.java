@@ -93,4 +93,10 @@ public class InfoPanel {
         Diplomatics.stage = stage;
         new Diplomatics().start();
     }
+
+    public void demographicsClicked(MouseEvent mouseEvent) throws IOException {
+        Demographics.infoPanelScene = infoPanelScene;
+        Demographics.stage = stage;
+        new Demographics().start();
+    }
 }
