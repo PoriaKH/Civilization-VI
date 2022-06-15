@@ -45,9 +45,9 @@ public class InfoPanel {
     }
 
     public void unitPanelClicked(MouseEvent mouseEvent) throws IOException {
-        GeneralUnitPanel.infoPanelScene = infoPanelScene;
-        GeneralUnitPanel.stage = stage;
-        new GeneralUnitPanel().start();
+        UnitPanel.infoPanelScene = infoPanelScene;
+        UnitPanel.stage = stage;
+        new UnitPanel().start();
     }
 
     public void victoryImprovementClicked(MouseEvent mouseEvent) throws IOException {
@@ -73,5 +73,11 @@ public class InfoPanel {
         TradePage.infoPanelScene = infoPanelScene;
         TradePage.stage = stage;
         new TradePage().start();
+    }
+
+    public void generalUnitPanelClicked(MouseEvent mouseEvent) throws IOException {
+        GeneralUnitPanel.infoPanelScene = infoPanelScene;
+        GeneralUnitPanel.stage = stage;
+        new GeneralUnitPanel().start();
     }
 }

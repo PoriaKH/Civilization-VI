@@ -2711,8 +2711,6 @@ public class PlayGameMenuController {
         return "";
     }
 
-    // sleepUnit, .... civilization baraye playeri hast ke alan dare dastor mide
-    //TODO ... bayad function marboot be darkhast amaliat va royat doshman dar atraf baraye behavior ha piyade shavad
     public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map){
         String str;
 

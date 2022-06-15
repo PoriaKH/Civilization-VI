@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="View.UnitPanel"
+            prefHeight="720.0" prefWidth="1280.0">
+
+            <left>
+                <VBox alignment="CENTER" spacing="20">
+                <Label text="Units behaviour"/>
+                <Button text="sleep unit" onMouseClicked="#sleepUnit"/>
+                    <Button text="alert unit" onMouseClicked="#alertUnit"/>
+                    <Button text="fortify unit" onMouseClicked="#fortifyUnit"/>
+                    <Button text="heal unit" onMouseClicked="#healUnit"/>
+                    <Button text="deploy unit" onMouseClicked="#deployUnit"/>
+                    <Button text="setup for range attack" onMouseClicked="#rangeUnit"/>
+                    <Button text="wakeup unit" onMouseClicked="#wakeUpUnit"/>
+                    <Button text="recover unit" onMouseClicked="#recoverUnit"/>
+                    <Button text="delete unit" onMouseClicked="#deleteUnit"/>
+                </VBox>
+            </left>
+            <center>
+                <VBox alignment="CENTER" spacing="20">
+                    <Label text="move unit"/>
+                    <TextField promptText="destination tile number" fx:id="moveDes"/>
+                    <Button text="MOVE !" onMouseClicked="#moveUnit"/>
+                    <Label text="attack city"/>
+                    <TextField promptText="destination tile number" fx:id="attackCityDes"/>
+                    <Button text="attack city !" onMouseClicked="#attackCityUnit"/>
+                    <Label text="attack tile"/>
+                    <TextField promptText="destination tile number" fx:id="attackTileDes"/>
+                    <Button text="attack tile !" onMouseClicked="#attackTileUnit"/>
+                    <Button text="make unit" onMouseClicked="#createUnit"/>
+                </VBox>
+            </center>
+            <right>
+                <VBox alignment="CENTER" spacing="20">
+                    <Label text="create road"/>
+                    <TextField promptText="tile number" fx:id="roadDes"/>
+                    <Button text="create road !" onMouseClicked="#createRoadUnit"/>
+                    <Label text="create rail road"/>
+                    <TextField promptText="tile number" fx:id="railDes"/>
+                    <Button text="create rail road!" onMouseClicked="#createRailUnit"/>
+                    <Label text="remove road"/>
+                    <TextField promptText="tile number" fx:id="removeRoadDes"/>
+                    <Button text="remove road !" onMouseClicked="#removeRoadUnit"/>
+                    <Label text="remove rail road"/>
+                    <TextField promptText="tile number" fx:id="removeRailDes"/>
+                    <Button text="remove rail road!" onMouseClicked="#removeRailUnit"/>
+
+                    <Label text="repair road"/>
+                    <TextField promptText="tile number" fx:id="repairRoadDes"/>
+                    <Button text="repair road !" onMouseClicked="#repairRoadUnit"/>
+                    <Label text="repair rail road"/>
+                    <TextField promptText="tile number" fx:id="repairRailDes"/>
+                    <Button text="repair rail road!" onMouseClicked="#repairRailUnit"/>
+                </VBox>
+            </right>
+</BorderPane>

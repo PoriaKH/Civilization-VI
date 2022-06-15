@@ -4,7 +4,9 @@ import Model.Civilization;
 import Model.Technology;
 import Model.Tile;
 import Model.Node;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -88,6 +90,12 @@ public class Unit extends Rectangle {
         this.isCivilian = isCivilian;
         this.setWidth(80);
         this.setHeight(80);
+        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
     }
 
     public int getConstantMP() {
