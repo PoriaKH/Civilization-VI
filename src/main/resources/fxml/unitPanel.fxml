@@ -40,6 +40,7 @@
                     <TextField promptText="destination tile number" fx:id="attackTileDes"/>
                     <Button text="attack tile !" onMouseClicked="#attackTileUnit"/>
                     <Button text="make unit" onMouseClicked="#createUnit"/>
+                    <Button text="BACK" onMouseClicked="#back"/>
                 </VBox>
             </center>
             <right>
