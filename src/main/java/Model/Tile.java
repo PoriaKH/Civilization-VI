@@ -534,6 +534,9 @@ public class Tile extends Polygon {
     public Resource getResource() {
         return resource;
     }
+    public void addResource(Resource resource){
+        this.resource = resource;
+    }
 
     public ArrayList<Unit> getUnits() {
         return units;
