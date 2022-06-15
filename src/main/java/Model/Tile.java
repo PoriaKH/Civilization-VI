@@ -3,12 +3,14 @@ package Model;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,6 +30,9 @@ public class Tile extends Polygon {
     public static URL railURL;
 
     public static Pane root;
+    public static Scene scene;
+    public static Stage stage;
+
     public float cameraSpeed = 30;
 
     private boolean isDesert;                   //Smooth

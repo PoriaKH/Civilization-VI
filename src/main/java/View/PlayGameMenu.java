@@ -5,6 +5,7 @@ import Model.Civilization;
 import Model.Member;
 import Model.Tile;
 import Model.Units.Civilian;
+import Model.Units.Unit;
 import Model.Units.Warrior;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -337,12 +338,14 @@ public class PlayGameMenu {
 
 
 
-
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root,1280,720);
         scene.getRoot().requestFocus();
         stage.setScene(scene);
         root.getChildren().get(0).requestFocus();
+
+        Tile.stage = stage;
+        Tile.scene = scene;
 
         stage.show();
     }

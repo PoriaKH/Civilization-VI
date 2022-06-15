@@ -4,6 +4,8 @@ import Model.Civilization;
 import Model.Technology;
 import Model.Tile;
 import Model.Node;
+import View.PlayGameMenu;
+import View.UnitPanel;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -11,6 +13,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,7 +96,14 @@ public class Unit extends Rectangle {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                UnitPanel.stage = Tile.stage;
+                UnitPanel.infoPanelScene = Tile.scene;
+                UnitPanel.doesEnteredFromInfoPanel = false;
+                try {
+                    new UnitPanel().start();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
