@@ -69,6 +69,9 @@ public class Main extends Application {
         DiplomaticReview.diplomaticReviewURL = new URL(Main.class.getResource("fxml/diplomaticReview.fxml").toExternalForm());
         DiplomaticInformation.diplomaticInfoURL = new URL(Main.class.getResource("fxml/diplomaticInformation.fxml").toExternalForm());
         Diplomacy.diplomacyURL = new URL(Main.class.getResource("fxml/diplomacy.fxml").toExternalForm());
+        Messages.messagesURL = new URL(Main.class.getResource("fxml/messages.fxml").toExternalForm());
+        SystemMessages.systemMessagesURL = new URL(Main.class.getResource("fxml/systemMessages.fxml").toExternalForm());
+        DiplomaticRequests.diplomaticRequestsURL = new URL(Main.class.getResource("fxml/diplomaticRequests.fxml").toExternalForm());
 
         Parent root = FXMLLoader.load(address_login_page);
         Scene scene = new Scene(root);

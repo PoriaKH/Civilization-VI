@@ -8,10 +8,16 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.Diplomacy"
+            fx:controller="View.Messages"
             prefHeight="720.0" prefWidth="1280.0">
     <bottom>
         <Button text="back" onMouseClicked="#backClicked"/>
     </bottom>
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+            <Button text="Requests" onMouseClicked="#requestsClicked"/>
+            <Button text="System Messages" onMouseClicked="#systemMessagesClicked"/>
+        </VBox>
+    </center>
 
 </BorderPane>

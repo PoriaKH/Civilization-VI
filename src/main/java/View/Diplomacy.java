@@ -1,5 +1,6 @@
 package View;
 
+import Controller.PlayGameMenuController;
 import Model.Civilization;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,9 +30,16 @@ public class Diplomacy {
     public Scene diplomacyScene;
 
     private ComboBox<Civilization> civilizationCombo = new ComboBox<>();
+    private ComboBox<Civilization> breakOathCombo = new ComboBox<>();
     private Civilization selectedCiv;
+    private Civilization selectedOathBreak;
 
     public void start() throws IOException {
+        int allies = 0;
+        for(Civilization civilization : InfoPanel.currentCivilization.getFriends()){
+            breakOathCombo.getItems().add(civilization);
+            allies++;
+        }
 
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
@@ -40,6 +50,29 @@ public class Diplomacy {
         vBox.getChildren().add(civilizationCombo);
         Button button = new Button("Send Friendly Request");
         vBox.getChildren().add(button);
+
+        if(allies > 0) {
+            Text text = new Text(" ");
+            vBox.getChildren().add(text);
+            Label label1 = new Label("Break Oath");
+            label1.setFont(new Font(20));
+            vBox.getChildren().add(label1);
+            vBox.getChildren().add(breakOathCombo);
+        }
+        Button button1 = new Button("break the oath");
+        if(allies > 0){
+            vBox.getChildren().add(button1);
+        }
+        button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    breakOathClicked();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         for(Civilization civilization : InfoPanel.civilizations){
             if(civilization != InfoPanel.currentCivilization){
@@ -52,22 +85,29 @@ public class Diplomacy {
                 selectedCiv = civilizationCombo.getSelectionModel().getSelectedItem();
             }
         });
+        breakOathCombo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                selectedOathBreak = breakOathCombo.getSelectionModel().getSelectedItem();
+            }
+        });
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if(selectedCiv == null){
                     showAlert("you must choose the civilization first");
+                    return;
                 }
                 for(Civilization tempCiv : selectedCiv.getFriendlyRequests()){
                     if(tempCiv == InfoPanel.currentCivilization) {
                         showAlert("you have already sent this request");
-                        break;
+                        return;
                     }
                 }
                 for(Civilization tempCiv : selectedCiv.getFriends()){
                     if(tempCiv == InfoPanel.currentCivilization){
                         showAlert("this civilization is already your allie");
-                        break;
+                        return;
                     }
                 }
                 selectedCiv.getFriendlyRequests().add(InfoPanel.currentCivilization);
@@ -87,11 +127,24 @@ public class Diplomacy {
         stage.setScene(diplomacyScene);
         stage.show();
     }
+    public void breakOathClicked() throws IOException {
+        if(selectedOathBreak == null) {
+            showAlert("you must choose the civilization you want to break oath with!");
+            return;
+        }
+
+        InfoPanel.currentCivilization.breakTheOath(selectedOathBreak);
+        new Diplomatics().start();
+    }
+
     public void showAlert(String message){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error");
-        alert.setHeaderText("result :");
+//        alert.setHeaderText("result :");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    public void backClicked(MouseEvent mouseEvent) throws IOException {
+        new Diplomatics().start();
     }
 }

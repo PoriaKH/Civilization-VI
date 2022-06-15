@@ -54,6 +54,7 @@ public class Civilization {
 
     public void acceptFriendlyRequest(Civilization civilization){
         this.friendlyRequests.remove(civilization);
+        civilization.friendlyRequests.remove(this);
         this.friends.add(civilization);
         civilization.friends.add(this);
         String message = PlayGameMenuController.turn + " : " + this.name + " : accepted your friendly request, now you are allies";
@@ -61,6 +62,7 @@ public class Civilization {
     }
     public void denyFriendlyRequest(Civilization civilization){
         this.friendlyRequests.remove(civilization);
+        civilization.friendlyRequests.remove(this);
         String message = PlayGameMenuController.turn + " : " + this.name + " : denied your friendly request !";
         civilization.addMessage(message);
     }

@@ -47,6 +47,9 @@ public class Diplomatics {
         new Diplomacy().start();
     }
 
-    public void messagesClicked(MouseEvent mouseEvent) {
+    public void messagesClicked(MouseEvent mouseEvent) throws IOException {
+        Messages.diplomaticsScene = diplomaticsPageScene;
+        Messages.stage = stage;
+        new Messages().start();
     }
 }
