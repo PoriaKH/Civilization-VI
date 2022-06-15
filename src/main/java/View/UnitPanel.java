@@ -49,59 +49,174 @@ public class UnitPanel {
     }
 
     public void sleepUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void alertUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void fortifyUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void healUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void deployUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void rangeUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void wakeUpUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void recoverUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void deleteUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void moveUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void attackCityUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void attackTileUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void createUnit(MouseEvent mouseEvent) {
     }
 
     public void createRoadUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void createRailUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void removeRailUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void removeRoadUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void repairRoadUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
     }
 
     public void repairRailUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+
+        }
+    }
+    public void showError () {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("wrong button/textField :");
+        alert.setHeaderText("result :");
+        alert.setContentText("this feature only works when you select a unit !");
+        alert.showAndWait();
     }
 }

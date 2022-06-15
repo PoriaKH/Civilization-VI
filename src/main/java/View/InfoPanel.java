@@ -47,6 +47,7 @@ public class InfoPanel {
     public void unitPanelClicked(MouseEvent mouseEvent) throws IOException {
         UnitPanel.infoPanelScene = infoPanelScene;
         UnitPanel.stage = stage;
+        UnitPanel.doesEnteredFromInfoPanel = true;
         new UnitPanel().start();
     }
 
