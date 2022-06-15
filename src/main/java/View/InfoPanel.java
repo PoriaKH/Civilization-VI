@@ -81,4 +81,11 @@ public class InfoPanel {
         GeneralUnitPanel.stage = stage;
         new GeneralUnitPanel().start();
     }
+
+    public void cityPanelClicked(MouseEvent mouseEvent) throws IOException {
+        CityPanel.infoPanelScene = infoPanelScene;
+        CityPanel.stage = stage;
+        new CityPanel().start();
+    }
+
 }

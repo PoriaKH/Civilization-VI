@@ -136,6 +136,7 @@ public class Resource {
                 isMetal = true;
                 break;
         }
+        this.name = name;
     }
 
     public int getFood() {

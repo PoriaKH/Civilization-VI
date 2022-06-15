@@ -19,6 +19,7 @@
             <Button text="Cheat menu" onMouseClicked="#cheatClicked"/>
             <Button text="Unit panel" onMouseClicked="#unitPanelClicked"/>
             <Button text="Trade" onMouseClicked="#tradeClicked"/>
+            <Button text="City Panel" onMouseClicked="#cityPanelClicked"/>
             <Button text="back" onMouseClicked="#backClicked"/>
         </VBox>
     </center>

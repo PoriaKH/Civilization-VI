@@ -783,32 +783,33 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations){
+    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
         StringBuilder stringBuilder = new StringBuilder("");//"Civilization name" :
         //                             Capital : tile numbers
         //                             City 2  : tile numbers
         //                                      ...
         //                             City n  : tile numbers
 
-        for(Civilization tempCivilization : civilizations){
-            stringBuilder.append(tempCivilization.getMember().getNickname()).append(" :\nCapital : ");
-            City capital = tempCivilization.getCapital();
-            for(Tile tile : capital.getTiles()){
-                stringBuilder.append(tile.getTileNumber()).append(" ");
-            }
-            stringBuilder.append("\n");
-            for(int i = 0; i < tempCivilization.getCities().size(); i++){
-                City tempCity = tempCivilization.getCities().get(i);
-                if(tempCity != tempCivilization.getCapital()){
-                    stringBuilder.append("City ").append(i + 1).append("  : ");
-                    for(Tile tile : tempCity.getTiles()){
-                        stringBuilder.append(tile.getTileNumber()).append(" ");
+        for(Civilization tempCivilization : civilizations) {
+            if (tempCivilization == playingCivilization) {
+                stringBuilder.append(tempCivilization.getMember().getNickname()).append(" :\nCapital : ");
+                City capital = tempCivilization.getCapital();
+                for (Tile tile : capital.getTiles()) {
+                    stringBuilder.append(tile.getTileNumber()).append(" ");
+                }
+                stringBuilder.append("\n");
+                for (int i = 0; i < tempCivilization.getCities().size(); i++) {
+                    City tempCity = tempCivilization.getCities().get(i);
+                    if (tempCity != tempCivilization.getCapital()) {
+                        stringBuilder.append("City ").append(i + 1).append("  : ");
+                        for (Tile tile : tempCity.getTiles()) {
+                            stringBuilder.append(tile.getTileNumber()).append(" ");
+                        }
+                        stringBuilder.append("\n");
                     }
-                    stringBuilder.append("\n");
                 }
             }
         }
-
         return stringBuilder;
     }
     public String diplomaticInformation(Civilization civilization,ArrayList<Tile> map){

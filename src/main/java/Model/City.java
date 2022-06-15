@@ -90,6 +90,7 @@ public class City {
         for(Tile tile : tiles){
             if(tile.getBuilding() != null){
                 this.gold += tile.getBuilding().getGold();
+                this.gold -= tile.getBuilding().getMaintenance();
             }
             if(tile.getCitizen() != null){
                 this.gold += tile.getGold();

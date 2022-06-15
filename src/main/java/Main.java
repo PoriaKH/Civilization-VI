@@ -58,6 +58,13 @@ public class Main extends Application {
         TradePage.tradePageURL = new URL(Main.class.getResource("fxml/tradePage.fxml").toExternalForm());
         SendTradeRequest.sendTradeRequestURL = new URL(Main.class.getResource("fxml/sendTradeRequest.fxml").toExternalForm());
         TradeRequests.tradeRequestsURL = new URL(Main.class.getResource("fxml/tradeRequests.fxml").toExternalForm());
+        CityPage.cityPageURL = new URL(Main.class.getResource("fxml/cityPage.fxml").toExternalForm());
+        CityPanel.cityPanelURL = new URL(Main.class.getResource("fxml/cityPanel.fxml").toExternalForm());
+        CityPage.flag1URL = new URL(Main.class.getResource("pictures/flags/1.png").toExternalForm());
+        CityPage.flag2URL = new URL(Main.class.getResource("pictures/flags/2.png").toExternalForm());
+        CityPage.flag3URL = new URL(Main.class.getResource("pictures/flags/3.png").toExternalForm());
+        CityPage.flag4URL = new URL(Main.class.getResource("pictures/flags/4.png").toExternalForm());
+        CityPage.flag5URL = new URL(Main.class.getResource("pictures/flags/5.png").toExternalForm());
 
         Parent root = FXMLLoader.load(address_login_page);
         Scene scene = new Scene(root);

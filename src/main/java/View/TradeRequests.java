@@ -42,32 +42,8 @@ public class TradeRequests {
     private static ArrayList<HBox> hBoxes = new ArrayList<>();
 
 
-
     public static VBox vbox = new VBox();
 
-//    public void initialize(){
-//        for(String text : InfoPanel.currentCivilization.getTrades()){
-//            HBox hBox = new HBox();
-//            hBox.setAlignment(Pos.CENTER);
-//            hBox.setSpacing(10);
-//            Text text1 = new Text(text);
-//            hBox.getChildren().add(text1);
-//            Button acceptButton = new Button("Accept");
-//            Button rejectButton = new Button("Reject");
-//            buttonStringHashMap.put(acceptButton,text);
-//            buttonStringHashMap.put(rejectButton,text);
-//            TradeRequests.buttons.add(acceptButton);
-//            TradeRequests.buttons.add(rejectButton);
-//            Text text2 = new Text("                                                                                ");
-//            hBox.getChildren().add(text2);
-//
-//            hBox.getChildren().add(acceptButton);
-//            hBox.getChildren().add(rejectButton);
-//
-//            hBoxes.add(hBox);
-//            TradeRequests.vbox.getChildren().add(hBox);
-//        }
-//    }
 
     public void start() throws IOException {
 

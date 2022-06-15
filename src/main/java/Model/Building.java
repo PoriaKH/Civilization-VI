@@ -319,4 +319,8 @@ public class Building extends Rectangle {
     public int getCost() {
         return cost;
     }
+
+    public int getMaintenance() {
+        return maintenance;
+    }
 }
