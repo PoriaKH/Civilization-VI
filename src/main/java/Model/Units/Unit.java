@@ -96,6 +96,7 @@ public class Unit extends Rectangle {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                UnitPanel.unit = (Unit) event.getSource();
                 UnitPanel.stage = Tile.stage;
                 UnitPanel.infoPanelScene = Tile.scene;
                 UnitPanel.doesEnteredFromInfoPanel = false;

@@ -1,12 +1,15 @@
 package View;
 
 import Controller.PlayGameMenuController;
+import Model.Units.Unit;
+import Model.Units.Warrior;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,6 +22,7 @@ public class UnitPanel {
     public static Scene infoPanelScene;
     public static Stage stage;
     public Scene scene;
+    public static Unit unit;
     public static boolean doesEnteredFromInfoPanel;
     public TextField moveDes;
     public TextField attackTileDes;
