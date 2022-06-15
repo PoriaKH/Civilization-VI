@@ -73,6 +73,7 @@ public class Main extends Application {
         SystemMessages.systemMessagesURL = new URL(Main.class.getResource("fxml/systemMessages.fxml").toExternalForm());
         DiplomaticRequests.diplomaticRequestsURL = new URL(Main.class.getResource("fxml/diplomaticRequests.fxml").toExternalForm());
         Demographics.demographicsPageURL = new URL(Main.class.getResource("fxml/demographics.fxml").toExternalForm());
+        EconomicalReview.economicalPageURL = new URL(Main.class.getResource("fxml/economicalReview.fxml").toExternalForm());
 
         Parent root = FXMLLoader.load(address_login_page);
         Scene scene = new Scene(root);

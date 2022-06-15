@@ -99,4 +99,10 @@ public class InfoPanel {
         Demographics.stage = stage;
         new Demographics().start();
     }
+
+    public void economicalReviewClicked(MouseEvent mouseEvent) throws IOException {
+        EconomicalReview.infoPanelScene = infoPanelScene;
+        EconomicalReview.stage = stage;
+        new EconomicalReview().start();
+    }
 }

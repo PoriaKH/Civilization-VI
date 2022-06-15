@@ -22,6 +22,7 @@
             <Button text="City Panel" onMouseClicked="#cityPanelClicked"/>
             <Button text="Diplomatics" onMouseClicked="#diplomaticsClicked"/>
             <Button text="Demographics" onMouseClicked="#demographicsClicked"/>
+            <Button text="Economical Review" onMouseClicked="#economicalReviewClicked"/>
             <Button text="back" onMouseClicked="#backClicked"/>
         </VBox>
     </center>
