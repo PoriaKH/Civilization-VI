@@ -89,18 +89,18 @@ public class CityPage {
                 pop++;
             }
         }
-        Text population = new Text("Population : " + pop);
-        population.setFont(new Font(20));
-        Text gold = new Text("Gold : " + city.getGold());
-        gold.setFont(new Font(20));
-        Text food = new Text("Food : " + city.getFood());
-        food.setFont(new Font(20));
-        Text production = new Text("Production : " + city.getProduction());
-        production.setFont(new Font(20));
-        Text science = new Text("Science : " + city.getSciencePerTurn());
-        science.setFont(new Font(20));
-        Text defenceStr = new Text("DefenceStrength : " + city.getDefenceStrength());
-        defenceStr.setFont(new Font(20));
+        Label population = new Label("Population : " + pop);
+        population.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(240,255,0);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b\"");
+        Label gold = new Label("Gold : " + city.getGold());
+        gold.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(240,255,0);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b\"");
+        Label food = new Label("Food : " + city.getFood());
+        food.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(240,255,0);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b\"");
+        Label production = new Label("Production : " + city.getProduction());
+        production.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(240,255,0);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b\"");
+        Label science = new Label("Science : " + city.getSciencePerTurn());
+        science.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(240,255,0);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b\"");
+        Label defenceStr = new Label("DefenceStrength : " + city.getDefenceStrength());
+        defenceStr.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(240,255,0);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b\"");
         StringBuilder resource = new StringBuilder("");
         for(Tile tile : city.getTiles()){
             if(tile.getResource() != null){
@@ -108,8 +108,8 @@ public class CityPage {
                 resource.append(",");
             }
         }
-        Text resources = new Text("Resources : " + resource);
-        resources.setFont(new Font(20));
+        Label resources = new Label("Resources : " + resource);
+        resources.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(240,255,0);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b");
 
 
         vBox.getChildren().add(population);
@@ -122,7 +122,7 @@ public class CityPage {
         vBox.getChildren().add(tempText3);
 
         Label label = new Label("Select the tiles that you want to work on :");
-        label.setFont(new Font(24));
+        label.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(8,250,24);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b");
         vBox.getChildren().add(label);
 
         HBox hBox = new HBox();

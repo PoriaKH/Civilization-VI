@@ -1,0 +1,31 @@
+.Label {
+    -fx-font-size: 50;
+    -fx-font-family: Ebrima;
+    -fx-font-weight: bold;
+    -fx-effect: innershadow(three-pass-box, rgb(255, 0, 47), 6, 0.0, 0, 2);
+}
+.background{
+    -fx-background-image: url("../pictures/profileMenuBackground.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+.backButton{
+    -fx-pref-height: 35;
+    -fx-font-size: 16;
+    -fx-pref-width: 350;
+    -fx-border-radius: 5;
+    -fx-background-color: #56d079;
+}
+Button{
+    -fx-font-size: 13;
+    -fx-pref-height: 30;
+    -fx-pref-width: 98;
+    -fx-border-radius: 5;
+    -fx-background-color: #ca76ff;
+}
+.Label2{
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(255, 0, 0);
+    -fx-effect: innershadow( three-pass-box , rgba(86, 255, 86, 0.56), 6, 0.0 , 0 , 2 );
+}

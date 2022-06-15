@@ -10,15 +10,15 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="View.BuildingsPage"
-            prefHeight="720.0" prefWidth="1280.0">
+            prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/style6.css" styleClass="background">
     <top>
         <HBox>
             <Text fx:id="gold" text=""/>
             <Text text="                                                                                                                        "/>
             <VBox alignment = "CENTER" spacing="10" minWidth="280" maxWidth="280">
-                <Label text="Tile"/>
+                <Label styleClass="Label" text="Tile"/>
                 <TextField fx:id="tileNumber" alignment="CENTER" promptText="enter tile number"/>
-                <Button text="purchase" onMouseClicked="#purchaseClicked"/>
+                <Button styleClass="backButton" text="purchase" onMouseClicked="#purchaseClicked"/>
                 <Text fx:id="message" text=""/>
             </VBox>
         </HBox>
@@ -178,7 +178,7 @@
         </VBox>
     </center>
     <bottom>
-        <Button text="back" onMouseClicked="#backClicked"/>
+        <Button styleClass="backButton" text="back" onMouseClicked="#backClicked"/>
     </bottom>
 
 </BorderPane>

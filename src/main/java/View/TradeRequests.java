@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -53,7 +54,8 @@ public class TradeRequests {
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER);
             hBox.setSpacing(10);
-            Text text1 = new Text(text);
+            Label text1 = new Label(text);
+            text1.setStyle("-fx-font-size: 19;-fx-font-weight: bold;-fx-text-fill: rgb(62,255,2);-fx-effect: innershadow( three-pass-box , rgba(21,250,13,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b");
             hBox.getChildren().add(text1);
             Button acceptButton = new Button("Accept");
             Button rejectButton = new Button("Reject");

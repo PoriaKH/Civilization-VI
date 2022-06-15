@@ -39,8 +39,8 @@ public class EconomicalReview {
         String text = new PlayGameMenuController().economicalReview(InfoPanel.currentCivilization).toString();
         String[] notes = text.split("\n");
         for(int i = 0; i < notes.length; i++){
-            Text text1 = new Text(notes[i]);
-            text1.setFont(new Font(17));
+            Label text1 = new Label(notes[i]);
+            text1.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(240,255,0);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b");
             vBox.getChildren().add(text1);
         }
 

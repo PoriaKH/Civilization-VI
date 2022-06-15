@@ -4,6 +4,7 @@ import Controller.PlayGameMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -30,8 +31,8 @@ public class Demographics {
 
         String[] notes = text.split("\n");
         for(int i = 0; i < notes.length; i++){
-            Text text1 = new Text(notes[i]);
-            text1.setFont(new Font(15));
+            Label text1 = new Label(notes[i]);
+            text1.setStyle("-fx-font-size: 19;-fx-font-weight: bold;-fx-text-fill: rgb(62,255,2);-fx-effect: innershadow( three-pass-box , rgba(21,250,13,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b");
             vBox.getChildren().add(text1);
         }
 

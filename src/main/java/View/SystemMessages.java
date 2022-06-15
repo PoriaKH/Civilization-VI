@@ -25,6 +25,7 @@ public class SystemMessages {
     public void start() throws IOException {
 
         Label label = new Label("Messages");
+        label.setStyle("-fx-font-size: 35;-fx-font-weight: bold;-fx-text-fill: rgb(255,235,0);-fx-effect: innershadow( three-pass-box , rgba(255,252,77,0.8), 6, 0.0 , 0 , 2 );");
         label.setFont(new Font(27));
         VBox vBox = new VBox();
         vBox.setSpacing(10);
@@ -40,8 +41,8 @@ public class SystemMessages {
 
         String[] notes = text.split("\n");
         for(int i = 0; i < notes.length; i++){
-            Text text1 = new Text(notes[i]);
-            text1.setFont(new Font(18));
+            Label text1 = new Label(notes[i]);
+            text1.setStyle("-fx-font-size: 19;-fx-font-weight: bold;-fx-text-fill: rgb(62,255,2);-fx-effect: innershadow( three-pass-box , rgba(21,250,13,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b");
             vBox.getChildren().add(text1);
         }
 

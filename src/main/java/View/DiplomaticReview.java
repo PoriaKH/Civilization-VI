@@ -4,6 +4,7 @@ import Controller.PlayGameMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -32,8 +33,8 @@ public class DiplomaticReview {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(10);
         for(int i = 0; i < str.length; i++){
-            Text text1 = new Text(str[i]);
-            text1.setFont(new Font(18));
+            Label text1 = new Label(str[i]);
+            text1.setStyle("-fx-font-size: 27;-fx-font-weight: bold;-fx-text-fill: rgb(240,255,0);-fx-effect: innershadow( three-pass-box , rgba(162,154,21,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b");
             vBox.getChildren().add(text1);
         }
 

@@ -44,6 +44,7 @@ public class DiplomaticRequests {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(10);
         Label label = new Label("Friendly Requests");
+        label.setStyle("-fx-font-size: 35;-fx-font-weight: bold;-fx-text-fill: rgb(255,235,0);-fx-effect: innershadow( three-pass-box , rgba(255,252,77,0.8), 6, 0.0 , 0 , 2 );");
         label.setFont(new Font(25));
         vBox.getChildren().add(label);
 
@@ -51,7 +52,8 @@ public class DiplomaticRequests {
             HBox hBox = new HBox();
             hBox.setSpacing(10);
             hBox.setAlignment(Pos.CENTER);
-            Text text = new Text(civilization.getName() + " : ");
+            Label text = new Label(civilization.getName() + " : ");
+            text.setStyle("-fx-font-size: 19;-fx-font-weight: bold;-fx-text-fill: rgb(62,255,2);-fx-effect: innershadow( three-pass-box , rgba(21,250,13,0.8), 6, 0.0 , 0 , 2 );-fx-background-color: #242f1b");
             hBox.getChildren().add(text);
             Button accept = new Button("Accept");
             Button reject = new Button("Reject");

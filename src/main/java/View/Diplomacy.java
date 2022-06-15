@@ -46,9 +46,12 @@ public class Diplomacy {
         vBox.setSpacing(10);
 
         Label label = new Label("choose the civilization that you want to be your allie");
+        label.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(220,0,255);-fx-effect: innershadow( three-pass-box , rgba(206,13,252,0.8), 6, 0.0 , 0 , 2 );");
         vBox.getChildren().add(label);
         vBox.getChildren().add(civilizationCombo);
         Button button = new Button("Send Friendly Request");
+        button.setStyle("-fx-pref-height: 35;-fx-font-size: 16;-fx-pref-width: 350;-fx-border-radius: 5;-fx-background-color: #56d079;");
+//        button.setStyle("-fx-pref-height: 35;-fx-font-size: 16;-fx-border-radius: 5;-fx-background-color: #56d079;");
         vBox.getChildren().add(button);
 
         if(allies > 0) {

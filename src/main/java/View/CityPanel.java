@@ -52,11 +52,18 @@ public class CityPanel {
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER);
             Text text1 = new Text(str);
-            text1.setFont(new Font(18));
+            text1.setStyle("-fx-font-size: 22;-fx-font-weight: bold;-fx-text-fill: rgb(255, 0, 0);-fx-effect: innershadow( three-pass-box , rgba(0,255,0,0.93), 6, 0.0 , 0 , 2 );");
+            /*
+            -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(255, 0, 0);
+    -fx-effect: innershadow( three-pass-box , rgba(86, 255, 86, 0.56), 6, 0.0 , 0 , 2 );
+             */
             hBox.getChildren().add(text1);
             Text temp = new Text("                              ");
             hBox.getChildren().add(temp);
             Button button = new Button("Page");
+            button.setStyle("-fx-background-color: #ddd1e5;");
             buttons.add(button);
             buttonStringHashMap.put(button,counter);
             hBox.getChildren().add(button);
