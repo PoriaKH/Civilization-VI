@@ -4,6 +4,7 @@ import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
@@ -21,6 +22,10 @@ public class Tile extends Polygon {
     public static URL building3URL;
     public static URL building4URL;
     public static URL building5URL;
+
+    public static URL roadURL;
+
+    public static URL railURL;
 
     public static Pane root;
     public float cameraSpeed = 30;
@@ -56,6 +61,10 @@ public class Tile extends Polygon {
     private boolean isWorking;
     private boolean isOnRepair;
     private int repairNeedImprovement;
+
+    private Rectangle road = new Rectangle(x - 160, y + 30, 20, 20);
+
+    private Rectangle rail = new Rectangle(x - 160, y - 30, 20, 20);
 
 
     private ArrayList<Tile> roads;
@@ -487,10 +496,28 @@ public class Tile extends Polygon {
     }
 
     public void setDoesHaveRoad(boolean doesHaveRoad) {
+        if (doesHaveRoad) {
+            Image image = new Image(roadURL.toExternalForm());
+            ImagePattern imagePattern = new ImagePattern(image);
+            road.setFill(imagePattern);
+            root.getChildren().add(road);
+        }
+        else {
+            root.getChildren().remove(road);
+        }
         this.doesHaveRoad = doesHaveRoad;
     }
 
     public void setDoesHaveRailWay(boolean doesHaveRailWay) {
+        if (doesHaveRailWay) {
+            Image image = new Image(railURL.toExternalForm());
+            ImagePattern imagePattern = new ImagePattern(image);
+            rail.setFill(imagePattern);
+            root.getChildren().add(rail);
+        }
+        else {
+            root.getChildren().remove(root);
+        }
         this.doesHaveRailWay = doesHaveRailWay;
     }
 
@@ -508,7 +535,6 @@ public class Tile extends Polygon {
     }
 
     public void addUnit (Unit unit) {
-        //TODO ... check shavad
         if (units.size() == 0) {
             unit.setX(this.x + 20);
             unit.setY(this.y - h);
