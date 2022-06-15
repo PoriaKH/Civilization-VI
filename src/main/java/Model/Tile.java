@@ -62,9 +62,9 @@ public class Tile extends Polygon {
     private boolean isOnRepair;
     private int repairNeedImprovement;
 
-    private Rectangle road = new Rectangle(x - 160, y + 30, 20, 20);
+    private Rectangle road = new Rectangle(x - 160, y + 30, 40, 20);
 
-    private Rectangle rail = new Rectangle(x - 160, y - 30, 20, 20);
+    private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);
 
 
     private ArrayList<Tile> roads;
@@ -867,6 +867,14 @@ public class Tile extends Polygon {
                 units.get(i).setY(this.y - h + 90);
             }
         }
+        if (doesHaveRoad) {
+            road.setX(this.x - 160);
+            road.setY(this.y + 30);
+        }
+        if (doesHaveRailWay) {
+            rail.setX(this.x - 160);
+            rail.setY(this.y - 30);
+        }
     }
     public void moveLeft(){
         double x1,y1;
@@ -913,6 +921,14 @@ public class Tile extends Polygon {
                 units.get(i).setX(this.x + 60);
                 units.get(i).setY(this.y - h + 90);
             }
+        }
+        if (doesHaveRoad) {
+            road.setX(this.x - 160);
+            road.setY(this.y + 30);
+        }
+        if (doesHaveRailWay) {
+            rail.setX(this.x - 160);
+            rail.setY(this.y - 30);
         }
     }
     public void moveUp(){
@@ -961,6 +977,14 @@ public class Tile extends Polygon {
                 units.get(i).setY(this.y - h + 90);
             }
         }
+        if (doesHaveRoad) {
+            road.setX(this.x - 160);
+            road.setY(this.y + 30);
+        }
+        if (doesHaveRailWay) {
+            rail.setX(this.x - 160);
+            rail.setY(this.y - 30);
+        }
     }
     public void moveDown(){
         double x1,y1;
@@ -1007,6 +1031,14 @@ public class Tile extends Polygon {
                 units.get(i).setX(this.x + 60);
                 units.get(i).setY(this.y - h + 90);
             }
+        }
+        if (doesHaveRoad) {
+            road.setX(this.x - 160);
+            road.setY(this.y + 30);
+        }
+        if (doesHaveRailWay) {
+            rail.setX(this.x - 160);
+            rail.setY(this.y - 30);
         }
     }
 }

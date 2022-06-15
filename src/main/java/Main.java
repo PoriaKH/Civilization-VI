@@ -13,6 +13,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Tile.roadURL = new URL(Main.class.getResource("pictures/Road.png").toExternalForm());
+        Tile.railURL = new URL(Main.class.getResource("pictures/Railroad.png").toExternalForm());
         CheatMenu.cheatMenuURL = new URL(Main.class.getResource("fxml/cheatMenu.fxml").toExternalForm());
         VictoryImprovement.victoryImprovementURL = new URL(Main.class.getResource("fxml/victoryImprovement.fxml").toExternalForm());
         GeneralUnitPanel.generalUnitPanelURL = new URL(Main.class.getResource("fxml/generalUnitPanel.fxml").toExternalForm());

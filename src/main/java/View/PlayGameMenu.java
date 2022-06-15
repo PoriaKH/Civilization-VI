@@ -281,6 +281,8 @@ public class PlayGameMenu {
                     Civilian civilian = new Civilian(playingCivilization, tiles.get(0), 10, 2, 2, 1, 70, true, true, false);
                     tiles.get(0).addUnit(warrior);
                     tiles.get(0).addUnit(civilian);
+                    tiles.get(0).setDoesHaveRoad(true);
+                    tiles.get(0).setDoesHaveRailWay(true);
                 }
                 if (Objects.equals(keyName, "C")) {
                     CheatMenu.infoPanelScene = scene;
