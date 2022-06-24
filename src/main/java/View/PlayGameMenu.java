@@ -324,6 +324,7 @@ public class PlayGameMenu {
                     alert.setContentText(string);
                     alert.showAndWait();
                 } else {
+                    PlayGameMenuController.turn ++;
                     playersCounter++;
                     if (playersCounter == civilizations.size()) {
                         playersCounter = 0;
