@@ -4369,8 +4369,8 @@ public class PlayGameMenuController {
             return str;
         }
 
-        warrior = newWarrior;
-        warrior.setFill(((Warrior)warrior).getUnitPic());
+        tile.removeUnit(warrior);
+        tile.addUnit(newWarrior);
         str = "unit upgraded successfully !";
         return str;
     }
