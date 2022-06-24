@@ -40,6 +40,8 @@ public class UnitPanel {
     public TextField removeRoadDes;
     public TextField repairRoadDes;
     public TextField repairRailDes;
+    public TextField unitName;
+    public TextField tileNumber;
 
 
     public void start () throws IOException {
@@ -187,6 +189,9 @@ public class UnitPanel {
     }
 
     public void createUnit(MouseEvent mouseEvent) {
+        String string = playGameMenuController.preUnitMaker(unitName.getText(),
+                Integer.parseInt(tileNumber.getText()), playingCivilization, map);
+        showNotification(string);
     }
 
     public void createRoadUnit(MouseEvent mouseEvent) {

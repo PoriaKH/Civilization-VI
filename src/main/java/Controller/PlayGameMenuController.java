@@ -1626,10 +1626,7 @@ public class PlayGameMenuController {
         return null;
     }
     // it makes parameters for unit maker such as unit or city
-    public String preUnitMaker (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
-        matcher.find();
-        String unitName = matcher.group("unitName").toLowerCase();
-        int index = Integer.parseInt(matcher.group("number"));
+    public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) {
         if (index < 0 || index > 71) {
             return "number of origin tile is invalid !";
         }

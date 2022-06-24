@@ -39,6 +39,9 @@
                     <Label text="attack tile"/>
                     <TextField promptText="destination tile number" fx:id="attackTileDes"/>
                     <Button text="attack tile !" onMouseClicked="#attackTileUnit"/>
+                    <Label text="create unit"/>
+                    <TextField promptText="unit name" fx:id="unitName"/>
+                    <TextField promptText="tile number" fx:id="tileNumber"/>
                     <Button text="make unit" onMouseClicked="#createUnit"/>
                     <Button text="BACK" onMouseClicked="#back"/>
                 </VBox>
