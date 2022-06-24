@@ -214,22 +214,13 @@ public class PlayGameMenuController {
         civilization.setHappiness(amount);
         return "cheat code activated successfully";
     }
-    public String cheatTeleportUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
+    public String cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
         String str;
-        matcher.find();
-        int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
-        int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
-        String unitName = matcher.group("unitName").toLowerCase();
-        if (numberOfOrigin < 0 || numberOfOrigin > 71) {
-            return "number of origin is invalid !";
-        }
         if (numberOfDestination < 0 || numberOfDestination > 71) {
             return "number of destination is invalid !";
         }
-        Tile origin = map.get(numberOfOrigin);
+        Tile origin = unit.getOrigin();
         Tile destination = map.get(numberOfDestination);
-        ArrayList<Unit> units = origin.getUnits();
-        Unit unit = getUnitInTile(units, unitName);
 
         if (unit == null) {
             str = "there is no unit with this name !";
@@ -254,8 +245,8 @@ public class PlayGameMenuController {
                 return str;
             }
         }
-        destination.addUnit(unit);
         origin.removeUnit(unit);
+        destination.addUnit(unit);
         unit.setOrigin(destination);
         unit.setHasOrdered(true);
         str = "unit teleported to destination !";
