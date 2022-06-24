@@ -29,6 +29,7 @@ public class Tile extends Polygon {
 
     public static URL railURL;
 
+    // for panel changing needed
     public static Pane root;
     public static Scene scene;
     public static Stage stage;

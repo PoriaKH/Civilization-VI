@@ -4565,4 +4565,20 @@ public class PlayGameMenuController {
             cities.get(i).setDamagePoint(newDamagePoint);
         }
     }
+    public void deleteLosers (Civilization civilization, ArrayList<Civilization> civilizations) {
+        for (int i = 0; i < civilizations.size(); i++) {
+            if (civilizations.get(i).getCities().size() == 0) {
+                civilizations.remove(i);
+                i--;
+            }
+        }
+    }
+    public boolean findWinner (Civilization civilization, ArrayList<Civilization> civilizations) {
+        if (civilizations.size() == 1) {
+            int point = civilization.getPoint() + 500;
+            civilization.getMember().setScore(point);
+            return true;
+        }
+        return false;
+    }
 }

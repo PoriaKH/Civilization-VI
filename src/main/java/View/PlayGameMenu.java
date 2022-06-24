@@ -145,16 +145,16 @@ public class PlayGameMenu {
         players.add(0, MainMenu.loggedInMember);
         if (areUsersOk) {
             MainMenu.mediaPlayer.stop();
-            switchToGame(mouseEvent,players);
+            switchToGame(mouseEvent, players, members);
         }
     }
-    public void switchToGame(MouseEvent mouseEvent,ArrayList<Member> members) throws IOException {
+    public void switchToGame(MouseEvent mouseEvent, ArrayList<Member> players, ArrayList<Member> members) throws IOException {
         root = FXMLLoader.load(gameMenuURL);
         Tile.root = root;
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-        ArrayList<Tile> tiles = playGameMenuController.mapCreator(members.size(),members);
+        ArrayList<Tile> tiles = playGameMenuController.mapCreator(players.size(),players);
         Tile.map = tiles;
-        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(members.size(), tiles, members);
+        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(players.size(), tiles, players);
         Tile.civilizations = civilizations;
         playingCivilization = civilizations.get(0);
 
@@ -324,6 +324,19 @@ public class PlayGameMenu {
                     alert.setContentText(string);
                     alert.showAndWait();
                 } else {
+                    playGameMenuController.deleteLosers(playingCivilization, civilizations);
+                    if (playGameMenuController.findWinner(playingCivilization, civilizations)) {
+                        //TODO .... write array members in file -> pouria
+                        //TODO .... graphic view for winner -> kian
+                        try {
+                            root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                    }
                     PlayGameMenuController.turn ++;
                     playersCounter++;
                     if (playersCounter == civilizations.size()) {
