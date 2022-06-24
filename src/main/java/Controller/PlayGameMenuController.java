@@ -2670,17 +2670,7 @@ public class PlayGameMenuController {
         return str;
     }
     // makes parameters for unit behaviours functions
-    public String preUnitBehaviour (Matcher matcher, Civilization civilization, ArrayList<Tile> map, String command) {
-        matcher.find();
-        String unitName = matcher.group("unitName");
-        int index = Integer.parseInt(matcher.group("number"));
-        if (index < 0 || index > 71) {
-            return "number of origin tile is invalid !";
-        }
-        Tile tile = map.get(index);
-        ArrayList<Unit> units = tile.getUnits();
-        Unit unit = getUnitInTile(units, unitName);
-
+    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) {
         if (command.equals("sleep")) {
             return  sleepUnit(civilization, unit, map);
         }
@@ -2703,10 +2693,10 @@ public class PlayGameMenuController {
             return wakeUpUnit(civilization, unit, map);
         }
         else if (command.equals("delete")) {
-            return deleteUnit(civilization, unit, map, tile);
+            return deleteUnit(civilization, unit, map, unit.getOrigin());
         }
         else if (command.equals("recover")) {
-            return recoverUnit(civilization, unit, map, tile);
+            return recoverUnit(civilization, unit, map, unit.getOrigin());
         }
         return "";
     }
@@ -2974,7 +2964,7 @@ public class PlayGameMenuController {
             str = "unit is on moving !";
             return str;
         }
-        //TODO ... agar dar navahi dostane bashad 2 afzayesh joon darad
+
         int health = unit.getHealth();
         if (tileIsForCity(civilization, tile)) {
             health += 3;

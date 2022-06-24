@@ -1,6 +1,7 @@
 package View;
 
 import Controller.PlayGameMenuController;
+import Model.Tile;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +25,8 @@ public class UnitPanel {
     public static Stage stage;
     public Scene scene;
     public static Unit unit;
+    public static ArrayList<Tile> map;
+    public static PlayGameMenuController playGameMenuController;
     public static boolean doesEnteredFromInfoPanel;
     public TextField moveDes;
     public TextField attackTileDes;
@@ -53,8 +57,17 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "sleep");
+            showNotification(string);
         }
+    }
+
+    private void showNotification(String string) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("result :");
+        alert.setHeaderText("result :");
+        alert.setContentText(string);
+        alert.showAndWait();
     }
 
     public void alertUnit(MouseEvent mouseEvent) {
@@ -62,7 +75,8 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "alert");
+            showNotification(string);
         }
     }
 
@@ -71,7 +85,8 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "fortify");
+            showNotification(string);
         }
     }
 
@@ -80,7 +95,8 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "heal");
+            showNotification(string);
         }
     }
 
@@ -89,7 +105,8 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "deploy");
+            showNotification(string);
         }
     }
 
@@ -98,7 +115,8 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "range");
+            showNotification(string);
         }
     }
 
@@ -107,7 +125,8 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "wake");
+            showNotification(string);
         }
     }
 
@@ -116,7 +135,8 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "recover");
+            showNotification(string);
         }
     }
 
@@ -125,7 +145,8 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "delete");
+            showNotification(string);
         }
     }
 

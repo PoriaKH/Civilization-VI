@@ -346,6 +346,7 @@ public class PlayGameMenu {
 
         Tile.stage = stage;
         Tile.scene = scene;
+        Tile.map = tiles;
 
         stage.show();
     }

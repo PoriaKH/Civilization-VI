@@ -100,6 +100,7 @@ public class Unit extends Rectangle {
                 UnitPanel.stage = Tile.stage;
                 UnitPanel.infoPanelScene = Tile.scene;
                 UnitPanel.doesEnteredFromInfoPanel = false;
+                UnitPanel.map = Tile.map;
                 try {
                     new UnitPanel().start();
                 } catch (IOException e) {

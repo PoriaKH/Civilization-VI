@@ -1,3 +1,4 @@
+import Controller.PlayGameMenuController;
 import Model.Tile;
 import Model.Units.Unit;
 import View.*;
@@ -13,6 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        UnitPanel.playGameMenuController = new PlayGameMenuController();
         UnitPanel.untPanelURL = new URL(Main.class.getResource("fxml/unitPanel.fxml").toExternalForm());
         Tile.roadURL = new URL(Main.class.getResource("pictures/Road.png").toExternalForm());
         Tile.railURL = new URL(Main.class.getResource("pictures/Railroad.png").toExternalForm());

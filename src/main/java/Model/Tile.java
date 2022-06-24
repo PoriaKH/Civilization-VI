@@ -32,7 +32,7 @@ public class Tile extends Polygon {
     public static Pane root;
     public static Scene scene;
     public static Stage stage;
-
+    public static ArrayList<Tile> map;
     public float cameraSpeed = 30;
 
     private boolean isDesert;                   //Smooth
