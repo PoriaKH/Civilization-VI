@@ -4368,9 +4368,10 @@ public class PlayGameMenuController {
             str = "your city doesn't have necessary resource !";
             return str;
         }
-
+        newWarrior.setX(warrior.getX());
+        newWarrior.setY(warrior.getY());
         tile.removeUnit(warrior);
-        tile.addUnit(newWarrior);
+        tile.addUnit2(newWarrior);
         str = "unit upgraded successfully !";
         return str;
     }

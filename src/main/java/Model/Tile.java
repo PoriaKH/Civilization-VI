@@ -556,6 +556,10 @@ public class Tile extends Polygon {
         root.getChildren().add(unit);
         units.add(unit);
     }
+    public void addUnit2 (Unit unit) {
+        root.getChildren().add(unit);
+        units.add(unit);
+    }
 
     public boolean isDesert() {
         return isDesert;
