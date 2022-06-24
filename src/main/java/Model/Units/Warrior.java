@@ -99,6 +99,11 @@ public class Warrior extends Unit{
         ImagePattern imagePattern = new ImagePattern(image);
         this.setFill(imagePattern);
     }
+    public ImagePattern getUnitPic () {
+        Image image = new Image(getURL().toExternalForm());
+        ImagePattern imagePattern = new ImagePattern(image);
+        return imagePattern;
+    }
 
     public URL getURL () {
         if (this.isTank()) {

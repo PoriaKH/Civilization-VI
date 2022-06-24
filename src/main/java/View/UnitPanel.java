@@ -44,7 +44,8 @@ public class UnitPanel {
     public TextField repairRailDes;
     public TextField unitName;
     public TextField tileNumber;
-
+    public TextField newUnitName;
+    public TextField tileIndex;
 
 
     public void start () throws IOException {
@@ -312,5 +313,16 @@ public class UnitPanel {
         alert.setHeaderText("result :");
         alert.setContentText("this feature only works when you select a unit !");
         alert.showAndWait();
+    }
+
+    public void upgradeUnit(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+            String string = playGameMenuController.preUpgradeUnit(unit, newUnitName.getText(),
+                    Integer.parseInt(tileIndex.getText()), playingCivilization, map);
+            showNotification(string);
+        }
     }
 }

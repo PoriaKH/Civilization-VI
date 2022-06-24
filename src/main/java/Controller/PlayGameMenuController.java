@@ -4335,16 +4335,10 @@ public class PlayGameMenuController {
      */
 
     // get necessary parameters for update warrior
-    public String preUpgradeUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
-        matcher.find();
-        String previousUnitName = matcher.group("oldUnitName").toLowerCase();
-        String newUnitName = matcher.group("newUnitName").toLowerCase();
-        int index = Integer.parseInt(matcher.group("number"));
+    public String preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map) {
         if (index < 0 || index > 71) {
             return "number of tile is invalid !";
         }
-
-        Unit oldUnit = getUnitInTile(map.get(index).getUnits(), previousUnitName);
         Unit newUnit = makeUnit(civilization, map.get(index), map, newUnitName);
         City city = findTile(index, map, civilization);
         return updateWarrior(civilization, oldUnit, newUnit, map, map.get(index), city);
@@ -4385,6 +4379,7 @@ public class PlayGameMenuController {
         }
 
         warrior = newWarrior;
+        warrior.setFill(((Warrior)warrior).getUnitPic());
         str = "unit upgraded successfully !";
         return str;
     }

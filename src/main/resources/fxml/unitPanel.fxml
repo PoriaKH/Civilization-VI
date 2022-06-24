@@ -25,6 +25,10 @@
                     <Button text="wakeup unit" onMouseClicked="#wakeUpUnit"/>
                     <Button text="recover unit" onMouseClicked="#recoverUnit"/>
                     <Button text="delete unit" onMouseClicked="#deleteUnit"/>
+                    <Label text="upgrade unit"/>
+                    <TextField promptText="new unit name" fx:id="newUnitName"/>
+                    <TextField promptText="tile number" fx:id="tileIndex"/>
+                    <Button text="upgrade !" onMouseClicked="#upgradeUnit"/>
                 </VBox>
             </left>
             <center>
