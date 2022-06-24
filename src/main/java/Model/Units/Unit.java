@@ -7,6 +7,7 @@ import Model.Node;
 import View.PlayGameMenu;
 import View.UnitPanel;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
@@ -96,17 +97,25 @@ public class Unit extends Rectangle {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                UnitPanel.unit = (Unit) event.getSource();
-                UnitPanel.stage = Tile.stage;
-                UnitPanel.infoPanelScene = Tile.scene;
-                UnitPanel.doesEnteredFromInfoPanel = false;
-                UnitPanel.map = Tile.map;
-                UnitPanel.playingCivilization = PlayGameMenu.playingCivilization;
-                UnitPanel.civilizations = Tile.civilizations;
-                try {
-                    new UnitPanel().start();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                if (!((Unit) event.getSource()).getCivilization().equals(PlayGameMenu.playingCivilization)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("selected unit :");
+                    alert.setHeaderText("result :");
+                    alert.setContentText("this unit is not for your civilization !");
+                    alert.showAndWait();
+                } else {
+                    UnitPanel.unit = (Unit) event.getSource();
+                    UnitPanel.stage = Tile.stage;
+                    UnitPanel.infoPanelScene = Tile.scene;
+                    UnitPanel.doesEnteredFromInfoPanel = false;
+                    UnitPanel.map = Tile.map;
+                    UnitPanel.playingCivilization = PlayGameMenu.playingCivilization;
+                    UnitPanel.civilizations = Tile.civilizations;
+                    try {
+                        new UnitPanel().start();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });

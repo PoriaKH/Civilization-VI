@@ -6,8 +6,10 @@ import Model.Tile;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -44,11 +46,21 @@ public class UnitPanel {
     public TextField tileNumber;
 
 
+
     public void start () throws IOException {
         BorderPane borderPane = FXMLLoader.load(untPanelURL);
+        if (!doesEnteredFromInfoPanel) showUnitName();
         scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void showUnitName() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("unit type :");
+        alert.setHeaderText("result :");
+        alert.setContentText(playGameMenuController.getUnitsName(unit));
+        alert.showAndWait();
     }
 
 
