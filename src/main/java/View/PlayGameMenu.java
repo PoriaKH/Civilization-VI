@@ -326,7 +326,11 @@ public class PlayGameMenu {
                 } else {
                     playGameMenuController.deleteLosers(playingCivilization, civilizations);
                     if (playGameMenuController.findWinner(playingCivilization, civilizations)) {
-                        //TODO .... write array members in file -> pouria
+                        //TODO .... write array members in file -> pouria ***********
+                        //TODO ... baraye datresi be barande civilization.get(0) okeye
+                        //TODO .... list member ha ham hast age khsati kol file ro dobare benevisi
+                        //TODO dat tabe fidnWinner emtaiza member barande ro ziad kardam
+
                         //TODO .... graphic view for winner -> kian
                         try {
                             root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
