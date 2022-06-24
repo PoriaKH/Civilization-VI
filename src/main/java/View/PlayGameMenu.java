@@ -36,8 +36,11 @@ import javafx.stage.Stage;
 
 import javax.swing.plaf.metal.MetalMenuBarUI;
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -330,7 +333,11 @@ public class PlayGameMenu {
                         //TODO ... baraye datresi be barande civilization.get(0) okeye
                         //TODO .... list member ha ham hast age khsati kol file ro dobare benevisi
                         //TODO dat tabe fidnWinner emtaiza member barande ro ziad kardam
-
+                        try {
+                            increaseFileScore(playingCivilization);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         //TODO .... graphic view for winner -> kian
                         try {
                             root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
@@ -366,6 +373,46 @@ public class PlayGameMenu {
         Tile.scene = scene;
 
         stage.show();
+    }
+    public void increaseFileScore(Civilization civilization) throws IOException {
+        File file = new File("users.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+
+            if(Objects.equals(fileUsername, civilization.getMember().getUsername())) {
+                continue;
+            }
+
+            stringBuilder.append(line);
+            stringBuilder.append("\n");
+
+            line = bufferedReader.readLine();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+        bufferedWriter.write(String.valueOf(stringBuilder));
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        Random rand = new Random();
+        int upperbound = 4;
+        int int_random = rand.nextInt(upperbound);
+
+        int newScore = civilization.getMember().getScore() + 500;
+        bufferedWriter.write(civilization.getMember().getUsername() + " " + civilization.getMember().getNickname() + " " + civilization.getMember().getPassword() + " " + newScore + " " + int_random + " " + dtf.format(now));
+        bufferedWriter.newLine();
+
+
+        bufferedWriter.close();
     }
     private void showRepetitiveAlert(int i) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
