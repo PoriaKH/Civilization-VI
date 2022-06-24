@@ -1,6 +1,7 @@
 package View;
 
 import Controller.PlayGameMenuController;
+import Model.Civilization;
 import Model.Tile;
 import Model.Units.Unit;
 import Model.Units.Warrior;
@@ -25,6 +26,7 @@ public class UnitPanel {
     public static Stage stage;
     public Scene scene;
     public static Unit unit;
+    public static Civilization playingCivilization;
     public static ArrayList<Tile> map;
     public static PlayGameMenuController playGameMenuController;
     public static boolean doesEnteredFromInfoPanel;
@@ -57,7 +59,7 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "sleep");
+            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "sleep");
             showNotification(string);
         }
     }
@@ -75,7 +77,7 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "alert");
+            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "alert");
             showNotification(string);
         }
     }
@@ -85,7 +87,7 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "fortify");
+            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "fortify");
             showNotification(string);
         }
     }
@@ -95,7 +97,7 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "heal");
+            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "heal");
             showNotification(string);
         }
     }
@@ -105,7 +107,7 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "deploy");
+            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "deploy");
             showNotification(string);
         }
     }
@@ -115,7 +117,7 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "range");
+            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "range");
             showNotification(string);
         }
     }
@@ -125,7 +127,7 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "wake");
+            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "wake");
             showNotification(string);
         }
     }
@@ -135,7 +137,7 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "recover");
+            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "recover");
             showNotification(string);
         }
     }
@@ -145,7 +147,7 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, unit.getCivilization(), map, "delete");
+            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "delete");
             showNotification(string);
         }
     }
@@ -155,7 +157,8 @@ public class UnitPanel {
             showError();
         }
         else {
-
+           String string = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()), playingCivilization, map);
+           showNotification(string);
         }
     }
 

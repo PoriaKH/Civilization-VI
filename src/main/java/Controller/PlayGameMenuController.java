@@ -1161,21 +1161,15 @@ public class PlayGameMenuController {
         unit.setPath(path);
     }
     // create parameters like unit or origin or destination for moveUnit function
-    public String preMoveUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
-        matcher.find();
-        int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
-        int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
-        String unitName = matcher.group("unitName").toLowerCase();
-        if (numberOfOrigin < 0 || numberOfOrigin > 71) {
-            return "number of origin tile is invalid !";
-        }
+    public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) {
         if (numberOfDestination < 0 || numberOfDestination > 71) {
             return "number of destination tile is invalid !";
         }
-        Tile origin = map.get(numberOfOrigin);
+        if (!unit.getCivilization().equals(civilization)) {
+            return "this unit is not for your civilization";
+        }
+        Tile origin = unit.getOrigin();
         Tile destination = map.get(numberOfDestination);
-        ArrayList<Unit> units = origin.getUnits();
-        Unit unit = getUnitInTile(units, unitName);
         if (unit != null && unit.getPath().size() != 0) {
             return "this unit is on moving !";
         }
@@ -2671,6 +2665,9 @@ public class PlayGameMenuController {
     }
     // makes parameters for unit behaviours functions
     public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) {
+        if (!unit.getCivilization().equals(civilization)) {
+            return "this unit is not for your civilization";
+        }
         if (command.equals("sleep")) {
             return  sleepUnit(civilization, unit, map);
         }

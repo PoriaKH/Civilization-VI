@@ -70,7 +70,9 @@ public class PlayGameMenu {
 
     private int playersCounter = 0;
 
-    private Civilization playingCivilization;
+    public static Civilization playingCivilization;
+
+
     public Text goldAmount;
     public Text happinessAmount;
 
