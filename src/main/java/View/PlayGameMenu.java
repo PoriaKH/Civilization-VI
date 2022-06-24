@@ -274,19 +274,6 @@ public class PlayGameMenu {
                         }
                     }
                 }
-                // for unit testing
-                if (Objects.equals(keyName, "U")) {
-                    Warrior warrior = new Warrior(playingCivilization, tiles.get(0), 10, 2, 2, 1, 70, false
-                            , 0, 4, 2, 6, false, false, true, false,
-                            false, false, false, false, false, false, false,
-                            false, false, false, false, false, false, false,
-                            false, false, false, false, false);
-                    Civilian civilian = new Civilian(playingCivilization, tiles.get(0), 10, 2, 2, 1, 70, true, true, false);
-                    tiles.get(0).addUnit(warrior);
-                    tiles.get(0).addUnit(civilian);
-                    tiles.get(0).setDoesHaveRoad(true);
-                    tiles.get(0).setDoesHaveRailWay(true);
-                }
                 if (Objects.equals(keyName, "C")) {
                     CheatMenu.infoPanelScene = scene;
                     CheatMenu.stage = stage;

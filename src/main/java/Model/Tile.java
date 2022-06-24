@@ -522,7 +522,7 @@ public class Tile extends Polygon {
             root.getChildren().add(rail);
         }
         else {
-            root.getChildren().remove(root);
+            root.getChildren().remove(rail);
         }
         this.doesHaveRailWay = doesHaveRailWay;
     }

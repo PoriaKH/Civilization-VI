@@ -199,7 +199,15 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            int index = Integer.parseInt(roadDes.getText());
+            String string;
+            if (index < 0 || index > 71) {
+                string = "invalid number";
+            }
+            else {
+                string = playGameMenuController.createRoad(playingCivilization, map.get(index), map);
+            }
+            showNotification(string);
         }
     }
 
@@ -208,16 +216,31 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            int index = Integer.parseInt(railDes.getText());
+            String string;
+            if (index < 0 || index > 71) {
+                string = "invalid number";
+            }
+            else {
+                string = playGameMenuController.createRailRoad(playingCivilization, map.get(index), map);
+            }
+            showNotification(string);
         }
     }
-
     public void removeRailUnit(MouseEvent mouseEvent) {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
-
+            int index = Integer.parseInt(removeRailDes.getText());
+            String string;
+            if (index < 0 || index > 71) {
+                string = "invalid number";
+            }
+            else {
+                string = playGameMenuController.removeRailRoad(playingCivilization, map.get(index), map);
+            }
+            showNotification(string);
         }
     }
 
@@ -226,7 +249,15 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            int index = Integer.parseInt(removeRoadDes.getText());
+            String string;
+            if (index < 0 || index > 71) {
+                string = "invalid number";
+            }
+            else {
+                string = playGameMenuController.removeRoad(playingCivilization, map.get(index), map);
+            }
+            showNotification(string);
         }
     }
 
@@ -235,7 +266,15 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            int index = Integer.parseInt(repairRoadDes.getText());
+            String string;
+            if (index < 0 || index > 71) {
+                string = "invalid number";
+            }
+            else {
+                string = playGameMenuController.repairRoad(playingCivilization, map.get(index), map);
+            }
+            showNotification(string);
         }
     }
 
@@ -244,7 +283,15 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            int index = Integer.parseInt(repairRailDes.getText());
+            String string;
+            if (index < 0 || index > 71) {
+                string = "invalid number";
+            }
+            else {
+                string = playGameMenuController.repairRail(playingCivilization, map.get(index), map);
+            }
+            showNotification(string);
         }
     }
     public void showError () {
