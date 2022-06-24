@@ -153,7 +153,9 @@ public class PlayGameMenu {
         Tile.root = root;
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
         ArrayList<Tile> tiles = playGameMenuController.mapCreator(members.size(),members);
+        Tile.map = tiles;
         ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(members.size(), tiles, members);
+        Tile.civilizations = civilizations;
         playingCivilization = civilizations.get(0);
 
         // Images for buttons and happiness and gold
@@ -310,18 +312,27 @@ public class PlayGameMenu {
 
             }
         });
-        //TODO add conditions -> koochak
+        //TODO add technology condition
         nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                playersCounter++;
-                if (playersCounter == civilizations.size()) {
-                    playersCounter = 0;
+                String string = playGameMenuController.nextTurn(playingCivilization, tiles);
+                if (!string.equals("done")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("next turn");
+                    alert.setHeaderText("result :");
+                    alert.setContentText(string);
+                    alert.showAndWait();
+                } else {
+                    playersCounter++;
+                    if (playersCounter == civilizations.size()) {
+                        playersCounter = 0;
+                    }
+                    playingCivilization = civilizations.get(playersCounter);
+                    civName.setText("civilization : " + playingCivilization.getName());
+                    goldAmount.setText(" : " + playingCivilization.getGold());
+                    happinessAmount.setText(" : " + playingCivilization.getHappiness());
                 }
-                playingCivilization = civilizations.get(playersCounter);
-                civName.setText("civilization : " + playingCivilization.getName());
-                goldAmount.setText(" : " + playingCivilization.getGold());
-                happinessAmount.setText(" : " + playingCivilization.getHappiness());
             }
         });
 
@@ -335,8 +346,6 @@ public class PlayGameMenu {
 
         Tile.stage = stage;
         Tile.scene = scene;
-        Tile.map = tiles;
-        Tile.civilizations = civilizations;
 
         stage.show();
     }

@@ -2,6 +2,7 @@ package View;
 
 import Model.Civilization;
 import Model.Tile;
+import Model.Units.Unit;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -48,6 +49,8 @@ public class InfoPanel {
         UnitPanel.infoPanelScene = infoPanelScene;
         UnitPanel.stage = stage;
         UnitPanel.doesEnteredFromInfoPanel = true;
+        UnitPanel.map = Tile.map;
+        UnitPanel.playingCivilization = PlayGameMenu.playingCivilization;
         new UnitPanel().start();
     }
 

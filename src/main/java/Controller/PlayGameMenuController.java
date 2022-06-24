@@ -4454,8 +4454,8 @@ public class PlayGameMenuController {
         int tileNumber = unitActionsNextTurnCheck(civilization,map);
         if(tileNumber != -1)
             return "order unit in tile number : " + tileNumber;
-        if (civilization.getWorkingOnTechnology() == null)
-            return "choose a technology to learn";
+        /*if (civilization.getWorkingOnTechnology() == null)
+            return "choose a technology to learn";*/
 //-----------------------------------------------------------------------------------
 
         improveImprovementsNextTurn(map);
