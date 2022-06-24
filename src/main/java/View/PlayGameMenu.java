@@ -349,6 +349,7 @@ public class PlayGameMenu {
         Tile.stage = stage;
         Tile.scene = scene;
         Tile.map = tiles;
+        Tile.civilizations = civilizations;
 
         stage.show();
     }

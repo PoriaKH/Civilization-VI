@@ -29,6 +29,7 @@ public class UnitPanel {
     public static Civilization playingCivilization;
     public static ArrayList<Tile> map;
     public static PlayGameMenuController playGameMenuController;
+    public static ArrayList<Civilization> civilizations;
     public static boolean doesEnteredFromInfoPanel;
     public TextField moveDes;
     public TextField attackTileDes;
@@ -157,7 +158,8 @@ public class UnitPanel {
             showError();
         }
         else {
-           String string = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()), playingCivilization, map);
+           String string = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
+                   playingCivilization, map);
            showNotification(string);
         }
     }
@@ -167,7 +169,9 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preAttackCity(unit,
+                    Integer.parseInt(attackCityDes.getText()), playingCivilization, map, civilizations);
+            showNotification(string);
         }
     }
 

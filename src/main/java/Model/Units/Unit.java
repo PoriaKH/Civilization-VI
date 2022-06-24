@@ -102,6 +102,7 @@ public class Unit extends Rectangle {
                 UnitPanel.doesEnteredFromInfoPanel = false;
                 UnitPanel.map = Tile.map;
                 UnitPanel.playingCivilization = PlayGameMenu.playingCivilization;
+                UnitPanel.civilizations = Tile.civilizations;
                 try {
                     new UnitPanel().start();
                 } catch (IOException e) {

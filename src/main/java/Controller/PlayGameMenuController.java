@@ -2399,21 +2399,12 @@ public class PlayGameMenuController {
         return false;
     }
 
-    public String preAttackCity (Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
-        matcher.find();
-        int originIndex = Integer.parseInt(matcher.group("origin"));
-        int destinationIndex = Integer.parseInt(matcher.group("destination"));
-
-        if (originIndex < 0 || originIndex > 71) {
-            return "number of origin tile is invalid !";
-        }
+    public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
         if (destinationIndex < 0 || destinationIndex> 71) {
             return "number of destination tile is invalid !";
         }
-
-        Unit attacker = getWarriorUnit(originIndex, map);
         City defenderCity = getCityFromTile (map.get(destinationIndex), map, civilizations);
-
+        int originIndex = getTileIndex(attacker.getOrigin(), map);
         if (attacker == null) {
             return "your unit is not military !";
         }
