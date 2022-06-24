@@ -29,6 +29,9 @@
                     <TextField promptText="new unit name" fx:id="newUnitName"/>
                     <TextField promptText="tile number" fx:id="tileIndex"/>
                     <Button text="upgrade !" onMouseClicked="#upgradeUnit"/>
+                    <Label text="create city"/>
+                    <TextField promptText="tile number" fx:id="tileNumberForCity"/>
+                    <Button text="create city !" onMouseClicked="#createCity"/>
                 </VBox>
             </left>
             <center>
