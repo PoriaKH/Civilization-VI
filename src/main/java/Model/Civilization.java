@@ -270,4 +270,8 @@ public class Civilization {
 
         return this.name;
     }
+
+    public void setCapital(City city) {
+        this.capital = city;
+    }
 }

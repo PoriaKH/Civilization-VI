@@ -2457,7 +2457,8 @@ public class PlayGameMenuController {
             map.get(originIndex).removeUnit(attacker);
             defenderCity.getCenterTile().addUnit(attacker);
             attacker.setOrigin(defenderCity.getCenterTile());
-            str = "your unit conquer the city !";
+            changeCapital(defenderCivilization);
+            str = "your unit conquered the city !";
         }
         else if (healthOfDefender > 0 && healthOfAttacker <= 0) {
             defenderCity.setDamagePoint(healthOfDefender);
@@ -2484,6 +2485,13 @@ public class PlayGameMenuController {
         }
         return str;
     }
+
+    private void changeCapital(Civilization civilization) {
+        for (int i = 0; i < civilization.getCities().size(); i++) {
+             civilization.setCapital(civilization.getCities().get(i));
+        }
+    }
+
     public String attackCityFromAir(Civilization civilization,Unit attacker, City defenderCity, int originIndex, ArrayList<Tile>map, Civilization defenderCivilization) {
         String str = "";
         int powerOfAttacker = ((Warrior)attacker).getRangedCombatDamage();
