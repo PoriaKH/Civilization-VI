@@ -717,6 +717,7 @@ public class Tile extends Polygon {
     public void removeUnit (Unit unit) {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).equals(unit)) {
+                root.getChildren().remove(units.get(i));
                 units.remove(i);
                 break;
             }

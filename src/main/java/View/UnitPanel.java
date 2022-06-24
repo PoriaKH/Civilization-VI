@@ -66,7 +66,7 @@ public class UnitPanel {
     }
 
     private void showNotification(String string) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("result :");
         alert.setHeaderText("result :");
         alert.setContentText(string);
@@ -180,7 +180,9 @@ public class UnitPanel {
             showError();
         }
         else {
-
+            String string = playGameMenuController.preAttackTile(unit, Integer.parseInt(attackTileDes.getText()),
+                    playingCivilization, map);
+            showNotification(string);
         }
     }
 

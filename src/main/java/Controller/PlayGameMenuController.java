@@ -2271,19 +2271,11 @@ public class PlayGameMenuController {
     }
 
     // prepare some parameters and return some string
-    public String preAttackTile (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
-        matcher.find();
-        int originIndex = Integer.parseInt(matcher.group("origin"));
-        int destinationIndex = Integer.parseInt(matcher.group("destination"));
-
-        if (originIndex < 0 || originIndex > 71) {
-            return "number of origin tile is invalid !";
-        }
+    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) {
         if (destinationIndex < 0 || destinationIndex > 71) {
             return "number of destination tile is invalid !";
         }
-
-        Unit attacker = getWarriorUnit(originIndex, map);
+        int originIndex = getTileIndex(attacker.getOrigin(), map);
         Unit defender = getWarriorUnit(destinationIndex, map);
 
         if (attacker == null) {
