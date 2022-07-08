@@ -8,6 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URL;
 
 public class Main extends Application {
@@ -76,6 +81,14 @@ public class Main extends Application {
         DiplomaticRequests.diplomaticRequestsURL = new URL(Main.class.getResource("fxml/diplomaticRequests.fxml").toExternalForm());
         Demographics.demographicsPageURL = new URL(Main.class.getResource("fxml/demographics.fxml").toExternalForm());
         EconomicalReview.economicalPageURL = new URL(Main.class.getResource("fxml/economicalReview.fxml").toExternalForm());
+
+        Socket socket = new Socket("localhost",8888);
+        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
+        dataOutputStream.writeUTF("hello world!");
+        dataOutputStream.flush();
+
+
 
         Parent root = FXMLLoader.load(address_login_page);
         Scene scene = new Scene(root);
