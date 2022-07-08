@@ -23,6 +23,7 @@
             <Button text="Diplomatics" onMouseClicked="#diplomaticsClicked"/>
             <Button text="Demographics" onMouseClicked="#demographicsClicked"/>
             <Button text="Economical Review" onMouseClicked="#economicalReviewClicked"/>
+            <Button text="save game" onMouseClicked="#saveTheGame"/>
             <Button text="back" onMouseClicked="#backClicked"/>
         </VBox>
     </center>

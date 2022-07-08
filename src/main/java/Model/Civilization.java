@@ -2,6 +2,7 @@ package Model;
 
 import Controller.PlayGameMenuController;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 

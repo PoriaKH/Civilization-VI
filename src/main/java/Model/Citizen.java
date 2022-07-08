@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.Serializable;
+
 public class Citizen {
     private Tile tile;
 

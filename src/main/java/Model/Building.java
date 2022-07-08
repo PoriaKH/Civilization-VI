@@ -2,6 +2,8 @@ package Model;
 
 import javafx.scene.shape.Rectangle;
 
+
+
 public class Building extends Rectangle {
     private Civilization civilization;
     private Tile tile;

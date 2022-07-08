@@ -5,9 +5,10 @@ import Model.Tile;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
+import java.io.Serializable;
 import java.net.URL;
 
-public class Warrior extends Unit{
+public class Warrior extends Unit {
     private int xp;
     private int damage;
     private int range;//if range == -1 -> N/A
