@@ -46,6 +46,7 @@ import java.util.regex.Pattern;
 
 import static View.GameMenu.gameMenuURL;
 import static View.MainMenu.gameMenuFxmlURL;
+import static View.UnitPanel.playGameMenuController;
 
 public class PlayGameMenu {
 
@@ -148,18 +149,20 @@ public class PlayGameMenu {
         players.add(0, MainMenu.loggedInMember);
         if (areUsersOk) {
             MainMenu.mediaPlayer.stop();
-            switchToGame(mouseEvent, players, members);
+
+            root = FXMLLoader.load(gameMenuURL);
+            Tile.root = root;
+            ArrayList<Tile> tiles = playGameMenuController.mapCreator(players.size(),players);
+            Tile.map = tiles;
+            ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(players.size(), tiles, players);
+            Tile.civilizations = civilizations;
+            playingCivilization = civilizations.get(0);
+
+            switchToGame(mouseEvent, players, members, tiles, civilizations);
         }
     }
-    public void switchToGame(MouseEvent mouseEvent, ArrayList<Member> players, ArrayList<Member> members) throws IOException {
-        root = FXMLLoader.load(gameMenuURL);
-        Tile.root = root;
+    public void switchToGame(MouseEvent mouseEvent, ArrayList<Member> players, ArrayList<Member> members, ArrayList<Tile> tiles, ArrayList<Civilization> civilizations) throws IOException {
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-        ArrayList<Tile> tiles = playGameMenuController.mapCreator(players.size(),players);
-        Tile.map = tiles;
-        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(players.size(), tiles, players);
-        Tile.civilizations = civilizations;
-        playingCivilization = civilizations.get(0);
 
         // Images for buttons and happiness and gold
         Image nextTurnImage = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
