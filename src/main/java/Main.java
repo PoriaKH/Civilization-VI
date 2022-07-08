@@ -16,6 +16,18 @@ import java.net.Socket;
 import java.net.URL;
 
 public class Main extends Application {
+    public static Socket socket;
+    public static DataOutputStream dataOutputStream;
+    public static DataInputStream dataInputStream;
+    static {
+        try {
+            socket = new Socket("localhost",8888);
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataInputStream = new DataInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -82,8 +94,7 @@ public class Main extends Application {
         Demographics.demographicsPageURL = new URL(Main.class.getResource("fxml/demographics.fxml").toExternalForm());
         EconomicalReview.economicalPageURL = new URL(Main.class.getResource("fxml/economicalReview.fxml").toExternalForm());
 
-        Socket socket = new Socket("localhost",8888);
-        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
 
         dataOutputStream.writeUTF("hello world!");
         dataOutputStream.flush();

@@ -117,28 +117,28 @@ public class InfoPanel {
         new EconomicalReview().start();
     }
 
-    public void saveTheGame(MouseEvent mouseEvent) throws IOException {
-        ArrayList<Object> objects = new ArrayList<>();
-        objects.add(civilizations);
-        objects.add(tiles);
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-//TODO has problems
-        new GraphAdapterBuilder().addType(Tile.class).addType(Unit.class).addType(Warrior.class).
-                addType(Civilian.class).addType(City.class).addType(Civilization.class).
-                addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(Improvement.class)
-                .addType(Resource.class).addType(Technology.class).registerOn(gsonBuilder);
-        Gson gson = gsonBuilder.create();
-        String data = gson.toJson(objects);
-
-        File file = new File("saveGame.txt");
-        PrintWriter printWriter = new PrintWriter(file);
-        printWriter.write(data);
-        printWriter.close();
-
-        Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+//    public void saveTheGame(MouseEvent mouseEvent) throws IOException {
+//        ArrayList<Object> objects = new ArrayList<>();
+//        objects.add(civilizations);
+//        objects.add(tiles);
+//
+//        GsonBuilder gsonBuilder = new GsonBuilder();
+////TODO has problems
+//        new GraphAdapterBuilder().addType(Tile.class).addType(Unit.class).addType(Warrior.class).
+//                addType(Civilian.class).addType(City.class).addType(Civilization.class).
+//                addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(Improvement.class)
+//                .addType(Resource.class).addType(Technology.class).registerOn(gsonBuilder);
+//        Gson gson = gsonBuilder.create();
+//        String data = gson.toJson(objects);
+//
+//        File file = new File("saveGame.txt");
+//        PrintWriter printWriter = new PrintWriter(file);
+//        printWriter.write(data);
+//        printWriter.close();
+//
+//        Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
 }
