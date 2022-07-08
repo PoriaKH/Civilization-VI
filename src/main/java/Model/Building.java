@@ -2,7 +2,7 @@ package Model;
 
 import javafx.scene.shape.Rectangle;
 
-import java.io.Serializable;
+
 
 public class Building extends Rectangle {
     private Civilization civilization;

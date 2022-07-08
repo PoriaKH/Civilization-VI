@@ -20,5 +20,7 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:17.0.1" level="project" />
     <orderEntry type="library" name="google.code.gson" level="project" />
+    <orderEntry type="library" name="gson-extras-0.6.0-javadoc" level="project" />
+    <orderEntry type="library" name="gson-extras-0.6.0" level="project" />
   </component>
 </module>
