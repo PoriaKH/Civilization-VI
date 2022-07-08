@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.Serializable;
+
 public class Resource {
 
     private String name;

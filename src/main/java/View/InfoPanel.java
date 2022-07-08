@@ -3,14 +3,21 @@ package View;
 import Model.Civilization;
 import Model.Tile;
 import Model.Units.Unit;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -107,5 +114,12 @@ public class InfoPanel {
         EconomicalReview.infoPanelScene = infoPanelScene;
         EconomicalReview.stage = stage;
         new EconomicalReview().start();
+    }
+
+    public void saveTheGame(MouseEvent mouseEvent) throws IOException {
+        Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

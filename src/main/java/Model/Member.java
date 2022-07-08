@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.Serializable;
+
 public class Member {
     private String username;
     private String password;

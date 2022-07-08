@@ -5,9 +5,10 @@ import Model.Tile;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
+import java.io.Serializable;
 import java.net.URL;
 
-public class Civilian extends Unit{
+public class Civilian extends Unit {
     private boolean isWorker;
     private boolean isSettler;
 
