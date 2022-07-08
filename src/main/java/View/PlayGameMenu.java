@@ -158,10 +158,10 @@ public class PlayGameMenu {
             Tile.civilizations = civilizations;
             playingCivilization = civilizations.get(0);
 
-            switchToGame(mouseEvent, players, members, tiles, civilizations);
+            switchToGame(mouseEvent, tiles, civilizations);
         }
     }
-    public void switchToGame(MouseEvent mouseEvent, ArrayList<Member> players, ArrayList<Member> members, ArrayList<Tile> tiles, ArrayList<Civilization> civilizations) throws IOException {
+    public void switchToGame(MouseEvent mouseEvent, ArrayList<Tile> tiles, ArrayList<Civilization> civilizations) throws IOException {
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
 
         // Images for buttons and happiness and gold
