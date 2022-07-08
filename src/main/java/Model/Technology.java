@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.Serializable;
+
 public class Technology {
     private boolean isAgriculture;
     private boolean isAnimalHusbandry;

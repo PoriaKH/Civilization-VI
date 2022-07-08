@@ -214,22 +214,13 @@ public class PlayGameMenuController {
         civilization.setHappiness(amount);
         return "cheat code activated successfully";
     }
-    public String cheatTeleportUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
+    public String cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
         String str;
-        matcher.find();
-        int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
-        int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
-        String unitName = matcher.group("unitName").toLowerCase();
-        if (numberOfOrigin < 0 || numberOfOrigin > 71) {
-            return "number of origin is invalid !";
-        }
         if (numberOfDestination < 0 || numberOfDestination > 71) {
             return "number of destination is invalid !";
         }
-        Tile origin = map.get(numberOfOrigin);
+        Tile origin = unit.getOrigin();
         Tile destination = map.get(numberOfDestination);
-        ArrayList<Unit> units = origin.getUnits();
-        Unit unit = getUnitInTile(units, unitName);
 
         if (unit == null) {
             str = "there is no unit with this name !";
@@ -254,8 +245,8 @@ public class PlayGameMenuController {
                 return str;
             }
         }
-        destination.addUnit(unit);
         origin.removeUnit(unit);
+        destination.addUnit(unit);
         unit.setOrigin(destination);
         unit.setHasOrdered(true);
         str = "unit teleported to destination !";
@@ -783,35 +774,36 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations){
+    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
         StringBuilder stringBuilder = new StringBuilder("");//"Civilization name" :
         //                             Capital : tile numbers
         //                             City 2  : tile numbers
         //                                      ...
         //                             City n  : tile numbers
 
-        for(Civilization tempCivilization : civilizations){
-            stringBuilder.append(tempCivilization.getMember().getNickname()).append(" :\nCapital : ");
-            City capital = tempCivilization.getCapital();
-            for(Tile tile : capital.getTiles()){
-                stringBuilder.append(tile.getTileNumber()).append(" ");
-            }
-            stringBuilder.append("\n");
-            for(int i = 0; i < tempCivilization.getCities().size(); i++){
-                City tempCity = tempCivilization.getCities().get(i);
-                if(tempCity != tempCivilization.getCapital()){
-                    stringBuilder.append("City ").append(i + 1).append("  : ");
-                    for(Tile tile : tempCity.getTiles()){
-                        stringBuilder.append(tile.getTileNumber()).append(" ");
+        for(Civilization tempCivilization : civilizations) {
+            if (tempCivilization == playingCivilization) {
+                stringBuilder.append(tempCivilization.getMember().getNickname()).append(" :\nCapital : ");
+                City capital = tempCivilization.getCapital();
+                for (Tile tile : capital.getTiles()) {
+                    stringBuilder.append(tile.getTileNumber()).append(" ");
+                }
+                stringBuilder.append("\n");
+                for (int i = 0; i < tempCivilization.getCities().size(); i++) {
+                    City tempCity = tempCivilization.getCities().get(i);
+                    if (tempCity != tempCivilization.getCapital()) {
+                        stringBuilder.append("City ").append(i + 1).append("  : ");
+                        for (Tile tile : tempCity.getTiles()) {
+                            stringBuilder.append(tile.getTileNumber()).append(" ");
+                        }
+                        stringBuilder.append("\n");
                     }
-                    stringBuilder.append("\n");
                 }
             }
         }
-
         return stringBuilder;
     }
-    public String diplomaticInformation(Civilization civilization,ArrayList<Tile> map){
+    public String diplomaticInformation(Civilization civilization){
         int point = civilization.getPoint();
 
         return "your point is : " + point;
@@ -959,7 +951,7 @@ public class PlayGameMenuController {
                     else {
                         move = "unit has path";
                     }
-                    stringBuilder.append("unit " + name + " movement : "+ move + " health : " + unitsOfTile.get(i1).getHealth());
+                    stringBuilder.append("unit " + name + " movement : "+ move + " health : " + unitsOfTile.get(i1).getHealth() + " tile : " + i);
                     if (unitsOfTile.get(i1).isCivilian()) {
                         stringBuilder.append(" damage : N/A" + "\n");
                     }
@@ -1022,7 +1014,6 @@ public class PlayGameMenuController {
         for(Civilization tempCiv : civilization.getFriends()){
             stringBuilder.append(tempCiv.getName()).append("\n");
         }
-        stringBuilder.append("other civilizations are your enemy");
         return stringBuilder;
     }
     //TODO for next phase ...
@@ -1161,21 +1152,15 @@ public class PlayGameMenuController {
         unit.setPath(path);
     }
     // create parameters like unit or origin or destination for moveUnit function
-    public String preMoveUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
-        matcher.find();
-        int numberOfOrigin = Integer.parseInt(matcher.group("numberO"));
-        int numberOfDestination = Integer.parseInt(matcher.group("numberD"));
-        String unitName = matcher.group("unitName").toLowerCase();
-        if (numberOfOrigin < 0 || numberOfOrigin > 71) {
-            return "number of origin tile is invalid !";
-        }
+    public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) {
         if (numberOfDestination < 0 || numberOfDestination > 71) {
             return "number of destination tile is invalid !";
         }
-        Tile origin = map.get(numberOfOrigin);
+        if (!unit.getCivilization().equals(civilization)) {
+            return "this unit is not for your civilization";
+        }
+        Tile origin = unit.getOrigin();
         Tile destination = map.get(numberOfDestination);
-        ArrayList<Unit> units = origin.getUnits();
-        Unit unit = getUnitInTile(units, unitName);
         if (unit != null && unit.getPath().size() != 0) {
             return "this unit is on moving !";
         }
@@ -1632,10 +1617,7 @@ public class PlayGameMenuController {
         return null;
     }
     // it makes parameters for unit maker such as unit or city
-    public String preUnitMaker (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
-        matcher.find();
-        String unitName = matcher.group("unitName").toLowerCase();
-        int index = Integer.parseInt(matcher.group("number"));
+    public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) {
         if (index < 0 || index > 71) {
             return "number of origin tile is invalid !";
         }
@@ -2271,20 +2253,17 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // prepare some parameters and return some string
-    public String preAttackTile (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
-        matcher.find();
-        int originIndex = Integer.parseInt(matcher.group("origin"));
-        int destinationIndex = Integer.parseInt(matcher.group("destination"));
+    public void sendMessageToDefender (Unit defender, Unit attacker) {
+        defender.getCivilization().addMessage("civilization :" + attacker.getCivilization() +
+                "attacked you at turn : " + turn);
+    }
 
-        if (originIndex < 0 || originIndex > 71) {
-            return "number of origin tile is invalid !";
-        }
+    // prepare some parameters and return some string
+    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) {
         if (destinationIndex < 0 || destinationIndex > 71) {
             return "number of destination tile is invalid !";
         }
-
-        Unit attacker = getWarriorUnit(originIndex, map);
+        int originIndex = getTileIndex(attacker.getOrigin(), map);
         Unit defender = getWarriorUnit(destinationIndex, map);
 
         if (attacker == null) {
@@ -2323,6 +2302,8 @@ public class PlayGameMenuController {
         if (defender == null) {
             defender = getCivilianUnit(destinationIndex, map);
             if (defender == null) return "there is no unit on destination !";
+
+        sendMessageToDefender(defender, attacker);
 
             defender.setCivilization(civilization);
             if (((Warrior)attacker).getRange() == -1) {
@@ -2398,21 +2379,12 @@ public class PlayGameMenuController {
         return false;
     }
 
-    public String preAttackCity (Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
-        matcher.find();
-        int originIndex = Integer.parseInt(matcher.group("origin"));
-        int destinationIndex = Integer.parseInt(matcher.group("destination"));
-
-        if (originIndex < 0 || originIndex > 71) {
-            return "number of origin tile is invalid !";
-        }
+    public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
         if (destinationIndex < 0 || destinationIndex> 71) {
             return "number of destination tile is invalid !";
         }
-
-        Unit attacker = getWarriorUnit(originIndex, map);
         City defenderCity = getCityFromTile (map.get(destinationIndex), map, civilizations);
-
+        int originIndex = getTileIndex(attacker.getOrigin(), map);
         if (attacker == null) {
             return "your unit is not military !";
         }
@@ -2473,7 +2445,8 @@ public class PlayGameMenuController {
             map.get(originIndex).removeUnit(attacker);
             defenderCity.getCenterTile().addUnit(attacker);
             attacker.setOrigin(defenderCity.getCenterTile());
-            str = "your unit conquer the city !";
+            changeCapital(defenderCivilization);
+            str = "your unit conquered the city !";
         }
         else if (healthOfDefender > 0 && healthOfAttacker <= 0) {
             defenderCity.setDamagePoint(healthOfDefender);
@@ -2500,6 +2473,13 @@ public class PlayGameMenuController {
         }
         return str;
     }
+
+    private void changeCapital(Civilization civilization) {
+        for (int i = 0; i < civilization.getCities().size(); i++) {
+             civilization.setCapital(civilization.getCities().get(i));
+        }
+    }
+
     public String attackCityFromAir(Civilization civilization,Unit attacker, City defenderCity, int originIndex, ArrayList<Tile>map, Civilization defenderCivilization) {
         String str = "";
         int powerOfAttacker = ((Warrior)attacker).getRangedCombatDamage();
@@ -2663,17 +2643,10 @@ public class PlayGameMenuController {
         return str;
     }
     // makes parameters for unit behaviours functions
-    public String preUnitBehaviour (Matcher matcher, Civilization civilization, ArrayList<Tile> map, String command) {
-        matcher.find();
-        String unitName = matcher.group("unitName");
-        int index = Integer.parseInt(matcher.group("number"));
-        if (index < 0 || index > 71) {
-            return "number of origin tile is invalid !";
+    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) {
+        if (!unit.getCivilization().equals(civilization)) {
+            return "this unit is not for your civilization";
         }
-        Tile tile = map.get(index);
-        ArrayList<Unit> units = tile.getUnits();
-        Unit unit = getUnitInTile(units, unitName);
-
         if (command.equals("sleep")) {
             return  sleepUnit(civilization, unit, map);
         }
@@ -2696,16 +2669,14 @@ public class PlayGameMenuController {
             return wakeUpUnit(civilization, unit, map);
         }
         else if (command.equals("delete")) {
-            return deleteUnit(civilization, unit, map, tile);
+            return deleteUnit(civilization, unit, map, unit.getOrigin());
         }
         else if (command.equals("recover")) {
-            return recoverUnit(civilization, unit, map, tile);
+            return recoverUnit(civilization, unit, map, unit.getOrigin());
         }
         return "";
     }
 
-    // sleepUnit, .... civilization baraye playeri hast ke alan dare dastor mide
-    //TODO ... bayad function marboot be darkhast amaliat va royat doshman dar atraf baraye behavior ha piyade shavad
     public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map){
         String str;
 
@@ -2969,7 +2940,7 @@ public class PlayGameMenuController {
             str = "unit is on moving !";
             return str;
         }
-        //TODO ... agar dar navahi dostane bashad 2 afzayesh joon darad
+
         int health = unit.getHealth();
         if (tileIsForCity(civilization, tile)) {
             health += 3;
@@ -3810,8 +3781,6 @@ public class PlayGameMenuController {
         if (technology == null)
             return "no technology with this name exists";
         civilization.setScience(technology.getCost());
-//        if (civilization.getScience() < technology.getCost())
-//            return "you don't have the needed amount of science";
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         for (Technology technology1 : allTechnologies)
             if (technology1.getName().equals(technologyName))
@@ -4357,16 +4326,10 @@ public class PlayGameMenuController {
      */
 
     // get necessary parameters for update warrior
-    public String preUpgradeUnit (Matcher matcher, Civilization civilization, ArrayList<Tile> map) {
-        matcher.find();
-        String previousUnitName = matcher.group("oldUnitName").toLowerCase();
-        String newUnitName = matcher.group("newUnitName").toLowerCase();
-        int index = Integer.parseInt(matcher.group("number"));
+    public String preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map) {
         if (index < 0 || index > 71) {
             return "number of tile is invalid !";
         }
-
-        Unit oldUnit = getUnitInTile(map.get(index).getUnits(), previousUnitName);
         Unit newUnit = makeUnit(civilization, map.get(index), map, newUnitName);
         City city = findTile(index, map, civilization);
         return updateWarrior(civilization, oldUnit, newUnit, map, map.get(index), city);
@@ -4405,8 +4368,10 @@ public class PlayGameMenuController {
             str = "your city doesn't have necessary resource !";
             return str;
         }
-
-        warrior = newWarrior;
+        newWarrior.setX(warrior.getX());
+        newWarrior.setY(warrior.getY());
+        tile.removeUnit(warrior);
+        tile.addUnit2(newWarrior);
         str = "unit upgraded successfully !";
         return str;
     }
@@ -4476,8 +4441,8 @@ public class PlayGameMenuController {
         int tileNumber = unitActionsNextTurnCheck(civilization,map);
         if(tileNumber != -1)
             return "order unit in tile number : " + tileNumber;
-        if (civilization.getWorkingOnTechnology() == null)
-            return "choose a technology to learn";
+        /*if (civilization.getWorkingOnTechnology() == null)
+            return "choose a technology to learn";*/
 //-----------------------------------------------------------------------------------
 
         improveImprovementsNextTurn(map);
@@ -4591,5 +4556,21 @@ public class PlayGameMenuController {
             if (newDamagePoint > 20) newDamagePoint = 20;
             cities.get(i).setDamagePoint(newDamagePoint);
         }
+    }
+    public void deleteLosers (Civilization civilization, ArrayList<Civilization> civilizations) {
+        for (int i = 0; i < civilizations.size(); i++) {
+            if (civilizations.get(i).getCities().size() == 0) {
+                civilizations.remove(i);
+                i--;
+            }
+        }
+    }
+    public boolean findWinner (Civilization civilization, ArrayList<Civilization> civilizations) {
+        if (civilizations.size() == 1) {
+            int point = civilization.getPoint() + 500;
+            civilization.getMember().setScore(point);
+            return true;
+        }
+        return false;
     }
 }

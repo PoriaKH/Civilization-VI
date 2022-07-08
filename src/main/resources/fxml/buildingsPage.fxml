@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="View.BuildingsPage"
+            prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/style6.css" styleClass="background">
+    <top>
+        <HBox>
+            <Text fx:id="gold" text=""/>
+            <Text text="                                                                                                                        "/>
+            <VBox alignment = "CENTER" spacing="10" minWidth="280" maxWidth="280">
+                <Label styleClass="Label" text="Tile"/>
+                <TextField fx:id="tileNumber" alignment="CENTER" promptText="enter tile number"/>
+                <Button styleClass="backButton" text="purchase" onMouseClicked="#purchaseClicked"/>
+                <Text fx:id="message" text=""/>
+            </VBox>
+        </HBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="50" maxWidth="1100">
+            <HBox alignment="CENTER" spacing="50" maxHeight="150">
+                <VBox alignment="CENTER">
+                    <Label text="80"/>
+                    <Button fx:id="Barracks" text="Barracks" onMouseClicked="#BarracksClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="100"/>
+                    <Button fx:id="Granary" text="Granary" onMouseClicked="#GranaryClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="80"/>
+                    <Button fx:id="Library" text="Library" onMouseClicked="#LibraryClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="60"/>
+                    <Button fx:id="Monument" text="Monument" onMouseClicked="#MonumentClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="100"/>
+                    <Button fx:id="Walls" text="Walls" onMouseClicked="#WallsClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="120"/>
+                    <Button fx:id="WaterMill" text="Water Mill" onMouseClicked="#WaterMillClicked"/>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER" spacing="50" maxHeight="150">
+                <VBox alignment="CENTER">
+                    <Label text="130"/>
+                    <Button fx:id="Armory" text="Armory" onMouseClicked="#ArmoryClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="120"/>
+                    <Button fx:id="BurialTomb" text="Burial Tomb" onMouseClicked="#BurialTombClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="150"/>
+                    <Button fx:id="Circus" text="Circus" onMouseClicked="#CircusClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="150"/>
+                    <Button fx:id="Colosseum" text="Colosseum" onMouseClicked="#ColosseumClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="200"/>
+                    <Button fx:id="Courthouse" text="Courthouse" onMouseClicked="#CourthouseClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="100"/>
+                    <Button fx:id="Stable" text="Stable" onMouseClicked="#StableClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="120"/>
+                    <Button fx:id="Temple" text="Temple" onMouseClicked="#TempleClicked"/>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER" spacing="50" maxHeight="150">
+                <VBox alignment="CENTER">
+                    <Label text="200"/>
+                    <Button fx:id="Castle" text="Castle" onMouseClicked="#CastleClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="150"/>
+                    <Button fx:id="Forge" text="Forge" onMouseClicked="#ForgeClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="120"/>
+                    <Button fx:id="Garden" text="Garden" onMouseClicked="#GardenClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="120"/>
+                    <Button fx:id="Market" text="Market" onMouseClicked="#MarketClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="120"/>
+                    <Button fx:id="Mint" text="Mint" onMouseClicked="#MintClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="120"/>
+                    <Button fx:id="Monastery" text="Monastery" onMouseClicked="#MonasteryClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="200"/>
+                    <Button fx:id="University" text="University" onMouseClicked="#UniversityClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="100"/>
+                    <Button fx:id="Workshop" text="Workshop" onMouseClicked="#WorkshopClicked"/>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER" spacing="50" maxHeight="150">
+                <VBox alignment="CENTER">
+                    <Label text="220"/>
+                    <Button fx:id="Bank" text="Bank" onMouseClicked="#BankClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="350"/>
+                    <Button fx:id="MilitaryAcademy" text="Military Academy" onMouseClicked="#MilitaryAcademyClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="350"/>
+                    <Button fx:id="Museum" text="Museum" onMouseClicked="#MuseumClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="220"/>
+                    <Button fx:id="OperaHouse" text="Opera House" onMouseClicked="#OperaHouseClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="350"/>
+                    <Button fx:id="PublicSchool" text="Public School" onMouseClicked="#PublicSchoolClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="220"/>
+                    <Button fx:id="SatrapsCourt" text="Satrap’s Court" onMouseClicked="#SatrapsCourtClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="300"/>
+                    <Button fx:id="Theater" text="Theater" onMouseClicked="#TheaterClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="180"/>
+                    <Button fx:id="Windmill" text="Windmill" onMouseClicked="#WindmillClicked"/>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER" spacing="50" maxHeight="150">
+                <VBox alignment="CENTER">
+                    <Label text="350"/>
+                    <Button fx:id="Arsenal" text="Arsenal" onMouseClicked="#ArsenalClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="600"/>
+                    <Button fx:id="BroadcastTower" text="Broadcast Tower" onMouseClicked="#BroadcastTowerClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="300"/>
+                    <Button fx:id="Factory" text="Factory" onMouseClicked="#FactoryClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="400"/>
+                    <Button fx:id="Hospital" text="Hospital" onMouseClicked="#HospitalClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="450"/>
+                    <Button fx:id="MilitaryBase" text="Military Base" onMouseClicked="#MilitaryBaseClicked"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label text="650"/>
+                    <Button fx:id="StockExchange" text="Stock Exchange" onMouseClicked="#StockExchangeClicked"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+    <bottom>
+        <Button styleClass="backButton" text="back" onMouseClicked="#backClicked"/>
+    </bottom>
+
+</BorderPane>

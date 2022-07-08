@@ -2,16 +2,40 @@ package Model;
 
 import Model.Units.Civilian;
 import Model.Units.Unit;
+import Model.Units.Warrior;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
+import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 public class Tile extends Polygon {
+    public static URL building1URL;
+    public static URL building2URL;
+    public static URL building3URL;
+    public static URL building4URL;
+    public static URL building5URL;
+
+    public static URL roadURL;
+
+    public static URL railURL;
+
+    // for panel changing needed
     public static Pane root;
+    public static Scene scene;
+    public static Stage stage;
+    public static ArrayList<Tile> map;
+    public static ArrayList<Civilization> civilizations;
     public float cameraSpeed = 30;
 
     private boolean isDesert;                   //Smooth
@@ -37,6 +61,7 @@ public class Tile extends Polygon {
 
     private Citizen citizen = null;
     private ArrayList<Unit> units;
+    private Building building;
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
     private Resource resource;
     private Attribute attribute;
@@ -44,6 +69,10 @@ public class Tile extends Polygon {
     private boolean isWorking;
     private boolean isOnRepair;
     private int repairNeedImprovement;
+
+    private Rectangle road = new Rectangle(x - 160, y + 30, 40, 20);
+
+    private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);
 
 
     private ArrayList<Tile> roads;
@@ -108,6 +137,34 @@ public class Tile extends Polygon {
                     }
                 }
             }
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(7);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Sheep");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Cotton");
+                        break;
+                    case 2:
+                        this.resource = new Resource("Gem");
+                        break;
+                    case 3:
+                        this.resource = new Resource("Gold");
+                        break;
+                    case 4:
+                        this.resource = new Resource("Gas");
+                        break;
+                    case 5:
+                        this.resource = new Resource("Marble");
+                        break;
+                    case 6:
+                        this.resource = new Resource("Silver");
+                        break;
+                }
+            }
         }
         else if(isMeadow){
             food += 2;
@@ -125,6 +182,43 @@ public class Tile extends Polygon {
                     } else {//Marsh
                         this.attribute = new Attribute(false, false, false, false, true, false);
                     }
+                }
+            }
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(10);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Banana");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Cow");
+                        break;
+                    case 2:
+                        this.resource = new Resource("Gazelle");
+                        break;
+                    case 3:
+                        this.resource = new Resource("Sheep");
+                        break;
+                    case 4:
+                        this.resource = new Resource("Cotton");
+                        break;
+                    case 5:
+                        this.resource = new Resource("Color");
+                        break;
+                    case 6:
+                        this.resource = new Resource("Fur");
+                        break;
+                    case 7:
+                        this.resource = new Resource("Gold");
+                        break;
+                    case 8:
+                        this.resource = new Resource("Marble");
+                        break;
+                    case 9:
+                        this.resource = new Resource("Silk");
+                        break;
                 }
             }
         }
@@ -147,10 +241,34 @@ public class Tile extends Polygon {
                     }
                 }
             }
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(4);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Gazelle");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Sheep");
+                        break;
+                    case 2:
+                        this.resource = new Resource("Gold");
+                        break;
+                    case 3:
+                        this.resource = new Resource("Silver");
+                        break;
+                }
+            }
         }
         else if(isMountain){
             mpCost = 100000000;
             this.attribute = new Attribute(false,true,false,false,false,false);
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){
+                this.resource = new Resource("Horse");
+            }
         }
         else if(isOcean){
             mpCost = 100000000;
@@ -178,6 +296,38 @@ public class Tile extends Polygon {
                     }
                 }
             }
+
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(8);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Wheat");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Cotton");
+                        break;
+                    case 2:
+                        this.resource = new Resource("Gem");
+                        break;
+                    case 3:
+                        this.resource = new Resource("Gold");
+                        break;
+                    case 4:
+                        this.resource = new Resource("Gas");
+                        break;
+                    case 5:
+                        this.resource = new Resource("Tusk");
+                        break;
+                    case 6:
+                        this.resource = new Resource("Marble");
+                        break;
+                    case 7:
+                        this.resource = new Resource("Coal");
+                        break;
+                }
+            }
         }
         else if(isSnow){
             combatChange -= 33;
@@ -189,6 +339,20 @@ public class Tile extends Polygon {
 
                 if(number == 1){//Ice
                     this.attribute = new Attribute(false,false,true,false,false,false);
+                }
+            }
+
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(2);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Sugar");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Metal");
+                        break;
                 }
             }
         }
@@ -214,6 +378,19 @@ public class Tile extends Polygon {
                     }
                 }
             }
+            Random random = new Random();
+            int number = random.nextInt(3);
+            if(number == 2){//Resource exists
+                number = random.nextInt(2);
+                switch (number){
+                    case 0:
+                        this.resource = new Resource("Fur");
+                        break;
+                    case 1:
+                        this.resource = new Resource("Silver");
+                        break;
+                }
+            }
         }
         //
         if(this.attribute != null) {
@@ -223,6 +400,11 @@ public class Tile extends Polygon {
             this.combatChange += this.attribute.getCombatChange();
             this.mpCost += this.attribute.getMpCost();
             this.combatChange += this.attribute.getCombatChange();
+        }
+        if(this.resource != null){
+            this.food += this.resource.getFood();
+            this.gold += this.resource.getGold();
+            this.production += this.resource.getProduction();
         }
 
 
@@ -322,10 +504,28 @@ public class Tile extends Polygon {
     }
 
     public void setDoesHaveRoad(boolean doesHaveRoad) {
+        if (doesHaveRoad) {
+            Image image = new Image(roadURL.toExternalForm());
+            ImagePattern imagePattern = new ImagePattern(image);
+            road.setFill(imagePattern);
+            root.getChildren().add(road);
+        }
+        else {
+            root.getChildren().remove(road);
+        }
         this.doesHaveRoad = doesHaveRoad;
     }
 
     public void setDoesHaveRailWay(boolean doesHaveRailWay) {
+        if (doesHaveRailWay) {
+            Image image = new Image(railURL.toExternalForm());
+            ImagePattern imagePattern = new ImagePattern(image);
+            rail.setFill(imagePattern);
+            root.getChildren().add(rail);
+        }
+        else {
+            root.getChildren().remove(rail);
+        }
         this.doesHaveRailWay = doesHaveRailWay;
     }
 
@@ -337,12 +537,28 @@ public class Tile extends Polygon {
     public Resource getResource() {
         return resource;
     }
+    public void addResource(Resource resource){
+        this.resource = resource;
+    }
 
     public ArrayList<Unit> getUnits() {
         return units;
     }
 
     public void addUnit (Unit unit) {
+        if (units.size() == 0) {
+            unit.setX(this.x + 20);
+            unit.setY(this.y - h);
+        }
+        else {
+            unit.setX(this.x + 60);
+            unit.setY(this.y - h + 90);
+        }
+        root.getChildren().add(unit);
+        units.add(unit);
+    }
+    public void addUnit2 (Unit unit) {
+        root.getChildren().add(unit);
         units.add(unit);
     }
 
@@ -449,6 +665,48 @@ public class Tile extends Polygon {
     public ArrayList<Tile> getRoads() {
         return roads;
     }
+    public void addBuilding(Building building){
+        this.building = building;
+
+        building.getCivilization().setScience(building.getScience());
+        building.getCivilization().setHappiness(building.getHappiness());
+        for(City city : building.getCivilization().getCities()){
+            for(Tile tile : city.getTiles()){
+                for(Unit unit : tile.getUnits()){
+                    if(!unit.isCivilian()){
+                        Warrior warrior = (Warrior) unit;
+                        warrior.increaseXp(building.getXp());
+                    }
+                }
+            }
+        }
+        for(City city : building.getCivilization().getCities()){
+            for(Tile tile : city.getTiles()){
+                if(tile == building.getTile()){
+                    city.setTotalFood(building.getFood());
+                }
+            }
+        }
+        double y1 = y - h;
+        double x1 = x - radius / 2;
+        building.setX(x1);
+        building.setY(y1);
+        building.setWidth(80);
+        building.setHeight(140);
+
+        if(building.isAncientEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building1URL))));
+        else if(building.isClassicalEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building2URL))));
+        else if(building.isMedievalEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building3URL))));
+        else if(building.isRenaissanceEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building4URL))));
+        else if(building.isIndustrialEra)
+            building.setFill(new ImagePattern(new Image(String.valueOf(building5URL))));
+
+        root.getChildren().add(building);
+    }
 
     public ArrayList<Tile> getRailRoads() {
         return railRoads;
@@ -465,6 +723,7 @@ public class Tile extends Polygon {
     public void removeUnit (Unit unit) {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).equals(unit)) {
+                root.getChildren().remove(units.get(i));
                 units.remove(i);
                 break;
             }
@@ -574,6 +833,9 @@ public class Tile extends Polygon {
         workingOnRoadUntilFinish.clear();
         workingOnRailUntilFinish.clear();
     }
+    public Building getBuilding(){
+        return this.building;
+    }
     public void moveRight(){
         double x1,y1;
         double x2,y2;
@@ -606,6 +868,29 @@ public class Tile extends Polygon {
                 x5, y5,
                 x6, y6,
         });
+
+        if(building != null) {
+            building.setX(x1);
+            building.setY(y1);
+        }
+        for (int i = 0; i < units.size(); i++) {
+            if (i == 0) {
+                units.get(i).setX(this.x + 20);
+                units.get(i).setY(this.y - h);
+            }
+            else {
+                units.get(i).setX(this.x + 60);
+                units.get(i).setY(this.y - h + 90);
+            }
+        }
+        if (doesHaveRoad) {
+            road.setX(this.x - 160);
+            road.setY(this.y + 30);
+        }
+        if (doesHaveRailWay) {
+            rail.setX(this.x - 160);
+            rail.setY(this.y - 30);
+        }
     }
     public void moveLeft(){
         double x1,y1;
@@ -639,6 +924,28 @@ public class Tile extends Polygon {
                 x5, y5,
                 x6, y6,
         });
+        if(building != null) {
+            building.setX(x1);
+            building.setY(y1);
+        }
+        for (int i = 0; i < units.size(); i++) {
+            if (i == 0) {
+                units.get(i).setX(this.x + 20);
+                units.get(i).setY(this.y - h);
+            }
+            else {
+                units.get(i).setX(this.x + 60);
+                units.get(i).setY(this.y - h + 90);
+            }
+        }
+        if (doesHaveRoad) {
+            road.setX(this.x - 160);
+            road.setY(this.y + 30);
+        }
+        if (doesHaveRailWay) {
+            rail.setX(this.x - 160);
+            rail.setY(this.y - 30);
+        }
     }
     public void moveUp(){
         double x1,y1;
@@ -672,6 +979,28 @@ public class Tile extends Polygon {
                 x5, y5,
                 x6, y6,
         });
+        if(building != null) {
+            building.setX(x1);
+            building.setY(y1);
+        }
+        for (int i = 0; i < units.size(); i++) {
+            if (i == 0) {
+                units.get(i).setX(this.x + 20);
+                units.get(i).setY(this.y - h);
+            }
+            else {
+                units.get(i).setX(this.x + 60);
+                units.get(i).setY(this.y - h + 90);
+            }
+        }
+        if (doesHaveRoad) {
+            road.setX(this.x - 160);
+            road.setY(this.y + 30);
+        }
+        if (doesHaveRailWay) {
+            rail.setX(this.x - 160);
+            rail.setY(this.y - 30);
+        }
     }
     public void moveDown(){
         double x1,y1;
@@ -705,5 +1034,27 @@ public class Tile extends Polygon {
                 x5, y5,
                 x6, y6,
         });
+        if(building != null) {
+            building.setX(x1);
+            building.setY(y1);
+        }
+        for (int i = 0; i < units.size(); i++) {
+            if (i == 0) {
+                units.get(i).setX(this.x + 20);
+                units.get(i).setY(this.y - h);
+            }
+            else {
+                units.get(i).setX(this.x + 60);
+                units.get(i).setY(this.y - h + 90);
+            }
+        }
+        if (doesHaveRoad) {
+            road.setX(this.x - 160);
+            road.setY(this.y + 30);
+        }
+        if (doesHaveRailWay) {
+            rail.setX(this.x - 160);
+            rail.setY(this.y - 30);
+        }
     }
 }

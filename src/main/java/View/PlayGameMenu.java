@@ -4,9 +4,13 @@ import Controller.PlayGameMenuController;
 import Model.Civilization;
 import Model.Member;
 import Model.Tile;
+import Model.Units.Civilian;
+import Model.Units.Unit;
+import Model.Units.Warrior;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,24 +18,35 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.swing.plaf.metal.MetalMenuBarUI;
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static View.GameMenu.gameMenuURL;
 import static View.MainMenu.gameMenuFxmlURL;
+import static View.UnitPanel.playGameMenuController;
 
 public class PlayGameMenu {
 
@@ -56,6 +71,14 @@ public class PlayGameMenu {
     private Button saveButton;
     @FXML
     private Button newGameButton;
+
+    private int playersCounter = 0;
+
+    public static Civilization playingCivilization;
+
+
+    public Text goldAmount;
+    public Text happinessAmount;
 
     public void newGame(MouseEvent mouseEvent) throws IOException {
         ArrayList<Member> members = getMembers();
@@ -123,31 +146,103 @@ public class PlayGameMenu {
             alert.showAndWait();
             return;
         }
-        players.add(MainMenu.loggedInMember);
+        players.add(0, MainMenu.loggedInMember);
         if (areUsersOk) {
             MainMenu.mediaPlayer.stop();
-            switchToGame(mouseEvent,players);
+
+            root = FXMLLoader.load(gameMenuURL);
+            Tile.root = root;
+            ArrayList<Tile> tiles = playGameMenuController.mapCreator(players.size(),players);
+            Tile.map = tiles;
+            ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(players.size(), tiles, players);
+            Tile.civilizations = civilizations;
+            playingCivilization = civilizations.get(0);
+
+            switchToGame(mouseEvent, tiles, civilizations);
         }
     }
-    public void switchToGame(MouseEvent mouseEvent,ArrayList<Member> members) throws IOException {
-        root = FXMLLoader.load(gameMenuURL);
-        Tile.root = root;
-
+    public void switchToGame(MouseEvent mouseEvent, ArrayList<Tile> tiles, ArrayList<Civilization> civilizations) throws IOException {
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-        ArrayList<Tile> tiles = playGameMenuController.mapCreator(members.size(),members);
-        ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(members.size(), tiles, members);
-        Civilization playingCivilization = civilizations.get(0);
-        HBox hbox = new HBox(20);
-        Text text = new Text("G: " + playingCivilization.getGold() +
-                "  H: " + playingCivilization.getHappiness());
-        Text name = new Text(playingCivilization.getName());
-        hbox.getChildren().add(text);
-        hbox.getChildren().add(name);
+
+        // Images for buttons and happiness and gold
+        Image nextTurnImage = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
+        ImageView nextTurnImageView = new ImageView(nextTurnImage);
+        nextTurnImageView.setFitHeight(26);
+        nextTurnImageView.setPreserveRatio(true);
+
+        Image goldImage = new Image(getClass().getResource("/pictures/Gold.png").toString());
+        ImageView goldView = new ImageView(goldImage);
+        goldView.setFitWidth(25);
+        goldView.setFitHeight(25);
+        goldAmount = new Text(" : " + playingCivilization.getGold());
+        goldAmount.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        goldAmount.setFill(Color.RED);
+        //making various space for vbox
+        Text spacing1 = new Text("                         ");
+        Text spacing2 = new Text("                                                                ");
+        Text spacing3 = new Text("                           ");
+        Text spacing4 = new Text("                           ");
+        Text spacing5 = new Text("                           ");
+
+        Image happinessImage = new Image(getClass().getResource("/pictures/Happiness.png").toString());
+        ImageView happinessView = new ImageView(happinessImage);
+        happinessView.setFitWidth(25);
+        happinessView.setFitHeight(25);
+        happinessAmount = new Text(" : " + playingCivilization.getHappiness());
+        happinessAmount.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        happinessAmount.setFill(Color.RED);
+
+        // civilization name text
+        Text civName = new Text("civilization : " + playingCivilization.getName());
+        civName.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        civName.setFill(Color.RED);
+        // buttons
+        Button infoPanelButton = new Button("info panel");
+        infoPanelButton.setStyle( "-fx-pref-width: 150;\n" +
+                "-fx-pref-height: 20;\n" +
+                " -fx-effect: dropshadow( one-pass-box , #1a0bf1, 8 , 0.0 , 2 , 0 );\n" +
+                "-fx-font-style: italic;\n" +
+                "-fx-background-color: #a9a2a2;");
 
 
+        Button technologyButton = new Button();
+        technologyButton.setStyle("-fx-effect: dropshadow( one-pass-box , #7304bd, 8 , 0.0 , 2 , 0 );");
+        technologyButton.setShape(new Circle(15));
+        technologyButton.setMinSize(30, 30);
+        technologyButton.setMaxSize(30, 30);
 
+        Image imageTechnology = new Image(getClass().getResource("/pictures/Science.png").toString());
+        ImageView technologyView = new ImageView(imageTechnology);
+        technologyView.fitWidthProperty().bind(technologyButton.widthProperty());
+        technologyView.fitHeightProperty().bind(technologyButton.heightProperty());
+        technologyButton.setGraphic(technologyView);
 
-        root.getChildren().add(hbox);
+        Button nextTurnButton = new Button();
+        nextTurnButton.setShape(new Circle(20));
+        nextTurnButton.setMinSize(40, 40);
+        nextTurnButton.setMaxSize(40, 40);
+        nextTurnButton.setGraphic(nextTurnImageView);
+
+        // adding to vbox
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.BOTTOM_CENTER);
+        hBox.getChildren().add(goldView);
+        hBox.getChildren().add(goldAmount);
+        hBox.getChildren().add(spacing1);
+        hBox.getChildren().add(happinessView);
+        hBox.getChildren().add(happinessAmount);
+        hBox.getChildren().add(spacing2);
+        hBox.getChildren().add(civName);
+        hBox.getChildren().add(spacing3);
+        hBox.getChildren().add(technologyButton);
+        hBox.getChildren().add(spacing4);
+        hBox.getChildren().add(infoPanelButton);
+        hBox.getChildren().add(spacing5);
+        hBox.getChildren().add(nextTurnButton);
+
+        root.getChildren().add(hBox);
+
+        // Event handlers
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -187,8 +282,88 @@ public class PlayGameMenu {
                         }
                     }
                 }
+                if (Objects.equals(keyName, "C")) {
+                    CheatMenu.infoPanelScene = scene;
+                    CheatMenu.stage = stage;
+                    CheatMenu.doesEnteredFromInfoPanel = false;
+                    try {
+                        new CheatMenu().start();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         });
+        infoPanelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    InfoPanel.goldAmount = goldAmount;
+                    InfoPanel.happinessAmount = happinessAmount;
+                    InfoPanel.stage = stage;
+                    InfoPanel.gameMenuScene = scene;
+                    InfoPanel.tiles = tiles;
+                    InfoPanel.currentCivilization = playingCivilization;
+                    InfoPanel.civilizations = civilizations;
+                    new InfoPanel().start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        //todo -> kian
+        technologyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
+        //TODO add technology condition
+        nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String string = playGameMenuController.nextTurn(playingCivilization, tiles);
+                if (!string.equals("done")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("next turn");
+                    alert.setHeaderText("result :");
+                    alert.setContentText(string);
+                    alert.showAndWait();
+                } else {
+                    playGameMenuController.deleteLosers(playingCivilization, civilizations);
+                    if (playGameMenuController.findWinner(playingCivilization, civilizations)) {
+                        //TODO .... write array members in file -> pouria ***********
+                        //TODO ... baraye datresi be barande civilization.get(0) okeye
+                        //TODO .... list member ha ham hast age khsati kol file ro dobare benevisi
+                        //TODO dat tabe fidnWinner emtaiza member barande ro ziad kardam
+                        try {
+                            increaseFileScore(playingCivilization);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        //TODO .... graphic view for winner -> kian
+                        try {
+                            root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                    }
+                    PlayGameMenuController.turn ++;
+                    playersCounter++;
+                    if (playersCounter == civilizations.size()) {
+                        playersCounter = 0;
+                    }
+                    playingCivilization = civilizations.get(playersCounter);
+                    civName.setText("civilization : " + playingCivilization.getName());
+                    goldAmount.setText(" : " + playingCivilization.getGold());
+                    happinessAmount.setText(" : " + playingCivilization.getHappiness());
+                }
+            }
+        });
+
 
 
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
@@ -196,7 +371,51 @@ public class PlayGameMenu {
         scene.getRoot().requestFocus();
         stage.setScene(scene);
         root.getChildren().get(0).requestFocus();
+
+        Tile.stage = stage;
+        Tile.scene = scene;
+
         stage.show();
+    }
+    public void increaseFileScore(Civilization civilization) throws IOException {
+        File file = new File("users.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+
+            if(Objects.equals(fileUsername, civilization.getMember().getUsername())) {
+                continue;
+            }
+
+            stringBuilder.append(line);
+            stringBuilder.append("\n");
+
+            line = bufferedReader.readLine();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+        bufferedWriter.write(String.valueOf(stringBuilder));
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        Random rand = new Random();
+        int upperbound = 4;
+        int int_random = rand.nextInt(upperbound);
+
+        int newScore = civilization.getMember().getScore() + 500;
+        bufferedWriter.write(civilization.getMember().getUsername() + " " + civilization.getMember().getNickname() + " " + civilization.getMember().getPassword() + " " + newScore + " " + int_random + " " + dtf.format(now));
+        bufferedWriter.newLine();
+
+
+        bufferedWriter.close();
     }
     private void showRepetitiveAlert(int i) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

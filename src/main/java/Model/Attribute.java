@@ -1,5 +1,7 @@
 package Model;
 
+
+
 public class Attribute {
     private int food;
     private int gold;

@@ -2,8 +2,13 @@ package Model.Units;
 
 import Model.Civilization;
 import Model.Tile;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
-public class Warrior extends Unit{
+import java.io.Serializable;
+import java.net.URL;
+
+public class Warrior extends Unit {
     private int xp;
     private int damage;
     private int range;//if range == -1 -> N/A
@@ -91,7 +96,67 @@ public class Warrior extends Unit{
         this.isInfantry = isInfantry;
         this.isPanzer = isPanzer;
         this.isTank = isTank;
+        Image image = new Image(getURL().toExternalForm());
+        ImagePattern imagePattern = new ImagePattern(image);
+        this.setFill(imagePattern);
     }
+    public ImagePattern getUnitPic () {
+        Image image = new Image(getURL().toExternalForm());
+        ImagePattern imagePattern = new ImagePattern(image);
+        return imagePattern;
+    }
+
+    public URL getURL () {
+        if (this.isTank()) {
+           return unitsURL.get("Tank");
+        } else if (this.isPanzer()) {
+            return unitsURL.get("Panzer");
+        } else if (this.isWarrior()) {
+            return unitsURL.get("Warrior");
+        } else if (this.isInfantry()) {
+            return unitsURL.get("Infantry");
+        } else if (this.isArtillery()) {
+            return unitsURL.get("Artillery");
+        } else if (this.isArcher()) {
+            return unitsURL.get("Archer");
+        } else if (this.isChariotArcher()) {
+            return unitsURL.get("Chariot Archer");
+        } else if (this.isScout()) {
+            return unitsURL.get("Scout");
+        } else if (this.isSpearman()) {
+            return unitsURL.get("Spearman");
+        } else if (this.isCatapult()) {
+            return unitsURL.get("Catapult");
+        } else if (this.isHorseMan()) {
+            return unitsURL.get("Horseman");
+        } else if (this.isSwordsMan()) {
+            return unitsURL.get("Swordsman");
+        } else if (this.isCrossbowMan()) {
+            return unitsURL.get("Crossbowman");
+        } else if (this.isKnight()) {
+            return unitsURL.get("Knight");
+        } else if (this.isLongswordMan()) {
+            return unitsURL.get("Longswordsman");
+        } else if (this.isPikeMan()) {
+            return unitsURL.get("Pikeman");
+        } else if (this.isTrebuchet()) {
+            return unitsURL.get("Trebuchet");
+        } else if (this.isCanon()) {
+            return unitsURL.get("Canon");
+        } else if (this.isCavalry()) {
+            return unitsURL.get("Cavalry");
+        } else if (this.isLancer()) {
+            return unitsURL.get("Lancer");
+        } else if (this.isMusketMan()) {
+            return unitsURL.get("Musketman");
+        } else if (this.isRifleMan()) {
+            return unitsURL.get("Rifleman");
+        } else if (this.isAntiTankGun()) {
+            return unitsURL.get("Anti-Tank Gun");
+        }
+        return null;
+    }
+
 
     public void setReadyForRangedBattle(boolean readyForRangedBattle) {
         this.isReadyForRangedBattle = readyForRangedBattle;
@@ -171,6 +236,9 @@ public class Warrior extends Unit{
 
     public void setXp(int xp) {
         this.xp = xp;
+    }
+    public void increaseXp(int amount){
+        this.xp += amount;
     }
 
     public int getRangedCombatDamage() {

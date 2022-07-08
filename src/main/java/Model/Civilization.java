@@ -2,6 +2,7 @@ package Model;
 
 import Controller.PlayGameMenuController;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,7 +18,7 @@ public class Civilization {
     private int goldPerTurn;
     private int happiness;
     private ArrayList<City> cities;
-    private HashMap<Civilization,Resource> trades;
+    private ArrayList<String> trades;
     private ArrayList<String> messages; // (int)turn : message
     private HashMap<Civilization, Integer> winsInUnitsWar = new HashMap<>(); // tamadon shekast khorde va tedad bakht haye on ra neshan mide
     private HashMap<Civilization, Integer> lossesInUnitsWar = new HashMap<>(); // tamadon pirooz va tedad bord haye on ra neshan mide
@@ -43,13 +44,18 @@ public class Civilization {
         cities.add(capital);
         this.science = 0;
         technologies = new ArrayList<>();
-        trades = new HashMap<>();
+        trades = new ArrayList<>();
         technologyEarnedPercent = new HashMap<>();
-        this.gold = 10;
+//        this.gold = 10;
+        //temporary
+        this.gold = 1000;
+        //temporary
+        capital.getCenterTile().addBuilding(new Building("Castle",this,capital.getCenterTile()));
     }
 
     public void acceptFriendlyRequest(Civilization civilization){
         this.friendlyRequests.remove(civilization);
+        civilization.friendlyRequests.remove(this);
         this.friends.add(civilization);
         civilization.friends.add(this);
         String message = PlayGameMenuController.turn + " : " + this.name + " : accepted your friendly request, now you are allies";
@@ -57,6 +63,7 @@ public class Civilization {
     }
     public void denyFriendlyRequest(Civilization civilization){
         this.friendlyRequests.remove(civilization);
+        civilization.friendlyRequests.remove(this);
         String message = PlayGameMenuController.turn + " : " + this.name + " : denied your friendly request !";
         civilization.addMessage(message);
     }
@@ -102,7 +109,7 @@ public class Civilization {
         return happiness;
     }
 
-    public HashMap<Civilization, Resource> getTrades() {
+    public ArrayList<String> getTrades() {
         return trades;
     }
 
@@ -176,7 +183,14 @@ public class Civilization {
         }
         //each science adds 2 points
         point += 2 * science;
-        //TODO... building points
+        //each building adds 12 pts
+        for(City city : cities){
+            for(Tile tile : city.getTiles()){
+                if(tile.getBuilding() != null)
+                    point += 12;
+            }
+        }
+        //
         return point;
     }
     public void setGold(int amount){
@@ -252,5 +266,13 @@ public class Civilization {
                 break;
             }
         }
+    }
+    public String toString(){
+
+        return this.name;
+    }
+
+    public void setCapital(City city) {
+        this.capital = city;
     }
 }

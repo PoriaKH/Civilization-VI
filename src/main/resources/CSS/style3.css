@@ -27,6 +27,12 @@ Label{
     -fx-background-position: center center;
     -fx-background-size: 1280 720;
 }
+.BackGround2 {
+    -fx-background-image: url("../pictures/mainMenu.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 1280 720;
+}
 TextField{
     -fx-max-height: 30;
     -fx-max-width: 300;

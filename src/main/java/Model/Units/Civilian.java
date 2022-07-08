@@ -2,8 +2,13 @@ package Model.Units;
 
 import Model.Civilization;
 import Model.Tile;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
-public class Civilian extends Unit{
+import java.io.Serializable;
+import java.net.URL;
+
+public class Civilian extends Unit {
     private boolean isWorker;
     private boolean isSettler;
 
@@ -37,5 +42,14 @@ public class Civilian extends Unit{
         super(civilization, origin, health, MP, mp, duration, goldCost, isCivilian);
         this.isWorker = isWorker;
         this.isSettler = isSettler;
+        Image image = new Image(getURL().toExternalForm());
+        ImagePattern imagePattern = new ImagePattern(image);
+        this.setFill(imagePattern);
+    }
+    public URL getURL () {
+        if (this.isSettler) {
+            return unitsURL.get("Settler");
+        }
+        return unitsURL.get("Worker");
     }
 }
