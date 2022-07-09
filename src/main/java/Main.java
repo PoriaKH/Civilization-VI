@@ -93,7 +93,9 @@ public class Main extends Application {
         DiplomaticRequests.diplomaticRequestsURL = new URL(Main.class.getResource("fxml/diplomaticRequests.fxml").toExternalForm());
         Demographics.demographicsPageURL = new URL(Main.class.getResource("fxml/demographics.fxml").toExternalForm());
         EconomicalReview.economicalPageURL = new URL(Main.class.getResource("fxml/economicalReview.fxml").toExternalForm());
-
+        MainMenu.lobbyURL = new URL(Main.class.getResource("fxml/lobby.fxml").toExternalForm());
+        Lobby.createHostURL = new URL(Main.class.getResource("fxml/createHost.fxml").toExternalForm());
+        Lobby.hostRequestsURL = new URL(Main.class.getResource("fxml/hostRequests.fxml").toExternalForm());
 
 
         dataOutputStream.writeUTF("hello world!");

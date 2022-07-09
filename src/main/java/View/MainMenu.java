@@ -26,12 +26,12 @@ import java.util.regex.Pattern;
 
 public class MainMenu {
     public static Member loggedInMember;
+
     public static URL scoreBoardFxmlURL;
-
     public static URL gameMenuFxmlURL;
-
     public static URL profileFxmlURL;
     public static URL mainMenuSoundURL;
+    public static URL lobbyURL;
 
     public static MediaPlayer mediaPlayer;
 
@@ -99,6 +99,14 @@ public class MainMenu {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public void lobbyClicked(MouseEvent mouseEvent) throws IOException {
+        root = FXMLLoader.load(lobbyURL);
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
