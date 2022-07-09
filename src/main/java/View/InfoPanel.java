@@ -15,10 +15,12 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
+import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -120,18 +122,24 @@ public class InfoPanel {
 
     public void saveTheGame(MouseEvent mouseEvent) throws IOException {
        ArrayList<Object> objects = new ArrayList<>();
-        objects.add(civilizations);
+       objects.add(civilizations);
        objects.add(tiles);
 
        GsonBuilder gsonBuilder = new GsonBuilder();
 
-       new GraphAdapterBuilder().addType(Tile.class).addType(Unit.class).addType(Warrior.class).
+       new GraphAdapterBuilder().addType(Unit.class).addType(Tile.class).addType(Warrior.class).
                 addType(Civilian.class).addType(City.class).addType(Civilization.class).
               addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(Improvement.class)
-                .addType(Resource.class).addType(Technology.class).registerOn(gsonBuilder);
-        Gson gson = gsonBuilder.create();
-       String data = gson.toJson(objects);
+                .addType(Resource.class).addType(Technology.class).addType(Node.class)
+               .addType(Member.class).addType(Rectangle.class).registerOn(gsonBuilder);
 
+        Gson gson = gsonBuilder.create();
+        String data = "";
+        try {
+            data = gson.toJson(objects);
+        }catch (Exception exception) {
+            System.out.println(exception.getCause());
+        }
         File file = new File("saveGame.txt");
         PrintWriter printWriter = new PrintWriter(file);
         printWriter.write(data);
