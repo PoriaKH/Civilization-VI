@@ -134,8 +134,12 @@ public class InfoPanel {
                .addType(Member.class).addType(Rectangle.class).registerOn(gsonBuilder);
 
         Gson gson = gsonBuilder.create();
-        String data = gson.toJson(objects);
-
+        String data = "";
+        try {
+            data = gson.toJson(objects);
+        }catch (Exception exception) {
+            System.out.println(exception.getCause());
+        }
         File file = new File("saveGame.txt");
         PrintWriter printWriter = new PrintWriter(file);
         printWriter.write(data);
