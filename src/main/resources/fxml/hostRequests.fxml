@@ -13,6 +13,7 @@
     <center>
         <VBox alignment="CENTER" spacing="10" maxWidth="350">
             <Button styleClass="backButton" text="Back" onMouseClicked="#backClicked"/>
+
         </VBox>
     </center>
 

@@ -15,6 +15,7 @@
             <Button styleClass="backButton" text="Create Host" onMouseClicked="#createHostClicked"/>
             <Button styleClass="backButton" text="Requests" onMouseClicked="#requestsClicked"/>
             <Button styleClass="backButton" text="Back" onMouseClicked="#backClicked"/>
+
         </VBox>
     </center>
 

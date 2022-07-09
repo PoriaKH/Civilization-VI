@@ -1,9 +1,12 @@
+import View.CommandProcessor;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
     public static ServerSocket serverSocket;
@@ -16,7 +19,7 @@ public class Main {
     }
 
     public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
-
+    HashMap<String,ArrayList<String>> requests = new HashMap<>();
 
     public static void main(String[] args) {
         try {
@@ -29,6 +32,7 @@ public class Main {
                         DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
                         while (true){
                             String input = dataInputStream.readUTF();
+                            CommandProcessor.run(input);
 //                            String result = process(input);
 //                            dataOutputStream.writeUTF(result);
                             System.out.println(input);

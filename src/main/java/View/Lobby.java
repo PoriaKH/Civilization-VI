@@ -24,6 +24,7 @@ public class Lobby {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
     }
 
     public void createHostClicked(MouseEvent mouseEvent) throws IOException {

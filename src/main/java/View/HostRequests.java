@@ -22,5 +22,6 @@ public class HostRequests {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
     }
 }
