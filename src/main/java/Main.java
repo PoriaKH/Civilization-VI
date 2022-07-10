@@ -28,9 +28,9 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-
     @Override
     public void start(Stage stage) throws Exception {
+        Room.creatorSocket = socket;
         UnitPanel.playGameMenuController = new PlayGameMenuController();
         UnitPanel.untPanelURL = new URL(Main.class.getResource("fxml/unitPanel.fxml").toExternalForm());
         Tile.roadURL = new URL(Main.class.getResource("pictures/Road.png").toExternalForm());
@@ -96,6 +96,7 @@ public class Main extends Application {
         MainMenu.lobbyURL = new URL(Main.class.getResource("fxml/lobby.fxml").toExternalForm());
         Lobby.createHostURL = new URL(Main.class.getResource("fxml/createHost.fxml").toExternalForm());
         Lobby.hostRequestsURL = new URL(Main.class.getResource("fxml/hostRequests.fxml").toExternalForm());
+        CreateHost.roomURL = new URL(Main.class.getResource("fxml/room.fxml").toExternalForm());
 
 
         dataOutputStream.writeUTF("hello world!");
