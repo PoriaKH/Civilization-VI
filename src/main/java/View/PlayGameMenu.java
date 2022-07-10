@@ -468,12 +468,12 @@ public class PlayGameMenu {
     }
 
     public ArrayList<Tile> loadTiles () throws IOException {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
         File file = new File("saveGame2.txt");
 
         byte[] bytes = new byte[(int) file.length()];
-        DataInputStream dataInputStream = new DataInputStream(new FileInputStream(file));
-        dataInputStream.readFully(bytes);
+        FileInputStream fileInputStream = new FileInputStream(file);
+        fileInputStream.read(bytes);
 
         String data = new String(bytes);
 
@@ -483,17 +483,21 @@ public class PlayGameMenu {
     }
 
     public ArrayList<Civilization> loadCivilizations () throws IOException {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
         File file = new File("saveGame.txt");
 
         byte[] bytes = new byte[(int) file.length()];
-        DataInputStream dataInputStream = new DataInputStream(new FileInputStream(file));
-        dataInputStream.readFully(bytes);
+        FileInputStream fileInputStream = new FileInputStream(file);
+        fileInputStream.read(bytes);
 
         String data = new String(bytes);
 
         Type listType = new TypeToken<ArrayList<Civilization>>() {}.getType();
         ArrayList<Civilization> civilizations = gson.fromJson(data, listType);
+
+        for (Civilization civilization : civilizations) {
+            System.out.println(civilization.getName());
+        }
         return civilizations;
     }
 

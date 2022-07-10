@@ -5,11 +5,12 @@ import javafx.scene.shape.Rectangle;
 
 
 
-public class Building extends Rectangle {
-    @Expose
+public class Building extends Rectangle { /// what is civilization ?
+
     private Civilization civilization;
 
     private Tile tile;
+
     @Expose
     public boolean isAncientEra = false;
     @Expose
