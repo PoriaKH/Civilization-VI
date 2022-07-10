@@ -77,6 +77,17 @@ public class Main extends Application {
         Tile.building3URL = new URL(Main.class.getResource("pictures/building3.png").toExternalForm());
         Tile.building4URL = new URL(Main.class.getResource("pictures/building4.png").toExternalForm());
         Tile.building5URL = new URL(Main.class.getResource("pictures/building5.png").toExternalForm());
+        Tile.dessert = new URL(Main.class.getResource("pictures/dessert.png").toExternalForm());
+        Tile.hill = new URL(Main.class.getResource("pictures/hill.png").toExternalForm());
+        Tile.ice = new URL(Main.class.getResource("pictures/ice.png").toExternalForm());
+        Tile.jungle = new URL(Main.class.getResource("pictures/jungle.png").toExternalForm());
+        Tile.meadow = new URL(Main.class.getResource("pictures/meadow.png").toExternalForm());
+        Tile.mountain = new URL(Main.class.getResource("pictures/mountain.png").toExternalForm());
+        Tile.plain = new URL(Main.class.getResource("pictures/plain.png").toExternalForm());
+        Tile.rainforest = new URL(Main.class.getResource("pictures/rainforest.png").toExternalForm());
+        Tile.snow = new URL(Main.class.getResource("pictures/snow.png").toExternalForm());
+        Tile.tundra = new URL(Main.class.getResource("pictures/tundra.png").toExternalForm());
+        Tile.fogOfWar = new URL(Main.class.getResource("pictures/fogOfWar.png").toExternalForm());
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
         for (int i = 0; i < Unit.unitsName.size(); i++) {
