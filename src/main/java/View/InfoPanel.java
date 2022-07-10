@@ -7,7 +7,6 @@ import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.graph.GraphAdapterBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -126,12 +125,6 @@ public class InfoPanel {
        objects.add(tiles);
 
        GsonBuilder gsonBuilder = new GsonBuilder();
-
-       new GraphAdapterBuilder().addType(Unit.class).addType(Tile.class).addType(Warrior.class).
-                addType(Civilian.class).addType(City.class).addType(Civilization.class).
-              addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(Improvement.class)
-                .addType(Resource.class).addType(Technology.class).addType(Node.class)
-               .addType(Member.class).addType(Rectangle.class).registerOn(gsonBuilder);
 
         Gson gson = gsonBuilder.create();
         String data = "";
