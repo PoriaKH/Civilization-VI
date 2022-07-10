@@ -1,39 +1,64 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class Resource {
-
+    @Expose
     private String name;
-
+    @Expose
     private boolean isLuxury = false;
+    @Expose
     private boolean isStrategic = false;
+    @Expose
     private boolean isBonus = false;
-
+    @Expose
     private int food;
+    @Expose
     private int production;
+    @Expose
     private int gold;
 //  ------------------------- bonus resources
+    @Expose
     private boolean isBanana = false;
+    @Expose
     private boolean isCow = false;
+    @Expose
     private boolean isGazelle = false;
+    @Expose
     private boolean isSheep = false;
+    @Expose
     private boolean isWheat = false;
 //    ------------------------ luxury resources
+    @Expose
     private boolean isCotton = false;//panbe
+    @Expose
     private boolean isColor = false;
+    @Expose
     private boolean isFur = false;//Khaz
+    @Expose
     private boolean isGem = false;
+    @Expose
     private boolean isGold = false;
+    @Expose
     private boolean isGas = false;//Bokhor
+    @Expose
     private boolean isTusk = false;//Aj
+    @Expose
     private boolean isMarble = false;//Marmar
+    @Expose
     private boolean isSilk = false;
+    @Expose
     private boolean isSilver = false;
+    @Expose
     private boolean isSugar = false;
 //    ------------------------ strategic resources
+    @Expose
     private boolean isCoal = false;
+    @Expose
     private boolean isHorse = false;
+    @Expose
     private boolean isMetal = false;
 //    ------------------------
     public Resource(String name){

@@ -2,6 +2,7 @@ package Model.Units;
 
 import Model.Civilization;
 import Model.Tile;
+import com.google.gson.annotations.Expose;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
@@ -9,9 +10,11 @@ import java.io.Serializable;
 import java.net.URL;
 
 public class Civilian extends Unit {
+    @Expose
     private boolean isWorker;
+    @Expose
     private boolean isSettler;
-
+    @Expose
     private Tile workingTile; // tile e ke dare roosh kar mikone ro neshoon mide age null bashe mitoone move va ... kone
 
     public Tile getWorkingTile() {

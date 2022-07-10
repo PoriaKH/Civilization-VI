@@ -1,20 +1,32 @@
 package Model;
 
 
+import com.google.gson.annotations.Expose;
 
 public class Attribute {
+    @Expose
     private int food;
+    @Expose
     private int gold;
+    @Expose
     private int production;
+    @Expose
     private int combatChange;
+    @Expose
     private int mpCost;
-
+    @Expose
     private boolean isPlat;//Jolge
+    @Expose
     private boolean isJungle;//isBlocker
+    @Expose
     private boolean isIce;
+    @Expose
     private boolean isRainForest;
+    @Expose
     private boolean isMarsh;//Mordab
+    @Expose
     private boolean isOasis;//Vahhe
+    @Expose
     private boolean isBlocker;
 
     public Attribute(boolean isPlat, boolean isJungle, boolean isIce, boolean isRainForest, boolean isMarsh, boolean isOasis){
