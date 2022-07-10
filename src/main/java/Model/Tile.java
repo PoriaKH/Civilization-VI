@@ -3,6 +3,7 @@ package Model;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import com.google.gson.annotations.Expose;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,75 +21,120 @@ import java.util.Map;
 import java.util.Random;
 
 public class Tile extends Polygon {
+    @Expose
     public static URL dessert;
+    @Expose
     public static URL fogOfWar;
+    @Expose
     public static URL hill;
+    @Expose
     public static URL ice;
+    @Expose
     public static URL jungle;
+    @Expose
     public static URL meadow;
+    @Expose
     public static URL mountain;
+    @Expose
     public static URL plain;
+    @Expose
     public static URL rainforest;
+    @Expose
     public static URL snow;
+    @Expose
     public static URL tundra;
-    public static URL marsh;
-    public static URL ocean;
+    @Expose
     public static URL building1URL;
+    @Expose
     public static URL building2URL;
+    @Expose
     public static URL building3URL;
+    @Expose
     public static URL building4URL;
+    @Expose
     public static URL building5URL;
-
+    @Expose
     public static URL roadURL;
-
+    @Expose
     public static URL railURL;
 
     // for panel changing needed
+    @Expose
     public static Pane root;
+    @Expose
     public static Scene scene;
+    @Expose
     public static Stage stage;
+    @Expose
     public static ArrayList<Tile> map;
+    @Expose
     public static ArrayList<Civilization> civilizations;
+    @Expose
     public float cameraSpeed = 30;
-
-    private boolean isDesert;                   //Smooth
+    @Expose
+    private boolean isDesert;//Smooth
+    @Expose
     private boolean isMeadow;//Alafzar          //Smooth
+    @Expose
     private boolean isHill;//Tape               //2             //isBlocker
+    @Expose
     private boolean isMountain;                 //NA            //isBlocker
+    @Expose
     private boolean isOcean;                    //NA
+    @Expose
     private boolean isPlain;                    //Smooth
+    @Expose
     private boolean isSnow;                     //Smooth
+    @Expose
     private boolean isTundra;                   //Smooth
+    @Expose
     private boolean isBlocker;
-
+    @Expose
     private int food;
+    @Expose
     private int production;
+    @Expose
     private int gold;
+    @Expose
     private int combatChange;
+    @Expose
     private int mpCost;
-
+    @Expose
     private int tileNumber;
+    @Expose
     private float x,y;
+    @Expose
     private float radius;
+    @Expose
     private double h;
-
+    @Expose
     private Citizen citizen = null;
+    @Expose
     private ArrayList<Unit> units;
+    @Expose
     private Building building;
+    @Expose
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
+    @Expose
     private Resource resource;
+    @Expose
     private Attribute attribute;
+    @Expose
     private ArrayList<Improvement> improvements;
+    @Expose
     private boolean isWorking;
+    @Expose
     private boolean isOnRepair;
+    @Expose
     private int repairNeedImprovement;
-
+    @Expose
     private Rectangle road = new Rectangle(x - 160, y + 30, 40, 20);
-
+    @Expose
     private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);
 
-
+    @Expose
     private ArrayList<Tile> roads;
+    @Expose
     private ArrayList<Tile> railRoads;
 
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
@@ -479,10 +525,6 @@ public class Tile extends Polygon {
             this.setFill(new ImagePattern(new Image(snow.toExternalForm())));
         else if (isTundra)
             this.setFill(new ImagePattern(new Image(tundra.toExternalForm())));
-        else if (getAttribute() != null && getAttribute().isMarsh())
-            this.setFill(new ImagePattern(new Image(marsh.toExternalForm())));
-        else if (isOcean)
-            this.setFill(new ImagePattern(new Image(ocean.toExternalForm())));
     }
 
     public void setResource(Resource resource) {
