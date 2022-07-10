@@ -3,7 +3,6 @@ package Model;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
-import com.google.gson.annotations.Expose;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,115 +20,74 @@ import java.util.Map;
 import java.util.Random;
 
 public class Tile extends Polygon {
-    @Expose
+    public static URL dessert;
+    public static URL fogOfWar;
+    public static URL hill;
+    public static URL ice;
+    public static URL jungle;
+    public static URL meadow;
+    public static URL mountain;
+    public static URL plain;
+    public static URL rainforest;
+    public static URL snow;
+    public static URL tundra;
     public static URL building1URL;
-    @Expose
     public static URL building2URL;
-    @Expose
     public static URL building3URL;
-    @Expose
     public static URL building4URL;
-    @Expose
     public static URL building5URL;
-    @Expose
+
     public static URL roadURL;
-    @Expose
+
     public static URL railURL;
+
     // for panel changing needed
-    @Expose
     public static Pane root;
-    @Expose
     public static Scene scene;
-    @Expose
     public static Stage stage;
-    @Expose
     public static ArrayList<Tile> map;
-    @Expose
     public static ArrayList<Civilization> civilizations;
-    @Expose
     public float cameraSpeed = 30;
-    @Expose
-    private boolean isDesert;//Smooth
-    @Expose
+
+    private boolean isDesert;                   //Smooth
     private boolean isMeadow;//Alafzar          //Smooth
-    @Expose
     private boolean isHill;//Tape               //2             //isBlocker
-    @Expose
     private boolean isMountain;                 //NA            //isBlocker
-    @Expose
     private boolean isOcean;                    //NA
-    @Expose
     private boolean isPlain;                    //Smooth
-    @Expose
     private boolean isSnow;                     //Smooth
-    @Expose
     private boolean isTundra;                   //Smooth
-    @Expose
     private boolean isBlocker;
-    @Expose
+
     private int food;
-    @Expose
     private int production;
-    @Expose
     private int gold;
-    @Expose
     private int combatChange;
-    @Expose
     private int mpCost;
-    @Expose
+
     private int tileNumber;
-    @Expose
     private float x,y;
-    @Expose
     private float radius;
-    @Expose
     private double h;
-    @Expose
+
     private Citizen citizen = null;
-    @Expose
     private ArrayList<Unit> units;
-    @Expose
     private Building building;
-    @Expose
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
-    @Expose
     private Resource resource;
-    @Expose
     private Attribute attribute;
-    @Expose
     private ArrayList<Improvement> improvements;
-    @Expose
     private boolean isWorking;
-    @Expose
     private boolean isOnRepair;
-    @Expose
     private int repairNeedImprovement;
-    @Expose
+
     private Rectangle road = new Rectangle(x - 160, y + 30, 40, 20);
-    @Expose
+
     private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);
-    @Expose
+
+
     private ArrayList<Tile> roads;
-    @Expose
     private ArrayList<Tile> railRoads;
-    @Expose
-    private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
-    @Expose
-    private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
-    @Expose
-    private Improvement workingOnImprovement;//if == null -> null
-    @Expose
-    private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
-    @Expose
-    private boolean doesHaveRoad;
-    @Expose
-    private boolean doesHaveRailWay;
-    @Expose
-    private boolean isRoadDamaged; // if a unit attack to road/rail it is true
-    @Expose
-    private boolean isRailDamaged;
-
-
 
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
         this.isWorking = false;
@@ -494,10 +452,44 @@ public class Tile extends Polygon {
         root.getChildren().add(this);
     }
 
+    public void generatingTile(int status){
+        if (status == -1){
+            this.setFill(new ImagePattern(new Image(fogOfWar.toExternalForm())));
+            return;
+        }
+        if  (isDesert)
+            this.setFill(new ImagePattern(new Image(dessert.toExternalForm())));
+        else if (isHill)
+            this.setFill(new ImagePattern(new Image(hill.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isIce())
+            this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isJungle())
+            this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+        else if (isMeadow)
+            this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
+        else if (isMountain)
+            this.setFill(new ImagePattern(new Image(mountain.toExternalForm())));
+        else if (isPlain)
+            this.setFill(new ImagePattern(new Image(plain.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isRainForest())
+            this.setFill(new ImagePattern(new Image(rainforest.toExternalForm())));
+        else if (isSnow)
+            this.setFill(new ImagePattern(new Image(snow.toExternalForm())));
+        else if (isTundra)
+            this.setFill(new ImagePattern(new Image(tundra.toExternalForm())));
+    }
+
     public void setResource(Resource resource) {
         this.resource = resource;
     }
 
+    private Improvement workingOnImprovement;//if == null -> null
+    private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
+
+    private boolean doesHaveRoad;
+    private boolean doesHaveRailWay;
+    private boolean isRoadDamaged; // if a unit attack to road/rail it is true
+    private boolean isRailDamaged;
     public void setDesert(boolean desert) {
         isDesert = desert;
     }
@@ -517,6 +509,8 @@ public class Tile extends Polygon {
     public void setRailDamaged(boolean railDamaged) {
         isRailDamaged = railDamaged;
     }
+    private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
+    private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
 
     public void assignWorkerToRoad (Unit unit, Integer turn) {
         workingOnRoadUntilFinish.put(unit, turn);

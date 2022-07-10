@@ -1,5 +1,8 @@
 package View;
 
+import Model.GameSocket;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,13 +13,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 
 import static View.MainMenu.lobbyURL;
 import static View.MainMenu.loggedInMember;
 
 public class CreateHost {
+    public static Socket socket;
+    public static String host;
+    public static DataOutputStream dataOutputStream;
+    public static DataInputStream dataInputStream;
     public static URL roomURL;
 
     public Pane root;
@@ -34,12 +44,18 @@ public class CreateHost {
     }
 
     public void createClicked(MouseEvent mouseEvent) throws IOException {
-//        String[] args = names.getText().split(",");
-//        for(int i = 0; i < args.length; i++){
-//            System.out.println(args[i]);
-//        }
+
         Room room = new Room();
         room.RoomConstructor(stage,scene,(BorderPane) root,loggedInMember);
+
+        GameSocket gameSocket = new GameSocket(host,socket.getPort());
+        GsonRoom gsonRoom = new GsonRoom(gameSocket,loggedInMember);
+
+        Gson gson = new GsonBuilder().create();
+        String str = gson.toJson(gsonRoom);
+        dataOutputStream.writeUTF(str);
+        dataOutputStream.flush();
+
         room.run(mouseEvent);
 
 //        root = FXMLLoader.load(roomURL);

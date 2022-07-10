@@ -162,7 +162,9 @@ public class PlayGameMenu {
             ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(players.size(), tiles, players);
             Tile.civilizations = civilizations;
             playingCivilization = civilizations.get(0);
-
+            ArrayList<Integer> status = playGameMenuController.statusChecker(playingCivilization, tiles);
+            for (int i = 0; i < 72; i++)
+                tiles.get(i).generatingTile(status.get(i));
             switchToGame(mouseEvent, tiles, civilizations);
         }
     }
@@ -254,7 +256,6 @@ public class PlayGameMenu {
                 System.out.println("x = " + event.getX() + "  y = " + event.getY());
             }
         });
-
         root.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {

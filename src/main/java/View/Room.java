@@ -38,7 +38,6 @@ public class Room {
     }
 
     public void run(MouseEvent mouseEvent) throws IOException {
-
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         Button backButton = new Button("back");
