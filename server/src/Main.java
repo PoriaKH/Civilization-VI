@@ -1,5 +1,5 @@
 import Model.Room;
-import View.CommandProcessor;
+
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -33,7 +33,7 @@ public class Main {
                         DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
                         while (true){
                             String input = dataInputStream.readUTF();
-                            CommandProcessor.run(input);
+
 //                            String result = process(input);
 //                            dataOutputStream.writeUTF(result);
                             System.out.println(input);

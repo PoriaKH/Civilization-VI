@@ -35,7 +35,6 @@ public class Tile extends Polygon {
     public static URL roadURL;
     @Expose
     public static URL railURL;
-
     // for panel changing needed
     @Expose
     public static Pane root;
@@ -43,9 +42,9 @@ public class Tile extends Polygon {
     public static Scene scene;
     @Expose
     public static Stage stage;
-
+    @Expose
     public static ArrayList<Tile> map;
-
+    @Expose
     public static ArrayList<Civilization> civilizations;
     @Expose
     public float cameraSpeed = 30;
@@ -109,11 +108,28 @@ public class Tile extends Polygon {
     private Rectangle road = new Rectangle(x - 160, y + 30, 40, 20);
     @Expose
     private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);
-//todo add expose
-
+    @Expose
     private ArrayList<Tile> roads;
-
+    @Expose
     private ArrayList<Tile> railRoads;
+    @Expose
+    private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
+    @Expose
+    private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
+    @Expose
+    private Improvement workingOnImprovement;//if == null -> null
+    @Expose
+    private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
+    @Expose
+    private boolean doesHaveRoad;
+    @Expose
+    private boolean doesHaveRailWay;
+    @Expose
+    private boolean isRoadDamaged; // if a unit attack to road/rail it is true
+    @Expose
+    private boolean isRailDamaged;
+
+
 
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
         this.isWorking = false;
@@ -481,18 +497,7 @@ public class Tile extends Polygon {
     public void setResource(Resource resource) {
         this.resource = resource;
     }
-    @Expose
-    private Improvement workingOnImprovement;//if == null -> null
-    @Expose
-    private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
-    @Expose
-    private boolean doesHaveRoad;
-    @Expose
-    private boolean doesHaveRailWay;
-    @Expose
-    private boolean isRoadDamaged; // if a unit attack to road/rail it is true
-    @Expose
-    private boolean isRailDamaged;
+
     public void setDesert(boolean desert) {
         isDesert = desert;
     }
@@ -512,10 +517,6 @@ public class Tile extends Polygon {
     public void setRailDamaged(boolean railDamaged) {
         isRailDamaged = railDamaged;
     }
-    @Expose
-    private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
-    @Expose
-    private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
 
     public void assignWorkerToRoad (Unit unit, Integer turn) {
         workingOnRoadUntilFinish.put(unit, turn);
