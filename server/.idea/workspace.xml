@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Controller/ServerController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/Member.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/Room.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../saveGame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../saveGame.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../saveGame2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../saveGame2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/server/Controller/ServerController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/server/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/server/Model/Member.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/server/Model/Room.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/server/View/CommandProcessor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
-    </list>
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +40,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../ProjFiles/Backup/13/server" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
