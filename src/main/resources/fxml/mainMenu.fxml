@@ -19,8 +19,9 @@
             <Button text="Game menu" alignment="CENTER" onMouseClicked="#gameMenuSwitch"/>
             <Button text="Profile menu" alignment="CENTER" onMouseClicked="#profileMenuSwitch"/>
             <Button text="Scoreboard" alignment="CENTER" onMouseClicked="#scoreboardSwitch"/>
+            <Button text = "Lobby" alignment="CENTER" onMouseClicked="#lobbyClicked"/>
+            <Button text="Chat Box" alignment="CENTER" onMouseClicked="#chatBoxSwitch" />
             <Button text="Logout" alignment="CENTER" onMouseClicked="#logout"/>
-            <Button text="chat box" alignment="CENTER" onMouseClicked="#chatBoxSwitch" />
         </VBox>
     </center>
 
