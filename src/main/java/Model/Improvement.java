@@ -1,22 +1,37 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class Improvement {
+    @Expose
     private int food;
+    @Expose
     private int production;
+    @Expose
     private int gold;
+    @Expose
     private boolean isWorking;//gharat nashode ast.(kharab nashode ast)
-
+    @Expose
     private boolean isCamp;
+    @Expose
     private boolean isFarm;
+    @Expose
     private boolean isLumberMill;
+    @Expose
     private boolean isMine;
+    @Expose
     private boolean isPaddock;//CheraGah
+    @Expose
     private boolean isAgriculture;
+    @Expose
     private boolean isStoneMine;
+    @Expose
     private boolean isTradingPost;
+    @Expose
     private boolean isLaboratory;
+    @Expose
     private String name;
     public Improvement(boolean isCamp, boolean isFarm, boolean isLumberMill, boolean isMine, boolean isPaddock,
                        boolean isAgriculture, boolean isStoneMine, boolean isTradingPost, boolean isLaboratory, int food, int production, int gold){

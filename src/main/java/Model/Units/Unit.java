@@ -22,64 +22,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Unit extends Rectangle {
-    private Civilization civilization;
     @Expose
+    private Civilization civilization;
+
     private Tile origin;
+    @Expose
     private int health;
+    @Expose
     private int MP;   // it shows mp for a unit and its final.
+    @Expose
     private int mp;  // it changes every time unit moves.
+    @Expose
     private int duration;
+    @Expose
     private int goldCost;
+    @Expose
     private int movesLeft;
     // for nextTurn
+    @Expose
     private boolean hasOrdered;
+    @Expose
     private boolean isOnSleep;
+    @Expose
+    private boolean isCivilian;
+
+    private Tile destination;//if == null -> null
 
     //URL
+    @Expose
     public static HashMap<String, URL> unitsURL = new HashMap<>();
+    @Expose
     public static ArrayList<String> unitsName = new ArrayList<>();
-    public static void setNames () {
-        unitsName.add("Worker");
-        unitsName.add("Warrior");
-        unitsName.add("Trebuchet");
-        unitsName.add("Tank");
-        unitsName.add("Swordsman");
-        unitsName.add("Spearman");
-        unitsName.add("Settler");
-        unitsName.add("Scout");
-        unitsName.add("Rifleman");
-        unitsName.add("Pikeman");
-        unitsName.add("Panzer");
-        unitsName.add("Musketman");
-        unitsName.add("Longswordsman");
-        unitsName.add("Knight");
-        unitsName.add("Infantry");
-        unitsName.add("Horseman");
-        unitsName.add("Crossbowman");
-        unitsName.add("Chariot Archer");
-        unitsName.add("Cavalry");
-        unitsName.add("Catapult");
-        unitsName.add("Cannon");
-        unitsName.add("Artillery");
-        unitsName.add("Archer");
-        unitsName.add("Anti-Tank Gun");
-    }
-
-    public boolean getHasOrdered() {
-        return hasOrdered;
-    }
-
-    public boolean getIsOnSleep() {
-        return isOnSleep;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
+    @Expose
     private boolean isOnWarFooting;//Amade bash
+    @Expose
     private boolean isOnBoost;
+    @Expose
     private boolean isOnBoostTillRecover;
+
     private ArrayList<Node> path = new ArrayList<>(); //the shortest way, it also contains origin and destination
 
     public Unit(Civilization civilization, Tile origin, int health, int MP, int mp, int duration, int goldCost, boolean isCivilian) {
@@ -122,6 +102,45 @@ public class Unit extends Rectangle {
                 }
             }
         });
+    }
+
+    public static void setNames () {
+        unitsName.add("Worker");
+        unitsName.add("Warrior");
+        unitsName.add("Trebuchet");
+        unitsName.add("Tank");
+        unitsName.add("Swordsman");
+        unitsName.add("Spearman");
+        unitsName.add("Settler");
+        unitsName.add("Scout");
+        unitsName.add("Rifleman");
+        unitsName.add("Pikeman");
+        unitsName.add("Panzer");
+        unitsName.add("Musketman");
+        unitsName.add("Longswordsman");
+        unitsName.add("Knight");
+        unitsName.add("Infantry");
+        unitsName.add("Horseman");
+        unitsName.add("Crossbowman");
+        unitsName.add("Chariot Archer");
+        unitsName.add("Cavalry");
+        unitsName.add("Catapult");
+        unitsName.add("Cannon");
+        unitsName.add("Artillery");
+        unitsName.add("Archer");
+        unitsName.add("Anti-Tank Gun");
+    }
+
+    public boolean getHasOrdered() {
+        return hasOrdered;
+    }
+
+    public boolean getIsOnSleep() {
+        return isOnSleep;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 
     public int getConstantMP() {
@@ -173,11 +192,6 @@ public class Unit extends Rectangle {
     public boolean isOnDeployment() {
         return isOnDeployment;
     }
-
-    private boolean isCivilian;
-
-
-    private Tile destination;//if == null -> null
 
     public int getGoldCost() {
         return goldCost;
