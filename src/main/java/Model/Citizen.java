@@ -1,8 +1,11 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class Citizen {
+    @Expose
     private Tile tile;
 
     public Citizen(Tile tile){

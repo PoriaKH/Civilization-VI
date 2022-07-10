@@ -34,8 +34,10 @@ public class Tile extends Polygon {
     public static Pane root;
     public static Scene scene;
     public static Stage stage;
+
     public static ArrayList<Tile> map;
     public static ArrayList<Civilization> civilizations;
+
     public float cameraSpeed = 30;
 
     private boolean isDesert;                   //Smooth

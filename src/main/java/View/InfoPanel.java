@@ -120,27 +120,21 @@ public class InfoPanel {
     }
 
     public void saveTheGame(MouseEvent mouseEvent) throws IOException {
-       ArrayList<Object> objects = new ArrayList<>();
-       objects.add(civilizations);
-       objects.add(tiles);
+        ArrayList<Object> objects = new ArrayList<>();
+        objects.add(civilizations);
+        objects.add(tiles);
 
-       GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String data = gson.toJson(objects);
 
-        Gson gson = gsonBuilder.create();
-        String data = "";
-        try {
-            data = gson.toJson(objects);
-        }catch (Exception exception) {
-            System.out.println(exception.getCause());
-        }
         File file = new File("saveGame.txt");
         PrintWriter printWriter = new PrintWriter(file);
         printWriter.write(data);
         printWriter.close();
 
-       Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
-       Scene scene = new Scene(root);
+        Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
+        Scene scene = new Scene(root);
         stage.setScene(scene);
-       stage.show();
-   }
+        stage.show();
+    }
 }

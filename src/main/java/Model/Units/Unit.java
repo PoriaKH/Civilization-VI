@@ -6,6 +6,7 @@ import Model.Tile;
 import Model.Node;
 import View.PlayGameMenu;
 import View.UnitPanel;
+import com.google.gson.annotations.Expose;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 
 public class Unit extends Rectangle {
     private Civilization civilization;
+    @Expose
     private Tile origin;
     private int health;
     private int MP;   // it shows mp for a unit and its final.

@@ -1,11 +1,13 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
 import javafx.scene.shape.Rectangle;
 
 
 
 public class Building extends Rectangle {
     private Civilization civilization;
+    @Expose
     private Tile tile;
 
     public boolean isAncientEra = false;
