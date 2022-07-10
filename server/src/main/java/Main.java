@@ -37,7 +37,6 @@ public class Main {
                             CommandProcessor.run(input);
 //                            String result = process(input);
 //                            dataOutputStream.writeUTF(result);
-                            CommandProcessor.run(input);
                             System.out.println(rooms);
                             System.out.println(rooms.size());
                             dataOutputStream.flush();

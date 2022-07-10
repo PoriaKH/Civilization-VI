@@ -1,6 +1,8 @@
 package View;
 
 import Model.Member;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -17,12 +19,12 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import static View.CreateHost.roomURL;
+import static View.CreateHost.*;
 import static View.Lobby.createHostURL;
+import static View.ProfileMenu.loggedInMember;
 
 public class Room {
     public static Socket creatorSocket;
-    public ArrayList<Socket> sockets = new ArrayList<>();
 
     public Member creator;
 
@@ -40,29 +42,40 @@ public class Room {
     public void run(MouseEvent mouseEvent) throws IOException {
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
-        Button backButton = new Button("back");
-        backButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
-        backButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        Button exitButton = new Button("Exit");
+        exitButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 try {
                     root = FXMLLoader.load(createHostURL);
+                    removeRoom();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
             }
         });
-        vBox.getChildren().add(backButton);
+//        vBox.getChildren().add(backButton);
 
         root = FXMLLoader.load(roomURL);
         root.setCenter(vBox);
+        root.setBottom(exitButton);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    public void removeRoom() throws IOException {
+        Gson gson = new GsonBuilder().create();
+        System.out.println("logged in :" + loggedInMember);
+        String send = gson.toJson(loggedInMember);
+        System.out.println(send);
+        dataOutputStream.writeUTF(send);
+        dataOutputStream.flush();
     }
 }
