@@ -20,6 +20,17 @@ import java.util.Map;
 import java.util.Random;
 
 public class Tile extends Polygon {
+    public static URL dessert;
+    public static URL fogOfWar;
+    public static URL hill;
+    public static URL ice;
+    public static URL jungle;
+    public static URL meadow;
+    public static URL mountain;
+    public static URL plain;
+    public static URL rainforest;
+    public static URL snow;
+    public static URL tundra;
     public static URL building1URL;
     public static URL building2URL;
     public static URL building3URL;
@@ -439,6 +450,33 @@ public class Tile extends Polygon {
         });
 
         root.getChildren().add(this);
+    }
+
+    public void generatingTile(int status){
+        if (status == -1){
+            this.setFill(new ImagePattern(new Image(fogOfWar.toExternalForm())));
+            return;
+        }
+        if  (isDesert)
+            this.setFill(new ImagePattern(new Image(dessert.toExternalForm())));
+        else if (isHill)
+            this.setFill(new ImagePattern(new Image(hill.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isIce())
+            this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isJungle())
+            this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+        else if (isMeadow)
+            this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
+        else if (isMountain)
+            this.setFill(new ImagePattern(new Image(mountain.toExternalForm())));
+        else if (isPlain)
+            this.setFill(new ImagePattern(new Image(plain.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isRainForest())
+            this.setFill(new ImagePattern(new Image(rainforest.toExternalForm())));
+        else if (isSnow)
+            this.setFill(new ImagePattern(new Image(snow.toExternalForm())));
+        else if (isTundra)
+            this.setFill(new ImagePattern(new Image(tundra.toExternalForm())));
     }
 
     public void setResource(Resource resource) {
