@@ -2,24 +2,33 @@ package Model;
 
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class City {
     //perTurn
+    @Expose
     private int gold;
+    @Expose
     private int food;
+    @Expose
     private int production;
     //perTurn
-
+    @Expose
     private int totalFood;
-
+    @Expose
     private ArrayList<Citizen> citizens;
+    @Expose
     private Tile centerTile;
+    @Expose
     private ArrayList<Tile> tiles;
+    @Expose
     private int defenceStrength;
+    @Expose
     private int damagePoint; // emtiaz zarbe har shahr
+    @Expose
     private int sciencePerTurn;
 
     public City(Tile centerTile, ArrayList<Tile> map){

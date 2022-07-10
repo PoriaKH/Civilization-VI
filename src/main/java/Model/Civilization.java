@@ -1,34 +1,54 @@
 package Model;
 
 import Controller.PlayGameMenuController;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Civilization {
+    @Expose
     private Member member;
+    @Expose
     private String firstLetterOfName;
+    @Expose
     private String name;
+    @Expose
     private City capital;
+    @Expose
     private int science;
+    @Expose
     private int sciencePerTurn;
+    @Expose
     private ArrayList<Technology> technologies;
+    @Expose
     private int gold;
+    @Expose
     private int goldPerTurn;
+    @Expose
     private int happiness;
+    @Expose
     private ArrayList<City> cities;
+    @Expose
     private ArrayList<String> trades;
+    @Expose
     private ArrayList<String> messages; // (int)turn : message
+    @Expose
     private HashMap<Civilization, Integer> winsInUnitsWar = new HashMap<>(); // tamadon shekast khorde va tedad bakht haye on ra neshan mide
+    @Expose
     private HashMap<Civilization, Integer> lossesInUnitsWar = new HashMap<>(); // tamadon pirooz va tedad bord haye on ra neshan mide
+    @Expose
     private int point;//to compare civilizations
+    @Expose
     private boolean isLearningTechnology = false;
-
+    @Expose
     private ArrayList<Civilization> friendlyRequests;
+    @Expose
     private ArrayList<Civilization> friends;
-
+    @Expose
     private Technology workingOnTechnology;//if == null -> have to choose
+    @Expose
     private HashMap<Technology, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){

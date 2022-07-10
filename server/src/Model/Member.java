@@ -1,21 +1,11 @@
 package Model;
 
-import com.google.gson.annotations.Expose;
-
-import java.io.Serializable;
-
 public class Member {
-    @Expose
     private String username;
-    @Expose
     private String password;
-    @Expose
     private String nickname;
-    @Expose
     private int score;
-    @Expose
     private String date;
-    @Expose
     private int imageNumber;
 
     public Member(String username, String nickname,String password, int score,int imageNumber,String date){

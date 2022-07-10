@@ -1,5 +1,7 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class Citizen {
