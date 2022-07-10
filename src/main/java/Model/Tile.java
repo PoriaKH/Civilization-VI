@@ -479,7 +479,7 @@ public class Tile extends Polygon {
             this.setFill(new ImagePattern(new Image(snow.toExternalForm())));
         else if (isTundra)
             this.setFill(new ImagePattern(new Image(tundra.toExternalForm())));
-        else if (getAttribute().isMarsh())
+        else if (getAttribute() != null && getAttribute().isMarsh())
             this.setFill(new ImagePattern(new Image(marsh.toExternalForm())));
         else if (isOcean)
             this.setFill(new ImagePattern(new Image(ocean.toExternalForm())));
