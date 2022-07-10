@@ -13,7 +13,7 @@
     <center>
         <VBox alignment="CENTER" maxWidth="350" spacing="10">
             <Button styleClass="backButton" text="Create Host" onMouseClicked="#createHostClicked"/>
-            <Button styleClass="backButton" text="Requests" onMouseClicked="#requestsClicked"/>
+            <Button styleClass="backButton" text="Hosts" onMouseClicked="#hostsClicked"/>
             <Button styleClass="backButton" text="Back" onMouseClicked="#backClicked"/>
 
         </VBox>

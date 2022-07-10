@@ -5,12 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoomArray.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/GsonRoomArray.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/GsonRoomArray.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/View/Hosts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/Hosts.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GameSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/LoginMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/GameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/GameSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/GsonRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/GsonRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/GameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/GameSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/CreateHost.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/CreateHost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/GsonRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/GsonRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/HostRequests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/createHost.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/createHost.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/hostRequests.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/Hosts.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/lobby.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/lobby.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/CreateHost.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/CreateHost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,12 +50,15 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2BkI3mTZZ8pYDQTscLZP9kywmAs" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -68,7 +90,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1657443459977</updated>
-      <workItem from="1657443461593" duration="6991000" />
+      <workItem from="1657443461593" duration="19227000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -95,6 +117,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="converted server project to maven" />
     <option name="LAST_COMMIT_MESSAGE" value="converted server project to maven" />
   </component>
