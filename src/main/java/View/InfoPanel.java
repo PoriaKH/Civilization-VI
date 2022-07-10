@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -121,33 +122,45 @@ public class InfoPanel {
     }
 
     public void saveTheGame(MouseEvent mouseEvent) throws IOException {
-       ArrayList<Object> objects = new ArrayList<>();
-       objects.add(civilizations);
-       objects.add(tiles);
-
-       GsonBuilder gsonBuilder = new GsonBuilder();
-
-       new GraphAdapterBuilder().addType(Unit.class).addType(Tile.class).addType(Warrior.class).
-                addType(Civilian.class).addType(City.class).addType(Civilization.class).
-              addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(Improvement.class)
-                .addType(Resource.class).addType(Technology.class).addType(Node.class)
-               .addType(Member.class).addType(Rectangle.class).registerOn(gsonBuilder);
-
-        Gson gson = gsonBuilder.create();
-        String data = "";
-        try {
-            data = gson.toJson(objects);
-        }catch (Exception exception) {
-            System.out.println(exception.getCause());
+        for (Civilization civilization : civilizations) {
+            System.out.println(civilization.getName());
         }
+        saveCivilizations();
+        saveTiles();
+
+        Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void saveCivilizations () throws FileNotFoundException {
         File file = new File("saveGame.txt");
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        new GraphAdapterBuilder().addType(Civilian.class).addType(Unit.class).addType(Warrior.class)
+                .addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(City.class)
+                .addType(Civilization.class).addType(Improvement.class).addType(Member.class).addType(Node.class)
+                .addType(Resource.class).addType(Technology.class).addType(Tile.class).registerOn(gsonBuilder);
+        Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+        String data = gson.toJson(civilizations);
+        System.out.println("civ : " + data);
         PrintWriter printWriter = new PrintWriter(file);
         printWriter.write(data);
         printWriter.close();
+    }
+    public void saveTiles () throws FileNotFoundException {
+        File file = new File("saveGame2.txt");
+        String data = "";
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        new GraphAdapterBuilder().addType(Tile.class).addType(Civilian.class).addType(Unit.class).addType(Warrior.class)
+                .addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(City.class)
+                .addType(Civilization.class).addType(Improvement.class).addType(Member.class).addType(Node.class)
+                .addType(Resource.class).addType(Technology.class).registerOn(gsonBuilder);
 
-       Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
-       Scene scene = new Scene(root);
-        stage.setScene(scene);
-       stage.show();
-   }
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        data = gson.toJson(tiles);
+        System.out.println("tile : " + data);
+        PrintWriter printWriter = new PrintWriter(file);
+        printWriter.write(data);
+        printWriter.close();
+    }
 }

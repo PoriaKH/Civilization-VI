@@ -14,7 +14,6 @@
     <center>
         <VBox alignment="CENTER" spacing="10" maxWidth="350">
             <Label text="enter nicknames down bellow"/>
-            <TextField fx:id="names" promptText="nickname 1,nickname 2, ..."/>
             <Button text="Create" onMouseClicked="#createClicked"/>
             <Text text=" "/>
             <Button styleClass="backButton" text="Back" onMouseClicked="#backClicked"/>

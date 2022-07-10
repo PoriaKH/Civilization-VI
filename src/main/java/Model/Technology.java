@@ -1,57 +1,109 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class Technology {
+    @Expose
     private boolean isAgriculture;
+    @Expose
     private boolean isAnimalHusbandry;
+    @Expose
     private boolean isArchery;
+    @Expose
     private boolean isBronzeWorking;
+    @Expose
     private boolean isCalendar;
+    @Expose
     private boolean isMasonry;
+    @Expose
     private boolean isMining;
+    @Expose
     private boolean isPottery;
+    @Expose
     private boolean isTheWheel;
+    @Expose
     private boolean isTrapping;
+    @Expose
     private boolean isWriting;
+    @Expose
     private boolean isConstruction;
+    @Expose
     private boolean isHorsebackRiding;
+    @Expose
     private boolean isIronWorking;
+    @Expose
     private boolean isMathematics;
+    @Expose
     private boolean isPhilosophy;
+    @Expose
     private boolean isChivalry;
+    @Expose
     private boolean isCivilService;
+    @Expose
     private boolean isCurrency;
+    @Expose
     private boolean isEducation;
+    @Expose
     private boolean isEngineering;
+    @Expose
     private boolean isMachinery;
+    @Expose
     private boolean isMetalCasting;
+    @Expose
     private boolean isPhysics;
+    @Expose
     private boolean isSteel;
+    @Expose
     private boolean isTheology;
+    @Expose
     private boolean isAcoustics;
+    @Expose
     private boolean isArchaeology;
+    @Expose
     private boolean isBanking;
+    @Expose
     private boolean isChemistry;
+    @Expose
     private boolean isEconomics;
+    @Expose
     private boolean isFertilizer;
+    @Expose
     private boolean isGunpowder;
+    @Expose
     private boolean isMetallurgy;
+    @Expose
     private boolean isMilitaryScience;
+    @Expose
     private boolean isPrintingPress;
+    @Expose
     private boolean isRifling;
+    @Expose
     private boolean isScientificTheory;
+    @Expose
     private boolean isBiology;
+    @Expose
     private boolean isCombustion;
+    @Expose
     private boolean isDynamite;
+    @Expose
     private boolean isElectricity;
+    @Expose
     private boolean isRadio;
+    @Expose
     private boolean isRailroad;
+    @Expose
     private boolean isReplaceableParts;
+    @Expose
     private boolean isParts;
+    @Expose
     private boolean isSteamPower;
+    @Expose
     private boolean isTelegraph;
+    @Expose
     private int cost;
+    @Expose
     private String name;
 
     public Technology(boolean isAgriculture, boolean isAnimalHusbandry, boolean isArchery, boolean isBronzeWorking,

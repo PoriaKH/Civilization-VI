@@ -2,6 +2,8 @@ import Controller.PlayGameMenuController;
 import Model.Tile;
 import Model.Units.Unit;
 import View.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,22 +17,29 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 
+import static View.MainMenu.loggedInMember;
+
 public class Main extends Application {
     public static Socket socket;
+    public static String host = "localhost";
     public static DataOutputStream dataOutputStream;
     public static DataInputStream dataInputStream;
     static {
         try {
-            socket = new Socket("localhost",8888);
+            socket = new Socket(host,8888);
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataInputStream = new DataInputStream(socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
     @Override
     public void start(Stage stage) throws Exception {
+        CreateHost.dataOutputStream = dataOutputStream;
+        CreateHost.dataInputStream = dataInputStream;
+        CreateHost.socket = socket;
+        CreateHost.host = host;
+        Room.creatorSocket = socket;
         UnitPanel.playGameMenuController = new PlayGameMenuController();
         UnitPanel.untPanelURL = new URL(Main.class.getResource("fxml/unitPanel.fxml").toExternalForm());
         Tile.roadURL = new URL(Main.class.getResource("pictures/Road.png").toExternalForm());
@@ -107,11 +116,12 @@ public class Main extends Application {
         MainMenu.lobbyURL = new URL(Main.class.getResource("fxml/lobby.fxml").toExternalForm());
         Lobby.createHostURL = new URL(Main.class.getResource("fxml/createHost.fxml").toExternalForm());
         Lobby.hostRequestsURL = new URL(Main.class.getResource("fxml/hostRequests.fxml").toExternalForm());
+        CreateHost.roomURL = new URL(Main.class.getResource("fxml/room.fxml").toExternalForm());
+
 
 
         dataOutputStream.writeUTF("hello world!");
         dataOutputStream.flush();
-
 
 
         Parent root = FXMLLoader.load(address_login_page);

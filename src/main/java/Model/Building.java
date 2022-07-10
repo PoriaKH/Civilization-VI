@@ -1,30 +1,46 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
 import javafx.scene.shape.Rectangle;
 
 
 
-public class Building extends Rectangle {
+public class Building extends Rectangle { /// what is civilization ?
+
     private Civilization civilization;
+
     private Tile tile;
 
+    @Expose
     public boolean isAncientEra = false;
+    @Expose
     public boolean isClassicalEra = false;
+    @Expose
     public boolean isMedievalEra = false;
+    @Expose
     public boolean isRenaissanceEra = false;
+    @Expose
     public boolean isIndustrialEra = false;
 
-
+    @Expose
     private int cost;
+    @Expose
     private int maintenance;//amount of gold required to pay as tax for each turn
+    @Expose
     private Technology technologyRequired;//could be null
-
+    @Expose
     private int gold;//will add to civilization(setGold)
+    @Expose
     private int science;//will add to civilization(setScience)
+    @Expose
     private int happiness;//will add to civilization(setHappiness)
+    @Expose
     private int xp;//will add to all civilization Warrior units(increaseXp)
+    @Expose
     private int food;//will add to city (setTotalFood)
+    @Expose
     private int defence;//will add to city (setDefenceStrength)
+    @Expose
     private int production;//will add to city(setProduction)
 
     public Building(String name,Civilization civilization,Tile tile){

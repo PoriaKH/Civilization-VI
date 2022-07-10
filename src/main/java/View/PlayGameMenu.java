@@ -7,6 +7,9 @@ import Model.Tile;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,9 +36,11 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.parser.JSONParser;
 
 import javax.swing.plaf.metal.MetalMenuBarUI;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -449,7 +454,52 @@ public class PlayGameMenu {
         return null;
     }
 
-    public void saveGameContinue(MouseEvent mouseEvent) {
+    public void saveGameContinue(MouseEvent mouseEvent) throws IOException {
+        ArrayList<Civilization> civilizations = loadCivilizations();
+        ArrayList<Tile> tiles = loadTiles();
+
+        MainMenu.mediaPlayer.stop();
+        root = FXMLLoader.load(gameMenuURL);
+        Tile.root = root;
+        Tile.map = tiles;
+        Tile.civilizations = civilizations;
+        playingCivilization = civilizations.get(0);
+
+        switchToGame(mouseEvent, tiles, civilizations);
+    }
+
+    public ArrayList<Tile> loadTiles () throws IOException {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+        File file = new File("saveGame2.txt");
+
+        byte[] bytes = new byte[(int) file.length()];
+        FileInputStream fileInputStream = new FileInputStream(file);
+        fileInputStream.read(bytes);
+
+        String data = new String(bytes);
+
+        Type listType = new TypeToken<ArrayList<Tile>>() {}.getType();
+        ArrayList<Tile> tiles = gson.fromJson(data, listType);
+        return tiles;
+    }
+
+    public ArrayList<Civilization> loadCivilizations () throws IOException {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+        File file = new File("saveGame.txt");
+
+        byte[] bytes = new byte[(int) file.length()];
+        FileInputStream fileInputStream = new FileInputStream(file);
+        fileInputStream.read(bytes);
+
+        String data = new String(bytes);
+
+        Type listType = new TypeToken<ArrayList<Civilization>>() {}.getType();
+        ArrayList<Civilization> civilizations = gson.fromJson(data, listType);
+
+        for (Civilization civilization : civilizations) {
+            System.out.println(civilization.getName());
+        }
+        return civilizations;
     }
 
     public void autoSaveGameContinue(MouseEvent mouseEvent) {

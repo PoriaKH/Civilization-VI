@@ -2,6 +2,7 @@ package Model.Units;
 
 import Model.Civilization;
 import Model.Tile;
+import com.google.gson.annotations.Expose;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
@@ -9,34 +10,61 @@ import java.io.Serializable;
 import java.net.URL;
 
 public class Warrior extends Unit {
+    @Expose
     private int xp;
+    @Expose
     private int damage;
+    @Expose
     private int range;//if range == -1 -> N/A
+    @Expose
     private int rangedCombatDamage;//if .. == -1 -> N/A
-
+    @Expose
     private boolean isScout;
+    @Expose
     private boolean isWarrior;
+    @Expose
     private boolean isArcher;
+    @Expose
     private boolean isChariotArcher;
+    @Expose
     private boolean isSpearman;
+    @Expose
     private boolean isCatapult;
+    @Expose
     private boolean isHorseMan;
+    @Expose
     private boolean isSwordsMan;
+    @Expose
     private boolean isCrossbowMan;
+    @Expose
     private boolean isKnight;
+    @Expose
     private boolean isLongswordMan;
+    @Expose
     private boolean isPikeMan;
+    @Expose
     private boolean isTrebuchet;
+    @Expose
     private boolean isCanon;
+    @Expose
     private boolean isCavalry;
+    @Expose
     private boolean isLancer;
+    @Expose
     private boolean isMusketMan;
+    @Expose
     private boolean isRifleMan;
+    @Expose
     private boolean isAntiTankGun;
+    @Expose
     private boolean isArtillery;
+    @Expose
     private boolean isInfantry;
+    @Expose
     private boolean isPanzer;
+    @Expose
     private boolean isTank;
+    @Expose
     private boolean isReadyForRangedBattle;
 
     public boolean isScout() {

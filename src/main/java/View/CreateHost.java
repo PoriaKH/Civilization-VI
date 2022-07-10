@@ -1,24 +1,39 @@
 package View;
 
+import Model.GameSocket;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
+import java.net.URL;
 
 import static View.MainMenu.lobbyURL;
+import static View.MainMenu.loggedInMember;
 
 public class CreateHost {
+    public static Socket socket;
+    public static String host;
+    public static DataOutputStream dataOutputStream;
+    public static DataInputStream dataInputStream;
+    public static URL roomURL;
+
     public Pane root;
     public Stage stage;
     public Scene scene;
-    @FXML
-    public TextField names;
+//    @FXML
+//    public TextField names;
 
     public void backClicked(MouseEvent mouseEvent) throws IOException {
         root = FXMLLoader.load(lobbyURL);
@@ -28,10 +43,25 @@ public class CreateHost {
         stage.show();
     }
 
-    public void createClicked(MouseEvent mouseEvent) {
-        String[] args = names.getText().split(",");
-        for(int i = 0; i < args.length; i++){
-            System.out.println(args[i]);
-        }
+    public void createClicked(MouseEvent mouseEvent) throws IOException {
+
+        Room room = new Room();
+        room.RoomConstructor(stage,scene,(BorderPane) root,loggedInMember);
+
+        GameSocket gameSocket = new GameSocket(host,socket.getPort());
+        GsonRoom gsonRoom = new GsonRoom(gameSocket,loggedInMember);
+
+        Gson gson = new GsonBuilder().create();
+        String str = gson.toJson(gsonRoom);
+        dataOutputStream.writeUTF(str);
+        dataOutputStream.flush();
+
+        room.run(mouseEvent);
+
+//        root = FXMLLoader.load(roomURL);
+//        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+//        scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
     }
 }
