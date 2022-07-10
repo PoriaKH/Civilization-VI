@@ -5,27 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/GameSocket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Controller/ServerController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/Member.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/Room.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/GameSocket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/View/GsonRoom.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/libraries/google_code_gson.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/google_code_gson.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/server/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Room.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/CreateHost.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/CreateHost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/CreateHost.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/CreateHost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../saveGame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../saveGame.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../saveGame2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../saveGame2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/Room.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,7 +42,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/ProjFiles/Backup/13/server" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../ProjFiles/Backup/13/server" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
