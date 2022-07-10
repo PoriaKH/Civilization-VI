@@ -1,3 +1,4 @@
+import Model.Room;
 import View.CommandProcessor;
 
 import java.io.DataInputStream;
@@ -19,7 +20,7 @@ public class Main {
     }
 
     public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
-    HashMap<String,ArrayList<String>> requests = new HashMap<>();
+    ArrayList<Room> rooms = new ArrayList<>();
 
     public static void main(String[] args) {
         try {
