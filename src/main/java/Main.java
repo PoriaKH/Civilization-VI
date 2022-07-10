@@ -88,6 +88,8 @@ public class Main extends Application {
         Tile.snow = new URL(Main.class.getResource("pictures/snow.png").toExternalForm());
         Tile.tundra = new URL(Main.class.getResource("pictures/tundra.png").toExternalForm());
         Tile.fogOfWar = new URL(Main.class.getResource("pictures/fogOfWar.png").toExternalForm());
+        Tile.marsh = new URL(Main.class.getResource("pictures/marsh.png").toExternalForm());
+        Tile.ocean = new URL(Main.class.getResource("pictures/ocean.png").toExternalForm());
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
         for (int i = 0; i < Unit.unitsName.size(); i++) {
