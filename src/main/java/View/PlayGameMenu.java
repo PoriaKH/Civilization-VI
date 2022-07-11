@@ -370,6 +370,9 @@ public class PlayGameMenu {
                     civName.setText("civilization : " + playingCivilization.getName());
                     goldAmount.setText(" : " + playingCivilization.getGold());
                     happinessAmount.setText(" : " + playingCivilization.getHappiness());
+                    ArrayList<Integer> status = playGameMenuController.statusChecker(playingCivilization, tiles);
+                    for (int i = 0; i < 72; i++)
+                        tiles.get(i).generatingTile(status.get(i));
                 }
             }
         });
