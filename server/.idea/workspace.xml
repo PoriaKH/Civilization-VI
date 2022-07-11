@@ -4,27 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Attribute.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Building.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Citizen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/City.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Civilization.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Improvement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Node.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Resource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Technology.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Tile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Civilian.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Units/SaveGameClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Unit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Warrior.java" afterDir="false" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added controller and models to server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GameSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GsonRoomArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoomArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Units/Civilian.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Units/SaveGameClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Units/Unit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Units/Warrior.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +87,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657443839399</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added controller and models to server">
+      <created>1657530324464</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1657530324464</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,6 +114,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="converted server project to maven" />
-    <option name="LAST_COMMIT_MESSAGE" value="converted server project to maven" />
+    <MESSAGE value="added controller and models to server" />
+    <option name="LAST_COMMIT_MESSAGE" value="added controller and models to server" />
   </component>
 </project>
