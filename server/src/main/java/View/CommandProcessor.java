@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandProcessor {
-    public static ArrayList<GsonRoom> rooms = new ArrayList<>();
+    public static ArrayList<GsonRoom> rooms;
 
     public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket) throws IOException {
         if(command.startsWith("{\"creatorSocket")){
