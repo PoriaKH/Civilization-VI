@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
-      <change beforePath="$PROJECT_DIR$/../saveGame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../saveGame.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/CreateHost.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/CreateHost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Hosts.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Hosts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Hosts$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Hosts$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
