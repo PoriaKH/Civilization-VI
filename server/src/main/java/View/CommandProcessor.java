@@ -58,13 +58,16 @@ public class CommandProcessor {
             matcher.find();
             String text = matcher.group("text");
             Gson gson = new GsonBuilder().create();
+//            System.out.println(gsonRoomArray.gsonRooms.size());
             for(GsonRoom gsonRoom : gsonRoomArray.gsonRooms){
+//                System.out.println("are we here");
                 if(Objects.equals(gsonRoom.creatorMember.getNickname(), text)){
                     String str = gson.toJson(gsonRoom,GsonRoom.class);
                     dataOutputStream.writeUTF(str);
-                    break;
+                    return;
                 }
             }
+            dataOutputStream.writeUTF("null");
         }
         else if(command.startsWith("join request:")){
             Matcher matcher = Pattern.compile("join request:(?<text>.*) (?<nick>.*)").matcher(command);
