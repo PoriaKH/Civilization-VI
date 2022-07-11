@@ -73,8 +73,13 @@ public class Room {
         dataOutputStream.writeUTF("set gson room:" + creator.getNickname());
         dataOutputStream.flush();
         String str = dataInputStream.readUTF();
+        if(str.equals("null")){
+            System.out.println("true");
+            this.gsonRoom = null;
+            return;
+        }
         Gson gson = new GsonBuilder().create();
-        this.gsonRoom = gson.fromJson(str,GsonRoom.class);
+        this.gsonRoom = gson.fromJson(str, GsonRoom.class);
     }
     public void run(MouseEvent mouseEvent) throws IOException {
 
@@ -92,7 +97,6 @@ public class Room {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
@@ -154,10 +158,13 @@ public class Room {
         dataOutputStream.flush();
     }
     public void refreshThePage(VBox vBox,Event event) throws IOException {
+        System.out.println("here1");
         kickButtons = new ArrayList<>();
         buttonStringHashMap = new HashMap<>();
         try {
+            System.out.println("here2");
             setAmIKicked();
+            System.out.println("here3");
             setGsonRoom();
         } catch (IOException e) {
             e.printStackTrace();
@@ -170,6 +177,7 @@ public class Room {
             stage.show();
         }
         if(gsonRoom != null) {
+            System.out.println("here4");
             while(vBox.getChildren().size() > 0){
                 vBox.getChildren().remove(0);
             }
@@ -190,6 +198,14 @@ public class Room {
                 vBox.getChildren().add(hBox);
             }
 
+        }
+        else {
+            System.out.println("here5");
+            root = FXMLLoader.load(lobbyURL);
+            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
         listenForKickButtons(vBox);
     }
