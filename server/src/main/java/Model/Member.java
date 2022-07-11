@@ -1,11 +1,19 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
+
 public class Member {
+    @Expose
     private String username;
+    @Expose
     private String password;
+    @Expose
     private String nickname;
+    @Expose
     private int score;
+    @Expose
     private String date;
+    @Expose
     private int imageNumber;
 
     public Member(String username, String nickname,String password, int score,int imageNumber,String date){
@@ -55,9 +63,5 @@ public class Member {
 
     public void setImageNumber(int imageNumber) {
         this.imageNumber = imageNumber;
-    }
-
-    public String toString(){
-        return "username : " + username + " nickname : " + nickname + " password" + password;
     }
 }
