@@ -6,14 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GameSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GsonRoomArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoomArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/GameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/GameSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/GsonRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/GsonRoom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/GsonRoomArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/GsonRoomArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/GameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/GameSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/GsonRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/GsonRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/GsonRoomArray.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/GsonRoomArray.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/Member.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Member.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/GameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/GameSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/GsonRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/GsonRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/GsonRoomArray.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/GsonRoomArray.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Member.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Member.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +80,7 @@
       <updated>1657443459977</updated>
       <workItem from="1657443461593" duration="19227000" />
       <workItem from="1657534031874" duration="922000" />
+      <workItem from="1657537311544" duration="77000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
