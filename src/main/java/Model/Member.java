@@ -66,4 +66,8 @@ public class Member {
     public void setImageNumber(int imageNumber) {
         this.imageNumber = imageNumber;
     }
+
+    public String toString(){
+        return "username : " + username + " nickname : " + nickname + " password" + password;
+    }
 }
