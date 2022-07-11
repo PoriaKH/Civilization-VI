@@ -168,6 +168,7 @@ public class PlayGameMenu {
             ArrayList<Integer> status = playGameMenuController.statusChecker(playingCivilization, tiles);
             for (int i = 0; i < 72; i++)
                 tiles.get(i).generatingTile(status.get(i));
+
             switchToGame(mouseEvent, tiles, civilizations);
         }
     }
