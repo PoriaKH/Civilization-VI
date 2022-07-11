@@ -44,6 +44,10 @@ public class Tile extends Polygon {
     @Expose
     public static URL tundra;
     @Expose
+    public static URL marsh;
+    @Expose
+    public static URL ocean;
+    @Expose
     public static URL building1URL;
     @Expose
     public static URL building2URL;
@@ -511,8 +515,10 @@ public class Tile extends Polygon {
             this.setFill(new ImagePattern(new Image(hill.toExternalForm())));
         else if (getAttribute() != null && getAttribute().isIce())
             this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
-        else if (getAttribute() != null && getAttribute().isJungle())
+        else if (getAttribute() != null && getAttribute().isJungle()) {
+            System.out.println(this);
             this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+        }
         else if (isMeadow)
             this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
         else if (isMountain)

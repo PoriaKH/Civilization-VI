@@ -5,6 +5,7 @@ import Model.Civilization;
 import Model.Member;
 import Model.Tile;
 import Model.Units.Civilian;
+import Model.Units.SaveGameClass;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 import com.google.gson.Gson;
@@ -41,9 +42,11 @@ import jdk.nashorn.internal.parser.JSONParser;
 import javax.swing.plaf.metal.MetalMenuBarUI;
 import java.io.*;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -455,8 +458,10 @@ public class PlayGameMenu {
     }
 
     public void saveGameContinue(MouseEvent mouseEvent) throws IOException {
-        ArrayList<Civilization> civilizations = loadCivilizations();
-        ArrayList<Tile> tiles = loadTiles();
+        SaveGameClass saveGameClass = loadGame();
+        ArrayList<Civilization> civilizations = saveGameClass.civilizations;
+        ArrayList<Tile> tiles = saveGameClass.tiles;
+        loadURLs(saveGameClass);
 
         MainMenu.mediaPlayer.stop();
         root = FXMLLoader.load(gameMenuURL);
@@ -465,25 +470,39 @@ public class PlayGameMenu {
         Tile.civilizations = civilizations;
         playingCivilization = civilizations.get(0);
 
+        ArrayList<Integer> status = playGameMenuController.statusChecker(playingCivilization, tiles);
+        for (int i = 0; i < 72; i++)
+            tiles.get(i).generatingTile(status.get(i));
+
         switchToGame(mouseEvent, tiles, civilizations);
     }
 
-    public ArrayList<Tile> loadTiles () throws IOException {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
-        File file = new File("saveGame2.txt");
-
-        byte[] bytes = new byte[(int) file.length()];
-        FileInputStream fileInputStream = new FileInputStream(file);
-        fileInputStream.read(bytes);
-
-        String data = new String(bytes);
-
-        Type listType = new TypeToken<ArrayList<Tile>>() {}.getType();
-        ArrayList<Tile> tiles = gson.fromJson(data, listType);
-        return tiles;
+    private void loadURLs(SaveGameClass saveGameClass) {
+        Tile.dessert = saveGameClass.dessert;
+        Tile.fogOfWar = saveGameClass.fogOfWar;
+        Tile.hill = saveGameClass.hill;
+        Tile.ice = saveGameClass.ice;
+        Tile.jungle = saveGameClass.jungle;
+        Tile.meadow = saveGameClass.meadow;
+        Tile.mountain = saveGameClass.mountain;
+        Tile.plain = saveGameClass.plain;
+        Tile.rainforest = saveGameClass.rainforest;
+        Tile.snow = saveGameClass.snow;
+        Tile.tundra = saveGameClass.tundra;
+        Tile.marsh = saveGameClass.marsh;
+        Tile.ocean = saveGameClass.ocean;
+        Tile.building1URL = saveGameClass.building1URL;
+        Tile.building2URL = saveGameClass.building2URL;
+        Tile.building3URL = saveGameClass.building3URL;
+        Tile.building4URL = saveGameClass.building4URL;
+        Tile.building5URL = saveGameClass.building5URL;
+        Tile.roadURL = saveGameClass.roadURL;
+        Tile.railURL = saveGameClass.railURL;
+        Unit.unitsURL = saveGameClass.unitsURL;
+        Unit.unitsName = saveGameClass.unitsName;
     }
 
-    public ArrayList<Civilization> loadCivilizations () throws IOException {
+    public SaveGameClass loadGame () throws IOException {
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
         File file = new File("saveGame.txt");
 
@@ -492,14 +511,15 @@ public class PlayGameMenu {
         fileInputStream.read(bytes);
 
         String data = new String(bytes);
-
-        Type listType = new TypeToken<ArrayList<Civilization>>() {}.getType();
-        ArrayList<Civilization> civilizations = gson.fromJson(data, listType);
-
-        for (Civilization civilization : civilizations) {
+        System.out.println(data);
+        SaveGameClass saveGameClass = gson.fromJson(data, SaveGameClass.class);
+        for (Tile tile : saveGameClass.tiles) {
+            System.out.println(tile.getTileNumber());
+        }
+        for (Civilization civilization : saveGameClass.civilizations) {
             System.out.println(civilization.getName());
         }
-        return civilizations;
+        return saveGameClass;
     }
 
     public void autoSaveGameContinue(MouseEvent mouseEvent) {

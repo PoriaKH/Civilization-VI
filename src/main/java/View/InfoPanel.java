@@ -2,11 +2,13 @@ package View;
 
 import Model.*;
 import Model.Units.Civilian;
+import Model.Units.SaveGameClass;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.annotations.Expose;
 import com.google.gson.graph.GraphAdapterBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -25,6 +27,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InfoPanel {
     public static Stage stage;
@@ -125,42 +128,57 @@ public class InfoPanel {
         for (Civilization civilization : civilizations) {
             System.out.println(civilization.getName());
         }
-        saveCivilizations();
-        saveTiles();
+        saveGame();
 
         Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-    public void saveCivilizations () throws FileNotFoundException {
+    public void saveGame () throws FileNotFoundException {
         File file = new File("saveGame.txt");
+
         GsonBuilder gsonBuilder = new GsonBuilder();
-        new GraphAdapterBuilder().addType(Civilian.class).addType(Unit.class).addType(Warrior.class)
+       /* new GraphAdapterBuilder().addType(Civilian.class).addType(Unit.class).addType(Warrior.class)
                 .addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(City.class)
                 .addType(Civilization.class).addType(Improvement.class).addType(Member.class).addType(Node.class)
-                .addType(Resource.class).addType(Technology.class).addType(Tile.class).registerOn(gsonBuilder);
+                .addType(Resource.class).addType(Technology.class).addType(Tile.class).registerOn(gsonBuilder);*/
         Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
-        String data = gson.toJson(civilizations);
+
+        SaveGameClass saveGameClass = new SaveGameClass();
+        saveGameClass.civilizations = civilizations;
+        saveGameClass.tiles = tiles;
+        saveURLs(saveGameClass);
+        String data = gson.toJson(saveGameClass);
+
         System.out.println("civ : " + data);
         PrintWriter printWriter = new PrintWriter(file);
         printWriter.write(data);
         printWriter.close();
     }
-    public void saveTiles () throws FileNotFoundException {
-        File file = new File("saveGame2.txt");
-        String data = "";
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        new GraphAdapterBuilder().addType(Tile.class).addType(Civilian.class).addType(Unit.class).addType(Warrior.class)
-                .addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(City.class)
-                .addType(Civilization.class).addType(Improvement.class).addType(Member.class).addType(Node.class)
-                .addType(Resource.class).addType(Technology.class).registerOn(gsonBuilder);
 
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        data = gson.toJson(tiles);
-        System.out.println("tile : " + data);
-        PrintWriter printWriter = new PrintWriter(file);
-        printWriter.write(data);
-        printWriter.close();
+    private void saveURLs(SaveGameClass saveGameClass) {
+        saveGameClass.dessert = Tile.dessert;
+        saveGameClass.fogOfWar = Tile.fogOfWar;
+        saveGameClass.hill = Tile.hill;
+        saveGameClass.ice = Tile.ice;
+        saveGameClass.jungle = Tile.jungle;
+        saveGameClass.meadow = Tile.meadow;
+        saveGameClass.mountain = Tile.mountain;
+        saveGameClass.plain = Tile.plain;
+        saveGameClass.rainforest = Tile.rainforest;
+        saveGameClass.snow = Tile.snow;
+        saveGameClass.tundra = Tile.tundra;
+        saveGameClass.marsh = Tile.marsh;
+        saveGameClass.ocean = Tile.ocean;
+        saveGameClass.building1URL = Tile.building1URL;
+        saveGameClass.building2URL = Tile.building2URL;
+        saveGameClass.building3URL = Tile.building3URL;
+        saveGameClass.building4URL = Tile.building4URL;
+        saveGameClass.building5URL = Tile.building5URL;
+        saveGameClass.roadURL = Tile.roadURL;
+        saveGameClass.railURL = Tile.railURL;
+        saveGameClass.unitsURL = Unit.unitsURL;
+        saveGameClass.unitsName = Unit.unitsName;
     }
 }
