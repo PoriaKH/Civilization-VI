@@ -107,6 +107,7 @@ public class LoginMenu {
                     int score = Integer.parseInt(fileMatcher.group("score"));
                     changeDate(fileUsername,fileNickname,filePassword,score,fileImage);
                     MainMenu.loggedInMember = new Member(usernameTF.getText(),fileNickname,passwordTF.getText(),score,fileImage,fileDate);
+                    ProfileMenu.loggedInMember = MainMenu.loggedInMember;
                     switchToMain(event);
                     message.setText("");
                 }

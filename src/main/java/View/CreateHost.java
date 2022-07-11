@@ -1,13 +1,12 @@
 package View;
 
 import Model.GameSocket;
+import Model.GsonRoom;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -48,7 +47,7 @@ public class CreateHost {
         Room room = new Room();
         room.RoomConstructor(stage,scene,(BorderPane) root,loggedInMember);
 
-        GameSocket gameSocket = new GameSocket(host,socket.getPort());
+        GameSocket gameSocket = new GameSocket(host,socket.getPort(),socket.getLocalPort());
         GsonRoom gsonRoom = new GsonRoom(gameSocket,loggedInMember);
 
         Gson gson = new GsonBuilder().create();
