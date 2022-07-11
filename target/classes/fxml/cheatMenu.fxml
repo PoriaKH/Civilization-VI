@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="View.CheatMenu"
+            prefHeight="720.0" prefWidth="1280.0"
+stylesheets="@../CSS/style3.css"
+styleClass="BackGround2">
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+        <Label text="cheat menu" styleClass="myLabel"/>
+        <Label text="if you catch me cheating, i will never tell you sorry"/>
+        <Label text="Gold" alignment="CENTER" />
+        <TextField promptText="enter a number" fx:id="gold"/>
+        <Button text="submit" onMouseClicked="#goldCheat"/>
+            <Label text="Food" alignment="CENTER"/>
+            <TextField promptText="enter a number" fx:id="food"/>
+            <Button text="submit" onMouseClicked="#foodCheat"/>
+            <Label text="science" alignment="CENTER"/>
+            <TextField promptText="enter a number" fx:id="science"/>
+            <Button text="submit" onMouseClicked="#scienceCheat"/>
+            <Label text="Happiness" alignment="CENTER"/>
+            <TextField promptText="enter a number" fx:id="happiness"/>
+            <Button text="submit" onMouseClicked="#happinessCheat"/>
+        <Button text="Back" onMouseClicked="#back"/>
+        </VBox>
+    </center>
+
+</BorderPane>

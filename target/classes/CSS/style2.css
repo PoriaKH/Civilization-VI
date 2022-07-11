@@ -1,0 +1,19 @@
+Button{
+    -fx-pref-width: 200;
+    -fx-pref-height: 20;
+    -fx-effect: dropshadow( one-pass-box , #1a0bf1, 8 , 0.0 , 2 , 0 );
+    -fx-font-style: italic;
+    -fx-background-color: #ee00ff;
+}
+Label{
+    -fx-font-size: 50;
+    -fx-font-family: Ebrima;
+    -fx-font-weight: bold;
+    -fx-effect: innershadow( three-pass-box , rgb(255, 0, 47), 6, 0.0 , 0 , 2 );
+}
+.BackGround {
+    -fx-background-image: url("../pictures/mainMenu.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 1280 720;
+}

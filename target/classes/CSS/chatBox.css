@@ -1,0 +1,53 @@
+.chatBox {
+
+    -fx-background-color:#333333;
+    -fx-pref-height:400px;
+    -fx-pref-width:1000px;
+
+}
+
+.label {
+    -fx-background-color: purple;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}
+
+.secondLabel {
+    -fx-background-color: white;
+    -fx-text-fill: purple;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}
+
+.button {
+
+    -fx-background-color:purple;
+    -fx-text-fill:white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 50px;
+}
+
+.secondButton {
+
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #030303;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 50px;
+}
+
+.text-field {
+
+    -fx-background-color:purple;
+    -fx-text-fill:white;
+    -fx-pref-height:25px;
+    -fx-font-size: 15;
+    -fx-pref-width:1000px;
+    -fx-translate-x: 0;
+    -fx-translate-y: 410;
+
+}

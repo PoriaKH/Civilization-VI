@@ -1,0 +1,52 @@
+Button{
+    -fx-pref-width: 250;
+    -fx-pref-height: 20;
+    -fx-effect: dropshadow( one-pass-box , #ff0000, 8 , 0.0 , 2 , 0 );
+    -fx-font-style: italic;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #3f9a12 0%, #3db23d 100%),
+            #4087a8,
+            #4a92b9,
+            radial-gradient(center 50% 50%, radius 100%, #0b9f41, #64ce32);
+}
+Label{
+    -fx-font-size: 20;
+    -fx-font-family: "Rage Italic";
+    -fx-font-weight: bold;
+    -fx-effect: innershadow( three-pass-box , rgb(106, 0, 110), 6, 0.0 , 0 , 2 );
+}
+.Label{
+    -fx-font-size: 40;
+    -fx-font-family: "Rage Italic";
+    -fx-font-weight: bold;
+    -fx-effect: innershadow( three-pass-box , rgb(106, 0, 110), 6, 0.0 , 0 , 2 );
+}
+.BackGround {
+    -fx-background-image: url("../pictures/gameMenu.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 1280 720;
+}
+.BackGround2 {
+    -fx-background-image: url("../pictures/mainMenu.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 1280 720;
+}
+TextField{
+    -fx-max-height: 30;
+    -fx-max-width: 300;
+    -fx-background-color: #73c973;
+    -fx-arc-height: 20;
+    -fx-arc-width: 20;
+    -fx-border-color: #c25050;
+    -fx-text-fill: #f10b0b;
+    -fx-prompt-text-fill: #cc7171;
+}
+
+.myLabel {
+    -fx-font-size: 50;
+    -fx-font-family: Ebrima;
+    -fx-font-weight: bold;
+    -fx-effect: innershadow( three-pass-box , rgb(255, 0, 47), 6, 0.0 , 0 , 2 );
+}
