@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="View.PlayGameMenu"
+            prefHeight="720.0" prefWidth="1280.0"
+            stylesheets="@../CSS/style3.css"
+            styleClass="BackGround">
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Label text="GAME MENU" alignment="CENTER" styleClass="myLabel"/>
+            <Label text="player 1" alignment="CENTER"/>
+            <TextField promptText="player1's username" alignment="CENTER" fx:id="user1"/>
+            <Label text="player 2" alignment="CENTER"/>
+            <TextField promptText="player2's username" alignment="CENTER" fx:id="user2"/>
+            <Label text="player 3" alignment="CENTER"/>
+            <TextField promptText="player3's username" alignment="CENTER" fx:id="user3"/>
+            <Label text="player 4" alignment="CENTER"/>
+            <TextField promptText="player4's username" alignment="CENTER" fx:id="user4"/>
+            <Button text="start the game" alignment="CENTER" onMouseClicked="#newGame" fx:id="newGameButton"
+            onMouseEntered="#showStartGameInfo"/>
+
+            <Button text="continue save game" alignment="CENTER" onMouseClicked="#saveGameContinue"
+            onMouseEntered="#showSaveInfo" fx:id="saveButton"/>
+
+            <Button text="continue auto save game" alignment="CENTER" onMouseClicked="#autoSaveGameContinue"
+                    onMouseEntered="#showAutoSaveInfo" fx:id="autoSaveButton"/>
+            <Button text="Back" alignment="CENTER" onMouseEntered="#backInfo"
+                    onMouseClicked="#backToMainMenu" fx:id="backButton"/>
+        </VBox>
+    </center>
+
+
+</BorderPane>

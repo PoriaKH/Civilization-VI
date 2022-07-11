@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="View.InfoPanel"
+            prefHeight="720.0" prefWidth="1280.0">
+    <center>
+        <VBox spacing="5" alignment="CENTER" maxWidth="350">
+            <Button text="Example" onMouseClicked="#exampleClicked"/>
+            <Button text="general unit panel" onMouseClicked="#generalUnitPanelClicked"/>
+            <Button text="victory improvement" onMouseClicked="#victoryImprovementClicked"/>
+            <Button text="Buildings" onMouseClicked="#buildingsClicked"/>
+            <Button text="Cheat menu" onMouseClicked="#cheatClicked"/>
+            <Button text="Unit panel" onMouseClicked="#unitPanelClicked"/>
+            <Button text="Trade" onMouseClicked="#tradeClicked"/>
+            <Button text="City Panel" onMouseClicked="#cityPanelClicked"/>
+            <Button text="Diplomatics" onMouseClicked="#diplomaticsClicked"/>
+            <Button text="Demographics" onMouseClicked="#demographicsClicked"/>
+            <Button text="Economical Review" onMouseClicked="#economicalReviewClicked"/>
+            <Button text="save game" onMouseClicked="#saveTheGame"/>
+            <Button text="back" onMouseClicked="#backClicked"/>
+        </VBox>
+    </center>
+
+</BorderPane>
