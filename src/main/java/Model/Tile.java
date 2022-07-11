@@ -22,6 +22,44 @@ import java.util.Random;
 
 public class Tile extends Polygon {
     @Expose
+    public static URL banana;
+    @Expose
+    public static URL coal;
+    @Expose
+    public static URL color;
+    @Expose
+    public static URL cotton;
+    @Expose
+    public static URL cow;
+    @Expose
+    public static URL fur;
+    @Expose
+    public static URL gas;
+    @Expose
+    public static URL gazelle;
+    @Expose
+    public static URL gem;
+    @Expose
+    public static URL golds;
+    @Expose
+    public static URL horse;
+    @Expose
+    public static URL marble;
+    @Expose
+    public static URL metal;
+    @Expose
+    public static URL sheep;
+    @Expose
+    public static URL silk;
+    @Expose
+    public static URL silver;
+    @Expose
+    public static URL sugar;
+    @Expose
+    public static URL tusk;
+    @Expose
+    public static URL wheat;
+    @Expose
     public static URL dessert;
     @Expose
     public static URL fogOfWar;
@@ -43,6 +81,10 @@ public class Tile extends Polygon {
     public static URL snow;
     @Expose
     public static URL tundra;
+    @Expose
+    public static URL marsh;
+    @Expose
+    public static URL ocean;
     @Expose
     public static URL building1URL;
     @Expose
@@ -505,6 +547,7 @@ public class Tile extends Polygon {
             this.setFill(new ImagePattern(new Image(fogOfWar.toExternalForm())));
             return;
         }
+        //land type
         if  (isDesert)
             this.setFill(new ImagePattern(new Image(dessert.toExternalForm())));
         else if (isHill)
@@ -525,6 +568,58 @@ public class Tile extends Polygon {
             this.setFill(new ImagePattern(new Image(snow.toExternalForm())));
         else if (isTundra)
             this.setFill(new ImagePattern(new Image(tundra.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isMarsh())
+            this.setFill(new ImagePattern(new Image(marsh.toExternalForm())));
+        else if (isOcean)
+            this.setFill(new ImagePattern(new Image(ocean.toExternalForm())));
+
+        //resources
+        if (getResource() == null)
+            return;
+        double x1 = this.getX() + 30;
+        double y1 = this.getY();
+        resource.setX(x1);
+        resource.setY(y1);
+        resource.setWidth(40);
+        resource.setHeight(40);
+        if (resource.isBanana())
+            resource.setFill(new ImagePattern(new Image(banana.toExternalForm())));
+        else if (resource.isCoal())
+            resource.setFill(new ImagePattern(new Image(coal.toExternalForm())));
+        else if (resource.isColor())
+            resource.setFill(new ImagePattern(new Image(color.toExternalForm())));
+        else if (resource.isCotton())
+            resource.setFill(new ImagePattern(new Image(cotton.toExternalForm())));
+        else if (resource.isCow())
+            resource.setFill(new ImagePattern(new Image(cow.toExternalForm())));
+        else if (resource.isFur())
+            resource.setFill(new ImagePattern(new Image(fur.toExternalForm())));
+        else if (resource.isGas())
+            resource.setFill(new ImagePattern(new Image(gas.toExternalForm())));
+        else if (resource.isGazelle())
+            resource.setFill(new ImagePattern(new Image(gazelle.toExternalForm())));
+        else if (resource.isGem())
+            resource.setFill(new ImagePattern(new Image(gem.toExternalForm())));
+        else if (resource.isGold())
+            resource.setFill(new ImagePattern(new Image(golds.toExternalForm())));
+        else if (resource.isHorse())
+            resource.setFill(new ImagePattern(new Image(horse.toExternalForm())));
+        else if (resource.isMarble())
+            resource.setFill(new ImagePattern(new Image(marble.toExternalForm())));
+        else if (resource.isMetal())
+            resource.setFill(new ImagePattern(new Image(metal.toExternalForm())));
+        else if (resource.isSheep())
+            resource.setFill(new ImagePattern(new Image(sheep.toExternalForm())));
+        else if (resource.isSilk())
+            resource.setFill(new ImagePattern(new Image(silk.toExternalForm())));
+        else if (resource.isSilver())
+            resource.setFill(new ImagePattern(new Image(silver.toExternalForm())));
+        else if (resource.isSugar())
+            resource.setFill(new ImagePattern(new Image(sugar.toExternalForm())));
+        else if (resource.isTusk())
+            resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
+        else if (resource.isWheat())
+            resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
     }
 
     public void setResource(Resource resource) {
