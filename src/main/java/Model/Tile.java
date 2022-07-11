@@ -516,8 +516,13 @@ public class Tile extends Polygon {
         else if (getAttribute() != null && getAttribute().isIce())
             this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
         else if (getAttribute() != null && getAttribute().isJungle()) {
-            System.out.println(this);
-            this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+            System.out.println(this.getAttribute().isJungle());
+            try {
+                this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
         else if (isMeadow)
             this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
