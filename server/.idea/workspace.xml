@@ -5,20 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Attribute.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Building.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Citizen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/City.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Civilization.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Improvement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Node.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Resource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Technology.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Tile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Civilian.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Units/SaveGameClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Unit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Warrior.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/CreateHost.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/CreateHost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Hosts.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Hosts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Hosts$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Hosts$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$6.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$7.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GameSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GsonRoomArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoomArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Member.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,10 +58,18 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/Model" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\AMIRHOSSEIN\Desktop\AP\project-group-08\server\src\main\java\Model" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Controller" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">

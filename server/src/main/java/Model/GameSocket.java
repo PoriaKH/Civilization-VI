@@ -11,7 +11,4 @@ public class GameSocket {
         this.remotePort = remotePort;
         this.socketPort = socketPort;
     }
-    public String toString(){
-        return "Host : " + socketHost + "RemotePort" + remotePort + " SocketPort : " + socketPort;
-    }
 }
