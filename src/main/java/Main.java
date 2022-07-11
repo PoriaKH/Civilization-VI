@@ -87,6 +87,26 @@ public class Main extends Application {
         Tile.fogOfWar = new URL(Main.class.getResource("pictures/fogOfWar.png").toExternalForm());
         Tile.marsh = new URL(Main.class.getResource("pictures/marsh.png").toExternalForm());
         Tile.ocean = new URL(Main.class.getResource("pictures/ocean.png").toExternalForm());
+
+        Tile.banana = new URL(Main.class.getResource("pictures/banana.png").toExternalForm());
+        Tile.coal = new URL(Main.class.getResource("pictures/coal.png").toExternalForm());
+        Tile.color = new URL(Main.class.getResource("pictures/color.png").toExternalForm());
+        Tile.cotton = new URL(Main.class.getResource("pictures/cotton.png").toExternalForm());
+        Tile.cow = new URL(Main.class.getResource("pictures/cow.png").toExternalForm());
+        Tile.fur = new URL(Main.class.getResource("pictures/fur.png").toExternalForm());
+        Tile.gas = new URL(Main.class.getResource("pictures/gas.png").toExternalForm());
+        Tile.gazelle = new URL(Main.class.getResource("pictures/gazelle.png").toExternalForm());
+        Tile.gem = new URL(Main.class.getResource("pictures/gem.png").toExternalForm());
+        Tile.golds = new URL(Main.class.getResource("pictures/golds.png").toExternalForm());
+        Tile.horse = new URL(Main.class.getResource("pictures/horse.png").toExternalForm());
+        Tile.marble = new URL(Main.class.getResource("pictures/marble.png").toExternalForm());
+        Tile.metal = new URL(Main.class.getResource("pictures/metal.png").toExternalForm());
+        Tile.sheep = new URL(Main.class.getResource("pictures/sheep.png").toExternalForm());
+        Tile.silk = new URL(Main.class.getResource("pictures/silk.png").toExternalForm());
+        Tile.silver = new URL(Main.class.getResource("pictures/silver.png").toExternalForm());
+        Tile.sugar = new URL(Main.class.getResource("pictures/sugar.png").toExternalForm());
+        Tile.tusk = new URL(Main.class.getResource("pictures/tusk.png").toExternalForm());
+        Tile.wheat = new URL(Main.class.getResource("pictures/wheat.png").toExternalForm());
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
         for (int i = 0; i < Unit.unitsName.size(); i++) {
