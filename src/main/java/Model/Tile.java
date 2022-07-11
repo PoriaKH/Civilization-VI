@@ -554,8 +554,15 @@ public class Tile extends Polygon {
             this.setFill(new ImagePattern(new Image(hill.toExternalForm())));
         else if (getAttribute() != null && getAttribute().isIce())
             this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
-        else if (getAttribute() != null && getAttribute().isJungle())
-            this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isJungle()) {
+            System.out.println(this.getAttribute().isJungle());
+            try {
+                this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
         else if (isMeadow)
             this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
         else if (isMountain)
@@ -625,13 +632,17 @@ public class Tile extends Polygon {
     public void setResource(Resource resource) {
         this.resource = resource;
     }
-
+    @Expose
     private Improvement workingOnImprovement;//if == null -> null
+    @Expose
     private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
-
+    @Expose
     private boolean doesHaveRoad;
+    @Expose
     private boolean doesHaveRailWay;
+    @Expose
     private boolean isRoadDamaged; // if a unit attack to road/rail it is true
+    @Expose
     private boolean isRailDamaged;
     public void setDesert(boolean desert) {
         isDesert = desert;

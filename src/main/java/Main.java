@@ -1,9 +1,8 @@
 import Controller.PlayGameMenuController;
+import Model.GameSocket;
 import Model.Tile;
 import Model.Units.Unit;
 import View.*;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,11 +12,8 @@ import javafx.stage.Stage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
-
-import static View.MainMenu.loggedInMember;
 
 public class Main extends Application {
     public static Socket socket;
@@ -35,6 +31,7 @@ public class Main extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
+        Hosts.gameSocket = new GameSocket(host,socket.getPort(),socket.getLocalPort());
         CreateHost.dataOutputStream = dataOutputStream;
         CreateHost.dataInputStream = dataInputStream;
         CreateHost.socket = socket;
@@ -137,14 +134,13 @@ public class Main extends Application {
         EconomicalReview.economicalPageURL = new URL(Main.class.getResource("fxml/economicalReview.fxml").toExternalForm());
         MainMenu.lobbyURL = new URL(Main.class.getResource("fxml/lobby.fxml").toExternalForm());
         Lobby.createHostURL = new URL(Main.class.getResource("fxml/createHost.fxml").toExternalForm());
-        Lobby.hostRequestsURL = new URL(Main.class.getResource("fxml/hostRequests.fxml").toExternalForm());
+        Lobby.hostsURL = new URL(Main.class.getResource("fxml/Hosts.fxml").toExternalForm());
         CreateHost.roomURL = new URL(Main.class.getResource("fxml/room.fxml").toExternalForm());
 
 
 
         dataOutputStream.writeUTF("hello world!");
         dataOutputStream.flush();
-
 
         Parent root = FXMLLoader.load(address_login_page);
         Scene scene = new Scene(root);

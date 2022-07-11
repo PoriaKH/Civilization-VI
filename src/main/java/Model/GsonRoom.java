@@ -1,4 +1,4 @@
-package View;
+package Model;
 
 import Model.GameSocket;
 import Model.Member;
@@ -12,10 +12,12 @@ public class GsonRoom {
     public ArrayList<GameSocket> sockets = new ArrayList<>();
 
     public Member creatorMember;
-    public ArrayList<Member> members = new ArrayList<>();
+    public ArrayList<String> nicknames = new ArrayList<>();
 
     public GsonRoom(GameSocket creatorSocket,Member member) {
         this.creatorMember = member;
         this.creatorSocket = creatorSocket;
+        nicknames.add(member.getNickname());
+        sockets.add(creatorSocket);
     }
 }

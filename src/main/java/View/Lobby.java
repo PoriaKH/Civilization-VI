@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -12,7 +13,7 @@ import java.net.URL;
 
 public class Lobby {
     public static URL createHostURL;
-    public static URL hostRequestsURL;
+    public static URL hostsURL;
 
     public Pane root;
     public Stage stage;
@@ -35,11 +36,8 @@ public class Lobby {
         stage.show();
     }
 
-    public void requestsClicked(MouseEvent mouseEvent) throws IOException {
-        root = FXMLLoader.load(hostRequestsURL);
-        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void hostsClicked(MouseEvent mouseEvent) throws IOException, InterruptedException {
+
+        Hosts.run(mouseEvent);
     }
 }
