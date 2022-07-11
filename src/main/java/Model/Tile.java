@@ -541,13 +541,17 @@ public class Tile extends Polygon {
     public void setResource(Resource resource) {
         this.resource = resource;
     }
-
+    @Expose
     private Improvement workingOnImprovement;//if == null -> null
+    @Expose
     private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
-
+    @Expose
     private boolean doesHaveRoad;
+    @Expose
     private boolean doesHaveRailWay;
+    @Expose
     private boolean isRoadDamaged; // if a unit attack to road/rail it is true
+    @Expose
     private boolean isRailDamaged;
     public void setDesert(boolean desert) {
         isDesert = desert;
