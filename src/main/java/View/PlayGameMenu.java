@@ -174,7 +174,6 @@ public class PlayGameMenu {
     }
     public void switchToGame(MouseEvent mouseEvent, ArrayList<Tile> tiles, ArrayList<Civilization> civilizations) throws IOException {
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-
         // Images for buttons and happiness and gold
         Image nextTurnImage = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
         ImageView nextTurnImageView = new ImageView(nextTurnImage);
