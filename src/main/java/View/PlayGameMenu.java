@@ -84,6 +84,10 @@ public class PlayGameMenu {
 
     public static Civilization playingCivilization;
 
+    public static ArrayList<Civilization> civilizations;
+
+    public static ArrayList<Tile> tiles;
+
 
     public Text goldAmount;
     public Text happinessAmount;
@@ -164,15 +168,17 @@ public class PlayGameMenu {
             Tile.map = tiles;
             ArrayList<Civilization> civilizations = playGameMenuController.initializeCivilizations(players.size(), tiles, players);
             Tile.civilizations = civilizations;
+            PlayGameMenu.civilizations = civilizations;
+            PlayGameMenu.tiles = tiles;
             playingCivilization = civilizations.get(0);
             ArrayList<Integer> status = playGameMenuController.statusChecker(playingCivilization, tiles);
             for (int i = 0; i < 72; i++)
                 tiles.get(i).generatingTile(status.get(i));
 
-            switchToGame(mouseEvent, tiles, civilizations);
+            switchToGame(mouseEvent);
         }
     }
-    public void switchToGame(MouseEvent mouseEvent, ArrayList<Tile> tiles, ArrayList<Civilization> civilizations) throws IOException {
+    public void switchToGame(MouseEvent mouseEvent) throws IOException {
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
         // Images for buttons and happiness and gold
         Image nextTurnImage = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
@@ -465,6 +471,13 @@ public class PlayGameMenu {
         ArrayList<Civilization> civilizations = saveGameClass.civilizations;
         ArrayList<Tile> tiles = saveGameClass.tiles;
         loadURLs(saveGameClass);
+        playGameMenuController.loadOriginTileForUnit(tiles);
+        playGameMenuController.loadCivilizationForBuilding(civilizations);
+        playGameMenuController.loadTileForBuilding(tiles);
+        playGameMenuController.loadTileForCitizen(tiles);
+
+        PlayGameMenu.civilizations = civilizations;
+        PlayGameMenu.tiles = tiles;
 
         MainMenu.mediaPlayer.stop();
         root = FXMLLoader.load(gameMenuURL);
@@ -477,7 +490,7 @@ public class PlayGameMenu {
         for (int i = 0; i < 72; i++)
             tiles.get(i).generatingTile(status.get(i));
 
-        switchToGame(mouseEvent, tiles, civilizations);
+        switchToGame(mouseEvent);
     }
 
     private void loadURLs(SaveGameClass saveGameClass) {

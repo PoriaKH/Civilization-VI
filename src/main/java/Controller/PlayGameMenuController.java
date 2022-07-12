@@ -4,6 +4,7 @@ import Model.*;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.PlayGameMenu;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -4572,5 +4573,31 @@ public class PlayGameMenuController {
             return true;
         }
         return false;
+    }
+    public void loadOriginTileForUnit (ArrayList<Tile> map) {
+        for (int i = 0; i < map.size(); i++) {
+            for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {
+                map.get(i).getUnits().get(i1).setOrigin(map.get(i));
+            }
+        }
+    }
+    public void loadTileForCitizen (ArrayList<Tile> map) {
+        for (Tile tile : map) {
+            tile.getCitizen().setTile(tile);
+        }
+    }
+    public void loadTileForBuilding (ArrayList<Tile> map) {
+        for (Tile tile : map) {
+            tile.getBuilding().setTile(tile);
+        }
+    }
+    public void loadCivilizationForBuilding (ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            for (City city : civilization.getCities()) {
+                for (Tile tile : city.getTiles()) {
+                    tile.getBuilding().setCivilization(civilization);
+                }
+            }
+        }
     }
 }

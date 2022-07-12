@@ -2,9 +2,11 @@ package Model;
 
 import com.google.gson.annotations.Expose;
 
+import java.awt.*;
 import java.io.Serializable;
+import javafx.scene.shape.Rectangle;
 
-public class Improvement {
+public class Improvement extends Rectangle {
     @Expose
     private int food;
     @Expose
