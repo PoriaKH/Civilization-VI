@@ -1,11 +1,18 @@
 package Controller;
 
 import Model.*;
+import Model.FunctionsGson.MapCreatorGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 import Model.Units.Unit;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import jdk.net.Sockets;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.*;
 import java.util.regex.Matcher;
 
@@ -15,7 +22,7 @@ public class PlayGameMenuController {
         turn = 0;
     }
 
-    public ArrayList<Tile> mapCreator(int numOfCivilizations, ArrayList<Member> members){//tik
+    public synchronized void mapCreator(int numOfCivilizations, ArrayList<Member> members, ArrayList<Socket> sockets) throws IOException {//tik
         int numOfTiles = 72;
         ArrayList<Tile> map = new ArrayList<>();
         float x0 = 300;
@@ -194,8 +201,16 @@ public class PlayGameMenuController {
         y += 2 * h;
         map.add(new Tile(71,false,false,false,true,false,false,false,false,x,y));
 
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        MapCreatorGson mapCreatorGson = new MapCreatorGson(numOfCivilizations, members);
+        mapCreatorGson.map = map;
+        String response = gson.toJson("mapCreator " + mapCreatorGson);
 
-        return map;
+        for (Socket socket : sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
     }
     public String cheatIncreaseGold(Civilization civilization,int amount){
         civilization.setGold(amount);
