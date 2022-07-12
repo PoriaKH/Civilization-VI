@@ -46,6 +46,7 @@ public class CreateHost {
 
         Room room = new Room();
         room.RoomConstructor(stage,scene,(BorderPane) root,loggedInMember);
+        room.isCreator = true;
 
         GameSocket gameSocket = new GameSocket(host,socket.getPort(),socket.getLocalPort());
         GsonRoom gsonRoom = new GsonRoom(gameSocket,loggedInMember);

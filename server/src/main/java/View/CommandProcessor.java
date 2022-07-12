@@ -58,13 +58,16 @@ public class CommandProcessor {
             matcher.find();
             String text = matcher.group("text");
             Gson gson = new GsonBuilder().create();
+//            System.out.println(gsonRoomArray.gsonRooms.size());
             for(GsonRoom gsonRoom : gsonRoomArray.gsonRooms){
+//                System.out.println("are we here");
                 if(Objects.equals(gsonRoom.creatorMember.getNickname(), text)){
                     String str = gson.toJson(gsonRoom,GsonRoom.class);
                     dataOutputStream.writeUTF(str);
-                    break;
+                    return;
                 }
             }
+            dataOutputStream.writeUTF("null");
         }
         else if(command.startsWith("join request:")){
             Matcher matcher = Pattern.compile("join request:(?<text>.*) (?<nick>.*)").matcher(command);
@@ -74,11 +77,38 @@ public class CommandProcessor {
             for(GsonRoom gsonRoom : gsonRoomArray.gsonRooms){
                 if(Objects.equals(text, gsonRoom.creatorMember.getNickname())){
                     gsonRoom.nicknames.add(nick);
-                    System.out.println("socket.getPort = " + socket.getPort());
-                    System.out.println("socket.getLocalPort = " + socket.getLocalPort());
                     GameSocket gameSocket = new GameSocket(socket.getLocalAddress().toString(),socket.getLocalPort(),socket.getPort());
                     gsonRoom.sockets.add(gameSocket);
                     break;
+                }
+            }
+        }
+        else if(command.equals("amIKicked")){
+            System.out.println("socket.getPort = " + socket.getPort());
+            System.out.println("socket.getLocalPort = " + socket.getLocalPort());
+            for(GsonRoom gsonRoom : gsonRoomArray.gsonRooms){
+                for(GameSocket gameSocket : gsonRoom.sockets){
+                    if(gameSocket.socketPort == socket.getPort()){
+                        dataOutputStream.writeUTF("false");
+                        return;
+                    }
+                }
+            }
+            dataOutputStream.writeUTF("true");
+        }
+        else if(command.startsWith("kick:")){
+            Matcher matcher = Pattern.compile("kick:(?<nick>.*)").matcher(command);
+            matcher.find();
+            String nick = matcher.group("nick");
+            for(GsonRoom gsonRoom : gsonRoomArray.gsonRooms){
+                int index = 0;
+                for(String str : gsonRoom.nicknames){
+                    if(Objects.equals(str, nick)){
+                        gsonRoom.sockets.remove(index);
+                        gsonRoom.nicknames.remove(index);
+                        return;
+                    }
+                    index++;
                 }
             }
         }

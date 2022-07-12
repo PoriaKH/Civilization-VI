@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -50,11 +51,12 @@ public class Hosts {
         ArrayList<Button> buttons = new ArrayList<>();
         for (GsonRoom gsonRoom : gsonRoomArray.gsonRooms) {
             HBox hBox = new HBox();
-            Text text1 = new Text(gsonRoom.creatorMember.getNickname());
+            Label label = new Label(gsonRoom.creatorMember.getNickname());
+            label.setStyle("-fx-font-size: 35;-fx-font-weight: bold;-fx-text-fill: rgb(255,235,0);-fx-effect: innershadow( three-pass-box , rgba(255,252,77,0.8), 6, 0.0 , 0 , 2 );");
             Button joinButton = new Button("join");
-            buttonStringHashMap.put(joinButton, text1.getText());
+            buttonStringHashMap.put(joinButton, label.getText());
             buttons.add(joinButton);
-            hBox.getChildren().add(text1);
+            hBox.getChildren().add(label);
             hBox.getChildren().add(joinButton);
             hBox.setAlignment(Pos.CENTER);
             hBox.setSpacing(10);

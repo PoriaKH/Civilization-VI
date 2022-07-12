@@ -20,4 +20,7 @@ public class GsonRoom {
         nicknames.add(member.getNickname());
         sockets.add(creatorSocket);
     }
+    public String toString() {
+        return "creatorSocket : " + creatorSocket + " sockets : " + sockets + " creatorMember : " + creatorMember + " nicknames : " + nicknames;
+    }
 }
