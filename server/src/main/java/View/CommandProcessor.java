@@ -3,6 +3,7 @@ package View;
 import Controller.PlayGameMenuController;
 import Model.*;
 import Model.FunctionsGson.CheatGson;
+import Model.FunctionsGson.CheatTeleport;
 import Model.FunctionsGson.MapCreatorGson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -157,6 +158,13 @@ public class CommandProcessor {
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
             playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+        }
+        else if (command.startsWith("teleport ")) {
+            command = command.replace("teleport ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            CheatTeleport cheatTeleport = gson.fromJson(command, CheatTeleport.class);
+            playGameMenuController.cheatTeleportUnit(cheatTeleport.unit, cheatTeleport.numberOfDestination,
+                    cheatTeleport.civilization, cheatTeleport.map);
         }
     }
     public static ArrayList<Socket> getGroup(Socket socket) {

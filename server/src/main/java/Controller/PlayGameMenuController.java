@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.FunctionsGson.CheatTeleport;
 import Model.FunctionsGson.MapCreatorGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
@@ -232,43 +233,44 @@ public class PlayGameMenuController {
         // TODO .... bayad yek arrayList az civilization ha dar server bashad
         civilization.setHappiness(amount);
     }
-    public String cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
+    public void cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
         String str;
+        CheatTeleport cheatTeleport = new CheatTeleport();
         if (numberOfDestination < 0 || numberOfDestination > 71) {
-            return "number of destination is invalid !";
+            cheatTeleport.string = "number of destination is invalid !";
+            return;
         }
         Tile origin = unit.getOrigin();
         Tile destination = map.get(numberOfDestination);
 
         if (unit == null) {
-            str = "there is no unit with this name !";
-            return str;
+            cheatTeleport.string = "there is no unit with this name !";
+            return;
         }
         if (unit.getIsOnSleep()|| unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
-            str = "this unit is not active !";
-            return str;
+            cheatTeleport.string = "this unit is not active !";
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this unit is for another civilization !";
-            return str;
+        if (!unit.getCivilization().getName().equals(civilization.getName())) {
+            cheatTeleport.string = "this unit is for another civilization !";
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "this unit has another path !";
-            return str;
+            cheatTeleport.string = "this unit has another path !";
+            return;
         }
         ArrayList<Unit> unitsDestination = destination.getUnits();
         for (int i = 0; i < unitsDestination.size(); i++) {
             if (unitsDestination.get(i).isCivilian() == unit.isCivilian()) {
-                str = "there is another unit with this type in the tile !";
-                return str;
+                cheatTeleport.string = "there is another unit with this type in the tile !";
+                return;
             }
         }
         origin.removeUnit(unit);
         destination.addUnit(unit);
         unit.setOrigin(destination);
         unit.setHasOrdered(true);
-        str = "unit teleported to destination !";
-        return str;
+        cheatTeleport.string = "unit teleported to destination !";
     }
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
