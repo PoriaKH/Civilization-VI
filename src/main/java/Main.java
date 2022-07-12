@@ -33,7 +33,6 @@ public class Main extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
-        clientThread.start();
         Hosts.gameSocket = new GameSocket(host,socket.getPort(),socket.getLocalPort());
         CreateHost.dataOutputStream = dataOutputStream;
         CreateHost.dataInputStream = dataInputStream;
@@ -151,8 +150,7 @@ public class Main extends Application {
         Lobby.createHostURL = new URL(Main.class.getResource("fxml/createHost.fxml").toExternalForm());
         Lobby.hostsURL = new URL(Main.class.getResource("fxml/Hosts.fxml").toExternalForm());
         CreateHost.roomURL = new URL(Main.class.getResource("fxml/room.fxml").toExternalForm());
-
-
+        clientThread.start();
 
         dataOutputStream.writeUTF("hello world!");
         dataOutputStream.flush();

@@ -30,6 +30,7 @@ public class PlayGameMenuController {
         CreateHost.dataOutputStream.writeUTF("mapCreator " + request);
         CreateHost.dataOutputStream.flush();
         String response = CreateHost.dataInputStream.readUTF();
+        response = response.replace("mapCreator ", "");
         MapCreatorGson mapCreatorGson2 = gson.fromJson(response, MapCreatorGson.class);
         return mapCreatorGson2.map;
     }
