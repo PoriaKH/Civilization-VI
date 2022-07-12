@@ -1,7 +1,5 @@
 package View;
 
-import Controller.PlayGameMenuController;
-import Model.FunctionsGson.MapCreatorGson;
 import Model.GameSocket;
 import Model.GsonRoom;
 import Model.GsonRoomArray;
@@ -19,8 +17,6 @@ import java.util.regex.Pattern;
 
 public class CommandProcessor {
     public static ArrayList<GsonRoom> rooms;
-    public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-    public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
 
     public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket) throws IOException {
         if(command.startsWith("{\"creatorSocket")){
@@ -116,21 +112,5 @@ public class CommandProcessor {
                 }
             }
         }
-        else if (command.startsWith("mapCreator ")) {
-            command = command.replace("mapCreator ", "");
-            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
-            MapCreatorGson mapCreatorGson = gson.fromJson(command, MapCreatorGson.class);
-            playGameMenuController.mapCreator(mapCreatorGson.numOfCivilizations, mapCreatorGson.members, getGroup(socket));
-        }
-    }
-
-    // get arrayList of sockets that contains specific socket
-    public static ArrayList<Socket> getGroup (Socket socket) {
-        for (ArrayList<Socket> arrayList : CommandProcessor.sockets) {
-            for (Socket socket1 : arrayList) {
-                if (socket.equals(socket1)) return arrayList;
-            }
-        }
-        return null;
     }
 }
