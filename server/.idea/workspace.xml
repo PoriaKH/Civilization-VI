@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatGson.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/MapCreatorGson.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-    </list>
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added cheatGson and else if in command processor" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +80,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657443839399</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added cheatGson and else if in command processor">
+      <created>1657632873760</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1657632873760</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,6 +107,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="converted server project to maven" />
-    <option name="LAST_COMMIT_MESSAGE" value="converted server project to maven" />
+    <MESSAGE value="added cheatGson and else if in command processor" />
+    <option name="LAST_COMMIT_MESSAGE" value="added cheatGson and else if in command processor" />
   </component>
 </project>

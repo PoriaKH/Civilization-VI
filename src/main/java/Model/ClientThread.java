@@ -9,8 +9,10 @@ import com.google.gson.GsonBuilder;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+
 public class ClientThread extends Thread{
     public DataInputStream dataInputStream;
+    public PlayGameMenuController playGameMenuController = new PlayGameMenuController();
     @Override
     public void run() {
         while (true) {
@@ -32,10 +34,16 @@ public class ClientThread extends Thread{
             response = response.replace("mapCreator ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             MapCreatorGson mapCreatorGson = gson.fromJson(response, MapCreatorGson.class);
-            if (mapCreatorGson.civilizations != null)
-            PlayGameMenu.civilizations = mapCreatorGson.civilizations;
-            if (mapCreatorGson.map != null)
-            PlayGameMenu.tiles = mapCreatorGson.map;
+            if (mapCreatorGson.civilizations != null) {
+                playGameMenuController.loadTileForCitizen(mapCreatorGson.map);
+                playGameMenuController.loadTileForBuilding(mapCreatorGson.map);
+                playGameMenuController.loadOriginTileForUnit(mapCreatorGson.map);
+                PlayGameMenu.civilizations = mapCreatorGson.civilizations;
+            }
+            if (mapCreatorGson.map != null) {
+                playGameMenuController.loadCivilizationForBuilding(mapCreatorGson.civilizations);
+                PlayGameMenu.tiles = mapCreatorGson.map;
+            }
         }
     }
 }
