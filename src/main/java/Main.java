@@ -107,6 +107,17 @@ public class Main extends Application {
         Tile.sugar = new URL(Main.class.getResource("pictures/sugar.png").toExternalForm());
         Tile.tusk = new URL(Main.class.getResource("pictures/tusk.png").toExternalForm());
         Tile.wheat = new URL(Main.class.getResource("pictures/wheat.png").toExternalForm());
+
+        Tile.agriculture = new URL(Main.class.getResource("pictures/agriculture.png").toExternalForm());
+        Tile.camp = new URL(Main.class.getResource("pictures/camp.png").toExternalForm());
+        Tile.farm = new URL(Main.class.getResource("pictures/farm.png").toExternalForm());
+        Tile.laboratory = new URL(Main.class.getResource("pictures/laboratory.png").toExternalForm());
+        Tile.lumberMill = new URL(Main.class.getResource("pictures/lumberMill.png").toExternalForm());
+        Tile.mine = new URL(Main.class.getResource("pictures/mine.png").toExternalForm());
+        Tile.paddock = new URL(Main.class.getResource("pictures/paddock.png").toExternalForm());
+        Tile.stoneMine = new URL(Main.class.getResource("pictures/stoneMine.png").toExternalForm());
+        Tile.tradingPost = new URL(Main.class.getResource("pictures/tradingPost.png").toExternalForm());
+
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
         for (int i = 0; i < Unit.unitsName.size(); i++) {

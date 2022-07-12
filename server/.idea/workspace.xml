@@ -5,8 +5,68 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/agriculture.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/camp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/farm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/laboratory.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/lumberMill.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/mine.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/paddock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/stoneMine.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/tradingPost.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/Model/City.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Civilian.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Unit$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Warrior.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/BuildingsPage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/CheatMenu.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/CityPage$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/CityPage$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/CityPage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/CityPanel$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/CityPanel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/Demographics.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/Diplomacy$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/Diplomacy$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/Diplomacy$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/Diplomacy$4.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/Diplomacy.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/DiplomaticInformation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/DiplomaticRequests$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/DiplomaticRequests.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/DiplomaticReview.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/Diplomatics.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/EconomicalReview.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/ExamplePage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/GeneralUnitPanel$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/GeneralUnitPanel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/InfoPanel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/Messages.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/SendTradeRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/SystemMessages.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/TradePage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/TradeRequests$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/TradeRequests.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Improvement.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Improvement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,9 +103,9 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
@@ -66,6 +126,7 @@
       <updated>1657443459977</updated>
       <workItem from="1657443461593" duration="19227000" />
       <workItem from="1657534031874" duration="922000" />
+      <workItem from="1657620399864" duration="949000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
