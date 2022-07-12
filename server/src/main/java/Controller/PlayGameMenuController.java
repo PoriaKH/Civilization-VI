@@ -212,23 +212,25 @@ public class PlayGameMenuController {
             dataOutputStream.flush();
         }
     }
-    public String cheatIncreaseGold(Civilization civilization,int amount){
+    public void cheatIncreaseGold(Civilization civilization, int amount){
+        // TODO .... bayad yek arrayList az civilization ha dar server bashad
         civilization.setGold(amount);
-        return "cheat code activated successfully";
     }
-    public String cheatIncreaseFood(Civilization civilization,int amount){
+    public void cheatIncreaseFood(Civilization civilization,int amount){
+        // TODO .... bayad yek arrayList az civilization ha dar server bashad
         for(City city : civilization.getCities()){
             city.setTotalFood(amount);
         }
-        return "cheat code activated successfully";
+
     }
-    public String cheatIncreaseTechnology(Civilization civilization,int amount){
+    public void cheatIncreaseTechnology(Civilization civilization,int amount){
+        // TODO .... bayad yek arrayList az civilization ha dar server bashad
         civilization.setScience(amount);
-        return "cheat code activated successfully";
+
     }
-    public String cheatIncreaseHappiness(Civilization civilization, int amount){
+    public void cheatIncreaseHappiness(Civilization civilization, int amount){
+        // TODO .... bayad yek arrayList az civilization ha dar server bashad
         civilization.setHappiness(amount);
-        return "cheat code activated successfully";
     }
     public String cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
         String str;

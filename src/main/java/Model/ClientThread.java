@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.PlayGameMenuController;
+import Model.FunctionsGson.CheatGson;
 import Model.FunctionsGson.MapCreatorGson;
 import View.PlayGameMenu;
 import com.google.gson.Gson;
@@ -34,15 +35,30 @@ public class ClientThread extends Thread{
             response = response.replace("mapCreator ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             MapCreatorGson mapCreatorGson = gson.fromJson(response, MapCreatorGson.class);
-            if (mapCreatorGson.civilizations != null) {
+            if (mapCreatorGson.map != null) {
                 playGameMenuController.loadTileForCitizen(mapCreatorGson.map);
                 playGameMenuController.loadTileForBuilding(mapCreatorGson.map);
                 playGameMenuController.loadOriginTileForUnit(mapCreatorGson.map);
+                PlayGameMenu.tiles = mapCreatorGson.map;
+            }
+            if (mapCreatorGson.civilizations != null) {
+                playGameMenuController.loadCivilizationForBuilding(mapCreatorGson.civilizations);
                 PlayGameMenu.civilizations = mapCreatorGson.civilizations;
             }
-            if (mapCreatorGson.map != null) {
-                playGameMenuController.loadCivilizationForBuilding(mapCreatorGson.civilizations);
-                PlayGameMenu.tiles = mapCreatorGson.map;
+        }
+        else if (response.startsWith("cheat ")) {
+            response = response.replace("cheat ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            CheatGson cheatGson = gson.fromJson(response, CheatGson.class);
+            if (cheatGson.tiles != null) {
+                playGameMenuController.loadTileForCitizen(cheatGson.tiles);
+                playGameMenuController.loadTileForBuilding(cheatGson.tiles);
+                playGameMenuController.loadOriginTileForUnit(cheatGson.tiles);
+                PlayGameMenu.tiles = cheatGson.tiles;
+            }
+            if (cheatGson.civilizations != null) {
+                playGameMenuController.loadCivilizationForBuilding(cheatGson.civilizations);
+                PlayGameMenu.civilizations = cheatGson.civilizations;
             }
         }
     }
