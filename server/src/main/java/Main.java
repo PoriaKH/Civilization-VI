@@ -28,6 +28,7 @@ public class Main {
     public static void main(String[] args) {
         GsonRoomArray gsonRoomArray = new GsonRoomArray();
         CommandProcessor.rooms = rooms;
+
         try {
             while (true){
                 Socket socket = serverSocket.accept();
