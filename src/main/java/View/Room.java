@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -141,6 +142,27 @@ public class Room {
         if(!isCreator)
             startButton.setDisable(true);
 
+        startButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    refreshThePage(vBox,event);
+                    if(gsonRoom.nicknames.size() > 5){
+                        showAlert("capacity over limit !");
+                    }
+                    else if(gsonRoom.nicknames.size() == 1){
+                        showAlert("the game must have more than one player to start !");
+                    }
+                    else {
+                        //start the game...
+                        //TODO...Koochak
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         hBox.getChildren().add(startButton);
         hBox.setSpacing(15);
         root.setBottom(hBox);
@@ -226,5 +248,12 @@ public class Room {
                 }
             });
         }
+    }
+    public void showAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("result :");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
