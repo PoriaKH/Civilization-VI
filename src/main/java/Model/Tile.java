@@ -12,6 +12,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
 import java.net.URL;

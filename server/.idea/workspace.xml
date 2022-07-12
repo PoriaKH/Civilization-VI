@@ -5,10 +5,60 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
-      <change beforePath="$PROJECT_DIR$/../saveGame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../saveGame.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/City.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Civilian.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Unit$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Warrior.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/BuildingsPage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/CheatMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/CityPage$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/CityPage$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/CityPage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/CityPanel$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/CityPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Demographics.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Diplomacy$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Diplomacy$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Diplomacy$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Diplomacy$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Diplomacy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/DiplomaticInformation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/DiplomaticRequests$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/DiplomaticRequests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/DiplomaticReview.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Diplomatics.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/EconomicalReview.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/ExamplePage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/GeneralUnitPanel$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/GeneralUnitPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/GsonRoom.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/HostRequests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/InfoPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Messages.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/SendTradeRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/SystemMessages.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/TradePage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/TradeRequests$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/TradeRequests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/fxml/hostRequests.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
