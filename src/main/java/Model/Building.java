@@ -298,6 +298,7 @@ public class Building extends Rectangle { /// what is civilization ?
     public Civilization getCivilization() {
         return civilization;
     }
+
     public Tile getTile(){
         return this.tile;
     }
@@ -340,5 +341,12 @@ public class Building extends Rectangle { /// what is civilization ?
 
     public int getMaintenance() {
         return maintenance;
+    }
+
+    public void setTile(Tile tile) {
+        this.tile = tile;
+    }
+    public void setCivilization(Civilization civilization) {
+        this.civilization = civilization;
     }
 }

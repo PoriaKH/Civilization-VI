@@ -1,11 +1,21 @@
 package Controller;
 
 import Model.*;
+import Model.FunctionsGson.CheatGson;
+import Model.FunctionsGson.CheatTeleport;
+import Model.FunctionsGson.MapCreatorGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.CreateHost;
 import View.PlayGameMenu;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.*;
 import java.util.regex.Matcher;
 
@@ -15,243 +25,100 @@ public class PlayGameMenuController {
         turn = 0;
     }
 
-    public ArrayList<Tile> mapCreator(int numOfCivilizations,ArrayList<Member> members){//tik
-        int numOfTiles = 72;
-        ArrayList<Tile> map = new ArrayList<>();
-        float x0 = 300;
-        float y0 = 300;
-
-        Tile t0 = new Tile(0,false,false,false,true,false,false,false,false,x0,y0);
-        float h = (float)t0.getH();
-        float radius = t0.getRadius();
-
-        map.add(t0);
-        float x = x0;
-        float y = y0 + 2 * h;
-        map.add(new Tile(1,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(2,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(3,false,false,false,false,true,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(4,false,false,false,false,true,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(5,false,false,false,false,true,false,false,false,x,y));
-
-        x = x0 + 3 * radius / 2;
-        y = y0 + h;
-        map.add(new Tile(6,false,false,false,false,false,true,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(7,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(8,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(9,false,false,false,false,false,true,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(10,false,false,false,false,true,false,false,false,x,y));
-
-        x += 3 * radius / 2;
-        y = y0;
-        map.add(new Tile(11,false,false,true,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(12,false,false,true,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(13,false,false,false,true,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(14,false,false,true,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(15,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(16,false,false,false,false,false,false,true,false,x,y));
-
-        x += 3 * radius / 2;
-        y = y0 + h;
-        map.add(new Tile(17,false,false,true,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(18,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(19,false,false,true,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(20,false,false,false,false,false,true,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(21,false,false,false,false,true,false,false,false,x,y));
-
-        x += 3 * radius / 2;
-        y = y0;
-        map.add(new Tile(22,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(23,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(24,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(25,false,false,false,false,false,false,true,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(26,false,false,false,false,false,false,true,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(27,false,false,false,false,true,false,false,false,x,y));
-
-        x += 3 * radius / 2;
-        y = y0 + h;
-        map.add(new Tile(28,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(29,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(30,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(31,false,false,false,false,false,false,true,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(32,false,false,false,false,true,false,false,false,x,y));
-
-        x += 3 * radius / 2;
-        y = y0;
-        map.add(new Tile(33,false,false,false,true,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(34,false,false,false,true,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(35,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(36,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(37,false,false,false,false,true,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(38,false,false,false,false,true,false,false,false,x,y));
-
-        x += 3 * radius / 2;
-        y = y0 + h;
-        map.add(new Tile(39,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(40,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(41,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(42,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(43,false,false,false,false,false,false,true,false,x,y));
-
-        x += 3 * radius / 2;
-        y = y0;
-        map.add(new Tile(44,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(45,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(46,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(47,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(48,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(49,true,false,false,false,false,false,false,false,x,y));
-
-        x += 3 * radius / 2;
-        y = y0 + h;
-        map.add(new Tile(50,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(51,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(52,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(53,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(54,true,false,false,false,false,false,false,false,x,y));
-
-        x += 3 * radius / 2;
-        y = y0;
-        map.add(new Tile(55,false,false,false,false,false,false,true,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(56,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(57,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(58,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(59,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(60,false,false,false,false,false,false,false,true,x,y));
-
-        x += 3 * radius / 2;
-        y = y0 + h;
-        map.add(new Tile(61,false,true,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(62,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(63,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(64,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(65,false,false,false,false,false,false,false,true,x,y));
-
-        x += 3 * radius / 2;
-        y = y0;
-        map.add(new Tile(66,false,false,false,true,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(67,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(68,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(69,true,false,false,false,false,false,false,false,x,y));
-        y += 2 * h;
-        map.add(new Tile(70,false,false,false,false,false,false,false,true,x,y));
-        y += 2 * h;
-        map.add(new Tile(71,false,false,false,true,false,false,false,false,x,y));
-
-
-        return map;
+    public ArrayList<Tile> mapCreator(int numOfCivilizations,ArrayList<Member> members) throws IOException {//tik
+        MapCreatorGson mapCreatorGson = new MapCreatorGson("mapCreator", numOfCivilizations, members);
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(mapCreatorGson);
+        CreateHost.dataOutputStream.writeUTF("mapCreator " + request);
+        CreateHost.dataOutputStream.flush();
+        String response = CreateHost.dataInputStream.readUTF();
+        response = response.replace("mapCreator ", "");
+        MapCreatorGson mapCreatorGson2 = gson.fromJson(response, MapCreatorGson.class);
+        return mapCreatorGson2.map;
     }
-    public String cheatIncreaseGold(Civilization civilization,int amount){
-        civilization.setGold(amount);
+    public String cheatIncreaseGold(Civilization civilization,int amount) throws IOException {
+        CheatGson cheatGson = new CheatGson();
+        cheatGson.amount = amount;
+        cheatGson.civilization = civilization;
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(cheatGson);
+        CreateHost.dataOutputStream.writeUTF("cheatGold " + request);
+        CreateHost.dataOutputStream.flush();
+        String response = CreateHost.dataInputStream.readUTF();
+        response = response.replace("cheat ", "");
+        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
+        if (cheatGson2.tiles != null)
+        PlayGameMenu.tiles = cheatGson2.tiles;
+        if (cheatGson2.civilization != null)
+        PlayGameMenu.civilizations = cheatGson2.civilizations;
         return "cheat code activated successfully";
     }
-    public String cheatIncreaseFood(Civilization civilization,int amount){
-        for(City city : civilization.getCities()){
-            city.setTotalFood(amount);
-        }
+    public String cheatIncreaseFood(Civilization civilization,int amount) throws IOException {
+        CheatGson cheatGson = new CheatGson();
+        cheatGson.amount = amount;
+        cheatGson.civilization = civilization;
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(cheatGson);
+        CreateHost.dataOutputStream.writeUTF("cheatFood " + request);
+        CreateHost.dataOutputStream.flush();
+        String response = CreateHost.dataInputStream.readUTF();
+        response = response.replace("cheat ", "");
+        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
+        if (cheatGson2.tiles != null)
+            PlayGameMenu.tiles = cheatGson2.tiles;
+        if (cheatGson2.civilization != null)
+            PlayGameMenu.civilizations = cheatGson2.civilizations;
         return "cheat code activated successfully";
     }
-    public String cheatIncreaseTechnology(Civilization civilization,int amount){
-        civilization.setScience(amount);
+    public String cheatIncreaseTechnology(Civilization civilization,int amount) throws IOException {
+        CheatGson cheatGson = new CheatGson();
+        cheatGson.amount = amount;
+        cheatGson.civilization = civilization;
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(cheatGson);
+        CreateHost.dataOutputStream.writeUTF("cheatTechnology " + request);
+        CreateHost.dataOutputStream.flush();
+        String response = CreateHost.dataInputStream.readUTF();
+        response = response.replace("cheat ", "");
+        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
+        if (cheatGson2.tiles != null)
+            PlayGameMenu.tiles = cheatGson2.tiles;
+        if (cheatGson2.civilization != null)
+            PlayGameMenu.civilizations = cheatGson2.civilizations;
         return "cheat code activated successfully";
     }
-    public String cheatIncreaseHappiness(Civilization civilization, int amount){
-        civilization.setHappiness(amount);
+    public String cheatIncreaseHappiness(Civilization civilization, int amount) throws IOException {
+        CheatGson cheatGson = new CheatGson();
+        cheatGson.amount = amount;
+        cheatGson.civilization = civilization;
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(cheatGson);
+        CreateHost.dataOutputStream.writeUTF("cheatHappiness " + request);
+        CreateHost.dataOutputStream.flush();
+        String response = CreateHost.dataInputStream.readUTF();
+        response = response.replace("cheat ", "");
+        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
+        if (cheatGson2.tiles != null)
+            PlayGameMenu.tiles = cheatGson2.tiles;
+        if (cheatGson2.civilization != null)
+            PlayGameMenu.civilizations = cheatGson2.civilizations;
         return "cheat code activated successfully";
     }
-    public String cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
-        String str;
-        if (numberOfDestination < 0 || numberOfDestination > 71) {
-            return "number of destination is invalid !";
-        }
-        Tile origin = unit.getOrigin();
-        Tile destination = map.get(numberOfDestination);
+    public String cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) throws IOException {
+        CheatTeleport cheatTeleport = new CheatTeleport();
+        cheatTeleport.numberOfDestination = numberOfDestination;
+        cheatTeleport.map = map;
+        cheatTeleport.unit = unit;
+        cheatTeleport.civilization = civilization;
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+        String request = gson.toJson(cheatTeleport);
+        CreateHost.dataOutputStream.writeUTF("teleport " + request);
+        CreateHost.dataOutputStream.flush();
+        String response = CreateHost.dataInputStream.readUTF();
+        response = response .replace("teleport ", "");
+        CheatTeleport cheatTeleport2 = gson.fromJson(response, CheatTeleport.class);
 
-        if (unit == null) {
-            str = "there is no unit with this name !";
-            return str;
-        }
-        if (unit.getIsOnSleep()|| unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
-            str = "this unit is not active !";
-            return str;
-        }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this unit is for another civilization !";
-            return str;
-        }
-        if (unit.getPath().size() != 0) {
-            str = "this unit has another path !";
-            return str;
-        }
-        ArrayList<Unit> unitsDestination = destination.getUnits();
-        for (int i = 0; i < unitsDestination.size(); i++) {
-            if (unitsDestination.get(i).isCivilian() == unit.isCivilian()) {
-                str = "there is another unit with this type in the tile !";
-                return str;
-            }
-        }
-        origin.removeUnit(unit);
-        destination.addUnit(unit);
-        unit.setOrigin(destination);
-        unit.setHasOrdered(true);
-        str = "unit teleported to destination !";
-        return str;
+        return cheatTeleport2.string;
     }
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
@@ -4573,5 +4440,31 @@ public class PlayGameMenuController {
             return true;
         }
         return false;
+    }
+    public void loadOriginTileForUnit (ArrayList<Tile> map) {
+        for (int i = 0; i < map.size(); i++) {
+            for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {
+                map.get(i).getUnits().get(i1).setOrigin(map.get(i));
+            }
+        }
+    }
+    public void loadTileForCitizen (ArrayList<Tile> map) {
+        for (Tile tile : map) {
+            tile.getCitizen().setTile(tile);
+        }
+    }
+    public void loadTileForBuilding (ArrayList<Tile> map) {
+        for (Tile tile : map) {
+            tile.getBuilding().setTile(tile);
+        }
+    }
+    public void loadCivilizationForBuilding (ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            for (City city : civilization.getCities()) {
+                for (Tile tile : city.getTiles()) {
+                    tile.getBuilding().setCivilization(civilization);
+                }
+            }
+        }
     }
 }

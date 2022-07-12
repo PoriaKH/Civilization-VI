@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added cheatGson and else if in command processor">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatTeleport.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatTeleport.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Improvement.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Improvement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,10 +46,15 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../gsonTest3" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Model.FunctionsGson" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
@@ -66,9 +75,11 @@
       <updated>1657443459977</updated>
       <workItem from="1657443461593" duration="19227000" />
       <workItem from="1657534031874" duration="922000" />
-      <workItem from="1657620399864" duration="949000" />
-      <workItem from="1657621474636" duration="1126000" />
-      <workItem from="1657628038412" duration="705000" />
+      <workItem from="1657560185061" duration="291000" />
+      <workItem from="1657620003109" duration="922000" />
+      <workItem from="1657624661800" duration="134000" />
+      <workItem from="1657624845949" duration="698000" />
+      <workItem from="1657625874166" duration="2636000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -77,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657443839399</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added cheatGson and else if in command processor">
+      <created>1657632873760</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1657632873760</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -97,6 +115,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="converted server project to maven" />
-    <option name="LAST_COMMIT_MESSAGE" value="converted server project to maven" />
+    <MESSAGE value="added cheatGson and else if in command processor" />
+    <option name="LAST_COMMIT_MESSAGE" value="added cheatGson and else if in command processor" />
   </component>
 </project>
