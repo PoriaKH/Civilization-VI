@@ -1,9 +1,6 @@
 package View;
 
-import Model.GameSocket;
-import Model.GsonRoom;
-import Model.GsonRoomArray;
-import Model.Member;
+import Model.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -17,6 +14,8 @@ import java.util.regex.Pattern;
 
 public class CommandProcessor {
     public static ArrayList<GsonRoom> rooms = new ArrayList<>();
+    public static ArrayList<Socket> allSockets = new ArrayList<>();
+    public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
 
     public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket) throws IOException {
         if(command.startsWith("{\"creatorSocket")){
@@ -111,6 +110,19 @@ public class CommandProcessor {
                     index++;
                 }
             }
+        }
+        else if(command.startsWith("{\"gameSockets")){
+            Gson gson = new GsonBuilder().create();
+            GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);
+            ArrayList<Socket> sockets2 = new ArrayList<>();
+            for(GameSocket gameSocket : gameSocketArray.gameSockets){
+                for(Socket socket1 : allSockets){
+                    if(gameSocket.socketPort == socket1.getPort()){
+                        sockets2.add(socket1);
+                    }
+                }
+            }
+            sockets.add(sockets2);
         }
     }
 }

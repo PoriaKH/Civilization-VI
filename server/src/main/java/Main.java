@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+import static View.CommandProcessor.allSockets;
+
 public class Main {
     public static ServerSocket serverSocket;
     static {
@@ -23,11 +25,11 @@ public class Main {
 
     public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
     public static ArrayList<GsonRoom> rooms = new ArrayList<>();
-    public static ArrayList<Socket> allSockets = new ArrayList<>();
 
     public static void main(String[] args) {
         GsonRoomArray gsonRoomArray = new GsonRoomArray();
         CommandProcessor.rooms = rooms;
+        CommandProcessor.sockets = sockets;
 
         try {
             while (true){

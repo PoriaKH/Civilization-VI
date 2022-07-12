@@ -1,6 +1,7 @@
 package View;
 
 import Model.GsonRoom;
+import Model.GsonRoomArray;
 import Model.Member;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -75,7 +76,6 @@ public class Room {
         dataOutputStream.flush();
         String str = dataInputStream.readUTF();
         if(str.equals("null")){
-            System.out.println("true");
             this.gsonRoom = null;
             return;
         }
@@ -155,7 +155,15 @@ public class Room {
                     }
                     else {
                         //start the game...
+
+                        Gson gson = new GsonBuilder().create();
+                        GameSocketArray gameSocketArray = new GameSocketArray();
+                        gameSocketArray.gameSockets = gsonRoom.sockets;
+                        String str = gson.toJson(gameSocketArray);
+                        dataOutputStream.writeUTF(str);
+                        dataOutputStream.flush();
                         //TODO...Koochak
+
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -173,20 +181,15 @@ public class Room {
     }
     public void removeRoom() throws IOException {
         Gson gson = new GsonBuilder().create();
-        System.out.println("logged in :" + loggedInMember);
         String send = gson.toJson(loggedInMember);
-        System.out.println(send);
         dataOutputStream.writeUTF(send);
         dataOutputStream.flush();
     }
     public void refreshThePage(VBox vBox,Event event) throws IOException {
-        System.out.println("here1");
         kickButtons = new ArrayList<>();
         buttonStringHashMap = new HashMap<>();
         try {
-            System.out.println("here2");
             setAmIKicked();
-            System.out.println("here3");
             setGsonRoom();
         } catch (IOException e) {
             e.printStackTrace();
@@ -199,7 +202,6 @@ public class Room {
             stage.show();
         }
         if(gsonRoom != null) {
-            System.out.println("here4");
             while(vBox.getChildren().size() > 0){
                 vBox.getChildren().remove(0);
             }
@@ -222,7 +224,6 @@ public class Room {
 
         }
         else {
-            System.out.println("here5");
             root = FXMLLoader.load(lobbyURL);
             stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -237,7 +238,6 @@ public class Room {
                 @Override
                 public void handle(MouseEvent event) {
                     String nick = buttonStringHashMap.get(button);
-                    System.out.println(nick);
                     try {
                         dataOutputStream.writeUTF("kick:" + nick);
                         dataOutputStream.flush();
