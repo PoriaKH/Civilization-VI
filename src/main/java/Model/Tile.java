@@ -23,6 +23,24 @@ import java.util.Random;
 
 public class Tile extends Polygon {
     @Expose
+    public static URL agriculture;
+    @Expose
+    public static URL camp;
+    @Expose
+    public static URL farm;
+    @Expose
+    public static URL laboratory;
+    @Expose
+    public static URL lumberMill;
+    @Expose
+    public static URL mine;
+    @Expose
+    public static URL paddock;
+    @Expose
+    public static URL stoneMine;
+    @Expose
+    public static URL tradingPost;
+    @Expose
     public static URL banana;
     @Expose
     public static URL coal;
@@ -948,6 +966,31 @@ public class Tile extends Polygon {
                         break;
                     }
                 }
+            Improvement improvement = workingOnImprovement;
+            double x2 = this.getX() + (h / 2);
+            double y2 = this.getY() + (h / 2);
+            resource.setX(x2);
+            resource.setY(y2);
+            resource.setWidth(60);
+            resource.setHeight(60);
+            if (improvement.getName().equals("agriculture"))
+                improvement.setFill(new ImagePattern(new Image(agriculture.toExternalForm())));
+            else if (improvement.getName().equals("camp"))
+                improvement.setFill(new ImagePattern(new Image(camp.toExternalForm())));
+            else if (improvement.getName().equals("farm"))
+                improvement.setFill(new ImagePattern(new Image(farm.toExternalForm())));
+            else if (improvement.getName().equals("laboratory"))
+                improvement.setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
+            else if (improvement.getName().equals("lumberMill"))
+                improvement.setFill(new ImagePattern(new Image(lumberMill.toExternalForm())));
+            else if (improvement.getName().equals("mine"))
+                improvement.setFill(new ImagePattern(new Image(mine.toExternalForm())));
+            else if (improvement.getName().equals("paddock"))
+                improvement.setFill(new ImagePattern(new Image(paddock.toExternalForm())));
+            else if (improvement.getName().equals("stoneMine"))
+                improvement.setFill(new ImagePattern(new Image(stoneMine.toExternalForm())));
+            else if (improvement.getName().equals("tradingPost"))
+                improvement.setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
             workingOnImprovement = null;
         }
         this.improvementEarnedPercent.replace(this.workingOnImprovement, roundLeft);
