@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.FunctionsGson.CheatGson;
 import Model.FunctionsGson.MapCreatorGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
@@ -34,8 +35,21 @@ public class PlayGameMenuController {
         MapCreatorGson mapCreatorGson2 = gson.fromJson(response, MapCreatorGson.class);
         return mapCreatorGson2.map;
     }
-    public String cheatIncreaseGold(Civilization civilization,int amount){
-        civilization.setGold(amount);
+    public String cheatIncreaseGold(Civilization civilization,int amount) throws IOException {
+        CheatGson cheatGson = new CheatGson();
+        cheatGson.amount = amount;
+        cheatGson.civilization = civilization;
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(cheatGson);
+        CreateHost.dataOutputStream.writeUTF("cheatGold " + request);
+        CreateHost.dataOutputStream.flush();
+        String response = CreateHost.dataInputStream.readUTF();
+        response = response.replace("cheatGold ", "");
+        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
+        if (cheatGson2.tiles != null)
+        PlayGameMenu.tiles = cheatGson2.tiles;
+        if (cheatGson2.civilization != null)
+        PlayGameMenu.civilizations = cheatGson2.civilizations;
         return "cheat code activated successfully";
     }
     public String cheatIncreaseFood(Civilization civilization,int amount){
