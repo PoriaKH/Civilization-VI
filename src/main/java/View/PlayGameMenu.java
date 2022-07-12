@@ -471,6 +471,10 @@ public class PlayGameMenu {
         ArrayList<Civilization> civilizations = saveGameClass.civilizations;
         ArrayList<Tile> tiles = saveGameClass.tiles;
         loadURLs(saveGameClass);
+        playGameMenuController.loadOriginTileForUnit(tiles);
+        playGameMenuController.loadCivilizationForBuilding(civilizations);
+        playGameMenuController.loadTileForBuilding(tiles);
+        playGameMenuController.loadTileForCitizen(tiles);
 
         PlayGameMenu.civilizations = civilizations;
         PlayGameMenu.tiles = tiles;
