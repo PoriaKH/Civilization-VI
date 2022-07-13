@@ -39,7 +39,7 @@ import static View.ProfileMenu.loggedInMember;
 
 public class Room {
     public boolean amIKicked = false;
-    public boolean isHostDisconnected = false;
+    public static boolean isMyTurn = false;
 
     public boolean isCreator = false;
     public GsonRoom gsonRoom;
@@ -163,6 +163,20 @@ public class Room {
                         dataOutputStream.writeUTF(str);
                         dataOutputStream.flush();
                         //TODO...Koochak
+                        //dadadadada
+                        ArrayList<DataInputStream> dataInputStreams  = new ArrayList<>();
+                        ArrayList<DataOutputStream> dataOutputStreams = new ArrayList<>();
+
+//                        while(true) {
+//                            String txt = dataInputStream.readUTF();
+//                            //                            HashMap<Member,Boolean> turn = new HashMap<>();
+//                            //isMyTurn = true
+//                            GameGroup = ... ;
+//                            if(isMyTurn){
+//
+//                            }
+//                        }
+
 
                     }
                 } catch (IOException e) {
