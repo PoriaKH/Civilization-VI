@@ -4,6 +4,7 @@ import Model.GameSocket;
 import Model.Tile;
 import Model.Units.Unit;
 import View.*;
+import View.Transition.VictoryAnimation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -171,6 +172,7 @@ public class Main extends Application {
 
         TechnologyPanel.technologyPanelURL = new URL(Main.class.getResource("fxml/technologyPanel.fxml").toExternalForm());
         ResearchInformation.researchInformationURL = new URL(Main.class.getResource("fxml/researchInformation.fxml").toExternalForm());
+        VictoryAnimation.winingTransitionURL = new URL(Main.class.getResource("pictures/victory").toExternalForm());
 
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
