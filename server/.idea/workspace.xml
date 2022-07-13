@@ -4,67 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
-      <change afterPath="$PROJECT_DIR$/../src/main/java/View/ResearchInformation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/View/TechnologyTree.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/fxml/technologyPanel.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Acoustics.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Agricultures.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/AnimalHusbandry.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Archaeology.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Archery.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Banking.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Biology.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/BronzeWorking.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Calendar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Chemistry.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Chivalry.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/CivilService.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Combustion.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Construction.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Currency.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Dynamite.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Economics.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Education.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Electricity.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Engineering.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Fertilizer.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Gunpowder.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/HorsebackRiding.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/IronWorking.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Machinery.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Masonry.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Mathematics.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/MetalCasting.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Metallurgy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/MilitaryScience.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Mining.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Philosophy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Physics.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Pottery.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/PrintingPress.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Radio.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Railroads.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/ReplaceableParts.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Rifling.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/ScientificTheory.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/SteamPower.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Steel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Telegraph.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/TheWheel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Theology.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Trapping.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/Writing.png" afterDir="false" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="done some on teleport">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/TechnologyPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/TechnologyPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/TechnologyPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/TechnologyPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,9 +74,6 @@
       <workItem from="1657624661800" duration="134000" />
       <workItem from="1657624845949" duration="698000" />
       <workItem from="1657625874166" duration="2636000" />
-      <workItem from="1657651163646" duration="606000" />
-      <workItem from="1657651803654" duration="595000" />
-      <workItem from="1657715508180" duration="226000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -151,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657632873760</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="done some on teleport">
+      <created>1657635849988</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1657635849988</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,6 +117,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="converted server project to maven" />
     <MESSAGE value="added cheatGson and else if in command processor" />
-    <option name="LAST_COMMIT_MESSAGE" value="added cheatGson and else if in command processor" />
+    <MESSAGE value="done some on teleport" />
+    <option name="LAST_COMMIT_MESSAGE" value="done some on teleport" />
   </component>
 </project>
