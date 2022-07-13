@@ -43,8 +43,11 @@ public class Hosts {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(15);
         dataOutputStream.writeUTF("return hosts");
+        System.out.println("reached2");
         dataOutputStream.flush();
         String str = dataInputStream.readUTF();
+        System.out.println("reached3");
+        System.out.println(str);
         Gson gson = new GsonBuilder().create();
         GsonRoomArray gsonRoomArray = gson.fromJson(str, GsonRoomArray.class);
         HashMap<Button, String> buttonStringHashMap = new HashMap<>();
@@ -62,7 +65,6 @@ public class Hosts {
             hBox.setSpacing(10);
             vBox.getChildren().add(hBox);
         }
-
         for (Button button : buttons) {
             button.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -91,7 +93,6 @@ public class Hosts {
                 }
             });
         }
-
         root.setCenter(vBox);
 
         stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
