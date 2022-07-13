@@ -170,6 +170,7 @@ public class Main extends Application {
         TechnologyTree.WritingURL = new URL(Main.class.getResource("pictures/Writing.png").toExternalForm());
 
         TechnologyPanel.technologyPanelURL = new URL(Main.class.getResource("fxml/technologyPanel.fxml").toExternalForm());
+        ResearchInformation.researchInformationURL = new URL(Main.class.getResource("fxml/researchInformation.fxml").toExternalForm());
 
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
