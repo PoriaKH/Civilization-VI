@@ -169,6 +169,8 @@ public class Main extends Application {
         TechnologyTree.TrappingURL = new URL(Main.class.getResource("pictures/Trapping.png").toExternalForm());
         TechnologyTree.WritingURL = new URL(Main.class.getResource("pictures/Writing.png").toExternalForm());
 
+        TechnologyPanel.technologyPanelURL = new URL(Main.class.getResource("fxml/technologyPanel.fxml").toExternalForm());
+
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
         for (int i = 0; i < Unit.unitsName.size(); i++) {

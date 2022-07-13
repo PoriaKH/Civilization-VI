@@ -3,6 +3,7 @@ package View;
 import Controller.PlayGameMenuController;
 import Model.Civilization;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -22,18 +23,17 @@ import java.util.ArrayList;
 public class TechnologyTree {
     public static PlayGameMenuController playGameMenuController;
     public static Civilization playingCivilization;
-    public static URL technologyTreeURL;
     public static Scene technologyPanelScene;
     public static Stage stage;
     public Scene scene;
     public Pane pane = new Pane();
-    private final Button back = new Button("back");
+    private Button back = new Button("back");
     private Label technologyLabel = new Label();
-    private TextField technologyField = new TextField("enter a technology to learn or change the current technology");
+    private TextField technologyField = new TextField();
     private Button learn = new Button("learn");
     private Button change = new Button("change");
     private ScrollPane container = new ScrollPane();
-    private VBox vBox = new VBox(100);
+    private VBox vBox = new VBox(95);
     private ArrayList<HBox> hBoxes = new ArrayList<>();
     public static URL AcousticsURL;
     public static URL AgricultureURL;
@@ -85,6 +85,7 @@ public class TechnologyTree {
 
 
     public void initializeTechnologyTree(){
+        vBox.setAlignment(Pos.CENTER);
         back.setOnMouseClicked(ev ->{
             stage.setScene(technologyPanelScene);
         });
@@ -95,6 +96,9 @@ public class TechnologyTree {
             technologyLabel.setText(result);
         });
         learn.setPrefSize(100, 30);
+        technologyField.setPrefWidth(500);
+        technologyField.setMaxWidth(500);
+        technologyField.setPromptText("enter a technology to learn or change the current technology");
         change.setOnMouseClicked(event -> {
             String technologyName = technologyField.getText();
             String result = playGameMenuController.changeTechnologyToLearn(playingCivilization, technologyName);
@@ -109,6 +113,9 @@ public class TechnologyTree {
         vBox.getChildren().add(learn);
         vBox.getChildren().add(change);
         initializeTechnologies();
+        pane.getChildren().addAll(container);
+        scene = new Scene(pane);
+        stage.setScene(scene);
     }
 
     private void initializeTechnologies(){
@@ -166,12 +173,16 @@ public class TechnologyTree {
         techs.get(i++).setFill(new ImagePattern(new Image(WritingURL.toExternalForm())));
         ArrayList<HBox> hBoxes = new ArrayList<>();
         for (int j = 0; j < 8; j++)
-            hBoxes.add(new HBox(30));
-        for (int j = 0; j < 8; j++) {
-            for (int k = 0; k < 6; k++)
-                hBoxes.get(j).getChildren().add(techs.get(j * k));
+            hBoxes.add(new HBox(27));
+        for (int j = 0; j < 8; j++)
+            for (int k = 0; k < 6; k++) {
+                if (6 * j + k == 47)
+                    break;
+                hBoxes.get(j).getChildren().add(techs.get(6 * j + k));
+            }
+
+        for (int j = 0; j < 8; j++)
             vBox.getChildren().add(hBoxes.get(j));
-        }
     }
 
 }

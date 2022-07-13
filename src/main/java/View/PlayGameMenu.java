@@ -330,7 +330,15 @@ public class PlayGameMenu {
         technologyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                TechnologyPanel.stage = stage;
+                TechnologyPanel.gameMenuScene = scene;
+                TechnologyPanel.playingCivilization = playingCivilization;
+                TechnologyPanel.playGameMenuController = playGameMenuController;
+                try {
+                    new TechnologyPanel().start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         //TODO add technology condition
