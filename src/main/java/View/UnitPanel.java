@@ -169,7 +169,7 @@ public class UnitPanel {
         }
     }
 
-    public void moveUnit(MouseEvent mouseEvent) {
+    public void moveUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }

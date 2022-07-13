@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="done some on teleport">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,6 +45,11 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Model.FunctionsGson" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -68,8 +73,7 @@
       <workItem from="1657620003109" duration="922000" />
       <workItem from="1657624661800" duration="134000" />
       <workItem from="1657624845949" duration="698000" />
-      <workItem from="1657625874166" duration="3601000" />
-      <workItem from="1657686301315" duration="2363000" />
+      <workItem from="1657625874166" duration="2636000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -78,7 +82,21 @@
       <option name="project" value="LOCAL" />
       <updated>1657443839399</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added cheatGson and else if in command processor">
+      <created>1657632873760</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1657632873760</updated>
+    </task>
+    <task id="LOCAL-00003" summary="done some on teleport">
+      <created>1657635849988</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1657635849988</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -98,6 +116,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="converted server project to maven" />
-    <option name="LAST_COMMIT_MESSAGE" value="converted server project to maven" />
+    <MESSAGE value="added cheatGson and else if in command processor" />
+    <MESSAGE value="done some on teleport" />
+    <option name="LAST_COMMIT_MESSAGE" value="done some on teleport" />
   </component>
 </project>

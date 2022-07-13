@@ -1,6 +1,10 @@
 package View;
 
+import Controller.PlayGameMenuController;
 import Model.*;
+import Model.FunctionsGson.CheatGson;
+import Model.FunctionsGson.CheatTeleport;
+import Model.FunctionsGson.MapCreatorGson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -16,6 +20,7 @@ public class CommandProcessor {
     public static ArrayList<GsonRoom> rooms = new ArrayList<>();
     public static ArrayList<Socket> allSockets = new ArrayList<>();
     public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
+    public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
 
     public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket) throws IOException {
         if(command.startsWith("{\"creatorSocket")){
@@ -124,5 +129,50 @@ public class CommandProcessor {
             }
             sockets.add(sockets2);
         }
+        else if (command.startsWith("mapCreator ")) {
+            command = command.replace("mapCreator ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            MapCreatorGson mapCreatorGson = gson.fromJson(command, MapCreatorGson.class);
+            playGameMenuController.mapCreator(mapCreatorGson.numOfCivilizations, mapCreatorGson.members, getGroup(socket));
+        }
+        else if (command.startsWith("cheatGold ")) {
+            command = command.replace("cheatGold ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
+            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+        }
+        else if (command.startsWith("cheatFood ")) {
+            command = command.replace("cheatFood ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
+            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+        }
+        else if (command.startsWith("cheatTechnology ")) {
+            command = command.replace("cheatTechnology ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
+            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+        }
+        else if (command.startsWith("cheatHappiness ")) {
+            command = command.replace("cheatHappiness ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
+            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+        }
+        else if (command.startsWith("teleport ")) {
+            command = command.replace("teleport ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            CheatTeleport cheatTeleport = gson.fromJson(command, CheatTeleport.class);
+            playGameMenuController.cheatTeleportUnit(cheatTeleport.unit, cheatTeleport.numberOfDestination,
+                    cheatTeleport.civilization, cheatTeleport.map);
+        }
+    }
+    public static ArrayList<Socket> getGroup(Socket socket) {
+        for (ArrayList<Socket> socketArrayList : sockets) {
+            for (Socket socket1 : socketArrayList) {
+                if (socket.equals(socket1)) return socketArrayList;
+            }
+        }
+        return null;
     }
 }

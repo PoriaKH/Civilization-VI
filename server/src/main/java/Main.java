@@ -1,6 +1,4 @@
-import Model.GameSocket;
-import Model.GsonRoom;
-import Model.GsonRoomArray;
+import Model.*;
 import View.CommandProcessor;
 
 import java.io.DataInputStream;
@@ -24,7 +22,10 @@ public class Main {
     }
 
     public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
+    public static ArrayList<ArrayList<Member>> members = new ArrayList<>();
     public static ArrayList<GsonRoom> rooms = new ArrayList<>();
+    // todo
+    public static ArrayList<GameGroup> gameGroups = new ArrayList<>();
 
     public static void main(String[] args) {
         GsonRoomArray gsonRoomArray = new GsonRoomArray();
