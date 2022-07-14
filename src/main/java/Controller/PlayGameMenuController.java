@@ -2183,28 +2183,43 @@ public class PlayGameMenuController {
         return this.createUnit(civilization, city, unit, map, 1);
     }
     // todo -> useless -> comment
-    public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
+    /*public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         matcher.find();
         int tileNumber = Integer.parseInt(matcher.group("tile"));
         return createCity(civilization,tileNumber,map,civilizations);
-    }
-    // todo -> client
-    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
-        if(tileNumber < 0 || tileNumber >= 72)
+    }*/
+    // todo -> client (done)
+    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations) throws IOException {
+/*        CreateCityGson createCityGson = new CreateCityGson();
+        createCityGson.civilization = civilization;
+        createCityGson.tileNumber = tileNumber;
+        createCityGson.map = map;
+        createCityGson.civilizations = civilizations;
+        createCityGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(createCityGson);
+
+        CreateHost.dataOutputStream.writeUTF("createCity" + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+        if (tileNumber < 0 || tileNumber >= 72)
             return "invalid tile number";
 
-        for(Tile tile : map){
-            if(tile.getTileNumber() == tileNumber){
-                for(Unit unit : tile.getUnits()){
-                    if(unit.getCivilization() == civilization){
-                        if(unit.isCivilian()){
+        for (Tile tile : map) {
+            if (tile.getTileNumber() == tileNumber) {
+                for (Unit unit : tile.getUnits()) {
+                    if (unit.getCivilization() == civilization) {
+                        if (unit.isCivilian()) {
                             Civilian civilian = (Civilian) unit;
-                            if(civilian.isSettler()){
-                                if(checkNeighboursForCreateCity(tile,map,civilizations)){
-                                    while(tile.getUnits().size() > 0) {
+                            if (civilian.isSettler()) {
+                                if (checkNeighboursForCreateCity(tile, map, civilizations)) {
+                                    while (tile.getUnits().size() > 0) {
                                         tile.getUnits().remove(0);
                                     }
-                                    City city1 = new City(tile,map);
+                                    City city1 = new City(tile, map);
                                     civilization.getCities().add(city1);
                                     return "city has been created successfully";
                                 }

@@ -179,6 +179,13 @@ public class CommandProcessor {
             playGameMenuController.preUnitMaker(unitMakingGson.unitName, unitMakingGson.index,
                     unitMakingGson.civilization, unitMakingGson.map, getGroup(unitMakingGson.member));
         }
+        else if (command.startsWith("createCity ")) {
+            command = command.replace("createCity ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            CreateCityGson createCityGson = gson.fromJson(command, CreateCityGson.class);
+            playGameMenuController.createCity(createCityGson.civilization, createCityGson.tileNumber,
+                    createCityGson.map, createCityGson.civilizations, getGroup(createCityGson.member));
+        }
 
 
 

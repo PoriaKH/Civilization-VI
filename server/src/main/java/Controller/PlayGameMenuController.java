@@ -2240,29 +2240,32 @@ public class PlayGameMenuController {
             return "no unit with this name exists!";
         return this.createUnit(civilization, city, unit, map, 1);
     }
-    public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
-        matcher.find();
-        int tileNumber = Integer.parseInt(matcher.group("tile"));
-        return createCity(civilization,tileNumber,map,civilizations);
-    }
-    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
-        if(tileNumber < 0 || tileNumber >= 72)
-            return "invalid tile number";
 
-        for(Tile tile : map){
+    public void createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        if(tileNumber < 0 || tileNumber >= 72) {
+            gameGroupData.result = "invalid tile number";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        for(Tile tile : gameGroupData.tiles){
             if(tile.getTileNumber() == tileNumber){
                 for(Unit unit : tile.getUnits()){
-                    if(unit.getCivilization() == civilization){
+                    if(unit.getCivilization().equals(civilizationServer)){
                         if(unit.isCivilian()){
                             Civilian civilian = (Civilian) unit;
                             if(civilian.isSettler()){
-                                if(checkNeighboursForCreateCity(tile,map,civilizations)){
+                                if(checkNeighboursForCreateCity(tile, gameGroupData.tiles, gameGroupData.civilizations)){
                                     while(tile.getUnits().size() > 0) {
                                         tile.getUnits().remove(0);
                                     }
-                                    City city1 = new City(tile,map);
-                                    civilization.getCities().add(city1);
-                                    return "city has been created successfully";
+                                    City city1 = new City(tile, gameGroupData.tiles);
+                                    civilizationServer.getCities().add(city1);
+                                    gameGroupData.result = "city has been created successfully";
+                                    sendMessageToAllClients(gameGroup, gameGroupData);
+                                    return;
                                 }
                             }
                         }
@@ -2270,7 +2273,8 @@ public class PlayGameMenuController {
                 }
             }
         }
-        return "you can't create city here";
+        gameGroupData.result = "you can't create city here";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public boolean checkNeighboursForCreateCity(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         for(Tile tempTile : map){

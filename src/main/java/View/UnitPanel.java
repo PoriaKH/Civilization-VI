@@ -336,7 +336,7 @@ public class UnitPanel {
         }
     }
 
-    public void createCity(MouseEvent mouseEvent) {
+    public void createCity(MouseEvent mouseEvent) throws IOException {
         String string = playGameMenuController.createCity(playingCivilization,
                 Integer.parseInt(tileNumberForCity.getText()), map, civilizations);
         showNotification(string);
