@@ -3,6 +3,7 @@ package Controller;
 import Model.*;
 import Model.FunctionsGson.GameGroupData;
 import Model.FunctionsGson.MapCreatorGson;
+import Model.FunctionsGson.UnitBehaviourGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
@@ -2846,38 +2847,63 @@ public class PlayGameMenuController {
         return str;
     }
     // makes parameters for unit behaviours functions
-    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) {
-        if (!unit.getCivilization().equals(civilization)) {
-            return "this unit is not for your civilization";
+    public void preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Unit unitServer = getUnitServer(gameGroupData.tiles, unit);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (!unitServer.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this unit is not for your civilization";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (command.equals("sleep")) {
-            return  sleepUnit(civilization, unit, map);
+            gameGroupData.result = sleepUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("alert")) {
-            return WarFootingUnit(civilization, unit, map);
+            gameGroupData.result = WarFootingUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("fortify")) {
-            return boostUnit(civilization, unit, map);
+            gameGroupData.result = boostUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("heal")) {
-            return boostTillRecoverUnit(civilization, unit, map);
+            gameGroupData.result = boostTillRecoverUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("deploy")) {
-            return deploymentUnit(civilization, unit, map);
+            gameGroupData.result = deploymentUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("range")) {
-            return readyForRangedBattleUnit(civilization, unit, map);
+            gameGroupData.result = readyForRangedBattleUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("wake")) {
-            return wakeUpUnit(civilization, unit, map);
+            gameGroupData.result = wakeUpUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("delete")) {
-            return deleteUnit(civilization, unit, map, unit.getOrigin());
+            gameGroupData.result = deleteUnit(civilizationServer, unitServer,
+                    gameGroupData.tiles, unitServer.getOrigin());
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("recover")) {
-            return recoverUnit(civilization, unit, map, unit.getOrigin());
+            gameGroupData.result = recoverUnit(civilizationServer, unitServer,
+                    gameGroupData.tiles, unitServer.getOrigin());
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        return "";
     }
 
     public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map){

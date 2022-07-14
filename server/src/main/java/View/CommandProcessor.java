@@ -200,6 +200,13 @@ public class CommandProcessor {
             playGameMenuController.preAttackCity(attackCityGson.attacker, attackCityGson.destinationIndex,
                     attackCityGson.civilization, attackCityGson.map, attackCityGson.civilizations, getGroup(attackCityGson.member));
         }
+        else if (command.startsWith("unitBehave ")) {
+            command = command.replace("unitBehave ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            UnitBehaviourGson unitBehaviourGson = gson.fromJson(command, UnitBehaviourGson.class);
+            playGameMenuController.preUnitBehaviour(unitBehaviourGson.unit, unitBehaviourGson.civilization,
+                    unitBehaviourGson.map, unitBehaviourGson.command, getGroup(unitBehaviourGson.member));
+        }
 
 
 

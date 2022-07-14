@@ -73,7 +73,7 @@ public class UnitPanel {
         else stage.setScene(infoPanelScene);
     }
 
-    public void sleepUnit(MouseEvent mouseEvent) {
+    public void sleepUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -91,7 +91,7 @@ public class UnitPanel {
         alert.showAndWait();
     }
 
-    public void alertUnit(MouseEvent mouseEvent) {
+    public void alertUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -101,7 +101,7 @@ public class UnitPanel {
         }
     }
 
-    public void fortifyUnit(MouseEvent mouseEvent) {
+    public void fortifyUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -111,7 +111,7 @@ public class UnitPanel {
         }
     }
 
-    public void healUnit(MouseEvent mouseEvent) {
+    public void healUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -121,7 +121,7 @@ public class UnitPanel {
         }
     }
 
-    public void deployUnit(MouseEvent mouseEvent) {
+    public void deployUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -131,7 +131,7 @@ public class UnitPanel {
         }
     }
 
-    public void rangeUnit(MouseEvent mouseEvent) {
+    public void rangeUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -141,7 +141,7 @@ public class UnitPanel {
         }
     }
 
-    public void wakeUpUnit(MouseEvent mouseEvent) {
+    public void wakeUpUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -151,7 +151,7 @@ public class UnitPanel {
         }
     }
 
-    public void recoverUnit(MouseEvent mouseEvent) {
+    public void recoverUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -161,7 +161,7 @@ public class UnitPanel {
         }
     }
 
-    public void deleteUnit(MouseEvent mouseEvent) {
+    public void deleteUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }

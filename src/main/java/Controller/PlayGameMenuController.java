@@ -2786,37 +2786,43 @@ public class PlayGameMenuController {
         }
         return str;
     }
-    // todo -> client
+    // todo -> client (done)
     // makes parameters for unit behaviours functions
-    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) {
+    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) throws IOException {
+/*        UnitBehaviourGson unitBehaviourGson = new UnitBehaviourGson();
+        unitBehaviourGson.unit = unit;
+        unitBehaviourGson.civilization = civilization;
+        unitBehaviourGson.map = map;
+        unitBehaviourGson.command = command;
+        unitBehaviourGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(unitBehaviourGson);
+
+        CreateHost.dataOutputStream.writeUTF("unitBehave " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (!unit.getCivilization().equals(civilization)) {
             return "this unit is not for your civilization";
         }
         if (command.equals("sleep")) {
-            return  sleepUnit(civilization, unit, map);
-        }
-        else if (command.equals("alert")) {
+            return sleepUnit(civilization, unit, map);
+        } else if (command.equals("alert")) {
             return WarFootingUnit(civilization, unit, map);
-        }
-        else if (command.equals("fortify")) {
+        } else if (command.equals("fortify")) {
             return boostUnit(civilization, unit, map);
-        }
-        else if (command.equals("heal")) {
+        } else if (command.equals("heal")) {
             return boostTillRecoverUnit(civilization, unit, map);
-        }
-        else if (command.equals("deploy")) {
+        } else if (command.equals("deploy")) {
             return deploymentUnit(civilization, unit, map);
-        }
-        else if (command.equals("range")) {
+        } else if (command.equals("range")) {
             return readyForRangedBattleUnit(civilization, unit, map);
-        }
-        else if (command.equals("wake")) {
+        } else if (command.equals("wake")) {
             return wakeUpUnit(civilization, unit, map);
-        }
-        else if (command.equals("delete")) {
+        } else if (command.equals("delete")) {
             return deleteUnit(civilization, unit, map, unit.getOrigin());
-        }
-        else if (command.equals("recover")) {
+        } else if (command.equals("recover")) {
             return recoverUnit(civilization, unit, map, unit.getOrigin());
         }
         return "";
