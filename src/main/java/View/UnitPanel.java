@@ -211,7 +211,7 @@ public class UnitPanel {
         }
     }
 
-    public void createUnit(MouseEvent mouseEvent) {
+    public void createUnit(MouseEvent mouseEvent) throws IOException {
         String string = playGameMenuController.preUnitMaker(unitName.getText(),
                 Integer.parseInt(tileNumber.getText()), playingCivilization, map);
         showNotification(string);

@@ -1,10 +1,7 @@
 package Controller;
 
 import Model.*;
-import Model.FunctionsGson.CheatGson;
-import Model.FunctionsGson.CheatTeleport;
-import Model.FunctionsGson.MapCreatorGson;
-import Model.FunctionsGson.MoveUnitGson;
+import Model.FunctionsGson.*;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
@@ -1687,7 +1684,21 @@ public class PlayGameMenuController {
     }
     // todo -> client
     // it makes parameters for unit maker such as unit or city
-    public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) {
+    public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        UnitMakingGson unitMakingGson = new UnitMakingGson();
+        unitMakingGson.unitName = unitName;
+        unitMakingGson.index = index;
+        unitMakingGson.civilization = civilization;
+        unitMakingGson.map = map;
+        unitMakingGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(unitMakingGson);
+
+        CreateHost.dataOutputStream.writeUTF("unitMaker " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (index < 0 || index > 71) {
             return "number of origin tile is invalid !";
         }

@@ -2,10 +2,7 @@ package View;
 
 import Controller.PlayGameMenuController;
 import Model.*;
-import Model.FunctionsGson.CheatGson;
-import Model.FunctionsGson.CheatTeleport;
-import Model.FunctionsGson.MapCreatorGson;
-import Model.FunctionsGson.MoveUnitGson;
+import Model.FunctionsGson.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -174,6 +171,13 @@ public class CommandProcessor {
             MoveUnitGson moveUnitGson = gson.fromJson(command, MoveUnitGson.class);
             playGameMenuController.preMoveUnit(moveUnitGson.unit, moveUnitGson.numberOfDestination,
                     moveUnitGson.civilization, moveUnitGson.map, getGroup(moveUnitGson.member));
+        }
+        else if (command.startsWith("unitMaker ")) {
+            command = command.replace("unitMaker ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            UnitMakingGson unitMakingGson = gson.fromJson(command, UnitMakingGson.class);
+            playGameMenuController.preUnitMaker(unitMakingGson.unitName, unitMakingGson.index,
+                    unitMakingGson.civilization, unitMakingGson.map, getGroup(unitMakingGson.member));
         }
 
 
