@@ -200,7 +200,7 @@ public class UnitPanel {
         }
     }
 
-    public void attackTileUnit(MouseEvent mouseEvent) {
+    public void attackTileUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }

@@ -2367,9 +2367,23 @@ public class PlayGameMenuController {
         defender.getCivilization().addMessage("civilization :" + attacker.getCivilization() +
                 "attacked you at turn : " + turn);
     }
-    // todo -> client
+    // todo -> client (done)
     // prepare some parameters and return some string
-    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) {
+    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        AttackTileGson attackTileGson = new AttackTileGson();
+        attackTileGson.attacker = attacker;
+        attackTileGson.destinationIndex = destinationIndex;
+        attackTileGson.civilization = civilization;
+        attackTileGson.map = map;
+        attackTileGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(attackTileGson);
+
+        CreateHost.dataOutputStream.writeUTF("attackTile " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (destinationIndex < 0 || destinationIndex > 71) {
             return "number of destination tile is invalid !";
         }
@@ -2388,10 +2402,10 @@ public class PlayGameMenuController {
         if (defender.getCivilization().equals(civilization)) {
             return "you can't attack your own unit !";
         }
-        if (attacker.getIsOnSleep()|| attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
+        if (attacker.getIsOnSleep() || attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
             return "this unit is not active !";
         }
-        if (((Warrior)attacker).getRange() != -1) {
+        if (((Warrior) attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
         }
         ArrayList<Integer> indexOfTiles = new ArrayList<>();
@@ -2399,10 +2413,10 @@ public class PlayGameMenuController {
         if (indexOfTiles.size() == 0) {
             return "this distance is too long for attack !";
         }
-        if (!isRangeEnough((Warrior)attacker, indexOfTiles)) {
+        if (!isRangeEnough((Warrior) attacker, indexOfTiles)) {
             return "unit 's range is not enough !";
         }
-        if (checkTheBlocks(map,indexOfTiles)) {
+        if (checkTheBlocks(map, indexOfTiles)) {
             return "your unit vision is blocked !";
         }
         if (defender != null && isFriend(civilization, defender.getCivilization())) {
@@ -2413,17 +2427,17 @@ public class PlayGameMenuController {
             defender = getCivilianUnit(destinationIndex, map);
             if (defender == null) return "there is no unit on destination !";
 
-        sendMessageToDefender(defender, attacker);
+            sendMessageToDefender(defender, attacker);
 
             defender.setCivilization(civilization);
-            if (((Warrior)attacker).getRange() == -1) {
+            if (((Warrior) attacker).getRange() == -1) {
                 attacker.setOrigin(map.get(destinationIndex));
                 map.get(destinationIndex).addUnit(attacker);
                 map.get(originIndex).removeUnit(attacker);
             }
             return "you captured civilians of enemy !";
         }
-        if (((Warrior)attacker).getRange() == -1)
+        if (((Warrior) attacker).getRange() == -1)
             return attackTileFromGround(civilization, attacker, defender, originIndex, destinationIndex, map);
         else
             return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);

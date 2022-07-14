@@ -2404,64 +2404,97 @@ public class PlayGameMenuController {
     }
 
     // prepare some parameters and return some string
-    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) {
+    public void preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (destinationIndex < 0 || destinationIndex > 71) {
-            return "number of destination tile is invalid !";
+            gameGroupData.result = "number of destination tile is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        int originIndex = getTileIndex(attacker.getOrigin(), map);
-        Unit defender = getWarriorUnit(destinationIndex, map);
 
-        if (attacker == null) {
-            return "your unit is not military !";
+        Unit attackerServer = getUnitServer(gameGroupData.tiles, attacker);
+        int originIndex = getTileIndex(attackerServer.getOrigin(), gameGroupData.tiles);
+        Unit defender = getWarriorUnit(destinationIndex, gameGroupData.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (attackerServer == null) {
+            gameGroupData.result = "your unit is not military !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!attacker.getCivilization().equals(civilization)) {
-            return "this is not your unit !";
+        if (!attackerServer.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this is not your unit !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (attacker.getPath().size() != 0) {
-            return "this unit is on moving !";
+        if (attackerServer.getPath().size() != 0) {
+            gameGroupData.result = "this unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (defender.getCivilization().equals(civilization)) {
-            return "you can't attack your own unit !";
+        if (defender.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "you can't attack your own unit !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (attacker.getIsOnSleep()|| attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
-            return "this unit is not active !";
+        if (attackerServer.getIsOnSleep() || attackerServer.isOnBoost() || attackerServer.isOnBoostTillRecover() || attackerServer.isOnWarFooting()) {
+            gameGroupData.result = "this unit is not active !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (((Warrior)attacker).getRange() != -1) {
-            return "this unit is not set up for range attack !";
+        if (((Warrior) attackerServer).getRange() != -1) {
+            gameGroupData.result = "this unit is not set up for range attack !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         ArrayList<Integer> indexOfTiles = new ArrayList<>();
         getAllIndexes(originIndex, destinationIndex, indexOfTiles);
         if (indexOfTiles.size() == 0) {
-            return "this distance is too long for attack !";
+            gameGroupData.result = "this distance is too long for attack !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!isRangeEnough((Warrior)attacker, indexOfTiles)) {
-            return "unit 's range is not enough !";
+        if (!isRangeEnough((Warrior) attackerServer, indexOfTiles)) {
+            gameGroupData.result = "unit 's range is not enough !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (checkTheBlocks(map,indexOfTiles)) {
-            return "your unit vision is blocked !";
+        if (checkTheBlocks(gameGroupData.tiles, indexOfTiles)) {
+            gameGroupData.result = "your unit vision is blocked !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (defender != null && isFriend(civilization, defender.getCivilization())) {
-            addToEnemy(civilization, defender.getCivilization());
+        if (defender != null && isFriend(civilizationServer, defender.getCivilization())) {
+            addToEnemy(civilizationServer, defender.getCivilization());
         }
-        attacker.setHasOrdered(true);
+        attackerServer.setHasOrdered(true);
         if (defender == null) {
-            defender = getCivilianUnit(destinationIndex, map);
-            if (defender == null) return "there is no unit on destination !";
-
-        sendMessageToDefender(defender, attacker);
-
-            defender.setCivilization(civilization);
-            if (((Warrior)attacker).getRange() == -1) {
-                attacker.setOrigin(map.get(destinationIndex));
-                map.get(destinationIndex).addUnit(attacker);
-                map.get(originIndex).removeUnit(attacker);
+            defender = getCivilianUnit(destinationIndex, gameGroupData.tiles);
+            if (defender == null) {
+                gameGroupData.result = "there is no unit on destination !";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
             }
-            return "you captured civilians of enemy !";
+
+            sendMessageToDefender(defender, attackerServer);
+
+            defender.setCivilization(civilizationServer);
+            if (((Warrior) attackerServer).getRange() == -1) {
+                attackerServer.setOrigin(gameGroupData.tiles.get(destinationIndex));
+                gameGroupData.tiles.get(destinationIndex).addUnit(attackerServer);
+                gameGroupData.tiles.get(originIndex).removeUnit(attackerServer);
+            }
+            gameGroupData.result = "you captured civilians of enemy !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (((Warrior)attacker).getRange() == -1)
-            return attackTileFromGround(civilization, attacker, defender, originIndex, destinationIndex, map);
-        else
-            return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);
+        if (((Warrior) attackerServer).getRange() == -1) {
+            gameGroupData.result = attackTileFromGround(civilizationServer, attackerServer, defender, originIndex, destinationIndex, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        } else {
+            gameGroupData.result = attackTileFromAir(civilizationServer, attackerServer, defender, originIndex, destinationIndex, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        }
     }
     // if a city contain that tile , return the city
     public City getCityFromTile (Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {

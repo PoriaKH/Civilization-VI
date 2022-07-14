@@ -186,6 +186,13 @@ public class CommandProcessor {
             playGameMenuController.createCity(createCityGson.civilization, createCityGson.tileNumber,
                     createCityGson.map, createCityGson.civilizations, getGroup(createCityGson.member));
         }
+        else if (command.startsWith("attackTile ")) {
+            command = command.replace("attackTile ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            AttackTileGson attackTileGson = gson.fromJson(command, AttackTileGson.class);
+            playGameMenuController.preAttackTile(attackTileGson.attacker, attackTileGson.destinationIndex,
+                    attackTileGson.civilization, attackTileGson.map, getGroup(attackTileGson.member));
+        }
 
 
 
