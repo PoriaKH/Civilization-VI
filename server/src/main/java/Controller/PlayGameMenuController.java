@@ -1,15 +1,13 @@
 package Controller;
 
 import Model.*;
-import Model.FunctionsGson.CheatTeleport;
+import Model.FunctionsGson.GameGroupData;
 import Model.FunctionsGson.MapCreatorGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
-import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import jdk.net.Sockets;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -213,65 +211,141 @@ public class PlayGameMenuController {
             dataOutputStream.flush();
         }
     }
-    public void cheatIncreaseGold(Civilization civilization, int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        civilization.setGold(amount);
+    public void cheatIncreaseGold(Civilization civilization, int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        serverCiv.setGold(amount);
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
-    public void cheatIncreaseFood(Civilization civilization,int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        for(City city : civilization.getCities()){
+    public void cheatIncreaseFood(Civilization civilization,int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        for(City city : serverCiv.getCities()){
             city.setTotalFood(amount);
         }
-
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
-    public void cheatIncreaseTechnology(Civilization civilization,int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        civilization.setScience(amount);
-
+    public void cheatIncreaseTechnology(Civilization civilization,int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        serverCiv.setScience(amount);
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
-    public void cheatIncreaseHappiness(Civilization civilization, int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        civilization.setHappiness(amount);
+    public void cheatIncreaseHappiness(Civilization civilization, int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        serverCiv.setHappiness(amount);
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
-    public void cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
+    public void cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
         String str;
-        CheatTeleport cheatTeleport = new CheatTeleport();
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (numberOfDestination < 0 || numberOfDestination > 71) {
-            cheatTeleport.string = "number of destination is invalid !";
+            gameGroupData.result = "number of destination is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        Tile origin = unit.getOrigin();
-        Tile destination = map.get(numberOfDestination);
+        Unit unitServer = getUnitServer(gameGroup.tiles, unit);
+        Tile origin = unitServer.getOrigin();
+        Tile destination = gameGroup.tiles.get(numberOfDestination);
 
-        if (unit == null) {
-            cheatTeleport.string = "there is no unit with this name !";
+        if (unitServer == null) {
+            gameGroupData.result = "there is no unit with this name !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        if (unit.getIsOnSleep()|| unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
-            cheatTeleport.string = "this unit is not active !";
+        if (unitServer.getIsOnSleep()|| unitServer.isOnBoost() || unitServer.isOnBoostTillRecover() || unitServer.isOnWarFooting()) {
+            gameGroupData.result = "this unit is not active !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        if (!unit.getCivilization().getName().equals(civilization.getName())) {
-            cheatTeleport.string = "this unit is for another civilization !";
+        if (!unitServer.getCivilization().getName().equals(civilization.getName())) {
+            gameGroupData.result = "this unit is for another civilization !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        if (unit.getPath().size() != 0) {
-            cheatTeleport.string = "this unit has another path !";
+        if (unitServer.getPath().size() != 0) {
+            gameGroupData.result = "this unit has another path !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         ArrayList<Unit> unitsDestination = destination.getUnits();
         for (int i = 0; i < unitsDestination.size(); i++) {
-            if (unitsDestination.get(i).isCivilian() == unit.isCivilian()) {
-                cheatTeleport.string = "there is another unit with this type in the tile !";
+            if (unitsDestination.get(i).isCivilian() == unitServer.isCivilian()) {
+                gameGroupData.result = "there is another unit with this type in the tile !";
+                sendMessageToAllClients(gameGroup, gameGroupData);
                 return;
             }
         }
-        origin.removeUnit(unit);
-        destination.addUnit(unit);
-        unit.setOrigin(destination);
-        unit.setHasOrdered(true);
-        cheatTeleport.string = "unit teleported to destination !";
+        origin.removeUnit(unitServer);
+        destination.addUnit(unitServer);
+        unitServer.setOrigin(destination);
+        unitServer.setHasOrdered(true);
+        gameGroupData.result = "unit teleported to destination !";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+    // get Unit in tiles of server
+    private Unit getUnitServer(ArrayList<Tile> tiles, Unit localUnit) {
+        for (Tile tile : tiles) {
+            for (Unit unit : tile.getUnits()) {
+                if (unit.equals(localUnit)) return unit;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for(int i = 0; i < numOfCivilizations; i++){
@@ -682,7 +756,7 @@ public class PlayGameMenuController {
         return finalTileStatus;
     }
 
-    public StringBuilder researchInformation(Civilization civilization){
+/*    public StringBuilder researchInformation(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder();
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         stringBuilder.append("technologies that have been learnt:\n");
@@ -697,8 +771,8 @@ public class PlayGameMenuController {
         for (Map.Entry<Technology, Integer> technology: technologyEarnedPercent.entrySet())
             stringBuilder.append(technology.getKey().getName() + "\trounds left: " + technology.getValue().toString() + "\n");
         return stringBuilder;
-    }
-    // return name of current unit
+    }*/
+    /*// return name of current unit
     public String getUnitsName (Unit unit) {
         if (unit.isCivilian()) {
             if (((Civilian)unit).isWorker()) {
@@ -780,8 +854,8 @@ public class PlayGameMenuController {
             }
         }
         return "";
-    }
-    public StringBuilder unitPanel(Civilization civilization,ArrayList<Tile> map){
+    }*/
+    /*public StringBuilder unitPanel(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> unitsOfTile = map.get(i).getUnits();
@@ -793,8 +867,8 @@ public class PlayGameMenuController {
             }
         }
         return stringBuilder;
-    }
-    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
+    }*/
+/*    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
         StringBuilder stringBuilder = new StringBuilder("");//"Civilization name" :
         //                             Capital : tile numbers
         //                             City 2  : tile numbers
@@ -822,12 +896,12 @@ public class PlayGameMenuController {
             }
         }
         return stringBuilder;
-    }
-    public String diplomaticInformation(Civilization civilization){
+    }*/
+    /*public String diplomaticInformation(Civilization civilization){
         int point = civilization.getPoint();
 
         return "your point is : " + point;
-    }
+    }*/
     public String sendFriendlyRequestDiplomatic(Civilization civilization,ArrayList<Civilization> civilizations,String name){
         if(Objects.equals(name, civilization.getMember().getNickname()))
             return "cant send request to yourself";
@@ -850,13 +924,13 @@ public class PlayGameMenuController {
         }
         return "there is no civilization with this name";
     }
-    public StringBuilder showMessages(Civilization civilization){
+   /* public StringBuilder showMessages(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         for(String string : civilization.getMessages()){
             stringBuilder.append(string).append("\n");
         }
         return stringBuilder;
-    }
+    }*/
     public StringBuilder showFriendlyRequests(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         int i = 1;
@@ -893,7 +967,7 @@ public class PlayGameMenuController {
         }
         return "you don't have any allie with this name";
     }
-    public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
+/*    public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();
         HashMap<Civilization, Integer> losses = civilization.getLossesInUnitsWar();
@@ -906,8 +980,8 @@ public class PlayGameMenuController {
             stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + " number of losses : " + entry.getValue() + "\n");
         }
         return stringBuilder;
-    }
-    public StringBuilder demographics(ArrayList<Civilization> civilizations,ArrayList<Tile> map){   //Jamiat shenasi
+    }*/
+/*    public StringBuilder demographics(ArrayList<Civilization> civilizations,ArrayList<Tile> map){   //Jamiat shenasi
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
         Civilization chosenCivilization = null;
@@ -956,8 +1030,8 @@ public class PlayGameMenuController {
         }
 
         return stringBuilder;
-    }
-    public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
+    }*/
+/*    public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> unitsOfTile = map.get(i).getUnits();
@@ -984,8 +1058,8 @@ public class PlayGameMenuController {
             }
         }
         return stringBuilder;
-    }
-    public StringBuilder roadsInfo (ArrayList<Tile> map) {
+    }*/
+/*    public StringBuilder roadsInfo (ArrayList<Tile> map) {
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("tiles with road : ");
         StringBuilder stringBuilderRoad = new StringBuilder("");
@@ -1003,8 +1077,8 @@ public class PlayGameMenuController {
         stringBuilderRoad.append(stringBuilderRail);
         stringBuilder.append(stringBuilderRoad);
         return stringBuilder;
-    }
-
+    }*/
+/*
     public StringBuilder economicalReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("Number of cities : ").append(civilization.getCities().size()).append("\n-----------------------").append("\n");
@@ -1027,15 +1101,15 @@ public class PlayGameMenuController {
         }
 
         return stringBuilder;
-    }
-    public StringBuilder diplomaticReview(Civilization civilization){
+    }*/
+   /* public StringBuilder diplomaticReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("your friends :\n");
         for(Civilization tempCiv : civilization.getFriends()){
             stringBuilder.append(tempCiv.getName()).append("\n");
         }
         return stringBuilder;
-    }
+    }*/
     //TODO for next phase ...
     /*
     public StringBuilder tradeHistory(Civilization civilization,ArrayList<Tile> map){
@@ -1172,23 +1246,59 @@ public class PlayGameMenuController {
         unit.setPath(path);
     }
     // create parameters like unit or origin or destination for moveUnit function
-    public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) {
+    public void preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (numberOfDestination < 0 || numberOfDestination > 71) {
-            return "number of destination tile is invalid !";
+            gameGroupData.result = "number of destination tile is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!unit.getCivilization().equals(civilization)) {
-            return "this unit is not for your civilization";
+            gameGroupData.result = "this unit is not for your civilization";
+            try {
+                sendMessageToAllClients(gameGroup, gameGroupData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
         }
-        Tile origin = unit.getOrigin();
-        Tile destination = map.get(numberOfDestination);
-        if (unit != null && unit.getPath().size() != 0) {
-            return "this unit is on moving !";
+
+        Unit serverUnit = getUnitServer(gameGroupData.tiles, unit);
+        Tile origin = serverUnit.getOrigin();
+        Tile destination = gameGroupData.tiles.get(numberOfDestination);
+
+        if (serverUnit != null && serverUnit.getPath().size() != 0) {
+            gameGroupData.result = "this unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (unit != null && unit.isCivilian() && ((Civilian)unit).getWorkingTile() != null) {
-            return "this civilian is working on something !";
+        if (serverUnit != null && serverUnit.isCivilian() && ((Civilian)serverUnit).getWorkingTile() != null) {
+            gameGroupData.result = "this civilian is working on something !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        return moveUnit(civilization, origin, destination, map, unit);
+        gameGroupData.result = moveUnit(getServerCivilization(civilization, gameGroupData.civilizations), origin, destination, gameGroupData.tiles, serverUnit);
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
+    private void sendMessageToAllClients(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
+        ArrayList<Socket> sockets = gameGroup.sockets;
+        for (Socket socket : sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            String respond = gson.toJson(gameGroupData);
+            dataOutputStream.writeUTF(respond);
+            dataOutputStream.flush();
+        }
+    }
+
+    private Civilization getServerCivilization(Civilization civilization, ArrayList<Civilization> civilizations) {
+        for (Civilization civilization2 : civilizations) {
+            if (civilization2.equals(civilization)) return civilization2;
+        }
+        return null;
+    }
+
     //return a unit from specific tile
     public Unit getUnitInTile (ArrayList<Unit> units, String unitName) {
         for (int i = 0; i < units.size(); i++) {

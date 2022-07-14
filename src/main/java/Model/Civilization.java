@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 public class Civilization {
     @Expose
+    public boolean isMyTurn = false;
+    @Expose
     private Member member;
     @Expose
     private String firstLetterOfName;
@@ -294,5 +296,11 @@ public class Civilization {
 
     public void setCapital(City city) {
         this.capital = city;
+    }
+
+    public boolean equals(Civilization civilization) {
+        if (this.getName().equals(civilization.getName()) &&
+                this.getMember().equals(civilization.getMember())) return true;
+        return false;
     }
 }

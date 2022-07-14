@@ -1247,4 +1247,10 @@ public class Tile extends Polygon {
             rail.setY(this.y - 30);
         }
     }
+
+    public boolean equals (Tile tile) {
+        if (this.getX() == tile.getX() &&
+        this.getY() == tile.getY()) return true;
+        return false;
+    }
 }

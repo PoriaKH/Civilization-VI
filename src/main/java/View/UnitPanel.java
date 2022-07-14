@@ -47,6 +47,8 @@ public class UnitPanel {
     public TextField newUnitName;
     public TextField tileIndex;
     public TextField tileNumberForCity;
+    public TextField tileNumberForImprovement;
+    public TextField improvementName;
 
 
     public void start () throws IOException {
@@ -175,17 +177,15 @@ public class UnitPanel {
         }
         else {
            String command = moveDes.getText();
-           String string;
            if (command.charAt(0) == 't') {
                String destination = command.replace("t", "");
-               string = playGameMenuController.cheatTeleportUnit(unit, Integer.parseInt(destination),
+               playGameMenuController.cheatTeleportUnit(unit, Integer.parseInt(destination),
                        playingCivilization, map);
            }
            else {
-               string = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
+               playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
                        playingCivilization, map);
            }
-           showNotification(string);
         }
     }
 
@@ -339,6 +339,13 @@ public class UnitPanel {
     public void createCity(MouseEvent mouseEvent) {
         String string = playGameMenuController.createCity(playingCivilization,
                 Integer.parseInt(tileNumberForCity.getText()), map, civilizations);
+        showNotification(string);
+    }
+
+    public void createImprovement(MouseEvent mouseEvent) {
+        int index = Integer.parseInt(tileNumberForImprovement.getText());
+        String string = playGameMenuController.createImprovement(playingCivilization, index, index,
+                improvementName.getText(), map);
         showNotification(string);
     }
 }

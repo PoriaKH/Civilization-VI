@@ -69,4 +69,11 @@ public class Member {
     public String toString(){
         return "username : " + username + " nickname : " + nickname + " password" + password;
     }
+
+    public boolean equals(Member member) {
+        if (this.username.equals(member.getUsername()) &&
+                this.password.equals(member.getPassword()) &&
+                this.nickname.equals(member.getNickname())) return true;
+        return false;
+    }
 }
