@@ -985,7 +985,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }*/
-    public StringBuilder demographics(ArrayList<Civilization> civilizations,ArrayList<Tile> map){   //Jamiat shenasi
+/*    public StringBuilder demographics(ArrayList<Civilization> civilizations,ArrayList<Tile> map){   //Jamiat shenasi
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
         Civilization chosenCivilization = null;
@@ -1034,7 +1034,7 @@ public class PlayGameMenuController {
         }
 
         return stringBuilder;
-    }
+    }*/
 /*    public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {

@@ -923,7 +923,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    // todo
+
     public StringBuilder demographics(ArrayList<Civilization> civilizations,ArrayList<Tile> map){   //Jamiat shenasi
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
