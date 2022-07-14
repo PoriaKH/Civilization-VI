@@ -860,7 +860,7 @@ public class PlayGameMenuController {
         }
         return "there is no civilization with this name";
     }
-    // todo
+
     public StringBuilder showMessages(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         for(String string : civilization.getMessages()){

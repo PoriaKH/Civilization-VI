@@ -928,13 +928,13 @@ public class PlayGameMenuController {
         }
         return "there is no civilization with this name";
     }
-    public StringBuilder showMessages(Civilization civilization){
+   /* public StringBuilder showMessages(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         for(String string : civilization.getMessages()){
             stringBuilder.append(string).append("\n");
         }
         return stringBuilder;
-    }
+    }*/
     public StringBuilder showFriendlyRequests(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         int i = 1;
