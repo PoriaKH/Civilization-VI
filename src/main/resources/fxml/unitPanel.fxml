@@ -10,7 +10,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="View.UnitPanel"
-            prefHeight="820.0" prefWidth="1280.0"
+            prefHeight="900.0" prefWidth="1280.0"
             stylesheets="@../CSS/style5.css"
             styleClass="BackGround">
             <left>
@@ -32,14 +32,10 @@
                     <Label text="create city"/>
                     <TextField promptText="tile number" fx:id="tileNumberForCity"/>
                     <Button text="create city !" onMouseClicked="#createCity"/>
-                    <Label text="create improvement"/>
-                    <TextField promptText="tile number" fx:id="tileNumberForImprovement"/>
-                    <TextField promptText="improvement name" fx:id="improvementName"/>
-                    <Button text="create improvement !" onMouseClicked="#createImprovement"/>
                 </VBox>
             </left>
             <center>
-                <VBox alignment="CENTER" spacing="20">
+                <VBox alignment="CENTER" spacing="17">
                     <Text text="UNIT PANEL" textAlignment="CENTER"/>
                     <Label text="move unit"/>
                     <TextField promptText="destination tile number" fx:id="moveDes"/>
@@ -54,6 +50,10 @@
                     <TextField promptText="unit name" fx:id="unitName"/>
                     <TextField promptText="tile number" fx:id="tileNumber"/>
                     <Button text="make unit" onMouseClicked="#createUnit"/>
+                    <Label text="create improvement"/>
+                    <TextField promptText="tile number" fx:id="tileNumberForImprovement"/>
+                    <TextField promptText="improvement name" fx:id="improvementName"/>
+                    <Button text="create improvement !" onMouseClicked="#createImprovement"/>
                     <Button text="BACK" onMouseClicked="#back"/>
                 </VBox>
             </center>

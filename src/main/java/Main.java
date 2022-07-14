@@ -173,6 +173,7 @@ public class Main extends Application {
         TechnologyPanel.technologyPanelURL = new URL(Main.class.getResource("fxml/technologyPanel.fxml").toExternalForm());
         ResearchInformation.researchInformationURL = new URL(Main.class.getResource("fxml/researchInformation.fxml").toExternalForm());
         VictoryAnimation.winingTransitionURL = new URL(Main.class.getResource("pictures/victory").toExternalForm());
+        VictoryAnimation.mainMenuFxmlURL = LoginMenu.mainMenuFxmlURL;
 
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
