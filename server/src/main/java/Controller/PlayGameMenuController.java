@@ -1747,20 +1747,28 @@ public class PlayGameMenuController {
         return null;
     }
     // it makes parameters for unit maker such as unit or city
-    public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) {
+    public void preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (index < 0 || index > 71) {
-            return "number of origin tile is invalid !";
+            gameGroupData.result =  "number of origin tile is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         City city = findTile(index, map, civilization);
         if (city == null) {
-            return "there is no city !";
+            gameGroupData.result =  "there is no city !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         Unit unit = makeUnit(civilization, city.getCenterTile(), map, unitName);
         if (unit == null) {
-            return "there is no unit with this name !";
+            gameGroupData.result = "there is no unit with this name !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         int turn = unit.getDuration();
-        return createUnit(civilization, city, unit, map, turn);
+        gameGroupData.result = createUnit(civilization, city, unit, map, turn);
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
     public Unit makeUnit (Civilization civilization, Tile tile, ArrayList<Tile> map, String unitName) {
