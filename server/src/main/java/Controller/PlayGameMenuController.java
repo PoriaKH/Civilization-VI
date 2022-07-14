@@ -9,7 +9,6 @@ import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -295,6 +294,7 @@ public class PlayGameMenuController {
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (numberOfDestination < 0 || numberOfDestination > 71) {
             gameGroupData.result = "number of destination is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         Unit unitServer = getUnitServer(gameGroup.tiles, unit);
@@ -303,24 +303,29 @@ public class PlayGameMenuController {
 
         if (unitServer == null) {
             gameGroupData.result = "there is no unit with this name !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         if (unitServer.getIsOnSleep()|| unitServer.isOnBoost() || unitServer.isOnBoostTillRecover() || unitServer.isOnWarFooting()) {
             gameGroupData.result = "this unit is not active !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         if (!unitServer.getCivilization().getName().equals(civilization.getName())) {
             gameGroupData.result = "this unit is for another civilization !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         if (unitServer.getPath().size() != 0) {
             gameGroupData.result = "this unit has another path !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         ArrayList<Unit> unitsDestination = destination.getUnits();
         for (int i = 0; i < unitsDestination.size(); i++) {
             if (unitsDestination.get(i).isCivilian() == unitServer.isCivilian()) {
                 gameGroupData.result = "there is another unit with this type in the tile !";
+                sendMessageToAllClients(gameGroup, gameGroupData);
                 return;
             }
         }
@@ -329,14 +334,7 @@ public class PlayGameMenuController {
         unitServer.setOrigin(destination);
         unitServer.setHasOrdered(true);
         gameGroupData.result = "unit teleported to destination !";
-
-        for (Socket socket : gameGroup.sockets) {
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            gameGroupData.result = "cheat code activated successfully";
-            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
-            dataOutputStream.flush();
-        }
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     // get Unit in tiles of server
     private Unit getUnitServer(ArrayList<Tile> tiles, Unit localUnit) {
@@ -1252,13 +1250,13 @@ public class PlayGameMenuController {
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (numberOfDestination < 0 || numberOfDestination > 71) {
             gameGroupData.result = "number of destination tile is invalid !";
-            sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         if (!unit.getCivilization().equals(civilization)) {
             gameGroupData.result = "this unit is not for your civilization";
             try {
-                sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
+                sendMessageToAllClients(gameGroup, gameGroupData);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -1271,19 +1269,19 @@ public class PlayGameMenuController {
 
         if (serverUnit != null && serverUnit.getPath().size() != 0) {
             gameGroupData.result = "this unit is on moving !";
-            sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         if (serverUnit != null && serverUnit.isCivilian() && ((Civilian)serverUnit).getWorkingTile() != null) {
             gameGroupData.result = "this civilian is working on something !";
-            sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         gameGroupData.result = moveUnit(getServerCivilization(civilization, gameGroupData.civilizations), origin, destination, gameGroupData.tiles, serverUnit);
-        sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
-    private void sendMessageToAllClientsAboutMoveUnit(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
+    private void sendMessageToAllClients(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
         ArrayList<Socket> sockets = gameGroup.sockets;
         for (Socket socket : sockets) {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
