@@ -1,5 +1,7 @@
 package View;
 
+import Controller.PlayGameMenuController;
+import Model.Civilization;
 import Model.Tile;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,23 +18,29 @@ public class TechnologyPanel {
     public static Scene gameMenuScene;
     public Scene technologyPanelScene;
     public static URL technologyPanelURL;
+    public static Civilization playingCivilization;
+    public static PlayGameMenuController playGameMenuController;
 
     public void start () throws IOException {
         BorderPane borderPane = FXMLLoader.load(technologyPanelURL);
         technologyPanelScene = new Scene(borderPane);
+        TechnologyTree.technologyPanelScene = technologyPanelScene;
+        ResearchInformation.technologyPanelScene = technologyPanelScene;
         stage.setScene(technologyPanelScene);
         stage.show();
     }
 
     public void moveToTechnologyTree(MouseEvent mouseEvent) throws IOException {
-        TechnologyTree.technologyPanelScene = technologyPanelScene;
         TechnologyTree.stage = stage;
+        TechnologyTree.playingCivilization = playingCivilization;
+        TechnologyTree.playGameMenuController = playGameMenuController;
         new TechnologyTree().initializeTechnologyTree();
     }
 
     public void moveToResearchInfo(MouseEvent mouseEvent) throws IOException {
-        ResearchInformation.technologyPanelScene = technologyPanelScene;
         ResearchInformation.stage = stage;
+        ResearchInformation.playGameMenuController = playGameMenuController;
+        ResearchInformation.playingCivilization = playingCivilization;
         new ResearchInformation().start();
     }
 

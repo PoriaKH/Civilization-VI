@@ -37,7 +37,6 @@ public class Lobby {
     }
 
     public void hostsClicked(MouseEvent mouseEvent) throws IOException, InterruptedException {
-
         Hosts.run(mouseEvent);
     }
 }
