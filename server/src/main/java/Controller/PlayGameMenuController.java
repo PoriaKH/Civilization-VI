@@ -776,7 +776,7 @@ public class PlayGameMenuController {
             stringBuilder.append(technology.getKey().getName() + "\trounds left: " + technology.getValue().toString() + "\n");
         return stringBuilder;
     }
-    // return name of current unit
+    /*// return name of current unit
     public String getUnitsName (Unit unit) {
         if (unit.isCivilian()) {
             if (((Civilian)unit).isWorker()) {
@@ -858,8 +858,8 @@ public class PlayGameMenuController {
             }
         }
         return "";
-    }
-    public StringBuilder unitPanel(Civilization civilization,ArrayList<Tile> map){
+    }*/
+    /*public StringBuilder unitPanel(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> unitsOfTile = map.get(i).getUnits();
@@ -871,7 +871,7 @@ public class PlayGameMenuController {
             }
         }
         return stringBuilder;
-    }
+    }*/
     public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
         StringBuilder stringBuilder = new StringBuilder("");//"Civilization name" :
         //                             Capital : tile numbers
@@ -1035,7 +1035,7 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
+/*    public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> unitsOfTile = map.get(i).getUnits();
@@ -1062,7 +1062,7 @@ public class PlayGameMenuController {
             }
         }
         return stringBuilder;
-    }
+    }*/
     public StringBuilder roadsInfo (ArrayList<Tile> map) {
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("tiles with road : ");
@@ -1082,7 +1082,7 @@ public class PlayGameMenuController {
         stringBuilder.append(stringBuilderRoad);
         return stringBuilder;
     }
-
+/*
     public StringBuilder economicalReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("Number of cities : ").append(civilization.getCities().size()).append("\n-----------------------").append("\n");
@@ -1105,7 +1105,7 @@ public class PlayGameMenuController {
         }
 
         return stringBuilder;
-    }
+    }*/
     public StringBuilder diplomaticReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("your friends :\n");

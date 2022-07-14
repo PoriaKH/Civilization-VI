@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added cheatCodes">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added teleport">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatTeleport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatTeleport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Units/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Unit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatTeleport.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatTeleport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657777806055</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added teleport">
+      <created>1657779298611</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1657779298611</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,6 +143,7 @@
     <MESSAGE value="done some on teleport" />
     <MESSAGE value="changed serverController and added addGold" />
     <MESSAGE value="added cheatCodes" />
-    <option name="LAST_COMMIT_MESSAGE" value="added cheatCodes" />
+    <MESSAGE value="added teleport" />
+    <option name="LAST_COMMIT_MESSAGE" value="added teleport" />
   </component>
 </project>

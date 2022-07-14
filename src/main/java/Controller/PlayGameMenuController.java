@@ -705,7 +705,6 @@ public class PlayGameMenuController {
             stringBuilder.append(technology.getKey().getName() + "\trounds left: " + technology.getValue().toString() + "\n");
         return stringBuilder;
     }
-    // todo
     // return name of current unit
     public String getUnitsName (Unit unit) {
         if (unit.isCivilian()) {
@@ -975,7 +974,7 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    // todo
+
     public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
@@ -1024,7 +1023,7 @@ public class PlayGameMenuController {
         stringBuilder.append(stringBuilderRoad);
         return stringBuilder;
     }
-    // todo
+
     public StringBuilder economicalReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("Number of cities : ").append(civilization.getCities().size()).append("\n-----------------------").append("\n");
