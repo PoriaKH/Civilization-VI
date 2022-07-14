@@ -177,6 +177,8 @@ public class Main extends Application {
         VictoryAnimation.winingTransitionURL = new URL(Main.class.getResource("pictures/victory").toExternalForm());
         VictoryAnimation.mainMenuFxmlURL = LoginMenu.mainMenuFxmlURL;
 
+        SettingPanel.settingPanelURL = new URL(Main.class.getResource("fxml/settingPanel.fxml").toExternalForm());
+
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
         for (int i = 0; i < Unit.unitsName.size(); i++) {

@@ -200,6 +200,7 @@ public class PlayGameMenu {
         Text spacing3 = new Text("                           ");
         Text spacing4 = new Text("                           ");
         Text spacing5 = new Text("                           ");
+        Text spacing6 = new Text("                    ");
 
         Image happinessImage = new Image(getClass().getResource("/pictures/Happiness.png").toString());
         ImageView happinessView = new ImageView(happinessImage);
@@ -221,6 +222,17 @@ public class PlayGameMenu {
                 "-fx-font-style: italic;\n" +
                 "-fx-background-color: #a9a2a2;");
 
+
+        Button settingButton = new Button();
+        settingButton.setStyle("-fx-effect: dropshadow( one-pass-box , #7304bd, 8 , 0.0 , 2 , 0 );");
+        settingButton.setShape(new Circle(15));
+        settingButton.setMinSize(30, 30);
+        settingButton.setMaxSize(30, 30);
+        Image imageSetting = new Image(getClass().getResource("/pictures/setting.png").toString());
+        ImageView settingView = new ImageView(imageSetting);
+        settingView.fitWidthProperty().bind(settingButton.widthProperty());
+        settingView.fitHeightProperty().bind(settingButton.heightProperty());
+        settingButton.setGraphic(settingView);
 
         Button technologyButton = new Button();
         technologyButton.setStyle("-fx-effect: dropshadow( one-pass-box , #7304bd, 8 , 0.0 , 2 , 0 );");
@@ -256,6 +268,8 @@ public class PlayGameMenu {
         hBox.getChildren().add(infoPanelButton);
         hBox.getChildren().add(spacing5);
         hBox.getChildren().add(nextTurnButton);
+        hBox.getChildren().add(spacing6);
+        hBox.getChildren().add(settingButton);
 
         root.getChildren().add(hBox);
 
@@ -308,6 +322,15 @@ public class PlayGameMenu {
                         throw new RuntimeException(e);
                     }
                 }
+            }
+        });
+        settingButton.setOnMouseClicked(event -> {
+            SettingPanel.gameScene = scene;
+            SettingPanel.stage = stage;
+            try {
+                new SettingPanel().run();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         infoPanelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
