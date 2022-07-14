@@ -2171,13 +2171,13 @@ public class PlayGameMenuController {
             return "no unit with this name exists!";
         return this.createUnit(civilization, city, unit, map, 1);
     }
-    // todo
+    // todo -> useless -> comment
     public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         matcher.find();
         int tileNumber = Integer.parseInt(matcher.group("tile"));
         return createCity(civilization,tileNumber,map,civilizations);
     }
-    // todo
+    // todo -> client
     public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         if(tileNumber < 0 || tileNumber >= 72)
             return "invalid tile number";
@@ -2205,7 +2205,7 @@ public class PlayGameMenuController {
         }
         return "you can't create city here";
     }
-    // todo
+    // todo -> comment
     public boolean checkNeighboursForCreateCity(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         for(Tile tempTile : map){
             if(tempTile == tile){
@@ -2227,7 +2227,7 @@ public class PlayGameMenuController {
         }
         return true;
     }
-    // todo
+    // todo -> comment
     public boolean areTilesNeighbour(Tile tile1, Tile tile2){
         double distance = (double)Math.sqrt(Math.pow(tile1.getX() - tile2.getX(), 2) + Math.pow(tile1.getY() - tile2.getY(), 2));
         if(distance < 1.1 * tile1.getRadius() * Math.sqrt(3))
@@ -2235,7 +2235,7 @@ public class PlayGameMenuController {
 
         return false;
     }
-    // todo
+    // todo -> comment
     // return a warrior unit from specific tile
     public Unit getWarriorUnit (int index, ArrayList<Tile> map) {
         ArrayList<Unit> units = map.get(index).getUnits();
@@ -2244,7 +2244,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo
+    // todo -> comment
     // get all indexes that are between attackers and defenders
     public void getAllIndexes(int originIndex, int destinationIndex, ArrayList<Integer> indexOfTiles) {
         if (originIndex < destinationIndex) {
@@ -2289,7 +2289,7 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     // if blockers block attackers vision return true
     public boolean checkTheBlocks (ArrayList<Tile> map, ArrayList<Integer> indexOfTiles) {
         for (int i = 1; i < indexOfTiles.size() - 1; i++) {
@@ -2298,7 +2298,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     // is attacker range enough for distance ?
     public boolean isRangeEnough(Warrior warrior, ArrayList<Integer> indexOfTiles) {
         int distance = indexOfTiles.size() - 1;
@@ -2306,7 +2306,7 @@ public class PlayGameMenuController {
         if (warrior.getRange() != -1 && distance > warrior.getRange()) return false;
         return true;
     }
-    // todo
+    // todo -> comment
     // return civilian unit from specific tile
     public Unit getCivilianUnit (int index, ArrayList<Tile> map) {
         ArrayList<Unit> units = map.get(index).getUnits();
@@ -2315,7 +2315,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo
+    // todo -> comment
     // remove a civilization from friends list
     public void addToEnemy (Civilization civilization, Civilization enemy) {
         ArrayList<Civilization> friends = civilization.getFriends();
@@ -2327,7 +2327,7 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     // if civilization2 is friend return true
     public boolean isFriend(Civilization civilization1, Civilization civilization2) {
         ArrayList<Civilization> friends = civilization1.getFriends();
@@ -2336,11 +2336,12 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     public void sendMessageToDefender (Unit defender, Unit attacker) {
         defender.getCivilization().addMessage("civilization :" + attacker.getCivilization() +
                 "attacked you at turn : " + turn);
     }
-    // todo
+    // todo -> client
     // prepare some parameters and return some string
     public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) {
         if (destinationIndex < 0 || destinationIndex > 71) {
@@ -2401,7 +2402,7 @@ public class PlayGameMenuController {
         else
             return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);
     }
-    // todo
+    // todo -> comment
     // if a city contain that tile , return the city
     public City getCityFromTile (Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
@@ -2413,7 +2414,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo
+    // todo -> comment
     // if city is for your civilization return true
     public boolean isCityForCivilization (City city, Civilization civilization) {
         for (City city1 : civilization.getCities()) {
@@ -2421,7 +2422,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     // return the civilization of city
     public Civilization getCivilizationFromCity(City city, ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
@@ -2431,7 +2432,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo
+    // todo -> comment
     public int getColumn (int index) {
         if (0 <= index && index <= 5) return 0;
         else if (6 <= index && index <= 10) return 1;
@@ -2448,7 +2449,7 @@ public class PlayGameMenuController {
         else if (66 <= index && index <= 71) return 12;
         return 0;
     }
-    // todo
+    // todo -> comment
     public boolean checkDistance(Unit unit, int origin, int destination) {
         int range = ((Warrior)unit).getRange();
         int columnO = getColumn(origin);
@@ -2464,7 +2465,7 @@ public class PlayGameMenuController {
         else if (range > 0 && delta - 1 <= range) return true;
         return false;
     }
-    // todo
+    // todo -> client
     public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
         if (destinationIndex < 0 || destinationIndex> 71) {
             return "number of destination tile is invalid !";
@@ -2503,7 +2504,7 @@ public class PlayGameMenuController {
         else
             return attackCityFromAir(civilization, attacker, defenderCity, originIndex, map, defenderCivilization);
     }
-    // todo
+    // todo -> comment
     public String attackCityFromGround(Civilization civilization,Unit attacker, City defenderCity, int originIndex, ArrayList<Tile>map, Civilization defenderCivilization) {
         String str = "";
         int powerOfAttacker = ((Warrior)attacker).getDamage();
@@ -2560,13 +2561,13 @@ public class PlayGameMenuController {
         }
         return str;
     }
-    // todo
+    // todo -> comment
     private void changeCapital(Civilization civilization) {
         for (int i = 0; i < civilization.getCities().size(); i++) {
              civilization.setCapital(civilization.getCities().get(i));
         }
     }
-    // todo
+    // todo -> comment
     public String attackCityFromAir(Civilization civilization,Unit attacker, City defenderCity, int originIndex, ArrayList<Tile>map, Civilization defenderCivilization) {
         String str = "";
         int powerOfAttacker = ((Warrior)attacker).getRangedCombatDamage();
@@ -2605,12 +2606,12 @@ public class PlayGameMenuController {
         }
         return str;
     }
-    // todo
+    // todo -> comment
     public int attributeCombatChange (Attribute attribute) {
         if (attribute == null) return 0;
         return attribute.getCombatChange();
     }
-    // todo
+    // todo -> comment
     public String attackTileFromGround(Civilization civilization, Unit attacker, Unit defender, int originIndex, int destinationIndex,ArrayList<Tile> map){
         String str = "";
         int combatChange = map.get(destinationIndex).getCombatChange() + attributeCombatChange(map.get(destinationIndex).getAttribute());
@@ -2690,7 +2691,7 @@ public class PlayGameMenuController {
         }
         return str;
     }
-    // todo
+    // todo -> comment
     public String attackTileFromAir(Civilization civilization, Unit attacker, Unit defender, int originIndex, int destinationIndex,ArrayList<Tile> map){
         String str;
 
@@ -2730,7 +2731,7 @@ public class PlayGameMenuController {
         }
         return str;
     }
-    // todo
+    // todo -> client
     // makes parameters for unit behaviours functions
     public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) {
         if (!unit.getCivilization().equals(civilization)) {
@@ -2765,7 +2766,7 @@ public class PlayGameMenuController {
         }
         return "";
     }
-    // todo
+    // todo -> comment
     public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map){
         String str;
 
@@ -2788,7 +2789,7 @@ public class PlayGameMenuController {
         str = "selected unit is sleeping";
         return str;
     }
-    // todo
+    // todo -> comment
     public String WarFootingUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2813,7 +2814,7 @@ public class PlayGameMenuController {
         str = "this unit is on standby !";
         return str;
     }
-    // todo
+    // todo -> comment
     public String boostUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
@@ -2842,7 +2843,7 @@ public class PlayGameMenuController {
         str = "booster has been activated for this unit !";
         return str;
     }
-    // todo
+    // todo -> comment
     public String boostTillRecoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2870,7 +2871,7 @@ public class PlayGameMenuController {
         str = "booster until full recovery has been activated for this unit !";
         return str;
     }
-    // todo
+    // todo -> comment
     //if unit tile is city center (tile) return true
     public boolean isTileCityCenter (Civilization civilization, Unit unit) {
         ArrayList<City> cities = civilization.getCities();
@@ -2880,7 +2881,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     public String deploymentUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2909,7 +2910,7 @@ public class PlayGameMenuController {
         str = "the unit is deployed in city !";
         return str;
     }
-    // todo
+    // todo -> comment
     public String readyForRangedBattleUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2971,7 +2972,7 @@ public class PlayGameMenuController {
         str = "unit making has been canceled !";
         return str;
     }
-    // todo
+    // todo -> comment
     public String wakeUpUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2994,7 +2995,7 @@ public class PlayGameMenuController {
         str = "selected unit is active";
         return str;
     }
-    // todo
+    // todo -> comment
     public String deleteUnit(Civilization civilization, Unit unit,ArrayList<Tile> map, Tile tile){
         String str;
         if (unit == null) {
@@ -3009,7 +3010,7 @@ public class PlayGameMenuController {
         str = "the unit deleted successfully !";
         return str;
     }
-    // todo
+    // todo -> comment
     public boolean tileIsForCity (Civilization civilization, Tile tile) {
         ArrayList<City> cities = civilization.getCities();
         for (int i = 0; i < cities.size(); i++) {
@@ -3020,7 +3021,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     public String recoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map, Tile tile){
         String str;
         if (unit == null) {
@@ -3091,7 +3092,7 @@ public class PlayGameMenuController {
         }
         return "tiles do not belong to your civilization !";
     }
-    // todo
+    // todo -> useless
     public String prePurchaseTile(Matcher matcher, Civilization civilization, ArrayList<Tile> map,ArrayList<Civilization> civilizations){
         matcher.find();
         int tileNumber = Integer.parseInt(matcher.group("tile"));
@@ -3101,7 +3102,7 @@ public class PlayGameMenuController {
         Tile tile = map.get(tileNumber);
         return purchaseTile(civilization,tile,map,civilizations);
     }
-    // todo
+    // todo -> client
     public String purchaseTile(Civilization civilization, Tile tile,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         for(City city : civilization.getCities()){
             for(Tile tempTile : city.getTiles()){
@@ -3124,7 +3125,7 @@ public class PlayGameMenuController {
         }
         return "this tile isn't neighbour with any of your cities";
     }
-    // todo
+    // todo -> comment
     public boolean doesTileBelongToAnyCivilization(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         for(Civilization civilization : civilizations){
             for(City city : civilization.getCities()){
@@ -3136,7 +3137,7 @@ public class PlayGameMenuController {
         }
         return false;//it doesn't
     }
-    // todo
+    // todo -> useless
     public StringBuilder showTechnologyMenu(Civilization civilization){
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         ArrayList<String> technologyNames = new ArrayList<>();
@@ -3211,7 +3212,7 @@ public class PlayGameMenuController {
             stringBuilder.append(possibleTechnologies.get(i) + "\n");
         return stringBuilder;
     }
-    // todo
+    // todo -> comment
     public Technology preChooseTechnologyToLearn(String name){
         if (name.equals("Agriculture")) {
             Technology technology = new Technology(true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
@@ -3403,7 +3404,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo
+    // todo -> comment
     public boolean hasPrerequisiteTechs(ArrayList<Technology> allTechnologies, String name){
         for (Technology technology : allTechnologies)
             if (technology.getName().equals(name))
@@ -3858,7 +3859,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> client
     public String chooseTechnologyToLearn(Civilization civilization, String technologyName){
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
@@ -3884,7 +3885,7 @@ public class PlayGameMenuController {
         civilization.setIsLearningTechnology(true);
         return "technology has been added to the learning technologies";
     }
-    // todo
+    // todo -> client
     public String changeTechnologyToLearn(Civilization civilization, String technologyName){
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
@@ -3938,7 +3939,7 @@ public class PlayGameMenuController {
         else
             return "this tile isn't your city tiles or city neighbors";
     }
-    // todo
+    // todo -> client
     public String createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map){
         ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
         if (tileUnitNumber != tileNumber)
@@ -4075,7 +4076,7 @@ public class PlayGameMenuController {
             panel.append(improvementPanel.get(i));
         return panel;
     }
-    // todo
+    // todo -> comment
     // after every turn check for road or rail making in your civilization,,, if work is making ->true if it is removing->false
     public void consumeTurnForRoadMaking (Civilization civilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
@@ -4123,7 +4124,7 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     public Unit getWorker (Tile tile) {
         ArrayList<Unit> units = tile.getUnits();
         for (int i = 0; i < units.size(); i++) {
@@ -4133,7 +4134,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo
+    // todo -> client
     public String createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
@@ -4167,7 +4168,7 @@ public class PlayGameMenuController {
         str = "the road will be ready in 3 turns";
         return str;
     }
-    // todo
+    // todo -> client
     public String createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
@@ -4252,7 +4253,7 @@ public class PlayGameMenuController {
             }
         return "no such improvement exists!";
     }
-    // todo
+    // todo -> client
     public String removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
@@ -4286,7 +4287,7 @@ public class PlayGameMenuController {
         str = "the road will be removed in 3 turns";
         return str;
     }
-    // todo
+    // todo -> client
     public String removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
@@ -4327,7 +4328,7 @@ public class PlayGameMenuController {
         tile.cancelImprovementOnProcess();
         return "Improvement canceled successfully";
     }
-    // todo
+    // todo -> client
     public String repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
 
@@ -4366,7 +4367,7 @@ public class PlayGameMenuController {
         str = "the road way will be repaired in 3 turns";
         return str;
     }
-    // todo
+    // todo -> client
     public String repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map){
         String str;
         Unit unit = getWorker(tile);
@@ -4446,7 +4447,7 @@ public class PlayGameMenuController {
         return str;
     }
      */
-     // todo
+     // todo -> client
     // get necessary parameters for update warrior
     public String preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map) {
         if (index < 0 || index > 71) {
@@ -4456,7 +4457,7 @@ public class PlayGameMenuController {
         City city = findTile(index, map, civilization);
         return updateWarrior(civilization, oldUnit, newUnit, map, map.get(index), city);
     }
-    // todo
+    // todo -> comment
     public String updateWarrior(Civilization civilization, Unit warrior, Unit newWarrior,ArrayList<Tile> map, Tile tile, City city){
         String str;
         if (warrior == null) {
@@ -4561,7 +4562,7 @@ public class PlayGameMenuController {
 
     }
      */
-    // todo
+    // todo -> client
     public String nextTurn(Civilization civilization, ArrayList<Tile> map){
         //unit actions check
         int tileNumber = unitActionsNextTurnCheck(civilization,map);
@@ -4589,7 +4590,7 @@ public class PlayGameMenuController {
         //TODO...  also complete historyInformation and showProductionsInProcess
         return "done";
     }
-    // todo
+    // todo -> comment
     public void increasePopulationNextTurn(Civilization civilization,ArrayList<Tile> map){
         if(civilization.getHappiness() < 0)
             return;
@@ -4606,7 +4607,7 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     public int unitActionsNextTurnCheck(Civilization civilization,ArrayList<Tile> map){
         for(Tile tile : map){
             for(Unit unit : tile.getUnits()){
@@ -4621,7 +4622,7 @@ public class PlayGameMenuController {
         }
         return -1;
     }
-    // todo
+    // todo -> comment
     public void resetHasOrdered(Civilization civilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
             Tile tile = map.get(i);
@@ -4637,17 +4638,17 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     public void improveImprovementsNextTurn(ArrayList<Tile> map){
         for (Tile tile : map)
             tile.reduceImprovementRound();
     }
-    // todo
+    // todo -> comment
     public void reduceRepairNeedImprovementTurnNextTurn(ArrayList<Tile> map){
         for (Tile tile: map)
             tile.reduceRepairNeedImprovementTurn();
     }
-    // todo
+    // todo -> comment
     public void increaseGoldCivilizationNextTurn(Civilization civilization,ArrayList<Tile> map){
         int finalAsset = 0;
         for(City city : civilization.getCities()){
@@ -4665,7 +4666,7 @@ public class PlayGameMenuController {
         //TODO... Buildings cost
         civilization.setGold(finalAsset);
     }
-    // todo
+    // todo -> comment
     public void increaseFoodCitiesNextTurn(Civilization civilization,ArrayList<Tile> map){
         for(City city : civilization.getCities()){
             int finalAsset = 0;
@@ -4674,7 +4675,7 @@ public class PlayGameMenuController {
             city.setTotalFood(finalAsset);
         }
     }
-    // todo
+    // todo -> comment
     public void increaseProductionCitiesNextTurn(Civilization civilization,ArrayList<Tile> map){
         for(City city : civilization.getCities()){
             int finalAsset = 0;
@@ -4682,7 +4683,7 @@ public class PlayGameMenuController {
             city.setProduction(finalAsset);
         }
     }
-    // todo
+    // todo -> comment
     // increase damage point of your cities by 1 every turn
     public void increaseCityDamagePoint (Civilization civilization) {
         ArrayList<City> cities = civilization.getCities();
@@ -4692,7 +4693,7 @@ public class PlayGameMenuController {
             cities.get(i).setDamagePoint(newDamagePoint);
         }
     }
-    // todo
+    // todo -> comment
     public void deleteLosers (Civilization civilization, ArrayList<Civilization> civilizations) {
         for (int i = 0; i < civilizations.size(); i++) {
             if (civilizations.get(i).getCities().size() == 0) {
@@ -4701,7 +4702,7 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     public boolean findWinner (Civilization civilization, ArrayList<Civilization> civilizations) {
         if (civilizations.size() == 1) {
             int point = civilization.getPoint() + 500;
@@ -4710,7 +4711,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     public void loadOriginTileForUnit (ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
             for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {
@@ -4718,19 +4719,19 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     public void loadTileForCitizen (ArrayList<Tile> map) {
         for (Tile tile : map) {
             tile.getCitizen().setTile(tile);
         }
     }
-    // todo
+    // todo -> comment
     public void loadTileForBuilding (ArrayList<Tile> map) {
         for (Tile tile : map) {
             tile.getBuilding().setTile(tile);
         }
     }
-    // todo
+    // todo -> comment
     public void loadCivilizationForBuilding (ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
             for (City city : civilization.getCities()) {
