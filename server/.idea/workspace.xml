@@ -4,15 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
-      <change afterPath="$PROJECT_DIR$/../src/main/java/View/SettingPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/fxml/settingPanel.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/pictures/setting.png" afterDir="false" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added UnitBehaviour to server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/CSS/style5.css" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/CSS/style5.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/unitPanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/unitPanel.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,7 +55,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -92,7 +91,6 @@
       <workItem from="1657625874166" duration="2636000" />
       <workItem from="1657716485412" duration="3076000" />
       <workItem from="1657734133379" duration="1737000" />
-      <workItem from="1657828293562" duration="1088000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -157,7 +155,28 @@
       <option name="project" value="LOCAL" />
       <updated>1657787970785</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="adding unitMaker">
+      <created>1657801356288</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1657801356288</updated>
+    </task>
+    <task id="LOCAL-00011" summary="added unitMaker to server">
+      <created>1657802561938</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1657802561938</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added UnitBehaviour to server">
+      <created>1657807744805</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1657807744805</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,6 +204,9 @@
     <MESSAGE value="removed cityPanel from server" />
     <MESSAGE value="removed diplomatic info from server" />
     <MESSAGE value="added moveUnit to server" />
-    <option name="LAST_COMMIT_MESSAGE" value="added moveUnit to server" />
+    <MESSAGE value="adding unitMaker" />
+    <MESSAGE value="added unitMaker to server" />
+    <MESSAGE value="added UnitBehaviour to server" />
+    <option name="LAST_COMMIT_MESSAGE" value="added UnitBehaviour to server" />
   </component>
 </project>

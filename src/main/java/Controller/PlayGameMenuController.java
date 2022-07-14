@@ -1192,7 +1192,7 @@ public class PlayGameMenuController {
         Collections.reverse(path);
         unit.setPath(path);
     }
-    // todo -> client
+    // todo -> client (done)
     // create parameters like unit or origin or destination for moveUnit function
     public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) throws IOException {
 /*        MoveUnitGson moveUnitGson = new MoveUnitGson();
@@ -1682,7 +1682,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo -> client
+    // todo -> client (done)
     // it makes parameters for unit maker such as unit or city
     public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) throws IOException {
 /*        UnitMakingGson unitMakingGson = new UnitMakingGson();
@@ -2183,28 +2183,43 @@ public class PlayGameMenuController {
         return this.createUnit(civilization, city, unit, map, 1);
     }
     // todo -> useless -> comment
-    public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
+    /*public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         matcher.find();
         int tileNumber = Integer.parseInt(matcher.group("tile"));
         return createCity(civilization,tileNumber,map,civilizations);
-    }
-    // todo -> client
-    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
-        if(tileNumber < 0 || tileNumber >= 72)
+    }*/
+    // todo -> client (done)
+    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations) throws IOException {
+/*        CreateCityGson createCityGson = new CreateCityGson();
+        createCityGson.civilization = civilization;
+        createCityGson.tileNumber = tileNumber;
+        createCityGson.map = map;
+        createCityGson.civilizations = civilizations;
+        createCityGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(createCityGson);
+
+        CreateHost.dataOutputStream.writeUTF("createCity" + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+        if (tileNumber < 0 || tileNumber >= 72)
             return "invalid tile number";
 
-        for(Tile tile : map){
-            if(tile.getTileNumber() == tileNumber){
-                for(Unit unit : tile.getUnits()){
-                    if(unit.getCivilization() == civilization){
-                        if(unit.isCivilian()){
+        for (Tile tile : map) {
+            if (tile.getTileNumber() == tileNumber) {
+                for (Unit unit : tile.getUnits()) {
+                    if (unit.getCivilization() == civilization) {
+                        if (unit.isCivilian()) {
                             Civilian civilian = (Civilian) unit;
-                            if(civilian.isSettler()){
-                                if(checkNeighboursForCreateCity(tile,map,civilizations)){
-                                    while(tile.getUnits().size() > 0) {
+                            if (civilian.isSettler()) {
+                                if (checkNeighboursForCreateCity(tile, map, civilizations)) {
+                                    while (tile.getUnits().size() > 0) {
                                         tile.getUnits().remove(0);
                                     }
-                                    City city1 = new City(tile,map);
+                                    City city1 = new City(tile, map);
                                     civilization.getCities().add(city1);
                                     return "city has been created successfully";
                                 }
@@ -2352,9 +2367,23 @@ public class PlayGameMenuController {
         defender.getCivilization().addMessage("civilization :" + attacker.getCivilization() +
                 "attacked you at turn : " + turn);
     }
-    // todo -> client
+    // todo -> client (done)
     // prepare some parameters and return some string
-    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) {
+    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        AttackTileGson attackTileGson = new AttackTileGson();
+        attackTileGson.attacker = attacker;
+        attackTileGson.destinationIndex = destinationIndex;
+        attackTileGson.civilization = civilization;
+        attackTileGson.map = map;
+        attackTileGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(attackTileGson);
+
+        CreateHost.dataOutputStream.writeUTF("attackTile " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (destinationIndex < 0 || destinationIndex > 71) {
             return "number of destination tile is invalid !";
         }
@@ -2373,10 +2402,10 @@ public class PlayGameMenuController {
         if (defender.getCivilization().equals(civilization)) {
             return "you can't attack your own unit !";
         }
-        if (attacker.getIsOnSleep()|| attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
+        if (attacker.getIsOnSleep() || attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
             return "this unit is not active !";
         }
-        if (((Warrior)attacker).getRange() != -1) {
+        if (((Warrior) attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
         }
         ArrayList<Integer> indexOfTiles = new ArrayList<>();
@@ -2384,10 +2413,10 @@ public class PlayGameMenuController {
         if (indexOfTiles.size() == 0) {
             return "this distance is too long for attack !";
         }
-        if (!isRangeEnough((Warrior)attacker, indexOfTiles)) {
+        if (!isRangeEnough((Warrior) attacker, indexOfTiles)) {
             return "unit 's range is not enough !";
         }
-        if (checkTheBlocks(map,indexOfTiles)) {
+        if (checkTheBlocks(map, indexOfTiles)) {
             return "your unit vision is blocked !";
         }
         if (defender != null && isFriend(civilization, defender.getCivilization())) {
@@ -2398,17 +2427,17 @@ public class PlayGameMenuController {
             defender = getCivilianUnit(destinationIndex, map);
             if (defender == null) return "there is no unit on destination !";
 
-        sendMessageToDefender(defender, attacker);
+            sendMessageToDefender(defender, attacker);
 
             defender.setCivilization(civilization);
-            if (((Warrior)attacker).getRange() == -1) {
+            if (((Warrior) attacker).getRange() == -1) {
                 attacker.setOrigin(map.get(destinationIndex));
                 map.get(destinationIndex).addUnit(attacker);
                 map.get(originIndex).removeUnit(attacker);
             }
             return "you captured civilians of enemy !";
         }
-        if (((Warrior)attacker).getRange() == -1)
+        if (((Warrior) attacker).getRange() == -1)
             return attackTileFromGround(civilization, attacker, defender, originIndex, destinationIndex, map);
         else
             return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);
@@ -2476,12 +2505,27 @@ public class PlayGameMenuController {
         else if (range > 0 && delta - 1 <= range) return true;
         return false;
     }
-    // todo -> client
-    public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
-        if (destinationIndex < 0 || destinationIndex> 71) {
+    // todo -> client (done)
+    public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) throws IOException {
+/*        AttackCityGson attackCityGson = new AttackCityGson();
+        attackCityGson.attacker = attacker;
+        attackCityGson.destinationIndex = destinationIndex;
+        attackCityGson.civilization = civilization;
+        attackCityGson.map = map;
+        attackCityGson.civilizations = civilizations;
+        attackCityGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(attackCityGson);
+
+        CreateHost.dataOutputStream.writeUTF("attackCity " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+        if (destinationIndex < 0 || destinationIndex > 71) {
             return "number of destination tile is invalid !";
         }
-        City defenderCity = getCityFromTile (map.get(destinationIndex), map, civilizations);
+        City defenderCity = getCityFromTile(map.get(destinationIndex), map, civilizations);
         int originIndex = getTileIndex(attacker.getOrigin(), map);
         if (attacker == null) {
             return "your unit is not military !";
@@ -2495,22 +2539,22 @@ public class PlayGameMenuController {
         if (defenderCity == null) {
             return "this tile is not for any city !";
         }
-        if (isCityForCivilization (defenderCity, civilization)) {
+        if (isCityForCivilization(defenderCity, civilization)) {
             return "this city is for your civilization !";
         }
         if (attacker.getIsOnSleep() || attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
             return "this unit is not active !";
         }
-        if (((Warrior)attacker).getRange() != -1) {
+        if (((Warrior) attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
         }
-        if (!checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(),map))) {
+        if (!checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(), map))) {
             return "this distance is too long for attack !";
         }
         Civilization defenderCivilization = getCivilizationFromCity(defenderCity, civilizations);
         attacker.setHasOrdered(true);
 
-        if (((Warrior)attacker).getRange() == -1)
+        if (((Warrior) attacker).getRange() == -1)
             return attackCityFromGround(civilization, attacker, defenderCity, originIndex, map, defenderCivilization);
         else
             return attackCityFromAir(civilization, attacker, defenderCity, originIndex, map, defenderCivilization);
@@ -2742,37 +2786,43 @@ public class PlayGameMenuController {
         }
         return str;
     }
-    // todo -> client
+    // todo -> client (done)
     // makes parameters for unit behaviours functions
-    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) {
+    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) throws IOException {
+/*        UnitBehaviourGson unitBehaviourGson = new UnitBehaviourGson();
+        unitBehaviourGson.unit = unit;
+        unitBehaviourGson.civilization = civilization;
+        unitBehaviourGson.map = map;
+        unitBehaviourGson.command = command;
+        unitBehaviourGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(unitBehaviourGson);
+
+        CreateHost.dataOutputStream.writeUTF("unitBehave " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (!unit.getCivilization().equals(civilization)) {
             return "this unit is not for your civilization";
         }
         if (command.equals("sleep")) {
-            return  sleepUnit(civilization, unit, map);
-        }
-        else if (command.equals("alert")) {
+            return sleepUnit(civilization, unit, map);
+        } else if (command.equals("alert")) {
             return WarFootingUnit(civilization, unit, map);
-        }
-        else if (command.equals("fortify")) {
+        } else if (command.equals("fortify")) {
             return boostUnit(civilization, unit, map);
-        }
-        else if (command.equals("heal")) {
+        } else if (command.equals("heal")) {
             return boostTillRecoverUnit(civilization, unit, map);
-        }
-        else if (command.equals("deploy")) {
+        } else if (command.equals("deploy")) {
             return deploymentUnit(civilization, unit, map);
-        }
-        else if (command.equals("range")) {
+        } else if (command.equals("range")) {
             return readyForRangedBattleUnit(civilization, unit, map);
-        }
-        else if (command.equals("wake")) {
+        } else if (command.equals("wake")) {
             return wakeUpUnit(civilization, unit, map);
-        }
-        else if (command.equals("delete")) {
+        } else if (command.equals("delete")) {
             return deleteUnit(civilization, unit, map, unit.getOrigin());
-        }
-        else if (command.equals("recover")) {
+        } else if (command.equals("recover")) {
             return recoverUnit(civilization, unit, map, unit.getOrigin());
         }
         return "";
@@ -2944,7 +2994,7 @@ public class PlayGameMenuController {
         str = "the unit is ready for ranged battle !";
         return str;
     }
-    // todo
+    // todo -> client
     public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map){
         if (tileNumber != destinationTileNumber)
             return "you should move your unit first";
@@ -2971,7 +3021,7 @@ public class PlayGameMenuController {
         tile.Loot();
         return "tile has been looted successfully";
     }
-    // todo
+    // todo -> ehtemalan useless
     public String cancelCommand(Civilization civilization, boolean isCivilian,ArrayList<Tile> map, Tile tile){
         String str;
         Unit unit = tile.getUnitInUnitMakingProgress(isCivilian);

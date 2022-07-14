@@ -14,7 +14,7 @@
             stylesheets="@../CSS/style5.css"
             styleClass="BackGround">
             <left>
-                <VBox alignment="CENTER" spacing="20">
+                <VBox alignment="CENTER" spacing="15">
                 <Label text="Units behaviour"/>
                 <Button text="sleep unit" onMouseClicked="#sleepUnit"/>
                     <Button text="alert unit" onMouseClicked="#alertUnit"/>
@@ -32,10 +32,13 @@
                     <Label text="create city"/>
                     <TextField promptText="tile number" fx:id="tileNumberForCity"/>
                     <Button text="create city !" onMouseClicked="#createCity"/>
+                    <Label text="loot tile"/>
+                    <TextField promptText="tile number" fx:id="tileNumberForLoot"/>
+                    <Button text="loot tile !" onMouseClicked="#lootTile"/>
                 </VBox>
             </left>
             <center>
-                <VBox alignment="CENTER" spacing="17">
+                <VBox alignment="CENTER" spacing="12">
                     <Text text="UNIT PANEL" textAlignment="CENTER"/>
                     <Label text="move unit"/>
                     <TextField promptText="destination tile number" fx:id="moveDes"/>
@@ -54,11 +57,12 @@
                     <TextField promptText="tile number" fx:id="tileNumberForImprovement"/>
                     <TextField promptText="improvement name" fx:id="improvementName"/>
                     <Button text="create improvement !" onMouseClicked="#createImprovement"/>
+                    <Button text="remove improvement !" onMouseClicked="#removeImprovement"/>
                     <Button text="BACK" onMouseClicked="#back"/>
                 </VBox>
             </center>
             <right>
-                <VBox alignment="CENTER" spacing="20">
+                <VBox alignment="CENTER" spacing="15">
                     <Label text="create road"/>
                     <TextField promptText="tile number" fx:id="roadDes"/>
                     <Button text="create road !" onMouseClicked="#createRoadUnit"/>

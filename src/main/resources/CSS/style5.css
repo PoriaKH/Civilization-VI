@@ -1,6 +1,6 @@
 Button{
     -fx-pref-width: 200;
-    -fx-pref-height: 20;
+    -fx-pref-height: 14;
     -fx-effect: dropshadow( one-pass-box , #d54444, 8 , 0.0 , 2 , 0 );
     -fx-font-style: italic;
     -fx-background-color:
@@ -21,10 +21,10 @@ Label{
     -fx-background-size: 1280 920;
 }
 TextField{
-    -fx-max-height: 30;
+    -fx-max-height: 16;
     -fx-max-width: 300;
     -fx-background-color: #0bc7f1;
-    -fx-arc-height: 20;
+    -fx-arc-height: 14;
     -fx-arc-width: 20;
     -fx-border-color: #b70000;
     -fx-text-fill: #181818;

@@ -179,6 +179,34 @@ public class CommandProcessor {
             playGameMenuController.preUnitMaker(unitMakingGson.unitName, unitMakingGson.index,
                     unitMakingGson.civilization, unitMakingGson.map, getGroup(unitMakingGson.member));
         }
+        else if (command.startsWith("createCity ")) {
+            command = command.replace("createCity ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            CreateCityGson createCityGson = gson.fromJson(command, CreateCityGson.class);
+            playGameMenuController.createCity(createCityGson.civilization, createCityGson.tileNumber,
+                    createCityGson.map, createCityGson.civilizations, getGroup(createCityGson.member));
+        }
+        else if (command.startsWith("attackTile ")) {
+            command = command.replace("attackTile ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            AttackTileGson attackTileGson = gson.fromJson(command, AttackTileGson.class);
+            playGameMenuController.preAttackTile(attackTileGson.attacker, attackTileGson.destinationIndex,
+                    attackTileGson.civilization, attackTileGson.map, getGroup(attackTileGson.member));
+        }
+        else if (command.startsWith("attackCity ")) {
+            command = command.replace("attackCity ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            AttackCityGson attackCityGson = gson.fromJson(command, AttackCityGson.class);
+            playGameMenuController.preAttackCity(attackCityGson.attacker, attackCityGson.destinationIndex,
+                    attackCityGson.civilization, attackCityGson.map, attackCityGson.civilizations, getGroup(attackCityGson.member));
+        }
+        else if (command.startsWith("unitBehave ")) {
+            command = command.replace("unitBehave ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            UnitBehaviourGson unitBehaviourGson = gson.fromJson(command, UnitBehaviourGson.class);
+            playGameMenuController.preUnitBehaviour(unitBehaviourGson.unit, unitBehaviourGson.civilization,
+                    unitBehaviourGson.map, unitBehaviourGson.command, getGroup(unitBehaviourGson.member));
+        }
 
 
 
