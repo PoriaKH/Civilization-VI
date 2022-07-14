@@ -87,21 +87,62 @@ public class TechnologyTree {
         back.setOnMouseClicked(ev ->{
             stage.setScene(technologyPanelScene);
         });
+        back.setStyle("-fx-pref-width: 200;\n" +
+                "    -fx-pref-height: 20;\n" +
+                "    -fx-effect: dropshadow( one-pass-box , #d54444, 8 , 0.0 , 2 , 0 );\n" +
+                "    -fx-font-style: italic;\n" +
+                "    -fx-background-color:\n" +
+                "            linear-gradient(from 0% 93% to 0% 100%, rgba(115, 42, 213, 0.83) 0%, #326dda 100%),\n" +
+                "            #1a9bda,\n" +
+                "            #31a3e0,\n" +
+                "            radial-gradient(center 50% 50%, radius 100%, rgba(255, 84, 84, 0.7), #f11111);");
         back.setPrefSize(100, 30);
         learn.setOnMouseClicked(event -> {
             String technologyName = technologyField.getText();
+            technologyField.clear();
             String result = playGameMenuController.chooseTechnologyToLearn(playingCivilization, technologyName);
             technologyLabel.setText(result);
         });
+        learn.setStyle("-fx-pref-width: 200;\n" +
+                "    -fx-pref-height: 20;\n" +
+                "    -fx-effect: dropshadow( one-pass-box , #d54444, 8 , 0.0 , 2 , 0 );\n" +
+                "    -fx-font-style: italic;\n" +
+                "    -fx-background-color:\n" +
+                "            linear-gradient(from 0% 93% to 0% 100%, rgba(115, 42, 213, 0.83) 0%, #326dda 100%),\n" +
+                "            #1a9bda,\n" +
+                "            #31a3e0,\n" +
+                "            radial-gradient(center 50% 50%, radius 100%, rgba(255, 84, 84, 0.7), #f11111);");
         learn.setPrefSize(100, 30);
         technologyField.setPrefWidth(500);
         technologyField.setMaxWidth(500);
         technologyField.setPromptText("enter a technology to learn or change the current technology");
         change.setOnMouseClicked(event -> {
             String technologyName = technologyField.getText();
+            technologyField.clear();
             String result = playGameMenuController.changeTechnologyToLearn(playingCivilization, technologyName);
             technologyLabel.setText(result);
         });
+        change.setStyle("-fx-pref-width: 200;\n" +
+                "    -fx-pref-height: 20;\n" +
+                "    -fx-effect: dropshadow( one-pass-box , #d54444, 8 , 0.0 , 2 , 0 );\n" +
+                "    -fx-font-style: italic;\n" +
+                "    -fx-background-color:\n" +
+                "            linear-gradient(from 0% 93% to 0% 100%, rgba(115, 42, 213, 0.83) 0%, #326dda 100%),\n" +
+                "            #1a9bda,\n" +
+                "            #31a3e0,\n" +
+                "            radial-gradient(center 50% 50%, radius 100%, rgba(255, 84, 84, 0.7), #f11111);");
+        technologyLabel.setStyle("-fx-font-size: 20;\n" +
+                "    -fx-font-family: Ebrima;\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-effect: innershadow( three-pass-box , rgb(255, 0, 47), 6, 0.0 , 0 , 2 );");
+        technologyField.setStyle("-fx-max-height: 30;\n" +
+                "    -fx-max-width: 300;\n" +
+                "    -fx-background-color: #0bc7f1;\n" +
+                "    -fx-arc-height: 20;\n" +
+                "    -fx-arc-width: 20;\n" +
+                "    -fx-border-color: #b70000;\n" +
+                "    -fx-text-fill: #181818;\n" +
+                "    -fx-prompt-text-fill: #494949;");
         change.setPrefSize(100, 30);
         container.setPrefSize(1280, 720);
         container.setContent(vBox);

@@ -8,6 +8,7 @@ import Model.Units.Civilian;
 import Model.Units.SaveGameClass;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.Transition.VictoryAnimation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -365,6 +366,16 @@ public class PlayGameMenu {
                             e.printStackTrace();
                         }
                         //TODO .... graphic view for winner -> kian
+                        VictoryAnimation victoryAnimation = new VictoryAnimation();
+                        VictoryAnimation.stage = stage;
+                        victoryAnimation.play();
+                        try {
+                            root = FXMLLoader.load(VictoryAnimation.mainMenuFxmlURL);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        scene = new Scene(root);
+                        stage.setScene(scene);
                         try {
                             root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
                         } catch (IOException e) {
