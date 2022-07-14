@@ -21,6 +21,7 @@ public class CommandProcessor {
     public static ArrayList<Socket> allSockets = new ArrayList<>();
     public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
     public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
+    public static ArrayList<GameGroup> gameGroups;
 
     public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket) throws IOException {
         if(command.startsWith("{\"creatorSocket")){
@@ -133,31 +134,31 @@ public class CommandProcessor {
             command = command.replace("mapCreator ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             MapCreatorGson mapCreatorGson = gson.fromJson(command, MapCreatorGson.class);
-            playGameMenuController.mapCreator(mapCreatorGson.numOfCivilizations, mapCreatorGson.members, getGroup(socket));
+           // playGameMenuController.mapCreator(mapCreatorGson.numOfCivilizations, mapCreatorGson.members, getGroup(socket));
         }
         else if (command.startsWith("cheatGold ")) {
             command = command.replace("cheatGold ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount, getGroup(cheatGson.member));
         }
         else if (command.startsWith("cheatFood ")) {
             command = command.replace("cheatFood ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseFood(cheatGson.civilization, cheatGson.amount);
         }
         else if (command.startsWith("cheatTechnology ")) {
             command = command.replace("cheatTechnology ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseTechnology(cheatGson.civilization, cheatGson.amount);
         }
         else if (command.startsWith("cheatHappiness ")) {
             command = command.replace("cheatHappiness ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseHappiness(cheatGson.civilization, cheatGson.amount);
         }
         else if (command.startsWith("teleport ")) {
             command = command.replace("teleport ", "");
@@ -167,10 +168,11 @@ public class CommandProcessor {
                     cheatTeleport.civilization, cheatTeleport.map);
         }
     }
-    public static ArrayList<Socket> getGroup(Socket socket) {
-        for (ArrayList<Socket> socketArrayList : sockets) {
-            for (Socket socket1 : socketArrayList) {
-                if (socket.equals(socket1)) return socketArrayList;
+    public static GameGroup getGroup(Member member) {
+        GameGroup group;
+        for (GameGroup gameGroup : gameGroups) {
+            for (Member member1 : gameGroup.members) {
+                if (member1.equals(member)) return gameGroup;
             }
         }
         return null;

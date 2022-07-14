@@ -1,5 +1,8 @@
 package View;
 
+import Controller.PlayGameMenuController;
+import Model.Civilization;
+import Model.FunctionsGson.GameGroupData;
 import Model.GsonRoom;
 import Model.GsonRoomArray;
 import Model.Member;
@@ -46,10 +49,13 @@ public class Room {
 
     public ArrayList<Button> kickButtons = new ArrayList<>();
     public HashMap<Button,String> buttonStringHashMap = new HashMap<>();
+    public PlayGameMenuController playGameMenuController = new PlayGameMenuController();
 
     public static Socket creatorSocket;
 
     public Member creator;
+    //todo ... check kon pouria
+    public Member member;
 
     public Stage stage;
     public BorderPane root;
@@ -162,22 +168,22 @@ public class Room {
                         String str = gson.toJson(gameSocketArray);
                         dataOutputStream.writeUTF(str);
                         dataOutputStream.flush();
-                        //TODO...Koochak
-                        //dadadadada
-                        ArrayList<DataInputStream> dataInputStreams  = new ArrayList<>();
-                        ArrayList<DataOutputStream> dataOutputStreams = new ArrayList<>();
+                        //TODO...Koochak add playGameMenu graphic
 
-//                        while(true) {
-//                            String txt = dataInputStream.readUTF();
-//                            //                            HashMap<Member,Boolean> turn = new HashMap<>();
-//                            //isMyTurn = true
-//                            GameGroup = ... ;
-//                            if(isMyTurn){
-//
-//                            }
-//                        }
-
-
+                         /*while (true) {
+                             String txt = dataInputStream.readUTF();
+                             Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+                             GameGroupData gameGroupData = gson2.fromJson(txt, GameGroupData.class);
+                             loadExtras(gameGroupData);
+                             PlayGameMenu.civilizations = gameGroupData.civilizations;
+                             PlayGameMenu.tiles = gameGroupData.tiles;
+                             Civilization civilization = getCivilization(gameGroupData.civilizations);
+                             isMyTurn = civilization.isMyTurn;
+                             if (isMyTurn) {
+                                String result = gameGroupData.result;
+                                showResult(result);
+                             }
+                         }*/
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -193,6 +199,29 @@ public class Room {
         stage.setScene(scene);
         stage.show();
     }
+
+    private void loadExtras(GameGroupData gameGroupData) {
+        playGameMenuController.loadTileForCitizen(gameGroupData.tiles);
+        playGameMenuController.loadTileForBuilding(gameGroupData.tiles);
+        playGameMenuController.loadOriginTileForUnit(gameGroupData.tiles);
+        playGameMenuController.loadCivilizationForBuilding(gameGroupData.civilizations);
+    }
+
+    private void showResult(String result) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("result :");
+            alert.setHeaderText("result :");
+            alert.setContentText(result);
+            alert.showAndWait();
+    }
+
+    private Civilization getCivilization(ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            if (civilization.getMember().equals(member)) return civilization;
+        }
+        return null;
+    }
+
     public void removeRoom() throws IOException {
         Gson gson = new GsonBuilder().create();
         String send = gson.toJson(loggedInMember);

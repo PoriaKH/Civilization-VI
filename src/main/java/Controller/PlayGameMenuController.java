@@ -213,22 +213,16 @@ public class PlayGameMenuController {
         map.add(new Tile(71,false,false,false,true,false,false,false,false,x,y));
         return map;
     }
-    public String cheatIncreaseGold(Civilization civilization,int amount) throws IOException {
+    public void cheatIncreaseGold(Civilization civilization,int amount) throws IOException {
         CheatGson cheatGson = new CheatGson();
         cheatGson.amount = amount;
         cheatGson.civilization = civilization;
+        cheatGson.member = civilization.getMember();
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String request = gson.toJson(cheatGson);
+
         CreateHost.dataOutputStream.writeUTF("cheatGold " + request);
         CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("cheat ", "");
-        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
-        if (cheatGson2.tiles != null)
-        PlayGameMenu.tiles = cheatGson2.tiles;
-        if (cheatGson2.civilization != null)
-        PlayGameMenu.civilizations = cheatGson2.civilizations;
-        return "cheat code activated successfully";
     }
     public String cheatIncreaseFood(Civilization civilization,int amount) throws IOException {
         CheatGson cheatGson = new CheatGson();
