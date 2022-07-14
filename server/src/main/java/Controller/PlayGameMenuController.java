@@ -1754,20 +1754,23 @@ public class PlayGameMenuController {
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        City city = findTile(index, map, civilization);
+
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        City city = findTile(index, gameGroupData.tiles, civilizationServer);
+
         if (city == null) {
             gameGroupData.result =  "there is no city !";
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        Unit unit = makeUnit(civilization, city.getCenterTile(), map, unitName);
+        Unit unit = makeUnit(civilizationServer, city.getCenterTile(), gameGroupData.tiles, unitName);
         if (unit == null) {
             gameGroupData.result = "there is no unit with this name !";
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         int turn = unit.getDuration();
-        gameGroupData.result = createUnit(civilization, city, unit, map, turn);
+        gameGroupData.result = createUnit(civilizationServer, city, unit, gameGroupData.tiles, turn);
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 

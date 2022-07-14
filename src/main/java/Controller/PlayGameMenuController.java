@@ -1192,7 +1192,7 @@ public class PlayGameMenuController {
         Collections.reverse(path);
         unit.setPath(path);
     }
-    // todo -> client
+    // todo -> client (done)
     // create parameters like unit or origin or destination for moveUnit function
     public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) throws IOException {
 /*        MoveUnitGson moveUnitGson = new MoveUnitGson();
@@ -1682,7 +1682,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo -> client
+    // todo -> client (done)
     // it makes parameters for unit maker such as unit or city
     public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) throws IOException {
 /*        UnitMakingGson unitMakingGson = new UnitMakingGson();
