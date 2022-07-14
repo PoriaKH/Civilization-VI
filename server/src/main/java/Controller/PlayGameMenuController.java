@@ -233,21 +233,64 @@ public class PlayGameMenuController {
             dataOutputStream.flush();
         }
     }
-    public void cheatIncreaseFood(Civilization civilization,int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        for(City city : civilization.getCities()){
+    public void cheatIncreaseFood(Civilization civilization,int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        for(City city : serverCiv.getCities()){
             city.setTotalFood(amount);
         }
-
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
-    public void cheatIncreaseTechnology(Civilization civilization,int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        civilization.setScience(amount);
-
+    public void cheatIncreaseTechnology(Civilization civilization,int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        serverCiv.setScience(amount);
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
-    public void cheatIncreaseHappiness(Civilization civilization, int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        civilization.setHappiness(amount);
+    public void cheatIncreaseHappiness(Civilization civilization, int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        serverCiv.setHappiness(amount);
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
     public void cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
         String str;

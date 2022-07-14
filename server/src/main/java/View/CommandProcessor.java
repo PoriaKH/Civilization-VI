@@ -146,19 +146,19 @@ public class CommandProcessor {
             command = command.replace("cheatFood ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseFood(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseFood(cheatGson.civilization, cheatGson.amount, getGroup(cheatGson.member));
         }
         else if (command.startsWith("cheatTechnology ")) {
             command = command.replace("cheatTechnology ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseTechnology(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseTechnology(cheatGson.civilization, cheatGson.amount, getGroup(cheatGson.member));
         }
         else if (command.startsWith("cheatHappiness ")) {
             command = command.replace("cheatHappiness ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseHappiness(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseHappiness(cheatGson.civilization, cheatGson.amount, getGroup(cheatGson.member));
         }
         else if (command.startsWith("teleport ")) {
             command = command.replace("teleport ", "");

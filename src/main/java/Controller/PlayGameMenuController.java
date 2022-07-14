@@ -224,56 +224,38 @@ public class PlayGameMenuController {
         CreateHost.dataOutputStream.writeUTF("cheatGold " + request);
         CreateHost.dataOutputStream.flush();
     }
-    public String cheatIncreaseFood(Civilization civilization,int amount) throws IOException {
+    public void cheatIncreaseFood(Civilization civilization,int amount) throws IOException {
         CheatGson cheatGson = new CheatGson();
         cheatGson.amount = amount;
         cheatGson.civilization = civilization;
+        cheatGson.member = civilization.getMember();
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String request = gson.toJson(cheatGson);
+
         CreateHost.dataOutputStream.writeUTF("cheatFood " + request);
         CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("cheat ", "");
-        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
-        if (cheatGson2.tiles != null)
-            PlayGameMenu.tiles = cheatGson2.tiles;
-        if (cheatGson2.civilization != null)
-            PlayGameMenu.civilizations = cheatGson2.civilizations;
-        return "cheat code activated successfully";
     }
-    public String cheatIncreaseTechnology(Civilization civilization,int amount) throws IOException {
+    public void cheatIncreaseTechnology(Civilization civilization,int amount) throws IOException {
         CheatGson cheatGson = new CheatGson();
         cheatGson.amount = amount;
         cheatGson.civilization = civilization;
+        cheatGson.member = civilization.getMember();
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String request = gson.toJson(cheatGson);
+
         CreateHost.dataOutputStream.writeUTF("cheatTechnology " + request);
         CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("cheat ", "");
-        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
-        if (cheatGson2.tiles != null)
-            PlayGameMenu.tiles = cheatGson2.tiles;
-        if (cheatGson2.civilization != null)
-            PlayGameMenu.civilizations = cheatGson2.civilizations;
-        return "cheat code activated successfully";
     }
-    public String cheatIncreaseHappiness(Civilization civilization, int amount) throws IOException {
+    public void cheatIncreaseHappiness(Civilization civilization, int amount) throws IOException {
         CheatGson cheatGson = new CheatGson();
         cheatGson.amount = amount;
         cheatGson.civilization = civilization;
+        cheatGson.member = civilization.getMember();
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String request = gson.toJson(cheatGson);
+
         CreateHost.dataOutputStream.writeUTF("cheatHappiness " + request);
         CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("cheat ", "");
-        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
-        if (cheatGson2.tiles != null)
-            PlayGameMenu.tiles = cheatGson2.tiles;
-        if (cheatGson2.civilization != null)
-            PlayGameMenu.civilizations = cheatGson2.civilizations;
-        return "cheat code activated successfully";
     }
     public String cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) throws IOException {
         CheatTeleport cheatTeleport = new CheatTeleport();
