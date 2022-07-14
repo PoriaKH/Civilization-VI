@@ -2505,12 +2505,27 @@ public class PlayGameMenuController {
         else if (range > 0 && delta - 1 <= range) return true;
         return false;
     }
-    // todo -> client
-    public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
-        if (destinationIndex < 0 || destinationIndex> 71) {
+    // todo -> client (done)
+    public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) throws IOException {
+/*        AttackCityGson attackCityGson = new AttackCityGson();
+        attackCityGson.attacker = attacker;
+        attackCityGson.destinationIndex = destinationIndex;
+        attackCityGson.civilization = civilization;
+        attackCityGson.map = map;
+        attackCityGson.civilizations = civilizations;
+        attackCityGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(attackCityGson);
+
+        CreateHost.dataOutputStream.writeUTF("attackCity " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+        if (destinationIndex < 0 || destinationIndex > 71) {
             return "number of destination tile is invalid !";
         }
-        City defenderCity = getCityFromTile (map.get(destinationIndex), map, civilizations);
+        City defenderCity = getCityFromTile(map.get(destinationIndex), map, civilizations);
         int originIndex = getTileIndex(attacker.getOrigin(), map);
         if (attacker == null) {
             return "your unit is not military !";
@@ -2524,22 +2539,22 @@ public class PlayGameMenuController {
         if (defenderCity == null) {
             return "this tile is not for any city !";
         }
-        if (isCityForCivilization (defenderCity, civilization)) {
+        if (isCityForCivilization(defenderCity, civilization)) {
             return "this city is for your civilization !";
         }
         if (attacker.getIsOnSleep() || attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
             return "this unit is not active !";
         }
-        if (((Warrior)attacker).getRange() != -1) {
+        if (((Warrior) attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
         }
-        if (!checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(),map))) {
+        if (!checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(), map))) {
             return "this distance is too long for attack !";
         }
         Civilization defenderCivilization = getCivilizationFromCity(defenderCity, civilizations);
         attacker.setHasOrdered(true);
 
-        if (((Warrior)attacker).getRange() == -1)
+        if (((Warrior) attacker).getRange() == -1)
             return attackCityFromGround(civilization, attacker, defenderCity, originIndex, map, defenderCivilization);
         else
             return attackCityFromAir(civilization, attacker, defenderCity, originIndex, map, defenderCivilization);

@@ -189,7 +189,7 @@ public class UnitPanel {
         }
     }
 
-    public void attackCityUnit(MouseEvent mouseEvent) {
+    public void attackCityUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
