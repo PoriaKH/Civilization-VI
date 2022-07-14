@@ -5,6 +5,7 @@ import Model.*;
 import Model.FunctionsGson.CheatGson;
 import Model.FunctionsGson.CheatTeleport;
 import Model.FunctionsGson.MapCreatorGson;
+import Model.FunctionsGson.MoveUnitGson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -166,6 +167,13 @@ public class CommandProcessor {
             CheatTeleport cheatTeleport = gson.fromJson(command, CheatTeleport.class);
             playGameMenuController.cheatTeleportUnit(cheatTeleport.unit, cheatTeleport.numberOfDestination,
                     cheatTeleport.civilization, cheatTeleport.map, getGroup(cheatTeleport.member));
+        }
+        else if (command.startsWith("moveUnit ")) {
+            command = command.replace("moveUnit ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            MoveUnitGson moveUnitGson = gson.fromJson(command, MoveUnitGson.class);
+            playGameMenuController.preMoveUnit(moveUnitGson.unit, moveUnitGson.numberOfDestination,
+                    moveUnitGson.civilization, moveUnitGson.map, getGroup(moveUnitGson.member));
         }
 
 

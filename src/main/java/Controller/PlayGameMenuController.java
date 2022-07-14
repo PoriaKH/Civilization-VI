@@ -4,6 +4,7 @@ import Model.*;
 import Model.FunctionsGson.CheatGson;
 import Model.FunctionsGson.CheatTeleport;
 import Model.FunctionsGson.MapCreatorGson;
+import Model.FunctionsGson.MoveUnitGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
@@ -1069,7 +1070,7 @@ public class PlayGameMenuController {
         return str;
     }
     */
-    // todo
+    // todo -> comment
     // finds all  the neighbours of a node (tile)
     public void findAllNeighbours(Node[] graph) {
         int column = 0;
@@ -1104,7 +1105,7 @@ public class PlayGameMenuController {
             counter++;
         }
     }
-    // todo
+    // todo -> comment
     // set distance of two node (tile) based on destination mp.
     public int distanceOfTwoNode(Node node) {
         Tile tile = node.tile;
@@ -1113,7 +1114,7 @@ public class PlayGameMenuController {
         }
         return tile.getMpCost();
     }
-    // todo
+    // todo -> comment
     // chase an algorithm based on graphs to find the shortest way.
     public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map) {
         while (unreached.size() > 0) {
@@ -1143,7 +1144,7 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     // find the shortest way from origin to destination based on mp.
     public void findTheShortestPath (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit) {
         for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
@@ -1194,9 +1195,21 @@ public class PlayGameMenuController {
         Collections.reverse(path);
         unit.setPath(path);
     }
-    // todo
+    // todo -> client
     // create parameters like unit or origin or destination for moveUnit function
-    public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) {
+    public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        MoveUnitGson moveUnitGson = new MoveUnitGson();
+        moveUnitGson.unit = unit;
+        moveUnitGson.numberOfDestination = numberOfDestination;
+        moveUnitGson.civilization = civilization;
+        moveUnitGson.map = map;
+        moveUnitGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+        String request = gson.toJson(moveUnitGson);
+        CreateHost.dataOutputStream.writeUTF("moveUnit " + request);
+        CreateHost.dataOutputStream.flush();*/
+
         if (numberOfDestination < 0 || numberOfDestination > 71) {
             return "number of destination tile is invalid !";
         }
@@ -1213,7 +1226,7 @@ public class PlayGameMenuController {
         }
         return moveUnit(civilization, origin, destination, map, unit);
     }
-    // todo
+    // todo -> comment
     //return a unit from specific tile
     public Unit getUnitInTile (ArrayList<Unit> units, String unitName) {
         for (int i = 0; i < units.size(); i++) {
@@ -1321,7 +1334,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo
+    // todo -> comment
     // check the road for units
     public boolean checkPath (Unit unit) {
         ArrayList<Node> nodes = unit.getPath();
@@ -1347,7 +1360,7 @@ public class PlayGameMenuController {
         }
         return 0;
     }
-    // todo
+    // todo -> comment
     // check the way for river
     public boolean isRiverOnWay (Tile origin, Tile destination, ArrayList<Tile> map) {
         int originIndex = getTileIndex(origin, map);
@@ -1360,7 +1373,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     // check the technology's name in civilization array of technology if it contains return true
     public boolean isTechnologyAvailable (Civilization civilization, String techName) {
         ArrayList<Technology> technologies = civilization.getTechnologies();
@@ -1369,7 +1382,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     // check origin and destination tiles , if both have same type of way(rail/road) return true
     public boolean isThereRoadOrRail (Tile origin, Tile destination) {
         if (origin.isDoesHaveRoad() && destination.isDoesHaveRoad() &&
@@ -1379,7 +1392,7 @@ public class PlayGameMenuController {
                 !origin.isRailDamaged() && !destination.isRailDamaged()) return true;
         return false;
     }
-    // todo
+    // todo -> comment
     // reset the mp of your civilization units
     public void addMpEveryTurn(Civilization civilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
@@ -1391,12 +1404,12 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     public int mpOfAttribute (Attribute attribute) {
         if (attribute == null) return 0;
         return attribute.getMpCost();
     }
-    // todo
+    // todo -> comment
     public String moveUnit (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
         String str;
         if (unit == null) {
@@ -1495,7 +1508,7 @@ public class PlayGameMenuController {
         }
         return str;
     }
-    // todo
+    // todo -> client (fek konam comment bayad beshe next turn kafie)
     // more than one turn moving function for units of playing civilization
     public void moveUnitWithMovesLeft (Civilization playingCivilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {

@@ -1,17 +1,15 @@
 package Controller;
 
 import Model.*;
-import Model.FunctionsGson.CheatTeleport;
 import Model.FunctionsGson.GameGroupData;
 import Model.FunctionsGson.MapCreatorGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
-import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import jdk.net.Sockets;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -1250,23 +1248,59 @@ public class PlayGameMenuController {
         unit.setPath(path);
     }
     // create parameters like unit or origin or destination for moveUnit function
-    public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) {
+    public void preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (numberOfDestination < 0 || numberOfDestination > 71) {
-            return "number of destination tile is invalid !";
+            gameGroupData.result = "number of destination tile is invalid !";
+            sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
+            return;
         }
         if (!unit.getCivilization().equals(civilization)) {
-            return "this unit is not for your civilization";
+            gameGroupData.result = "this unit is not for your civilization";
+            try {
+                sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
         }
-        Tile origin = unit.getOrigin();
-        Tile destination = map.get(numberOfDestination);
-        if (unit != null && unit.getPath().size() != 0) {
-            return "this unit is on moving !";
+
+        Unit serverUnit = getUnitServer(gameGroupData.tiles, unit);
+        Tile origin = serverUnit.getOrigin();
+        Tile destination = gameGroupData.tiles.get(numberOfDestination);
+
+        if (serverUnit != null && serverUnit.getPath().size() != 0) {
+            gameGroupData.result = "this unit is on moving !";
+            sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
+            return;
         }
-        if (unit != null && unit.isCivilian() && ((Civilian)unit).getWorkingTile() != null) {
-            return "this civilian is working on something !";
+        if (serverUnit != null && serverUnit.isCivilian() && ((Civilian)serverUnit).getWorkingTile() != null) {
+            gameGroupData.result = "this civilian is working on something !";
+            sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
+            return;
         }
-        return moveUnit(civilization, origin, destination, map, unit);
+        gameGroupData.result = moveUnit(getServerCivilization(civilization, gameGroupData.civilizations), origin, destination, gameGroupData.tiles, serverUnit);
+        sendMessageToAllClientsAboutMoveUnit(gameGroup, gameGroupData);
     }
+
+    private void sendMessageToAllClientsAboutMoveUnit(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
+        ArrayList<Socket> sockets = gameGroup.sockets;
+        for (Socket socket : sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            String respond = gson.toJson(gameGroupData);
+            dataOutputStream.writeUTF(respond);
+            dataOutputStream.flush();
+        }
+    }
+
+    private Civilization getServerCivilization(Civilization civilization, ArrayList<Civilization> civilizations) {
+        for (Civilization civilization2 : civilizations) {
+            if (civilization2.equals(civilization)) return civilization2;
+        }
+        return null;
+    }
+
     //return a unit from specific tile
     public Unit getUnitInTile (ArrayList<Unit> units, String unitName) {
         for (int i = 0; i < units.size(); i++) {
