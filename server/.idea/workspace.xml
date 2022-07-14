@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added teleport">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-    </list>
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="removed cityPanel from server" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -121,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657779298611</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="removed cityPanel from server">
+      <created>1657785325386</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1657785325386</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,6 +149,7 @@
     <MESSAGE value="changed serverController and added addGold" />
     <MESSAGE value="added cheatCodes" />
     <MESSAGE value="added teleport" />
-    <option name="LAST_COMMIT_MESSAGE" value="added teleport" />
+    <MESSAGE value="removed cityPanel from server" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed cityPanel from server" />
   </component>
 </project>

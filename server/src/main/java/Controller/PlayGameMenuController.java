@@ -901,11 +901,11 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }*/
-    public String diplomaticInformation(Civilization civilization){
+    /*public String diplomaticInformation(Civilization civilization){
         int point = civilization.getPoint();
 
         return "your point is : " + point;
-    }
+    }*/
     public String sendFriendlyRequestDiplomatic(Civilization civilization,ArrayList<Civilization> civilizations,String name){
         if(Objects.equals(name, civilization.getMember().getNickname()))
             return "cant send request to yourself";

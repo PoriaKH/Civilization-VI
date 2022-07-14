@@ -831,7 +831,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    // todo
+
     public String diplomaticInformation(Civilization civilization){
         int point = civilization.getPoint();
 
