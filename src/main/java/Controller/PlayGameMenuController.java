@@ -1520,7 +1520,7 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     // check the necessary technologies for unit
     public boolean checkTechnology (ArrayList<Technology> technologies, String name) {
         for (int i = 0; i < technologies.size(); i++) {
@@ -1528,7 +1528,7 @@ public class PlayGameMenuController {
         }
         return true;
     }
-    // todo
+    // todo -> comment
     public boolean isTechnologyAvailableForUnit (Unit unit, Civilization civilization) {
         Warrior warrior = (Warrior) unit;
         ArrayList<Technology> technologies = civilization.getTechnologies();
@@ -1599,7 +1599,7 @@ public class PlayGameMenuController {
         }
         return true;
     }
-    // todo
+    // todo -> comment
     //check the necessary resources for unit
     public boolean isResourceAvailableForUnit (Unit unit, City city) {
         Warrior warrior = (Warrior) unit;
@@ -1652,7 +1652,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     // if unit is a warrior return true
     public boolean isUnitWarrior (Tile cityCenter) {
         ArrayList<Unit> units = cityCenter.getUnits();
@@ -1661,7 +1661,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     //if unit is a civilian return true
     public boolean isUnitCivilian (Tile cityCenter) {
         ArrayList<Unit> units = cityCenter.getUnits();
@@ -1670,7 +1670,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     // return a city that contains specific tile
     public City findTile (int index, ArrayList<Tile> map, Civilization civilization) {
         Tile tile = map.get(index);
@@ -1685,7 +1685,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo
+    // todo -> client
     // it makes parameters for unit maker such as unit or city
     public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) {
         if (index < 0 || index > 71) {
@@ -1702,7 +1702,7 @@ public class PlayGameMenuController {
         int turn = unit.getDuration();
         return createUnit(civilization, city, unit, map, turn);
     }
-    // todo
+    // todo -> comment
     public Unit makeUnit (Civilization civilization, Tile tile, ArrayList<Tile> map, String unitName) {
         if (unitName.equals("archer")) {
             Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 70, false
@@ -1898,7 +1898,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo
+    // todo -> comment (next turn bara client kafie)
     // every turn check city center for making new turn
     public void checkForUnitMaking (Civilization civilization) {
         ArrayList<City> cities = civilization.getCities();
@@ -1916,7 +1916,7 @@ public class PlayGameMenuController {
             }
         }
     }
-    // todo
+    // todo -> comment
     public boolean isSameUnitOnMakingProgress (Tile tile, Unit unit) {
         HashMap<Unit, Integer> turns = tile.getTurnForUnitMaking();
         for(Map.Entry<Unit,Integer> entry : turns.entrySet()) {
@@ -1924,7 +1924,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map, int turn){
         String str;
 
