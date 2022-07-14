@@ -49,6 +49,7 @@ public class UnitPanel {
     public TextField tileNumberForCity;
     public TextField tileNumberForImprovement;
     public TextField improvementName;
+    public TextField tileNumberForLoot;
 
 
     public void start () throws IOException {
@@ -343,9 +344,37 @@ public class UnitPanel {
     }
 
     public void createImprovement(MouseEvent mouseEvent) {
-        int index = Integer.parseInt(tileNumberForImprovement.getText());
-        String string = playGameMenuController.createImprovement(playingCivilization, index, index,
-                improvementName.getText(), map);
-        showNotification(string);
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+            int index = Integer.parseInt(tileNumberForImprovement.getText());
+            String string = playGameMenuController.createImprovement(playingCivilization, unit.getOrigin().getTileNumber(), index,
+                    improvementName.getText(), map);
+            showNotification(string);
+            showNotification(string);
+        }
+    }
+
+    public void lootTile(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+            String string = playGameMenuController.lootTile(playingCivilization, unit.getOrigin().getTileNumber(),
+                    Integer.parseInt(tileNumberForLoot.getText()), map);
+            showNotification(string);
+        }
+    }
+
+    public void removeImprovement(MouseEvent mouseEvent) {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+            String string = playGameMenuController.removeImprovement(playingCivilization, playGameMenuController.preRemoveImprovement(improvementName.getText()),
+                    Integer.parseInt(tileNumberForImprovement.getText()), map);
+            showNotification(string);
+        }
     }
 }

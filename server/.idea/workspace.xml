@@ -4,14 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added unitMaker to server">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/UnitBehaviourGson.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/UnitBehaviourGson.java" afterDir="false" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added UnitBehaviour to server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/CSS/style5.css" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/CSS/style5.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/unitPanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/unitPanel.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657802561938</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added UnitBehaviour to server">
+      <created>1657807744805</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1657807744805</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +206,7 @@
     <MESSAGE value="added moveUnit to server" />
     <MESSAGE value="adding unitMaker" />
     <MESSAGE value="added unitMaker to server" />
-    <option name="LAST_COMMIT_MESSAGE" value="added unitMaker to server" />
+    <MESSAGE value="added UnitBehaviour to server" />
+    <option name="LAST_COMMIT_MESSAGE" value="added UnitBehaviour to server" />
   </component>
 </project>

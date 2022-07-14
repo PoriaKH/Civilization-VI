@@ -2994,7 +2994,7 @@ public class PlayGameMenuController {
         str = "the unit is ready for ranged battle !";
         return str;
     }
-    // todo
+    // todo -> client
     public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map){
         if (tileNumber != destinationTileNumber)
             return "you should move your unit first";
@@ -3021,7 +3021,7 @@ public class PlayGameMenuController {
         tile.Loot();
         return "tile has been looted successfully";
     }
-    // todo
+    // todo -> ehtemalan useless
     public String cancelCommand(Civilization civilization, boolean isCivilian,ArrayList<Tile> map, Tile tile){
         String str;
         Unit unit = tile.getUnitInUnitMakingProgress(isCivilian);
