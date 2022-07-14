@@ -257,21 +257,18 @@ public class PlayGameMenuController {
         CreateHost.dataOutputStream.writeUTF("cheatHappiness " + request);
         CreateHost.dataOutputStream.flush();
     }
-    public String cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) throws IOException {
+    public void cheatTeleportUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) throws IOException {
         CheatTeleport cheatTeleport = new CheatTeleport();
         cheatTeleport.numberOfDestination = numberOfDestination;
         cheatTeleport.map = map;
         cheatTeleport.unit = unit;
         cheatTeleport.civilization = civilization;
+        cheatTeleport.member = civilization.getMember();
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
         String request = gson.toJson(cheatTeleport);
+
         CreateHost.dataOutputStream.writeUTF("teleport " + request);
         CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response .replace("teleport ", "");
-        CheatTeleport cheatTeleport2 = gson.fromJson(response, CheatTeleport.class);
-
-        return cheatTeleport2.string;
     }
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();

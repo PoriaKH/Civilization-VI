@@ -292,45 +292,64 @@ public class PlayGameMenuController {
             dataOutputStream.flush();
         }
     }
-    public void cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
+    public void cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
         String str;
-        CheatTeleport cheatTeleport = new CheatTeleport();
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (numberOfDestination < 0 || numberOfDestination > 71) {
-            cheatTeleport.string = "number of destination is invalid !";
+            gameGroupData.result = "number of destination is invalid !";
             return;
         }
-        Tile origin = unit.getOrigin();
-        Tile destination = map.get(numberOfDestination);
+        Unit unitServer = getUnitServer(gameGroup.tiles, unit);
+        Tile origin = unitServer.getOrigin();
+        Tile destination = gameGroup.tiles.get(numberOfDestination);
 
-        if (unit == null) {
-            cheatTeleport.string = "there is no unit with this name !";
+        if (unitServer == null) {
+            gameGroupData.result = "there is no unit with this name !";
             return;
         }
-        if (unit.getIsOnSleep()|| unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
-            cheatTeleport.string = "this unit is not active !";
+        if (unitServer.getIsOnSleep()|| unitServer.isOnBoost() || unitServer.isOnBoostTillRecover() || unitServer.isOnWarFooting()) {
+            gameGroupData.result = "this unit is not active !";
             return;
         }
-        if (!unit.getCivilization().getName().equals(civilization.getName())) {
-            cheatTeleport.string = "this unit is for another civilization !";
+        if (!unitServer.getCivilization().getName().equals(civilization.getName())) {
+            gameGroupData.result = "this unit is for another civilization !";
             return;
         }
-        if (unit.getPath().size() != 0) {
-            cheatTeleport.string = "this unit has another path !";
+        if (unitServer.getPath().size() != 0) {
+            gameGroupData.result = "this unit has another path !";
             return;
         }
         ArrayList<Unit> unitsDestination = destination.getUnits();
         for (int i = 0; i < unitsDestination.size(); i++) {
-            if (unitsDestination.get(i).isCivilian() == unit.isCivilian()) {
-                cheatTeleport.string = "there is another unit with this type in the tile !";
+            if (unitsDestination.get(i).isCivilian() == unitServer.isCivilian()) {
+                gameGroupData.result = "there is another unit with this type in the tile !";
                 return;
             }
         }
-        origin.removeUnit(unit);
-        destination.addUnit(unit);
-        unit.setOrigin(destination);
-        unit.setHasOrdered(true);
-        cheatTeleport.string = "unit teleported to destination !";
+        origin.removeUnit(unitServer);
+        destination.addUnit(unitServer);
+        unitServer.setOrigin(destination);
+        unitServer.setHasOrdered(true);
+        gameGroupData.result = "unit teleported to destination !";
+
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
+    // get Unit in tiles of server
+    private Unit getUnitServer(ArrayList<Tile> tiles, Unit localUnit) {
+        for (Tile tile : tiles) {
+            for (Unit unit : tile.getUnits()) {
+                if (unit.equals(localUnit)) return unit;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for(int i = 0; i < numOfCivilizations; i++){

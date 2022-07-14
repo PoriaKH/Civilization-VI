@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="changed serverController and added addGold">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added cheatCodes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatTeleport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatTeleport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Units/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Unit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatTeleport.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatTeleport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657777212029</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added cheatCodes">
+      <created>1657777806055</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1657777806055</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +143,7 @@
     <MESSAGE value="added cheatGson and else if in command processor" />
     <MESSAGE value="done some on teleport" />
     <MESSAGE value="changed serverController and added addGold" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed serverController and added addGold" />
+    <MESSAGE value="added cheatCodes" />
+    <option name="LAST_COMMIT_MESSAGE" value="added cheatCodes" />
   </component>
 </project>

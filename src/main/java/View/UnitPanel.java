@@ -175,17 +175,15 @@ public class UnitPanel {
         }
         else {
            String command = moveDes.getText();
-           String string;
            if (command.charAt(0) == 't') {
                String destination = command.replace("t", "");
-               string = playGameMenuController.cheatTeleportUnit(unit, Integer.parseInt(destination),
+               playGameMenuController.cheatTeleportUnit(unit, Integer.parseInt(destination),
                        playingCivilization, map);
            }
            else {
-               string = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
+               playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
                        playingCivilization, map);
            }
-           showNotification(string);
         }
     }
 

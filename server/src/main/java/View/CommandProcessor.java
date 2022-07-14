@@ -165,9 +165,18 @@ public class CommandProcessor {
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatTeleport cheatTeleport = gson.fromJson(command, CheatTeleport.class);
             playGameMenuController.cheatTeleportUnit(cheatTeleport.unit, cheatTeleport.numberOfDestination,
-                    cheatTeleport.civilization, cheatTeleport.map);
+                    cheatTeleport.civilization, cheatTeleport.map, getGroup(cheatTeleport.member));
         }
+
+
+
+
+
     }
+
+
+
+    // get group from member
     public static GameGroup getGroup(Member member) {
         GameGroup group;
         for (GameGroup gameGroup : gameGroups) {
