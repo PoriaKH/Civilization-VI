@@ -760,7 +760,7 @@ public class PlayGameMenuController {
         return finalTileStatus;
     }
 
-    public StringBuilder researchInformation(Civilization civilization){
+/*    public StringBuilder researchInformation(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder();
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         stringBuilder.append("technologies that have been learnt:\n");
@@ -775,7 +775,7 @@ public class PlayGameMenuController {
         for (Map.Entry<Technology, Integer> technology: technologyEarnedPercent.entrySet())
             stringBuilder.append(technology.getKey().getName() + "\trounds left: " + technology.getValue().toString() + "\n");
         return stringBuilder;
-    }
+    }*/
     /*// return name of current unit
     public String getUnitsName (Unit unit) {
         if (unit.isCivilian()) {

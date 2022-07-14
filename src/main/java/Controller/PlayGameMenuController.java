@@ -688,7 +688,7 @@ public class PlayGameMenuController {
         }
         return finalTileStatus;
     }
-    // todo
+
     public StringBuilder researchInformation(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder();
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
