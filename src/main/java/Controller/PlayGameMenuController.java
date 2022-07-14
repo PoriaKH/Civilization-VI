@@ -908,7 +908,7 @@ public class PlayGameMenuController {
         }
         return "you don't have any allie with this name";
     }
-    // todo
+
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();

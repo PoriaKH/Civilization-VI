@@ -971,7 +971,7 @@ public class PlayGameMenuController {
         }
         return "you don't have any allie with this name";
     }
-    public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
+/*    public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();
         HashMap<Civilization, Integer> losses = civilization.getLossesInUnitsWar();
@@ -984,7 +984,7 @@ public class PlayGameMenuController {
             stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + " number of losses : " + entry.getValue() + "\n");
         }
         return stringBuilder;
-    }
+    }*/
     public StringBuilder demographics(ArrayList<Civilization> civilizations,ArrayList<Tile> map){   //Jamiat shenasi
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
