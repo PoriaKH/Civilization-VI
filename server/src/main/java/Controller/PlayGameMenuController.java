@@ -872,7 +872,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }*/
-    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
+/*    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
         StringBuilder stringBuilder = new StringBuilder("");//"Civilization name" :
         //                             Capital : tile numbers
         //                             City 2  : tile numbers
@@ -900,7 +900,7 @@ public class PlayGameMenuController {
             }
         }
         return stringBuilder;
-    }
+    }*/
     public String diplomaticInformation(Civilization civilization){
         int point = civilization.getPoint();
 
