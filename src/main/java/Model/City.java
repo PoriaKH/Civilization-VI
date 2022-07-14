@@ -148,7 +148,6 @@ public class City {
         return tiles;
     }
 
-
     public ArrayList<Citizen> getCitizens() {
         return citizens;
     }
@@ -156,10 +155,16 @@ public class City {
     public void setTotalFood(int amount){
         this.totalFood += amount;
     }
+
     public int getTotalFood(){
         return totalFood;
     }
+
     public void setProduction(int amount){
         production += amount;
+    }
+
+    public void addCitizen(Citizen citizen){
+        this.citizens.add(citizen);
     }
 }

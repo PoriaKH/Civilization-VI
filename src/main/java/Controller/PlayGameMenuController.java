@@ -4064,7 +4064,7 @@ public class PlayGameMenuController {
         else
             return "only workers can work on improvements";
     }
-    // todo
+    // todo -> useless
     public StringBuilder showImprovements(ArrayList<Tile> map){
         StringBuilder panel = new StringBuilder();
         ArrayList<String> improvementPanel = new ArrayList<>();

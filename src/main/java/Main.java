@@ -122,6 +122,8 @@ public class Main extends Application {
         Tile.stoneMine = new URL(Main.class.getResource("pictures/stoneMine.png").toExternalForm());
         Tile.tradingPost = new URL(Main.class.getResource("pictures/tradingPost.png").toExternalForm());
 
+        Tile.ruinURL = new URL(Main.class.getResource("pictures/ruin.png").toExternalForm());
+
         TechnologyTree.AcousticsURL = new URL(Main.class.getResource("pictures/Acoustics.png").toExternalForm());
         TechnologyTree.AgricultureURL = new URL(Main.class.getResource("pictures/Agricultures.png").toExternalForm());
         TechnologyTree.AnimalHusbandryURL = new URL(Main.class.getResource("pictures/AnimalHusbandry.png").toExternalForm());

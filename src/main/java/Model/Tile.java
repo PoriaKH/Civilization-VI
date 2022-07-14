@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -118,6 +119,8 @@ public class Tile extends Polygon {
     public static URL roadURL;
     @Expose
     public static URL railURL;
+    @Expose
+    public static URL ruinURL;
 
     // for panel changing needed
     @Expose
@@ -126,6 +129,8 @@ public class Tile extends Polygon {
     public static Scene scene;
     @Expose
     public static Stage stage;
+    @Expose
+    public static Ruin ruin = null;
     @Expose
     public static ArrayList<Tile> map;
     @Expose
@@ -526,6 +531,9 @@ public class Tile extends Polygon {
             this.gold += this.resource.getGold();
             this.production += this.resource.getProduction();
         }
+        double chance = Math.random();
+        if (chance >= 0.3 && chance < 0.35)
+            ruin = new Ruin();
 
 
         double x1,y1;
@@ -646,6 +654,13 @@ public class Tile extends Polygon {
             resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
         else if (resource.isWheat())
             resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
+
+        //ruin
+        if (ruin != null){
+            ruin.setX(this.getX());
+            ruin.setY(this.getY());
+            ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
+        }
     }
 
     public void setResource(Resource resource) {
@@ -760,6 +775,22 @@ public class Tile extends Polygon {
         if (units.size() == 0) {
             unit.setX(this.x + 20);
             unit.setY(this.y - h);
+            if (ruin != null) {
+                ArrayList<String> techNames = new ArrayList<>();
+                for (Technology t : unit.getCivilization().getTechnologies())
+                    techNames.add(t.getName());
+                if (!techNames.contains(ruin.getFreeTechnology().getName()))
+                    unit.getCivilization().addTechnology(ruin.getFreeTechnology());
+                unit.getCivilization().addGold(ruin.getFreeGold());
+                Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
+                Citizen ruinCitizen = new Citizen(citizenTile);
+                unit.getCivilization().getCapital().addCitizen(ruinCitizen);
+                Civilian civilian = new Civilian(unit.getCivilization(), this, 10, 2, 2, 1, 89, true, false, true);
+                Unit unit1 = (Unit) civilian;
+                this.units.add(unit1);
+                ruin.setFill(Color.TRANSPARENT);
+                ruin = null;
+            }
         }
         else {
             unit.setX(this.x + 60);
