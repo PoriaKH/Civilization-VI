@@ -1047,7 +1047,7 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    // todo
+
     public StringBuilder diplomaticReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("your friends :\n");

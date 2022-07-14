@@ -1106,14 +1106,14 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }*/
-    public StringBuilder diplomaticReview(Civilization civilization){
+   /* public StringBuilder diplomaticReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("your friends :\n");
         for(Civilization tempCiv : civilization.getFriends()){
             stringBuilder.append(tempCiv.getName()).append("\n");
         }
         return stringBuilder;
-    }
+    }*/
     //TODO for next phase ...
     /*
     public StringBuilder tradeHistory(Civilization civilization,ArrayList<Tile> map){
