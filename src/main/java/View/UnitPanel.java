@@ -47,6 +47,8 @@ public class UnitPanel {
     public TextField newUnitName;
     public TextField tileIndex;
     public TextField tileNumberForCity;
+    public TextField tileNumberForImprovement;
+    public TextField improvementName;
 
 
     public void start () throws IOException {
@@ -337,6 +339,13 @@ public class UnitPanel {
     public void createCity(MouseEvent mouseEvent) {
         String string = playGameMenuController.createCity(playingCivilization,
                 Integer.parseInt(tileNumberForCity.getText()), map, civilizations);
+        showNotification(string);
+    }
+
+    public void createImprovement(MouseEvent mouseEvent) {
+        int index = Integer.parseInt(tileNumberForImprovement.getText());
+        String string = playGameMenuController.createImprovement(playingCivilization, index, index,
+                improvementName.getText(), map);
         showNotification(string);
     }
 }
