@@ -4876,32 +4876,42 @@ public class PlayGameMenuController {
 
     }
      */
-    public String nextTurn(Civilization civilization, ArrayList<Tile> map){
+    public void nextTurn(Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         //unit actions check
-        int tileNumber = unitActionsNextTurnCheck(civilization,map);
-        if(tileNumber != -1)
-            return "order unit in tile number : " + tileNumber;
-        /*if (civilization.getWorkingOnTechnology() == null)
-            return "choose a technology to learn";*/
-//-----------------------------------------------------------------------------------
+        int tileNumber = unitActionsNextTurnCheck(civilizationServer, gameGroupData.tiles);
+        if(tileNumber != -1) {
+            gameGroupData.result = "order unit in tile number : " + tileNumber;
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        //check that are you working on a technology
+        if (civilizationServer.getWorkingOnTechnology() == null) {
+            gameGroupData.result = "choose a technology to learn";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
 
-        improveImprovementsNextTurn(map);
-        checkForUnitMaking(civilization);
-        consumeTurnForRoadMaking(civilization,map);
-        addMpEveryTurn(civilization,map);
-        moveUnitWithMovesLeft(civilization,map);
-        increaseGoldCivilizationNextTurn(civilization,map);
-        increaseFoodCitiesNextTurn(civilization,map);
-        increaseProductionCitiesNextTurn(civilization,map);
-        increasePopulationNextTurn(civilization,map);
-        reduceRepairNeedImprovementTurnNextTurn(map);
-        resetHasOrdered(civilization,map);
-        civilization.reduceTechnologyRound();
-        increaseCityDamagePoint(civilization);
-
+        improveImprovementsNextTurn(gameGroupData.tiles);
+        checkForUnitMaking(civilizationServer);
+        consumeTurnForRoadMaking(civilizationServer, gameGroupData.tiles);
+        addMpEveryTurn(civilizationServer, gameGroupData.tiles);
+        moveUnitWithMovesLeft(civilizationServer, gameGroupData.tiles);
+        increaseGoldCivilizationNextTurn(civilizationServer, gameGroupData.tiles);
+        increaseFoodCitiesNextTurn(civilizationServer, gameGroupData.tiles);
+        increaseProductionCitiesNextTurn(civilizationServer, gameGroupData.tiles);
+        increasePopulationNextTurn(civilizationServer, gameGroupData.tiles);
+        reduceRepairNeedImprovementTurnNextTurn(gameGroupData.tiles);
+        resetHasOrdered(civilizationServer, gameGroupData.tiles);
+        civilizationServer.reduceTechnologyRound();
+        increaseCityDamagePoint(civilizationServer);
 
         //TODO...  also complete historyInformation and showProductionsInProcess
-        return "done";
+
+        gameGroupData.result = "done";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public void increasePopulationNextTurn(Civilization civilization,ArrayList<Tile> map){
         if(civilization.getHappiness() < 0)

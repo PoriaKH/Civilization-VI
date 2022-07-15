@@ -4790,13 +4790,26 @@ public class PlayGameMenuController {
     }
      */
     // todo -> client
-    public String nextTurn(Civilization civilization, ArrayList<Tile> map){
+    public String nextTurn(Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        NextTurnGson nextTurnGson = new NextTurnGson();
+        nextTurnGson.civilization = civilization;
+        nextTurnGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(nextTurnGson);
+
+        CreateHost.dataOutputStream.writeUTF("nextTurn " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
         //unit actions check
         int tileNumber = unitActionsNextTurnCheck(civilization,map);
         if(tileNumber != -1)
             return "order unit in tile number : " + tileNumber;
-        /*if (civilization.getWorkingOnTechnology() == null)
-            return "choose a technology to learn";*/
+        if (civilization.getWorkingOnTechnology() == null)
+            return "choose a technology to learn";
 
         improveImprovementsNextTurn(map);
         checkForUnitMaking(civilization);

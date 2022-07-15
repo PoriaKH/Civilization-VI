@@ -310,6 +310,13 @@ public class CommandProcessor {
             playGameMenuController.preUpgradeUnit(upgradeUnitGson.oldUnit, upgradeUnitGson.newUnitName,
                     upgradeUnitGson.index, upgradeUnitGson.civilization, gameGroup.tiles, gameGroup);
         }
+        else if (command.startsWith("nextTurn ")) {
+            command = command.replace("nextTurn ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            NextTurnGson nextTurnGson = gson.fromJson(command, NextTurnGson.class);
+            GameGroup gameGroup = getGroup(nextTurnGson.member);
+            playGameMenuController.nextTurn(nextTurnGson.civilization, gameGroup.tiles, gameGroup);
+        }
 
 
 
