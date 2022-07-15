@@ -578,6 +578,10 @@ public class Tile extends Polygon {
                 improvements.get(0).setVisible(false);
             if (root.getChildren().contains(building))
                 building.setVisible(false);
+            if (units.size() >= 1 && root.getChildren().contains(units.get(0)))
+                units.get(0).setVisible(false);
+            if (units.size() >= 2 && root.getChildren().contains(units.get(1)))
+                units.get(1).setVisible(false);
             return;
         }
         if (root.getChildren().contains(resource))
@@ -586,6 +590,10 @@ public class Tile extends Polygon {
             improvements.get(0).setVisible(true);
         if (root.getChildren().contains(building))
             building.setVisible(true);
+        if (units.size() >= 1 && root.getChildren().contains(units.get(0)))
+            units.get(0).setVisible(true);
+        if (units.size() >= 2 && root.getChildren().contains(units.get(1)))
+            units.get(1).setVisible(true);
         //land type
         if  (isDesert)
             this.setFill(new ImagePattern(new Image(dessert.toExternalForm())));
