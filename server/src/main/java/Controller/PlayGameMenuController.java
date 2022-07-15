@@ -4897,6 +4897,7 @@ public class PlayGameMenuController {
         resetHasOrdered(civilizationServer, gameGroupData.tiles);
         civilizationServer.reduceTechnologyRound();
         increaseCityDamagePoint(civilizationServer);
+        checkZoneOfAllCivilizations(gameGroupData.civilizations, gameGroupData.tiles, civilizationServer);
 
         //TODO...  also complete historyInformation and showProductionsInProcess
 
@@ -4997,6 +4998,44 @@ public class PlayGameMenuController {
             cities.get(i).setDamagePoint(newDamagePoint);
         }
     }
+
+    public void checkZoneOfAllCivilizations (ArrayList<Civilization> civilizations, ArrayList<Tile> map, Civilization civilization) {
+        for (Civilization civilization2 : civilizations) {
+            if (!civilization2.equals(civilization)) {
+                checkZone(civilization2, map);
+            }
+        }
+    }
+    // if an enemy unit is near you send you a message
+    public void checkZone (Civilization civilization, ArrayList<Tile> map) {
+        Node[] graph = new Node[72];
+        for (int i = 0; i < graph.length; i++) {
+            graph[i] = new Node();
+            graph[i].tile = map.get(i);
+        }
+        findAllNeighbours (graph);
+
+        for (int i = 0; i < map.size(); i++) {
+            for (Unit unit : map.get(i).getUnits()) {
+                if (unit.getCivilization().equals(civilization) && !unit.isOnSleep()) {
+                    for (Node neighbour : graph[i].neighbours) {
+                        for (Unit enemyUnit : neighbour.tile.getUnits()) {
+                            if (!enemyUnit.getCivilization().equals(civilization)) {
+                                sendZoneMessage(unit, enemyUnit);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void sendZoneMessage(Unit unit, Unit enemyUnit) {
+        String message = "units of civilization : " + enemyUnit.getCivilization() +
+                " are near tile number : " + unit.getOrigin().getTileNumber() + " at turn : " + turn;
+        unit.getCivilization().addMessage(message);
+    }
+
+
     public void deleteLosers (Civilization civilization, ArrayList<Civilization> civilizations) {
         for (int i = 0; i < civilizations.size(); i++) {
             if (civilizations.get(i).getCities().size() == 0) {
