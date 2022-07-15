@@ -2,7 +2,6 @@ package Controller;
 
 import Model.*;
 import Model.FunctionsGson.GameGroupData;
-import Model.FunctionsGson.MapCreatorGson;
 import Model.FunctionsGson.UnitBehaviourGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;

@@ -24,14 +24,6 @@ public class PlayGameMenuController {
     }
     // todo -> initializeCivilizations and mapCreator are for making map on server side
     public ArrayList<Tile> mapCreator(int numOfCivilizations,ArrayList<Member> members) throws IOException {//tik
-/*        MapCreatorGson mapCreatorGson = new MapCreatorGson("mapCreator", numOfCivilizations, members);
-        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-        String request = gson.toJson(mapCreatorGson);
-        CreateHost.dataOutputStream.writeUTF("mapCreator " + request);
-        CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("mapCreator ", "");
-        MapCreatorGson mapCreatorGson2 = gson.fromJson(response, MapCreatorGson.class);*/
         int numOfTiles = 72;
         ArrayList<Tile> map = new ArrayList<>();
         float x0 = 300;
