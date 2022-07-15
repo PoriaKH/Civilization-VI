@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="View.SettingPanel"
+            stylesheets="@../CSS/style4.css"
+            prefHeight="720.0" prefWidth="1280.0"
+            styleClass="background">
+
+    <center>
+        <VBox alignment="CENTER" spacing="50">
+            <Button text="mute" onMouseClicked="#mute" prefWidth="200"/>
+            <Button text="unmute" onMouseClicked="#unmute" prefWidth="200"/>
+            <Button text="back" onMouseClicked="#back" prefWidth="200"/>
+        </VBox>
+    </center>
+</BorderPane>
