@@ -200,7 +200,7 @@ public class PlayGameMenu {
         Text spacing3 = new Text("                           ");
         Text spacing4 = new Text("                           ");
         Text spacing5 = new Text("                           ");
-        Text spacing6 = new Text("                    ");
+        Text spacing6 = new Text("    ");
 
         Image happinessImage = new Image(getClass().getResource("/pictures/Happiness.png").toString());
         ImageView happinessView = new ImageView(happinessImage);
@@ -280,48 +280,64 @@ public class PlayGameMenu {
                 System.out.println("x = " + event.getX() + "  y = " + event.getY());
             }
         });
-        root.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                String keyName = event.getCode().getName();
-                if(Objects.equals(keyName, "Up")){
-                    if(tiles.get(0).getY() <= 250) {
-                        for (Tile tile : tiles) {
-                            tile.moveDown();
-                        }
+
+        boolean[] keysPressed = new boolean[5];//down, up, right, left, c
+        for (int i = 0; i < 5; i++)
+            keysPressed[i] = false;
+        root.setOnKeyPressed(keyEvent -> {
+            switch (keyEvent.getCode()) {
+                case UP: keysPressed[0] = true; break;
+                case DOWN: keysPressed[1] = true; break;
+                case LEFT: keysPressed[2] = true; break;
+                case RIGHT: keysPressed[3] = true; break;
+                case C: keysPressed[4] = true; break;
+            }
+            if(keysPressed[0]){
+                if(tiles.get(0).getY() <= 250) {
+                    for (Tile tile : tiles) {
+                        tile.moveDown();
                     }
                 }
-                if(Objects.equals(keyName, "Down")){
-                    if(tiles.get(5).getY() >= 500) {
-                        for (Tile tile : tiles) {
-                            tile.moveUp();
-                        }
+            }
+            if(keysPressed[1]){
+                if(tiles.get(5).getY() >= 500) {
+                    for (Tile tile : tiles) {
+                        tile.moveUp();
                     }
                 }
-                if(Objects.equals(keyName, "Left")){
-                    if(tiles.get(0).getX() <= 300) {
-                        for (Tile tile : tiles) {
-                            tile.moveRight();
-                        }
+            }
+            if(keysPressed[2]){
+                if(tiles.get(0).getX() <= 300) {
+                    for (Tile tile : tiles) {
+                        tile.moveRight();
                     }
                 }
-                if(Objects.equals(keyName, "Right")) {
-                    if (tiles.get(66).getX() >= 1000) {
-                        for (Tile tile : tiles) {
-                            tile.moveLeft();
-                        }
+            }
+            if(keysPressed[3]) {
+                if (tiles.get(66).getX() >= 1000) {
+                    for (Tile tile : tiles) {
+                        tile.moveLeft();
                     }
                 }
-                if (Objects.equals(keyName, "C")) {
-                    CheatMenu.infoPanelScene = scene;
-                    CheatMenu.stage = stage;
-                    CheatMenu.doesEnteredFromInfoPanel = false;
-                    try {
-                        new CheatMenu().start();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+            }
+            if (keysPressed[4]) {
+                CheatMenu.infoPanelScene = scene;
+                CheatMenu.stage = stage;
+                CheatMenu.doesEnteredFromInfoPanel = false;
+                try {
+                    new CheatMenu().start();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
+            }
+        });
+        root.setOnKeyReleased(keyEvent ->{
+            switch (keyEvent.getCode()) {
+                case UP: keysPressed[0] = false; break;
+                case DOWN: keysPressed[1] = false; break;
+                case LEFT: keysPressed[2] = false; break;
+                case RIGHT: keysPressed[3] = false; break;
+                case C: keysPressed[4] = false; break;
             }
         });
         settingButton.setOnMouseClicked(event -> {

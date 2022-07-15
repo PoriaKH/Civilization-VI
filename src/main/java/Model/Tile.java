@@ -572,8 +572,20 @@ public class Tile extends Polygon {
     public void generatingTile(int status){
         if (status == -1){
             this.setFill(new ImagePattern(new Image(fogOfWar.toExternalForm())));
+            if (root.getChildren().contains(resource))
+                resource.setVisible(false);
+            if (improvements.size() > 0 && root.getChildren().contains(improvements.get(0)))
+                improvements.get(0).setVisible(false);
+            if (root.getChildren().contains(building))
+                building.setVisible(false);
             return;
         }
+        if (root.getChildren().contains(resource))
+            resource.setVisible(true);
+        if (improvements.size() > 0 && root.getChildren().contains(improvements.get(0)))
+            improvements.get(0).setVisible(true);
+        if (root.getChildren().contains(building))
+            building.setVisible(true);
         //land type
         if  (isDesert)
             this.setFill(new ImagePattern(new Image(dessert.toExternalForm())));
@@ -608,58 +620,61 @@ public class Tile extends Polygon {
             this.setFill(new ImagePattern(new Image(ocean.toExternalForm())));
 
         //resources
-        if (getResource() == null)
-            return;
-        double x1 = this.getX() + 30;
-        double y1 = this.getY();
-        resource.setX(x1);
-        resource.setY(y1);
-        resource.setWidth(40);
-        resource.setHeight(40);
-        if (resource.isBanana())
-            resource.setFill(new ImagePattern(new Image(banana.toExternalForm())));
-        else if (resource.isCoal())
-            resource.setFill(new ImagePattern(new Image(coal.toExternalForm())));
-        else if (resource.isColor())
-            resource.setFill(new ImagePattern(new Image(color.toExternalForm())));
-        else if (resource.isCotton())
-            resource.setFill(new ImagePattern(new Image(cotton.toExternalForm())));
-        else if (resource.isCow())
-            resource.setFill(new ImagePattern(new Image(cow.toExternalForm())));
-        else if (resource.isFur())
-            resource.setFill(new ImagePattern(new Image(fur.toExternalForm())));
-        else if (resource.isGas())
-            resource.setFill(new ImagePattern(new Image(gas.toExternalForm())));
-        else if (resource.isGazelle())
-            resource.setFill(new ImagePattern(new Image(gazelle.toExternalForm())));
-        else if (resource.isGem())
-            resource.setFill(new ImagePattern(new Image(gem.toExternalForm())));
-        else if (resource.isGold())
-            resource.setFill(new ImagePattern(new Image(golds.toExternalForm())));
-        else if (resource.isHorse())
-            resource.setFill(new ImagePattern(new Image(horse.toExternalForm())));
-        else if (resource.isMarble())
-            resource.setFill(new ImagePattern(new Image(marble.toExternalForm())));
-        else if (resource.isMetal())
-            resource.setFill(new ImagePattern(new Image(metal.toExternalForm())));
-        else if (resource.isSheep())
-            resource.setFill(new ImagePattern(new Image(sheep.toExternalForm())));
-        else if (resource.isSilk())
-            resource.setFill(new ImagePattern(new Image(silk.toExternalForm())));
-        else if (resource.isSilver())
-            resource.setFill(new ImagePattern(new Image(silver.toExternalForm())));
-        else if (resource.isSugar())
-            resource.setFill(new ImagePattern(new Image(sugar.toExternalForm())));
-        else if (resource.isTusk())
-            resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
-        else if (resource.isWheat())
-            resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
+        if (getResource() != null) {
+            double y11 = this.getY();
+            double x11 = this.getX() + 70;
+            resource.setX(x11);
+            resource.setY(y11);
+            resource.setWidth(40);
+            resource.setHeight(40);
+            if (resource.isBanana())
+                resource.setFill(new ImagePattern(new Image(banana.toExternalForm())));
+            else if (resource.isCoal())
+                resource.setFill(new ImagePattern(new Image(coal.toExternalForm())));
+            else if (resource.isColor())
+                resource.setFill(new ImagePattern(new Image(color.toExternalForm())));
+            else if (resource.isCotton())
+                resource.setFill(new ImagePattern(new Image(cotton.toExternalForm())));
+            else if (resource.isCow())
+                resource.setFill(new ImagePattern(new Image(cow.toExternalForm())));
+            else if (resource.isFur())
+                resource.setFill(new ImagePattern(new Image(fur.toExternalForm())));
+            else if (resource.isGas())
+                resource.setFill(new ImagePattern(new Image(gas.toExternalForm())));
+            else if (resource.isGazelle())
+                resource.setFill(new ImagePattern(new Image(gazelle.toExternalForm())));
+            else if (resource.isGem())
+                resource.setFill(new ImagePattern(new Image(gem.toExternalForm())));
+            else if (resource.isGold())
+                resource.setFill(new ImagePattern(new Image(golds.toExternalForm())));
+            else if (resource.isHorse())
+                resource.setFill(new ImagePattern(new Image(horse.toExternalForm())));
+            else if (resource.isMarble())
+                resource.setFill(new ImagePattern(new Image(marble.toExternalForm())));
+            else if (resource.isMetal())
+                resource.setFill(new ImagePattern(new Image(metal.toExternalForm())));
+            else if (resource.isSheep())
+                resource.setFill(new ImagePattern(new Image(sheep.toExternalForm())));
+            else if (resource.isSilk())
+                resource.setFill(new ImagePattern(new Image(silk.toExternalForm())));
+            else if (resource.isSilver())
+                resource.setFill(new ImagePattern(new Image(silver.toExternalForm())));
+            else if (resource.isSugar())
+                resource.setFill(new ImagePattern(new Image(sugar.toExternalForm())));
+            else if (resource.isTusk())
+                resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
+            else if (resource.isWheat())
+                resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
+            if (!root.getChildren().contains(resource))
+                root.getChildren().add(resource);
+        }
 
         //ruin
         if (ruin != null){
             ruin.setX(this.getX());
             ruin.setY(this.getY());
             ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
+            //root.getChildren().add(ruin);
         }
     }
 
@@ -997,13 +1012,11 @@ public class Tile extends Polygon {
                         break;
                     }
                 }
-            Improvement improvement = workingOnImprovement;
-            double x2 = this.getX() + (h / 2);
-            double y2 = this.getY() + (h / 2);
-            resource.setX(x2);
-            resource.setY(y2);
-            resource.setWidth(60);
-            resource.setHeight(60);
+            Improvement improvement = improvements.get(0);
+            improvement.setX(this.getX() + 50);
+            improvement.setY(this.getY() + 30);
+            improvement.setWidth(60);
+            improvement.setHeight(60);
             if (improvement.getName().equals("agriculture"))
                 improvement.setFill(new ImagePattern(new Image(agriculture.toExternalForm())));
             else if (improvement.getName().equals("camp"))
@@ -1022,6 +1035,7 @@ public class Tile extends Polygon {
                 improvement.setFill(new ImagePattern(new Image(stoneMine.toExternalForm())));
             else if (improvement.getName().equals("tradingPost"))
                 improvement.setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
+            root.getChildren().add(improvement);
             workingOnImprovement = null;
         }
         this.improvementEarnedPercent.replace(this.workingOnImprovement, roundLeft);
@@ -1158,6 +1172,16 @@ public class Tile extends Polygon {
             rail.setX(this.x - 160);
             rail.setY(this.y - 30);
         }
+        if (resource != null){
+            double y11 = this.getY();
+            double x11 = this.getX() + 70;
+            resource.setX(x11);
+            resource.setY(y11);
+        }
+        if (improvements.size() > 0){
+            improvements.get(0).setX(this.getX() + 50);
+            improvements.get(0).setY(this.getY() + 30);
+        }
     }
     public void moveLeft(){
         double x1,y1;
@@ -1212,6 +1236,16 @@ public class Tile extends Polygon {
         if (doesHaveRailWay) {
             rail.setX(this.x - 160);
             rail.setY(this.y - 30);
+        }
+        if (resource != null){
+            double y11 = this.getY();
+            double x11 = this.getX() + 70;
+            resource.setX(x11);
+            resource.setY(y11);
+        }
+        if (improvements.size() > 0){
+            improvements.get(0).setX(this.getX() + 50);
+            improvements.get(0).setY(this.getY() + 30);
         }
     }
     public void moveUp(){
@@ -1268,6 +1302,16 @@ public class Tile extends Polygon {
             rail.setX(this.x - 160);
             rail.setY(this.y - 30);
         }
+        if (resource != null){
+            double y11 = this.getY();
+            double x11 = this.getX() + 70;
+            resource.setX(x11);
+            resource.setY(y11);
+        }
+        if (improvements.size() > 0){
+            improvements.get(0).setX(this.getX() + 50);
+            improvements.get(0).setY(this.getY() + 30);
+        }
     }
     public void moveDown(){
         double x1,y1;
@@ -1322,6 +1366,16 @@ public class Tile extends Polygon {
         if (doesHaveRailWay) {
             rail.setX(this.x - 160);
             rail.setY(this.y - 30);
+        }
+        if (resource != null){
+            double y11 = this.getY();
+            double x11 = this.getX() + 70;
+            resource.setX(x11);
+            resource.setY(y11);
+        }
+        if (improvements.size() > 0){
+            improvements.get(0).setX(this.getX() + 50);
+            improvements.get(0).setY(this.getY() + 30);
         }
     }
 }
