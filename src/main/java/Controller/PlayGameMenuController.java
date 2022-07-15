@@ -3963,8 +3963,22 @@ public class PlayGameMenuController {
         civilization.setIsLearningTechnology(true);
         return "technology has been added to the learning technologies";
     }
-    // todo -> client
-    public String changeTechnologyToLearn(Civilization civilization, String technologyName){
+
+
+    // todo -> client (done)
+    public String changeTechnologyToLearn(Civilization civilization, String technologyName) throws IOException {
+ /*       ChooseTechnologyGson chooseTechnologyGson = new ChooseTechnologyGson();
+        chooseTechnologyGson.civilization = civilization;
+        chooseTechnologyGson.technologyName = technologyName;
+        chooseTechnologyGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(chooseTechnologyGson);
+
+        CreateHost.dataOutputStream.writeUTF("changeTechnology " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
             return "no technology with this name exists";
@@ -3978,13 +3992,15 @@ public class PlayGameMenuController {
         if (technology.getCost() > 99) {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
             civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
-        }
-        else {
+        } else {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 2);
             civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
         }
         return "technology has been changed successfully";
     }
+
+
+
     // todo
     public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int tileUnitNumber, ArrayList<Tile> map){
         if (tileNumber != tileUnitNumber || map.get(tileNumber).getCitizen() == null)

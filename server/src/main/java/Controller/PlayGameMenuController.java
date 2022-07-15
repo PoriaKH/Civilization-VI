@@ -4042,27 +4042,42 @@ public class PlayGameMenuController {
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
-    public String changeTechnologyToLearn(Civilization civilization, String technologyName){
+    public void changeTechnologyToLearn(Civilization civilization, String technologyName, GameGroup gameGroup) throws IOException {
         Technology technology = preChooseTechnologyToLearn(technologyName);
-        if (technology == null)
-            return "no technology with this name exists";
-        civilization.setScience(technology.getCost());
-        ArrayList<Technology> allTechnologies = civilization.getTechnologies();
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (technology == null) {
+            gameGroupData.result = "no technology with this name exists";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        civilizationServer.setScience(technology.getCost());
+        ArrayList<Technology> allTechnologies = civilizationServer.getTechnologies();
+
         for (Technology technology1 : allTechnologies)
-            if (technology1.getName().equals(technologyName))
-                return "you already have this technology";
-        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
-            return "you don't have the prerequisite techs to learn this technology";
+            if (technology1.getName().equals(technologyName)) {
+                gameGroupData.result = "you already have this technology";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        if (!hasPrerequisiteTechs(allTechnologies, technologyName)) {
+            gameGroupData.result = "you don't have the prerequisite techs to learn this technology";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         if (technology.getCost() > 99) {
-            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
-            civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
+            civilizationServer.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
+            civilizationServer.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
         }
         else {
-            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 2);
-            civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
+            civilizationServer.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 2);
+            civilizationServer.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
         }
-        return "technology has been changed successfully";
+        gameGroupData.result = "technology has been changed successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
     public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int tileUnitNumber, ArrayList<Tile> map){
         if (tileNumber != tileUnitNumber || map.get(tileNumber).getCitizen() == null)
             return "you should move your citizen to this tile first";

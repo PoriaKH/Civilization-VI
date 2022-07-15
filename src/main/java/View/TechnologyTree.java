@@ -124,7 +124,12 @@ public class TechnologyTree {
         change.setOnMouseClicked(event -> {
             String technologyName = technologyField.getText();
             technologyField.clear();
-            String result = playGameMenuController.changeTechnologyToLearn(playingCivilization, technologyName);
+            String result = null;
+            try {
+                result = playGameMenuController.changeTechnologyToLearn(playingCivilization, technologyName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             technologyLabel.setText(result);
         });
         change.setStyle("-fx-pref-width: 200;\n" +

@@ -230,6 +230,14 @@ public class CommandProcessor {
             playGameMenuController.chooseTechnologyToLearn(chooseTechnologyGson.civilization,
                     chooseTechnologyGson.technologyName, gameGroup);
         }
+        else if (command.startsWith("changeTechnology ")) {
+            command = command.replace("changeTechnology ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChooseTechnologyGson chooseTechnologyGson = gson.fromJson(command, ChooseTechnologyGson.class);
+            GameGroup gameGroup = getGroup(chooseTechnologyGson.member);
+            playGameMenuController.changeTechnologyToLearn(chooseTechnologyGson.civilization,
+                    chooseTechnologyGson.technologyName, gameGroup);
+        }
 
 
 
