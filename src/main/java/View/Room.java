@@ -54,8 +54,6 @@ public class Room {
     public static Socket creatorSocket;
 
     public Member creator;
-    //todo ... check kon pouria
-    public Member member;
 
     public Stage stage;
     public BorderPane root;
@@ -217,7 +215,7 @@ public class Room {
 
     private Civilization getCivilization(ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
-            if (civilization.getMember().equals(member)) return civilization;
+            if (civilization.getMember().equals(loggedInMember)) return civilization;
         }
         return null;
     }
