@@ -4726,7 +4726,7 @@ public class PlayGameMenuController {
         str = "unit upgraded successfully !";
         return str;
     }
-    // todo
+    // todo -> estefade nashode
     public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
@@ -4772,7 +4772,7 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
-    // todo
+    // todo -> estefade nashode
     public StringBuilder showCitizens(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         for(City city : civilization.getCities()){
@@ -4797,7 +4797,6 @@ public class PlayGameMenuController {
             return "order unit in tile number : " + tileNumber;
         /*if (civilization.getWorkingOnTechnology() == null)
             return "choose a technology to learn";*/
-//-----------------------------------------------------------------------------------
 
         improveImprovementsNextTurn(map);
         checkForUnitMaking(civilization);

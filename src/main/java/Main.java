@@ -1,5 +1,4 @@
 import Controller.PlayGameMenuController;
-import Model.ClientThread;
 import Model.GameSocket;
 import Model.Tile;
 import Model.Units.Unit;
@@ -18,7 +17,6 @@ import java.net.Socket;
 import java.net.URL;
 
 public class Main extends Application {
-    public static ClientThread clientThread = new ClientThread();
     public static Socket socket;
     public static String host = "localhost";
     public static DataOutputStream dataOutputStream;
@@ -39,7 +37,6 @@ public class Main extends Application {
         CreateHost.dataInputStream = dataInputStream;
         CreateHost.socket = socket;
         CreateHost.host = host;
-        clientThread.dataInputStream = CreateHost.dataInputStream;
         Room.creatorSocket = socket;
         UnitPanel.playGameMenuController = new PlayGameMenuController();
         UnitPanel.untPanelURL = new URL(Main.class.getResource("fxml/unitPanel.fxml").toExternalForm());
