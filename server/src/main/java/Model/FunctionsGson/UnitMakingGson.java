@@ -16,6 +16,4 @@ public class UnitMakingGson {
     public int index;
     @Expose
     public Civilization civilization;
-    @Expose
-    public ArrayList<Tile> map;
 }

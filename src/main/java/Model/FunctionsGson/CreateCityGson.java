@@ -14,8 +14,4 @@ public class CreateCityGson {
     public Civilization civilization;
     @Expose
     public int tileNumber;
-    @Expose
-    public ArrayList<Tile> map;
-    @Expose
-    public ArrayList<Civilization> civilizations;
 }

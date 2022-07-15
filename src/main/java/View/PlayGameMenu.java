@@ -385,7 +385,12 @@ public class PlayGameMenu {
         nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String string = playGameMenuController.nextTurn(playingCivilization, tiles);
+                String string = null;
+                try {
+                    string = playGameMenuController.nextTurn(civilizations , playingCivilization, tiles);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 if (!string.equals("done")) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("next turn");

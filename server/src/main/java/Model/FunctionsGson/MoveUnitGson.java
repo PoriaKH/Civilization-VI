@@ -17,6 +17,4 @@ public class MoveUnitGson {
     public int numberOfDestination;
     @Expose
     public Civilization civilization;
-    @Expose
-    public ArrayList<Tile> map;
 }

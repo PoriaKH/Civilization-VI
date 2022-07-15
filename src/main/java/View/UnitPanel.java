@@ -218,7 +218,7 @@ public class UnitPanel {
         showNotification(string);
     }
 
-    public void createRoadUnit(MouseEvent mouseEvent) {
+    public void createRoadUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -235,7 +235,7 @@ public class UnitPanel {
         }
     }
 
-    public void createRailUnit(MouseEvent mouseEvent) {
+    public void createRailUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -251,7 +251,7 @@ public class UnitPanel {
             showNotification(string);
         }
     }
-    public void removeRailUnit(MouseEvent mouseEvent) {
+    public void removeRailUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -268,7 +268,7 @@ public class UnitPanel {
         }
     }
 
-    public void removeRoadUnit(MouseEvent mouseEvent) {
+    public void removeRoadUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -285,7 +285,7 @@ public class UnitPanel {
         }
     }
 
-    public void repairRoadUnit(MouseEvent mouseEvent) {
+    public void repairRoadUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -302,7 +302,7 @@ public class UnitPanel {
         }
     }
 
-    public void repairRailUnit(MouseEvent mouseEvent) {
+    public void repairRailUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -326,7 +326,7 @@ public class UnitPanel {
         alert.showAndWait();
     }
 
-    public void upgradeUnit(MouseEvent mouseEvent) {
+    public void upgradeUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -343,7 +343,7 @@ public class UnitPanel {
         showNotification(string);
     }
 
-    public void createImprovement(MouseEvent mouseEvent) {
+    public void createImprovement(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -356,7 +356,7 @@ public class UnitPanel {
         }
     }
 
-    public void lootTile(MouseEvent mouseEvent) {
+    public void lootTile(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -367,7 +367,7 @@ public class UnitPanel {
         }
     }
 
-    public void removeImprovement(MouseEvent mouseEvent) {
+    public void removeImprovement(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }

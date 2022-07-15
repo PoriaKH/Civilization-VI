@@ -8,14 +8,15 @@ import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 
-public class CheatTeleport {
-    // request
+public class UpgradeUnitGson {
     @Expose
     public Member member;
     @Expose
-    public Unit unit;
+    public Unit oldUnit;
     @Expose
-    public int numberOfDestination;
+    public String newUnitName;
+    @Expose
+    public int index;
     @Expose
     public Civilization civilization;
 }

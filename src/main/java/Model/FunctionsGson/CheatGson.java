@@ -15,11 +15,4 @@ public class CheatGson {
     public int amount;
     @Expose
     public Civilization civilization;
-    // result
-    @Expose
-    public String message;
-    @Expose
-    public ArrayList<Tile> tiles;
-    @Expose
-    public ArrayList<Civilization> civilizations;
 }

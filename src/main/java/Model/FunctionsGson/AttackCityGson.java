@@ -17,8 +17,4 @@ public class AttackCityGson {
     public int destinationIndex;
     @Expose
     public Civilization civilization;
-    @Expose
-    public ArrayList<Tile> map;
-    @Expose
-    public ArrayList<Civilization> civilizations;
 }
