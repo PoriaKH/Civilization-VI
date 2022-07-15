@@ -4245,8 +4245,20 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    // todo -> client
-    public String createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
+    // todo -> client(done)
+    public String createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+        /*RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("createRoad " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -4261,7 +4273,7 @@ public class PlayGameMenuController {
             str = "unit is on moving !";
             return str;
         }
-        if (!((Civilian)unit).isWorker()) {
+        if (!((Civilian) unit).isWorker()) {
             str = "this unit is not worker !";
             return str;
         }
@@ -4269,18 +4281,31 @@ public class PlayGameMenuController {
             str = "there is already a road on this tile !";
             return str;
         }
-        if (((Civilian)unit).getWorkingTile() != null) {
+        if (((Civilian) unit).getWorkingTile() != null) {
             str = "worker is working on something else !";
             return str;
         }
 
         tile.assignWorkerToRoad(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
+        ((Civilian) unit).setWorkingTile(tile);
         str = "the road will be ready in 3 turns";
         return str;
     }
-    // todo -> client
-    public String createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
+    // todo -> client(done)
+    public String createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("createRail " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -4313,7 +4338,7 @@ public class PlayGameMenuController {
         str = "the rail way will be ready in 3 turns";
         return str;
     }
-    // todo
+    // todo -> comment
     public Improvement preRemoveImprovement(String improvementName){
         if (improvementName.equals("camp"))
             return new Improvement(true, false, false, false, false, false, false, false, false, 0, 0, 0);
@@ -4336,7 +4361,7 @@ public class PlayGameMenuController {
         else
             return null;
     }
-    // todo
+    // todo -> client
     public String removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map){
         ArrayList<City> cities = civilization.getCities();
         ArrayList<Tile> cityTiles = new ArrayList<>();
@@ -4364,8 +4389,22 @@ public class PlayGameMenuController {
             }
         return "no such improvement exists!";
     }
-    // todo -> client
-    public String removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
+    // todo -> client(done)
+    public String removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("removeRoad " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -4398,8 +4437,23 @@ public class PlayGameMenuController {
         str = "the road will be removed in 3 turns";
         return str;
     }
-    // todo -> client
-    public String removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
+    // todo -> client(done)
+    public String removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("removeRail " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -4432,17 +4486,33 @@ public class PlayGameMenuController {
         str = "the rail way will be removed in 3 turns";
         return str;
     }
-    // todo
+    // todo -> useless - estefade nashode
     public String cancelImprovementOnProcess(Civilization civilization, Tile tile){
         if (tile.getWorkingOnImprovement() == null)
             return "this tile isn't working on any improvement";
         tile.cancelImprovementOnProcess();
         return "Improvement canceled successfully";
     }
-    // todo -> client
-    public String repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
 
+
+    // todo -> client(done)
+    public String repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("repairRoad " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
+
+        String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
             str = "this tile doesn't have any worker !";
@@ -4478,8 +4548,25 @@ public class PlayGameMenuController {
         str = "the road way will be repaired in 3 turns";
         return str;
     }
-    // todo -> client
-    public String repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map){
+
+
+    // todo -> client (done)
+    public String repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("repairRail " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {

@@ -246,6 +246,54 @@ public class CommandProcessor {
             playGameMenuController.createImprovement(createImprovementGson.civilization, createImprovementGson.tileUnitNumber,
                     createImprovementGson.tileNumber, createImprovementGson.improvementName, gameGroup.tiles, gameGroup);
         }
+        else if (command.startsWith("createRoad ")) {
+            command = command.replace("createRoad ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.createRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("createRail ")) {
+            command = command.replace("createRail ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.createRailRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("removeRoad ")) {
+            command = command.replace("removeRoad ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.removeRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("removeRail ")) {
+            command = command.replace("removeRail ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.removeRailRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("repairRoad ")) {
+            command = command.replace("repairRoad ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.repairRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("repairRail ")) {
+            command = command.replace("repairRail ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.repairRail(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
 
 
 

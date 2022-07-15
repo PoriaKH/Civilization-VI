@@ -4381,72 +4381,97 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    public String createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
+    public void createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (tile.isDoesHaveRoad()) {
-            str = "there is already a road on this tile !";
-            return str;
+        if (tileServer.isDoesHaveRoad()) {
+            gameGroupData.result = "there is already a road on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRoad(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the road will be ready in 3 turns";
-        return str;
+        tileServer.assignWorkerToRoad(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the road will be ready in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
-    public String createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
-        if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+    private Tile getTileServer(Tile tile, ArrayList<Tile> tiles) {
+        for (Tile tile1 : tiles) {
+            if (tile.equals(tile1)) return tile1;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        return null;
+    }
+
+    public void createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (unit == null) {
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (tile.isDoesHaveRailWay()) {
-            str = "there is already a rail way on this tile !";
-            return str;
+        if (tileServer.isDoesHaveRailWay()) {
+            gameGroupData.result = "there is already a rail way on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRail(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the rail way will be ready in 3 turns";
-        return str;
+        tileServer.assignWorkerToRail(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the rail way will be ready in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public Improvement preRemoveImprovement(String improvementName){
         if (improvementName.equals("camp"))
@@ -4497,71 +4522,89 @@ public class PlayGameMenuController {
             }
         return "no such improvement exists!";
     }
-    public String removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
+    public void removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!tile.isDoesHaveRoad()) {
-            str = "there is no road on this tile !";
-            return str;
+        if (!tileServer.isDoesHaveRoad()) {
+            gameGroupData.result = "there is no road on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRoad(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the road will be removed in 3 turns";
-        return str;
+        tileServer.assignWorkerToRoad(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the road will be removed in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
-    public String removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
+    public void removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!tile.isDoesHaveRailWay()) {
-            str = "there is no rail way on this tile !";
-            return str;
+        if (!tileServer.isDoesHaveRailWay()) {
+            gameGroupData.result = "there is no rail way on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRail(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the rail way will be removed in 3 turns";
-        return str;
+        tileServer.assignWorkerToRail(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the rail way will be removed in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public String cancelImprovementOnProcess(Civilization civilization, Tile tile){
         if (tile.getWorkingOnImprovement() == null)
@@ -4569,80 +4612,99 @@ public class PlayGameMenuController {
         tile.cancelImprovementOnProcess();
         return "Improvement canceled successfully";
     }
-    public String repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
+    public void repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
 
-        Unit unit = getWorker(tile);
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!tile.isDoesHaveRoad()) {
-            str = "there is no road way on this tile !";
-            return str;
+        if (!tileServer.isDoesHaveRoad()) {
+            gameGroupData.result = "there is no road way on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (tile.isDoesHaveRoad() && !tile.isRoadDamaged()) {
-            str = "this road doesn't need repair!";
-            return str;
+        if (tileServer.isDoesHaveRoad() && !tileServer.isRoadDamaged()) {
+            gameGroupData.result = "this road doesn't need repair!";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRoad(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the road way will be repaired in 3 turns";
-        return str;
+        tileServer.assignWorkerToRoad(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the road way will be repaired in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
-    public String repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
+    public void repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!tile.isDoesHaveRailWay()) {
-            str = "there is no rail way on this tile !";
-            return str;
+        if (!tileServer.isDoesHaveRailWay()) {
+            gameGroupData.result = "there is no rail way on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (tile.isDoesHaveRailWay() && !tile.isRailDamaged()) {
-            str = "this rail road doesn't need repair!";
-            return str;
+        if (tileServer.isDoesHaveRailWay() && !tileServer.isRailDamaged()) {
+            gameGroupData.result = "this rail road doesn't need repair!";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRail(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the rail way will be repaired in 3 turns";
-        return str;
+        tileServer.assignWorkerToRail(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the rail way will be repaired in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public String repairImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, ArrayList<Tile> map){
         ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
