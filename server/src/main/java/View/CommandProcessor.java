@@ -129,10 +129,7 @@ public class CommandProcessor {
             sockets.add(sockets2);
         }
         else if (command.startsWith("mapCreator ")) {
-            command = command.replace("mapCreator ", "");
-            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
-            MapCreatorGson mapCreatorGson = gson.fromJson(command, MapCreatorGson.class);
-           // playGameMenuController.mapCreator(mapCreatorGson.numOfCivilizations, mapCreatorGson.members, getGroup(socket));
+
         }
         else if (command.startsWith("cheatGold ")) {
             command = command.replace("cheatGold ", "");
