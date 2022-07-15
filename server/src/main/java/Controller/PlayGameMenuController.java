@@ -3067,31 +3067,50 @@ public class PlayGameMenuController {
         str = "the unit is ready for ranged battle !";
         return str;
     }
-    public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map){
-        if (tileNumber != destinationTileNumber)
-            return "you should move your unit first";
-        ArrayList<Unit> allUnits = map.get(tileNumber).getUnits();
-        if (allUnits.size() == 0)
-            return "there is no unit in this tile";
+    public void lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (tileNumber != destinationTileNumber) {
+            gameGroupData.result = "you should move your unit first";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        ArrayList<Unit> allUnits = gameGroupData.tiles.get(tileNumber).getUnits();
+        if (allUnits.size() == 0) {
+            gameGroupData.result = "there is no unit in this tile";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
         boolean isThereAnyRelatedUnit = false;
         for (Unit unit : allUnits)
-            if (unit.getCivilization() == civilization) {
+            if (unit.getCivilization().equals(civilizationServer)) {
                 isThereAnyRelatedUnit = true;
                 break;
             }
-        if (!isThereAnyRelatedUnit)
-            return "units in this tile doesn't belong to you";
+        if (!isThereAnyRelatedUnit) {
+            gameGroupData.result = "units in this tile doesn't belong to you";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
         Unit lootUnit = null;
         for (Unit unit : allUnits)
             if (!unit.isCivilian()) {
                 lootUnit = unit;
                 break;
             }
-        if (lootUnit == null)
-            return "only warriors can loot a tile";
-        Tile tile = map.get(destinationTileNumber);
+        if (lootUnit == null) {
+            gameGroupData.result = "only warriors can loot a tile";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
+        Tile tile = gameGroupData.tiles.get(destinationTileNumber);
         tile.Loot();
-        return "tile has been looted successfully";
+        gameGroupData.result = "tile has been looted successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public String cancelCommand(Civilization civilization, boolean isCivilian,ArrayList<Tile> map, Tile tile){
         String str;

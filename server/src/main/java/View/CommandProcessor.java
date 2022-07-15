@@ -214,6 +214,14 @@ public class CommandProcessor {
             playGameMenuController.preUnitBehaviour(unitBehaviourGson.unit, unitBehaviourGson.civilization,
                     gameGroup.tiles, unitBehaviourGson.command, gameGroup);
         }
+        else if (command.startsWith("lootTile ")) {
+            command = command.replace("lootTile ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            LootTileGson lootTileGson = gson.fromJson(command, LootTileGson.class);
+            GameGroup gameGroup = getGroup(lootTileGson.member);
+            playGameMenuController.lootTile(lootTileGson.civilization, lootTileGson.tileNumber,
+                    lootTileGson.destinationTileNumber, gameGroup.tiles, gameGroup);
+        }
 
 
 

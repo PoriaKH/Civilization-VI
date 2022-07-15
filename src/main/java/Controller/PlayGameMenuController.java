@@ -2987,7 +2987,20 @@ public class PlayGameMenuController {
         return str;
     }
     // todo -> client
-    public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map){
+    public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map) throws IOException {
+/*        LootTileGson lootTileGson = new LootTileGson();
+        lootTileGson.civilization = civilization;
+        lootTileGson.tileNumber = tileNumber;
+        lootTileGson.destinationTileNumber = destinationTileNumber;
+        lootTileGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(lootTileGson);
+
+        CreateHost.dataOutputStream.writeUTF("lootTile " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (tileNumber != destinationTileNumber)
             return "you should move your unit first";
         ArrayList<Unit> allUnits = map.get(tileNumber).getUnits();

@@ -356,7 +356,7 @@ public class UnitPanel {
         }
     }
 
-    public void lootTile(MouseEvent mouseEvent) {
+    public void lootTile(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }

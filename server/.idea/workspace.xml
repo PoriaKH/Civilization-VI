@@ -5,25 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added UnitBehaviour to server">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/LootTileGson.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/LootTileGson.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/AttackCityGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/AttackCityGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/AttackTileGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/AttackTileGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatTeleport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CheatTeleport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CreateCityGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/CreateCityGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/MoveUnitGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/MoveUnitGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/UnitBehaviourGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/UnitBehaviourGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/UnitMakingGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/UnitMakingGson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/AttackCityGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/AttackCityGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/AttackTileGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/AttackTileGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatTeleport.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CheatTeleport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CreateCityGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/CreateCityGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/MoveUnitGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/MoveUnitGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/UnitBehaviourGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/UnitBehaviourGson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/UnitMakingGson.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/UnitMakingGson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
