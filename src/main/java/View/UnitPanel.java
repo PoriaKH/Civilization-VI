@@ -184,8 +184,9 @@ public class UnitPanel {
                        playingCivilization, map);
            }
            else {
-               playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
+               String result = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
                        playingCivilization, map);
+               showNotification(result);
            }
         }
     }

@@ -532,7 +532,7 @@ public class Tile extends Polygon {
             this.production += this.resource.getProduction();
         }
         double chance = Math.random();
-        if (chance >= 0.3 && chance < 0.35)
+        if (chance >= 0.33 && chance < 0.38)
             ruin = new Ruin();
 
 
@@ -579,6 +579,25 @@ public class Tile extends Polygon {
             if (root.getChildren().contains(building))
                 building.setVisible(false);
             return;
+        }
+        if (ruin != null) {
+            if (units.size() > 0) {
+                Unit unit = units.get(0);
+                ArrayList<String> techNames = new ArrayList<>();
+                for (Technology t : unit.getCivilization().getTechnologies())
+                    techNames.add(t.getName());
+                if (!techNames.contains(ruin.getFreeTechnology().getName()))
+                    unit.getCivilization().addTechnology(ruin.getFreeTechnology());
+                unit.getCivilization().addGold(ruin.getFreeGold());
+                Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
+                Citizen ruinCitizen = new Citizen(citizenTile);
+                unit.getCivilization().getCapital().addCitizen(ruinCitizen);
+                Civilian civilian = new Civilian(unit.getCivilization(), this, 10, 2, 2, 1, 89, true, false, true);
+                Unit unit1 = (Unit) civilian;
+                this.units.add(unit1);
+                ruin.setFill(Color.TRANSPARENT);
+                ruin = null;
+            }
         }
         if (root.getChildren().contains(resource))
             resource.setVisible(true);
@@ -667,6 +686,33 @@ public class Tile extends Polygon {
                 resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
             if (!root.getChildren().contains(resource))
                 root.getChildren().add(resource);
+        }
+
+        //improvement
+        if (improvements.size() > 0) {
+            double y22 = this.getY() + 30;
+            double x22 = this.getX() + 30;
+            resource.setX(x22);
+            resource.setY(y22);
+            if (improvements.get(0).isCamp())
+                improvements.get(0).setFill(new ImagePattern(new Image(camp.toExternalForm())));
+            else if (improvements.get(0).isFarm())
+                improvements.get(0).setFill(new ImagePattern(new Image(farm.toExternalForm())));
+            else if (improvements.get(0).isLumberMill())
+                improvements.get(0).setFill(new ImagePattern(new Image(lumberMill.toExternalForm())));
+            else if (improvements.get(0).isMine())
+                improvements.get(0).setFill(new ImagePattern(new Image(mine.toExternalForm())));
+            else if (improvements.get(0).isPaddock())
+                improvements.get(0).setFill(new ImagePattern(new Image(paddock.toExternalForm())));
+            else if (improvements.get(0).isAgriculture())
+                improvements.get(0).setFill(new ImagePattern(new Image(agriculture.toExternalForm())));
+            else if (improvements.get(0).isStoneMine())
+                improvements.get(0).setFill(new ImagePattern(new Image(stoneMine.toExternalForm())));
+            else if (improvements.get(0).isTradingPost())
+                improvements.get(0).setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
+            else if (improvements.get(0).isLaboratory())
+                improvements.get(0).setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
+            root.getChildren().add(improvements.get(0));
         }
 
         //ruin
@@ -790,22 +836,6 @@ public class Tile extends Polygon {
         if (units.size() == 0) {
             unit.setX(this.x + 20);
             unit.setY(this.y - h);
-            if (ruin != null) {
-                ArrayList<String> techNames = new ArrayList<>();
-                for (Technology t : unit.getCivilization().getTechnologies())
-                    techNames.add(t.getName());
-                if (!techNames.contains(ruin.getFreeTechnology().getName()))
-                    unit.getCivilization().addTechnology(ruin.getFreeTechnology());
-                unit.getCivilization().addGold(ruin.getFreeGold());
-                Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
-                Citizen ruinCitizen = new Citizen(citizenTile);
-                unit.getCivilization().getCapital().addCitizen(ruinCitizen);
-                Civilian civilian = new Civilian(unit.getCivilization(), this, 10, 2, 2, 1, 89, true, false, true);
-                Unit unit1 = (Unit) civilian;
-                this.units.add(unit1);
-                ruin.setFill(Color.TRANSPARENT);
-                ruin = null;
-            }
         }
         else {
             unit.setX(this.x + 60);
