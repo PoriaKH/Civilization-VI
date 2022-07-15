@@ -4362,7 +4362,21 @@ public class PlayGameMenuController {
             return null;
     }
     // todo -> client
-    public String removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map){
+    public String removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map) throws IOException {
+/*        RemoveImprovementGson removeImprovementGson = new RemoveImprovementGson();
+        removeImprovementGson.civilization = civilization;
+        removeImprovementGson.improvement = improvement;
+        removeImprovementGson.tileNumber = tileNumber;
+        removeImprovementGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(gson);
+
+        CreateHost.dataOutputStream.writeUTF("removeImprovement " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
         ArrayList<City> cities = civilization.getCities();
         ArrayList<Tile> cityTiles = new ArrayList<>();
         for (int i = 0; i < cities.size(); i++) {
@@ -4382,7 +4396,7 @@ public class PlayGameMenuController {
             return "this tile doesn't belong to your civilization";
         ArrayList<Improvement> improvements = tile.getImprovements();
         for (int i = 0; i < improvements.size(); i++)
-            if (improvements.get(i).equals(improvement)){
+            if (improvements.get(i).equals(improvement)) {
                 improvements.remove(i);
                 tile.setImprovements(improvements);
                 return "improvement deleted successfully";

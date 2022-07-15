@@ -367,7 +367,7 @@ public class UnitPanel {
         }
     }
 
-    public void removeImprovement(MouseEvent mouseEvent) {
+    public void removeImprovement(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }

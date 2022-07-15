@@ -294,6 +294,14 @@ public class CommandProcessor {
             playGameMenuController.repairRail(roadFunctionsGson.civilization, roadFunctionsGson.tile,
                     gameGroup.tiles, gameGroup);
         }
+        else if (command.startsWith("removeImprovement ")) {
+            command = command.replace("removeImprovement ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RemoveImprovementGson removeImprovementGson = gson.fromJson(command, RemoveImprovementGson.class);
+            GameGroup gameGroup = getGroup(removeImprovementGson.member);
+            playGameMenuController.removeImprovement(removeImprovementGson.civilization,
+                    removeImprovementGson.improvement, removeImprovementGson.tileNumber, gameGroup.tiles, gameGroup);
+        }
 
 
 

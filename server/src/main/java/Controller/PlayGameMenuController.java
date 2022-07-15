@@ -4495,15 +4495,18 @@ public class PlayGameMenuController {
         else
             return null;
     }
-    public String removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map){
-        ArrayList<City> cities = civilization.getCities();
+    public void removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        ArrayList<City> cities = civilizationServer.getCities();
         ArrayList<Tile> cityTiles = new ArrayList<>();
         for (int i = 0; i < cities.size(); i++) {
             ArrayList<Tile> tiles = cities.get(i).getTiles();
             for (int j = 0; j < tiles.size(); j++)
                 cityTiles.add(tiles.get(j));
         }
-        Tile tile = map.get(tileNumber);
+        Tile tile = gameGroupData.tiles.get(tileNumber);
         boolean isOurs = false;
         for (int i = 0; i < cityTiles.size(); i++) {
             if (cityTiles.get(i).equals(tile)) {
@@ -4511,17 +4514,24 @@ public class PlayGameMenuController {
                 break;
             }
         }
-        if (!isOurs)
-            return "this tile doesn't belong to your civilization";
+        if (!isOurs) {
+            gameGroupData.result = "this tile doesn't belong to your civilization";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         ArrayList<Improvement> improvements = tile.getImprovements();
         for (int i = 0; i < improvements.size(); i++)
-            if (improvements.get(i).equals(improvement)){
+            if (improvements.get(i).getName().equals(improvement.getName())){
                 improvements.remove(i);
                 tile.setImprovements(improvements);
-                return "improvement deleted successfully";
+                gameGroupData.result = "improvement deleted successfully";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
             }
-        return "no such improvement exists!";
+        gameGroupData.result = "no such improvement exists!";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
     public void removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         Tile tileServer = getTileServer(tile, gameGroupData.tiles);
