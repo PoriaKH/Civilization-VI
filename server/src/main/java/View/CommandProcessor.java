@@ -302,6 +302,14 @@ public class CommandProcessor {
             playGameMenuController.removeImprovement(removeImprovementGson.civilization,
                     removeImprovementGson.improvement, removeImprovementGson.tileNumber, gameGroup.tiles, gameGroup);
         }
+        else if (command.startsWith("upgradeUnit ")) {
+            command = command.replace("upgradeUnit ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            UpgradeUnitGson upgradeUnitGson = gson.fromJson(command, UpgradeUnitGson.class);
+            GameGroup gameGroup = getGroup(upgradeUnitGson.member);
+            playGameMenuController.preUpgradeUnit(upgradeUnitGson.oldUnit, upgradeUnitGson.newUnitName,
+                    upgradeUnitGson.index, upgradeUnitGson.civilization, gameGroup.tiles, gameGroup);
+        }
 
 
 

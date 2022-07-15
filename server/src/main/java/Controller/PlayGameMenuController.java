@@ -4759,14 +4759,21 @@ public class PlayGameMenuController {
      */
 
     // get necessary parameters for update warrior
-    public String preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map) {
+    public void preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        Unit oldUnitServer = getUnitServer(gameGroupData.tiles, oldUnit);
         if (index < 0 || index > 71) {
-            return "number of tile is invalid !";
+            gameGroupData.result = "number of tile is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        Unit newUnit = makeUnit(civilization, map.get(index), map, newUnitName);
-        City city = findTile(index, map, civilization);
-        return updateWarrior(civilization, oldUnit, newUnit, map, map.get(index), city);
+        Unit newUnit = makeUnit(civilizationServer, gameGroupData.tiles.get(index), gameGroupData.tiles, newUnitName);
+        City city = findTile(index, gameGroupData.tiles, civilizationServer);
+        gameGroupData.result = updateWarrior(civilizationServer, oldUnitServer, newUnit, gameGroupData.tiles, gameGroupData.tiles.get(index), city);
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
     public String updateWarrior(Civilization civilization, Unit warrior, Unit newWarrior,ArrayList<Tile> map, Tile tile, City city){
         String str;
         if (warrior == null) {

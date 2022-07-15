@@ -4361,7 +4361,7 @@ public class PlayGameMenuController {
         else
             return null;
     }
-    // todo -> client
+    // todo -> client (done)
     public String removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map) throws IOException {
 /*        RemoveImprovementGson removeImprovementGson = new RemoveImprovementGson();
         removeImprovementGson.civilization = civilization;
@@ -4617,7 +4617,7 @@ public class PlayGameMenuController {
         str = "the rail way will be repaired in 3 turns";
         return str;
     }
-    // todo
+    // todo -> estefade nashode
     public String repairImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, ArrayList<Tile> map){
         ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
         if (allUnits.size() == 0)
@@ -4659,9 +4659,24 @@ public class PlayGameMenuController {
         return str;
     }
      */
-     // todo -> client
+     // todo -> client (done)
     // get necessary parameters for update warrior
-    public String preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map) {
+    public String preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        UpgradeUnitGson upgradeUnitGson = new UpgradeUnitGson();
+        upgradeUnitGson.oldUnit = oldUnit;
+        upgradeUnitGson.newUnitName = newUnitName;
+        upgradeUnitGson.index = index;
+        upgradeUnitGson.civilization = civilization;
+        upgradeUnitGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(upgradeUnitGson);
+
+        CreateHost.dataOutputStream.writeUTF("upgradeUnit " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
         if (index < 0 || index > 71) {
             return "number of tile is invalid !";
         }

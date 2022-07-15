@@ -326,7 +326,7 @@ public class UnitPanel {
         alert.showAndWait();
     }
 
-    public void upgradeUnit(MouseEvent mouseEvent) {
+    public void upgradeUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
