@@ -3280,7 +3280,7 @@ public class PlayGameMenuController {
         }
         return false;//it doesn't
     }
-    public StringBuilder showTechnologyMenu(Civilization civilization){
+/*    public StringBuilder showTechnologyMenu(Civilization civilization){
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         ArrayList<String> technologyNames = new ArrayList<>();
         technologyNames.add("Agriculture");
@@ -3353,7 +3353,7 @@ public class PlayGameMenuController {
         for (int i = 0; i < possibleTechnologies.size(); i++)
             stringBuilder.append(possibleTechnologies.get(i) + "\n");
         return stringBuilder;
-    }
+    }*/
     public Technology preChooseTechnologyToLearn(String name){
         if (name.equals("Agriculture")) {
             Technology technology = new Technology(true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
@@ -3999,31 +3999,49 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    public String chooseTechnologyToLearn(Civilization civilization, String technologyName){
+    public void chooseTechnologyToLearn(Civilization civilization, String technologyName, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         Technology technology = preChooseTechnologyToLearn(technologyName);
-        if (technology == null)
-            return "no technology with this name exists";
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        if (technology == null) {
+            gameGroupData.result = "no technology with this name exists";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
 //        if (civilization.getScience() < technology.getCost())
 //            return "you don't have the needed amount of science";
-        ArrayList<Technology> allTechnologies = civilization.getTechnologies();
+
+        ArrayList<Technology> allTechnologies = civilizationServer.getTechnologies();
         for (Technology technology1 : allTechnologies)
-            if (technology1.getName().equals(technologyName))
-                return "you already have this technology";
-        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
-            return "you don't have the prerequisite techs to learn this technology";
-        if (civilization.isLearningTechnology())
-            return "you are learning a technology";
+            if (technology1.getName().equals(technologyName)) {
+                gameGroupData.result = "you already have this technology";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        if (!hasPrerequisiteTechs(allTechnologies, technologyName)) {
+            gameGroupData.result = "you don't have the prerequisite techs to learn this technology";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        if (civilizationServer.isLearningTechnology()) {
+            gameGroupData.result = "you are learning a technology";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         if (technology.getCost() > 99) {
-            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
-            civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
+            civilizationServer.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
+            civilizationServer.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
         }
         else {
-            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 1);
-            civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
+            civilizationServer.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 1);
+            civilizationServer.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
         }
-        civilization.setIsLearningTechnology(true);
-        return "technology has been added to the learning technologies";
+
+        civilizationServer.setIsLearningTechnology(true);
+        gameGroupData.result = "technology has been added to the learning technologies";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
     public String changeTechnologyToLearn(Civilization civilization, String technologyName){
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)

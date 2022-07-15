@@ -222,6 +222,14 @@ public class CommandProcessor {
             playGameMenuController.lootTile(lootTileGson.civilization, lootTileGson.tileNumber,
                     lootTileGson.destinationTileNumber, gameGroup.tiles, gameGroup);
         }
+        else if (command.startsWith("chooseTechnology ")) {
+            command = command.replace("chooseTechnology ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChooseTechnologyGson chooseTechnologyGson = gson.fromJson(command, ChooseTechnologyGson.class);
+            GameGroup gameGroup = getGroup(chooseTechnologyGson.member);
+            playGameMenuController.chooseTechnologyToLearn(chooseTechnologyGson.civilization,
+                    chooseTechnologyGson.technologyName, gameGroup);
+        }
 
 
 

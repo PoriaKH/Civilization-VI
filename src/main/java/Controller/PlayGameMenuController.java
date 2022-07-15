@@ -2986,7 +2986,7 @@ public class PlayGameMenuController {
         str = "the unit is ready for ranged battle !";
         return str;
     }
-    // todo -> client
+    // todo -> client (done)
     public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map) throws IOException {
 /*        LootTileGson lootTileGson = new LootTileGson();
         lootTileGson.civilization = civilization;
@@ -3120,7 +3120,7 @@ public class PlayGameMenuController {
         str = "unit health increased !";
         return str;
     }
-    // todo
+    // todo -> estefade nashode
     public String preLockCitizen(Matcher matcher,Civilization civilization, ArrayList<Tile> map){
         matcher.find();
         int originTileNumber = Integer.parseInt(matcher.group("origin"));
@@ -3134,7 +3134,7 @@ public class PlayGameMenuController {
         Tile destination = map.get(destinationTileNumber);
         return lockCitizen(civilization,origin,destination,map);
     }
-    // todo
+    // todo -> estefade nashode
     public String lockCitizen(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map){//move citizen from origin to destination
         for(City city : civilization.getCities()){
             for(Tile tile1 : city.getTiles()){
@@ -3168,7 +3168,7 @@ public class PlayGameMenuController {
         Tile tile = map.get(tileNumber);
         return purchaseTile(civilization,tile,map,civilizations);
     }
-    // todo -> client
+    // todo -> client -> estefade nashode
     public String purchaseTile(Civilization civilization, Tile tile,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         for(City city : civilization.getCities()){
             for(Tile tempTile : city.getTiles()){
@@ -3925,8 +3925,21 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo -> client
-    public String chooseTechnologyToLearn(Civilization civilization, String technologyName){
+    // todo -> client (done)
+    public String chooseTechnologyToLearn(Civilization civilization, String technologyName) throws IOException {
+/*        ChooseTechnologyGson chooseTechnologyGson = new ChooseTechnologyGson();
+        chooseTechnologyGson.technologyName = technologyName;
+        chooseTechnologyGson.civilization = civilization;
+        chooseTechnologyGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(chooseTechnologyGson);
+
+        CreateHost.dataOutputStream.writeUTF("chooseTechnology " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
             return "no technology with this name exists";
@@ -3943,8 +3956,7 @@ public class PlayGameMenuController {
         if (technology.getCost() > 99) {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
             civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
-        }
-        else {
+        } else {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 1);
             civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
         }

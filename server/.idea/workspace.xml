@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added UnitBehaviour to server">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/LootTileGson.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/LootTileGson.java" afterDir="false" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added lootTile to server">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/ChooseTechnologyGson.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/ChooseTechnologyGson.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/TechnologyTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/TechnologyTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657807744805</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="added lootTile to server">
+      <created>1657861011709</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1657861011709</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -206,6 +213,7 @@
     <MESSAGE value="adding unitMaker" />
     <MESSAGE value="added unitMaker to server" />
     <MESSAGE value="added UnitBehaviour to server" />
-    <option name="LAST_COMMIT_MESSAGE" value="added UnitBehaviour to server" />
+    <MESSAGE value="added lootTile to server" />
+    <option name="LAST_COMMIT_MESSAGE" value="added lootTile to server" />
   </component>
 </project>
