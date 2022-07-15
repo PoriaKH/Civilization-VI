@@ -18,11 +18,4 @@ public class CheatTeleport {
     public int numberOfDestination;
     @Expose
     public Civilization civilization;
-    @Expose
-    public ArrayList<Tile> map;
-    // result
-    @Expose
-    public String string;
-    @Expose
-    public ArrayList<Civilization> civilizations;
 }

@@ -16,7 +16,5 @@ public class UnitBehaviourGson {
     @Expose
     public Civilization civilization;
     @Expose
-    public ArrayList<Tile> map;
-    @Expose
     public String command;
 }

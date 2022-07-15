@@ -162,50 +162,57 @@ public class CommandProcessor {
             command = command.replace("teleport ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatTeleport cheatTeleport = gson.fromJson(command, CheatTeleport.class);
+            GameGroup gameGroup = getGroup(cheatTeleport.member);
             playGameMenuController.cheatTeleportUnit(cheatTeleport.unit, cheatTeleport.numberOfDestination,
-                    cheatTeleport.civilization, cheatTeleport.map, getGroup(cheatTeleport.member));
+                    cheatTeleport.civilization, gameGroup.tiles, gameGroup);
         }
         else if (command.startsWith("moveUnit ")) {
             command = command.replace("moveUnit ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             MoveUnitGson moveUnitGson = gson.fromJson(command, MoveUnitGson.class);
+            GameGroup gameGroup = getGroup(moveUnitGson.member);
             playGameMenuController.preMoveUnit(moveUnitGson.unit, moveUnitGson.numberOfDestination,
-                    moveUnitGson.civilization, moveUnitGson.map, getGroup(moveUnitGson.member));
+                    moveUnitGson.civilization, gameGroup.tiles, gameGroup);
         }
         else if (command.startsWith("unitMaker ")) {
             command = command.replace("unitMaker ", "");
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
             UnitMakingGson unitMakingGson = gson.fromJson(command, UnitMakingGson.class);
+            GameGroup gameGroup = getGroup(unitMakingGson.member);
             playGameMenuController.preUnitMaker(unitMakingGson.unitName, unitMakingGson.index,
-                    unitMakingGson.civilization, unitMakingGson.map, getGroup(unitMakingGson.member));
+                    unitMakingGson.civilization, gameGroup.tiles, gameGroup);
         }
         else if (command.startsWith("createCity ")) {
             command = command.replace("createCity ", "");
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
             CreateCityGson createCityGson = gson.fromJson(command, CreateCityGson.class);
+            GameGroup gameGroup = getGroup(createCityGson.member);
             playGameMenuController.createCity(createCityGson.civilization, createCityGson.tileNumber,
-                    createCityGson.map, createCityGson.civilizations, getGroup(createCityGson.member));
+                    gameGroup.tiles, gameGroup.civilizations, gameGroup);
         }
         else if (command.startsWith("attackTile ")) {
             command = command.replace("attackTile ", "");
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
             AttackTileGson attackTileGson = gson.fromJson(command, AttackTileGson.class);
+            GameGroup gameGroup = getGroup(attackTileGson.member);
             playGameMenuController.preAttackTile(attackTileGson.attacker, attackTileGson.destinationIndex,
-                    attackTileGson.civilization, attackTileGson.map, getGroup(attackTileGson.member));
+                    attackTileGson.civilization, gameGroup.tiles, gameGroup);
         }
         else if (command.startsWith("attackCity ")) {
             command = command.replace("attackCity ", "");
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
             AttackCityGson attackCityGson = gson.fromJson(command, AttackCityGson.class);
+            GameGroup gameGroup = getGroup(attackCityGson.member);
             playGameMenuController.preAttackCity(attackCityGson.attacker, attackCityGson.destinationIndex,
-                    attackCityGson.civilization, attackCityGson.map, attackCityGson.civilizations, getGroup(attackCityGson.member));
+                    attackCityGson.civilization, gameGroup.tiles, gameGroup.civilizations, gameGroup);
         }
         else if (command.startsWith("unitBehave ")) {
             command = command.replace("unitBehave ", "");
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
             UnitBehaviourGson unitBehaviourGson = gson.fromJson(command, UnitBehaviourGson.class);
+            GameGroup gameGroup = getGroup(unitBehaviourGson.member);
             playGameMenuController.preUnitBehaviour(unitBehaviourGson.unit, unitBehaviourGson.civilization,
-                    unitBehaviourGson.map, unitBehaviourGson.command, getGroup(unitBehaviourGson.member));
+                    gameGroup.tiles, unitBehaviourGson.command, gameGroup);
         }
 
 
@@ -216,7 +223,7 @@ public class CommandProcessor {
 
 
 
-    // get group from member
+    // get game group of a member
     public static GameGroup getGroup(Member member) {
         GameGroup group;
         for (GameGroup gameGroup : gameGroups) {

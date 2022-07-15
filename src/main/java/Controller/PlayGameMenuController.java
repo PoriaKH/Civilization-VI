@@ -258,7 +258,6 @@ public class PlayGameMenuController {
     public void cheatTeleportUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) throws IOException {
         CheatTeleport cheatTeleport = new CheatTeleport();
         cheatTeleport.numberOfDestination = numberOfDestination;
-        cheatTeleport.map = map;
         cheatTeleport.unit = unit;
         cheatTeleport.civilization = civilization;
         cheatTeleport.member = civilization.getMember();
@@ -1199,7 +1198,6 @@ public class PlayGameMenuController {
         moveUnitGson.unit = unit;
         moveUnitGson.numberOfDestination = numberOfDestination;
         moveUnitGson.civilization = civilization;
-        moveUnitGson.map = map;
         moveUnitGson.member = civilization.getMember();
 
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
@@ -1689,7 +1687,6 @@ public class PlayGameMenuController {
         unitMakingGson.unitName = unitName;
         unitMakingGson.index = index;
         unitMakingGson.civilization = civilization;
-        unitMakingGson.map = map;
         unitMakingGson.member = civilization.getMember();
 
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
@@ -2193,8 +2190,6 @@ public class PlayGameMenuController {
 /*        CreateCityGson createCityGson = new CreateCityGson();
         createCityGson.civilization = civilization;
         createCityGson.tileNumber = tileNumber;
-        createCityGson.map = map;
-        createCityGson.civilizations = civilizations;
         createCityGson.member = civilization.getMember();
 
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
@@ -2369,12 +2364,12 @@ public class PlayGameMenuController {
     }
     // todo -> client (done)
     // prepare some parameters and return some string
-    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) throws IOException {
+    public String
+    preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) throws IOException {
 /*        AttackTileGson attackTileGson = new AttackTileGson();
         attackTileGson.attacker = attacker;
         attackTileGson.destinationIndex = destinationIndex;
         attackTileGson.civilization = civilization;
-        attackTileGson.map = map;
         attackTileGson.member = civilization.getMember();
 
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
@@ -2511,8 +2506,6 @@ public class PlayGameMenuController {
         attackCityGson.attacker = attacker;
         attackCityGson.destinationIndex = destinationIndex;
         attackCityGson.civilization = civilization;
-        attackCityGson.map = map;
-        attackCityGson.civilizations = civilizations;
         attackCityGson.member = civilization.getMember();
 
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
@@ -2792,7 +2785,6 @@ public class PlayGameMenuController {
 /*        UnitBehaviourGson unitBehaviourGson = new UnitBehaviourGson();
         unitBehaviourGson.unit = unit;
         unitBehaviourGson.civilization = civilization;
-        unitBehaviourGson.map = map;
         unitBehaviourGson.command = command;
         unitBehaviourGson.member = civilization.getMember();
 
