@@ -563,7 +563,7 @@ public class PlayGameMenuController {
 
         return map;
     }
-    // todo
+    // todo -> client va niaz be ersal be server nadarad
     // if distance between two tile center is (rad3 * radius) they're neighbor
     private boolean isCityNeighbor(float x1, float y1, float x2, float y2, float radius){
         double distance = Math.sqrt(Math.pow((double)x2 - (double)x1, 2) + Math.pow((double)y2 - (double) y1, 2));
@@ -571,14 +571,14 @@ public class PlayGameMenuController {
             return true;
         return false;
     }
-    // todo
+    // todo -> client va niaz be ersal be server nadarad
     private boolean isUnitNeighbor(float x1, float y1, float x2, float y2, float radius){
         double distance = Math.sqrt(Math.pow((double) x2 - (double) x1, 2) + Math.pow((double) y2 - (double) y1, 2));
         if (1.5 * radius * Math.sqrt(3) < distance && distance < 2.5 * radius * Math.sqrt(3))
             return true;
         return false;
     }
-    // todo
+    // todo -> client va niaz be ersal be server nadarad
     // 1 -> vazeh, -1 -> fog
     public ArrayList<Integer> statusChecker(Civilization civilization, ArrayList<Tile> map){
         ArrayList<Integer> civilizationTiles  = new ArrayList<>();
@@ -650,7 +650,7 @@ public class PlayGameMenuController {
         }
         return civilizationTiles;
     }
-    // todo
+    // todo -> client va niaz be ersal be server nadarad
     // -1 -> fog, 0  -> moshakhas, 1 -> vazeh
     public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now, HashMap<Integer, Tile> zeroStatusTiles, ArrayList<Tile> map){
         //TODO... if(now == fog of war && old == vazeh -> now = moshakhas)
@@ -826,7 +826,7 @@ public class PlayGameMenuController {
 
         return "your point is : " + point;
     }
-    // todo
+    // todo -> estefade nashode
     public String sendFriendlyRequestDiplomatic(Civilization civilization,ArrayList<Civilization> civilizations,String name){
         if(Objects.equals(name, civilization.getMember().getNickname()))
             return "cant send request to yourself";
@@ -857,7 +857,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    // todo
+    // todo -> estefade nashode
     public StringBuilder showFriendlyRequests(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         int i = 1;
@@ -867,7 +867,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    // todo
+    // todo -> estefade nashode
     public String acceptFriendlyRequest(Civilization civilization,String name){
         for(Civilization tempCivilization : civilization.getFriendlyRequests()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
@@ -877,7 +877,7 @@ public class PlayGameMenuController {
         }
         return "there is no friendly request with this name";
     }
-    // todo
+    // todo -> estefade nashode
     public String denyFriendlyRequest(Civilization civilization,String name){
         for(Civilization tempCivilization : civilization.getFriendlyRequests()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
@@ -887,7 +887,7 @@ public class PlayGameMenuController {
         }
         return "there is no friendly request with this name";
     }
-    // todo
+    // todo -> estefade nashode
     public String breakTheOath(Civilization civilization,String name){//this will cut the friendship between you and your allie
         for(Civilization tempCivilization : civilization.getFriends()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
@@ -1337,7 +1337,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    // todo
+    // todo -> comment
     // return the index of specific tile
     public int getTileIndex (Tile tile, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
@@ -1495,7 +1495,7 @@ public class PlayGameMenuController {
         }
         return str;
     }
-    // todo -> client (fek konam comment bayad beshe next turn kafie)
+    // todo -> comment
     // more than one turn moving function for units of playing civilization
     public void moveUnitWithMovesLeft (Civilization playingCivilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
@@ -1968,7 +1968,7 @@ public class PlayGameMenuController {
         str = "unit will be created soon !";
         return str;
     }
-    // todo
+    // todo -> estefade nashode
     public String purchaseUnit(Civilization civilization, ArrayList<Tile> map, Matcher matcher){
         matcher.find();
         String unitName = matcher.group("unitName");
@@ -4781,7 +4781,7 @@ public class PlayGameMenuController {
 
     }
      */
-    // todo -> client
+    // todo -> client (done)
     public String nextTurn(Civilization civilization, ArrayList<Tile> map) throws IOException {
 /*        NextTurnGson nextTurnGson = new NextTurnGson();
         nextTurnGson.civilization = civilization;
