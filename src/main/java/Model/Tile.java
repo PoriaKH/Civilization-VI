@@ -700,8 +700,8 @@ public class Tile extends Polygon {
         if (improvements.size() > 0) {
             double y22 = this.getY() + 30;
             double x22 = this.getX() + 30;
-            resource.setX(x22);
-            resource.setY(y22);
+            improvements.get(0).setX(x22);
+            improvements.get(0).setY(y22);
             if (improvements.get(0).isCamp())
                 improvements.get(0).setFill(new ImagePattern(new Image(camp.toExternalForm())));
             else if (improvements.get(0).isFarm())
