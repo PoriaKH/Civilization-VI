@@ -371,7 +371,7 @@ public class PlayGameMenu {
             public void handle(MouseEvent event) {
                 String string = null;
                 try {
-                    string = playGameMenuController.nextTurn(playingCivilization, tiles);
+                    string = playGameMenuController.nextTurn(civilizations , playingCivilization, tiles);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
