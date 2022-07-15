@@ -4001,7 +4001,7 @@ public class PlayGameMenuController {
 
 
 
-    // todo
+    // todo -> estefade nashode
     public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int tileUnitNumber, ArrayList<Tile> map){
         if (tileNumber != tileUnitNumber || map.get(tileNumber).getCitizen() == null)
             return "you should move your citizen to this tile first";
@@ -4033,8 +4033,24 @@ public class PlayGameMenuController {
         else
             return "this tile isn't your city tiles or city neighbors";
     }
-    // todo -> client
-    public String createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map){
+    // todo -> client (done)
+    public String createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map) throws IOException {
+/*            CreateImprovementGson createImprovementGson = new CreateImprovementGson();
+            createImprovementGson.civilization = civilization;
+            createImprovementGson.tileUnitNumber = tileUnitNumber;
+            createImprovementGson.tileNumber = tileNumber;
+            createImprovementGson.improvementName = improvementName;
+            createImprovementGson.member = civilization.getMember();
+
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            String request = gson.toJson(createImprovementGson);
+
+            CreateHost.dataOutputStream.writeUTF("createImprovement " + request);
+            CreateHost.dataOutputStream.flush();*/
+
+
+
+
         ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
         if (tileUnitNumber != tileNumber)
             return "you should move your unit to this tile first";
@@ -4154,10 +4170,11 @@ public class PlayGameMenuController {
                 return "no improvement with this name exists!";
             civilian.setWorkingTile(tile);
             return "improvement created successfully";
-        }
-        else
+        } else
             return "only workers can work on improvements";
     }
+
+
     // todo -> useless
     public StringBuilder showImprovements(ArrayList<Tile> map){
         StringBuilder panel = new StringBuilder();

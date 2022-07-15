@@ -343,7 +343,7 @@ public class UnitPanel {
         showNotification(string);
     }
 
-    public void createImprovement(MouseEvent mouseEvent) {
+    public void createImprovement(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }

@@ -4109,28 +4109,43 @@ public class PlayGameMenuController {
         else
             return "this tile isn't your city tiles or city neighbors";
     }
-    public String createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map){
-        ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
-        if (tileUnitNumber != tileNumber)
-            return "you should move your unit to this tile first";
-        if (allUnits.size() == 0)
-            return "there is no unit in this tile";
+    public void createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        ArrayList<Unit> allUnits = gameGroupData.tiles.get(tileUnitNumber).getUnits();
+
+        if (tileUnitNumber != tileNumber) {
+            gameGroupData.result = "you should move your unit to this tile first";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        if (allUnits.size() == 0) {
+            gameGroupData.result = "there is no unit in this tile";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         boolean isThereAnyRelatedUnit = false;
         Unit creatorUnit = null;
         for (Unit unit : allUnits)
-            if (unit.getCivilization() == civilization) {
+            if (unit.getCivilization().equals(civilizationServer)) {
                 isThereAnyRelatedUnit = true;
                 creatorUnit = unit;
                 break;
             }
-        if (!isThereAnyRelatedUnit)
-            return "units in this tile doesn't belong to you";
-        if (!creatorUnit.isCivilian())
-            return "only workers can work on improvements";
+        if (!isThereAnyRelatedUnit) {
+            gameGroupData.result = "units in this tile doesn't belong to you";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        if (!creatorUnit.isCivilian()) {
+            gameGroupData.result = "only workers can work on improvements";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         Civilian civilian = (Civilian) creatorUnit;
         if (civilian.isWorker()) {
-            Tile tile = map.get(tileNumber);
-            ArrayList<Technology> techs = civilization.getTechnologies();
+            Tile tile = gameGroupData.tiles.get(tileNumber);
+            ArrayList<Technology> techs = civilizationServer.getTechnologies();
             ArrayList<String> technologies = new ArrayList<>();
             for (int i = 0; i < techs.size(); i++)
                 technologies.add(techs.get(i).getName());
@@ -4139,100 +4154,165 @@ public class PlayGameMenuController {
                     if (technologies.contains("Trapping")) {
                         Improvement improvement = new Improvement(true, false, false, false, false, false, false, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 5);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "camp can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "camp can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("farm")) {
                 if (tile.getAttribute() != null && tile.getAttribute().isRainForest()) {
                     if (technologies.contains("Mining")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 10);
-                    } else
-                        return "you don't have the prerequisite technology";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
                 } else if (tile.getAttribute() != null && tile.getAttribute().isJungle()) {
                     if (technologies.contains("BronzeWorking")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 13);
-                    } else
-                        return "you don't have the prerequisite technology";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
                 } else if (tile.getAttribute() != null && tile.getAttribute().isMarsh()) {
                     if (technologies.contains("Masonry")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 12);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "farm can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "farm can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("lumberMill")) {     //duration = 7
                 if (tile.getAttribute() != null && tile.getAttribute().isJungle()) {
                     if (technologies.contains("Construction")) {
                         Improvement improvement = new Improvement(false, false, true, false, false, false, false, false, false, 0, 1, 0);
                         tile.addToImprovementEarnedPercent(improvement, 7);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "lumberMill can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "lumberMill can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("mine")) {       //duration = 14
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow() || tile.isHill() || (tile.getAttribute() != null && tile.getAttribute().isJungle()) || (tile.getAttribute() != null && tile.getAttribute().isRainForest()) || (tile.getAttribute() != null && tile.getAttribute().isMarsh())) {
                     if (technologies.contains("Mining")) {
                         Improvement improvement = new Improvement(false, false, false, true, false, false, false, false, false, 0, 1, 0);
                         tile.addToImprovementEarnedPercent(improvement, 14);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "mine can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "mine can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("paddock")) {        //duration = 8
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isHill()) {
                     Improvement improvement = new Improvement(false, false, false, false, true, false, false, false, false, 0, 0, 0);
                     tile.addToImprovementEarnedPercent(improvement, 8);
-                } else
-                    return "paddock can't be build in this tile";
+                } else {
+                    gameGroupData.result = "paddock can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("agriculture")) {
                 if (tile.isPlain() || tile.isMeadow() || (tile.getAttribute() != null && tile.getAttribute().isJungle()) || (tile.getAttribute() != null && tile.getAttribute().isRainForest()) || (tile.getAttribute() != null && tile.getAttribute().isMarsh()) || (tile.getAttribute() != null && tile.getAttribute().isPlat())) {
                     if (technologies.contains("Calendar")) {        //duration = 5
                         Improvement improvement = new Improvement(false, false, false, false, false, true, false, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 5);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "agriculture can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "agriculture can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("stoneMine")) {      //duration = 15
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isHill()) {
                     if (technologies.contains("Masonry")) {
                         Improvement improvement = new Improvement(false, false, false, false, false, false, true, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 15);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "stoneMine can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "stoneMine can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("tradingPost")) {        //duration = 10
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra()) {
                     if (technologies.contains("Trapping")) {
                         Improvement improvement = new Improvement(false, false, false, false, false, false, false, true, false, 0, 0, 1);
                         tile.addToImprovementEarnedPercent(improvement, 10);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "tradingPost can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "tradingPost can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("laboratory")) {     //duration = 20
                 //plain, dessert, meadow, tundra, snow
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow()) {
                     if (technologies.contains("Engineering")) {
                         Improvement improvement = new Improvement(false, false, false, false, false, false, false, false, true, 0, 2, 0);
                         tile.addToImprovementEarnedPercent(improvement, 20);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "laboratory can't be build in this tile";
-            } else
-                return "no improvement with this name exists!";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "laboratory can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
+            } else {
+                gameGroupData.result = "no improvement with this name exists!";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
             civilian.setWorkingTile(tile);
-            return "improvement created successfully";
+            gameGroupData.result = "improvement created successfully";
+            sendMessageToAllClients(gameGroup, gameGroupData);
         }
-        else
-            return "only workers can work on improvements";
+        else {
+            gameGroupData.result = "only workers can work on improvements";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        }
     }
+
+
     public StringBuilder showImprovements(ArrayList<Tile> map){
         StringBuilder panel = new StringBuilder();
         ArrayList<String> improvementPanel = new ArrayList<>();

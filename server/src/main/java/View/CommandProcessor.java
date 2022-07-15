@@ -238,6 +238,14 @@ public class CommandProcessor {
             playGameMenuController.changeTechnologyToLearn(chooseTechnologyGson.civilization,
                     chooseTechnologyGson.technologyName, gameGroup);
         }
+        else if (command.startsWith("createImprovement ")) {
+            command = command.replace("createImprovement ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            CreateImprovementGson createImprovementGson = gson.fromJson(command, CreateImprovementGson.class);
+            GameGroup gameGroup = getGroup(createImprovementGson.member);
+            playGameMenuController.createImprovement(createImprovementGson.civilization, createImprovementGson.tileUnitNumber,
+                    createImprovementGson.tileNumber, createImprovementGson.improvementName, gameGroup.tiles, gameGroup);
+        }
 
 
 
