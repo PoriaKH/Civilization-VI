@@ -4898,12 +4898,29 @@ public class PlayGameMenuController {
         civilizationServer.reduceTechnologyRound();
         increaseCityDamagePoint(civilizationServer);
         checkZoneOfAllCivilizations(gameGroupData.civilizations, gameGroupData.tiles, civilizationServer);
+        turn ++;
+        changeTurn(gameGroupData.civilizations);
 
         //TODO...  also complete historyInformation and showProductionsInProcess
 
         gameGroupData.result = "done";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
+    private void changeTurn(ArrayList<Civilization> civilizations) {
+        for (int i = 0; i < civilizations.size(); i++) {
+            if (civilizations.get(i).isMyTurn) {
+                civilizations.get(i).isMyTurn = false;
+                i++;
+                if (i == civilizations.size()) {
+                    i = 0;
+                }
+                civilizations.get(i).isMyTurn = true;
+                break;
+            }
+        }
+    }
+
     public void increasePopulationNextTurn(Civilization civilization,ArrayList<Tile> map){
         if(civilization.getHappiness() < 0)
             return;
