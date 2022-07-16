@@ -415,34 +415,17 @@ public class PlayGameMenu {
                 } else {
                     playGameMenuController.deleteLosers(playingCivilization, civilizations);
                     if (playGameMenuController.findWinner(playingCivilization, civilizations)) {
-                        //TODO .... write array members in file -> pouria ***********
-                        //TODO ... baraye datresi be barande civilization.get(0) okeye
-                        //TODO .... list member ha ham hast age khsati kol file ro dobare benevisi
-                        //TODO dat tabe fidnWinner emtaiza member barande ro ziad kardam
-                        try {
+                        //TODO ... pouria increaseFileScore kar nemikone ,
+                        //TODO ... ehtemalan bekhatere while hamishe true e.
+                        /*try {
                             increaseFileScore(playingCivilization);
+                            System.out.println("after file");
                         } catch (IOException e) {
                             e.printStackTrace();
-                        }
-                        //TODO .... graphic view for winner -> kian
-                        VictoryAnimation victoryAnimation = new VictoryAnimation();
+                        }*/
                         VictoryAnimation.stage = stage;
+                        VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
                         victoryAnimation.play();
-                        try {
-                            root = FXMLLoader.load(VictoryAnimation.mainMenuFxmlURL);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        try {
-                            root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.show();
                     }
                     PlayGameMenuController.turn ++;
                     playersCounter++;

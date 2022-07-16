@@ -1986,7 +1986,7 @@ public class PlayGameMenuController {
             return str;
         }
 
-        /*if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
+        if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
             str = "you don't have necessary technology!";
             return str;
         }
@@ -1994,7 +1994,7 @@ public class PlayGameMenuController {
         if (!unit.isCivilian() && !isResourceAvailableForUnit (unit, city)) {
             str = "you don't have necessary resource!";
             return str;
-        }*/
+        }
 
         Tile centerTile = city.getCenterTile();
         if (!unit.isCivilian() && isUnitWarrior (centerTile)) {
@@ -2604,12 +2604,6 @@ public class PlayGameMenuController {
         healthOfAttacker = healthOfAttacker - powerOfDefender;
         healthOfDefender = healthOfDefender - powerOfAttacker;
 
-        System.out.println("attackerPower : " + powerOfAttacker);
-        System.out.println("attackerHealth : " + healthOfAttacker);
-        System.out.println("cityPower : " + powerOfDefender);
-        System.out.println("cityHealth : " + healthOfDefender);
-        System.out.println();
-
         if (healthOfDefender <= 0 && healthOfAttacker > 0) {
             ArrayList<Tile> tiles = defenderCity.getTiles();
             for (int i = 0; i < tiles.size(); i++) {
@@ -2724,12 +2718,6 @@ public class PlayGameMenuController {
 
         healthOfAttacker = healthOfAttacker - powerOfDefender;
         healthOfDefender = healthOfDefender - powerOfAttacker;
-
-        System.out.println("powerAttacker :" + powerOfAttacker);
-        System.out.println("healthAttacker :" + healthOfAttacker);
-        System.out.println("powerDefender :" + powerOfDefender);
-        System.out.println("healthDefender :" + healthOfDefender);
-
 
         attacker.setHealth(healthOfAttacker);
         defender.setHealth(healthOfDefender);
