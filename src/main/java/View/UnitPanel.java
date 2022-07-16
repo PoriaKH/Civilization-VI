@@ -31,6 +31,7 @@ public class UnitPanel {
     public static Civilization playingCivilization;
     public static ArrayList<Tile> map;
     public static PlayGameMenuController playGameMenuController;
+    public static PlayGameMenu playGameMenu;
     public static ArrayList<Civilization> civilizations;
     public static boolean doesEnteredFromInfoPanel;
     public TextField moveDes;
@@ -179,11 +180,13 @@ public class UnitPanel {
         else {
            String command = moveDes.getText();
            if (command.charAt(0) == 't') {
+               PlayGameMenuController.playGameMenu = playGameMenu;
                String destination = command.replace("t", "");
                playGameMenuController.cheatTeleportUnit(unit, Integer.parseInt(destination),
                        playingCivilization, map);
            }
            else {
+               PlayGameMenuController.playGameMenu = playGameMenu;
                String result = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
                        playingCivilization, map);
                showNotification(result);

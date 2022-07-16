@@ -59,6 +59,8 @@ public class Unit extends Rectangle {
     private boolean isOnBoost;
     @Expose
     private boolean isOnBoostTillRecover;
+    @Expose
+    public static PlayGameMenu playGameMenu;
 
     private ArrayList<Node> path = new ArrayList<>(); //the shortest way, it also contains origin and destination
 
@@ -94,6 +96,7 @@ public class Unit extends Rectangle {
                     UnitPanel.map = Tile.map;
                     UnitPanel.playingCivilization = PlayGameMenu.playingCivilization;
                     UnitPanel.civilizations = Tile.civilizations;
+                    UnitPanel.playGameMenu = playGameMenu;
                     try {
                         new UnitPanel().start();
                     } catch (IOException e) {

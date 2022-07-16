@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 
 public class PlayGameMenuController {
+    public static PlayGameMenu playGameMenu;
     public static int turn;
     {
         turn = 0;
@@ -1490,12 +1491,14 @@ public class PlayGameMenuController {
 
             Tile originTile = unit.getPath().get(i).tile;
             Tile destinationTile = unit.getPath().get(i + 1).tile;
+            playGameMenu.updateMapAfterMove();
 
 
             if (unit.getMp() >= 1) {
                 originTile.removeUnit(unit);
                 destinationTile.addUnit(unit);
                 unit.setOrigin(destinationTile);
+                playGameMenu.updateMapAfterMove();
 
                 int newMP;
 
