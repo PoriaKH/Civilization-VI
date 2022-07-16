@@ -9,9 +9,15 @@ import Model.Units.SaveGameClass;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 import View.Transition.VictoryAnimation;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.jsoniter.JsonIterator;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -591,8 +597,10 @@ public class PlayGameMenu {
     }
 
     public SaveGameClass loadGame () throws IOException {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+        /*Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();*/
         File file = new File("saveGame.txt");
+        /*XStream xStream = new XStream(new DomDriver());
+        xStream.addPermission(AnyTypePermission.ANY);*/
 
         byte[] bytes = new byte[(int) file.length()];
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -600,14 +608,23 @@ public class PlayGameMenu {
 
         String data = new String(bytes);
         System.out.println(data);
-        SaveGameClass saveGameClass = gson.fromJson(data, SaveGameClass.class);
-        for (Tile tile : saveGameClass.tiles) {
+        /*SaveGameClass saveGameClass = gson.fromJson(data, SaveGameClass.class);*/
+        /*SaveGameClass saveGameClass = (SaveGameClass) xStream.fromXML(data);*/
+        //SaveGameClass saveGameClass = JsonIterator.deserialize(data, SaveGameClass.class);
+
+        /*Kryo kryo = new Kryo();
+        Input input = new Input(new FileInputStream("saveGame.txt"));
+        SaveGameClass saveGameClass = kryo.readObject(input, SaveGameClass.class);
+        input.close();*/
+
+        /*for (Tile tile : saveGameClass.tiles) {
             System.out.println(tile.getTileNumber());
         }
         for (Civilization civilization : saveGameClass.civilizations) {
             System.out.println(civilization.getName());
         }
-        return saveGameClass;
+        return saveGameClass;*/
+        return new SaveGameClass();
     }
 
     public void autoSaveGameContinue(MouseEvent mouseEvent) {

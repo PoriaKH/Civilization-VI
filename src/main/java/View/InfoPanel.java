@@ -5,11 +5,17 @@ import Model.Units.Civilian;
 import Model.Units.SaveGameClass;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Output;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.annotations.Expose;
 import com.google.gson.graph.GraphAdapterBuilder;
+import com.jsoniter.output.JsonStream;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -138,23 +144,33 @@ public class InfoPanel {
     public void saveGame () throws FileNotFoundException {
         File file = new File("saveGame.txt");
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-       /* new GraphAdapterBuilder().addType(Civilian.class).addType(Unit.class).addType(Warrior.class)
+/*        GsonBuilder gsonBuilder = new GsonBuilder();
+        new GraphAdapterBuilder().addType(Civilian.class).addType(Unit.class).addType(Warrior.class)
                 .addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(City.class)
                 .addType(Civilization.class).addType(Improvement.class).addType(Member.class).addType(Node.class)
-                .addType(Resource.class).addType(Technology.class).addType(Tile.class).registerOn(gsonBuilder);*/
-        Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+                .addType(Resource.class).addType(Technology.class).addType(Tile.class).registerOn(gsonBuilder);
+        Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();*/
 
         SaveGameClass saveGameClass = new SaveGameClass();
         saveGameClass.civilizations = civilizations;
         saveGameClass.tiles = tiles;
         saveURLs(saveGameClass);
-        String data = gson.toJson(saveGameClass);
 
-        System.out.println("civ : " + data);
+        /*XStream xStream = new XStream(new DomDriver());
+        xStream.addPermission(AnyTypePermission.ANY);
+        String data = xStream.toXML(saveGameClass);*/
+
+       // String data = JsonStream.serialize(saveGameClass);
+
+        /*Kryo kryo = new Kryo();
+        Output output = new Output(new FileOutputStream("saveGame.txt"));
+        kryo.writeObject(output, saveGameClass);
+        output.close();*/
+
+        /*System.out.println("civ : " + data);
         PrintWriter printWriter = new PrintWriter(file);
-        printWriter.write(data);
-        printWriter.close();
+        printWriter.write(data);*/
+        /*printWriter.close();*/
     }
 
     private void saveURLs(SaveGameClass saveGameClass) {

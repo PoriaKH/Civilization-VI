@@ -4,7 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="changed codes in server" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="changed codes in server/client">
+      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__com_jsoniter_jsoniter_0_9_23.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__com_thoughtworks_xstream_xstream_1_4_15.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__xmlpull_xmlpull_1_1_3_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__xpp3_xpp3_min_1_1_4c.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../saveGame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../saveGame.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/InfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/GeneralUnitPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/GeneralUnitPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/InfoPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/InfoPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +69,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../binaryFile" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -231,7 +254,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657955135699</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="changed codes in server/client">
+      <created>1657955848307</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1657955848307</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,6 +301,7 @@
     <MESSAGE value="updated server" />
     <MESSAGE value="edited nexTurn on server side" />
     <MESSAGE value="changed codes in server" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed codes in server" />
+    <MESSAGE value="changed codes in server/client" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed codes in server/client" />
   </component>
 </project>
