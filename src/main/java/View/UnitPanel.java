@@ -353,7 +353,6 @@ public class UnitPanel {
             String string = playGameMenuController.createImprovement(playingCivilization, unit.getOrigin().getTileNumber(), index,
                     improvementName.getText(), map);
             showNotification(string);
-            showNotification(string);
         }
     }
 

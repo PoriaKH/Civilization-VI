@@ -5,6 +5,7 @@ import Model.Units.Unit;
 import Model.Units.Warrior;
 import com.google.gson.annotations.Expose;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -566,6 +567,13 @@ public class Tile extends Polygon {
                 x6, y6,
         });
 
+        this.setOnMouseClicked(keyEvent -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("tile's information:");
+            alert.setContentText("tile number is: " + tileNumber + "\n");
+            alert.showAndWait();
+        });
+
         root.getChildren().add(this);
     }
 
@@ -700,8 +708,8 @@ public class Tile extends Polygon {
         if (improvements.size() > 0) {
             double y22 = this.getY() + 30;
             double x22 = this.getX() + 30;
-            resource.setX(x22);
-            resource.setY(y22);
+            improvements.get(0).setX(x22);
+            improvements.get(0).setY(y22);
             if (improvements.get(0).isCamp())
                 improvements.get(0).setFill(new ImagePattern(new Image(camp.toExternalForm())));
             else if (improvements.get(0).isFarm())
@@ -720,7 +728,8 @@ public class Tile extends Polygon {
                 improvements.get(0).setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
             else if (improvements.get(0).isLaboratory())
                 improvements.get(0).setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
-            root.getChildren().add(improvements.get(0));
+            if (!root.getChildren().contains(improvements.get(0)))
+                root.getChildren().add(improvements.get(0));
         }
 
         //ruin

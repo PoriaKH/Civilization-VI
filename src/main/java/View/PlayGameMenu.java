@@ -55,6 +55,7 @@ import java.util.regex.Pattern;
 
 import static View.GameMenu.gameMenuURL;
 import static View.MainMenu.gameMenuFxmlURL;
+import static View.UnitPanel.map;
 import static View.UnitPanel.playGameMenuController;
 
 public class PlayGameMenu {
@@ -88,6 +89,16 @@ public class PlayGameMenu {
     public static ArrayList<Civilization> civilizations;
 
     public static ArrayList<Tile> tiles;
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation1 = new HashMap<>();
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation2 = new HashMap<>();
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation3 = new HashMap<>();
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation4 = new HashMap<>();
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation5 = new HashMap<>();
+    ArrayList<Integer> tileStatusOfCivilization1 = new ArrayList<>();
+    ArrayList<Integer> tileStatusOfCivilization2 = new ArrayList<>();
+    ArrayList<Integer> tileStatusOfCivilization3 = new ArrayList<>();
+    ArrayList<Integer> tileStatusOfCivilization4 = new ArrayList<>();
+    ArrayList<Integer> tileStatusOfCivilization5 = new ArrayList<>();
 
 
     public Text goldAmount;
@@ -172,9 +183,31 @@ public class PlayGameMenu {
             PlayGameMenu.civilizations = civilizations;
             PlayGameMenu.tiles = tiles;
             playingCivilization = civilizations.get(0);
-            ArrayList<Integer> status = playGameMenuController.statusChecker(playingCivilization, tiles);
+            int numOfCivilizations = civilizations.size();
+            if (numOfCivilizations == 2) {
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+            }
+            else if (numOfCivilizations == 3) {
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+            }
+            else if (numOfCivilizations == 4) {
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+                tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+            }
+            else if (numOfCivilizations == 5){
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);///   ----> -1 , 1
+                tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+                tileStatusOfCivilization5 = playGameMenuController.statusChecker(civilizations.get(4), tiles);
+            }
             for (int i = 0; i < 72; i++)
-                tiles.get(i).generatingTile(status.get(i));
+                tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));
 
             switchToGame(mouseEvent);
         }
@@ -439,9 +472,79 @@ public class PlayGameMenu {
                     goldAmount.setText(" : " + playingCivilization.getGold());
                     happinessAmount.setText(" : " + playingCivilization.getHappiness());
                     PlayGameMenuController.turn ++;
-                    ArrayList<Integer> status = playGameMenuController.statusChecker(playingCivilization, tiles);
-                    for (int i = 0; i < 72; i++)
-                        tiles.get(i).generatingTile(status.get(i));
+                    ArrayList<Integer> civilization1new = new ArrayList<>();
+                    ArrayList<Integer> civilization2new = new ArrayList<>();   ///---> -1, 1
+                    ArrayList<Integer> civilization3new = new ArrayList<>();
+                    ArrayList<Integer> civilization4new = new ArrayList<>();
+                    ArrayList<Integer> civilization5new = new ArrayList<>();
+
+                    int numOfCivilizations = civilizations.size();
+                    if (numOfCivilizations == 2) {
+                        civilization1new = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+                        civilization2new = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+                    }
+                    else if (numOfCivilizations == 3) {
+                        civilization1new = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+                        civilization2new = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+                        civilization3new = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+                    }
+                    else if (numOfCivilizations == 4) {
+                        civilization1new = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+                        civilization2new = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+                        civilization3new = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+                        civilization4new = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+                    }
+                    else if (numOfCivilizations == 5) {
+                        civilization1new = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+                        civilization2new = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+                        civilization3new = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+                        civilization4new = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+                        civilization5new = playGameMenuController.statusChecker(civilizations.get(4), tiles);
+                    }
+
+
+                    if (numOfCivilizations == 2) {
+                        tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+                        tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+                    }
+                    else if (numOfCivilizations == 3) {
+                        tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+                        tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+                        tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new, zeroStatusTilesCivilisation3, tiles);
+                    }
+                    else if (numOfCivilizations == 4) {
+                        tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+                        tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+                        tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new, zeroStatusTilesCivilisation3, tiles);
+                        tileStatusOfCivilization4 = playGameMenuController.statusComparator(tileStatusOfCivilization4, civilization4new, zeroStatusTilesCivilisation4, tiles);
+
+                    }
+                    else if (numOfCivilizations == 5) {
+                        tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+                        tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+                        tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new, zeroStatusTilesCivilisation3, tiles);
+                        tileStatusOfCivilization4 = playGameMenuController.statusComparator(tileStatusOfCivilization4, civilization4new, zeroStatusTilesCivilisation4, tiles);
+                        tileStatusOfCivilization5 = playGameMenuController.statusComparator(tileStatusOfCivilization5, civilization5new, zeroStatusTilesCivilisation5, tiles);
+                    }
+
+                    if (playersCounter == 0)
+                        for (int i = 0; i < 72; i++) {
+                            System.out.println(i + "  " + tileStatusOfCivilization1.get(i));
+                            tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));
+                        }
+                    if (playersCounter == 1)
+                        for (int i = 0; i < 72; i++)
+                            tiles.get(i).generatingTile(tileStatusOfCivilization2.get(i));
+                    if (playersCounter == 2)
+                        for (int i = 0; i < 72; i++)
+                            tiles.get(i).generatingTile(tileStatusOfCivilization3.get(i));
+                    if (playersCounter == 3)
+                        for (int i = 0; i < 72; i++)
+                            tiles.get(i).generatingTile(tileStatusOfCivilization4.get(i));
+                    if (playersCounter == 4)
+                        for (int i = 0; i < 72; i++)
+                            tiles.get(i).generatingTile(tileStatusOfCivilization5.get(i));
+
                 }
             }
         });

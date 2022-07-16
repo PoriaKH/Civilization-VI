@@ -4161,7 +4161,7 @@ public class PlayGameMenuController {
             } else
                 return "no improvement with this name exists!";
             civilian.setWorkingTile(tile);
-            return "improvement created successfully";
+            return "improvement will be created soon!";
         } else
             return "only workers can work on improvements";
     }
