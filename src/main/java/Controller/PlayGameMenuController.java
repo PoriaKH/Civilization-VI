@@ -976,15 +976,15 @@ public class PlayGameMenuController {
                         move = "unit doesn't any path !";
                     }
                     else {
-                        move = "unit has path";
+                        move = "unit has path !";
                     }
-                    stringBuilder.append("unit " + name + " movement : "+ move + " health : " + unitsOfTile.get(i1).getHealth() + " tile : " + i);
+                    stringBuilder.append("unit " + name + " ,movement : " + move + " ,health : " + unitsOfTile.get(i1).getHealth() + " ,tile : " + i);
                     if (unitsOfTile.get(i1).isCivilian()) {
-                        stringBuilder.append(" damage : N/A" + "\n");
+                        stringBuilder.append(" ,damage : N/A" + "\n");
                     }
                     else {
-                        stringBuilder.append(" damage: " + ((Warrior)unitsOfTile.get(i1)).getDamage() +
-                                " range: " + ((Warrior)unitsOfTile.get(i1)).getRange() + " range damage: " +
+                        stringBuilder.append(" ,damage: " + ((Warrior)unitsOfTile.get(i1)).getDamage() +
+                                " ,range: " + ((Warrior)unitsOfTile.get(i1)).getRange() + " ,range damage: " +
                                 ((Warrior)unitsOfTile.get(i1)).getRangedCombatDamage() + "\n");
                     }
                 }
@@ -2671,6 +2671,12 @@ public class PlayGameMenuController {
 
         healthOfAttacker = healthOfAttacker - powerOfDefender;
         healthOfDefender = healthOfDefender - powerOfAttacker;
+
+        System.out.println("powerAttacker :" + powerOfAttacker);
+        System.out.println("healthAttacker :" + healthOfAttacker);
+        System.out.println("powerDefender :" + powerOfDefender);
+        System.out.println("healthDefender :" + healthOfDefender);
+
 
         attacker.setHealth(healthOfAttacker);
         defender.setHealth(healthOfDefender);

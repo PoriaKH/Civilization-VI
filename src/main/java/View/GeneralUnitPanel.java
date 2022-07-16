@@ -39,8 +39,8 @@ public class GeneralUnitPanel {
 
         Text text = new Text(playGameMenuController.
                 generalUnitReview(InfoPanel.currentCivilization, InfoPanel.tiles).toString());
-        text.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        text.setFill(Color.BLUE);
+        text.setFont(Font.font("Pristina", FontWeight.BOLD, FontPosture.REGULAR, 25));
+        text.setFill(Color.RED);
         Text text1 = new Text("hello there");
         gridPane.addRow(1, text);
         gridPane.addRow(2, text1);

@@ -176,6 +176,15 @@ public class PlayGameMenu {
             for (int i = 0; i < 72; i++)
                 tiles.get(i).generatingTile(status.get(i));
 
+            for (int i = 0; i < civilizations.size(); i++) {
+                for (int i1 = 0; i1 < civilizations.size(); i1++) {
+                    if (i != i1) {
+                        civilizations.get(i).addCivilizationToWinsUnit(civilizations.get(i1));
+                        civilizations.get(i).addCivilizationToLossesUnit(civilizations.get(i1));
+                    }
+                }
+            }
+
             switchToGame(mouseEvent);
         }
     }
