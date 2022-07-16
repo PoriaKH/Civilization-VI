@@ -1137,7 +1137,7 @@ public class PlayGameMenuController {
     }
     // todo -> comment
     // chase an algorithm based on graphs to find the shortest way.
-    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map) {
+    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map,  Unit unit) {
         while (unreached.size() > 0) {
             Node minimumBranch;
             int index = 0;
@@ -1157,7 +1157,7 @@ public class PlayGameMenuController {
 
             for (int i = 0; i < minimumBranch.neighbours.size(); ++i) {
                 Node neighbourOfBranch = minimumBranch.neighbours.get(i);
-                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch);
+                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch) + enemyUnitEffect(neighbourOfBranch, unit);
                 if (mpCost < distanceFromNode.get(neighbourOfBranch)) {
                     distanceFromNode.replace(neighbourOfBranch, mpCost);
                     previousNode.replace(neighbourOfBranch, minimumBranch);
@@ -1165,6 +1165,16 @@ public class PlayGameMenuController {
             }
         }
     }
+
+    private Integer enemyUnitEffect(Node neighbourOfBranch,  Unit myUnit) {
+        for (Unit unit : neighbourOfBranch.tile.getUnits()) {
+            if ((!unit.isCivilian() && ((!myUnit.isCivilian()) || !unit.getCivilization().equals(myUnit.getCivilization()))) || (unit.isCivilian() && myUnit.isCivilian())) {
+                return 1000000;
+            }
+        }
+        return 0;
+    }
+
     // todo -> comment
     // find the shortest way from origin to destination based on mp.
     public void findTheShortestPath (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit) {
@@ -1197,7 +1207,7 @@ public class PlayGameMenuController {
             }
             unreached.add(graph[i]);
         }
-        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map);
+        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map, unit);
 
         if (previousNode.get(destinationNode) == null) {
             for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
