@@ -570,7 +570,7 @@ public class Tile extends Polygon {
         this.setOnMouseClicked(keyEvent -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("tile's information:");
-            alert.setContentText("tile number is: " + tileNumber + "\n");
+            alert.setContentText("tile number :  " + tileNumber + "\n" + "gold amount :  " + gold + "\n" + "food amount :  " + food + "\n" + "production amount :  " + production);
             alert.showAndWait();
         });
 
@@ -604,9 +604,6 @@ public class Tile extends Polygon {
                 Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
                 Citizen ruinCitizen = new Citizen(citizenTile);
                 unit.getCivilization().getCapital().addCitizen(ruinCitizen);
-                Civilian civilian = new Civilian(unit.getCivilization(), this, 10, 2, 2, 1, 89, true, false, true);
-                Unit unit1 = (Unit) civilian;
-                this.units.add(unit1);
                 ruin.setFill(Color.TRANSPARENT);
                 ruin = null;
             }
