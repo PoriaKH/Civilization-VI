@@ -2565,6 +2565,7 @@ public class PlayGameMenuController {
                 tiles.get(i).getUnits().clear();
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
+                tiles.get(i).getBuilding().setCivilization(attacker.getCivilization());
             }
             defenderCivilization.removeCity(defenderCity);
             civilization.addCity(defenderCity);
