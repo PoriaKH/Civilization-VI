@@ -443,24 +443,9 @@ public class PlayGameMenu {
                             e.printStackTrace();
                         }
                         //TODO .... graphic view for winner -> kian
-                        VictoryAnimation victoryAnimation = new VictoryAnimation();
                         VictoryAnimation.stage = stage;
+                        VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
                         victoryAnimation.play();
-                        try {
-                            root = FXMLLoader.load(VictoryAnimation.mainMenuFxmlURL);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        try {
-                            root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.show();
                     }
                     PlayGameMenuController.turn ++;
                     playersCounter++;
