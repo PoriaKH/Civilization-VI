@@ -5,27 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="changed codes in server/client">
-      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__com_jsoniter_jsoniter_0_9_23.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__com_thoughtworks_xstream_xstream_1_4_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__xmlpull_xmlpull_1_1_3_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__xpp3_xpp3_min_1_1_4c.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../saveGame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../saveGame.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/InfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/GeneralUnitPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/GeneralUnitPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/InfoPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/InfoPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +51,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../binaryFile" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />

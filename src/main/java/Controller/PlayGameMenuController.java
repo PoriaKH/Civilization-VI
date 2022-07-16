@@ -247,8 +247,8 @@ public class PlayGameMenuController {
         CreateHost.dataOutputStream.writeUTF("cheatHappiness " + request);
         CreateHost.dataOutputStream.flush();
     }
-    public void cheatTeleportUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) throws IOException {
-        CheatTeleport cheatTeleport = new CheatTeleport();
+    public String cheatTeleportUnit (Unit unitServer, int numberOfDestination, Civilization civilizationServer, ArrayList<Tile> map) throws IOException {
+ /*       CheatTeleport cheatTeleport = new CheatTeleport();
         cheatTeleport.numberOfDestination = numberOfDestination;
         cheatTeleport.unit = unit;
         cheatTeleport.civilization = civilization;
@@ -257,7 +257,40 @@ public class PlayGameMenuController {
         String request = gson.toJson(cheatTeleport);
 
         CreateHost.dataOutputStream.writeUTF("teleport " + request);
-        CreateHost.dataOutputStream.flush();
+        CreateHost.dataOutputStream.flush();*/
+
+        String str;
+
+        if (numberOfDestination < 0 || numberOfDestination > 71) {
+            return "number of destination is invalid !";
+        }
+        Tile origin = unitServer.getOrigin();
+        Tile destination = map.get(numberOfDestination);
+
+        if (unitServer == null) {
+            return  "there is no unit with this name !";
+        }
+        if (unitServer.getIsOnSleep()|| unitServer.isOnBoost() || unitServer.isOnBoostTillRecover() || unitServer.isOnWarFooting()) {
+            return  "this unit is not active !";
+
+        }
+        if (!unitServer.getCivilization().getName().equals(civilizationServer.getName())) {
+            return  "this unit is for another civilization !";
+        }
+        if (unitServer.getPath().size() != 0) {
+            return "this unit has another path !";
+        }
+        ArrayList<Unit> unitsDestination = destination.getUnits();
+        for (int i = 0; i < unitsDestination.size(); i++) {
+            if (unitsDestination.get(i).isCivilian() == unitServer.isCivilian()) {
+                return  "there is another unit with this type in the tile !";
+            }
+        }
+        origin.removeUnit(unitServer);
+        destination.addUnit(unitServer);
+        unitServer.setOrigin(destination);
+        unitServer.setHasOrdered(true);
+        return  "unit teleported to destination !";
     }
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
@@ -1943,7 +1976,7 @@ public class PlayGameMenuController {
             return str;
         }
 
-        if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
+        /*if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
             str = "you don't have necessary technology!";
             return str;
         }
@@ -1951,7 +1984,7 @@ public class PlayGameMenuController {
         if (!unit.isCivilian() && !isResourceAvailableForUnit (unit, city)) {
             str = "you don't have necessary resource!";
             return str;
-        }
+        }*/
 
         Tile centerTile = city.getCenterTile();
         if (!unit.isCivilian() && isUnitWarrior (centerTile)) {
@@ -2555,9 +2588,17 @@ public class PlayGameMenuController {
         }
         int powerOfDefender = defenderCity.getDefenceStrength();
         int healthOfDefender = defenderCity.getDamagePoint();
-
+        if (healthOfDefender == 0) {
+            powerOfDefender = 5;
+        }
         healthOfAttacker = healthOfAttacker - powerOfDefender;
         healthOfDefender = healthOfDefender - powerOfAttacker;
+
+        System.out.println("attackerPower : " + powerOfAttacker);
+        System.out.println("attackerHealth : " + healthOfAttacker);
+        System.out.println("cityPower : " + powerOfDefender);
+        System.out.println("cityHealth : " + healthOfDefender);
+        System.out.println();
 
         if (healthOfDefender <= 0 && healthOfAttacker > 0) {
             ArrayList<Tile> tiles = defenderCity.getTiles();
@@ -2590,7 +2631,7 @@ public class PlayGameMenuController {
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
             }
-            defenderCity.setDamagePoint(1);
+            defenderCity.setDamagePoint(0);
             map.get(originIndex).removeUnit(attacker);
             attacker = null;
             str = "your unit died and the city became ruin !";

@@ -2621,7 +2621,9 @@ public class PlayGameMenuController {
         }
         int powerOfDefender = defenderCity.getDefenceStrength();
         int healthOfDefender = defenderCity.getDamagePoint();
-
+        if (healthOfDefender == 0) {
+            powerOfDefender = 5;
+        }
         healthOfAttacker = healthOfAttacker - powerOfDefender;
         healthOfDefender = healthOfDefender - powerOfAttacker;
 
@@ -2656,7 +2658,7 @@ public class PlayGameMenuController {
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
             }
-            defenderCity.setDamagePoint(1);
+            defenderCity.setDamagePoint(0);
             map.get(originIndex).removeUnit(attacker);
             attacker = null;
             str = "your unit died and the city became ruin !";
