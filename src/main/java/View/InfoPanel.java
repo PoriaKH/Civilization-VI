@@ -181,4 +181,10 @@ public class InfoPanel {
         saveGameClass.unitsURL = Unit.unitsURL;
         saveGameClass.unitsName = Unit.unitsName;
     }
+
+    public void unitsInfo(MouseEvent mouseEvent) {
+        UnitInformationPanel.playingCivilization = currentCivilization;
+        UnitInformationPanel.stage = stage;
+        new UnitInformationPanel().initializePanelTree();
+    }
 }

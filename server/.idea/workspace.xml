@@ -5,30 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="updated server">
+      <change afterPath="$PROJECT_DIR$/../src/main/java/View/UnitInformationPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/ClientThread.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/AttackCityGson.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/AttackCityGson.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/AttackTileGson.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/AttackTileGson.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/CheatGson.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/CheatGson.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/CheatTeleport.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/CheatTeleport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/CreateCityGson.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/CreateCityGson.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/MapCreatorGson.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/MoveUnitGson.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/MoveUnitGson.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/UnitBehaviourGson.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/UnitBehaviourGson.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/UnitMakingGson.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/UnitMakingGson.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/TechnologyTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/TechnologyTree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Units/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Units/Unit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/InfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/infoPanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/infoPanel.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +55,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />

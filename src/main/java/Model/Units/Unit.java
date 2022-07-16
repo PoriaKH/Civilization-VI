@@ -124,6 +124,7 @@ public class Unit extends Rectangle {
         unitsName.add("Crossbowman");
         unitsName.add("Chariot Archer");
         unitsName.add("Cavalry");
+        unitsName.add("Lancer");
         unitsName.add("Catapult");
         unitsName.add("Cannon");
         unitsName.add("Artillery");

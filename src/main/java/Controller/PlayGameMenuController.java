@@ -1705,7 +1705,7 @@ public class PlayGameMenuController {
     // todo -> comment
     public Unit makeUnit (Civilization civilization, Tile tile, ArrayList<Tile> map, String unitName) {
         if (unitName.equals("archer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 70, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 1, 70, false
                     , 0, 4, 2, 6, false, false, true, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1713,7 +1713,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("chariot archer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 1, 60, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 4, 4, 1, 60, false
                     , 0, 3, 2, 6, false, false, false, true,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1729,15 +1729,15 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("settler")) {
-            Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 89, true, false, true);
+            Civilian civilian = new Civilian(civilization, tile, 2, 2, 2, 1, 89, true, false, true);
             return civilian;
         }
         else if (unitName.equals("worker")) {
-            Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 70, true, true, false);
+            Civilian civilian = new Civilian(civilization, tile, 2, 2, 2, 1, 70, true, true, false);
             return civilian;
         }
         else if (unitName.equals("spearman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 50, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 50, false
                     , 0, 7, -1, -1, false, false, false, false,
                     true, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1745,7 +1745,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("warrior")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 40, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 40, false
                     , 0, 6, -1, -1, false, true, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1753,7 +1753,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("catapult")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 2, 2, 1, 100, false
                     , 0, 4, 2, 14, false, false, false, false,
                     false, true, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1769,7 +1769,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("swordsman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 80, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 2, 80, false
                     , 0, 11, -1, -1, false, false, false, false,
                     false, false, false, true, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1777,7 +1777,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("crossbowman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 120, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 2, 120, false
                     , 0, 6, 2, 12, false, false, false, false,
                     false, false, false, false, true, false, false,
                     false, false, false, false, false, false, false,
@@ -1785,7 +1785,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("knight")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 1, 150, false
+            Warrior warrior = new Warrior(civilization, tile, 8, 3, 3, 1, 150, false
                     , 0, 18, -1, -1, false, false, false, false,
                     false, false, false, false, false, true, false,
                     false, false, false, false, false, false, false,
@@ -1793,7 +1793,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("longswordsman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 3, 150, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 3, 3, 3, 150, false
                     , 0, 18, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, true,
                     false, false, false, false, false, false, false,
@@ -1801,7 +1801,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("pikeman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 100, false
                     , 0, 10, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     true, false, false, false, false, false, false,
@@ -1809,7 +1809,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("trebuchet")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 170, false
+            Warrior warrior = new Warrior(civilization, tile, 9, 2, 2, 3, 170, false
                     , 0, 6, 2, 20, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, true, false, false, false, false, false,
@@ -1817,7 +1817,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("canon")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 250, false
+            Warrior warrior = new Warrior(civilization, tile, 8, 2, 2, 2, 250, false
                     , 0, 10, 2, 26, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, true, false, false, false, false,
@@ -1825,7 +1825,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("cavalry")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 2, 260, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 3, 3, 2, 260, false
                     , 0, 25, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, true, false, false, false,
@@ -1841,7 +1841,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("musketman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 120, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 3, 120, false
                     , 0, 16, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, true, false,
@@ -1849,7 +1849,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("rifleman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 200, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 3, 200, false
                     , 0, 25, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, true,
@@ -1857,7 +1857,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("anti-tank gun")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 6, 300, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 2, 2, 6, 300, false
                     , 0, 32, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1865,7 +1865,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("artillery")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 5, 420, false
+            Warrior warrior = new Warrior(civilization, tile, 12, 2, 2, 5, 420, false
                     , 0, 16, 32, 3, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1873,7 +1873,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("infantry")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 300, false
+            Warrior warrior = new Warrior(civilization, tile, 14, 2, 2, 4, 300, false
                     , 0, 36, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1881,7 +1881,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("panzer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 5, 5, 3, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 14, 5, 5, 5, 450, false
                     , 0, 60, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1889,7 +1889,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("tank")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 8, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 15, 4, 4, 6, 450, false
                     , 0, 50, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
