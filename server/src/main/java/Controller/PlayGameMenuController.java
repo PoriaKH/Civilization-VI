@@ -4969,7 +4969,7 @@ public class PlayGameMenuController {
             for (int i1 = 0; i1 < units.size(); i1++) {
                 if(units.get(i1).getCivilization() == civilization){
                     if(!units.get(i1).getIsOnSleep()){
-                        if(!units.get(i1).isCivilian() && !units.get(i1).getHasOrdered() && units.get(i1).getPath().size() == 0){
+                        if(!units.get(i1).isCivilian() && units.get(i1).getHasOrdered() && units.get(i1).getPath().size() == 0){
                             units.get(i1).setHasOrdered(false);
                         }
                     }
