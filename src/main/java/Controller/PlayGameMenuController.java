@@ -247,8 +247,8 @@ public class PlayGameMenuController {
         CreateHost.dataOutputStream.writeUTF("cheatHappiness " + request);
         CreateHost.dataOutputStream.flush();
     }
-    public void cheatTeleportUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) throws IOException {
-        CheatTeleport cheatTeleport = new CheatTeleport();
+    public String cheatTeleportUnit (Unit unitServer, int numberOfDestination, Civilization civilizationServer, ArrayList<Tile> map) throws IOException {
+ /*       CheatTeleport cheatTeleport = new CheatTeleport();
         cheatTeleport.numberOfDestination = numberOfDestination;
         cheatTeleport.unit = unit;
         cheatTeleport.civilization = civilization;
@@ -257,7 +257,40 @@ public class PlayGameMenuController {
         String request = gson.toJson(cheatTeleport);
 
         CreateHost.dataOutputStream.writeUTF("teleport " + request);
-        CreateHost.dataOutputStream.flush();
+        CreateHost.dataOutputStream.flush();*/
+
+        String str;
+
+        if (numberOfDestination < 0 || numberOfDestination > 71) {
+            return "number of destination is invalid !";
+        }
+        Tile origin = unitServer.getOrigin();
+        Tile destination = map.get(numberOfDestination);
+
+        if (unitServer == null) {
+            return  "there is no unit with this name !";
+        }
+        if (unitServer.getIsOnSleep()|| unitServer.isOnBoost() || unitServer.isOnBoostTillRecover() || unitServer.isOnWarFooting()) {
+            return  "this unit is not active !";
+
+        }
+        if (!unitServer.getCivilization().getName().equals(civilizationServer.getName())) {
+            return  "this unit is for another civilization !";
+        }
+        if (unitServer.getPath().size() != 0) {
+            return "this unit has another path !";
+        }
+        ArrayList<Unit> unitsDestination = destination.getUnits();
+        for (int i = 0; i < unitsDestination.size(); i++) {
+            if (unitsDestination.get(i).isCivilian() == unitServer.isCivilian()) {
+                return  "there is another unit with this type in the tile !";
+            }
+        }
+        origin.removeUnit(unitServer);
+        destination.addUnit(unitServer);
+        unitServer.setOrigin(destination);
+        unitServer.setHasOrdered(true);
+        return  "unit teleported to destination !";
     }
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
@@ -976,15 +1009,15 @@ public class PlayGameMenuController {
                         move = "unit doesn't any path !";
                     }
                     else {
-                        move = "unit has path";
+                        move = "unit has path !";
                     }
-                    stringBuilder.append("unit " + name + " movement : "+ move + " health : " + unitsOfTile.get(i1).getHealth() + " tile : " + i);
+                    stringBuilder.append("unit " + name + " ,movement : " + move + " ,health : " + unitsOfTile.get(i1).getHealth() + " ,tile : " + i);
                     if (unitsOfTile.get(i1).isCivilian()) {
-                        stringBuilder.append(" damage : N/A" + "\n");
+                        stringBuilder.append(" ,damage : N/A" + "\n");
                     }
                     else {
-                        stringBuilder.append(" damage: " + ((Warrior)unitsOfTile.get(i1)).getDamage() +
-                                " range: " + ((Warrior)unitsOfTile.get(i1)).getRange() + " range damage: " +
+                        stringBuilder.append(" ,damage: " + ((Warrior)unitsOfTile.get(i1)).getDamage() +
+                                " ,range: " + ((Warrior)unitsOfTile.get(i1)).getRange() + " ,range damage: " +
                                 ((Warrior)unitsOfTile.get(i1)).getRangedCombatDamage() + "\n");
                     }
                 }
@@ -1104,7 +1137,7 @@ public class PlayGameMenuController {
     }
     // todo -> comment
     // chase an algorithm based on graphs to find the shortest way.
-    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map) {
+    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map,  Unit unit) {
         while (unreached.size() > 0) {
             Node minimumBranch;
             int index = 0;
@@ -1124,7 +1157,7 @@ public class PlayGameMenuController {
 
             for (int i = 0; i < minimumBranch.neighbours.size(); ++i) {
                 Node neighbourOfBranch = minimumBranch.neighbours.get(i);
-                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch);
+                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch) + enemyUnitEffect(neighbourOfBranch, unit);
                 if (mpCost < distanceFromNode.get(neighbourOfBranch)) {
                     distanceFromNode.replace(neighbourOfBranch, mpCost);
                     previousNode.replace(neighbourOfBranch, minimumBranch);
@@ -1132,6 +1165,16 @@ public class PlayGameMenuController {
             }
         }
     }
+
+    private Integer enemyUnitEffect(Node neighbourOfBranch,  Unit myUnit) {
+        for (Unit unit : neighbourOfBranch.tile.getUnits()) {
+            if ((!unit.isCivilian() && ((!myUnit.isCivilian()) || !unit.getCivilization().equals(myUnit.getCivilization()))) || (unit.isCivilian() && myUnit.isCivilian())) {
+                return 1000000;
+            }
+        }
+        return 0;
+    }
+
     // todo -> comment
     // find the shortest way from origin to destination based on mp.
     public void findTheShortestPath (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit) {
@@ -1164,7 +1207,7 @@ public class PlayGameMenuController {
             }
             unreached.add(graph[i]);
         }
-        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map);
+        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map, unit);
 
         if (previousNode.get(destinationNode) == null) {
             for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
@@ -1705,7 +1748,7 @@ public class PlayGameMenuController {
     // todo -> comment
     public Unit makeUnit (Civilization civilization, Tile tile, ArrayList<Tile> map, String unitName) {
         if (unitName.equals("archer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 70, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 1, 70, false
                     , 0, 4, 2, 6, false, false, true, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1713,7 +1756,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("chariot archer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 1, 60, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 4, 4, 1, 60, false
                     , 0, 3, 2, 6, false, false, false, true,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1729,15 +1772,15 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("settler")) {
-            Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 89, true, false, true);
+            Civilian civilian = new Civilian(civilization, tile, 2, 2, 2, 1, 89, true, false, true);
             return civilian;
         }
         else if (unitName.equals("worker")) {
-            Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 70, true, true, false);
+            Civilian civilian = new Civilian(civilization, tile, 2, 2, 2, 1, 70, true, true, false);
             return civilian;
         }
         else if (unitName.equals("spearman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 50, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 50, false
                     , 0, 7, -1, -1, false, false, false, false,
                     true, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1745,7 +1788,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("warrior")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 40, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 40, false
                     , 0, 6, -1, -1, false, true, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1753,7 +1796,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("catapult")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 2, 2, 1, 100, false
                     , 0, 4, 2, 14, false, false, false, false,
                     false, true, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1769,7 +1812,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("swordsman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 80, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 2, 80, false
                     , 0, 11, -1, -1, false, false, false, false,
                     false, false, false, true, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1777,7 +1820,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("crossbowman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 120, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 2, 120, false
                     , 0, 6, 2, 12, false, false, false, false,
                     false, false, false, false, true, false, false,
                     false, false, false, false, false, false, false,
@@ -1785,7 +1828,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("knight")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 1, 150, false
+            Warrior warrior = new Warrior(civilization, tile, 8, 3, 3, 1, 150, false
                     , 0, 18, -1, -1, false, false, false, false,
                     false, false, false, false, false, true, false,
                     false, false, false, false, false, false, false,
@@ -1793,7 +1836,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("longswordsman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 3, 150, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 3, 3, 3, 150, false
                     , 0, 18, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, true,
                     false, false, false, false, false, false, false,
@@ -1801,7 +1844,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("pikeman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 100, false
                     , 0, 10, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     true, false, false, false, false, false, false,
@@ -1809,7 +1852,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("trebuchet")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 170, false
+            Warrior warrior = new Warrior(civilization, tile, 9, 2, 2, 3, 170, false
                     , 0, 6, 2, 20, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, true, false, false, false, false, false,
@@ -1817,7 +1860,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("canon")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 250, false
+            Warrior warrior = new Warrior(civilization, tile, 8, 2, 2, 2, 250, false
                     , 0, 10, 2, 26, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, true, false, false, false, false,
@@ -1825,7 +1868,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("cavalry")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 2, 260, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 3, 3, 2, 260, false
                     , 0, 25, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, true, false, false, false,
@@ -1841,7 +1884,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("musketman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 120, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 3, 120, false
                     , 0, 16, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, true, false,
@@ -1849,7 +1892,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("rifleman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 200, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 3, 200, false
                     , 0, 25, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, true,
@@ -1857,7 +1900,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("anti-tank gun")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 6, 300, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 2, 2, 6, 300, false
                     , 0, 32, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1865,7 +1908,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("artillery")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 5, 420, false
+            Warrior warrior = new Warrior(civilization, tile, 12, 2, 2, 5, 420, false
                     , 0, 16, 32, 3, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1873,7 +1916,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("infantry")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 300, false
+            Warrior warrior = new Warrior(civilization, tile, 14, 2, 2, 4, 300, false
                     , 0, 36, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1881,7 +1924,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("panzer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 5, 5, 3, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 14, 5, 5, 5, 450, false
                     , 0, 60, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1889,7 +1932,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("tank")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 8, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 15, 4, 4, 6, 450, false
                     , 0, 50, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -2555,7 +2598,9 @@ public class PlayGameMenuController {
         }
         int powerOfDefender = defenderCity.getDefenceStrength();
         int healthOfDefender = defenderCity.getDamagePoint();
-
+        if (healthOfDefender == 0) {
+            powerOfDefender = 5;
+        }
         healthOfAttacker = healthOfAttacker - powerOfDefender;
         healthOfDefender = healthOfDefender - powerOfAttacker;
 
@@ -2565,6 +2610,8 @@ public class PlayGameMenuController {
                 tiles.get(i).getUnits().clear();
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
+                if (tiles.get(i).getBuilding() != null)
+                    tiles.get(i).getBuilding().setCivilization(attacker.getCivilization());
             }
             defenderCivilization.removeCity(defenderCity);
             civilization.addCity(defenderCity);
@@ -2589,7 +2636,7 @@ public class PlayGameMenuController {
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
             }
-            defenderCity.setDamagePoint(1);
+            defenderCity.setDamagePoint(0);
             map.get(originIndex).removeUnit(attacker);
             attacker = null;
             str = "your unit died and the city became ruin !";
@@ -4862,7 +4909,7 @@ public class PlayGameMenuController {
             for (int i1 = 0; i1 < units.size(); i1++) {
                 if(units.get(i1).getCivilization() == civilization){
                     if(!units.get(i1).getIsOnSleep()){
-                        if(!units.get(i1).isCivilian() && !units.get(i1).getHasOrdered() && units.get(i1).getPath().size() == 0){
+                        if(!units.get(i1).isCivilian() && units.get(i1).getHasOrdered() && units.get(i1).getPath().size() == 0){
                             units.get(i1).setHasOrdered(false);
                         }
                     }

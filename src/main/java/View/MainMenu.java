@@ -51,7 +51,7 @@ public class MainMenu {
             Media media = new Media(mainMenuSoundURL.toString());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setVolume(50);
+            mediaPlayer.setVolume(20);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             SettingPanel.mediaPlayer = mediaPlayer;
         }
