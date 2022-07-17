@@ -441,6 +441,18 @@ public class PlayGameMenu {
                     alert.setContentText(string);
                     alert.showAndWait();
                 } else {
+
+                    PlayGameMenuController.turn ++;
+                    playersCounter++;
+                    if (playersCounter == civilizations.size()) {
+                        playersCounter = 0;
+                    }
+                    playingCivilization = civilizations.get(playersCounter);
+                    civName.setText("civilization : " + playingCivilization.getName());
+                    goldAmount.setText(" : " + playingCivilization.getGold());
+                    happinessAmount.setText(" : " + playingCivilization.getHappiness());
+
+
                     playGameMenuController.deleteLosers(playingCivilization, civilizations);
                     if (playGameMenuController.findWinner(playingCivilization, civilizations)
                             || playGameMenuController.findWinnerByYear(civilizations)) {
@@ -452,20 +464,23 @@ public class PlayGameMenu {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }*/
+                        if (5 * PlayGameMenuController.turn == 2050) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("WINNER : ");
+                            alert.setHeaderText("game is over because we are in year 2050 :");
+                            alert.setContentText("Winner civilization : " + civilizations.get(0).getName());
+
+                            playingCivilization = civilizations.get(0);
+                            civName.setText("civilization : " + playingCivilization.getName());
+                            goldAmount.setText(" : " + playingCivilization.getGold());
+                            happinessAmount.setText(" : " + playingCivilization.getHappiness());
+
+                            alert.showAndWait();
+                        }
                         VictoryAnimation.stage = stage;
                         VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
                         victoryAnimation.play();
                     }
-                    PlayGameMenuController.turn ++;
-                    playersCounter++;
-                    if (playersCounter == civilizations.size()) {
-                        playersCounter = 0;
-                    }
-                    playingCivilization = civilizations.get(playersCounter);
-                    civName.setText("civilization : " + playingCivilization.getName());
-                    goldAmount.setText(" : " + playingCivilization.getGold());
-                    happinessAmount.setText(" : " + playingCivilization.getHappiness());
-
                     updateMapAfterMove();
                 }
             }
