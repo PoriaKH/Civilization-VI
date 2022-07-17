@@ -5,6 +5,7 @@ import Model.Units.Unit;
 import Model.Units.Warrior;
 import com.google.gson.annotations.Expose;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -156,6 +157,10 @@ public class Tile extends Polygon {
     @Expose
     private boolean isBlocker;
     @Expose
+    private boolean ruinDiscovered;
+    @Expose
+    private boolean hasRuin;
+    @Expose
     private int food;
     @Expose
     private int production;
@@ -220,6 +225,8 @@ public class Tile extends Polygon {
         this.isSnow = isSnow;
         this.isTundra = isTundra;
         this.isBlocker = false;
+        this.ruinDiscovered = false;
+        this.hasRuin = false;
         if(isHill || isMountain)
             this.isBlocker = true;
 
@@ -532,8 +539,11 @@ public class Tile extends Polygon {
             this.production += this.resource.getProduction();
         }
         double chance = Math.random();
-        if (chance >= 0.33 && chance < 0.38)
+        if (chance >= 0.33 && chance < 0.38 && !isOcean) {
             ruin = new Ruin();
+            this.hasRuin = true;
+            System.out.println(this.tileNumber);
+        }
 
 
         double x1,y1;
@@ -566,6 +576,13 @@ public class Tile extends Polygon {
                 x6, y6,
         });
 
+        this.setOnMouseClicked(keyEvent -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("tile's information:");
+            alert.setContentText("tile number :  " + tileNumber + "\n" + "gold amount :  " + gold + "\n" + "food amount :  " + food + "\n" + "production amount :  " + production);
+            alert.showAndWait();
+        });
+
         root.getChildren().add(this);
     }
 
@@ -578,35 +595,20 @@ public class Tile extends Polygon {
                 improvements.get(0).setVisible(false);
             if (root.getChildren().contains(building))
                 building.setVisible(false);
+            if (root.getChildren().contains(ruin))
+                ruin.setVisible(false);
             if (units.size() >= 1 && root.getChildren().contains(units.get(0)))
                 units.get(0).setVisible(false);
             if (units.size() >= 2 && root.getChildren().contains(units.get(1)))
                 units.get(1).setVisible(false);
             return;
         }
-        if (ruin != null) {
-            if (units.size() > 0) {
-                Unit unit = units.get(0);
-                ArrayList<String> techNames = new ArrayList<>();
-                for (Technology t : unit.getCivilization().getTechnologies())
-                    techNames.add(t.getName());
-                if (!techNames.contains(ruin.getFreeTechnology().getName()))
-                    unit.getCivilization().addTechnology(ruin.getFreeTechnology());
-                unit.getCivilization().addGold(ruin.getFreeGold());
-                Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
-                Citizen ruinCitizen = new Citizen(citizenTile);
-                unit.getCivilization().getCapital().addCitizen(ruinCitizen);
-                Civilian civilian = new Civilian(unit.getCivilization(), this, 10, 2, 2, 1, 89, true, false, true);
-                Unit unit1 = (Unit) civilian;
-                this.units.add(unit1);
-                ruin.setFill(Color.TRANSPARENT);
-                ruin = null;
-            }
-        }
         if (root.getChildren().contains(resource))
             resource.setVisible(true);
         if (improvements.size() > 0 && root.getChildren().contains(improvements.get(0)))
             improvements.get(0).setVisible(true);
+        if (root.getChildren().contains(ruin))
+            ruin.setVisible(true);
         if (root.getChildren().contains(building))
             building.setVisible(true);
         if (units.size() >= 1 && root.getChildren().contains(units.get(0)))
@@ -720,15 +722,36 @@ public class Tile extends Polygon {
                 improvements.get(0).setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
             else if (improvements.get(0).isLaboratory())
                 improvements.get(0).setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
-            root.getChildren().add(improvements.get(0));
+            if (!root.getChildren().contains(improvements.get(0)))
+                root.getChildren().add(improvements.get(0));
         }
 
         //ruin
-        if (ruin != null){
-            ruin.setX(this.getX());
-            ruin.setY(this.getY());
+        if (hasRuin && !ruinDiscovered) {
+            double y11 = this.getY();
+            double x11 = this.getX();
+            ruin.setWidth(40);
+            ruin.setHeight(40);
+            ruin.setX(x11);
+            ruin.setY(y11);
             ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
-            //root.getChildren().add(ruin);
+            if (!root.getChildren().contains(ruin))
+                root.getChildren().add(ruin);
+            if (units.size() > 0) {
+                Unit unit = units.get(0);
+                ArrayList<String> techNames = new ArrayList<>();
+                for (Technology t : unit.getCivilization().getTechnologies())
+                    techNames.add(t.getName());
+                if (!techNames.contains(ruin.getFreeTechnology().getName()))
+                    unit.getCivilization().addTechnology(ruin.getFreeTechnology());
+                unit.getCivilization().addGold(ruin.getFreeGold());
+                Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
+                Citizen ruinCitizen = new Citizen(citizenTile);
+                unit.getCivilization().getCapital().getCitizens().add(ruinCitizen);
+                ruin.setVisible(false);
+                ruinDiscovered = true;
+                hasRuin = false;
+            }
         }
     }
 
@@ -1216,6 +1239,10 @@ public class Tile extends Polygon {
             resource.setX(x11);
             resource.setY(y11);
         }
+        if (ruin != null){
+            ruin.setY(this.getY());
+            ruin.setX(this.getX());
+        }
         if (improvements.size() > 0){
             improvements.get(0).setX(this.getX() + 50);
             improvements.get(0).setY(this.getY() + 30);
@@ -1280,6 +1307,10 @@ public class Tile extends Polygon {
             double x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
+        }
+        if (ruin != null){
+            ruin.setY(this.getY());
+            ruin.setX(this.getX());
         }
         if (improvements.size() > 0){
             improvements.get(0).setX(this.getX() + 50);
@@ -1346,6 +1377,10 @@ public class Tile extends Polygon {
             resource.setX(x11);
             resource.setY(y11);
         }
+        if (ruin != null){
+            ruin.setY(this.getY());
+            ruin.setX(this.getX());
+        }
         if (improvements.size() > 0){
             improvements.get(0).setX(this.getX() + 50);
             improvements.get(0).setY(this.getY() + 30);
@@ -1410,6 +1445,10 @@ public class Tile extends Polygon {
             double x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
+        }
+        if (ruin != null){
+            ruin.setY(this.getY());
+            ruin.setX(this.getX());
         }
         if (improvements.size() > 0){
             improvements.get(0).setX(this.getX() + 50);

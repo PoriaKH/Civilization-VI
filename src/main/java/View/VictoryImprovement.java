@@ -33,9 +33,10 @@ public class VictoryImprovement {
         Label label = new Label("Victory improvement");
         borderPane.setTop(label);
         label.setAlignment(Pos.TOP_CENTER);
+        label.setFont(Font.font("Comic Sans MS", FontWeight.LIGHT, FontPosture.ITALIC, 20));
         Text text = new Text(playGameMenuController.
                 victoryImprovement(InfoPanel.currentCivilization, InfoPanel.tiles).toString());
-        text.setFont(Font.font("Chiller", FontWeight.LIGHT, FontPosture.ITALIC, 40));
+        text.setFont(Font.font("Comic Sans MS", FontWeight.LIGHT, FontPosture.ITALIC, 30));
         text.setFill(Color.RED);
         borderPane.setCenter(text);
 

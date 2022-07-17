@@ -31,6 +31,7 @@ public class UnitPanel {
     public static Civilization playingCivilization;
     public static ArrayList<Tile> map;
     public static PlayGameMenuController playGameMenuController;
+    public static PlayGameMenu playGameMenu;
     public static ArrayList<Civilization> civilizations;
     public static boolean doesEnteredFromInfoPanel;
     public TextField moveDes;
@@ -179,15 +180,18 @@ public class UnitPanel {
         else {
            String command = moveDes.getText();
            if (command.charAt(0) == 't') {
+               PlayGameMenuController.playGameMenu = playGameMenu;
                String destination = command.replace("t", "");
                playGameMenuController.cheatTeleportUnit(unit, Integer.parseInt(destination),
                        playingCivilization, map);
            }
            else {
+               PlayGameMenuController.playGameMenu = playGameMenu;
                String result = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
                        playingCivilization, map);
                showNotification(result);
            }
+           moveDes.clear();
         }
     }
 
@@ -198,6 +202,7 @@ public class UnitPanel {
         else {
             String string = playGameMenuController.preAttackCity(unit,
                     Integer.parseInt(attackCityDes.getText()), playingCivilization, map, civilizations);
+            attackCityDes.clear();
             showNotification(string);
         }
     }
@@ -209,6 +214,7 @@ public class UnitPanel {
         else {
             String string = playGameMenuController.preAttackTile(unit, Integer.parseInt(attackTileDes.getText()),
                     playingCivilization, map);
+            attackTileDes.clear();
             showNotification(string);
         }
     }
@@ -216,6 +222,8 @@ public class UnitPanel {
     public void createUnit(MouseEvent mouseEvent) throws IOException {
         String string = playGameMenuController.preUnitMaker(unitName.getText(),
                 Integer.parseInt(tileNumber.getText()), playingCivilization, map);
+        tileNumber.clear();
+        unitName.clear();
         showNotification(string);
     }
 
@@ -225,6 +233,7 @@ public class UnitPanel {
         }
         else {
             int index = Integer.parseInt(roadDes.getText());
+            roadDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -242,6 +251,7 @@ public class UnitPanel {
         }
         else {
             int index = Integer.parseInt(railDes.getText());
+            railDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -258,6 +268,7 @@ public class UnitPanel {
         }
         else {
             int index = Integer.parseInt(removeRailDes.getText());
+            removeRailDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -275,6 +286,7 @@ public class UnitPanel {
         }
         else {
             int index = Integer.parseInt(removeRoadDes.getText());
+            removeRoadDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -292,6 +304,7 @@ public class UnitPanel {
         }
         else {
             int index = Integer.parseInt(repairRoadDes.getText());
+            repairRoadDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -309,6 +322,7 @@ public class UnitPanel {
         }
         else {
             int index = Integer.parseInt(repairRailDes.getText());
+            repairRailDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -334,6 +348,8 @@ public class UnitPanel {
         else {
             String string = playGameMenuController.preUpgradeUnit(unit, newUnitName.getText(),
                     Integer.parseInt(tileIndex.getText()), playingCivilization, map);
+            tileIndex.clear();
+            newUnitName.clear();
             showNotification(string);
         }
     }
@@ -341,6 +357,7 @@ public class UnitPanel {
     public void createCity(MouseEvent mouseEvent) throws IOException {
         String string = playGameMenuController.createCity(playingCivilization,
                 Integer.parseInt(tileNumberForCity.getText()), map, civilizations);
+        tileNumberForCity.clear();
         showNotification(string);
     }
 
@@ -352,6 +369,8 @@ public class UnitPanel {
             int index = Integer.parseInt(tileNumberForImprovement.getText());
             String string = playGameMenuController.createImprovement(playingCivilization, unit.getOrigin().getTileNumber(), index,
                     improvementName.getText(), map);
+            tileNumberForImprovement.clear();
+            improvementName.clear();
             showNotification(string);
         }
     }
@@ -363,6 +382,7 @@ public class UnitPanel {
         else {
             String string = playGameMenuController.lootTile(playingCivilization, unit.getOrigin().getTileNumber(),
                     Integer.parseInt(tileNumberForLoot.getText()), map);
+            tileNumberForLoot.clear();
             showNotification(string);
         }
     }
@@ -374,6 +394,8 @@ public class UnitPanel {
         else {
             String string = playGameMenuController.removeImprovement(playingCivilization, playGameMenuController.preRemoveImprovement(improvementName.getText()),
                     Integer.parseInt(tileNumberForImprovement.getText()), map);
+            tileNumberForImprovement.clear();
+            improvementName.clear();
             showNotification(string);
         }
     }

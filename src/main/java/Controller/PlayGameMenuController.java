@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 
 public class PlayGameMenuController {
+    public static PlayGameMenu playGameMenu;
     public static int turn;
     {
         turn = 0;
@@ -937,11 +938,11 @@ public class PlayGameMenuController {
         HashMap<Civilization, Integer> losses = civilization.getLossesInUnitsWar();
         stringBuilder.append("wins :" + "\n");
         for(Map.Entry<Civilization, Integer> entry : wins.entrySet()) {
-            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + " number of wins : " + entry.getValue() + "\n");
+            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + ",  number of wins : " + entry.getValue() + "\n");
         }
         stringBuilder.append("losses :" + "\n");
         for(Map.Entry<Civilization, Integer> entry : losses.entrySet()) {
-            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + " number of losses : " + entry.getValue() + "\n");
+            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + ",  number of losses : " + entry.getValue() + "\n");
         }
         return stringBuilder;
     }
@@ -1490,12 +1491,14 @@ public class PlayGameMenuController {
 
             Tile originTile = unit.getPath().get(i).tile;
             Tile destinationTile = unit.getPath().get(i + 1).tile;
+            playGameMenu.updateMapAfterMove();
 
 
             if (unit.getMp() >= 1) {
                 originTile.removeUnit(unit);
                 destinationTile.addUnit(unit);
                 unit.setOrigin(destinationTile);
+                playGameMenu.updateMapAfterMove();
 
                 int newMP;
 
@@ -1986,15 +1989,15 @@ public class PlayGameMenuController {
             return str;
         }
 
-        if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
-            str = "you don't have necessary technology!";
-            return str;
-        }
-
-        if (!unit.isCivilian() && !isResourceAvailableForUnit (unit, city)) {
-            str = "you don't have necessary resource!";
-            return str;
-        }
+//        if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
+//            str = "you don't have necessary technology!";
+//            return str;
+//        }
+//
+//        if (!unit.isCivilian() && !isResourceAvailableForUnit (unit, city)) {
+//            str = "you don't have necessary resource!";
+//            return str;
+//        }
 
         Tile centerTile = city.getCenterTile();
         if (!unit.isCivilian() && isUnitWarrior (centerTile)) {
@@ -4208,7 +4211,7 @@ public class PlayGameMenuController {
             } else
                 return "no improvement with this name exists!";
             civilian.setWorkingTile(tile);
-            return "improvement created successfully";
+            return "improvement will be created soon!";
         } else
             return "only workers can work on improvements";
     }
@@ -4909,7 +4912,7 @@ public class PlayGameMenuController {
             for (int i1 = 0; i1 < units.size(); i1++) {
                 if(units.get(i1).getCivilization() == civilization){
                     if(!units.get(i1).getIsOnSleep()){
-                        if(!units.get(i1).isCivilian() && units.get(i1).getHasOrdered() && units.get(i1).getPath().size() == 0){
+                        if(!units.get(i1).isCivilian() && !units.get(i1).getHasOrdered() && units.get(i1).getPath().size() == 0){
                             units.get(i1).setHasOrdered(false);
                         }
                     }
