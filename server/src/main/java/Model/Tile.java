@@ -539,7 +539,6 @@ public class Tile {
 
         root.getChildren().add(this);
     }
-/*TODO ... kian in comment shode moshkel dare? */
     /*public void generatingTile(int status){
         if (status == -1){
             this.setFill(new ImagePattern(new Image(fogOfWar.toExternalForm())));
