@@ -139,6 +139,8 @@ public class CommandProcessor {
 
             gameGroup.tiles = playGameMenuController.mapCreator(members.size(),members);
             gameGroup.civilizations = playGameMenuController.initializeCivilizations(members.size(), gameGroup.tiles, members);
+            gameGroup.civilizations.get(0).isMyTurn = true;
+
 
             // TODO ... kian sakht map ro check kon
             int numOfCivilizations = gameGroup.civilizations.size();
