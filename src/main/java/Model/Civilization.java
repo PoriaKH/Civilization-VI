@@ -322,21 +322,20 @@ public class Civilization {
         this.capital.copyFieldsOfCity(civilizationServer.getCapital());
         this.science = civilizationServer.getScience();
         this.sciencePerTurn = civilizationServer.sciencePerTurn;
-        this.technologies = civilizationServer.getTechnologies();
+        this.technologies = civilizationServer.getTechnologies(); //todo
         this.gold = civilizationServer.getGold();
         this.goldPerTurn = civilizationServer.getGoldPerTurn();
         this.happiness = civilizationServer.getHappiness();
-        this.cities = civilizationServer.getCities();
-        this.trades = civilizationServer.getTrades();
-        this.messages = civilizationServer.getMessages();
-        this.winsInUnitsWar = civilizationServer.getWinsInUnitsWar();
-        this.lossesInUnitsWar = civilizationServer.getLossesInUnitsWar();
+        this.cities = civilizationServer.getCities(); //todo
+        this.trades = civilizationServer.getTrades(); //todo
+        this.messages = civilizationServer.getMessages(); //todo
+        this.winsInUnitsWar = civilizationServer.getWinsInUnitsWar(); //todo
+        this.lossesInUnitsWar = civilizationServer.getLossesInUnitsWar(); //todo
         this.point = civilizationServer.getPoint();
         this.isLearningTechnology = civilizationServer.isLearningTechnology;
-        this.friendlyRequests = civilizationServer.getFriendlyRequests();
-        this.friends = civilizationServer.getFriends();
+        this.friendlyRequests = civilizationServer.getFriendlyRequests(); //todo
+        this.friends = civilizationServer.getFriends(); //todo
         this.workingOnTechnology = civilizationServer.getWorkingOnTechnology();
         this.technologyEarnedPercent = civilizationServer.getTechnologyEarnedPercent();
     }
-
 }

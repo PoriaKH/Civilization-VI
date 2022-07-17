@@ -1456,9 +1456,14 @@ public class Tile extends Polygon {
         }
     }
 
+    public Ruin getRuin() {
+        return ruin;
+    }
+
     public boolean equals (Tile tile) {
         if (this.getX() == tile.getX() &&
                 this.getY() == tile.getY()) return true;
         return false;
     }
+
 }

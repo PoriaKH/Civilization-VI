@@ -2,6 +2,7 @@ package Model;
 
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
@@ -173,11 +174,31 @@ public class City {
         this.food = city.getFood();
         this.production = city.getProduction();
         this.totalFood = city.getTotalFood();
-        this.citizens = Citizen.copyListOfCitizens(this, city); //todo
-        this.centerTile = city.getCenterTile(); //todo
-        this.tiles = city.getTiles(); //todo
+        this.citizens = Citizen.copyListOfCitizens(this, city);
+        this.centerTile = getCenterForCity(city.getCenterTile());
+        this.tiles = getCityTiles(city.getTiles());
         this.defenceStrength = city.getDefenceStrength();
         this.damagePoint = city.getDamagePoint();
         this.sciencePerTurn = city.getSciencePerTurn();
+    }
+
+    private ArrayList<Tile> getCityTiles(ArrayList<Tile> tiles) {
+        ArrayList<Tile> tilesCity = new ArrayList<>();
+        for (Tile tile : PlayGameMenu.tiles) {
+            for (Tile tile1 : tiles) {
+                if (tile.equals(tile1)) {
+                    tilesCity.add(tile);
+                    break;
+                }
+            }
+        }
+        return tilesCity;
+    }
+
+    private Tile getCenterForCity(Tile centerTile) {
+        for (Tile tile : PlayGameMenu.tiles) {
+            if (tile.equals(centerTile)) return tile;
+        }
+        return null;
     }
 }

@@ -32,4 +32,5 @@ public class Ruin extends Rectangle {
     public int getFreeGold() {
         return freeGold;
     }
+
 }
