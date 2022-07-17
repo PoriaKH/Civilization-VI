@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 
 
 
-public class Building extends Rectangle { /// what is civilization ?
+public class Building {
 
     private Civilization civilization;
 

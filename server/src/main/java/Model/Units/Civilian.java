@@ -44,14 +44,14 @@ public class Civilian extends Unit {
         super(civilization, origin, health, MP, mp, duration, goldCost, isCivilian);
         this.isWorker = isWorker;
         this.isSettler = isSettler;
-        Image image = new Image(getURL().toExternalForm());
+        /*Image image = new Image(getURL().toExternalForm());
         ImagePattern imagePattern = new ImagePattern(image);
-        this.setFill(imagePattern);
+        this.setFill(imagePattern);*/
     }
-    public URL getURL () {
+    /*public URL getURL () {
         if (this.isSettler) {
             return unitsURL.get("Settler");
         }
         return unitsURL.get("Worker");
-    }
+    }*/
 }
