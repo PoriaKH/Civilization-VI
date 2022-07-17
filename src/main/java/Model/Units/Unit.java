@@ -260,4 +260,10 @@ public class Unit extends Rectangle {
     public void setDestination(Tile destination) {
         this.destination = destination;
     }
+
+    public boolean equals (Unit unit) {
+        if (this.isCivilian == unit.isCivilian &&
+                this.origin.equals(unit.origin)) return true;
+        return false;
+    }
 }

@@ -319,7 +319,7 @@ public class Civilization {
         /*this.member;
         this.firstLetterOfName;
         this.name;*/
-        this.capital = civilizationServer.getCapital();
+        this.capital.copyFieldsOfCity(civilizationServer.getCapital());
         this.science = civilizationServer.getScience();
         this.sciencePerTurn = civilizationServer.sciencePerTurn;
         this.technologies = civilizationServer.getTechnologies();
@@ -338,4 +338,5 @@ public class Civilization {
         this.workingOnTechnology = civilizationServer.getWorkingOnTechnology();
         this.technologyEarnedPercent = civilizationServer.getTechnologyEarnedPercent();
     }
+
 }

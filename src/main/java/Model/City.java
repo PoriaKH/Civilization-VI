@@ -167,4 +167,17 @@ public class City {
     public void addCitizen(Citizen citizen){
         this.citizens.add(citizen);
     }
+
+    public void copyFieldsOfCity(City city) {
+        this.gold = city.getGold();
+        this.food = city.getFood();
+        this.production = city.getProduction();
+        this.totalFood = city.getTotalFood();
+        this.citizens = Citizen.copyListOfCitizens(this, city); //todo
+        this.centerTile = city.getCenterTile(); //todo
+        this.tiles = city.getTiles(); //todo
+        this.defenceStrength = city.getDefenceStrength();
+        this.damagePoint = city.getDamagePoint();
+        this.sciencePerTurn = city.getSciencePerTurn();
+    }
 }

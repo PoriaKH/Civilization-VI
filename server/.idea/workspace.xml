@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added map and civilizations generator to server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/GameGroupData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/GameGroupData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GameGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GameGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Citizen.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Citizen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Civilization.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Civilization.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Units/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Units/Unit.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
