@@ -123,11 +123,11 @@ public class Warrior extends Unit {
         this.isInfantry = isInfantry;
         this.isPanzer = isPanzer;
         this.isTank = isTank;
-        Image image = new Image(getURL().toExternalForm());
+        /*Image image = new Image(getURL().toExternalForm());
         ImagePattern imagePattern = new ImagePattern(image);
-        this.setFill(imagePattern);
+        this.setFill(imagePattern);*/
     }
-    public ImagePattern getUnitPic () {
+/*    public ImagePattern getUnitPic () {
         Image image = new Image(getURL().toExternalForm());
         ImagePattern imagePattern = new ImagePattern(image);
         return imagePattern;
@@ -182,7 +182,7 @@ public class Warrior extends Unit {
             return unitsURL.get("Anti-Tank Gun");
         }
         return null;
-    }
+    }*/
 
 
     public void setReadyForRangedBattle(boolean readyForRangedBattle) {

@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Civilization {
     @Expose
@@ -301,5 +302,13 @@ public class Civilization {
         if (this.getName().equals(civilization.getName()) &&
         this.getMember().equals(civilization.getMember())) return true;
         return false;
+    }
+
+    public int getAllWins() {
+        int wins = 0;
+        for(Map.Entry<Civilization, Integer> entry : winsInUnitsWar.entrySet()) {
+            wins = wins + entry.getValue();
+        }
+        return wins;
     }
 }

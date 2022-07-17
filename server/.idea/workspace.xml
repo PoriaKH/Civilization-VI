@@ -4,22 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added map and civilizations generator to server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Civilization.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Civilization.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Civilization.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Civilization.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Unit$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Unit$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,8 +94,7 @@
       <workItem from="1657625874166" duration="2636000" />
       <workItem from="1657716485412" duration="3076000" />
       <workItem from="1657734133379" duration="1737000" />
-      <workItem from="1657995710133" duration="1927000" />
-      <workItem from="1658053872074" duration="623000" />
+      <workItem from="1657995710133" duration="1924000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -270,7 +264,28 @@
       <option name="project" value="LOCAL" />
       <updated>1657972294863</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="removed all related things to graphic from server">
+      <created>1658036517456</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1658036517456</updated>
+    </task>
+    <task id="LOCAL-00026" summary="added map and civilizations generator to server">
+      <created>1658038353364</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1658038353364</updated>
+    </task>
+    <task id="LOCAL-00027" summary="added map and civilizations generator to server">
+      <created>1658038401685</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1658038401685</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -311,6 +326,9 @@
     <MESSAGE value="edited nexTurn on server side" />
     <MESSAGE value="changed codes in server" />
     <MESSAGE value="changed codes in server/client" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed codes in server/client" />
+    <MESSAGE value="commit" />
+    <MESSAGE value="removed all related things to graphic from server" />
+    <MESSAGE value="added map and civilizations generator to server" />
+    <option name="LAST_COMMIT_MESSAGE" value="added map and civilizations generator to server" />
   </component>
 </project>

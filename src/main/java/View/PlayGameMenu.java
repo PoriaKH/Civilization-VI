@@ -441,22 +441,7 @@ public class PlayGameMenu {
                     alert.setContentText(string);
                     alert.showAndWait();
                 } else {
-                    playGameMenuController.deleteLosers(playingCivilization, civilizations);
-                    if (playGameMenuController.findWinner(playingCivilization, civilizations)) {
-                        //TODO .... write array members in file -> pouria ***********
-                        //TODO ... baraye datresi be barande civilization.get(0) okeye
-                        //TODO .... list member ha ham hast age khsati kol file ro dobare benevisi
-                        //TODO dat tabe fidnWinner emtaiza member barande ro ziad kardam
-                        try {
-                            increaseFileScore(playingCivilization);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        //TODO .... graphic view for winner -> kian
-                        VictoryAnimation.stage = stage;
-                        VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
-                        victoryAnimation.play();
-                    }
+
                     PlayGameMenuController.turn ++;
                     playersCounter++;
                     if (playersCounter == civilizations.size()) {
@@ -467,6 +452,35 @@ public class PlayGameMenu {
                     goldAmount.setText(" : " + playingCivilization.getGold());
                     happinessAmount.setText(" : " + playingCivilization.getHappiness());
 
+
+                    playGameMenuController.deleteLosers(playingCivilization, civilizations);
+                    if (playGameMenuController.findWinner(playingCivilization, civilizations)
+                            || playGameMenuController.findWinnerByYear(civilizations)) {
+                        //TODO .... write array members in file -> pouria ***********
+                        //ToDO ... tabe moshkel dare ehtemalan az while(true) e
+
+                         /*try {
+                            increaseFileScore(civilizations.get(0));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }*/
+                        if (5 * PlayGameMenuController.turn == 2050) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("WINNER : ");
+                            alert.setHeaderText("game is over because we are in year 2050 :");
+                            alert.setContentText("Winner civilization : " + civilizations.get(0).getName());
+
+                            playingCivilization = civilizations.get(0);
+                            civName.setText("civilization : " + playingCivilization.getName());
+                            goldAmount.setText(" : " + playingCivilization.getGold());
+                            happinessAmount.setText(" : " + playingCivilization.getHappiness());
+
+                            alert.showAndWait();
+                        }
+                        VictoryAnimation.stage = stage;
+                        VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
+                        victoryAnimation.play();
+                    }
                     updateMapAfterMove();
                 }
             }

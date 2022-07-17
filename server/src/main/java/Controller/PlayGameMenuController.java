@@ -21,7 +21,7 @@ public class PlayGameMenuController {
         turn = 0;
     }
 
-    public synchronized ArrayList<Tile> mapCreator(int numOfCivilizations, ArrayList<Member> members, ArrayList<Socket> sockets) throws IOException {//tik
+    public synchronized ArrayList<Tile> mapCreator(int numOfCivilizations, ArrayList<Member> members) throws IOException {//tik
         int numOfTiles = 72;
         ArrayList<Tile> map = new ArrayList<>();
         float x0 = 300;
@@ -1280,7 +1280,7 @@ public class PlayGameMenuController {
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
-    private void sendMessageToAllClients(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
+    public void sendMessageToAllClients(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
         ArrayList<Socket> sockets = gameGroup.sockets;
         for (Socket socket : sockets) {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -4809,8 +4809,8 @@ public class PlayGameMenuController {
             str = "your city doesn't have necessary resource !";
             return str;
         }
-        newWarrior.setX(warrior.getX());
-        newWarrior.setY(warrior.getY());
+        /*newWarrior.setX(warrior.getX());
+        newWarrior.setY(warrior.getY());*/
         tile.removeUnit(warrior);
         tile.addUnit2(newWarrior);
         str = "unit upgraded successfully !";
@@ -5079,6 +5079,28 @@ public class PlayGameMenuController {
             return true;
         }
         return false;
+    }
+    public boolean findWinnerByYear(ArrayList<Civilization> civilizations) {
+        if (turn * 5 != 2050) return false;
+        for (int i = 1; i < civilizations.size(); ++i) {
+            for (int j = 0; j < civilizations.size() - 1; ++j) {
+                if (civilizations.get(j).getPoint() < civilizations.get(j + 1).getPoint()) {
+                    Civilization civilization = civilizations.get(j);
+                    civilizations.set(j, civilizations.get(j + 1));
+                    civilizations.set(j + 1, civilization);
+                }
+                else if (civilizations.get(j).getPoint() == civilizations.get(j + 1).getPoint()) {
+                    if (civilizations.get(j).getScience() < civilizations.get(j + 1).getScience() ||
+                            civilizations.get(j).getHappiness() < civilizations.get(j + 1).getHappiness() ||
+                            civilizations.get(j).getAllWins() < civilizations.get(j + 1).getAllWins()) {
+                        Civilization civilization = civilizations.get(j);
+                        civilizations.set(j, civilizations.get(j + 1));
+                        civilizations.set(j + 1, civilization);
+                    }
+                }
+            }
+        }
+        return true;
     }
     public void loadOriginTileForUnit (ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {

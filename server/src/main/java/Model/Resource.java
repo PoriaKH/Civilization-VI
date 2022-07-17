@@ -3,7 +3,7 @@ package Model;
 import com.google.gson.annotations.Expose;
 import javafx.scene.shape.Rectangle;
 
-public class Resource extends Rectangle {
+public class Resource {
     @Expose
     private String name;
     @Expose
