@@ -484,6 +484,7 @@ public class PlayGameMenu {
 
         stage.show();
     }
+    //TODO... koochak bebar to server
     public void updateMapAfterMove(){
         ArrayList<Integer> civilization1new = new ArrayList<>();
         ArrayList<Integer> civilization2new = new ArrayList<>();   ///---> -1, 1

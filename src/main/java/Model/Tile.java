@@ -131,7 +131,7 @@ public class Tile extends Polygon {
     @Expose
     public static Stage stage;
     @Expose
-    public static Ruin ruin = null;
+    public Ruin ruin;
     @Expose
     public static ArrayList<Tile> map;
     @Expose
@@ -542,7 +542,6 @@ public class Tile extends Polygon {
         if (chance >= 0.33 && chance < 0.38 && !isOcean) {
             ruin = new Ruin();
             this.hasRuin = true;
-            System.out.println(this.tileNumber);
         }
 
 
@@ -730,10 +729,11 @@ public class Tile extends Polygon {
         if (hasRuin && !ruinDiscovered) {
             double y11 = this.getY();
             double x11 = this.getX();
+            ruin.setVisible(true);
             ruin.setWidth(40);
             ruin.setHeight(40);
-            ruin.setX(x11);
-            ruin.setY(y11);
+            ruin.setX(x11 - 10);
+            ruin.setY(y11 - 10);
             ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
             if (!root.getChildren().contains(ruin))
                 root.getChildren().add(ruin);
