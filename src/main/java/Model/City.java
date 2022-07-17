@@ -54,7 +54,6 @@ public class City {
 
     }
 
-
     public int getDamagePoint() {
         return damagePoint;
     }
