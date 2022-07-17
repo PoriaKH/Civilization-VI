@@ -322,7 +322,7 @@ public class Civilization {
         this.capital.copyFieldsOfCity(civilizationServer.getCapital());
         this.science = civilizationServer.getScience();
         this.sciencePerTurn = civilizationServer.sciencePerTurn;
-        this.technologies = civilizationServer.getTechnologies(); //todo
+        this.technologies = Technology.copyListOfTechnology(this.getTechnologies(), civilizationServer.getTechnologies());
         this.gold = civilizationServer.getGold();
         this.goldPerTurn = civilizationServer.getGoldPerTurn();
         this.happiness = civilizationServer.getHappiness();

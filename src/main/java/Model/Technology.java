@@ -3,6 +3,7 @@ package Model;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Technology {
     @Expose
@@ -554,6 +555,39 @@ public class Technology {
 
     public int getCost() {
         return cost;
+    }
+
+
+
+    public boolean equals (Technology technology) {
+        return this.getName().equals(technology.getName());
+    }
+
+    public static ArrayList<Technology> copyListOfTechnology(ArrayList<Technology> clientTechnologies, ArrayList<Technology> serverTechnologies) {
+        ArrayList<Technology> technologies;
+        technologies = newTechnologies(clientTechnologies, serverTechnologies);
+        clientTechnologies.addAll(technologies);
+        return clientTechnologies;
+    }
+
+    public static ArrayList<Technology> newTechnologies (ArrayList<Technology> clientTechnologies, ArrayList<Technology> serverTechnologies) {
+        boolean doesExist = false;
+        ArrayList<Technology> technologies = new ArrayList<>();
+        for (Technology serverTechnology : serverTechnologies) {
+            for (Technology clientTechnology : clientTechnologies) {
+                if (serverTechnology.equals(clientTechnology)) {
+                    doesExist = true;
+                    break;
+                }
+            }
+            if (doesExist) {
+                doesExist = false;
+            }
+            else {
+                technologies.add(serverTechnology);
+            }
+        }
+        return technologies;
     }
 
 }
