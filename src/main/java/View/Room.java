@@ -1,13 +1,11 @@
 package View;
 
 import Controller.PlayGameMenuController;
-import Model.Civilization;
+import Model.*;
 import Model.FunctionsGson.GameGroupData;
-import Model.GsonRoom;
-import Model.GsonRoomArray;
-import Model.Member;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -173,7 +171,7 @@ public class Room {
                              Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
                              GameGroupData gameGroupData = gson2.fromJson(txt, GameGroupData.class);
                              loadExtras(gameGroupData);
-                             PlayGameMenu.civilizations = gameGroupData.civilizations;
+                             copyCivilizations(gameGroupData.civilizations);
                              PlayGameMenu.tiles = gameGroupData.tiles;
                              Civilization civilization = getCivilization(gameGroupData.civilizations);
                              isMyTurn = civilization.isMyTurn;
@@ -218,6 +216,32 @@ public class Room {
             if (civilization.getMember().equals(loggedInMember)) return civilization;
         }
         return null;
+    }
+
+    private void copyCivilizations (ArrayList<Civilization> serverCivilizations) {
+        deleteCivilization(serverCivilizations);
+        for (int i = 0; i < PlayGameMenu.civilizations.size(); i++) {
+            PlayGameMenu.civilizations.get(i).copyFieldsOfCivilizations(serverCivilizations.get(i));
+        }
+    }
+
+    private void deleteCivilization(ArrayList<Civilization> serverCivilizations) {
+        boolean doesCivExist = false;
+        for (int i = 0; i < PlayGameMenu.civilizations.size(); i++) {
+            for (int i1 = 0; i1 < serverCivilizations.size(); i1++) {
+                if (serverCivilizations.get(i1).equals(PlayGameMenu.civilizations.get(i))) {
+                    doesCivExist = true;
+                    break;
+                }
+            }
+            if (doesCivExist) {
+                doesCivExist = false;
+            }
+            else {
+                PlayGameMenu.civilizations.remove(i);
+                i--;
+            }
+        }
     }
 
     public void removeRoom() throws IOException {

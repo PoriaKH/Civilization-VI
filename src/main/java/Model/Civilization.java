@@ -313,4 +313,29 @@ public class Civilization {
         }
         return wins;
     }
+
+    public void copyFieldsOfCivilizations(Civilization civilizationServer) {
+        this.isMyTurn = civilizationServer.isMyTurn;
+        /*this.member;
+        this.firstLetterOfName;
+        this.name;*/
+        this.capital = civilizationServer.getCapital();
+        this.science = civilizationServer.getScience();
+        this.sciencePerTurn = civilizationServer.sciencePerTurn;
+        this.technologies = civilizationServer.getTechnologies();
+        this.gold = civilizationServer.getGold();
+        this.goldPerTurn = civilizationServer.getGoldPerTurn();
+        this.happiness = civilizationServer.getHappiness();
+        this.cities = civilizationServer.getCities();
+        this.trades = civilizationServer.getTrades();
+        this.messages = civilizationServer.getMessages();
+        this.winsInUnitsWar = civilizationServer.getWinsInUnitsWar();
+        this.lossesInUnitsWar = civilizationServer.getLossesInUnitsWar();
+        this.point = civilizationServer.getPoint();
+        this.isLearningTechnology = civilizationServer.isLearningTechnology;
+        this.friendlyRequests = civilizationServer.getFriendlyRequests();
+        this.friends = civilizationServer.getFriends();
+        this.workingOnTechnology = civilizationServer.getWorkingOnTechnology();
+        this.technologyEarnedPercent = civilizationServer.getTechnologyEarnedPercent();
+    }
 }

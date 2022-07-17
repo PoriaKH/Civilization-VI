@@ -6,23 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added map and civilizations generator to server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Building.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Building.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Civilization.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Civilization.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Resource.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Resource.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Units/Civilian.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Units/Civilian.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Units/Unit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Units/Unit.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Units/Warrior.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Units/Warrior.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Civilization.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Civilization.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Civilization.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Civilization.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Unit$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Unit$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/VictoryImprovement.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
