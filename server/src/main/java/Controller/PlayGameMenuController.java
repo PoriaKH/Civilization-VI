@@ -5080,6 +5080,28 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    public boolean findWinnerByYear(ArrayList<Civilization> civilizations) {
+        if (turn * 5 != 2050) return false;
+        for (int i = 1; i < civilizations.size(); ++i) {
+            for (int j = 0; j < civilizations.size() - 1; ++j) {
+                if (civilizations.get(j).getPoint() < civilizations.get(j + 1).getPoint()) {
+                    Civilization civilization = civilizations.get(j);
+                    civilizations.set(j, civilizations.get(j + 1));
+                    civilizations.set(j + 1, civilization);
+                }
+                else if (civilizations.get(j).getPoint() == civilizations.get(j + 1).getPoint()) {
+                    if (civilizations.get(j).getScience() < civilizations.get(j + 1).getScience() ||
+                            civilizations.get(j).getHappiness() < civilizations.get(j + 1).getHappiness() ||
+                            civilizations.get(j).getAllWins() < civilizations.get(j + 1).getAllWins()) {
+                        Civilization civilization = civilizations.get(j);
+                        civilizations.set(j, civilizations.get(j + 1));
+                        civilizations.set(j + 1, civilization);
+                    }
+                }
+            }
+        }
+        return true;
+    }
     public void loadOriginTileForUnit (ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
             for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {

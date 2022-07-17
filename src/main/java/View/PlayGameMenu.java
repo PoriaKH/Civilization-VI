@@ -442,17 +442,16 @@ public class PlayGameMenu {
                     alert.showAndWait();
                 } else {
                     playGameMenuController.deleteLosers(playingCivilization, civilizations);
-                    if (playGameMenuController.findWinner(playingCivilization, civilizations)) {
+                    if (playGameMenuController.findWinner(playingCivilization, civilizations)
+                            || playGameMenuController.findWinnerByYear(civilizations)) {
                         //TODO .... write array members in file -> pouria ***********
-                        //TODO ... baraye datresi be barande civilization.get(0) okeye
-                        //TODO .... list member ha ham hast age khsati kol file ro dobare benevisi
-                        //TODO dat tabe fidnWinner emtaiza member barande ro ziad kardam
-                        try {
-                            increaseFileScore(playingCivilization);
+                        //ToDO ... tabe moshkel dare ehtemalan az while(true) e
+
+                         /*try {
+                            increaseFileScore(civilizations.get(0));
                         } catch (IOException e) {
                             e.printStackTrace();
-                        }
-                        //TODO .... graphic view for winner -> kian
+                        }*/
                         VictoryAnimation.stage = stage;
                         VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
                         victoryAnimation.play();
