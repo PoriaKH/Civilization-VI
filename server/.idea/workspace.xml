@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="removed all related things to graphic from server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Building.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Resource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Units/Civilian.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Civilian.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Units/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Unit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Units/Warrior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Units/Warrior.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,7 +257,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657972294863</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="removed all related things to graphic from server">
+      <created>1658036517456</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1658036517456</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -304,6 +306,7 @@
     <MESSAGE value="changed codes in server" />
     <MESSAGE value="changed codes in server/client" />
     <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="removed all related things to graphic from server" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed all related things to graphic from server" />
   </component>
 </project>

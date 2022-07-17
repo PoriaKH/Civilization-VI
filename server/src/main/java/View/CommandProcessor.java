@@ -3,8 +3,10 @@ package View;
 import Controller.PlayGameMenuController;
 import Model.*;
 import Model.FunctionsGson.*;
+import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.fxml.FXMLLoader;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -127,10 +129,65 @@ public class CommandProcessor {
                 }
             }
             sockets.add(sockets2);
-        }
-        else if (command.startsWith("mapCreator ")) {
+            // TODO... pouria az inja game shoro she revale dige? in members ro set kon
+            ArrayList<Member> members = new ArrayList<>();
+
+            GameGroup gameGroup = new GameGroup();
+            gameGroup.sockets = sockets2;
+            gameGroup.members = members;
+
+
+            gameGroup.tiles = playGameMenuController.mapCreator(members.size(),members);
+            gameGroup.civilizations = playGameMenuController.initializeCivilizations(members.size(), gameGroup.tiles, members);
+
+            // TODO ... kian sakht map ro check kon
+            int numOfCivilizations = gameGroup.civilizations.size();
+            ArrayList<Integer> tileStatusOfCivilization1 = new ArrayList<>();
+            ArrayList<Integer> tileStatusOfCivilization2 = new ArrayList<>();
+            ArrayList<Integer> tileStatusOfCivilization3 = new ArrayList<>();
+            ArrayList<Integer> tileStatusOfCivilization4 = new ArrayList<>();
+            ArrayList<Integer> tileStatusOfCivilization5 = new ArrayList<>();
+
+            if (numOfCivilizations == 2) {
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);///   ----> -1 , 1
+            }
+            else if (numOfCivilizations == 3) {
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);///   ----> -1 , 1
+                tileStatusOfCivilization3 = playGameMenuController.statusChecker(gameGroup.civilizations.get(2), gameGroup.tiles);
+            }
+            else if (numOfCivilizations == 4) {
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);///   ----> -1 , 1
+                tileStatusOfCivilization3 = playGameMenuController.statusChecker(gameGroup.civilizations.get(2), gameGroup.tiles);
+                tileStatusOfCivilization4 = playGameMenuController.statusChecker(gameGroup.civilizations.get(3), gameGroup.tiles);
+            }
+            else if (numOfCivilizations == 5){
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);
+                tileStatusOfCivilization3 = playGameMenuController.statusChecker(gameGroup.civilizations.get(2), gameGroup.tiles);///   ----> -1 , 1
+                tileStatusOfCivilization4 = playGameMenuController.statusChecker(gameGroup.civilizations.get(3), gameGroup.tiles);
+                tileStatusOfCivilization5 = playGameMenuController.statusChecker(gameGroup.civilizations.get(4), gameGroup.tiles);
+            }
+            /*for (int i = 0; i < 72; i++)
+                gameGroup.tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));*/
+
+            for (int i = 0; i < gameGroup.civilizations.size(); i++) {
+                for (int i1 = 0; i1 < gameGroup.civilizations.size(); i1++) {
+                    if (i != i1) {
+                        gameGroup.civilizations.get(i).addCivilizationToWinsUnit(gameGroup.civilizations.get(i1));
+                        gameGroup.civilizations.get(i).addCivilizationToLossesUnit(gameGroup.civilizations.get(i1));
+                    }
+                }
+            }
+            GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+            gameGroupData.result = "newGame";
+            playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
 
         }
+
+
         else if (command.startsWith("cheatGold ")) {
             command = command.replace("cheatGold ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();

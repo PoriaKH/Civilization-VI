@@ -21,7 +21,7 @@ public class PlayGameMenuController {
         turn = 0;
     }
 
-    public synchronized ArrayList<Tile> mapCreator(int numOfCivilizations, ArrayList<Member> members, ArrayList<Socket> sockets) throws IOException {//tik
+    public synchronized ArrayList<Tile> mapCreator(int numOfCivilizations, ArrayList<Member> members) throws IOException {//tik
         int numOfTiles = 72;
         ArrayList<Tile> map = new ArrayList<>();
         float x0 = 300;
@@ -1280,7 +1280,7 @@ public class PlayGameMenuController {
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
-    private void sendMessageToAllClients(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
+    public void sendMessageToAllClients(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
         ArrayList<Socket> sockets = gameGroup.sockets;
         for (Socket socket : sockets) {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
