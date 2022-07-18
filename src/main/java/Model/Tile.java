@@ -1098,6 +1098,31 @@ public class Tile extends Polygon {
         }
         this.improvementEarnedPercent.replace(this.workingOnImprovement, roundLeft);
     }
+    private void addImprovementPicture(Improvement improvement) {
+        improvement.setX(this.getX() + 50);
+        improvement.setY(this.getY() + 30);
+        improvement.setWidth(60);
+        improvement.setHeight(60);
+        if (improvement.getName().equals("agriculture"))
+            improvement.setFill(new ImagePattern(new Image(agriculture.toExternalForm())));
+        else if (improvement.getName().equals("camp"))
+            improvement.setFill(new ImagePattern(new Image(camp.toExternalForm())));
+        else if (improvement.getName().equals("farm"))
+            improvement.setFill(new ImagePattern(new Image(farm.toExternalForm())));
+        else if (improvement.getName().equals("laboratory"))
+            improvement.setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
+        else if (improvement.getName().equals("lumberMill"))
+            improvement.setFill(new ImagePattern(new Image(lumberMill.toExternalForm())));
+        else if (improvement.getName().equals("mine"))
+            improvement.setFill(new ImagePattern(new Image(mine.toExternalForm())));
+        else if (improvement.getName().equals("paddock"))
+            improvement.setFill(new ImagePattern(new Image(paddock.toExternalForm())));
+        else if (improvement.getName().equals("stoneMine"))
+            improvement.setFill(new ImagePattern(new Image(stoneMine.toExternalForm())));
+        else if (improvement.getName().equals("tradingPost"))
+            improvement.setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
+        root.getChildren().add(improvement);
+    }
     public void cancelImprovementOnProcess(){
         if (workingOnImprovement == null)
             return;
@@ -1524,12 +1549,25 @@ public class Tile extends Polygon {
         this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
         //this.resource = tile.getResource();
         //this.attribute = tile.getAttribute();
-        //this.improvements = tile.getImprovements();
+        this.improvements = setImprovementCopy(tile.getImprovements());
         this.isWorking = tile.isWorking;
         this.isOnRepair = tile.isOnRepair;
         this.repairNeedImprovement = tile.getRepairNeedImprovement();
         this.roads = getRoadsTileCopy(tile.getRoads());
         this.railRoads = getRoadsTileCopy(tile.getRailRoads());
+    }
+
+    private ArrayList<Improvement> setImprovementCopy(ArrayList<Improvement> improvements) {
+        Improvement improvementTemp = improvements.get(0);
+        ArrayList<Improvement> improvements2 = new ArrayList<>();
+        if (this.getImprovements().get(0) == null &&
+            improvements.get(0) != null) {
+            Improvement improvement = new Improvement(improvementTemp.isCamp(),improvementTemp.isFarm(),improvementTemp.isLumberMill(),improvementTemp.isMine(),improvementTemp.isPaddock(),improvementTemp.isAgriculture(),
+                    improvementTemp.isStoneMine(),improvementTemp.isTradingPost(),improvementTemp.isLaboratory(),improvementTemp.getFood(),improvementTemp.getProduction(),improvementTemp.getGold());
+            improvements2.add(improvement);
+            addImprovementPicture(improvement);
+        }
+        return improvements2;
     }
 
     private ArrayList<Tile> getRoadsTileCopy(ArrayList<Tile> tiles) {
