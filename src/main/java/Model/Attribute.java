@@ -131,4 +131,19 @@ public class Attribute {
     public boolean isBlocker() {
         return isBlocker;
     }
+
+    public void copyFields(Attribute attribute) {
+        this.food = attribute.getFood();
+        this.gold = attribute.getGold();
+        this.production = attribute.getProduction();
+        this.combatChange = attribute.getCombatChange();
+        this.mpCost = attribute.getMpCost();
+        this.isPlat = attribute.isPlat();
+        this.isJungle = attribute.isJungle();
+        this.isIce = attribute.isIce();
+        this.isRainForest = attribute.isRainForest();
+        this.isMarsh = attribute.isMarsh();
+        this.isOasis = attribute.isOasis();
+        this.isBlocker = attribute.isBlocker();
+    }
 }

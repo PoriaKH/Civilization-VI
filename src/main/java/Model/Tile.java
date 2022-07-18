@@ -618,15 +618,8 @@ public class Tile extends Polygon {
             this.setFill(new ImagePattern(new Image(hill.toExternalForm())));
         else if (getAttribute() != null && getAttribute().isIce())
             this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
-        else if (getAttribute() != null && getAttribute().isJungle()) {
-            System.out.println(this.getAttribute().isJungle());
-            try {
-                this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
-            }
-            catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        else if (getAttribute() != null && getAttribute().isJungle())
+            this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
         else if (isMeadow)
             this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
         else if (isMountain)
@@ -751,6 +744,33 @@ public class Tile extends Polygon {
             }
         }
     }
+    private void addAttributePicture(Attribute attribute2) {
+        if  (isDesert)
+            this.setFill(new ImagePattern(new Image(dessert.toExternalForm())));
+        else if (isHill)
+            this.setFill(new ImagePattern(new Image(hill.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isIce())
+            this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isJungle())
+            this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+        else if (isMeadow)
+            this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
+        else if (isMountain)
+            this.setFill(new ImagePattern(new Image(mountain.toExternalForm())));
+        else if (isPlain)
+            this.setFill(new ImagePattern(new Image(plain.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isRainForest())
+            this.setFill(new ImagePattern(new Image(rainforest.toExternalForm())));
+        else if (isSnow)
+            this.setFill(new ImagePattern(new Image(snow.toExternalForm())));
+        else if (isTundra)
+            this.setFill(new ImagePattern(new Image(tundra.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isMarsh())
+            this.setFill(new ImagePattern(new Image(marsh.toExternalForm())));
+        else if (isOcean)
+            this.setFill(new ImagePattern(new Image(ocean.toExternalForm())));
+    }
+
     private void addResourcePicture(Resource resource2) {
         if (getResource() != null) {
             double y11 = this.getY();
@@ -1599,13 +1619,26 @@ public class Tile extends Polygon {
         this.building = setBuildingCopy(tile.getBuilding()); // todo ... pouria check
         this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
         this.resource = copyResource(tile.getResource());
-        //this.attribute = tile.getAttribute();
+        this.attribute = setAttributeCopy(tile.getAttribute());
         this.improvements = setImprovementCopy(tile.getImprovements());
         this.isWorking = tile.isWorking;
         this.isOnRepair = tile.isOnRepair;
         this.repairNeedImprovement = tile.getRepairNeedImprovement();
         this.roads = getRoadsTileCopy(tile.getRoads());
         this.railRoads = getRoadsTileCopy(tile.getRailRoads());
+    }
+
+    private Attribute setAttributeCopy(Attribute attribute) {
+        if (this.getAttribute() == null && attribute != null) {
+            Attribute attribute2 = new Attribute(attribute.isPlat(), attribute.isJungle(), attribute.isIce(), attribute.isRainForest(), attribute.isMarsh(), attribute.isOasis());
+            addAttributePicture(attribute2);
+            return attribute2;
+        }
+        else if (this.getAttribute() != null && attribute != null) {
+            this.getAttribute().copyFields(attribute);
+            return this.getAttribute();
+        }
+        return null;
     }
 
     private Resource copyResource(Resource resource) {
