@@ -186,6 +186,7 @@ public class Room {
                                  playGameMenu = new PlayGameMenu();
                                  Unit.playGameMenu = playGameMenu;
                                  PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
+                                 playGameMenu.switchToGame(mouseEvent);
                              }
                              else {
                                  startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
