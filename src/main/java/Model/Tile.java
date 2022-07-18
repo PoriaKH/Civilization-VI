@@ -1528,14 +1528,22 @@ public class Tile extends Polygon {
         this.isWorking = tile.isWorking;
         this.isOnRepair = tile.isOnRepair;
         this.repairNeedImprovement = tile.getRepairNeedImprovement();
-        //this.roads = tile.getRoads();
-        //this.railRoads = tile.getRailRoads();
+        this.roads = getRoadsTileCopy(tile.getRoads());
+        this.railRoads = getRoadsTileCopy(tile.getRailRoads());
+    }
+
+    private ArrayList<Tile> getRoadsTileCopy(ArrayList<Tile> tiles) {
+        ArrayList<Tile> clientTiles = new ArrayList<>();
+        for (Tile tile : tiles) {
+            clientTiles.add(getClientTile(tile));
+        }
+        return clientTiles;
     }
 
     private Building setBuildingCopy(Building building) {
         if (this.getBuilding() == null && building != null) {
-            building.setTile(getTile(building.getTile()));
-            getTile(building.getTile()).addBuilding(building);
+            building.setTile(getClientTile(building.getTile()));
+            getClientTile(building.getTile()).addBuilding(building);
             return building;
         }
         else {
@@ -1547,14 +1555,14 @@ public class Tile extends Polygon {
         HashMap<Unit,Integer> hashMap = new HashMap<>();
         for (Map.Entry<Unit,Integer> entry : turnForUnitMaking.entrySet()) {
             if (!entry.getKey().isCivilian()) {
-                Warrior warrior = new Warrior(Civilization.getCivilizationCopy(entry.getKey().getCivilization()),Tile.getTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
+                Warrior warrior = new Warrior(Civilization.getCivilizationCopy(entry.getKey().getCivilization()),Tile.getClientTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
                         ((Warrior)entry.getKey()).getXp(),((Warrior)entry.getKey()).getDamage(),((Warrior)entry.getKey()).getRange(),((Warrior)entry.getKey()).getRangedCombatDamage(),((Warrior)entry.getKey()).isScout(),((Warrior)entry.getKey()).isWarrior(),((Warrior)entry.getKey()).isArcher(),((Warrior)entry.getKey()).isChariotArcher(),
                         ((Warrior)entry.getKey()).isSpearman(),((Warrior)entry.getKey()).isCatapult(),((Warrior)entry.getKey()).isHorseMan(),((Warrior)entry.getKey()).isSwordsMan(),((Warrior)entry.getKey()).isCrossbowMan(),((Warrior)entry.getKey()).isKnight(),((Warrior)entry.getKey()).isLongswordMan(),((Warrior)entry.getKey()).isPikeMan(),((Warrior)entry.getKey()).isTrebuchet(),
                         ((Warrior)entry.getKey()).isCanon(),((Warrior)entry.getKey()).isCavalry(),((Warrior)entry.getKey()).isLancer(),((Warrior)entry.getKey()).isMusketMan(),((Warrior)entry.getKey()).isRifleMan(),((Warrior)entry.getKey()).isAntiTankGun(),((Warrior)entry.getKey()).isArtillery(),((Warrior)entry.getKey()).isInfantry(),((Warrior)entry.getKey()).isPanzer(),((Warrior)entry.getKey()).isTank());
                 hashMap.put(warrior, entry.getValue());
             }
             else {
-                Civilian civilian = new Civilian(Civilization.getCivilizationCopy(entry.getKey().getCivilization()),Tile.getTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
+                Civilian civilian = new Civilian(Civilization.getCivilizationCopy(entry.getKey().getCivilization()),Tile.getClientTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
                         ((Civilian)entry.getKey()).isWorker(), ((Civilian)entry.getKey()).isSettler());
                 hashMap.put(civilian, entry.getValue());
             }
@@ -1588,7 +1596,7 @@ public class Tile extends Polygon {
         units.clear();
     }
 
-    public static Tile getTile(Tile tile) {
+    public static Tile getClientTile(Tile tile) {
         for (Tile tile2 : PlayGameMenu.tiles) {
             if (tile.equals(tile2)) return tile2;
         }
