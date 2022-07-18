@@ -168,6 +168,13 @@ public class City {
         this.citizens.add(citizen);
     }
 
+    public boolean equals(City city) {
+        if (this.centerTile.equals(city.getCenterTile()) &&
+                this.defenceStrength == city.damagePoint &&
+                this.damagePoint == city.getDamagePoint()) return true;
+        return false;
+    }
+
     public void copyFieldsOfCity(City city) {
         this.gold = city.getGold();
         this.food = city.getFood();
@@ -199,5 +206,54 @@ public class City {
             if (tile.equals(centerTile)) return tile;
         }
         return null;
+    }
+
+    public ArrayList<City> copyCities(ArrayList<City> clientCities, ArrayList<City> serverCities) {
+        ArrayList<City> answer = new ArrayList<>();
+        ArrayList<City> newCities;
+        newCities = newCities(clientCities, serverCities);
+        for (City newCity : newCities) {
+            City city = new City(getCenterForCity(newCity.getCenterTile()), PlayGameMenu.tiles);
+            city.copyFieldsOfCity(newCity);
+            answer.add(city);
+        }
+        newCities = updateCities(clientCities, serverCities);
+        for (City newCity : newCities) {
+            for (City clientCity : clientCities) {
+                if (clientCity.equals(newCity)) {
+                    clientCity.copyFieldsOfCity(newCity);
+                    answer.add(clientCity);
+                    break;
+                }
+            }
+        }
+
+        return answer;
+    }
+
+    public ArrayList<City> newCities(ArrayList<City> clientCities, ArrayList<City> serverCities) {
+        ArrayList<City> cities = new ArrayList<>();
+        boolean doesExist = false;
+        for (City serverCity : serverCities) {
+            for (City clientCity : clientCities) {
+                if (serverCity.equals(clientCity)) {
+                    doesExist = true;
+                    break;
+                }
+            }
+            if (doesExist) doesExist = false;
+            else cities.add(serverCity);
+        }
+        return cities;
+    }
+
+    public ArrayList<City> updateCities(ArrayList<City> clientCities, ArrayList<City> serverCities) {
+        ArrayList<City> cities = new ArrayList<>();
+        for (City serverCity : serverCities) {
+            for (City clientCity : clientCities) {
+                if (serverCity.equals(clientCity)) cities.add(serverCity);
+            }
+        }
+        return cities;
     }
 }

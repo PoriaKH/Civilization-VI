@@ -25,6 +25,7 @@ public class Citizen {
             for (int i1 = 0; i1 < citizens.size(); i1++) {
                 if (client.getCitizens().get(i).equals(citizens.get(i1))) {
                     client.getCitizens().get(i).copyCitizen(citizens.get(i1));
+                    break;
                 }
             }
         }

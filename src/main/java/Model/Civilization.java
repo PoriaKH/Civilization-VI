@@ -326,7 +326,7 @@ public class Civilization {
         this.gold = civilizationServer.getGold();
         this.goldPerTurn = civilizationServer.getGoldPerTurn();
         this.happiness = civilizationServer.getHappiness();
-        this.cities = civilizationServer.getCities();
+        this.cities = capital.copyCities(this.getCities(), civilizationServer.getCities());
         this.trades = civilizationServer.getTrades(); //todo
         this.messages = civilizationServer.getMessages(); //todo
         this.winsInUnitsWar = civilizationServer.getWinsInUnitsWar(); //todo
