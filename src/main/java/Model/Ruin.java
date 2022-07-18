@@ -36,4 +36,8 @@ public class Ruin extends Rectangle {
         return freeGold;
     }
 
+    public void copyField(Ruin ruin) {
+        this.freeTechnology = ruin.getFreeTechnology();
+        this.freeGold = ruin.getFreeGold();
+    }
 }

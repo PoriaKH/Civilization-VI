@@ -744,6 +744,38 @@ public class Tile extends Polygon {
             }
         }
     }
+    private void removeRuinPicture(Ruin ruin) {
+        if (this.units.size() > 0) {
+            Unit unit = units.get(0);
+            ArrayList<String> techNames = new ArrayList<>();
+            for (Technology t : unit.getCivilization().getTechnologies())
+                techNames.add(t.getName());
+            if (!techNames.contains(ruin.getFreeTechnology().getName()))
+                unit.getCivilization().addTechnology(ruin.getFreeTechnology());
+            unit.getCivilization().addGold(ruin.getFreeGold());
+            Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
+            Citizen ruinCitizen = new Citizen(citizenTile);
+            unit.getCivilization().getCapital().getCitizens().add(ruinCitizen);
+            ruin.setVisible(false);
+            ruinDiscovered = true;
+            hasRuin = false;
+        }
+    }
+    private void addRuinPicture(Ruin ruin2) {
+        if (hasRuin && !ruinDiscovered) {
+            double y11 = this.getY();
+            double x11 = this.getX();
+            ruin.setVisible(true);
+            ruin.setWidth(40);
+            ruin.setHeight(40);
+            ruin.setX(x11 - 10);
+            ruin.setY(y11 - 10);
+            ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
+            if (!root.getChildren().contains(ruin))
+                root.getChildren().add(ruin);
+        }
+    }
+
     private void addAttributePicture(Attribute attribute2) {
         if  (isDesert)
             this.setFill(new ImagePattern(new Image(dessert.toExternalForm())));
@@ -1589,9 +1621,8 @@ public class Tile extends Polygon {
     }
 
     public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits) {
-        // todo -> poria kian -> check konid in set kardan haye class haye khodeton ro
-        //  ,age ax set kardan dare va .... khodeton bezanid
-        //this.ruin = ;
+        // todo ... check classes that yall wrote
+        this.ruin = getRuinCopy(tile.getRuin());
         this.cameraSpeed = 30;
         this.isDesert = tile.isDesert;
         this.isMeadow = tile.isMeadow;
@@ -1616,7 +1647,7 @@ public class Tile extends Polygon {
         this.h = tile.getH();
         this.citizen = getCitizenCopy(tile.getCitizen());
         getUnitsListCopy(this, allUnits);
-        this.building = setBuildingCopy(tile.getBuilding()); // todo ... pouria check
+        this.building = setBuildingCopy(tile.getBuilding());
         this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
         this.resource = copyResource(tile.getResource());
         this.attribute = setAttributeCopy(tile.getAttribute());
@@ -1626,6 +1657,23 @@ public class Tile extends Polygon {
         this.repairNeedImprovement = tile.getRepairNeedImprovement();
         this.roads = getRoadsTileCopy(tile.getRoads());
         this.railRoads = getRoadsTileCopy(tile.getRailRoads());
+    }
+
+    private Ruin getRuinCopy(Ruin ruin) {
+        if (this.getRuin() == null && ruin != null) {
+            Ruin ruin2 = ruin;
+            addRuinPicture(ruin2);
+            return ruin2;
+        }
+        else if (this.getRuin() != null && ruin != null) {
+            this.getRuin().copyField(ruin);
+            return this.getRuin();
+        }
+        else if (this.getRuin() != null && ruin == null) {
+            removeRuinPicture(this.getRuin());
+            return null;
+        }
+        return null;
     }
 
     private Attribute setAttributeCopy(Attribute attribute) {
