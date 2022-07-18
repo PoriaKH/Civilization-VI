@@ -271,30 +271,24 @@ public class Room {
     }
 
     private void copyCivilizations (ArrayList<Civilization> serverCivilizations) {
-        deleteCivilization(serverCivilizations);
+        PlayGameMenu.civilizations = deleteCivilization(serverCivilizations);
         for (int i = 0; i < PlayGameMenu.civilizations.size(); i++) {
             PlayGameMenu.civilizations.get(i).copyFieldsOfCivilizations(serverCivilizations.get(i));
         }
         playGameMenuController.loadCivilizationForBuilding(PlayGameMenu.civilizations);
     }
 
-    private void deleteCivilization(ArrayList<Civilization> serverCivilizations) {
-        boolean doesCivExist = false;
-        for (int i = 0; i < PlayGameMenu.civilizations.size(); i++) {
-            for (int i1 = 0; i1 < serverCivilizations.size(); i1++) {
-                if (serverCivilizations.get(i1).equals(PlayGameMenu.civilizations.get(i))) {
-                    doesCivExist = true;
+    private ArrayList<Civilization> deleteCivilization(ArrayList<Civilization> serverCivilizations) {
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (Civilization serverCivilization : serverCivilizations) {
+            for (Civilization civilization : PlayGameMenu.civilizations) {
+                if (civilization.equals(serverCivilization)) {
+                    civilizations.add(civilization);
                     break;
                 }
             }
-            if (doesCivExist) {
-                doesCivExist = false;
-            }
-            else {
-                PlayGameMenu.civilizations.remove(i);
-                i--;
-            }
         }
+        return civilizations;
     }
 
     private void copyTiles (ArrayList<Tile> serverTiles) {
