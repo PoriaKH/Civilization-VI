@@ -3,6 +3,7 @@ package View;
 import Controller.PlayGameMenuController;
 import Model.*;
 import Model.FunctionsGson.GameGroupData;
+import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
@@ -172,7 +173,7 @@ public class Room {
                              GameGroupData gameGroupData = gson2.fromJson(txt, GameGroupData.class);
                              loadExtras(gameGroupData);
                              copyCivilizations(gameGroupData.civilizations);
-                             PlayGameMenu.tiles = gameGroupData.tiles;
+                             copyTiles(gameGroupData.tiles);
                              Civilization civilization = getCivilization(gameGroupData.civilizations);
                              isMyTurn = civilization.isMyTurn;
                              if (isMyTurn) {
@@ -242,6 +243,16 @@ public class Room {
                 i--;
             }
         }
+    }
+
+    private void copyTiles (ArrayList<Tile> serverTiles) {
+        for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
+            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), getAllUnits(serverTiles));
+        }
+    }
+
+    private ArrayList<Unit> getAllUnits(ArrayList<Tile> serverTiles) {
+
     }
 
     public void removeRoom() throws IOException {

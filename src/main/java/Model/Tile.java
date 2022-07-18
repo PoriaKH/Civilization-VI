@@ -3,6 +3,7 @@ package Model;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -1178,6 +1179,35 @@ public class Tile extends Polygon {
     public Building getBuilding(){
         return this.building;
     }
+
+    public boolean isRuinDiscovered() {
+        return ruinDiscovered;
+    }
+
+    public boolean isHasRuin() {
+        return hasRuin;
+    }
+
+    public int getRepairNeedImprovement() {
+        return repairNeedImprovement;
+    }
+
+    public Rectangle getRoad() {
+        return road;
+    }
+
+    public Rectangle getRail() {
+        return rail;
+    }
+
+    public HashMap<Unit, Integer> getWorkingOnRoadUntilFinish() {
+        return workingOnRoadUntilFinish;
+    }
+
+    public HashMap<Unit, Integer> getWorkingOnRailUntilFinish() {
+        return workingOnRailUntilFinish;
+    }
+
     public void moveRight(){
         double x1,y1;
         double x2,y2;
@@ -1466,4 +1496,60 @@ public class Tile extends Polygon {
         return false;
     }
 
+    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits) {
+        //this.ruin = ;
+        this.cameraSpeed = 30;
+        this.isDesert = tile.isDesert;
+        this.isMeadow = tile.isMeadow;
+        this.isHill = tile.isHill;
+        this.isMountain = tile.isMountain;
+        this.isOcean = tile.isOcean;
+        this.isPlain = tile.isPlain;
+        this.isSnow = tile.isSnow;
+        this.isTundra = tile.isTundra;
+        this.isBlocker = tile.isBlocker;
+        this.ruinDiscovered = tile.ruinDiscovered;
+        this.hasRuin = tile.hasRuin;
+        this.food = tile.food;
+        this.production = tile.production;
+        this.gold = tile.getGold();
+        this.combatChange = tile.getCombatChange();
+        this.mpCost = tile.getMpCost();
+        this.tileNumber = tile.getTileNumber();
+        this.x = tile.getX();
+        this.y = tile.getY();
+        this.radius = tile.getRadius();
+        this.h = tile.getH();
+        this.citizen = getCitizenCopy(tile.getCitizen());
+        this.units = getUnitsListCopy(tile, allUnits);
+        @Expose
+        private Building building;
+        @Expose
+        private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
+        @Expose
+        private Resource resource;
+        @Expose
+        private Attribute attribute;
+        @Expose
+        private ArrayList<Improvement> improvements;
+        this.isWorking = tile.isWorking;
+        this.isOnRepair = tile.isOnRepair;
+        this.repairNeedImprovement = tile.getRepairNeedImprovement();
+
+        @Expose
+        private ArrayList<Tile> roads;
+        @Expose
+        private ArrayList<Tile> railRoads;
+    }
+
+    private Citizen getCitizenCopy(Citizen citizen) {
+        for (Civilization civilization : PlayGameMenu.civilizations) {
+            for (City city : civilization.getCities()) {
+                for (Citizen cityCitizen : city.getCitizens()) {
+                    if (cityCitizen.equals(citizen)) return cityCitizen;
+                }
+            }
+        }
+        return citizen;
+    }
 }

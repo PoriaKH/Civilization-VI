@@ -1,12 +1,15 @@
 package Model;
 
 import Model.Units.Unit;
+import com.google.gson.annotations.Expose;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
 public class Ruin extends Rectangle {
+    @Expose
     private Technology freeTechnology;
+    @Expose
     private int freeGold; //1 to 6
 
     public Ruin() {
