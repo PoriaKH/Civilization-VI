@@ -1567,6 +1567,10 @@ public class Tile extends Polygon {
             improvements2.add(improvement);
             addImprovementPicture(improvement);
         }
+        else {
+            this.getImprovements().get(0).copyFields(improvements.get(0));
+            improvements2.add(improvements.get(0));
+        }
         return improvements2;
     }
 
