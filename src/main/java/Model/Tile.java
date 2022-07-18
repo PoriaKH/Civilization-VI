@@ -751,6 +751,57 @@ public class Tile extends Polygon {
             }
         }
     }
+    private void addResourcePicture(Resource resource2) {
+        if (getResource() != null) {
+            double y11 = this.getY();
+            double x11 = this.getX() + 70;
+            resource.setX(x11);
+            resource.setY(y11);
+            resource.setWidth(40);
+            resource.setHeight(40);
+            if (resource.isBanana())
+                resource.setFill(new ImagePattern(new Image(banana.toExternalForm())));
+            else if (resource.isCoal())
+                resource.setFill(new ImagePattern(new Image(coal.toExternalForm())));
+            else if (resource.isColor())
+                resource.setFill(new ImagePattern(new Image(color.toExternalForm())));
+            else if (resource.isCotton())
+                resource.setFill(new ImagePattern(new Image(cotton.toExternalForm())));
+            else if (resource.isCow())
+                resource.setFill(new ImagePattern(new Image(cow.toExternalForm())));
+            else if (resource.isFur())
+                resource.setFill(new ImagePattern(new Image(fur.toExternalForm())));
+            else if (resource.isGas())
+                resource.setFill(new ImagePattern(new Image(gas.toExternalForm())));
+            else if (resource.isGazelle())
+                resource.setFill(new ImagePattern(new Image(gazelle.toExternalForm())));
+            else if (resource.isGem())
+                resource.setFill(new ImagePattern(new Image(gem.toExternalForm())));
+            else if (resource.isGold())
+                resource.setFill(new ImagePattern(new Image(golds.toExternalForm())));
+            else if (resource.isHorse())
+                resource.setFill(new ImagePattern(new Image(horse.toExternalForm())));
+            else if (resource.isMarble())
+                resource.setFill(new ImagePattern(new Image(marble.toExternalForm())));
+            else if (resource.isMetal())
+                resource.setFill(new ImagePattern(new Image(metal.toExternalForm())));
+            else if (resource.isSheep())
+                resource.setFill(new ImagePattern(new Image(sheep.toExternalForm())));
+            else if (resource.isSilk())
+                resource.setFill(new ImagePattern(new Image(silk.toExternalForm())));
+            else if (resource.isSilver())
+                resource.setFill(new ImagePattern(new Image(silver.toExternalForm())));
+            else if (resource.isSugar())
+                resource.setFill(new ImagePattern(new Image(sugar.toExternalForm())));
+            else if (resource.isTusk())
+                resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
+            else if (resource.isWheat())
+                resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
+            if (!root.getChildren().contains(resource))
+                root.getChildren().add(resource);
+        }
+    }
+
 
     public void setResource(Resource resource) {
         this.resource = resource;
@@ -1547,7 +1598,7 @@ public class Tile extends Polygon {
         getUnitsListCopy(this, allUnits);
         this.building = setBuildingCopy(tile.getBuilding()); // todo ... pouria check
         this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
-        //this.resource = tile.getResource();
+        this.resource = copyResource(tile.getResource());
         //this.attribute = tile.getAttribute();
         this.improvements = setImprovementCopy(tile.getImprovements());
         this.isWorking = tile.isWorking;
@@ -1557,19 +1608,33 @@ public class Tile extends Polygon {
         this.railRoads = getRoadsTileCopy(tile.getRailRoads());
     }
 
-    private ArrayList<Improvement> setImprovementCopy(ArrayList<Improvement> improvements) {
-        Improvement improvementTemp = improvements.get(0);
-        ArrayList<Improvement> improvements2 = new ArrayList<>();
-        if (this.getImprovements().get(0) == null &&
-            improvements.get(0) != null) {
-            Improvement improvement = new Improvement(improvementTemp.isCamp(),improvementTemp.isFarm(),improvementTemp.isLumberMill(),improvementTemp.isMine(),improvementTemp.isPaddock(),improvementTemp.isAgriculture(),
-                    improvementTemp.isStoneMine(),improvementTemp.isTradingPost(),improvementTemp.isLaboratory(),improvementTemp.getFood(),improvementTemp.getProduction(),improvementTemp.getGold());
-            improvements2.add(improvement);
-            addImprovementPicture(improvement);
+    private Resource copyResource(Resource resource) {
+        if (this.getResource() == null && resource != null) {
+            Resource resource2 = new Resource(resource.getName());
+            addResourcePicture(resource2);
+            return resource2;
         }
-        else {
-            this.getImprovements().get(0).copyFields(improvements.get(0));
-            improvements2.add(improvements.get(0));
+        else if (this.getResource() != null && resource != null){
+            this.getResource().copyFields(resource);
+            return this.getResource();
+        }
+        return null;
+    }
+
+    private ArrayList<Improvement> setImprovementCopy(ArrayList<Improvement> improvements) {
+        ArrayList<Improvement> improvements2 = new ArrayList<>();
+        if (improvements.size() >= 1) {
+            Improvement improvementTemp = improvements.get(0);
+            if (this.getImprovements().get(0) == null && improvements.get(0) != null) {
+                Improvement improvement = new Improvement(improvementTemp.isCamp(), improvementTemp.isFarm(), improvementTemp.isLumberMill(), improvementTemp.isMine(), improvementTemp.isPaddock(), improvementTemp.isAgriculture(),
+                        improvementTemp.isStoneMine(), improvementTemp.isTradingPost(), improvementTemp.isLaboratory(), improvementTemp.getFood(), improvementTemp.getProduction(), improvementTemp.getGold());
+                improvements2.add(improvement);
+                addImprovementPicture(improvement);
+            } else if (this.getImprovements().get(0) != null && improvements.get(0) != null) {
+                this.getImprovements().get(0).copyFields(improvements.get(0));
+                improvements2.add(improvements.get(0));
+                return improvements2;
+            }
         }
         return improvements2;
     }
