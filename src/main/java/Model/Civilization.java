@@ -356,7 +356,7 @@ public class Civilization {
         return results;
     }
 
-    private static Civilization getCivilizationCopy(Civilization key) {
+    public static Civilization getCivilizationCopy(Civilization key) {
         for (Civilization civilization : PlayGameMenu.civilizations) {
             if (civilization.equals(key)) return civilization;
         }

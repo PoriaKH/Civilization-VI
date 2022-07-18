@@ -3,7 +3,9 @@ package View;
 import Controller.PlayGameMenuController;
 import Model.*;
 import Model.FunctionsGson.GameGroupData;
+import Model.Units.Civilian;
 import Model.Units.Unit;
+import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
@@ -246,13 +248,36 @@ public class Room {
     }
 
     private void copyTiles (ArrayList<Tile> serverTiles) {
+        ArrayList<Unit> units = getAllUnits(serverTiles);
         for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
-            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), getAllUnits(serverTiles));
+            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units);
         }
     }
 
     private ArrayList<Unit> getAllUnits(ArrayList<Tile> serverTiles) {
-
+        ArrayList<Unit> allServerUnits = new ArrayList<>();
+        for (Tile tile : PlayGameMenu.tiles) {
+            tile.deleteUnits();
+        }
+        for (Tile serverTile : serverTiles) {
+            allServerUnits.addAll(serverTile.getUnits());
+        }
+        ArrayList<Unit> allClientUnits = new ArrayList<>();
+        for (Unit allServerUnit : allServerUnits) {
+            if (!allServerUnit.isCivilian()) {
+                Warrior warrior = new Warrior(Civilization.getCivilizationCopy(allServerUnit.getCivilization()),Tile.getTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
+                        ((Warrior)allServerUnit).getXp(),((Warrior)allServerUnit).getDamage(),((Warrior)allServerUnit).getRange(),((Warrior)allServerUnit).getRangedCombatDamage(),((Warrior)allServerUnit).isScout(),((Warrior)allServerUnit).isWarrior(),((Warrior)allServerUnit).isArcher(),((Warrior)allServerUnit).isChariotArcher(),
+                        ((Warrior)allServerUnit).isSpearman(),((Warrior)allServerUnit).isCatapult(),((Warrior)allServerUnit).isHorseMan(),((Warrior)allServerUnit).isSwordsMan(),((Warrior)allServerUnit).isCrossbowMan(),((Warrior)allServerUnit).isKnight(),((Warrior)allServerUnit).isLongswordMan(),((Warrior)allServerUnit).isPikeMan(),((Warrior)allServerUnit).isTrebuchet(),
+                        ((Warrior)allServerUnit).isCanon(),((Warrior)allServerUnit).isCavalry(),((Warrior)allServerUnit).isLancer(),((Warrior)allServerUnit).isMusketMan(),((Warrior)allServerUnit).isRifleMan(),((Warrior)allServerUnit).isAntiTankGun(),((Warrior)allServerUnit).isArtillery(),((Warrior)allServerUnit).isInfantry(),((Warrior)allServerUnit).isPanzer(),((Warrior)allServerUnit).isTank());
+                allClientUnits.add(warrior);
+            }
+            else {
+                Civilian civilian = new Civilian(Civilization.getCivilizationCopy(allServerUnit.getCivilization()),Tile.getTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
+                        ((Civilian)allServerUnit).isWorker(), ((Civilian)allServerUnit).isSettler());
+                allClientUnits.add(civilian);
+            }
+        }
+        return allClientUnits;
     }
 
     public void removeRoom() throws IOException {
