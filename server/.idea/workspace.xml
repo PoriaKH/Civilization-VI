@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added map and civilizations generator to server">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="changed gameGroupData on server side">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Ruin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/City.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/GameGroupData.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/GameGroupData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Tile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +58,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Model" />
       <recent name="Model.FunctionsGson" />
     </key>
   </component>
@@ -280,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658038401685</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="changed gameGroupData on server side">
+      <created>1658136177243</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1658136177243</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,7 +305,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="converted server project to maven" />
     <MESSAGE value="added cheatGson and else if in command processor" />
     <MESSAGE value="done some on teleport" />
     <MESSAGE value="changed serverController and added addGold" />
@@ -324,6 +329,7 @@
     <MESSAGE value="commit" />
     <MESSAGE value="removed all related things to graphic from server" />
     <MESSAGE value="added map and civilizations generator to server" />
-    <option name="LAST_COMMIT_MESSAGE" value="added map and civilizations generator to server" />
+    <MESSAGE value="changed gameGroupData on server side" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed gameGroupData on server side" />
   </component>
 </project>
