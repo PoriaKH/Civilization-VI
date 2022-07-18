@@ -1520,16 +1520,23 @@ public class Tile extends Polygon {
         this.h = tile.getH();
         this.citizen = getCitizenCopy(tile.getCitizen());
         getUnitsListCopy(this, allUnits);
-        //this.building = tile.building;
+        this.building = setBuildingCopy(tile.getBuilding());
         this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
-        this.resource = tile.getResource();
-        this.attribute = tile.getAttribute();
-        this.improvements = tile.getImprovements();
+        //this.resource = tile.getResource();
+        //this.attribute = tile.getAttribute();
+        //this.improvements = tile.getImprovements();
         this.isWorking = tile.isWorking;
         this.isOnRepair = tile.isOnRepair;
         this.repairNeedImprovement = tile.getRepairNeedImprovement();
-        this.roads = tile.getRoads();
-        this.railRoads = tile.getRailRoads();
+        //this.roads = tile.getRoads();
+        //this.railRoads = tile.getRailRoads();
+    }
+
+    private Building setBuildingCopy(Building building) {
+        if (this.getBuilding() == null) {
+            building.setCivilization();
+            building.setTile();
+        }
     }
 
     private HashMap<Unit, Integer> getTurnForUnitMakingListCopy(HashMap<Unit, Integer> turnForUnitMaking) {
