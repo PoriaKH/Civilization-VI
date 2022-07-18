@@ -255,6 +255,7 @@ public class Room {
             Civilization civilization = new Civilization(serverCivilization.getMember(), city);
             civilizations.add(civilization);
         }
+        playGameMenuController.loadCivilizationForBuilding(civilizations);
         PlayGameMenu.civilizations = civilizations;
     }
 
@@ -285,6 +286,7 @@ public class Room {
         for (int i = 0; i < PlayGameMenu.civilizations.size(); i++) {
             PlayGameMenu.civilizations.get(i).copyFieldsOfCivilizations(serverCivilizations.get(i));
         }
+        playGameMenuController.loadCivilizationForBuilding(PlayGameMenu.civilizations);
     }
 
     private void deleteCivilization(ArrayList<Civilization> serverCivilizations) {

@@ -1520,7 +1520,7 @@ public class Tile extends Polygon {
         this.h = tile.getH();
         this.citizen = getCitizenCopy(tile.getCitizen());
         getUnitsListCopy(this, allUnits);
-        this.building = setBuildingCopy(tile.getBuilding());
+        this.building = setBuildingCopy(tile.getBuilding()); // todo ... pouria check
         this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
         //this.resource = tile.getResource();
         //this.attribute = tile.getAttribute();
@@ -1533,9 +1533,13 @@ public class Tile extends Polygon {
     }
 
     private Building setBuildingCopy(Building building) {
-        if (this.getBuilding() == null) {
-            building.setCivilization();
-            building.setTile();
+        if (this.getBuilding() == null && building != null) {
+            building.setTile(getTile(building.getTile()));
+            getTile(building.getTile()).addBuilding(building);
+            return building;
+        }
+        else {
+            return this.getBuilding();
         }
     }
 
