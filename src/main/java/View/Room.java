@@ -33,13 +33,16 @@ import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
 import static View.CreateHost.*;
+import static View.GameMenu.gameMenuURL;
 import static View.Lobby.createHostURL;
 import static View.MainMenu.lobbyURL;
 import static View.ProfileMenu.loggedInMember;
+import static View.UnitPanel.playGameMenuController;
 
 public class Room {
     public boolean amIKicked = false;
@@ -51,7 +54,7 @@ public class Room {
     public ArrayList<Button> kickButtons = new ArrayList<>();
     public HashMap<Button,String> buttonStringHashMap = new HashMap<>();
     public PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-
+    public PlayGameMenu playGameMenu;
     public static Socket creatorSocket;
 
     public Member creator;
@@ -174,8 +177,20 @@ public class Room {
                              Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
                              GameGroupData gameGroupData = gson2.fromJson(txt, GameGroupData.class);
                              loadExtras(gameGroupData);
-                             copyCivilizations(gameGroupData.civilizations);
-                             copyTiles(gameGroupData.tiles);
+                             if (!gameGroupData.result.equals("newGame")) {
+                                 // TODO ... kian check kon
+                                 root = FXMLLoader.load(gameMenuURL);
+                                 Tile.root = root;
+                                 copyTiles(gameGroupData.tiles);
+                                 copyCivilizations(gameGroupData.civilizations);
+                                 playGameMenu = new PlayGameMenu();
+                                 Unit.playGameMenu = playGameMenu;
+                                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
+                             }
+                             else {
+                                 startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
+                                 startCivilizations(gameGroupData.civilizations);
+                             }
                              Civilization civilization = getCivilization(gameGroupData.civilizations);
                              isMyTurn = civilization.isMyTurn;
                              if (isMyTurn) {
@@ -197,6 +212,49 @@ public class Room {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private ArrayList<Integer> getStatusChecker(GameGroupData gameGroupData) {
+        if (gameGroupData.index == 0) {
+            return gameGroupData.tileStatusOfCivilization1;
+        }
+        else if (gameGroupData.index == 1) {
+            return gameGroupData.tileStatusOfCivilization2;
+        }
+        else if (gameGroupData.index == 2) {
+            return gameGroupData.tileStatusOfCivilization3;
+        }
+        else if (gameGroupData.index == 3) {
+            return gameGroupData.tileStatusOfCivilization4;
+        }
+        else if (gameGroupData.index == 4) {
+            return gameGroupData.tileStatusOfCivilization5;
+        }
+        return null;
+    }
+
+    private void startTiles(ArrayList<Tile> tiles, ArrayList<Integer> tileStatusOfCivilization) {
+        ArrayList<Tile> map = new ArrayList<>();
+        for (Tile tile : tiles) {
+            Tile tileMap = new Tile(tile.getTileNumber(), tile.isDesert(), tile.isMeadow(), tile.isHill(), tile.isMountain(),
+                    tile.isOcean(), tile.isPlain(), tile.isSnow(), tile.isTundra(), tile.getX(), tile.getY());
+            map.add(tileMap);
+        }
+        for (int i = 0; i < map.size(); i++) {
+            map.get(i).generatingTile(tileStatusOfCivilization.get(i));
+        }
+        PlayGameMenu.tiles = map;
+    }
+
+    private void startCivilizations(ArrayList<Civilization> serverCivilizations) {
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (Civilization serverCivilization : serverCivilizations) {
+            City city = new City();
+            city.copyFieldsOfCity(serverCivilization.getCapital());
+            Civilization civilization = new Civilization(serverCivilization.getMember(), city);
+            civilizations.add(civilization);
+        }
+        PlayGameMenu.civilizations = civilizations;
     }
 
     private void loadExtras(GameGroupData gameGroupData) {

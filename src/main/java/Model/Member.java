@@ -26,6 +26,10 @@ public class Member {
         this.date = date;
         this.imageNumber = imageNumber;
     }
+
+    public Member() {
+    }
+
     public String getUsername() {
         return username;
     }
