@@ -745,21 +745,20 @@ public class Tile extends Polygon {
         }
     }
     private void removeRuinPicture(Ruin ruin) {
-        if (this.units.size() > 0) {
-            Unit unit = units.get(0);
-            ArrayList<String> techNames = new ArrayList<>();
-            for (Technology t : unit.getCivilization().getTechnologies())
-                techNames.add(t.getName());
-            if (!techNames.contains(ruin.getFreeTechnology().getName()))
-                unit.getCivilization().addTechnology(ruin.getFreeTechnology());
-            unit.getCivilization().addGold(ruin.getFreeGold());
-            Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
-            Citizen ruinCitizen = new Citizen(citizenTile);
-            unit.getCivilization().getCapital().getCitizens().add(ruinCitizen);
-            ruin.setVisible(false);
-            ruinDiscovered = true;
-            hasRuin = false;
-        }
+        // todo kian in logic bayad samt server bashe yani citizen sakhtan va ....
+        Unit unit = units.get(0);
+        ArrayList<String> techNames = new ArrayList<>();
+        for (Technology t : unit.getCivilization().getTechnologies())
+            techNames.add(t.getName());
+        if (!techNames.contains(ruin.getFreeTechnology().getName()))
+            unit.getCivilization().addTechnology(ruin.getFreeTechnology());
+        unit.getCivilization().addGold(ruin.getFreeGold());
+        Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
+        Citizen ruinCitizen = new Citizen(citizenTile);
+        unit.getCivilization().getCapital().getCitizens().add(ruinCitizen);
+        ruin.setVisible(false);
+        ruinDiscovered = true;
+        hasRuin = false;
     }
     private void addRuinPicture(Ruin ruin2) {
         if (hasRuin && !ruinDiscovered) {
@@ -1669,7 +1668,7 @@ public class Tile extends Polygon {
             this.getRuin().copyField(ruin);
             return this.getRuin();
         }
-        else if (this.getRuin() != null && ruin == null) {
+        else if (this.units.size() > 0) {
             removeRuinPicture(this.getRuin());
             return null;
         }
