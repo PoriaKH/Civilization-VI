@@ -1493,6 +1493,8 @@ public class Tile extends Polygon {
     }
 
     public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits) {
+        // todo -> poria kian -> check konid in set kardan haye class haye khodeton ro
+        //  ,age ax set kardan dare va .... khodeton bezanid
         //this.ruin = ;
         this.cameraSpeed = 30;
         this.isDesert = tile.isDesert;
