@@ -21,6 +21,7 @@ public class CommandProcessor {
     public static ArrayList<GsonRoom> rooms = new ArrayList<>();
     public static ArrayList<Socket> allSockets = new ArrayList<>();
     public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
+    public static ArrayList<ArrayList<Member>> members = new ArrayList<>();
     public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
     public static ArrayList<GameGroup> gameGroups;
 
@@ -128,14 +129,18 @@ public class CommandProcessor {
             Gson gson = new GsonBuilder().create();
             GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);
             ArrayList<Socket> sockets2 = new ArrayList<>();
+            ArrayList<Member> members2 = new ArrayList<>();
             for(GameSocket gameSocket : gameSocketArray.gameSockets){
                 for(Socket socket1 : allSockets){
                     if(gameSocket.socketPort == socket1.getPort()){
                         sockets2.add(socket1);
                     }
                 }
+                members2.add(gameSocket.member);
             }
             sockets.add(sockets2);
+            members.add(members2);
+
             dataOutputStream.writeUTF("give me members");
             dataOutputStream.flush();
             // TODO... pouria az inja game shoro she revale dige? in members ro set kon

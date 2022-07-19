@@ -5,6 +5,7 @@ public class GameSocket {
     public String socketHost;
     public int remotePort;
     public int socketPort;
+    public Member member;
 
     public GameSocket(String socketHost,int remotePort,int socketPort){
         this.socketHost = socketHost;
