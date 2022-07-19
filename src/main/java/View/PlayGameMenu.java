@@ -695,6 +695,7 @@ public class PlayGameMenu {
             String fileUsername = fileMatcher.group("username");
 
             if(Objects.equals(fileUsername, civilization.getMember().getUsername())) {
+                line = bufferedReader.readLine();
                 continue;
             }
 
