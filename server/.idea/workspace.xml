@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Hosts.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Hosts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Hosts$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Hosts$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Hosts.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Hosts.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Lobby.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Lobby.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +77,7 @@
       <workItem from="1657624661800" duration="134000" />
       <workItem from="1657624845949" duration="698000" />
       <workItem from="1657625874166" duration="2636000" />
-      <workItem from="1657716485412" duration="3076000" />
+      <workItem from="1657716485412" duration="3415000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
