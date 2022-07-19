@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.PlayGameMenuController;
+import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
@@ -319,23 +320,46 @@ public class Civilization {
         /*this.member;
         this.firstLetterOfName;
         this.name;*/
-        this.capital = civilizationServer.getCapital();
+        this.capital.copyFieldsOfCity(civilizationServer.getCapital());
         this.science = civilizationServer.getScience();
         this.sciencePerTurn = civilizationServer.sciencePerTurn;
-        this.technologies = civilizationServer.getTechnologies();
+        this.technologies = Technology.copyListOfTechnology(this.getTechnologies(), civilizationServer.getTechnologies());
         this.gold = civilizationServer.getGold();
         this.goldPerTurn = civilizationServer.getGoldPerTurn();
         this.happiness = civilizationServer.getHappiness();
-        this.cities = civilizationServer.getCities();
+        this.cities = capital.copyCities(this.getCities(), civilizationServer.getCities());
         this.trades = civilizationServer.getTrades();
         this.messages = civilizationServer.getMessages();
-        this.winsInUnitsWar = civilizationServer.getWinsInUnitsWar();
-        this.lossesInUnitsWar = civilizationServer.getLossesInUnitsWar();
+        this.winsInUnitsWar = Civilization.getHashMapOfWar(civilizationServer.getWinsInUnitsWar());
+        this.lossesInUnitsWar = Civilization.getHashMapOfWar(civilizationServer.getLossesInUnitsWar());
         this.point = civilizationServer.getPoint();
         this.isLearningTechnology = civilizationServer.isLearningTechnology;
-        this.friendlyRequests = civilizationServer.getFriendlyRequests();
-        this.friends = civilizationServer.getFriends();
+        this.friendlyRequests = Civilization.getFriendsCopy(civilizationServer.getFriendlyRequests());
+        this.friends = Civilization.getFriendsCopy(civilizationServer.getFriends());
         this.workingOnTechnology = civilizationServer.getWorkingOnTechnology();
         this.technologyEarnedPercent = civilizationServer.getTechnologyEarnedPercent();
+    }
+
+    private static ArrayList<Civilization> getFriendsCopy(ArrayList<Civilization> friendlyRequests) {
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (Civilization friendlyRequest : friendlyRequests) {
+            civilizations.add(getCivilizationCopy(friendlyRequest));
+        }
+        return civilizations;
+    }
+
+    private static HashMap<Civilization, Integer> getHashMapOfWar(HashMap<Civilization, Integer> winsInUnitsWar) {
+        HashMap<Civilization, Integer> results = new HashMap<>();
+        for (Map.Entry<Civilization, Integer> entry: winsInUnitsWar.entrySet()) {
+            results.put(getCivilizationCopy(entry.getKey()), entry.getValue());
+        }
+        return results;
+    }
+
+    public static Civilization getCivilizationCopy(Civilization key) {
+        for (Civilization civilization : PlayGameMenu.civilizations) {
+            if (civilization.equals(key)) return civilization;
+        }
+       return key;
     }
 }

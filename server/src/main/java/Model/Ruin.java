@@ -1,10 +1,7 @@
 package Model;
 
-import Model.Units.Unit;
 import com.google.gson.annotations.Expose;
 import javafx.scene.shape.Rectangle;
-
-import java.util.ArrayList;
 
 public class Ruin extends Rectangle {
     @Expose
@@ -36,8 +33,4 @@ public class Ruin extends Rectangle {
         return freeGold;
     }
 
-    public void copyField(Ruin ruin) {
-        this.freeTechnology = ruin.getFreeTechnology();
-        this.freeGold = ruin.getFreeGold();
-    }
 }

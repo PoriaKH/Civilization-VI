@@ -276,4 +276,33 @@ public class Resource extends Rectangle {
     public boolean isSheep() {
         return isSheep;
     }
+
+    public void copyFields(Resource resource) {
+        this.name = resource.getName();
+        this.isLuxury = resource.isLuxury();
+        this.isStrategic = resource.isStrategic();
+        this.isBonus = resource.isBonus();
+        this.food = resource.getFood();
+        this.production = resource.getProduction();
+        this.gold = resource.getGold();
+        this.isBanana = resource.isBanana();
+        this.isCow = resource.isCow();
+        this.isGazelle = resource.isGazelle();
+        this.isSheep = resource.isSheep();
+        this.isWheat = resource.isWheat();
+        this.isCotton = resource.isCotton();
+        this.isColor = resource.isColor();
+        this.isFur = resource.isFur();
+        this.isGem = resource.isGem();
+        this.isGold = resource.isGold();
+        this.isGas = resource.isGas();
+        this.isTusk = resource.isTusk();
+        this.isMarble = resource.isMarble();
+        this.isSilk = resource.isSilk();
+        this.isSilver = resource.isSilver();
+        this.isSugar = resource.isSugar();
+        this.isCoal = resource.isCoal();
+        this.isHorse = resource.isHorse();
+        this.isMetal = resource.isMetal();
+    }
 }

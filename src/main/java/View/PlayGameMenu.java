@@ -258,7 +258,7 @@ public class PlayGameMenu {
         civName.setFill(Color.RED);
         // buttons
         Button infoPanelButton = new Button("info panel");
-        infoPanelButton.setStyle( "-fx-pref-width: 150;\n" +
+        infoPanelButton.setStyle("-fx-pref-width: 150;\n" +
                 "-fx-pref-height: 20;\n" +
                 " -fx-effect: dropshadow( one-pass-box , #1a0bf1, 8 , 0.0 , 2 , 0 );\n" +
                 "-fx-font-style: italic;\n" +
@@ -322,40 +322,49 @@ public class PlayGameMenu {
                 System.out.println("x = " + event.getX() + "  y = " + event.getY());
             }
         });
-
         boolean[] keysPressed = new boolean[5];//down, up, right, left, c
         for (int i = 0; i < 5; i++)
             keysPressed[i] = false;
         root.setOnKeyPressed(keyEvent -> {
             switch (keyEvent.getCode()) {
-                case UP: keysPressed[0] = true; break;
-                case DOWN: keysPressed[1] = true; break;
-                case LEFT: keysPressed[2] = true; break;
-                case RIGHT: keysPressed[3] = true; break;
-                case C: keysPressed[4] = true; break;
+                case UP:
+                    keysPressed[0] = true;
+                    break;
+                case DOWN:
+                    keysPressed[1] = true;
+                    break;
+                case LEFT:
+                    keysPressed[2] = true;
+                    break;
+                case RIGHT:
+                    keysPressed[3] = true;
+                    break;
+                case C:
+                    keysPressed[4] = true;
+                    break;
             }
-            if(keysPressed[0]){
-                if(tiles.get(0).getY() <= 250) {
+            if (keysPressed[0]) {
+                if (tiles.get(0).getY() <= 250) {
                     for (Tile tile : tiles) {
                         tile.moveDown();
                     }
                 }
             }
-            if(keysPressed[1]){
-                if(tiles.get(5).getY() >= 500) {
+            if (keysPressed[1]) {
+                if (tiles.get(5).getY() >= 500) {
                     for (Tile tile : tiles) {
                         tile.moveUp();
                     }
                 }
             }
-            if(keysPressed[2]){
-                if(tiles.get(0).getX() <= 300) {
+            if (keysPressed[2]) {
+                if (tiles.get(0).getX() <= 300) {
                     for (Tile tile : tiles) {
                         tile.moveRight();
                     }
                 }
             }
-            if(keysPressed[3]) {
+            if (keysPressed[3]) {
                 if (tiles.get(66).getX() >= 1000) {
                     for (Tile tile : tiles) {
                         tile.moveLeft();
@@ -373,122 +382,147 @@ public class PlayGameMenu {
                 }
             }
         });
-        root.setOnKeyReleased(keyEvent ->{
+        root.setOnKeyReleased(keyEvent -> {
             switch (keyEvent.getCode()) {
-                case UP: keysPressed[0] = false; break;
-                case DOWN: keysPressed[1] = false; break;
-                case LEFT: keysPressed[2] = false; break;
-                case RIGHT: keysPressed[3] = false; break;
-                case C: keysPressed[4] = false; break;
+                case UP:
+                    keysPressed[0] = false;
+                    break;
+                case DOWN:
+                    keysPressed[1] = false;
+                    break;
+                case LEFT:
+                    keysPressed[2] = false;
+                    break;
+                case RIGHT:
+                    keysPressed[3] = false;
+                    break;
+                case C:
+                    keysPressed[4] = false;
+                    break;
             }
         });
-        settingButton.setOnMouseClicked(event -> {
-            SettingPanel.gameScene = scene;
-            SettingPanel.stage = stage;
-            try {
-                new SettingPanel().run();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        infoPanelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    InfoPanel.goldAmount = goldAmount;
-                    InfoPanel.happinessAmount = happinessAmount;
-                    InfoPanel.stage = stage;
-                    InfoPanel.gameMenuScene = scene;
-                    InfoPanel.tiles = tiles;
-                    InfoPanel.currentCivilization = playingCivilization;
-                    InfoPanel.civilizations = civilizations;
-                    new InfoPanel().start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                updateMapAfterMove();
-            }
-        });
-        //todo -> kian
-        technologyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                TechnologyPanel.stage = stage;
-                TechnologyPanel.gameMenuScene = scene;
-                TechnologyPanel.playingCivilization = playingCivilization;
-                TechnologyPanel.playGameMenuController = playGameMenuController;
-                try {
-                    new TechnologyPanel().start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        //TODO add technology condition
-        nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                String string = null;
-                try {
-                    string = playGameMenuController.nextTurn(civilizations , playingCivilization, tiles);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (!string.equals("done")) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("next turn");
-                    alert.setHeaderText("result :");
-                    alert.setContentText(string);
-                    alert.showAndWait();
-                } else {
-
-                    PlayGameMenuController.turn ++;
-                    playersCounter++;
-                    if (playersCounter == civilizations.size()) {
-                        playersCounter = 0;
+            settingButton.setOnMouseClicked(event -> {
+                if (Room.isMyTurn) {
+                    SettingPanel.gameScene = scene;
+                    SettingPanel.stage = stage;
+                    try {
+                        new SettingPanel().run();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    playingCivilization = civilizations.get(playersCounter);
-                    civName.setText("civilization : " + playingCivilization.getName());
-                    goldAmount.setText(" : " + playingCivilization.getGold());
-                    happinessAmount.setText(" : " + playingCivilization.getHappiness());
+                }else {
+                    showError();
+                }
+            });
+            infoPanelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (Room.isMyTurn) {
+                        try {
+                            InfoPanel.goldAmount = goldAmount;
+                            InfoPanel.happinessAmount = happinessAmount;
+                            InfoPanel.stage = stage;
+                            InfoPanel.gameMenuScene = scene;
+                            InfoPanel.tiles = tiles;
+                            InfoPanel.currentCivilization = playingCivilization;
+                            InfoPanel.civilizations = civilizations;
+                            new InfoPanel().start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        updateMapAfterMove();
+                    } else {
+                        showError();
+                    }
+                }
+            });
+            //todo -> kian
+            technologyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (Room.isMyTurn) {
+                        TechnologyPanel.stage = stage;
+                        TechnologyPanel.gameMenuScene = scene;
+                        TechnologyPanel.playingCivilization = playingCivilization;
+                        TechnologyPanel.playGameMenuController = playGameMenuController;
+                        try {
+                            new TechnologyPanel().start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        showError();
+                    }
+                }
+            });
+            //TODO add technology condition
+            nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (Room.isMyTurn) {
+                        String string = null;
+                        try {
+                            string = playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if (!string.equals("done")) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("next turn");
+                            alert.setHeaderText("result :");
+                            alert.setContentText(string);
+                            alert.showAndWait();
+                        } else {
+
+                            PlayGameMenuController.turn++;
+                            playersCounter++;
+                            if (playersCounter == civilizations.size()) {
+                                playersCounter = 0;
+                            }
+                            playingCivilization = civilizations.get(playersCounter);
+                            civName.setText("civilization : " + playingCivilization.getName());
+                            goldAmount.setText(" : " + playingCivilization.getGold());
+                            happinessAmount.setText(" : " + playingCivilization.getHappiness());
 
 
-                    playGameMenuController.deleteLosers(playingCivilization, civilizations);
-                    if (playGameMenuController.findWinner(playingCivilization, civilizations)
-                            || playGameMenuController.findWinnerByYear(civilizations)) {
-                        //TODO .... write array members in file -> pouria ***********
-                        //ToDO ... tabe moshkel dare ehtemalan az while(true) e
+                            playGameMenuController.deleteLosers(playingCivilization, civilizations);
+                            if (playGameMenuController.findWinner(playingCivilization, civilizations)
+                                    || playGameMenuController.findWinnerByYear(civilizations)) {
+                                //TODO .... write array members in file -> pouria ***********
+                                //ToDO ... tabe moshkel dare ehtemalan az while(true) e
 
                          /*try {
                             increaseFileScore(civilizations.get(0));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }*/
-                        if (5 * PlayGameMenuController.turn == 2050) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("WINNER : ");
-                            alert.setHeaderText("game is over because we are in year 2050 :");
-                            alert.setContentText("Winner civilization : " + civilizations.get(0).getName());
+                                if (5 * PlayGameMenuController.turn == 2050) {
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("WINNER : ");
+                                    alert.setHeaderText("game is over because we are in year 2050 :");
+                                    alert.setContentText("Winner civilization : " + civilizations.get(0).getName());
 
-                            playingCivilization = civilizations.get(0);
-                            civName.setText("civilization : " + playingCivilization.getName());
-                            goldAmount.setText(" : " + playingCivilization.getGold());
-                            happinessAmount.setText(" : " + playingCivilization.getHappiness());
+                                    playingCivilization = civilizations.get(0);
+                                    civName.setText("civilization : " + playingCivilization.getName());
+                                    goldAmount.setText(" : " + playingCivilization.getGold());
+                                    happinessAmount.setText(" : " + playingCivilization.getHappiness());
 
-                            alert.showAndWait();
+                                    alert.showAndWait();
+                                }
+                                VictoryAnimation.stage = stage;
+                                VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
+                                victoryAnimation.play();
+                            }
+                            updateMapAfterMove();
                         }
-                        VictoryAnimation.stage = stage;
-                        VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
-                        victoryAnimation.play();
+                    }else {
+                        showError();
                     }
-                    updateMapAfterMove();
                 }
-            }
-        });
+            });
 
-
-        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root,1280,720);
+        stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
         scene.getRoot().requestFocus();
         stage.setScene(scene);
         root.getChildren().get(0).requestFocus();
@@ -498,6 +532,15 @@ public class PlayGameMenu {
 
         stage.show();
     }
+
+    private void showError() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("illegal action");
+        alert.setHeaderText("result :");
+        alert.setContentText("it is not your turn");
+        alert.showAndWait();
+    }
+
     //TODO... koochak bebar to server
     public void updateMapAfterMove(){
         ArrayList<Integer> civilization1new = new ArrayList<>();

@@ -3,9 +3,11 @@ package View;
 import Controller.PlayGameMenuController;
 import Model.*;
 import Model.FunctionsGson.GameGroupData;
+import Model.Units.Civilian;
+import Model.Units.Unit;
+import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.Expose;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -18,29 +20,22 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 import static View.CreateHost.*;
-import static View.Lobby.createHostURL;
 import static View.MainMenu.lobbyURL;
 import static View.ProfileMenu.loggedInMember;
 
 public class Room {
     public boolean amIKicked = false;
-    public static boolean isMyTurn = false;
+    public static boolean isMyTurn = true; // todo felan bara test graphic true e
 
     public boolean isCreator = false;
     public GsonRoom gsonRoom;
@@ -48,7 +43,7 @@ public class Room {
     public ArrayList<Button> kickButtons = new ArrayList<>();
     public HashMap<Button,String> buttonStringHashMap = new HashMap<>();
     public PlayGameMenuController playGameMenuController = new PlayGameMenuController();
-
+    public PlayGameMenu playGameMenu;
     public static Socket creatorSocket;
 
     public Member creator;
@@ -166,20 +161,34 @@ public class Room {
                         dataOutputStream.flush();
                         //TODO...Koochak add playGameMenu graphic
 
-                         /*while (true) {
+                         while (true) {
                              String txt = dataInputStream.readUTF();
                              Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
                              GameGroupData gameGroupData = gson2.fromJson(txt, GameGroupData.class);
                              loadExtras(gameGroupData);
-                             copyCivilizations(gameGroupData.civilizations);
-                             PlayGameMenu.tiles = gameGroupData.tiles;
+                             if (!gameGroupData.result.equals("newGame")) {
+                                 // TODO ... kian check kon
+                                 root = FXMLLoader.load(GameMenu.gameMenuURL);
+                                 Tile.root = root;
+                                 copyTiles(gameGroupData.tiles);
+                                 copyCivilizations(gameGroupData.civilizations);
+                                 playGameMenu = new PlayGameMenu();
+                                 Unit.playGameMenu = playGameMenu;
+                                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
+                                 playGameMenu.switchToGame(mouseEvent);
+                             }
+                             else {
+                                 startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
+                                 startCivilizations(gameGroupData.civilizations);
+                             }
                              Civilization civilization = getCivilization(gameGroupData.civilizations);
                              isMyTurn = civilization.isMyTurn;
                              if (isMyTurn) {
-                                String result = gameGroupData.result;
-                                showResult(result);
+                                 PlayGameMenu.playingCivilization = civilization;
+                                 String result = gameGroupData.result;
+                                 showResult(result);
                              }
-                         }*/
+                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -194,6 +203,50 @@ public class Room {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private ArrayList<Integer> getStatusChecker(GameGroupData gameGroupData) {
+        if (gameGroupData.index == 0) {
+            return gameGroupData.tileStatusOfCivilization1;
+        }
+        else if (gameGroupData.index == 1) {
+            return gameGroupData.tileStatusOfCivilization2;
+        }
+        else if (gameGroupData.index == 2) {
+            return gameGroupData.tileStatusOfCivilization3;
+        }
+        else if (gameGroupData.index == 3) {
+            return gameGroupData.tileStatusOfCivilization4;
+        }
+        else if (gameGroupData.index == 4) {
+            return gameGroupData.tileStatusOfCivilization5;
+        }
+        return null;
+    }
+
+    private void startTiles(ArrayList<Tile> tiles, ArrayList<Integer> tileStatusOfCivilization) {
+        ArrayList<Tile> map = new ArrayList<>();
+        for (Tile tile : tiles) {
+            Tile tileMap = new Tile(tile.getTileNumber(), tile.isDesert(), tile.isMeadow(), tile.isHill(), tile.isMountain(),
+                    tile.isOcean(), tile.isPlain(), tile.isSnow(), tile.isTundra(), tile.getX(), tile.getY());
+            map.add(tileMap);
+        }
+        for (int i = 0; i < map.size(); i++) {
+            map.get(i).generatingTile(tileStatusOfCivilization.get(i));
+        }
+        PlayGameMenu.tiles = map;
+    }
+
+    private void startCivilizations(ArrayList<Civilization> serverCivilizations) {
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (Civilization serverCivilization : serverCivilizations) {
+            City city = new City();
+            city.copyFieldsOfCity(serverCivilization.getCapital());
+            Civilization civilization = new Civilization(serverCivilization.getMember(), city);
+            civilizations.add(civilization);
+        }
+        playGameMenuController.loadCivilizationForBuilding(civilizations);
+        PlayGameMenu.civilizations = civilizations;
     }
 
     private void loadExtras(GameGroupData gameGroupData) {
@@ -219,29 +272,57 @@ public class Room {
     }
 
     private void copyCivilizations (ArrayList<Civilization> serverCivilizations) {
-        deleteCivilization(serverCivilizations);
+        PlayGameMenu.civilizations = deleteCivilization(serverCivilizations);
         for (int i = 0; i < PlayGameMenu.civilizations.size(); i++) {
             PlayGameMenu.civilizations.get(i).copyFieldsOfCivilizations(serverCivilizations.get(i));
         }
+        playGameMenuController.loadCivilizationForBuilding(PlayGameMenu.civilizations);
     }
 
-    private void deleteCivilization(ArrayList<Civilization> serverCivilizations) {
-        boolean doesCivExist = false;
-        for (int i = 0; i < PlayGameMenu.civilizations.size(); i++) {
-            for (int i1 = 0; i1 < serverCivilizations.size(); i1++) {
-                if (serverCivilizations.get(i1).equals(PlayGameMenu.civilizations.get(i))) {
-                    doesCivExist = true;
+    private ArrayList<Civilization> deleteCivilization(ArrayList<Civilization> serverCivilizations) {
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (Civilization serverCivilization : serverCivilizations) {
+            for (Civilization civilization : PlayGameMenu.civilizations) {
+                if (civilization.equals(serverCivilization)) {
+                    civilizations.add(civilization);
                     break;
                 }
             }
-            if (doesCivExist) {
-                doesCivExist = false;
+        }
+        return civilizations;
+    }
+
+    private void copyTiles (ArrayList<Tile> serverTiles) {
+        ArrayList<Unit> units = getAllUnits(serverTiles);
+        for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
+            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units);
+        }
+    }
+
+    private ArrayList<Unit> getAllUnits(ArrayList<Tile> serverTiles) {
+        ArrayList<Unit> allServerUnits = new ArrayList<>();
+        for (Tile tile : PlayGameMenu.tiles) {
+            tile.deleteUnits();
+        }
+        for (Tile serverTile : serverTiles) {
+            allServerUnits.addAll(serverTile.getUnits());
+        }
+        ArrayList<Unit> allClientUnits = new ArrayList<>();
+        for (Unit allServerUnit : allServerUnits) {
+            if (!allServerUnit.isCivilian()) {
+                Warrior warrior = new Warrior(Civilization.getCivilizationCopy(allServerUnit.getCivilization()),Tile.getClientTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
+                        ((Warrior)allServerUnit).getXp(),((Warrior)allServerUnit).getDamage(),((Warrior)allServerUnit).getRange(),((Warrior)allServerUnit).getRangedCombatDamage(),((Warrior)allServerUnit).isScout(),((Warrior)allServerUnit).isWarrior(),((Warrior)allServerUnit).isArcher(),((Warrior)allServerUnit).isChariotArcher(),
+                        ((Warrior)allServerUnit).isSpearman(),((Warrior)allServerUnit).isCatapult(),((Warrior)allServerUnit).isHorseMan(),((Warrior)allServerUnit).isSwordsMan(),((Warrior)allServerUnit).isCrossbowMan(),((Warrior)allServerUnit).isKnight(),((Warrior)allServerUnit).isLongswordMan(),((Warrior)allServerUnit).isPikeMan(),((Warrior)allServerUnit).isTrebuchet(),
+                        ((Warrior)allServerUnit).isCanon(),((Warrior)allServerUnit).isCavalry(),((Warrior)allServerUnit).isLancer(),((Warrior)allServerUnit).isMusketMan(),((Warrior)allServerUnit).isRifleMan(),((Warrior)allServerUnit).isAntiTankGun(),((Warrior)allServerUnit).isArtillery(),((Warrior)allServerUnit).isInfantry(),((Warrior)allServerUnit).isPanzer(),((Warrior)allServerUnit).isTank());
+                allClientUnits.add(warrior);
             }
             else {
-                PlayGameMenu.civilizations.remove(i);
-                i--;
+                Civilian civilian = new Civilian(Civilization.getCivilizationCopy(allServerUnit.getCivilization()),Tile.getClientTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
+                        ((Civilian)allServerUnit).isWorker(), ((Civilian)allServerUnit).isSettler());
+                allClientUnits.add(civilian);
             }
         }
+        return allClientUnits;
     }
 
     public void removeRoom() throws IOException {

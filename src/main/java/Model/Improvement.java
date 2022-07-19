@@ -128,4 +128,21 @@ public class Improvement extends Rectangle {
     public String getName() {
         return name;
     }
+
+    public void copyFields(Improvement improvement) {
+        this.food = improvement.getFood();
+        this.production = improvement.getProduction();
+        this.gold = improvement.getGold();
+        this.isWorking = improvement.isWorking();
+        this.isCamp = improvement.isCamp();
+        this.isFarm = improvement.isFarm();
+        this.isLumberMill = improvement.isLumberMill();
+        this.isMine = improvement.isMine();
+        this.isPaddock = improvement.isPaddock();
+        this.isAgriculture = improvement.isAgriculture();
+        this.isStoneMine = improvement.isStoneMine();
+        this.isTradingPost = improvement.isTradingPost();
+        this.isLaboratory = improvement.isLaboratory();
+        this.name = improvement.getName();
+    }
 }

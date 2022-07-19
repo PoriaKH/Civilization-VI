@@ -109,6 +109,9 @@ public class Tile {
     public static ArrayList<Tile> map;
     @Expose
     public static ArrayList<Civilization> civilizations;*/
+
+    @Expose
+    public Ruin ruin;
     @Expose
     public float cameraSpeed = 30;
     @Expose
@@ -129,6 +132,10 @@ public class Tile {
     private boolean isTundra;                   //Smooth
     @Expose
     private boolean isBlocker;
+    @Expose
+    private boolean ruinDiscovered;
+    @Expose
+    private boolean hasRuin;
     @Expose
     private int food;
     @Expose
@@ -194,6 +201,8 @@ public class Tile {
         this.isSnow = isSnow;
         this.isTundra = isTundra;
         this.isBlocker = false;
+        this.ruinDiscovered = false;
+        this.hasRuin = false;
         if(isHill || isMountain)
             this.isBlocker = true;
 
@@ -505,6 +514,13 @@ public class Tile {
             this.gold += this.resource.getGold();
             this.production += this.resource.getProduction();
         }
+        double chance = Math.random();
+        if (chance >= 0.33 && chance < 0.38 && !isOcean) {
+            ruin = new Ruin();
+            this.hasRuin = true;
+        }
+
+
 /*
 
         double x1,y1;
@@ -1247,6 +1263,13 @@ public class Tile {
         }
     }*/
 
+    public boolean isRuinDiscovered() {
+        return ruinDiscovered;
+    }
+
+    public boolean isHasRuin() {
+        return hasRuin;
+    }
     public boolean equals (Tile tile) {
         if (this.getX() == tile.getX() &&
         this.getY() == tile.getY()) return true;

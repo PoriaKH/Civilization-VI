@@ -2,6 +2,7 @@ package Model;
 
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
@@ -53,6 +54,8 @@ public class City {
 
     }
 
+    public City() {
+    }
 
     public int getDamagePoint() {
         return damagePoint;
@@ -166,5 +169,94 @@ public class City {
 
     public void addCitizen(Citizen citizen){
         this.citizens.add(citizen);
+    }
+
+    public boolean equals(City city) {
+        if (this.centerTile.equals(city.getCenterTile()) &&
+                this.defenceStrength == city.damagePoint &&
+                this.damagePoint == city.getDamagePoint()) return true;
+        return false;
+    }
+
+    public void copyFieldsOfCity(City city) {
+        this.gold = city.getGold();
+        this.food = city.getFood();
+        this.production = city.getProduction();
+        this.totalFood = city.getTotalFood();
+        this.citizens = Citizen.copyListOfCitizens(this, city);
+        this.centerTile = getCenterForCity(city.getCenterTile());
+        this.tiles = getCityTiles(city.getTiles());
+        this.defenceStrength = city.getDefenceStrength();
+        this.damagePoint = city.getDamagePoint();
+        this.sciencePerTurn = city.getSciencePerTurn();
+    }
+
+    private ArrayList<Tile> getCityTiles(ArrayList<Tile> tiles) {
+        ArrayList<Tile> tilesCity = new ArrayList<>();
+        for (Tile tile : PlayGameMenu.tiles) {
+            for (Tile tile1 : tiles) {
+                if (tile.equals(tile1)) {
+                    tilesCity.add(tile);
+                    break;
+                }
+            }
+        }
+        return tilesCity;
+    }
+
+    private Tile getCenterForCity(Tile centerTile) {
+        for (Tile tile : PlayGameMenu.tiles) {
+            if (tile.equals(centerTile)) return tile;
+        }
+        return null;
+    }
+
+    public ArrayList<City> copyCities(ArrayList<City> clientCities, ArrayList<City> serverCities) {
+        ArrayList<City> answer = new ArrayList<>();
+        ArrayList<City> newCities;
+        newCities = newCities(clientCities, serverCities);
+        for (City newCity : newCities) {
+            City city = new City(getCenterForCity(newCity.getCenterTile()), PlayGameMenu.tiles);
+            city.copyFieldsOfCity(newCity);
+            answer.add(city);
+        }
+        newCities = updateCities(clientCities, serverCities);
+        for (City newCity : newCities) {
+            for (City clientCity : clientCities) {
+                if (clientCity.equals(newCity)) {
+                    clientCity.copyFieldsOfCity(newCity);
+                    answer.add(clientCity);
+                    break;
+                }
+            }
+        }
+
+        return answer;
+    }
+
+    public ArrayList<City> newCities(ArrayList<City> clientCities, ArrayList<City> serverCities) {
+        ArrayList<City> cities = new ArrayList<>();
+        boolean doesExist = false;
+        for (City serverCity : serverCities) {
+            for (City clientCity : clientCities) {
+                if (serverCity.equals(clientCity)) {
+                    doesExist = true;
+                    break;
+                }
+            }
+            if (doesExist) doesExist = false;
+            else cities.add(serverCity);
+        }
+        return cities;
+    }
+
+    public ArrayList<City> updateCities(ArrayList<City> clientCities, ArrayList<City> serverCities) {
+        ArrayList<City> cities = new ArrayList<>();
+        for (City serverCity : serverCities) {
+            for (City clientCity : clientCities) {
+                if (serverCity.equals(clientCity)) cities.add(serverCity);
+            }
+        }
+        return cities;
     }
 }

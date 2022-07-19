@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="changed gameGroupData on server side">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/GameGroupData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/GameGroupData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/GameGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/GameGroup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +55,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -56,6 +63,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Model" />
       <recent name="Model.FunctionsGson" />
     </key>
   </component>
@@ -86,8 +94,6 @@
       <workItem from="1657716485412" duration="3076000" />
       <workItem from="1657734133379" duration="1737000" />
       <workItem from="1657995710133" duration="1924000" />
-      <workItem from="1658066393727" duration="71000" />
-      <workItem from="1658236054866" duration="53000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -278,7 +284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658038401685</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="changed gameGroupData on server side">
+      <created>1658136177243</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1658136177243</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -297,7 +310,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="converted server project to maven" />
     <MESSAGE value="added cheatGson and else if in command processor" />
     <MESSAGE value="done some on teleport" />
     <MESSAGE value="changed serverController and added addGold" />
@@ -322,6 +334,7 @@
     <MESSAGE value="commit" />
     <MESSAGE value="removed all related things to graphic from server" />
     <MESSAGE value="added map and civilizations generator to server" />
-    <option name="LAST_COMMIT_MESSAGE" value="added map and civilizations generator to server" />
+    <MESSAGE value="changed gameGroupData on server side" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed gameGroupData on server side" />
   </component>
 </project>

@@ -1282,8 +1282,14 @@ public class PlayGameMenuController {
 
     public void sendMessageToAllClients(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
         ArrayList<Socket> sockets = gameGroup.sockets;
-        for (Socket socket : sockets) {
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        for (int i = 0; i < sockets.size(); i++) {
+            gameGroupData.index = i;
+            gameGroupData.tileStatusOfCivilization1 = gameGroup.tileStatusOfCivilization1;
+            gameGroupData.tileStatusOfCivilization2 = gameGroup.tileStatusOfCivilization2;
+            gameGroupData.tileStatusOfCivilization3 = gameGroup.tileStatusOfCivilization3;
+            gameGroupData.tileStatusOfCivilization4 = gameGroup.tileStatusOfCivilization4;
+            gameGroupData.tileStatusOfCivilization5 = gameGroup.tileStatusOfCivilization5;
+            DataOutputStream dataOutputStream = new DataOutputStream(sockets.get(i).getOutputStream());
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
             String respond = gson.toJson(gameGroupData);
             dataOutputStream.writeUTF(respond);

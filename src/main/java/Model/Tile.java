@@ -3,20 +3,17 @@ package Model;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.scene.shape.Rectangle;
 
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -621,15 +618,8 @@ public class Tile extends Polygon {
             this.setFill(new ImagePattern(new Image(hill.toExternalForm())));
         else if (getAttribute() != null && getAttribute().isIce())
             this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
-        else if (getAttribute() != null && getAttribute().isJungle()) {
-            System.out.println(this.getAttribute().isJungle());
-            try {
-                this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
-            }
-            catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        else if (getAttribute() != null && getAttribute().isJungle())
+            this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
         else if (isMeadow)
             this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
         else if (isMountain)
@@ -754,6 +744,115 @@ public class Tile extends Polygon {
             }
         }
     }
+    private void removeRuinPicture(Ruin ruin) {
+        // todo kian in logic bayad samt server bashe yani citizen sakhtan va ....
+        Unit unit = units.get(0);
+        ArrayList<String> techNames = new ArrayList<>();
+        for (Technology t : unit.getCivilization().getTechnologies())
+            techNames.add(t.getName());
+        if (!techNames.contains(ruin.getFreeTechnology().getName()))
+            unit.getCivilization().addTechnology(ruin.getFreeTechnology());
+        unit.getCivilization().addGold(ruin.getFreeGold());
+        Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
+        Citizen ruinCitizen = new Citizen(citizenTile);
+        unit.getCivilization().getCapital().getCitizens().add(ruinCitizen);
+        ruin.setVisible(false);
+        ruinDiscovered = true;
+        hasRuin = false;
+    }
+    private void addRuinPicture(Ruin ruin2) {
+        if (hasRuin && !ruinDiscovered) {
+            double y11 = this.getY();
+            double x11 = this.getX();
+            ruin.setVisible(true);
+            ruin.setWidth(40);
+            ruin.setHeight(40);
+            ruin.setX(x11 - 10);
+            ruin.setY(y11 - 10);
+            ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
+            if (!root.getChildren().contains(ruin))
+                root.getChildren().add(ruin);
+        }
+    }
+
+    private void addAttributePicture(Attribute attribute2) {
+        if  (isDesert)
+            this.setFill(new ImagePattern(new Image(dessert.toExternalForm())));
+        else if (isHill)
+            this.setFill(new ImagePattern(new Image(hill.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isIce())
+            this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isJungle())
+            this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+        else if (isMeadow)
+            this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
+        else if (isMountain)
+            this.setFill(new ImagePattern(new Image(mountain.toExternalForm())));
+        else if (isPlain)
+            this.setFill(new ImagePattern(new Image(plain.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isRainForest())
+            this.setFill(new ImagePattern(new Image(rainforest.toExternalForm())));
+        else if (isSnow)
+            this.setFill(new ImagePattern(new Image(snow.toExternalForm())));
+        else if (isTundra)
+            this.setFill(new ImagePattern(new Image(tundra.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isMarsh())
+            this.setFill(new ImagePattern(new Image(marsh.toExternalForm())));
+        else if (isOcean)
+            this.setFill(new ImagePattern(new Image(ocean.toExternalForm())));
+    }
+
+    private void addResourcePicture(Resource resource2) {
+        if (getResource() != null) {
+            double y11 = this.getY();
+            double x11 = this.getX() + 70;
+            resource.setX(x11);
+            resource.setY(y11);
+            resource.setWidth(40);
+            resource.setHeight(40);
+            if (resource.isBanana())
+                resource.setFill(new ImagePattern(new Image(banana.toExternalForm())));
+            else if (resource.isCoal())
+                resource.setFill(new ImagePattern(new Image(coal.toExternalForm())));
+            else if (resource.isColor())
+                resource.setFill(new ImagePattern(new Image(color.toExternalForm())));
+            else if (resource.isCotton())
+                resource.setFill(new ImagePattern(new Image(cotton.toExternalForm())));
+            else if (resource.isCow())
+                resource.setFill(new ImagePattern(new Image(cow.toExternalForm())));
+            else if (resource.isFur())
+                resource.setFill(new ImagePattern(new Image(fur.toExternalForm())));
+            else if (resource.isGas())
+                resource.setFill(new ImagePattern(new Image(gas.toExternalForm())));
+            else if (resource.isGazelle())
+                resource.setFill(new ImagePattern(new Image(gazelle.toExternalForm())));
+            else if (resource.isGem())
+                resource.setFill(new ImagePattern(new Image(gem.toExternalForm())));
+            else if (resource.isGold())
+                resource.setFill(new ImagePattern(new Image(golds.toExternalForm())));
+            else if (resource.isHorse())
+                resource.setFill(new ImagePattern(new Image(horse.toExternalForm())));
+            else if (resource.isMarble())
+                resource.setFill(new ImagePattern(new Image(marble.toExternalForm())));
+            else if (resource.isMetal())
+                resource.setFill(new ImagePattern(new Image(metal.toExternalForm())));
+            else if (resource.isSheep())
+                resource.setFill(new ImagePattern(new Image(sheep.toExternalForm())));
+            else if (resource.isSilk())
+                resource.setFill(new ImagePattern(new Image(silk.toExternalForm())));
+            else if (resource.isSilver())
+                resource.setFill(new ImagePattern(new Image(silver.toExternalForm())));
+            else if (resource.isSugar())
+                resource.setFill(new ImagePattern(new Image(sugar.toExternalForm())));
+            else if (resource.isTusk())
+                resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
+            else if (resource.isWheat())
+                resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
+            if (!root.getChildren().contains(resource))
+                root.getChildren().add(resource);
+        }
+    }
+
 
     public void setResource(Resource resource) {
         this.resource = resource;
@@ -1101,6 +1200,31 @@ public class Tile extends Polygon {
         }
         this.improvementEarnedPercent.replace(this.workingOnImprovement, roundLeft);
     }
+    private void addImprovementPicture(Improvement improvement) {
+        improvement.setX(this.getX() + 50);
+        improvement.setY(this.getY() + 30);
+        improvement.setWidth(60);
+        improvement.setHeight(60);
+        if (improvement.getName().equals("agriculture"))
+            improvement.setFill(new ImagePattern(new Image(agriculture.toExternalForm())));
+        else if (improvement.getName().equals("camp"))
+            improvement.setFill(new ImagePattern(new Image(camp.toExternalForm())));
+        else if (improvement.getName().equals("farm"))
+            improvement.setFill(new ImagePattern(new Image(farm.toExternalForm())));
+        else if (improvement.getName().equals("laboratory"))
+            improvement.setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
+        else if (improvement.getName().equals("lumberMill"))
+            improvement.setFill(new ImagePattern(new Image(lumberMill.toExternalForm())));
+        else if (improvement.getName().equals("mine"))
+            improvement.setFill(new ImagePattern(new Image(mine.toExternalForm())));
+        else if (improvement.getName().equals("paddock"))
+            improvement.setFill(new ImagePattern(new Image(paddock.toExternalForm())));
+        else if (improvement.getName().equals("stoneMine"))
+            improvement.setFill(new ImagePattern(new Image(stoneMine.toExternalForm())));
+        else if (improvement.getName().equals("tradingPost"))
+            improvement.setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
+        root.getChildren().add(improvement);
+    }
     public void cancelImprovementOnProcess(){
         if (workingOnImprovement == null)
             return;
@@ -1178,6 +1302,35 @@ public class Tile extends Polygon {
     public Building getBuilding(){
         return this.building;
     }
+
+    public boolean isRuinDiscovered() {
+        return ruinDiscovered;
+    }
+
+    public boolean isHasRuin() {
+        return hasRuin;
+    }
+
+    public int getRepairNeedImprovement() {
+        return repairNeedImprovement;
+    }
+
+    public Rectangle getRoad() {
+        return road;
+    }
+
+    public Rectangle getRail() {
+        return rail;
+    }
+
+    public HashMap<Unit, Integer> getWorkingOnRoadUntilFinish() {
+        return workingOnRoadUntilFinish;
+    }
+
+    public HashMap<Unit, Integer> getWorkingOnRailUntilFinish() {
+        return workingOnRailUntilFinish;
+    }
+
     public void moveRight(){
         double x1,y1;
         double x2,y2;
@@ -1454,5 +1607,186 @@ public class Tile extends Polygon {
             improvements.get(0).setX(this.getX() + 50);
             improvements.get(0).setY(this.getY() + 30);
         }
+    }
+
+    public Ruin getRuin() {
+        return ruin;
+    }
+
+    public boolean equals (Tile tile) {
+        if (this.getX() == tile.getX() &&
+                this.getY() == tile.getY()) return true;
+        return false;
+    }
+
+    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits) {
+        // todo ... check classes that yall wrote
+        this.ruin = getRuinCopy(tile.getRuin());
+        this.cameraSpeed = 30;
+        this.isDesert = tile.isDesert;
+        this.isMeadow = tile.isMeadow;
+        this.isHill = tile.isHill;
+        this.isMountain = tile.isMountain;
+        this.isOcean = tile.isOcean;
+        this.isPlain = tile.isPlain;
+        this.isSnow = tile.isSnow;
+        this.isTundra = tile.isTundra;
+        this.isBlocker = tile.isBlocker;
+        this.ruinDiscovered = tile.ruinDiscovered;
+        this.hasRuin = tile.hasRuin;
+        this.food = tile.food;
+        this.production = tile.production;
+        this.gold = tile.getGold();
+        this.combatChange = tile.getCombatChange();
+        this.mpCost = tile.getMpCost();
+        this.tileNumber = tile.getTileNumber();
+        this.x = tile.getX();
+        this.y = tile.getY();
+        this.radius = tile.getRadius();
+        this.h = tile.getH();
+        this.citizen = getCitizenCopy(tile.getCitizen());
+        getUnitsListCopy(this, allUnits);
+        this.building = setBuildingCopy(tile.getBuilding());
+        this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
+        this.resource = copyResource(tile.getResource());
+        this.attribute = setAttributeCopy(tile.getAttribute());
+        this.improvements = setImprovementCopy(tile.getImprovements());
+        this.isWorking = tile.isWorking;
+        this.isOnRepair = tile.isOnRepair;
+        this.repairNeedImprovement = tile.getRepairNeedImprovement();
+        this.roads = getRoadsTileCopy(tile.getRoads());
+        this.railRoads = getRoadsTileCopy(tile.getRailRoads());
+    }
+
+    private Ruin getRuinCopy(Ruin ruin) {
+        if (this.getRuin() == null && ruin != null) {
+            Ruin ruin2 = ruin;
+            addRuinPicture(ruin2);
+            return ruin2;
+        }
+        else if (this.getRuin() != null && ruin != null) {
+            this.getRuin().copyField(ruin);
+            return this.getRuin();
+        }
+        else if (this.units.size() > 0) {
+            removeRuinPicture(this.getRuin());
+            return null;
+        }
+        return null;
+    }
+
+    private Attribute setAttributeCopy(Attribute attribute) {
+        if (this.getAttribute() == null && attribute != null) {
+            Attribute attribute2 = new Attribute(attribute.isPlat(), attribute.isJungle(), attribute.isIce(), attribute.isRainForest(), attribute.isMarsh(), attribute.isOasis());
+            addAttributePicture(attribute2);
+            return attribute2;
+        }
+        else if (this.getAttribute() != null && attribute != null) {
+            this.getAttribute().copyFields(attribute);
+            return this.getAttribute();
+        }
+        return null;
+    }
+
+    private Resource copyResource(Resource resource) {
+        if (this.getResource() == null && resource != null) {
+            Resource resource2 = new Resource(resource.getName());
+            addResourcePicture(resource2);
+            return resource2;
+        }
+        else if (this.getResource() != null && resource != null){
+            this.getResource().copyFields(resource);
+            return this.getResource();
+        }
+        return null;
+    }
+
+    private ArrayList<Improvement> setImprovementCopy(ArrayList<Improvement> improvements) {
+        ArrayList<Improvement> improvements2 = new ArrayList<>();
+        if (improvements.size() >= 1) {
+            Improvement improvementTemp = improvements.get(0);
+            if (this.getImprovements().get(0) == null && improvements.get(0) != null) {
+                Improvement improvement = new Improvement(improvementTemp.isCamp(), improvementTemp.isFarm(), improvementTemp.isLumberMill(), improvementTemp.isMine(), improvementTemp.isPaddock(), improvementTemp.isAgriculture(),
+                        improvementTemp.isStoneMine(), improvementTemp.isTradingPost(), improvementTemp.isLaboratory(), improvementTemp.getFood(), improvementTemp.getProduction(), improvementTemp.getGold());
+                improvements2.add(improvement);
+                addImprovementPicture(improvement);
+            } else if (this.getImprovements().get(0) != null && improvements.get(0) != null) {
+                this.getImprovements().get(0).copyFields(improvements.get(0));
+                improvements2.add(improvements.get(0));
+                return improvements2;
+            }
+        }
+        return improvements2;
+    }
+
+    private ArrayList<Tile> getRoadsTileCopy(ArrayList<Tile> tiles) {
+        ArrayList<Tile> clientTiles = new ArrayList<>();
+        for (Tile tile : tiles) {
+            clientTiles.add(getClientTile(tile));
+        }
+        return clientTiles;
+    }
+
+    private Building setBuildingCopy(Building building) {
+        if (this.getBuilding() == null && building != null) {
+            building.setTile(getClientTile(building.getTile()));
+            getClientTile(building.getTile()).addBuilding(building);
+            return building;
+        }
+        else {
+            return this.getBuilding();
+        }
+    }
+
+    private HashMap<Unit, Integer> getTurnForUnitMakingListCopy(HashMap<Unit, Integer> turnForUnitMaking) {
+        HashMap<Unit,Integer> hashMap = new HashMap<>();
+        for (Map.Entry<Unit,Integer> entry : turnForUnitMaking.entrySet()) {
+            if (!entry.getKey().isCivilian()) {
+                Warrior warrior = new Warrior(Civilization.getCivilizationCopy(entry.getKey().getCivilization()),Tile.getClientTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
+                        ((Warrior)entry.getKey()).getXp(),((Warrior)entry.getKey()).getDamage(),((Warrior)entry.getKey()).getRange(),((Warrior)entry.getKey()).getRangedCombatDamage(),((Warrior)entry.getKey()).isScout(),((Warrior)entry.getKey()).isWarrior(),((Warrior)entry.getKey()).isArcher(),((Warrior)entry.getKey()).isChariotArcher(),
+                        ((Warrior)entry.getKey()).isSpearman(),((Warrior)entry.getKey()).isCatapult(),((Warrior)entry.getKey()).isHorseMan(),((Warrior)entry.getKey()).isSwordsMan(),((Warrior)entry.getKey()).isCrossbowMan(),((Warrior)entry.getKey()).isKnight(),((Warrior)entry.getKey()).isLongswordMan(),((Warrior)entry.getKey()).isPikeMan(),((Warrior)entry.getKey()).isTrebuchet(),
+                        ((Warrior)entry.getKey()).isCanon(),((Warrior)entry.getKey()).isCavalry(),((Warrior)entry.getKey()).isLancer(),((Warrior)entry.getKey()).isMusketMan(),((Warrior)entry.getKey()).isRifleMan(),((Warrior)entry.getKey()).isAntiTankGun(),((Warrior)entry.getKey()).isArtillery(),((Warrior)entry.getKey()).isInfantry(),((Warrior)entry.getKey()).isPanzer(),((Warrior)entry.getKey()).isTank());
+                hashMap.put(warrior, entry.getValue());
+            }
+            else {
+                Civilian civilian = new Civilian(Civilization.getCivilizationCopy(entry.getKey().getCivilization()),Tile.getClientTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
+                        ((Civilian)entry.getKey()).isWorker(), ((Civilian)entry.getKey()).isSettler());
+                hashMap.put(civilian, entry.getValue());
+            }
+        }
+        return hashMap;
+    }
+
+    private void getUnitsListCopy(Tile tile, ArrayList<Unit> allUnits) {
+        for (Unit allUnit : allUnits) {
+            if (allUnit.getOrigin().equals(tile)) {
+                tile.addUnit2(allUnit);
+            }
+        }
+    }
+
+    private Citizen getCitizenCopy(Citizen citizen) {
+        for (Civilization civilization : PlayGameMenu.civilizations) {
+            for (City city : civilization.getCities()) {
+                for (Citizen cityCitizen : city.getCitizens()) {
+                    if (cityCitizen.equals(citizen)) return cityCitizen;
+                }
+            }
+        }
+        return citizen;
+    }
+
+    public void deleteUnits () {
+        for (Unit unit : units) {
+            if (root.getChildren().contains(unit)) root.getChildren().remove(unit);
+        }
+        units.clear();
+    }
+
+    public static Tile getClientTile(Tile tile) {
+        for (Tile tile2 : PlayGameMenu.tiles) {
+            if (tile.equals(tile2)) return tile2;
+        }
+        return null;
     }
 }
