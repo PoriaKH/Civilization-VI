@@ -35,7 +35,7 @@ import static View.ProfileMenu.loggedInMember;
 
 public class Room {
     public boolean amIKicked = false;
-    public static boolean isMyTurn = false;
+    public static boolean isMyTurn = true; // todo felan bara test graphic true e
 
     public boolean isCreator = false;
     public GsonRoom gsonRoom;
@@ -161,14 +161,14 @@ public class Room {
                         dataOutputStream.flush();
                         //TODO...Koochak add playGameMenu graphic
 
-                         /*while (true) {
+                         while (true) {
                              String txt = dataInputStream.readUTF();
                              Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
                              GameGroupData gameGroupData = gson2.fromJson(txt, GameGroupData.class);
                              loadExtras(gameGroupData);
                              if (!gameGroupData.result.equals("newGame")) {
                                  // TODO ... kian check kon
-                                 root = FXMLLoader.load(gameMenuURL);
+                                 root = FXMLLoader.load(GameMenu.gameMenuURL);
                                  Tile.root = root;
                                  copyTiles(gameGroupData.tiles);
                                  copyCivilizations(gameGroupData.civilizations);
@@ -184,10 +184,11 @@ public class Room {
                              Civilization civilization = getCivilization(gameGroupData.civilizations);
                              isMyTurn = civilization.isMyTurn;
                              if (isMyTurn) {
-                                String result = gameGroupData.result;
-                                showResult(result);
+                                 PlayGameMenu.playingCivilization = civilization;
+                                 String result = gameGroupData.result;
+                                 showResult(result);
                              }
-                         }*/
+                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
