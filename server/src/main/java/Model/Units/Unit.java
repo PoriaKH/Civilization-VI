@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Unit extends Rectangle {
+public class Unit {
     @Expose
     private Civilization civilization;
 
@@ -41,11 +41,11 @@ public class Unit extends Rectangle {
 
     private Tile destination;//if == null -> null
 
-    //URL
+/*    //URL
     @Expose
     public static HashMap<String, URL> unitsURL = new HashMap<>();
     @Expose
-    public static ArrayList<String> unitsName = new ArrayList<>();
+    public static ArrayList<String> unitsName = new ArrayList<>();*/
     @Expose
     private boolean isOnWarFooting;//Amade bash
     @Expose
@@ -68,8 +68,8 @@ public class Unit extends Rectangle {
         this.duration = duration;
         this.goldCost = goldCost;
         this.isCivilian = isCivilian;
-        this.setWidth(80);
-        this.setHeight(80);
+        /*this.setWidth(80);
+        this.setHeight(80);*/
 /*        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -97,7 +97,7 @@ public class Unit extends Rectangle {
         });*/
     }
 
-    public static void setNames () {
+/*    public static void setNames () {
         unitsName.add("Worker");
         unitsName.add("Warrior");
         unitsName.add("Trebuchet");
@@ -122,7 +122,7 @@ public class Unit extends Rectangle {
         unitsName.add("Artillery");
         unitsName.add("Archer");
         unitsName.add("Anti-Tank Gun");
-    }
+    }*/
 
     public boolean getHasOrdered() {
         return hasOrdered;
@@ -248,5 +248,11 @@ public class Unit extends Rectangle {
 
     public void setDestination(Tile destination) {
         this.destination = destination;
+    }
+
+    public boolean equals (Unit unit) {
+        if (this.isCivilian == unit.isCivilian &&
+        this.origin.equals(unit.origin)) return true;
+        return false;
     }
 }

@@ -31,6 +31,7 @@ public class UnitPanel {
     public static Civilization playingCivilization;
     public static ArrayList<Tile> map;
     public static PlayGameMenuController playGameMenuController;
+    public static PlayGameMenu playGameMenu;
     public static ArrayList<Civilization> civilizations;
     public static boolean doesEnteredFromInfoPanel;
     public TextField moveDes;
@@ -47,6 +48,9 @@ public class UnitPanel {
     public TextField newUnitName;
     public TextField tileIndex;
     public TextField tileNumberForCity;
+    public TextField tileNumberForImprovement;
+    public TextField improvementName;
+    public TextField tileNumberForLoot;
 
 
     public void start () throws IOException {
@@ -71,7 +75,7 @@ public class UnitPanel {
         else stage.setScene(infoPanelScene);
     }
 
-    public void sleepUnit(MouseEvent mouseEvent) {
+    public void sleepUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -89,7 +93,7 @@ public class UnitPanel {
         alert.showAndWait();
     }
 
-    public void alertUnit(MouseEvent mouseEvent) {
+    public void alertUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -99,7 +103,7 @@ public class UnitPanel {
         }
     }
 
-    public void fortifyUnit(MouseEvent mouseEvent) {
+    public void fortifyUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -109,7 +113,7 @@ public class UnitPanel {
         }
     }
 
-    public void healUnit(MouseEvent mouseEvent) {
+    public void healUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -119,7 +123,7 @@ public class UnitPanel {
         }
     }
 
-    public void deployUnit(MouseEvent mouseEvent) {
+    public void deployUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -129,7 +133,7 @@ public class UnitPanel {
         }
     }
 
-    public void rangeUnit(MouseEvent mouseEvent) {
+    public void rangeUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -139,7 +143,7 @@ public class UnitPanel {
         }
     }
 
-    public void wakeUpUnit(MouseEvent mouseEvent) {
+    public void wakeUpUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -149,7 +153,7 @@ public class UnitPanel {
         }
     }
 
-    public void recoverUnit(MouseEvent mouseEvent) {
+    public void recoverUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -159,7 +163,7 @@ public class UnitPanel {
         }
     }
 
-    public void deleteUnit(MouseEvent mouseEvent) {
+    public void deleteUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
@@ -175,54 +179,61 @@ public class UnitPanel {
         }
         else {
            String command = moveDes.getText();
-           String string;
            if (command.charAt(0) == 't') {
+               PlayGameMenuController.playGameMenu = playGameMenu;
                String destination = command.replace("t", "");
-               string = playGameMenuController.cheatTeleportUnit(unit, Integer.parseInt(destination),
+               playGameMenuController.cheatTeleportUnit(unit, Integer.parseInt(destination),
                        playingCivilization, map);
            }
            else {
-               string = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
+               PlayGameMenuController.playGameMenu = playGameMenu;
+               String result = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
                        playingCivilization, map);
+               showNotification(result);
            }
-           showNotification(string);
+           moveDes.clear();
         }
     }
 
-    public void attackCityUnit(MouseEvent mouseEvent) {
+    public void attackCityUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
             String string = playGameMenuController.preAttackCity(unit,
                     Integer.parseInt(attackCityDes.getText()), playingCivilization, map, civilizations);
+            attackCityDes.clear();
             showNotification(string);
         }
     }
 
-    public void attackTileUnit(MouseEvent mouseEvent) {
+    public void attackTileUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
             String string = playGameMenuController.preAttackTile(unit, Integer.parseInt(attackTileDes.getText()),
                     playingCivilization, map);
+            attackTileDes.clear();
             showNotification(string);
         }
     }
 
-    public void createUnit(MouseEvent mouseEvent) {
+    public void createUnit(MouseEvent mouseEvent) throws IOException {
         String string = playGameMenuController.preUnitMaker(unitName.getText(),
                 Integer.parseInt(tileNumber.getText()), playingCivilization, map);
+        tileNumber.clear();
+        unitName.clear();
         showNotification(string);
     }
 
-    public void createRoadUnit(MouseEvent mouseEvent) {
+    public void createRoadUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
             int index = Integer.parseInt(roadDes.getText());
+            roadDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -234,12 +245,13 @@ public class UnitPanel {
         }
     }
 
-    public void createRailUnit(MouseEvent mouseEvent) {
+    public void createRailUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
             int index = Integer.parseInt(railDes.getText());
+            railDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -250,12 +262,13 @@ public class UnitPanel {
             showNotification(string);
         }
     }
-    public void removeRailUnit(MouseEvent mouseEvent) {
+    public void removeRailUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
             int index = Integer.parseInt(removeRailDes.getText());
+            removeRailDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -267,12 +280,13 @@ public class UnitPanel {
         }
     }
 
-    public void removeRoadUnit(MouseEvent mouseEvent) {
+    public void removeRoadUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
             int index = Integer.parseInt(removeRoadDes.getText());
+            removeRoadDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -284,12 +298,13 @@ public class UnitPanel {
         }
     }
 
-    public void repairRoadUnit(MouseEvent mouseEvent) {
+    public void repairRoadUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
             int index = Integer.parseInt(repairRoadDes.getText());
+            repairRoadDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -301,12 +316,13 @@ public class UnitPanel {
         }
     }
 
-    public void repairRailUnit(MouseEvent mouseEvent) {
+    public void repairRailUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
             int index = Integer.parseInt(repairRailDes.getText());
+            repairRailDes.clear();
             String string;
             if (index < 0 || index > 71) {
                 string = "invalid number";
@@ -325,20 +341,62 @@ public class UnitPanel {
         alert.showAndWait();
     }
 
-    public void upgradeUnit(MouseEvent mouseEvent) {
+    public void upgradeUnit(MouseEvent mouseEvent) throws IOException {
         if (doesEnteredFromInfoPanel) {
             showError();
         }
         else {
             String string = playGameMenuController.preUpgradeUnit(unit, newUnitName.getText(),
                     Integer.parseInt(tileIndex.getText()), playingCivilization, map);
+            tileIndex.clear();
+            newUnitName.clear();
             showNotification(string);
         }
     }
 
-    public void createCity(MouseEvent mouseEvent) {
+    public void createCity(MouseEvent mouseEvent) throws IOException {
         String string = playGameMenuController.createCity(playingCivilization,
                 Integer.parseInt(tileNumberForCity.getText()), map, civilizations);
+        tileNumberForCity.clear();
         showNotification(string);
+    }
+
+    public void createImprovement(MouseEvent mouseEvent) throws IOException {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+            int index = Integer.parseInt(tileNumberForImprovement.getText());
+            String string = playGameMenuController.createImprovement(playingCivilization, unit.getOrigin().getTileNumber(), index,
+                    improvementName.getText(), map);
+            tileNumberForImprovement.clear();
+            improvementName.clear();
+            showNotification(string);
+        }
+    }
+
+    public void lootTile(MouseEvent mouseEvent) throws IOException {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+            String string = playGameMenuController.lootTile(playingCivilization, unit.getOrigin().getTileNumber(),
+                    Integer.parseInt(tileNumberForLoot.getText()), map);
+            tileNumberForLoot.clear();
+            showNotification(string);
+        }
+    }
+
+    public void removeImprovement(MouseEvent mouseEvent) throws IOException {
+        if (doesEnteredFromInfoPanel) {
+            showError();
+        }
+        else {
+            String string = playGameMenuController.removeImprovement(playingCivilization, playGameMenuController.preRemoveImprovement(improvementName.getText()),
+                    Integer.parseInt(tileNumberForImprovement.getText()), map);
+            tileNumberForImprovement.clear();
+            improvementName.clear();
+            showNotification(string);
+        }
     }
 }

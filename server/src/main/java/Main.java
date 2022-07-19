@@ -31,6 +31,7 @@ public class Main {
         GsonRoomArray gsonRoomArray = new GsonRoomArray();
         CommandProcessor.rooms = rooms;
         CommandProcessor.sockets = sockets;
+        CommandProcessor.gameGroups = gameGroups;
 
         try {
             while (true){

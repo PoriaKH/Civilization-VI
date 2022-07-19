@@ -1,15 +1,13 @@
 package Controller;
 
 import Model.*;
-import Model.FunctionsGson.CheatTeleport;
-import Model.FunctionsGson.MapCreatorGson;
+import Model.FunctionsGson.GameGroupData;
+import Model.FunctionsGson.UnitBehaviourGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
-import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import jdk.net.Sockets;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -23,7 +21,7 @@ public class PlayGameMenuController {
         turn = 0;
     }
 
-    public synchronized void mapCreator(int numOfCivilizations, ArrayList<Member> members, ArrayList<Socket> sockets) throws IOException {//tik
+    public synchronized ArrayList<Tile> mapCreator(int numOfCivilizations, ArrayList<Member> members) throws IOException {//tik
         int numOfTiles = 72;
         ArrayList<Tile> map = new ArrayList<>();
         float x0 = 300;
@@ -202,76 +200,143 @@ public class PlayGameMenuController {
         y += 2 * h;
         map.add(new Tile(71,false,false,false,true,false,false,false,false,x,y));
 
-        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-        MapCreatorGson mapCreatorGson = new MapCreatorGson(numOfCivilizations, members);
-        mapCreatorGson.map = map;
-        String response = gson.toJson("mapCreator " + mapCreatorGson);
-
-        for (Socket socket : sockets) {
+        return map;
+    }
+    public void cheatIncreaseGold(Civilization civilization, int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        serverCiv.setGold(amount);
+        for (Socket socket : gameGroup.sockets) {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            dataOutputStream.writeUTF(response);
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
             dataOutputStream.flush();
         }
     }
-    public void cheatIncreaseGold(Civilization civilization, int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        civilization.setGold(amount);
-    }
-    public void cheatIncreaseFood(Civilization civilization,int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        for(City city : civilization.getCities()){
+    public void cheatIncreaseFood(Civilization civilization,int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        for(City city : serverCiv.getCities()){
             city.setTotalFood(amount);
         }
-
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
-    public void cheatIncreaseTechnology(Civilization civilization,int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        civilization.setScience(amount);
-
+    public void cheatIncreaseTechnology(Civilization civilization,int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        serverCiv.setScience(amount);
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
-    public void cheatIncreaseHappiness(Civilization civilization, int amount){
-        // TODO .... bayad yek arrayList az civilization ha dar server bashad
-        civilization.setHappiness(amount);
+    public void cheatIncreaseHappiness(Civilization civilization, int amount, GameGroup gameGroup) throws IOException {
+        ArrayList<Civilization> civilizations = gameGroup.civilizations;
+        Civilization serverCiv = null;
+        for (Civilization civ : civilizations) {
+            if (civ.equals(civilization)) {
+                serverCiv = civ;
+                break;
+            }
+        }
+        serverCiv.setHappiness(amount);
+        for (Socket socket : gameGroup.sockets) {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
+            gameGroupData.result = "cheat code activated successfully";
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
+            dataOutputStream.flush();
+        }
     }
-    public void cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) {
+    public void cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
         String str;
-        CheatTeleport cheatTeleport = new CheatTeleport();
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (numberOfDestination < 0 || numberOfDestination > 71) {
-            cheatTeleport.string = "number of destination is invalid !";
+            gameGroupData.result = "number of destination is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        Tile origin = unit.getOrigin();
-        Tile destination = map.get(numberOfDestination);
+        Unit unitServer = getUnitServer(gameGroup.tiles, unit);
+        Tile origin = unitServer.getOrigin();
+        Tile destination = gameGroup.tiles.get(numberOfDestination);
 
-        if (unit == null) {
-            cheatTeleport.string = "there is no unit with this name !";
+        if (unitServer == null) {
+            gameGroupData.result = "there is no unit with this name !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        if (unit.getIsOnSleep()|| unit.isOnBoost() || unit.isOnBoostTillRecover() || unit.isOnWarFooting()) {
-            cheatTeleport.string = "this unit is not active !";
+        if (unitServer.getIsOnSleep()|| unitServer.isOnBoost() || unitServer.isOnBoostTillRecover() || unitServer.isOnWarFooting()) {
+            gameGroupData.result = "this unit is not active !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        if (!unit.getCivilization().getName().equals(civilization.getName())) {
-            cheatTeleport.string = "this unit is for another civilization !";
+        if (!unitServer.getCivilization().getName().equals(civilization.getName())) {
+            gameGroupData.result = "this unit is for another civilization !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        if (unit.getPath().size() != 0) {
-            cheatTeleport.string = "this unit has another path !";
+        if (unitServer.getPath().size() != 0) {
+            gameGroupData.result = "this unit has another path !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         ArrayList<Unit> unitsDestination = destination.getUnits();
         for (int i = 0; i < unitsDestination.size(); i++) {
-            if (unitsDestination.get(i).isCivilian() == unit.isCivilian()) {
-                cheatTeleport.string = "there is another unit with this type in the tile !";
+            if (unitsDestination.get(i).isCivilian() == unitServer.isCivilian()) {
+                gameGroupData.result = "there is another unit with this type in the tile !";
+                sendMessageToAllClients(gameGroup, gameGroupData);
                 return;
             }
         }
-        origin.removeUnit(unit);
-        destination.addUnit(unit);
-        unit.setOrigin(destination);
-        unit.setHasOrdered(true);
-        cheatTeleport.string = "unit teleported to destination !";
+        origin.removeUnit(unitServer);
+        destination.addUnit(unitServer);
+        unitServer.setOrigin(destination);
+        unitServer.setHasOrdered(true);
+        gameGroupData.result = "unit teleported to destination !";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+    // get Unit in tiles of server
+    private Unit getUnitServer(ArrayList<Tile> tiles, Unit localUnit) {
+        for (Tile tile : tiles) {
+            for (Unit unit : tile.getUnits()) {
+                if (unit.equals(localUnit)) return unit;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for(int i = 0; i < numOfCivilizations; i++){
@@ -682,7 +747,7 @@ public class PlayGameMenuController {
         return finalTileStatus;
     }
 
-    public StringBuilder researchInformation(Civilization civilization){
+/*    public StringBuilder researchInformation(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder();
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         stringBuilder.append("technologies that have been learnt:\n");
@@ -697,8 +762,8 @@ public class PlayGameMenuController {
         for (Map.Entry<Technology, Integer> technology: technologyEarnedPercent.entrySet())
             stringBuilder.append(technology.getKey().getName() + "\trounds left: " + technology.getValue().toString() + "\n");
         return stringBuilder;
-    }
-    // return name of current unit
+    }*/
+    /*// return name of current unit
     public String getUnitsName (Unit unit) {
         if (unit.isCivilian()) {
             if (((Civilian)unit).isWorker()) {
@@ -780,8 +845,8 @@ public class PlayGameMenuController {
             }
         }
         return "";
-    }
-    public StringBuilder unitPanel(Civilization civilization,ArrayList<Tile> map){
+    }*/
+    /*public StringBuilder unitPanel(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> unitsOfTile = map.get(i).getUnits();
@@ -793,8 +858,8 @@ public class PlayGameMenuController {
             }
         }
         return stringBuilder;
-    }
-    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
+    }*/
+/*    public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
         StringBuilder stringBuilder = new StringBuilder("");//"Civilization name" :
         //                             Capital : tile numbers
         //                             City 2  : tile numbers
@@ -822,12 +887,12 @@ public class PlayGameMenuController {
             }
         }
         return stringBuilder;
-    }
-    public String diplomaticInformation(Civilization civilization){
+    }*/
+    /*public String diplomaticInformation(Civilization civilization){
         int point = civilization.getPoint();
 
         return "your point is : " + point;
-    }
+    }*/
     public String sendFriendlyRequestDiplomatic(Civilization civilization,ArrayList<Civilization> civilizations,String name){
         if(Objects.equals(name, civilization.getMember().getNickname()))
             return "cant send request to yourself";
@@ -850,13 +915,13 @@ public class PlayGameMenuController {
         }
         return "there is no civilization with this name";
     }
-    public StringBuilder showMessages(Civilization civilization){
+   /* public StringBuilder showMessages(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         for(String string : civilization.getMessages()){
             stringBuilder.append(string).append("\n");
         }
         return stringBuilder;
-    }
+    }*/
     public StringBuilder showFriendlyRequests(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         int i = 1;
@@ -893,7 +958,7 @@ public class PlayGameMenuController {
         }
         return "you don't have any allie with this name";
     }
-    public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
+/*    public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();
         HashMap<Civilization, Integer> losses = civilization.getLossesInUnitsWar();
@@ -906,8 +971,8 @@ public class PlayGameMenuController {
             stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + " number of losses : " + entry.getValue() + "\n");
         }
         return stringBuilder;
-    }
-    public StringBuilder demographics(ArrayList<Civilization> civilizations,ArrayList<Tile> map){   //Jamiat shenasi
+    }*/
+/*    public StringBuilder demographics(ArrayList<Civilization> civilizations,ArrayList<Tile> map){   //Jamiat shenasi
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
         Civilization chosenCivilization = null;
@@ -956,8 +1021,8 @@ public class PlayGameMenuController {
         }
 
         return stringBuilder;
-    }
-    public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
+    }*/
+/*    public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
             ArrayList<Unit> unitsOfTile = map.get(i).getUnits();
@@ -984,8 +1049,8 @@ public class PlayGameMenuController {
             }
         }
         return stringBuilder;
-    }
-    public StringBuilder roadsInfo (ArrayList<Tile> map) {
+    }*/
+/*    public StringBuilder roadsInfo (ArrayList<Tile> map) {
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("tiles with road : ");
         StringBuilder stringBuilderRoad = new StringBuilder("");
@@ -1003,8 +1068,8 @@ public class PlayGameMenuController {
         stringBuilderRoad.append(stringBuilderRail);
         stringBuilder.append(stringBuilderRoad);
         return stringBuilder;
-    }
-
+    }*/
+/*
     public StringBuilder economicalReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("Number of cities : ").append(civilization.getCities().size()).append("\n-----------------------").append("\n");
@@ -1027,15 +1092,15 @@ public class PlayGameMenuController {
         }
 
         return stringBuilder;
-    }
-    public StringBuilder diplomaticReview(Civilization civilization){
+    }*/
+   /* public StringBuilder diplomaticReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("your friends :\n");
         for(Civilization tempCiv : civilization.getFriends()){
             stringBuilder.append(tempCiv.getName()).append("\n");
         }
         return stringBuilder;
-    }
+    }*/
     //TODO for next phase ...
     /*
     public StringBuilder tradeHistory(Civilization civilization,ArrayList<Tile> map){
@@ -1093,7 +1158,7 @@ public class PlayGameMenuController {
         return tile.getMpCost();
     }
     // chase an algorithm based on graphs to find the shortest way.
-    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map) {
+    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map, Unit unit) {
         while (unreached.size() > 0) {
             Node minimumBranch;
             int index = 0;
@@ -1113,13 +1178,21 @@ public class PlayGameMenuController {
 
             for (int i = 0; i < minimumBranch.neighbours.size(); ++i) {
                 Node neighbourOfBranch = minimumBranch.neighbours.get(i);
-                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch);
+                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch) + enemyUnitEffect(neighbourOfBranch, unit);
                 if (mpCost < distanceFromNode.get(neighbourOfBranch)) {
                     distanceFromNode.replace(neighbourOfBranch, mpCost);
                     previousNode.replace(neighbourOfBranch, minimumBranch);
                 }
             }
         }
+    }
+    private Integer enemyUnitEffect(Node neighbourOfBranch,  Unit myUnit) {
+        for (Unit unit : neighbourOfBranch.tile.getUnits()) {
+            if ((!unit.isCivilian() && ((!myUnit.isCivilian()) || !unit.getCivilization().equals(myUnit.getCivilization()))) || (unit.isCivilian() && myUnit.isCivilian())) {
+                return 1000000;
+            }
+        }
+        return 0;
     }
     // find the shortest way from origin to destination based on mp.
     public void findTheShortestPath (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit) {
@@ -1152,7 +1225,7 @@ public class PlayGameMenuController {
             }
             unreached.add(graph[i]);
         }
-        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map);
+        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map, unit);
 
         if (previousNode.get(destinationNode) == null) {
             for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
@@ -1172,23 +1245,65 @@ public class PlayGameMenuController {
         unit.setPath(path);
     }
     // create parameters like unit or origin or destination for moveUnit function
-    public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) {
+    public void preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (numberOfDestination < 0 || numberOfDestination > 71) {
-            return "number of destination tile is invalid !";
+            gameGroupData.result = "number of destination tile is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!unit.getCivilization().equals(civilization)) {
-            return "this unit is not for your civilization";
+            gameGroupData.result = "this unit is not for your civilization";
+            try {
+                sendMessageToAllClients(gameGroup, gameGroupData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
         }
-        Tile origin = unit.getOrigin();
-        Tile destination = map.get(numberOfDestination);
-        if (unit != null && unit.getPath().size() != 0) {
-            return "this unit is on moving !";
+
+        Unit serverUnit = getUnitServer(gameGroupData.tiles, unit);
+        Tile origin = serverUnit.getOrigin();
+        Tile destination = gameGroupData.tiles.get(numberOfDestination);
+
+        if (serverUnit != null && serverUnit.getPath().size() != 0) {
+            gameGroupData.result = "this unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (unit != null && unit.isCivilian() && ((Civilian)unit).getWorkingTile() != null) {
-            return "this civilian is working on something !";
+        if (serverUnit != null && serverUnit.isCivilian() && ((Civilian)serverUnit).getWorkingTile() != null) {
+            gameGroupData.result = "this civilian is working on something !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        return moveUnit(civilization, origin, destination, map, unit);
+        gameGroupData.result = moveUnit(getServerCivilization(civilization, gameGroupData.civilizations), origin, destination, gameGroupData.tiles, serverUnit);
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
+    public void sendMessageToAllClients(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
+        ArrayList<Socket> sockets = gameGroup.sockets;
+        for (int i = 0; i < sockets.size(); i++) {
+            gameGroupData.index = i;
+            gameGroupData.tileStatusOfCivilization1 = gameGroup.tileStatusOfCivilization1;
+            gameGroupData.tileStatusOfCivilization2 = gameGroup.tileStatusOfCivilization2;
+            gameGroupData.tileStatusOfCivilization3 = gameGroup.tileStatusOfCivilization3;
+            gameGroupData.tileStatusOfCivilization4 = gameGroup.tileStatusOfCivilization4;
+            gameGroupData.tileStatusOfCivilization5 = gameGroup.tileStatusOfCivilization5;
+            DataOutputStream dataOutputStream = new DataOutputStream(sockets.get(i).getOutputStream());
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            String respond = gson.toJson(gameGroupData);
+            dataOutputStream.writeUTF(respond);
+            dataOutputStream.flush();
+        }
+    }
+
+    private Civilization getServerCivilization(Civilization civilization, ArrayList<Civilization> civilizations) {
+        for (Civilization civilization2 : civilizations) {
+            if (civilization2.equals(civilization)) return civilization2;
+        }
+        return null;
+    }
+
     //return a unit from specific tile
     public Unit getUnitInTile (ArrayList<Unit> units, String unitName) {
         for (int i = 0; i < units.size(); i++) {
@@ -1637,25 +1752,36 @@ public class PlayGameMenuController {
         return null;
     }
     // it makes parameters for unit maker such as unit or city
-    public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) {
+    public void preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (index < 0 || index > 71) {
-            return "number of origin tile is invalid !";
+            gameGroupData.result =  "number of origin tile is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        City city = findTile(index, map, civilization);
+
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        City city = findTile(index, gameGroupData.tiles, civilizationServer);
+
         if (city == null) {
-            return "there is no city !";
+            gameGroupData.result =  "there is no city !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        Unit unit = makeUnit(civilization, city.getCenterTile(), map, unitName);
+        Unit unit = makeUnit(civilizationServer, city.getCenterTile(), gameGroupData.tiles, unitName);
         if (unit == null) {
-            return "there is no unit with this name !";
+            gameGroupData.result = "there is no unit with this name !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         int turn = unit.getDuration();
-        return createUnit(civilization, city, unit, map, turn);
+        gameGroupData.result = createUnit(civilizationServer, city, unit, gameGroupData.tiles, turn);
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
     public Unit makeUnit (Civilization civilization, Tile tile, ArrayList<Tile> map, String unitName) {
         if (unitName.equals("archer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 70, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 1, 70, false
                     , 0, 4, 2, 6, false, false, true, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1663,7 +1789,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("chariot archer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 1, 60, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 4, 4, 1, 60, false
                     , 0, 3, 2, 6, false, false, false, true,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1679,15 +1805,15 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("settler")) {
-            Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 89, true, false, true);
+            Civilian civilian = new Civilian(civilization, tile, 2, 2, 2, 1, 89, true, false, true);
             return civilian;
         }
         else if (unitName.equals("worker")) {
-            Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 70, true, true, false);
+            Civilian civilian = new Civilian(civilization, tile, 2, 2, 2, 1, 70, true, true, false);
             return civilian;
         }
         else if (unitName.equals("spearman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 50, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 50, false
                     , 0, 7, -1, -1, false, false, false, false,
                     true, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1695,7 +1821,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("warrior")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 40, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 40, false
                     , 0, 6, -1, -1, false, true, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1703,7 +1829,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("catapult")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 2, 2, 1, 100, false
                     , 0, 4, 2, 14, false, false, false, false,
                     false, true, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1719,7 +1845,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("swordsman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 80, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 2, 80, false
                     , 0, 11, -1, -1, false, false, false, false,
                     false, false, false, true, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1727,7 +1853,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("crossbowman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 120, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 2, 120, false
                     , 0, 6, 2, 12, false, false, false, false,
                     false, false, false, false, true, false, false,
                     false, false, false, false, false, false, false,
@@ -1735,7 +1861,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("knight")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 1, 150, false
+            Warrior warrior = new Warrior(civilization, tile, 8, 3, 3, 1, 150, false
                     , 0, 18, -1, -1, false, false, false, false,
                     false, false, false, false, false, true, false,
                     false, false, false, false, false, false, false,
@@ -1743,7 +1869,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("longswordsman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 3, 150, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 3, 3, 3, 150, false
                     , 0, 18, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, true,
                     false, false, false, false, false, false, false,
@@ -1751,7 +1877,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("pikeman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 100, false
                     , 0, 10, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     true, false, false, false, false, false, false,
@@ -1759,7 +1885,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("trebuchet")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 170, false
+            Warrior warrior = new Warrior(civilization, tile, 9, 2, 2, 3, 170, false
                     , 0, 6, 2, 20, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, true, false, false, false, false, false,
@@ -1767,7 +1893,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("canon")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 250, false
+            Warrior warrior = new Warrior(civilization, tile, 8, 2, 2, 2, 250, false
                     , 0, 10, 2, 26, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, true, false, false, false, false,
@@ -1775,7 +1901,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("cavalry")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 2, 260, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 3, 3, 2, 260, false
                     , 0, 25, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, true, false, false, false,
@@ -1791,7 +1917,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("musketman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 120, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 3, 120, false
                     , 0, 16, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, true, false,
@@ -1799,7 +1925,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("rifleman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 200, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 3, 200, false
                     , 0, 25, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, true,
@@ -1807,7 +1933,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("anti-tank gun")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 6, 300, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 2, 2, 6, 300, false
                     , 0, 32, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1815,7 +1941,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("artillery")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 5, 420, false
+            Warrior warrior = new Warrior(civilization, tile, 12, 2, 2, 5, 420, false
                     , 0, 16, 32, 3, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1823,7 +1949,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("infantry")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 300, false
+            Warrior warrior = new Warrior(civilization, tile, 14, 2, 2, 4, 300, false
                     , 0, 36, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1831,7 +1957,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("panzer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 5, 5, 3, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 14, 5, 5, 5, 450, false
                     , 0, 60, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1839,7 +1965,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("tank")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 8, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 15, 4, 4, 6, 450, false
                     , 0, 50, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -2119,29 +2245,32 @@ public class PlayGameMenuController {
             return "no unit with this name exists!";
         return this.createUnit(civilization, city, unit, map, 1);
     }
-    public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
-        matcher.find();
-        int tileNumber = Integer.parseInt(matcher.group("tile"));
-        return createCity(civilization,tileNumber,map,civilizations);
-    }
-    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
-        if(tileNumber < 0 || tileNumber >= 72)
-            return "invalid tile number";
 
-        for(Tile tile : map){
+    public void createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        if(tileNumber < 0 || tileNumber >= 72) {
+            gameGroupData.result = "invalid tile number";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        for(Tile tile : gameGroupData.tiles){
             if(tile.getTileNumber() == tileNumber){
                 for(Unit unit : tile.getUnits()){
-                    if(unit.getCivilization() == civilization){
+                    if(unit.getCivilization().equals(civilizationServer)){
                         if(unit.isCivilian()){
                             Civilian civilian = (Civilian) unit;
                             if(civilian.isSettler()){
-                                if(checkNeighboursForCreateCity(tile,map,civilizations)){
+                                if(checkNeighboursForCreateCity(tile, gameGroupData.tiles, gameGroupData.civilizations)){
                                     while(tile.getUnits().size() > 0) {
                                         tile.getUnits().remove(0);
                                     }
-                                    City city1 = new City(tile,map);
-                                    civilization.getCities().add(city1);
-                                    return "city has been created successfully";
+                                    City city1 = new City(tile, gameGroupData.tiles);
+                                    civilizationServer.getCities().add(city1);
+                                    gameGroupData.result = "city has been created successfully";
+                                    sendMessageToAllClients(gameGroup, gameGroupData);
+                                    return;
                                 }
                             }
                         }
@@ -2149,7 +2278,8 @@ public class PlayGameMenuController {
                 }
             }
         }
-        return "you can't create city here";
+        gameGroupData.result = "you can't create city here";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public boolean checkNeighboursForCreateCity(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         for(Tile tempTile : map){
@@ -2279,64 +2409,97 @@ public class PlayGameMenuController {
     }
 
     // prepare some parameters and return some string
-    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) {
+    public void preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         if (destinationIndex < 0 || destinationIndex > 71) {
-            return "number of destination tile is invalid !";
+            gameGroupData.result = "number of destination tile is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        int originIndex = getTileIndex(attacker.getOrigin(), map);
-        Unit defender = getWarriorUnit(destinationIndex, map);
 
-        if (attacker == null) {
-            return "your unit is not military !";
+        Unit attackerServer = getUnitServer(gameGroupData.tiles, attacker);
+        int originIndex = getTileIndex(attackerServer.getOrigin(), gameGroupData.tiles);
+        Unit defender = getWarriorUnit(destinationIndex, gameGroupData.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (attackerServer == null) {
+            gameGroupData.result = "your unit is not military !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!attacker.getCivilization().equals(civilization)) {
-            return "this is not your unit !";
+        if (!attackerServer.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this is not your unit !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (attacker.getPath().size() != 0) {
-            return "this unit is on moving !";
+        if (attackerServer.getPath().size() != 0) {
+            gameGroupData.result = "this unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (defender.getCivilization().equals(civilization)) {
-            return "you can't attack your own unit !";
+        if (defender.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "you can't attack your own unit !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (attacker.getIsOnSleep()|| attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
-            return "this unit is not active !";
+        if (attackerServer.getIsOnSleep() || attackerServer.isOnBoost() || attackerServer.isOnBoostTillRecover() || attackerServer.isOnWarFooting()) {
+            gameGroupData.result = "this unit is not active !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (((Warrior)attacker).getRange() != -1) {
-            return "this unit is not set up for range attack !";
+        if (((Warrior) attackerServer).getRange() != -1) {
+            gameGroupData.result = "this unit is not set up for range attack !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         ArrayList<Integer> indexOfTiles = new ArrayList<>();
         getAllIndexes(originIndex, destinationIndex, indexOfTiles);
         if (indexOfTiles.size() == 0) {
-            return "this distance is too long for attack !";
+            gameGroupData.result = "this distance is too long for attack !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!isRangeEnough((Warrior)attacker, indexOfTiles)) {
-            return "unit 's range is not enough !";
+        if (!isRangeEnough((Warrior) attackerServer, indexOfTiles)) {
+            gameGroupData.result = "unit 's range is not enough !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (checkTheBlocks(map,indexOfTiles)) {
-            return "your unit vision is blocked !";
+        if (checkTheBlocks(gameGroupData.tiles, indexOfTiles)) {
+            gameGroupData.result = "your unit vision is blocked !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (defender != null && isFriend(civilization, defender.getCivilization())) {
-            addToEnemy(civilization, defender.getCivilization());
+        if (defender != null && isFriend(civilizationServer, defender.getCivilization())) {
+            addToEnemy(civilizationServer, defender.getCivilization());
         }
-        attacker.setHasOrdered(true);
+        attackerServer.setHasOrdered(true);
         if (defender == null) {
-            defender = getCivilianUnit(destinationIndex, map);
-            if (defender == null) return "there is no unit on destination !";
-
-        sendMessageToDefender(defender, attacker);
-
-            defender.setCivilization(civilization);
-            if (((Warrior)attacker).getRange() == -1) {
-                attacker.setOrigin(map.get(destinationIndex));
-                map.get(destinationIndex).addUnit(attacker);
-                map.get(originIndex).removeUnit(attacker);
+            defender = getCivilianUnit(destinationIndex, gameGroupData.tiles);
+            if (defender == null) {
+                gameGroupData.result = "there is no unit on destination !";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
             }
-            return "you captured civilians of enemy !";
+
+            sendMessageToDefender(defender, attackerServer);
+
+            defender.setCivilization(civilizationServer);
+            if (((Warrior) attackerServer).getRange() == -1) {
+                attackerServer.setOrigin(gameGroupData.tiles.get(destinationIndex));
+                gameGroupData.tiles.get(destinationIndex).addUnit(attackerServer);
+                gameGroupData.tiles.get(originIndex).removeUnit(attackerServer);
+            }
+            gameGroupData.result = "you captured civilians of enemy !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (((Warrior)attacker).getRange() == -1)
-            return attackTileFromGround(civilization, attacker, defender, originIndex, destinationIndex, map);
-        else
-            return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);
+        if (((Warrior) attackerServer).getRange() == -1) {
+            gameGroupData.result = attackTileFromGround(civilizationServer, attackerServer, defender, originIndex, destinationIndex, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        } else {
+            gameGroupData.result = attackTileFromAir(civilizationServer, attackerServer, defender, originIndex, destinationIndex, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        }
     }
     // if a city contain that tile , return the city
     public City getCityFromTile (Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
@@ -2399,43 +2562,68 @@ public class PlayGameMenuController {
         return false;
     }
 
-    public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
-        if (destinationIndex < 0 || destinationIndex> 71) {
-            return "number of destination tile is invalid !";
+    public void preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        if (destinationIndex < 0 || destinationIndex > 71) {
+            gameGroupData.result = "number of destination tile is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        City defenderCity = getCityFromTile (map.get(destinationIndex), map, civilizations);
-        int originIndex = getTileIndex(attacker.getOrigin(), map);
-        if (attacker == null) {
-            return "your unit is not military !";
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        Unit attackerServer = getUnitServer(gameGroupData.tiles, attacker);
+        City defenderCity = getCityFromTile(gameGroupData.tiles.get(destinationIndex), gameGroupData.tiles, gameGroupData.civilizations);
+        int originIndex = getTileIndex(attackerServer.getOrigin(), gameGroupData.tiles);
+
+        if (attackerServer == null) {
+            gameGroupData.result = "your unit is not military !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!attacker.getCivilization().equals(civilization)) {
-            return "this is not your unit !";
+        if (!attackerServer.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this is not your unit !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (attacker.getPath().size() != 0) {
-            return "this unit is on moving !";
+        if (attackerServer.getPath().size() != 0) {
+            gameGroupData.result = "this unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (defenderCity == null) {
-            return "this tile is not for any city !";
+            gameGroupData.result = "this tile is not for any city !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (isCityForCivilization (defenderCity, civilization)) {
-            return "this city is for your civilization !";
+        if (isCityForCivilization(defenderCity, civilizationServer)) {
+            gameGroupData.result = "this city is for your civilization !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (attacker.getIsOnSleep() || attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
-            return "this unit is not active !";
+        if (attackerServer.getIsOnSleep() || attackerServer.isOnBoost() || attackerServer.isOnBoostTillRecover() || attackerServer.isOnWarFooting()) {
+            gameGroupData.result = "this unit is not active !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (((Warrior)attacker).getRange() != -1) {
-            return "this unit is not set up for range attack !";
+        if (((Warrior) attackerServer).getRange() != -1) {
+            gameGroupData.result = "this unit is not set up for range attack !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(),map))) {
-            return "this distance is too long for attack !";
+        if (!checkDistance(attackerServer, originIndex, getTileIndex(defenderCity.getCenterTile(), gameGroupData.tiles))) {
+            gameGroupData.result = "this distance is too long for attack !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        Civilization defenderCivilization = getCivilizationFromCity(defenderCity, civilizations);
-        attacker.setHasOrdered(true);
+        Civilization defenderCivilization = getCivilizationFromCity(defenderCity, gameGroupData.civilizations);
+        attackerServer.setHasOrdered(true);
 
-        if (((Warrior)attacker).getRange() == -1)
-            return attackCityFromGround(civilization, attacker, defenderCity, originIndex, map, defenderCivilization);
-        else
-            return attackCityFromAir(civilization, attacker, defenderCity, originIndex, map, defenderCivilization);
+        if (((Warrior) attackerServer).getRange() == -1) {
+            gameGroupData.result = attackCityFromGround(civilizationServer, attackerServer, defenderCity, originIndex, gameGroupData.tiles, defenderCivilization);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        } else {
+            gameGroupData.result = attackCityFromAir(civilizationServer, attackerServer, defenderCity, originIndex, gameGroupData.tiles, defenderCivilization);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        }
     }
     public String attackCityFromGround(Civilization civilization,Unit attacker, City defenderCity, int originIndex, ArrayList<Tile>map, Civilization defenderCivilization) {
         String str = "";
@@ -2447,7 +2635,9 @@ public class PlayGameMenuController {
         }
         int powerOfDefender = defenderCity.getDefenceStrength();
         int healthOfDefender = defenderCity.getDamagePoint();
-
+        if (healthOfDefender == 0) {
+            powerOfDefender = 5;
+        }
         healthOfAttacker = healthOfAttacker - powerOfDefender;
         healthOfDefender = healthOfDefender - powerOfAttacker;
 
@@ -2457,6 +2647,7 @@ public class PlayGameMenuController {
                 tiles.get(i).getUnits().clear();
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
+                tiles.get(i).getBuilding().setCivilization(attacker.getCivilization());
             }
             defenderCivilization.removeCity(defenderCity);
             civilization.addCity(defenderCity);
@@ -2481,7 +2672,7 @@ public class PlayGameMenuController {
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
             }
-            defenderCity.setDamagePoint(1);
+            defenderCity.setDamagePoint(0);
             map.get(originIndex).removeUnit(attacker);
             attacker = null;
             str = "your unit died and the city became ruin !";
@@ -2663,38 +2854,63 @@ public class PlayGameMenuController {
         return str;
     }
     // makes parameters for unit behaviours functions
-    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) {
-        if (!unit.getCivilization().equals(civilization)) {
-            return "this unit is not for your civilization";
+    public void preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Unit unitServer = getUnitServer(gameGroupData.tiles, unit);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (!unitServer.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this unit is not for your civilization";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (command.equals("sleep")) {
-            return  sleepUnit(civilization, unit, map);
+            gameGroupData.result = sleepUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("alert")) {
-            return WarFootingUnit(civilization, unit, map);
+            gameGroupData.result = WarFootingUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("fortify")) {
-            return boostUnit(civilization, unit, map);
+            gameGroupData.result = boostUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("heal")) {
-            return boostTillRecoverUnit(civilization, unit, map);
+            gameGroupData.result = boostTillRecoverUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("deploy")) {
-            return deploymentUnit(civilization, unit, map);
+            gameGroupData.result = deploymentUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("range")) {
-            return readyForRangedBattleUnit(civilization, unit, map);
+            gameGroupData.result = readyForRangedBattleUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("wake")) {
-            return wakeUpUnit(civilization, unit, map);
+            gameGroupData.result = wakeUpUnit(civilizationServer, unitServer, gameGroupData.tiles);
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("delete")) {
-            return deleteUnit(civilization, unit, map, unit.getOrigin());
+            gameGroupData.result = deleteUnit(civilizationServer, unitServer,
+                    gameGroupData.tiles, unitServer.getOrigin());
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         else if (command.equals("recover")) {
-            return recoverUnit(civilization, unit, map, unit.getOrigin());
+            gameGroupData.result = recoverUnit(civilizationServer, unitServer,
+                    gameGroupData.tiles, unitServer.getOrigin());
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        return "";
     }
 
     public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map){
@@ -2858,31 +3074,50 @@ public class PlayGameMenuController {
         str = "the unit is ready for ranged battle !";
         return str;
     }
-    public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map){
-        if (tileNumber != destinationTileNumber)
-            return "you should move your unit first";
-        ArrayList<Unit> allUnits = map.get(tileNumber).getUnits();
-        if (allUnits.size() == 0)
-            return "there is no unit in this tile";
+    public void lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (tileNumber != destinationTileNumber) {
+            gameGroupData.result = "you should move your unit first";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        ArrayList<Unit> allUnits = gameGroupData.tiles.get(tileNumber).getUnits();
+        if (allUnits.size() == 0) {
+            gameGroupData.result = "there is no unit in this tile";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
         boolean isThereAnyRelatedUnit = false;
         for (Unit unit : allUnits)
-            if (unit.getCivilization() == civilization) {
+            if (unit.getCivilization().equals(civilizationServer)) {
                 isThereAnyRelatedUnit = true;
                 break;
             }
-        if (!isThereAnyRelatedUnit)
-            return "units in this tile doesn't belong to you";
+        if (!isThereAnyRelatedUnit) {
+            gameGroupData.result = "units in this tile doesn't belong to you";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
         Unit lootUnit = null;
         for (Unit unit : allUnits)
             if (!unit.isCivilian()) {
                 lootUnit = unit;
                 break;
             }
-        if (lootUnit == null)
-            return "only warriors can loot a tile";
-        Tile tile = map.get(destinationTileNumber);
+        if (lootUnit == null) {
+            gameGroupData.result = "only warriors can loot a tile";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
+        Tile tile = gameGroupData.tiles.get(destinationTileNumber);
         tile.Loot();
-        return "tile has been looted successfully";
+        gameGroupData.result = "tile has been looted successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public String cancelCommand(Civilization civilization, boolean isCivilian,ArrayList<Tile> map, Tile tile){
         String str;
@@ -3052,7 +3287,7 @@ public class PlayGameMenuController {
         }
         return false;//it doesn't
     }
-    public StringBuilder showTechnologyMenu(Civilization civilization){
+/*    public StringBuilder showTechnologyMenu(Civilization civilization){
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         ArrayList<String> technologyNames = new ArrayList<>();
         technologyNames.add("Agriculture");
@@ -3125,7 +3360,7 @@ public class PlayGameMenuController {
         for (int i = 0; i < possibleTechnologies.size(); i++)
             stringBuilder.append(possibleTechnologies.get(i) + "\n");
         return stringBuilder;
-    }
+    }*/
     public Technology preChooseTechnologyToLearn(String name){
         if (name.equals("Agriculture")) {
             Technology technology = new Technology(true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
@@ -3771,52 +4006,85 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    public String chooseTechnologyToLearn(Civilization civilization, String technologyName){
+    public void chooseTechnologyToLearn(Civilization civilization, String technologyName, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         Technology technology = preChooseTechnologyToLearn(technologyName);
-        if (technology == null)
-            return "no technology with this name exists";
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        if (technology == null) {
+            gameGroupData.result = "no technology with this name exists";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
 //        if (civilization.getScience() < technology.getCost())
 //            return "you don't have the needed amount of science";
-        ArrayList<Technology> allTechnologies = civilization.getTechnologies();
+
+        ArrayList<Technology> allTechnologies = civilizationServer.getTechnologies();
         for (Technology technology1 : allTechnologies)
-            if (technology1.getName().equals(technologyName))
-                return "you already have this technology";
-        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
-            return "you don't have the prerequisite techs to learn this technology";
-        if (civilization.isLearningTechnology())
-            return "you are learning a technology";
+            if (technology1.getName().equals(technologyName)) {
+                gameGroupData.result = "you already have this technology";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        if (!hasPrerequisiteTechs(allTechnologies, technologyName)) {
+            gameGroupData.result = "you don't have the prerequisite techs to learn this technology";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        if (civilizationServer.isLearningTechnology()) {
+            gameGroupData.result = "you are learning a technology";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         if (technology.getCost() > 99) {
-            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
-            civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
+            civilizationServer.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
+            civilizationServer.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
         }
         else {
-            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 1);
-            civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
+            civilizationServer.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 1);
+            civilizationServer.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
         }
-        civilization.setIsLearningTechnology(true);
-        return "technology has been added to the learning technologies";
+
+        civilizationServer.setIsLearningTechnology(true);
+        gameGroupData.result = "technology has been added to the learning technologies";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
-    public String changeTechnologyToLearn(Civilization civilization, String technologyName){
+
+    public void changeTechnologyToLearn(Civilization civilization, String technologyName, GameGroup gameGroup) throws IOException {
         Technology technology = preChooseTechnologyToLearn(technologyName);
-        if (technology == null)
-            return "no technology with this name exists";
-        civilization.setScience(technology.getCost());
-        ArrayList<Technology> allTechnologies = civilization.getTechnologies();
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (technology == null) {
+            gameGroupData.result = "no technology with this name exists";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        civilizationServer.setScience(technology.getCost());
+        ArrayList<Technology> allTechnologies = civilizationServer.getTechnologies();
+
         for (Technology technology1 : allTechnologies)
-            if (technology1.getName().equals(technologyName))
-                return "you already have this technology";
-        if (!hasPrerequisiteTechs(allTechnologies, technologyName))
-            return "you don't have the prerequisite techs to learn this technology";
+            if (technology1.getName().equals(technologyName)) {
+                gameGroupData.result = "you already have this technology";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        if (!hasPrerequisiteTechs(allTechnologies, technologyName)) {
+            gameGroupData.result = "you don't have the prerequisite techs to learn this technology";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         if (technology.getCost() > 99) {
-            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
-            civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
+            civilizationServer.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
+            civilizationServer.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
         }
         else {
-            civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 2);
-            civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
+            civilizationServer.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 2);
+            civilizationServer.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
         }
-        return "technology has been changed successfully";
+        gameGroupData.result = "technology has been changed successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
     public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int tileUnitNumber, ArrayList<Tile> map){
         if (tileNumber != tileUnitNumber || map.get(tileNumber).getCitizen() == null)
             return "you should move your citizen to this tile first";
@@ -3848,28 +4116,43 @@ public class PlayGameMenuController {
         else
             return "this tile isn't your city tiles or city neighbors";
     }
-    public String createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map){
-        ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
-        if (tileUnitNumber != tileNumber)
-            return "you should move your unit to this tile first";
-        if (allUnits.size() == 0)
-            return "there is no unit in this tile";
+    public void createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        ArrayList<Unit> allUnits = gameGroupData.tiles.get(tileUnitNumber).getUnits();
+
+        if (tileUnitNumber != tileNumber) {
+            gameGroupData.result = "you should move your unit to this tile first";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        if (allUnits.size() == 0) {
+            gameGroupData.result = "there is no unit in this tile";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         boolean isThereAnyRelatedUnit = false;
         Unit creatorUnit = null;
         for (Unit unit : allUnits)
-            if (unit.getCivilization() == civilization) {
+            if (unit.getCivilization().equals(civilizationServer)) {
                 isThereAnyRelatedUnit = true;
                 creatorUnit = unit;
                 break;
             }
-        if (!isThereAnyRelatedUnit)
-            return "units in this tile doesn't belong to you";
-        if (!creatorUnit.isCivilian())
-            return "only workers can work on improvements";
+        if (!isThereAnyRelatedUnit) {
+            gameGroupData.result = "units in this tile doesn't belong to you";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        if (!creatorUnit.isCivilian()) {
+            gameGroupData.result = "only workers can work on improvements";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         Civilian civilian = (Civilian) creatorUnit;
         if (civilian.isWorker()) {
-            Tile tile = map.get(tileNumber);
-            ArrayList<Technology> techs = civilization.getTechnologies();
+            Tile tile = gameGroupData.tiles.get(tileNumber);
+            ArrayList<Technology> techs = civilizationServer.getTechnologies();
             ArrayList<String> technologies = new ArrayList<>();
             for (int i = 0; i < techs.size(); i++)
                 technologies.add(techs.get(i).getName());
@@ -3878,100 +4161,165 @@ public class PlayGameMenuController {
                     if (technologies.contains("Trapping")) {
                         Improvement improvement = new Improvement(true, false, false, false, false, false, false, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 5);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "camp can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "camp can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("farm")) {
                 if (tile.getAttribute() != null && tile.getAttribute().isRainForest()) {
                     if (technologies.contains("Mining")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 10);
-                    } else
-                        return "you don't have the prerequisite technology";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
                 } else if (tile.getAttribute() != null && tile.getAttribute().isJungle()) {
                     if (technologies.contains("BronzeWorking")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 13);
-                    } else
-                        return "you don't have the prerequisite technology";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
                 } else if (tile.getAttribute() != null && tile.getAttribute().isMarsh()) {
                     if (technologies.contains("Masonry")) {
                         Improvement improvement = new Improvement(false, true, false, false, false, false, false, false, false, 1, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 12);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "farm can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "farm can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("lumberMill")) {     //duration = 7
                 if (tile.getAttribute() != null && tile.getAttribute().isJungle()) {
                     if (technologies.contains("Construction")) {
                         Improvement improvement = new Improvement(false, false, true, false, false, false, false, false, false, 0, 1, 0);
                         tile.addToImprovementEarnedPercent(improvement, 7);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "lumberMill can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "lumberMill can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("mine")) {       //duration = 14
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow() || tile.isHill() || (tile.getAttribute() != null && tile.getAttribute().isJungle()) || (tile.getAttribute() != null && tile.getAttribute().isRainForest()) || (tile.getAttribute() != null && tile.getAttribute().isMarsh())) {
                     if (technologies.contains("Mining")) {
                         Improvement improvement = new Improvement(false, false, false, true, false, false, false, false, false, 0, 1, 0);
                         tile.addToImprovementEarnedPercent(improvement, 14);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "mine can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "mine can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("paddock")) {        //duration = 8
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isHill()) {
                     Improvement improvement = new Improvement(false, false, false, false, true, false, false, false, false, 0, 0, 0);
                     tile.addToImprovementEarnedPercent(improvement, 8);
-                } else
-                    return "paddock can't be build in this tile";
+                } else {
+                    gameGroupData.result = "paddock can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("agriculture")) {
                 if (tile.isPlain() || tile.isMeadow() || (tile.getAttribute() != null && tile.getAttribute().isJungle()) || (tile.getAttribute() != null && tile.getAttribute().isRainForest()) || (tile.getAttribute() != null && tile.getAttribute().isMarsh()) || (tile.getAttribute() != null && tile.getAttribute().isPlat())) {
                     if (technologies.contains("Calendar")) {        //duration = 5
                         Improvement improvement = new Improvement(false, false, false, false, false, true, false, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 5);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "agriculture can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "agriculture can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("stoneMine")) {      //duration = 15
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isHill()) {
                     if (technologies.contains("Masonry")) {
                         Improvement improvement = new Improvement(false, false, false, false, false, false, true, false, false, 0, 0, 0);
                         tile.addToImprovementEarnedPercent(improvement, 15);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "stoneMine can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "stoneMine can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("tradingPost")) {        //duration = 10
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra()) {
                     if (technologies.contains("Trapping")) {
                         Improvement improvement = new Improvement(false, false, false, false, false, false, false, true, false, 0, 0, 1);
                         tile.addToImprovementEarnedPercent(improvement, 10);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "tradingPost can't be build in this tile";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "tradingPost can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
             } else if (improvementName.equals("laboratory")) {     //duration = 20
                 //plain, dessert, meadow, tundra, snow
                 if (tile.isPlain() || tile.isDesert() || tile.isMeadow() || tile.isTundra() || tile.isSnow()) {
                     if (technologies.contains("Engineering")) {
                         Improvement improvement = new Improvement(false, false, false, false, false, false, false, false, true, 0, 2, 0);
                         tile.addToImprovementEarnedPercent(improvement, 20);
-                    } else
-                        return "you don't have the prerequisite technology";
-                } else
-                    return "laboratory can't be build in this tile";
-            } else
-                return "no improvement with this name exists!";
+                    } else {
+                        gameGroupData.result = "you don't have the prerequisite technology";
+                        sendMessageToAllClients(gameGroup, gameGroupData);
+                        return;
+                    }
+                } else {
+                    gameGroupData.result = "laboratory can't be build in this tile";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
+            } else {
+                gameGroupData.result = "no improvement with this name exists!";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
             civilian.setWorkingTile(tile);
-            return "improvement created successfully";
+            gameGroupData.result = "improvement created successfully";
+            sendMessageToAllClients(gameGroup, gameGroupData);
         }
-        else
-            return "only workers can work on improvements";
+        else {
+            gameGroupData.result = "only workers can work on improvements";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        }
     }
+
+
     public StringBuilder showImprovements(ArrayList<Tile> map){
         StringBuilder panel = new StringBuilder();
         ArrayList<String> improvementPanel = new ArrayList<>();
@@ -4040,72 +4388,97 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    public String createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
+    public void createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (tile.isDoesHaveRoad()) {
-            str = "there is already a road on this tile !";
-            return str;
+        if (tileServer.isDoesHaveRoad()) {
+            gameGroupData.result = "there is already a road on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRoad(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the road will be ready in 3 turns";
-        return str;
+        tileServer.assignWorkerToRoad(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the road will be ready in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
-    public String createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
-        if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+    private Tile getTileServer(Tile tile, ArrayList<Tile> tiles) {
+        for (Tile tile1 : tiles) {
+            if (tile.equals(tile1)) return tile1;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        return null;
+    }
+
+    public void createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if (unit == null) {
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (tile.isDoesHaveRailWay()) {
-            str = "there is already a rail way on this tile !";
-            return str;
+        if (tileServer.isDoesHaveRailWay()) {
+            gameGroupData.result = "there is already a rail way on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRail(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the rail way will be ready in 3 turns";
-        return str;
+        tileServer.assignWorkerToRail(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the rail way will be ready in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public Improvement preRemoveImprovement(String improvementName){
         if (improvementName.equals("camp"))
@@ -4129,15 +4502,18 @@ public class PlayGameMenuController {
         else
             return null;
     }
-    public String removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map){
-        ArrayList<City> cities = civilization.getCities();
+    public void removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        ArrayList<City> cities = civilizationServer.getCities();
         ArrayList<Tile> cityTiles = new ArrayList<>();
         for (int i = 0; i < cities.size(); i++) {
             ArrayList<Tile> tiles = cities.get(i).getTiles();
             for (int j = 0; j < tiles.size(); j++)
                 cityTiles.add(tiles.get(j));
         }
-        Tile tile = map.get(tileNumber);
+        Tile tile = gameGroupData.tiles.get(tileNumber);
         boolean isOurs = false;
         for (int i = 0; i < cityTiles.size(); i++) {
             if (cityTiles.get(i).equals(tile)) {
@@ -4145,82 +4521,107 @@ public class PlayGameMenuController {
                 break;
             }
         }
-        if (!isOurs)
-            return "this tile doesn't belong to your civilization";
+        if (!isOurs) {
+            gameGroupData.result = "this tile doesn't belong to your civilization";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         ArrayList<Improvement> improvements = tile.getImprovements();
         for (int i = 0; i < improvements.size(); i++)
-            if (improvements.get(i).equals(improvement)){
+            if (improvements.get(i).getName().equals(improvement.getName())){
                 improvements.remove(i);
                 tile.setImprovements(improvements);
-                return "improvement deleted successfully";
+                gameGroupData.result = "improvement deleted successfully";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
             }
-        return "no such improvement exists!";
+        gameGroupData.result = "no such improvement exists!";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
-    public String removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
+
+    public void removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!tile.isDoesHaveRoad()) {
-            str = "there is no road on this tile !";
-            return str;
+        if (!tileServer.isDoesHaveRoad()) {
+            gameGroupData.result = "there is no road on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRoad(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the road will be removed in 3 turns";
-        return str;
+        tileServer.assignWorkerToRoad(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the road will be removed in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
-    public String removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
+    public void removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!tile.isDoesHaveRailWay()) {
-            str = "there is no rail way on this tile !";
-            return str;
+        if (!tileServer.isDoesHaveRailWay()) {
+            gameGroupData.result = "there is no rail way on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRail(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the rail way will be removed in 3 turns";
-        return str;
+        tileServer.assignWorkerToRail(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the rail way will be removed in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public String cancelImprovementOnProcess(Civilization civilization, Tile tile){
         if (tile.getWorkingOnImprovement() == null)
@@ -4228,80 +4629,99 @@ public class PlayGameMenuController {
         tile.cancelImprovementOnProcess();
         return "Improvement canceled successfully";
     }
-    public String repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
+    public void repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
 
-        Unit unit = getWorker(tile);
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!tile.isDoesHaveRoad()) {
-            str = "there is no road way on this tile !";
-            return str;
+        if (!tileServer.isDoesHaveRoad()) {
+            gameGroupData.result = "there is no road way on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (tile.isDoesHaveRoad() && !tile.isRoadDamaged()) {
-            str = "this road doesn't need repair!";
-            return str;
+        if (tileServer.isDoesHaveRoad() && !tileServer.isRoadDamaged()) {
+            gameGroupData.result = "this road doesn't need repair!";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRoad(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the road way will be repaired in 3 turns";
-        return str;
+        tileServer.assignWorkerToRoad(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the road way will be repaired in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
-    public String repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
-        Unit unit = getWorker(tile);
+    public void repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Tile tileServer = getTileServer(tile, gameGroupData.tiles);
+        Unit unit = getWorker(tileServer);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         if (unit == null) {
-            str = "this tile doesn't have any worker !";
-            return str;
+            gameGroupData.result = "this tile doesn't have any worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
-            str = "this worker does not belong to you !";
-            return str;
+        if (!unit.getCivilization().equals(civilizationServer)) {
+            gameGroupData.result = "this worker does not belong to you !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (unit.getPath().size() != 0) {
-            str = "unit is on moving !";
-            return str;
+            gameGroupData.result = "unit is on moving !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (!((Civilian)unit).isWorker()) {
-            str = "this unit is not worker !";
-            return str;
+            gameGroupData.result = "this unit is not worker !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (!tile.isDoesHaveRailWay()) {
-            str = "there is no rail way on this tile !";
-            return str;
+        if (!tileServer.isDoesHaveRailWay()) {
+            gameGroupData.result = "there is no rail way on this tile !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        if (tile.isDoesHaveRailWay() && !tile.isRailDamaged()) {
-            str = "this rail road doesn't need repair!";
-            return str;
+        if (tileServer.isDoesHaveRailWay() && !tileServer.isRailDamaged()) {
+            gameGroupData.result = "this rail road doesn't need repair!";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
         if (((Civilian)unit).getWorkingTile() != null) {
-            str = "worker is working on something else !";
-            return str;
+            gameGroupData.result = "worker is working on something else !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
 
-        tile.assignWorkerToRail(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
-        str = "the rail way will be repaired in 3 turns";
-        return str;
+        tileServer.assignWorkerToRail(unit, 3);
+        ((Civilian)unit).setWorkingTile(tileServer);
+        gameGroupData.result = "the rail way will be repaired in 3 turns";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public String repairImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, ArrayList<Tile> map){
         ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
@@ -4346,14 +4766,21 @@ public class PlayGameMenuController {
      */
 
     // get necessary parameters for update warrior
-    public String preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map) {
+    public void preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        Unit oldUnitServer = getUnitServer(gameGroupData.tiles, oldUnit);
         if (index < 0 || index > 71) {
-            return "number of tile is invalid !";
+            gameGroupData.result = "number of tile is invalid !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
         }
-        Unit newUnit = makeUnit(civilization, map.get(index), map, newUnitName);
-        City city = findTile(index, map, civilization);
-        return updateWarrior(civilization, oldUnit, newUnit, map, map.get(index), city);
+        Unit newUnit = makeUnit(civilizationServer, gameGroupData.tiles.get(index), gameGroupData.tiles, newUnitName);
+        City city = findTile(index, gameGroupData.tiles, civilizationServer);
+        gameGroupData.result = updateWarrior(civilizationServer, oldUnitServer, newUnit, gameGroupData.tiles, gameGroupData.tiles.get(index), city);
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
     public String updateWarrior(Civilization civilization, Unit warrior, Unit newWarrior,ArrayList<Tile> map, Tile tile, City city){
         String str;
         if (warrior == null) {
@@ -4388,8 +4815,8 @@ public class PlayGameMenuController {
             str = "your city doesn't have necessary resource !";
             return str;
         }
-        newWarrior.setX(warrior.getX());
-        newWarrior.setY(warrior.getY());
+        /*newWarrior.setX(warrior.getX());
+        newWarrior.setY(warrior.getY());*/
         tile.removeUnit(warrior);
         tile.addUnit2(newWarrior);
         str = "unit upgraded successfully !";
@@ -4456,33 +4883,155 @@ public class PlayGameMenuController {
 
     }
      */
-    public String nextTurn(Civilization civilization, ArrayList<Tile> map){
+    public void nextTurn(Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+
         //unit actions check
-        int tileNumber = unitActionsNextTurnCheck(civilization,map);
-        if(tileNumber != -1)
-            return "order unit in tile number : " + tileNumber;
-        /*if (civilization.getWorkingOnTechnology() == null)
-            return "choose a technology to learn";*/
-//-----------------------------------------------------------------------------------
+        int tileNumber = unitActionsNextTurnCheck(civilizationServer, gameGroupData.tiles);
+        if(tileNumber != -1) {
+            gameGroupData.result = "order unit in tile number : " + tileNumber;
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        //check that are you working on a technology
+        if (civilizationServer.getWorkingOnTechnology() == null) {
+            gameGroupData.result = "choose a technology to learn";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
 
-        improveImprovementsNextTurn(map);
-        checkForUnitMaking(civilization);
-        consumeTurnForRoadMaking(civilization,map);
-        addMpEveryTurn(civilization,map);
-        moveUnitWithMovesLeft(civilization,map);
-        increaseGoldCivilizationNextTurn(civilization,map);
-        increaseFoodCitiesNextTurn(civilization,map);
-        increaseProductionCitiesNextTurn(civilization,map);
-        increasePopulationNextTurn(civilization,map);
-        reduceRepairNeedImprovementTurnNextTurn(map);
-        resetHasOrdered(civilization,map);
-        civilization.reduceTechnologyRound();
-        increaseCityDamagePoint(civilization);
-
+        improveImprovementsNextTurn(gameGroupData.tiles);
+        checkForUnitMaking(civilizationServer);
+        consumeTurnForRoadMaking(civilizationServer, gameGroupData.tiles);
+        addMpEveryTurn(civilizationServer, gameGroupData.tiles);
+        moveUnitWithMovesLeft(civilizationServer, gameGroupData.tiles);
+        increaseGoldCivilizationNextTurn(civilizationServer, gameGroupData.tiles);
+        increaseFoodCitiesNextTurn(civilizationServer, gameGroupData.tiles);
+        increaseProductionCitiesNextTurn(civilizationServer, gameGroupData.tiles);
+        increasePopulationNextTurn(civilizationServer, gameGroupData.tiles);
+        reduceRepairNeedImprovementTurnNextTurn(gameGroupData.tiles);
+        resetHasOrdered(civilizationServer, gameGroupData.tiles);
+        civilizationServer.reduceTechnologyRound();
+        increaseCityDamagePoint(civilizationServer);
+        checkZoneOfAllCivilizations(gameGroupData.civilizations, gameGroupData.tiles, civilizationServer);
+        updateMapAfterMove(gameGroup);
+        turn ++;
+        changeTurn(gameGroupData.civilizations);
 
         //TODO...  also complete historyInformation and showProductionsInProcess
-        return "done";
+
+        gameGroupData.result = "done";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
+    public void updateMapAfterMove(GameGroup gameGroup) {
+        ArrayList<Integer> civilization1new = new ArrayList<>();
+        ArrayList<Integer> civilization2new = new ArrayList<>();   ///---> -1, 1
+        ArrayList<Integer> civilization3new = new ArrayList<>();
+        ArrayList<Integer> civilization4new = new ArrayList<>();
+        ArrayList<Integer> civilization5new = new ArrayList<>();
+
+        int numOfCivilizations = gameGroup.civilizations.size();
+        if (numOfCivilizations == 2) {
+            civilization1new = statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+            civilization2new = statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);
+        }
+        else if (numOfCivilizations == 3) {
+            civilization1new = statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+            civilization2new = statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);
+            civilization3new = statusChecker(gameGroup.civilizations.get(2), gameGroup.tiles);
+        }
+        else if (numOfCivilizations == 4) {
+            civilization1new = statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+            civilization2new = statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);
+            civilization3new = statusChecker(gameGroup.civilizations.get(2), gameGroup.tiles);
+            civilization4new = statusChecker(gameGroup.civilizations.get(3), gameGroup.tiles);
+        }
+        else if (numOfCivilizations == 5) {
+            civilization1new = statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+            civilization2new = statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);
+            civilization3new = statusChecker(gameGroup.civilizations.get(2), gameGroup.tiles);
+            civilization4new = statusChecker(gameGroup.civilizations.get(3), gameGroup.tiles);
+            civilization5new = statusChecker(gameGroup.civilizations.get(4), gameGroup.tiles);
+        }
+
+
+        if (numOfCivilizations == 2) {
+            for (int i = 0; i < 72; i++) {
+                if (gameGroup.tileStatusOfCivilization1.get(i) == -1 && civilization1new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization1.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization2.get(i) == -1 && civilization2new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization2.set(i, 1);
+            }
+            //tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+            //tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+        }
+        else if (numOfCivilizations == 3) {
+            for (int i = 0; i < 72; i++) {
+                if (gameGroup.tileStatusOfCivilization1.get(i) == -1 && civilization1new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization1.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization2.get(i) == -1 && civilization2new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization2.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization3.get(i) == -1 && civilization3new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization3.set(i, 1);
+            }
+//                    tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+//                    tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+//                    tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new, zeroStatusTilesCivilisation3, tiles);
+        }
+        else if (numOfCivilizations == 4) {
+            for (int i = 0; i < 72; i++) {
+                if (gameGroup.tileStatusOfCivilization1.get(i) == -1 && civilization1new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization1.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization2.get(i) == -1 && civilization2new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization2.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization3.get(i) == -1 && civilization3new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization3.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization4.get(i) == -1 && civilization4new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization4.set(i, 1);
+            }
+//                    tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+//                    tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+//                    tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new, zeroStatusTilesCivilisation3, tiles);
+//                    tileStatusOfCivilization4 = playGameMenuController.statusComparator(tileStatusOfCivilization4, civilization4new, zeroStatusTilesCivilisation4, tiles);
+
+        }
+        else if (numOfCivilizations == 5) {
+            for (int i = 0; i < 72; i++) {
+                if (gameGroup.tileStatusOfCivilization1.get(i) == -1 && civilization1new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization1.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization2.get(i) == -1 && civilization2new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization2.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization3.get(i) == -1 && civilization3new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization3.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization4.get(i) == -1 && civilization4new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization4.set(i, 1);
+                if (gameGroup.tileStatusOfCivilization5.get(i) == -1 && civilization5new.get(i) == 1)
+                    gameGroup.tileStatusOfCivilization5.set(i, 1);
+            }
+//                    tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+//                    tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+//                    tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new, zeroStatusTilesCivilisation3, tiles);
+//                    tileStatusOfCivilization4 = playGameMenuController.statusComparator(tileStatusOfCivilization4, civilization4new, zeroStatusTilesCivilisation4, tiles);
+//                    tileStatusOfCivilization5 = playGameMenuController.statusComparator(tileStatusOfCivilization5, civilization5new, zeroStatusTilesCivilisation5, tiles);
+        }
+    }
+
+    private void changeTurn(ArrayList<Civilization> civilizations) {
+        for (int i = 0; i < civilizations.size(); i++) {
+            if (civilizations.get(i).isMyTurn) {
+                civilizations.get(i).isMyTurn = false;
+                i++;
+                if (i == civilizations.size()) {
+                    i = 0;
+                }
+                civilizations.get(i).isMyTurn = true;
+                break;
+            }
+        }
+    }
+
     public void increasePopulationNextTurn(Civilization civilization,ArrayList<Tile> map){
         if(civilization.getHappiness() < 0)
             return;
@@ -4520,7 +5069,7 @@ public class PlayGameMenuController {
             for (int i1 = 0; i1 < units.size(); i1++) {
                 if(units.get(i1).getCivilization() == civilization){
                     if(!units.get(i1).getIsOnSleep()){
-                        if(!units.get(i1).isCivilian() && !units.get(i1).getHasOrdered() && units.get(i1).getPath().size() == 0){
+                        if(!units.get(i1).isCivilian() && units.get(i1).getHasOrdered() && units.get(i1).getPath().size() == 0){
                             units.get(i1).setHasOrdered(false);
                         }
                     }
@@ -4577,6 +5126,44 @@ public class PlayGameMenuController {
             cities.get(i).setDamagePoint(newDamagePoint);
         }
     }
+
+    public void checkZoneOfAllCivilizations (ArrayList<Civilization> civilizations, ArrayList<Tile> map, Civilization civilization) {
+        for (Civilization civilization2 : civilizations) {
+            if (!civilization2.equals(civilization)) {
+                checkZone(civilization2, map);
+            }
+        }
+    }
+    // if an enemy unit is near you send you a message
+    public void checkZone (Civilization civilization, ArrayList<Tile> map) {
+        Node[] graph = new Node[72];
+        for (int i = 0; i < graph.length; i++) {
+            graph[i] = new Node();
+            graph[i].tile = map.get(i);
+        }
+        findAllNeighbours (graph);
+
+        for (int i = 0; i < map.size(); i++) {
+            for (Unit unit : map.get(i).getUnits()) {
+                if (unit.getCivilization().equals(civilization) && !unit.isOnSleep()) {
+                    for (Node neighbour : graph[i].neighbours) {
+                        for (Unit enemyUnit : neighbour.tile.getUnits()) {
+                            if (!enemyUnit.getCivilization().equals(civilization)) {
+                                sendZoneMessage(unit, enemyUnit);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void sendZoneMessage(Unit unit, Unit enemyUnit) {
+        String message = "units of civilization : " + enemyUnit.getCivilization() +
+                " are near tile number : " + unit.getOrigin().getTileNumber() + " at turn : " + turn;
+        unit.getCivilization().addMessage(message);
+    }
+
+
     public void deleteLosers (Civilization civilization, ArrayList<Civilization> civilizations) {
         for (int i = 0; i < civilizations.size(); i++) {
             if (civilizations.get(i).getCities().size() == 0) {
@@ -4592,6 +5179,28 @@ public class PlayGameMenuController {
             return true;
         }
         return false;
+    }
+    public boolean findWinnerByYear(ArrayList<Civilization> civilizations) {
+        if (turn * 5 != 2050) return false;
+        for (int i = 1; i < civilizations.size(); ++i) {
+            for (int j = 0; j < civilizations.size() - 1; ++j) {
+                if (civilizations.get(j).getPoint() < civilizations.get(j + 1).getPoint()) {
+                    Civilization civilization = civilizations.get(j);
+                    civilizations.set(j, civilizations.get(j + 1));
+                    civilizations.set(j + 1, civilization);
+                }
+                else if (civilizations.get(j).getPoint() == civilizations.get(j + 1).getPoint()) {
+                    if (civilizations.get(j).getScience() < civilizations.get(j + 1).getScience() ||
+                            civilizations.get(j).getHappiness() < civilizations.get(j + 1).getHappiness() ||
+                            civilizations.get(j).getAllWins() < civilizations.get(j + 1).getAllWins()) {
+                        Civilization civilization = civilizations.get(j);
+                        civilizations.set(j, civilizations.get(j + 1));
+                        civilizations.set(j + 1, civilization);
+                    }
+                }
+            }
+        }
+        return true;
     }
     public void loadOriginTileForUnit (ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {

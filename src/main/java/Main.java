@@ -1,9 +1,9 @@
 import Controller.PlayGameMenuController;
-import Model.ClientThread;
 import Model.GameSocket;
 import Model.Tile;
 import Model.Units.Unit;
 import View.*;
+import View.Transition.VictoryAnimation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +17,6 @@ import java.net.Socket;
 import java.net.URL;
 
 public class Main extends Application {
-    public static ClientThread clientThread = new ClientThread();
     public static Socket socket;
     public static String host = "localhost";
     public static DataOutputStream dataOutputStream;
@@ -38,7 +37,6 @@ public class Main extends Application {
         CreateHost.dataInputStream = dataInputStream;
         CreateHost.socket = socket;
         CreateHost.host = host;
-        clientThread.dataInputStream = CreateHost.dataInputStream;
         Room.creatorSocket = socket;
         UnitPanel.playGameMenuController = new PlayGameMenuController();
         UnitPanel.untPanelURL = new URL(Main.class.getResource("fxml/unitPanel.fxml").toExternalForm());
@@ -121,6 +119,8 @@ public class Main extends Application {
         Tile.stoneMine = new URL(Main.class.getResource("pictures/stoneMine.png").toExternalForm());
         Tile.tradingPost = new URL(Main.class.getResource("pictures/tradingPost.png").toExternalForm());
 
+        Tile.ruinURL = new URL(Main.class.getResource("pictures/ruin.png").toExternalForm());
+
         TechnologyTree.AcousticsURL = new URL(Main.class.getResource("pictures/Acoustics.png").toExternalForm());
         TechnologyTree.AgricultureURL = new URL(Main.class.getResource("pictures/Agricultures.png").toExternalForm());
         TechnologyTree.AnimalHusbandryURL = new URL(Main.class.getResource("pictures/AnimalHusbandry.png").toExternalForm());
@@ -170,6 +170,11 @@ public class Main extends Application {
         TechnologyTree.WritingURL = new URL(Main.class.getResource("pictures/Writing.png").toExternalForm());
 
         TechnologyPanel.technologyPanelURL = new URL(Main.class.getResource("fxml/technologyPanel.fxml").toExternalForm());
+        ResearchInformation.researchInformationURL = new URL(Main.class.getResource("fxml/researchInformation.fxml").toExternalForm());
+        VictoryAnimation.winingTransitionURL = new URL(Main.class.getResource("pictures/victory/").toExternalForm());
+        VictoryAnimation.mainMenuFxmlURL = LoginMenu.mainMenuFxmlURL;
+
+        SettingPanel.settingPanelURL = new URL(Main.class.getResource("fxml/settingPanel.fxml").toExternalForm());
 
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();

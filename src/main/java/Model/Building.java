@@ -349,4 +349,6 @@ public class Building extends Rectangle { /// what is civilization ?
     public void setCivilization(Civilization civilization) {
         this.civilization = civilization;
     }
+
+
 }

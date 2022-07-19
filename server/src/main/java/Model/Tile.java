@@ -18,8 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Tile extends Polygon {
-    @Expose
+public class Tile {
+/*    @Expose
     public static URL banana;
     @Expose
     public static URL coal;
@@ -96,9 +96,9 @@ public class Tile extends Polygon {
     @Expose
     public static URL roadURL;
     @Expose
-    public static URL railURL;
+    public static URL railURL;*/
 
-    // for panel changing needed
+/*    // for panel changing needed
     @Expose
     public static Pane root;
     @Expose
@@ -108,7 +108,10 @@ public class Tile extends Polygon {
     @Expose
     public static ArrayList<Tile> map;
     @Expose
-    public static ArrayList<Civilization> civilizations;
+    public static ArrayList<Civilization> civilizations;*/
+
+    @Expose
+    public Ruin ruin;
     @Expose
     public float cameraSpeed = 30;
     @Expose
@@ -129,6 +132,10 @@ public class Tile extends Polygon {
     private boolean isTundra;                   //Smooth
     @Expose
     private boolean isBlocker;
+    @Expose
+    private boolean ruinDiscovered;
+    @Expose
+    private boolean hasRuin;
     @Expose
     private int food;
     @Expose
@@ -167,10 +174,10 @@ public class Tile extends Polygon {
     private boolean isOnRepair;
     @Expose
     private int repairNeedImprovement;
-    @Expose
+/*    @Expose
     private Rectangle road = new Rectangle(x - 160, y + 30, 40, 20);
     @Expose
-    private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);
+    private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);*/
 
     @Expose
     private ArrayList<Tile> roads;
@@ -194,6 +201,8 @@ public class Tile extends Polygon {
         this.isSnow = isSnow;
         this.isTundra = isTundra;
         this.isBlocker = false;
+        this.ruinDiscovered = false;
+        this.hasRuin = false;
         if(isHill || isMountain)
             this.isBlocker = true;
 
@@ -505,7 +514,14 @@ public class Tile extends Polygon {
             this.gold += this.resource.getGold();
             this.production += this.resource.getProduction();
         }
+        double chance = Math.random();
+        if (chance >= 0.33 && chance < 0.38 && !isOcean) {
+            ruin = new Ruin();
+            this.hasRuin = true;
+        }
 
+
+/*
 
         double x1,y1;
         double x2,y2;
@@ -539,8 +555,7 @@ public class Tile extends Polygon {
 
         root.getChildren().add(this);
     }
-
-    public void generatingTile(int status){
+    /*public void generatingTile(int status){
         if (status == -1){
             this.setFill(new ImagePattern(new Image(fogOfWar.toExternalForm())));
             return;
@@ -624,7 +639,7 @@ public class Tile extends Polygon {
         else if (resource.isTusk())
             resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
         else if (resource.isWheat())
-            resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
+            resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));*/
     }
 
     public void setResource(Resource resource) {
@@ -694,7 +709,7 @@ public class Tile extends Polygon {
     }
 
     public void setDoesHaveRoad(boolean doesHaveRoad) {
-        if (doesHaveRoad) {
+        /*if (doesHaveRoad) {
             Image image = new Image(roadURL.toExternalForm());
             ImagePattern imagePattern = new ImagePattern(image);
             road.setFill(imagePattern);
@@ -702,12 +717,12 @@ public class Tile extends Polygon {
         }
         else {
             root.getChildren().remove(road);
-        }
+        }*/
         this.doesHaveRoad = doesHaveRoad;
     }
 
     public void setDoesHaveRailWay(boolean doesHaveRailWay) {
-        if (doesHaveRailWay) {
+        /*if (doesHaveRailWay) {
             Image image = new Image(railURL.toExternalForm());
             ImagePattern imagePattern = new ImagePattern(image);
             rail.setFill(imagePattern);
@@ -715,7 +730,7 @@ public class Tile extends Polygon {
         }
         else {
             root.getChildren().remove(rail);
-        }
+        }*/
         this.doesHaveRailWay = doesHaveRailWay;
     }
 
@@ -736,7 +751,7 @@ public class Tile extends Polygon {
     }
 
     public void addUnit (Unit unit) {
-        if (units.size() == 0) {
+        /*if (units.size() == 0) {
             unit.setX(this.x + 20);
             unit.setY(this.y - h);
         }
@@ -744,11 +759,11 @@ public class Tile extends Polygon {
             unit.setX(this.x + 60);
             unit.setY(this.y - h + 90);
         }
-        root.getChildren().add(unit);
+        root.getChildren().add(unit);*/
         units.add(unit);
     }
     public void addUnit2 (Unit unit) {
-        root.getChildren().add(unit);
+        //root.getChildren().add(unit);
         units.add(unit);
     }
 
@@ -877,7 +892,7 @@ public class Tile extends Polygon {
                 }
             }
         }
-        double y1 = y - h;
+/*        double y1 = y - h;
         double x1 = x - radius / 2;
         building.setX(x1);
         building.setY(y1);
@@ -895,7 +910,7 @@ public class Tile extends Polygon {
         else if(building.isIndustrialEra)
             building.setFill(new ImagePattern(new Image(String.valueOf(building5URL))));
 
-        root.getChildren().add(building);
+        root.getChildren().add(building);*/
     }
 
     public ArrayList<Tile> getRailRoads() {
@@ -913,7 +928,7 @@ public class Tile extends Polygon {
     public void removeUnit (Unit unit) {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).equals(unit)) {
-                root.getChildren().remove(units.get(i));
+                //root.getChildren().remove(units.get(i));
                 units.remove(i);
                 break;
             }
@@ -1026,7 +1041,7 @@ public class Tile extends Polygon {
     public Building getBuilding(){
         return this.building;
     }
-    public void moveRight(){
+    /*public void moveRight(){
         double x1,y1;
         double x2,y2;
         double x3,y3;
@@ -1246,5 +1261,18 @@ public class Tile extends Polygon {
             rail.setX(this.x - 160);
             rail.setY(this.y - 30);
         }
+    }*/
+
+    public boolean isRuinDiscovered() {
+        return ruinDiscovered;
+    }
+
+    public boolean isHasRuin() {
+        return hasRuin;
+    }
+    public boolean equals (Tile tile) {
+        if (this.getX() == tile.getX() &&
+        this.getY() == tile.getY()) return true;
+        return false;
     }
 }

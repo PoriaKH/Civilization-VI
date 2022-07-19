@@ -2,12 +2,14 @@ package View;
 
 import Controller.PlayGameMenuController;
 import Model.Civilization;
+import Model.FunctionsGson.GameGroupData;
 import Model.Member;
 import Model.Tile;
 import Model.Units.Civilian;
 import Model.Units.SaveGameClass;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.Transition.VictoryAnimation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -54,6 +56,7 @@ import java.util.regex.Pattern;
 
 import static View.GameMenu.gameMenuURL;
 import static View.MainMenu.gameMenuFxmlURL;
+import static View.UnitPanel.map;
 import static View.UnitPanel.playGameMenuController;
 
 public class PlayGameMenu {
@@ -86,7 +89,19 @@ public class PlayGameMenu {
 
     public static ArrayList<Civilization> civilizations;
 
+    public static GameGroupData gameGroupData;
+
     public static ArrayList<Tile> tiles;
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation1 = new HashMap<>();
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation2 = new HashMap<>();
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation3 = new HashMap<>();
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation4 = new HashMap<>();
+    HashMap<Integer, Tile> zeroStatusTilesCivilisation5 = new HashMap<>();
+    ArrayList<Integer> tileStatusOfCivilization1 = new ArrayList<>();
+    ArrayList<Integer> tileStatusOfCivilization2 = new ArrayList<>();
+    ArrayList<Integer> tileStatusOfCivilization3 = new ArrayList<>();
+    ArrayList<Integer> tileStatusOfCivilization4 = new ArrayList<>();
+    ArrayList<Integer> tileStatusOfCivilization5 = new ArrayList<>();
 
 
     public Text goldAmount;
@@ -161,7 +176,7 @@ public class PlayGameMenu {
         players.add(0, MainMenu.loggedInMember);
         if (areUsersOk) {
             MainMenu.mediaPlayer.stop();
-
+            Unit.playGameMenu = this;
             root = FXMLLoader.load(gameMenuURL);
             Tile.root = root;
             ArrayList<Tile> tiles = playGameMenuController.mapCreator(players.size(),players);
@@ -171,9 +186,69 @@ public class PlayGameMenu {
             PlayGameMenu.civilizations = civilizations;
             PlayGameMenu.tiles = tiles;
             playingCivilization = civilizations.get(0);
-            ArrayList<Integer> status = playGameMenuController.statusChecker(playingCivilization, tiles);
+            int numOfCivilizations = civilizations.size();
+            if (numOfCivilizations == 2) {
+//                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+//                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
+                    tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
+                    tileStatusOfCivilization2.set(i, gameGroupData.tileStatusOfCivilization2.get(i));
+            }
+            else if (numOfCivilizations == 3) {
+//                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+//                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+//                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
+                    tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
+                    tileStatusOfCivilization2.set(i, gameGroupData.tileStatusOfCivilization2.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization3.size(); i++)
+                    tileStatusOfCivilization3.set(i, gameGroupData.tileStatusOfCivilization3.get(i));
+            }
+            else if (numOfCivilizations == 4) {
+//                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+//                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+//                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+//                tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
+                    tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
+                    tileStatusOfCivilization2.set(i, gameGroupData.tileStatusOfCivilization2.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization3.size(); i++)
+                    tileStatusOfCivilization3.set(i, gameGroupData.tileStatusOfCivilization3.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization4.size(); i++)
+                    tileStatusOfCivilization4.set(i, gameGroupData.tileStatusOfCivilization4.get(i));
+
+            }
+            else if (numOfCivilizations == 5){
+//                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+//                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+//                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);///   ----> -1 , 1
+//                tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+//                tileStatusOfCivilization5 = playGameMenuController.statusChecker(civilizations.get(4), tiles);
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
+                    tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
+                    tileStatusOfCivilization2.set(i, gameGroupData.tileStatusOfCivilization2.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization3.size(); i++)
+                    tileStatusOfCivilization3.set(i, gameGroupData.tileStatusOfCivilization3.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization4.size(); i++)
+                    tileStatusOfCivilization4.set(i, gameGroupData.tileStatusOfCivilization4.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization5.size(); i++)
+                    tileStatusOfCivilization5.set(i, gameGroupData.tileStatusOfCivilization5.get(i));
+            }
             for (int i = 0; i < 72; i++)
-                tiles.get(i).generatingTile(status.get(i));
+                tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));
+
+            for (int i = 0; i < civilizations.size(); i++) {
+                for (int i1 = 0; i1 < civilizations.size(); i1++) {
+                    if (i != i1) {
+                        civilizations.get(i).addCivilizationToWinsUnit(civilizations.get(i1));
+                        civilizations.get(i).addCivilizationToLossesUnit(civilizations.get(i1));
+                    }
+                }
+            }
 
             switchToGame(mouseEvent);
         }
@@ -199,6 +274,7 @@ public class PlayGameMenu {
         Text spacing3 = new Text("                           ");
         Text spacing4 = new Text("                           ");
         Text spacing5 = new Text("                           ");
+        Text spacing6 = new Text("    ");
 
         Image happinessImage = new Image(getClass().getResource("/pictures/Happiness.png").toString());
         ImageView happinessView = new ImageView(happinessImage);
@@ -214,12 +290,23 @@ public class PlayGameMenu {
         civName.setFill(Color.RED);
         // buttons
         Button infoPanelButton = new Button("info panel");
-        infoPanelButton.setStyle( "-fx-pref-width: 150;\n" +
+        infoPanelButton.setStyle("-fx-pref-width: 150;\n" +
                 "-fx-pref-height: 20;\n" +
                 " -fx-effect: dropshadow( one-pass-box , #1a0bf1, 8 , 0.0 , 2 , 0 );\n" +
                 "-fx-font-style: italic;\n" +
                 "-fx-background-color: #a9a2a2;");
 
+
+        Button settingButton = new Button();
+        settingButton.setStyle("-fx-effect: dropshadow( one-pass-box , #7304bd, 8 , 0.0 , 2 , 0 );");
+        settingButton.setShape(new Circle(15));
+        settingButton.setMinSize(30, 30);
+        settingButton.setMaxSize(30, 30);
+        Image imageSetting = new Image(getClass().getResource("/pictures/setting.png").toString());
+        ImageView settingView = new ImageView(imageSetting);
+        settingView.fitWidthProperty().bind(settingButton.widthProperty());
+        settingView.fitHeightProperty().bind(settingButton.heightProperty());
+        settingButton.setGraphic(settingView);
 
         Button technologyButton = new Button();
         technologyButton.setStyle("-fx-effect: dropshadow( one-pass-box , #7304bd, 8 , 0.0 , 2 , 0 );");
@@ -255,6 +342,8 @@ public class PlayGameMenu {
         hBox.getChildren().add(infoPanelButton);
         hBox.getChildren().add(spacing5);
         hBox.getChildren().add(nextTurnButton);
+        hBox.getChildren().add(spacing6);
+        hBox.getChildren().add(settingButton);
 
         root.getChildren().add(hBox);
 
@@ -265,135 +354,207 @@ public class PlayGameMenu {
                 System.out.println("x = " + event.getX() + "  y = " + event.getY());
             }
         });
-        root.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                String keyName = event.getCode().getName();
-                if(Objects.equals(keyName, "Up")){
-                    if(tiles.get(0).getY() <= 250) {
-                        for (Tile tile : tiles) {
-                            tile.moveDown();
-                        }
+        boolean[] keysPressed = new boolean[5];//down, up, right, left, c
+        for (int i = 0; i < 5; i++)
+            keysPressed[i] = false;
+        root.setOnKeyPressed(keyEvent -> {
+            switch (keyEvent.getCode()) {
+                case UP:
+                    keysPressed[0] = true;
+                    break;
+                case DOWN:
+                    keysPressed[1] = true;
+                    break;
+                case LEFT:
+                    keysPressed[2] = true;
+                    break;
+                case RIGHT:
+                    keysPressed[3] = true;
+                    break;
+                case C:
+                    keysPressed[4] = true;
+                    break;
+            }
+            if (keysPressed[0]) {
+                if (tiles.get(0).getY() <= 250) {
+                    for (Tile tile : tiles) {
+                        tile.moveDown();
                     }
                 }
-                if(Objects.equals(keyName, "Down")){
-                    if(tiles.get(5).getY() >= 500) {
-                        for (Tile tile : tiles) {
-                            tile.moveUp();
-                        }
+            }
+            if (keysPressed[1]) {
+                if (tiles.get(5).getY() >= 500) {
+                    for (Tile tile : tiles) {
+                        tile.moveUp();
                     }
                 }
-                if(Objects.equals(keyName, "Left")){
-                    if(tiles.get(0).getX() <= 300) {
-                        for (Tile tile : tiles) {
-                            tile.moveRight();
-                        }
+            }
+            if (keysPressed[2]) {
+                if (tiles.get(0).getX() <= 300) {
+                    for (Tile tile : tiles) {
+                        tile.moveRight();
                     }
                 }
-                if(Objects.equals(keyName, "Right")) {
-                    if (tiles.get(66).getX() >= 1000) {
-                        for (Tile tile : tiles) {
-                            tile.moveLeft();
-                        }
+            }
+            if (keysPressed[3]) {
+                if (tiles.get(66).getX() >= 1000) {
+                    for (Tile tile : tiles) {
+                        tile.moveLeft();
                     }
                 }
-                if (Objects.equals(keyName, "C")) {
-                    CheatMenu.infoPanelScene = scene;
-                    CheatMenu.stage = stage;
-                    CheatMenu.doesEnteredFromInfoPanel = false;
+            }
+            if (keysPressed[4]) {
+                CheatMenu.infoPanelScene = scene;
+                CheatMenu.stage = stage;
+                CheatMenu.doesEnteredFromInfoPanel = false;
+                try {
+                    new CheatMenu().start();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        root.setOnKeyReleased(keyEvent -> {
+            switch (keyEvent.getCode()) {
+                case UP:
+                    keysPressed[0] = false;
+                    break;
+                case DOWN:
+                    keysPressed[1] = false;
+                    break;
+                case LEFT:
+                    keysPressed[2] = false;
+                    break;
+                case RIGHT:
+                    keysPressed[3] = false;
+                    break;
+                case C:
+                    keysPressed[4] = false;
+                    break;
+            }
+        });
+            settingButton.setOnMouseClicked(event -> {
+                if (Room.isMyTurn) {
+                    SettingPanel.gameScene = scene;
+                    SettingPanel.stage = stage;
                     try {
-                        new CheatMenu().start();
+                        new SettingPanel().run();
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
+                }else {
+                    showError();
                 }
-            }
-        });
-        infoPanelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    InfoPanel.goldAmount = goldAmount;
-                    InfoPanel.happinessAmount = happinessAmount;
-                    InfoPanel.stage = stage;
-                    InfoPanel.gameMenuScene = scene;
-                    InfoPanel.tiles = tiles;
-                    InfoPanel.currentCivilization = playingCivilization;
-                    InfoPanel.civilizations = civilizations;
-                    new InfoPanel().start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        //todo -> kian
-        technologyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                TechnologyPanel.stage = stage;
-                TechnologyPanel.gameMenuScene = scene;
-                TechnologyPanel.playingCivilization = playingCivilization;
-                TechnologyPanel.playGameMenuController = playGameMenuController;
-                try {
-                    new TechnologyPanel().start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        //TODO add technology condition
-        nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                String string = playGameMenuController.nextTurn(playingCivilization, tiles);
-                if (!string.equals("done")) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("next turn");
-                    alert.setHeaderText("result :");
-                    alert.setContentText(string);
-                    alert.showAndWait();
-                } else {
-                    playGameMenuController.deleteLosers(playingCivilization, civilizations);
-                    if (playGameMenuController.findWinner(playingCivilization, civilizations)) {
-                        //TODO .... write array members in file -> pouria ***********
-                        //TODO ... baraye datresi be barande civilization.get(0) okeye
-                        //TODO .... list member ha ham hast age khsati kol file ro dobare benevisi
-                        //TODO dat tabe fidnWinner emtaiza member barande ro ziad kardam
+            });
+            infoPanelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (Room.isMyTurn) {
                         try {
-                            increaseFileScore(playingCivilization);
+                            InfoPanel.goldAmount = goldAmount;
+                            InfoPanel.happinessAmount = happinessAmount;
+                            InfoPanel.stage = stage;
+                            InfoPanel.gameMenuScene = scene;
+                            InfoPanel.tiles = tiles;
+                            InfoPanel.currentCivilization = playingCivilization;
+                            InfoPanel.civilizations = civilizations;
+                            new InfoPanel().start();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        //TODO .... graphic view for winner -> kian
-                        try {
-                            root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.show();
+                        updateMapAfterMove();
+                    } else {
+                        showError();
                     }
-                    PlayGameMenuController.turn ++;
-                    playersCounter++;
-                    if (playersCounter == civilizations.size()) {
-                        playersCounter = 0;
-                    }
-                    playingCivilization = civilizations.get(playersCounter);
-                    civName.setText("civilization : " + playingCivilization.getName());
-                    goldAmount.setText(" : " + playingCivilization.getGold());
-                    happinessAmount.setText(" : " + playingCivilization.getHappiness());
-                    ArrayList<Integer> status = playGameMenuController.statusChecker(playingCivilization, tiles);
-                    for (int i = 0; i < 72; i++)
-                        tiles.get(i).generatingTile(status.get(i));
                 }
-            }
-        });
+            });
+            //todo -> kian
+            technologyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (Room.isMyTurn) {
+                        TechnologyPanel.stage = stage;
+                        TechnologyPanel.gameMenuScene = scene;
+                        TechnologyPanel.playingCivilization = playingCivilization;
+                        TechnologyPanel.playGameMenuController = playGameMenuController;
+                        try {
+                            new TechnologyPanel().start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        showError();
+                    }
+                }
+            });
+            //TODO add technology condition
+            nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (Room.isMyTurn) {
+                        String string = null;
+                        try {
+                            string = playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if (!string.equals("done")) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("next turn");
+                            alert.setHeaderText("result :");
+                            alert.setContentText(string);
+                            alert.showAndWait();
+                        } else {
+
+                            PlayGameMenuController.turn++;
+                            playersCounter++;
+                            if (playersCounter == civilizations.size()) {
+                                playersCounter = 0;
+                            }
+                            playingCivilization = civilizations.get(playersCounter);
+                            civName.setText("civilization : " + playingCivilization.getName());
+                            goldAmount.setText(" : " + playingCivilization.getGold());
+                            happinessAmount.setText(" : " + playingCivilization.getHappiness());
 
 
+                            playGameMenuController.deleteLosers(playingCivilization, civilizations);
+                            if (playGameMenuController.findWinner(playingCivilization, civilizations)
+                                    || playGameMenuController.findWinnerByYear(civilizations)) {
+                                //TODO .... write array members in file -> pouria ***********
+                                //ToDO ... tabe moshkel dare ehtemalan az while(true) e
 
-        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root,1280,720);
+                         /*try {
+                            increaseFileScore(civilizations.get(0));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }*/
+                                if (5 * PlayGameMenuController.turn == 2050) {
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("WINNER : ");
+                                    alert.setHeaderText("game is over because we are in year 2050 :");
+                                    alert.setContentText("Winner civilization : " + civilizations.get(0).getName());
+
+                                    playingCivilization = civilizations.get(0);
+                                    civName.setText("civilization : " + playingCivilization.getName());
+                                    goldAmount.setText(" : " + playingCivilization.getGold());
+                                    happinessAmount.setText(" : " + playingCivilization.getHappiness());
+
+                                    alert.showAndWait();
+                                }
+                                VictoryAnimation.stage = stage;
+                                VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
+                                victoryAnimation.play();
+                            }
+                            updateMapAfterMove();
+                        }
+                    }else {
+                        showError();
+                    }
+                }
+            });
+
+        stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
         scene.getRoot().requestFocus();
         stage.setScene(scene);
         root.getChildren().get(0).requestFocus();
@@ -402,6 +563,123 @@ public class PlayGameMenu {
         Tile.scene = scene;
 
         stage.show();
+    }
+
+    private void showError() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("illegal action");
+        alert.setHeaderText("result :");
+        alert.setContentText("it is not your turn");
+        alert.showAndWait();
+    }
+
+    //TODO... koochak bebar to server
+    public void updateMapAfterMove(){
+        ArrayList<Integer> civilization1new = new ArrayList<>();
+        ArrayList<Integer> civilization2new = new ArrayList<>();   ///---> -1, 1
+        ArrayList<Integer> civilization3new = new ArrayList<>();
+        ArrayList<Integer> civilization4new = new ArrayList<>();
+        ArrayList<Integer> civilization5new = new ArrayList<>();
+
+        int numOfCivilizations = civilizations.size();
+        if (numOfCivilizations == 2) {
+            civilization1new = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+            civilization2new = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+        }
+        else if (numOfCivilizations == 3) {
+            civilization1new = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+            civilization2new = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+            civilization3new = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+        }
+        else if (numOfCivilizations == 4) {
+            civilization1new = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+            civilization2new = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+            civilization3new = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+            civilization4new = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+        }
+        else if (numOfCivilizations == 5) {
+            civilization1new = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+            civilization2new = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+            civilization3new = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+            civilization4new = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+            civilization5new = playGameMenuController.statusChecker(civilizations.get(4), tiles);
+        }
+
+
+        if (numOfCivilizations == 2) {
+            for (int i = 0; i < 72; i++) {
+                if (tileStatusOfCivilization1.get(i) == -1 && civilization1new.get(i) == 1)
+                    tileStatusOfCivilization1.set(i, 1);
+                if (tileStatusOfCivilization2.get(i) == -1 && civilization2new.get(i) == 1)
+                    tileStatusOfCivilization2.set(i, 1);
+            }
+            //tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+            //tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+        }
+        else if (numOfCivilizations == 3) {
+            for (int i = 0; i < 72; i++) {
+                if (tileStatusOfCivilization1.get(i) == -1 && civilization1new.get(i) == 1)
+                    tileStatusOfCivilization1.set(i, 1);
+                if (tileStatusOfCivilization2.get(i) == -1 && civilization2new.get(i) == 1)
+                    tileStatusOfCivilization2.set(i, 1);
+                if (tileStatusOfCivilization3.get(i) == -1 && civilization3new.get(i) == 1)
+                    tileStatusOfCivilization3.set(i, 1);
+            }
+//                    tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+//                    tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+//                    tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new, zeroStatusTilesCivilisation3, tiles);
+        }
+        else if (numOfCivilizations == 4) {
+            for (int i = 0; i < 72; i++) {
+                if (tileStatusOfCivilization1.get(i) == -1 && civilization1new.get(i) == 1)
+                    tileStatusOfCivilization1.set(i, 1);
+                if (tileStatusOfCivilization2.get(i) == -1 && civilization2new.get(i) == 1)
+                    tileStatusOfCivilization2.set(i, 1);
+                if (tileStatusOfCivilization3.get(i) == -1 && civilization3new.get(i) == 1)
+                    tileStatusOfCivilization3.set(i, 1);
+                if (tileStatusOfCivilization4.get(i) == -1 && civilization4new.get(i) == 1)
+                    tileStatusOfCivilization4.set(i, 1);
+            }
+//                    tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+//                    tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+//                    tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new, zeroStatusTilesCivilisation3, tiles);
+//                    tileStatusOfCivilization4 = playGameMenuController.statusComparator(tileStatusOfCivilization4, civilization4new, zeroStatusTilesCivilisation4, tiles);
+
+        }
+        else if (numOfCivilizations == 5) {
+            for (int i = 0; i < 72; i++) {
+                if (tileStatusOfCivilization1.get(i) == -1 && civilization1new.get(i) == 1)
+                    tileStatusOfCivilization1.set(i, 1);
+                if (tileStatusOfCivilization2.get(i) == -1 && civilization2new.get(i) == 1)
+                    tileStatusOfCivilization2.set(i, 1);
+                if (tileStatusOfCivilization3.get(i) == -1 && civilization3new.get(i) == 1)
+                    tileStatusOfCivilization3.set(i, 1);
+                if (tileStatusOfCivilization4.get(i) == -1 && civilization4new.get(i) == 1)
+                    tileStatusOfCivilization4.set(i, 1);
+                if (tileStatusOfCivilization5.get(i) == -1 && civilization5new.get(i) == 1)
+                    tileStatusOfCivilization5.set(i, 1);
+            }
+//                    tileStatusOfCivilization1 = playGameMenuController.statusComparator(tileStatusOfCivilization1, civilization1new, zeroStatusTilesCivilisation1, tiles);
+//                    tileStatusOfCivilization2 = playGameMenuController.statusComparator(tileStatusOfCivilization2, civilization2new, zeroStatusTilesCivilisation2, tiles);
+//                    tileStatusOfCivilization3 = playGameMenuController.statusComparator(tileStatusOfCivilization3, civilization3new, zeroStatusTilesCivilisation3, tiles);
+//                    tileStatusOfCivilization4 = playGameMenuController.statusComparator(tileStatusOfCivilization4, civilization4new, zeroStatusTilesCivilisation4, tiles);
+//                    tileStatusOfCivilization5 = playGameMenuController.statusComparator(tileStatusOfCivilization5, civilization5new, zeroStatusTilesCivilisation5, tiles);
+        }
+        if (playersCounter == 0)
+            for (int i = 0; i < 72; i++)
+                tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));
+        if (playersCounter == 1)
+            for (int i = 0; i < 72; i++)
+                tiles.get(i).generatingTile(tileStatusOfCivilization2.get(i));
+        if (playersCounter == 2)
+            for (int i = 0; i < 72; i++)
+                tiles.get(i).generatingTile(tileStatusOfCivilization3.get(i));
+        if (playersCounter == 3)
+            for (int i = 0; i < 72; i++)
+                tiles.get(i).generatingTile(tileStatusOfCivilization4.get(i));
+        if (playersCounter == 4)
+            for (int i = 0; i < 72; i++)
+                tiles.get(i).generatingTile(tileStatusOfCivilization5.get(i));
     }
     public void increaseFileScore(Civilization civilization) throws IOException {
         File file = new File("users.txt");

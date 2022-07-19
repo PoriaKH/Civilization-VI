@@ -26,6 +26,10 @@ public class Member {
         this.date = date;
         this.imageNumber = imageNumber;
     }
+
+    public Member() {
+    }
+
     public String getUsername() {
         return username;
     }
@@ -68,5 +72,12 @@ public class Member {
 
     public String toString(){
         return "username : " + username + " nickname : " + nickname + " password" + password;
+    }
+
+    public boolean equals(Member member) {
+        if (this.username.equals(member.getUsername()) &&
+                this.password.equals(member.getPassword()) &&
+                this.nickname.equals(member.getNickname())) return true;
+        return false;
     }
 }

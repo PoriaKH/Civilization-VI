@@ -2,11 +2,11 @@ package View;
 
 import Controller.PlayGameMenuController;
 import Model.*;
-import Model.FunctionsGson.CheatGson;
-import Model.FunctionsGson.CheatTeleport;
-import Model.FunctionsGson.MapCreatorGson;
+import Model.FunctionsGson.*;
+import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.fxml.FXMLLoader;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -21,6 +21,7 @@ public class CommandProcessor {
     public static ArrayList<Socket> allSockets = new ArrayList<>();
     public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
     public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
+    public static ArrayList<GameGroup> gameGroups;
 
     public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket) throws IOException {
         if(command.startsWith("{\"creatorSocket")){
@@ -128,49 +129,266 @@ public class CommandProcessor {
                 }
             }
             sockets.add(sockets2);
+            dataOutputStream.writeUTF("salam dodol tala");
+            // TODO... pouria az inja game shoro she revale dige? in members ro set kon
+            ArrayList<Member> members = new ArrayList<>();
+
+            GameGroup gameGroup = new GameGroup();
+            gameGroup.sockets = sockets2;
+            gameGroup.members = members;
+
+
+            gameGroup.tiles = playGameMenuController.mapCreator(members.size(),members);
+            gameGroup.civilizations = playGameMenuController.initializeCivilizations(members.size(), gameGroup.tiles, members);
+            gameGroup.civilizations.get(0).isMyTurn = true;
+
+
+            // TODO ... kian sakht map ro check kon
+            int numOfCivilizations = gameGroup.civilizations.size();
+            ArrayList<Integer> tileStatusOfCivilization1 = new ArrayList<>();
+            ArrayList<Integer> tileStatusOfCivilization2 = new ArrayList<>();
+            ArrayList<Integer> tileStatusOfCivilization3 = new ArrayList<>();
+            ArrayList<Integer> tileStatusOfCivilization4 = new ArrayList<>();
+            ArrayList<Integer> tileStatusOfCivilization5 = new ArrayList<>();
+
+            if (numOfCivilizations == 2) {
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);///   ----> -1 , 1
+            }
+            else if (numOfCivilizations == 3) {
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);///   ----> -1 , 1
+                tileStatusOfCivilization3 = playGameMenuController.statusChecker(gameGroup.civilizations.get(2), gameGroup.tiles);
+            }
+            else if (numOfCivilizations == 4) {
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);///   ----> -1 , 1
+                tileStatusOfCivilization3 = playGameMenuController.statusChecker(gameGroup.civilizations.get(2), gameGroup.tiles);
+                tileStatusOfCivilization4 = playGameMenuController.statusChecker(gameGroup.civilizations.get(3), gameGroup.tiles);
+            }
+            else if (numOfCivilizations == 5){
+                tileStatusOfCivilization1 = playGameMenuController.statusChecker(gameGroup.civilizations.get(0), gameGroup.tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(gameGroup.civilizations.get(1), gameGroup.tiles);
+                tileStatusOfCivilization3 = playGameMenuController.statusChecker(gameGroup.civilizations.get(2), gameGroup.tiles);///   ----> -1 , 1
+                tileStatusOfCivilization4 = playGameMenuController.statusChecker(gameGroup.civilizations.get(3), gameGroup.tiles);
+                tileStatusOfCivilization5 = playGameMenuController.statusChecker(gameGroup.civilizations.get(4), gameGroup.tiles);
+            }
+            /*for (int i = 0; i < 72; i++)
+                gameGroup.tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));*/
+
+            for (int i = 0; i < gameGroup.civilizations.size(); i++) {
+                for (int i1 = 0; i1 < gameGroup.civilizations.size(); i1++) {
+                    if (i != i1) {
+                        gameGroup.civilizations.get(i).addCivilizationToWinsUnit(gameGroup.civilizations.get(i1));
+                        gameGroup.civilizations.get(i).addCivilizationToLossesUnit(gameGroup.civilizations.get(i1));
+                    }
+                }
+            }
+            GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+            gameGroupData.result = "newGame";
+            playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
+
         }
-        else if (command.startsWith("mapCreator ")) {
-            command = command.replace("mapCreator ", "");
-            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
-            MapCreatorGson mapCreatorGson = gson.fromJson(command, MapCreatorGson.class);
-            playGameMenuController.mapCreator(mapCreatorGson.numOfCivilizations, mapCreatorGson.members, getGroup(socket));
-        }
+
+
         else if (command.startsWith("cheatGold ")) {
             command = command.replace("cheatGold ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount, getGroup(cheatGson.member));
         }
         else if (command.startsWith("cheatFood ")) {
             command = command.replace("cheatFood ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseFood(cheatGson.civilization, cheatGson.amount, getGroup(cheatGson.member));
         }
         else if (command.startsWith("cheatTechnology ")) {
             command = command.replace("cheatTechnology ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseTechnology(cheatGson.civilization, cheatGson.amount, getGroup(cheatGson.member));
         }
         else if (command.startsWith("cheatHappiness ")) {
             command = command.replace("cheatHappiness ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatGson cheatGson = gson.fromJson(command, CheatGson.class);
-            playGameMenuController.cheatIncreaseGold(cheatGson.civilization, cheatGson.amount);
+            playGameMenuController.cheatIncreaseHappiness(cheatGson.civilization, cheatGson.amount, getGroup(cheatGson.member));
         }
         else if (command.startsWith("teleport ")) {
             command = command.replace("teleport ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
             CheatTeleport cheatTeleport = gson.fromJson(command, CheatTeleport.class);
+            GameGroup gameGroup = getGroup(cheatTeleport.member);
             playGameMenuController.cheatTeleportUnit(cheatTeleport.unit, cheatTeleport.numberOfDestination,
-                    cheatTeleport.civilization, cheatTeleport.map);
+                    cheatTeleport.civilization, gameGroup.tiles, gameGroup);
         }
+        else if (command.startsWith("moveUnit ")) {
+            command = command.replace("moveUnit ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            MoveUnitGson moveUnitGson = gson.fromJson(command, MoveUnitGson.class);
+            GameGroup gameGroup = getGroup(moveUnitGson.member);
+            playGameMenuController.preMoveUnit(moveUnitGson.unit, moveUnitGson.numberOfDestination,
+                    moveUnitGson.civilization, gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("unitMaker ")) {
+            command = command.replace("unitMaker ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            UnitMakingGson unitMakingGson = gson.fromJson(command, UnitMakingGson.class);
+            GameGroup gameGroup = getGroup(unitMakingGson.member);
+            playGameMenuController.preUnitMaker(unitMakingGson.unitName, unitMakingGson.index,
+                    unitMakingGson.civilization, gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("createCity ")) {
+            command = command.replace("createCity ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            CreateCityGson createCityGson = gson.fromJson(command, CreateCityGson.class);
+            GameGroup gameGroup = getGroup(createCityGson.member);
+            playGameMenuController.createCity(createCityGson.civilization, createCityGson.tileNumber,
+                    gameGroup.tiles, gameGroup.civilizations, gameGroup);
+        }
+        else if (command.startsWith("attackTile ")) {
+            command = command.replace("attackTile ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            AttackTileGson attackTileGson = gson.fromJson(command, AttackTileGson.class);
+            GameGroup gameGroup = getGroup(attackTileGson.member);
+            playGameMenuController.preAttackTile(attackTileGson.attacker, attackTileGson.destinationIndex,
+                    attackTileGson.civilization, gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("attackCity ")) {
+            command = command.replace("attackCity ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            AttackCityGson attackCityGson = gson.fromJson(command, AttackCityGson.class);
+            GameGroup gameGroup = getGroup(attackCityGson.member);
+            playGameMenuController.preAttackCity(attackCityGson.attacker, attackCityGson.destinationIndex,
+                    attackCityGson.civilization, gameGroup.tiles, gameGroup.civilizations, gameGroup);
+        }
+        else if (command.startsWith("unitBehave ")) {
+            command = command.replace("unitBehave ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            UnitBehaviourGson unitBehaviourGson = gson.fromJson(command, UnitBehaviourGson.class);
+            GameGroup gameGroup = getGroup(unitBehaviourGson.member);
+            playGameMenuController.preUnitBehaviour(unitBehaviourGson.unit, unitBehaviourGson.civilization,
+                    gameGroup.tiles, unitBehaviourGson.command, gameGroup);
+        }
+        else if (command.startsWith("lootTile ")) {
+            command = command.replace("lootTile ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            LootTileGson lootTileGson = gson.fromJson(command, LootTileGson.class);
+            GameGroup gameGroup = getGroup(lootTileGson.member);
+            playGameMenuController.lootTile(lootTileGson.civilization, lootTileGson.tileNumber,
+                    lootTileGson.destinationTileNumber, gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("chooseTechnology ")) {
+            command = command.replace("chooseTechnology ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChooseTechnologyGson chooseTechnologyGson = gson.fromJson(command, ChooseTechnologyGson.class);
+            GameGroup gameGroup = getGroup(chooseTechnologyGson.member);
+            playGameMenuController.chooseTechnologyToLearn(chooseTechnologyGson.civilization,
+                    chooseTechnologyGson.technologyName, gameGroup);
+        }
+        else if (command.startsWith("changeTechnology ")) {
+            command = command.replace("changeTechnology ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChooseTechnologyGson chooseTechnologyGson = gson.fromJson(command, ChooseTechnologyGson.class);
+            GameGroup gameGroup = getGroup(chooseTechnologyGson.member);
+            playGameMenuController.changeTechnologyToLearn(chooseTechnologyGson.civilization,
+                    chooseTechnologyGson.technologyName, gameGroup);
+        }
+        else if (command.startsWith("createImprovement ")) {
+            command = command.replace("createImprovement ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            CreateImprovementGson createImprovementGson = gson.fromJson(command, CreateImprovementGson.class);
+            GameGroup gameGroup = getGroup(createImprovementGson.member);
+            playGameMenuController.createImprovement(createImprovementGson.civilization, createImprovementGson.tileUnitNumber,
+                    createImprovementGson.tileNumber, createImprovementGson.improvementName, gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("createRoad ")) {
+            command = command.replace("createRoad ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.createRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("createRail ")) {
+            command = command.replace("createRail ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.createRailRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("removeRoad ")) {
+            command = command.replace("removeRoad ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.removeRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("removeRail ")) {
+            command = command.replace("removeRail ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.removeRailRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("repairRoad ")) {
+            command = command.replace("repairRoad ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.repairRoad(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("repairRail ")) {
+            command = command.replace("repairRail ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RoadFunctionsGson roadFunctionsGson = gson.fromJson(command, RoadFunctionsGson.class);
+            GameGroup gameGroup = getGroup(roadFunctionsGson.member);
+            playGameMenuController.repairRail(roadFunctionsGson.civilization, roadFunctionsGson.tile,
+                    gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("removeImprovement ")) {
+            command = command.replace("removeImprovement ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RemoveImprovementGson removeImprovementGson = gson.fromJson(command, RemoveImprovementGson.class);
+            GameGroup gameGroup = getGroup(removeImprovementGson.member);
+            playGameMenuController.removeImprovement(removeImprovementGson.civilization,
+                    removeImprovementGson.improvement, removeImprovementGson.tileNumber, gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("upgradeUnit ")) {
+            command = command.replace("upgradeUnit ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            UpgradeUnitGson upgradeUnitGson = gson.fromJson(command, UpgradeUnitGson.class);
+            GameGroup gameGroup = getGroup(upgradeUnitGson.member);
+            playGameMenuController.preUpgradeUnit(upgradeUnitGson.oldUnit, upgradeUnitGson.newUnitName,
+                    upgradeUnitGson.index, upgradeUnitGson.civilization, gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("nextTurn ")) {
+            command = command.replace("nextTurn ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            NextTurnGson nextTurnGson = gson.fromJson(command, NextTurnGson.class);
+            GameGroup gameGroup = getGroup(nextTurnGson.member);
+            playGameMenuController.nextTurn(nextTurnGson.civilization, gameGroup.tiles, gameGroup);
+        }
+
+
+
+
+
     }
-    public static ArrayList<Socket> getGroup(Socket socket) {
-        for (ArrayList<Socket> socketArrayList : sockets) {
-            for (Socket socket1 : socketArrayList) {
-                if (socket.equals(socket1)) return socketArrayList;
+
+
+
+    // get game group of a member
+    public static GameGroup getGroup(Member member) {
+        GameGroup group;
+        for (GameGroup gameGroup : gameGroups) {
+            for (Member member1 : gameGroup.members) {
+                if (member1.equals(member)) return gameGroup;
             }
         }
         return null;

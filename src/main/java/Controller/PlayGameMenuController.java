@@ -1,9 +1,7 @@
 package Controller;
 
 import Model.*;
-import Model.FunctionsGson.CheatGson;
-import Model.FunctionsGson.CheatTeleport;
-import Model.FunctionsGson.MapCreatorGson;
+import Model.FunctionsGson.*;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
@@ -20,20 +18,13 @@ import java.util.*;
 import java.util.regex.Matcher;
 
 public class PlayGameMenuController {
+    public static PlayGameMenu playGameMenu;
     public static int turn;
     {
         turn = 0;
     }
-
+    // todo -> initializeCivilizations and mapCreator are for making map on server side
     public ArrayList<Tile> mapCreator(int numOfCivilizations,ArrayList<Member> members) throws IOException {//tik
-/*        MapCreatorGson mapCreatorGson = new MapCreatorGson("mapCreator", numOfCivilizations, members);
-        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-        String request = gson.toJson(mapCreatorGson);
-        CreateHost.dataOutputStream.writeUTF("mapCreator " + request);
-        CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("mapCreator ", "");
-        MapCreatorGson mapCreatorGson2 = gson.fromJson(response, MapCreatorGson.class);*/
         int numOfTiles = 72;
         ArrayList<Tile> map = new ArrayList<>();
         float x0 = 300;
@@ -213,89 +204,94 @@ public class PlayGameMenuController {
         map.add(new Tile(71,false,false,false,true,false,false,false,false,x,y));
         return map;
     }
-    public String cheatIncreaseGold(Civilization civilization,int amount) throws IOException {
+    public void cheatIncreaseGold(Civilization civilization,int amount) throws IOException {
         CheatGson cheatGson = new CheatGson();
         cheatGson.amount = amount;
         cheatGson.civilization = civilization;
+        cheatGson.member = civilization.getMember();
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String request = gson.toJson(cheatGson);
+
         CreateHost.dataOutputStream.writeUTF("cheatGold " + request);
         CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("cheat ", "");
-        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
-        if (cheatGson2.tiles != null)
-        PlayGameMenu.tiles = cheatGson2.tiles;
-        if (cheatGson2.civilization != null)
-        PlayGameMenu.civilizations = cheatGson2.civilizations;
-        return "cheat code activated successfully";
     }
-    public String cheatIncreaseFood(Civilization civilization,int amount) throws IOException {
+    public void cheatIncreaseFood(Civilization civilization,int amount) throws IOException {
         CheatGson cheatGson = new CheatGson();
         cheatGson.amount = amount;
         cheatGson.civilization = civilization;
+        cheatGson.member = civilization.getMember();
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String request = gson.toJson(cheatGson);
+
         CreateHost.dataOutputStream.writeUTF("cheatFood " + request);
         CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("cheat ", "");
-        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
-        if (cheatGson2.tiles != null)
-            PlayGameMenu.tiles = cheatGson2.tiles;
-        if (cheatGson2.civilization != null)
-            PlayGameMenu.civilizations = cheatGson2.civilizations;
-        return "cheat code activated successfully";
     }
-    public String cheatIncreaseTechnology(Civilization civilization,int amount) throws IOException {
+    public void cheatIncreaseTechnology(Civilization civilization,int amount) throws IOException {
         CheatGson cheatGson = new CheatGson();
         cheatGson.amount = amount;
         cheatGson.civilization = civilization;
+        cheatGson.member = civilization.getMember();
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String request = gson.toJson(cheatGson);
+
         CreateHost.dataOutputStream.writeUTF("cheatTechnology " + request);
         CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("cheat ", "");
-        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
-        if (cheatGson2.tiles != null)
-            PlayGameMenu.tiles = cheatGson2.tiles;
-        if (cheatGson2.civilization != null)
-            PlayGameMenu.civilizations = cheatGson2.civilizations;
-        return "cheat code activated successfully";
     }
-    public String cheatIncreaseHappiness(Civilization civilization, int amount) throws IOException {
+    public void cheatIncreaseHappiness(Civilization civilization, int amount) throws IOException {
         CheatGson cheatGson = new CheatGson();
         cheatGson.amount = amount;
         cheatGson.civilization = civilization;
+        cheatGson.member = civilization.getMember();
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String request = gson.toJson(cheatGson);
+
         CreateHost.dataOutputStream.writeUTF("cheatHappiness " + request);
         CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response.replace("cheat ", "");
-        CheatGson cheatGson2 = gson.fromJson(response, CheatGson.class);
-        if (cheatGson2.tiles != null)
-            PlayGameMenu.tiles = cheatGson2.tiles;
-        if (cheatGson2.civilization != null)
-            PlayGameMenu.civilizations = cheatGson2.civilizations;
-        return "cheat code activated successfully";
     }
-    public String cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map) throws IOException {
-        CheatTeleport cheatTeleport = new CheatTeleport();
+    public String cheatTeleportUnit (Unit unitServer, int numberOfDestination, Civilization civilizationServer, ArrayList<Tile> map) throws IOException {
+ /*       CheatTeleport cheatTeleport = new CheatTeleport();
         cheatTeleport.numberOfDestination = numberOfDestination;
-        cheatTeleport.map = map;
         cheatTeleport.unit = unit;
         cheatTeleport.civilization = civilization;
+        cheatTeleport.member = civilization.getMember();
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
         String request = gson.toJson(cheatTeleport);
-        CreateHost.dataOutputStream.writeUTF("teleport " + request);
-        CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        response = response .replace("teleport ", "");
-        CheatTeleport cheatTeleport2 = gson.fromJson(response, CheatTeleport.class);
 
-        return cheatTeleport2.string;
+        CreateHost.dataOutputStream.writeUTF("teleport " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+        String str;
+
+        if (numberOfDestination < 0 || numberOfDestination > 71) {
+            return "number of destination is invalid !";
+        }
+        Tile origin = unitServer.getOrigin();
+        Tile destination = map.get(numberOfDestination);
+
+        if (unitServer == null) {
+            return  "there is no unit with this name !";
+        }
+        if (unitServer.getIsOnSleep()|| unitServer.isOnBoost() || unitServer.isOnBoostTillRecover() || unitServer.isOnWarFooting()) {
+            return  "this unit is not active !";
+
+        }
+        if (!unitServer.getCivilization().getName().equals(civilizationServer.getName())) {
+            return  "this unit is for another civilization !";
+        }
+        if (unitServer.getPath().size() != 0) {
+            return "this unit has another path !";
+        }
+        ArrayList<Unit> unitsDestination = destination.getUnits();
+        for (int i = 0; i < unitsDestination.size(); i++) {
+            if (unitsDestination.get(i).isCivilian() == unitServer.isCivilian()) {
+                return  "there is another unit with this type in the tile !";
+            }
+        }
+        origin.removeUnit(unitServer);
+        destination.addUnit(unitServer);
+        unitServer.setOrigin(destination);
+        unitServer.setHasOrdered(true);
+        return  "unit teleported to destination !";
     }
     public ArrayList<Civilization> initializeCivilizations(int numOfCivilizations, ArrayList<Tile> map, ArrayList<Member> members){
         ArrayList<Civilization> civilizations = new ArrayList<>();
@@ -391,6 +387,7 @@ public class PlayGameMenuController {
         tileColors[72] = BACKGROUND_BLUE;
         return tileColors;
     }
+    // useLess
     public String[] setTileType(ArrayList<Tile> map, String tilecolors[], HashMap<Integer, Tile> zeroStatusTilesCivilisation, ArrayList<Integer> tileStatusOfCivilization) {
         String tileType[] = new String[72];
         for (int i = 0; i < map.size(); i++) {
@@ -434,6 +431,7 @@ public class PlayGameMenuController {
         }
         return tileType;
     }
+    // useLess
     public String[] unitMaker(ArrayList<Tile> map, int index, HashMap<Integer, Tile> zeroStatusTilesCivilisation, ArrayList<Integer> tileStatusOfCivilization){
         String unit1[] = new String[72];
         for (int i = 0; i < 72; i++)
@@ -475,6 +473,7 @@ public class PlayGameMenuController {
         }
         return unit1;
     }
+    //useLess
     public String[] cvMaker(ArrayList<Tile> map, Civilization civilization){
         String cv[] = new String[72];
         for (int i = 0; i < 72; i++)
@@ -491,6 +490,7 @@ public class PlayGameMenuController {
         }
         return cv;
     }
+    // useLess
     public String[] cityCenterMaker(ArrayList<Tile> map, Civilization civilization){
         String cityCenter[] = new String[72];
         for (int i = 0; i < 72; i++)
@@ -500,6 +500,7 @@ public class PlayGameMenuController {
             cityCenter[city.getCenterTile().getTileNumber()] = "*";
         return cityCenter;
     }
+    // useLess
     public String[] showMap(String ANSI_COLORS[], String number[], String types[], String unit1[], String unit2[], String cv[], String cityCenter[]){
         char block = '\u2588';
         String block5 = " \\" + block + block + block + block + block + block + block + block + block + block + "/";
@@ -596,6 +597,7 @@ public class PlayGameMenuController {
 
         return map;
     }
+    // todo -> client va niaz be ersal be server nadarad
     // if distance between two tile center is (rad3 * radius) they're neighbor
     private boolean isCityNeighbor(float x1, float y1, float x2, float y2, float radius){
         double distance = Math.sqrt(Math.pow((double)x2 - (double)x1, 2) + Math.pow((double)y2 - (double) y1, 2));
@@ -603,12 +605,14 @@ public class PlayGameMenuController {
             return true;
         return false;
     }
+    // todo -> client va niaz be ersal be server nadarad
     private boolean isUnitNeighbor(float x1, float y1, float x2, float y2, float radius){
         double distance = Math.sqrt(Math.pow((double) x2 - (double) x1, 2) + Math.pow((double) y2 - (double) y1, 2));
         if (1.5 * radius * Math.sqrt(3) < distance && distance < 2.5 * radius * Math.sqrt(3))
             return true;
         return false;
     }
+    // todo -> client va niaz be ersal be server nadarad
     // 1 -> vazeh, -1 -> fog
     public ArrayList<Integer> statusChecker(Civilization civilization, ArrayList<Tile> map){
         ArrayList<Integer> civilizationTiles  = new ArrayList<>();
@@ -680,6 +684,7 @@ public class PlayGameMenuController {
         }
         return civilizationTiles;
     }
+    // todo -> client va niaz be ersal be server nadarad
     // -1 -> fog, 0  -> moshakhas, 1 -> vazeh
     public ArrayList<Integer> statusComparator(ArrayList<Integer> old, ArrayList<Integer> now, HashMap<Integer, Tile> zeroStatusTiles, ArrayList<Tile> map){
         //TODO... if(now == fog of war && old == vazeh -> now = moshakhas)
@@ -819,6 +824,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
+
     public StringBuilder cityPanel(ArrayList<Tile> map,ArrayList<Civilization> civilizations,Civilization playingCivilization){
         StringBuilder stringBuilder = new StringBuilder("");//"Civilization name" :
         //                             Capital : tile numbers
@@ -848,11 +854,13 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
+
     public String diplomaticInformation(Civilization civilization){
         int point = civilization.getPoint();
 
         return "your point is : " + point;
     }
+    // todo -> estefade nashode
     public String sendFriendlyRequestDiplomatic(Civilization civilization,ArrayList<Civilization> civilizations,String name){
         if(Objects.equals(name, civilization.getMember().getNickname()))
             return "cant send request to yourself";
@@ -875,6 +883,7 @@ public class PlayGameMenuController {
         }
         return "there is no civilization with this name";
     }
+
     public StringBuilder showMessages(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         for(String string : civilization.getMessages()){
@@ -882,6 +891,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
+    // todo -> estefade nashode
     public StringBuilder showFriendlyRequests(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         int i = 1;
@@ -891,6 +901,7 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
+    // todo -> estefade nashode
     public String acceptFriendlyRequest(Civilization civilization,String name){
         for(Civilization tempCivilization : civilization.getFriendlyRequests()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
@@ -900,6 +911,7 @@ public class PlayGameMenuController {
         }
         return "there is no friendly request with this name";
     }
+    // todo -> estefade nashode
     public String denyFriendlyRequest(Civilization civilization,String name){
         for(Civilization tempCivilization : civilization.getFriendlyRequests()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
@@ -909,6 +921,7 @@ public class PlayGameMenuController {
         }
         return "there is no friendly request with this name";
     }
+    // todo -> estefade nashode
     public String breakTheOath(Civilization civilization,String name){//this will cut the friendship between you and your allie
         for(Civilization tempCivilization : civilization.getFriends()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
@@ -918,20 +931,22 @@ public class PlayGameMenuController {
         }
         return "you don't have any allie with this name";
     }
+
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();
         HashMap<Civilization, Integer> losses = civilization.getLossesInUnitsWar();
         stringBuilder.append("wins :" + "\n");
         for(Map.Entry<Civilization, Integer> entry : wins.entrySet()) {
-            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + " number of wins : " + entry.getValue() + "\n");
+            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + ",  number of wins : " + entry.getValue() + "\n");
         }
         stringBuilder.append("losses :" + "\n");
         for(Map.Entry<Civilization, Integer> entry : losses.entrySet()) {
-            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + " number of losses : " + entry.getValue() + "\n");
+            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + ",  number of losses : " + entry.getValue() + "\n");
         }
         return stringBuilder;
     }
+
     public StringBuilder demographics(ArrayList<Civilization> civilizations,ArrayList<Tile> map){   //Jamiat shenasi
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
@@ -982,6 +997,7 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
+
     public StringBuilder generalUnitReview(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
@@ -994,15 +1010,15 @@ public class PlayGameMenuController {
                         move = "unit doesn't any path !";
                     }
                     else {
-                        move = "unit has path";
+                        move = "unit has path !";
                     }
-                    stringBuilder.append("unit " + name + " movement : "+ move + " health : " + unitsOfTile.get(i1).getHealth() + " tile : " + i);
+                    stringBuilder.append("unit " + name + " ,movement : " + move + " ,health : " + unitsOfTile.get(i1).getHealth() + " ,tile : " + i);
                     if (unitsOfTile.get(i1).isCivilian()) {
-                        stringBuilder.append(" damage : N/A" + "\n");
+                        stringBuilder.append(" ,damage : N/A" + "\n");
                     }
                     else {
-                        stringBuilder.append(" damage: " + ((Warrior)unitsOfTile.get(i1)).getDamage() +
-                                " range: " + ((Warrior)unitsOfTile.get(i1)).getRange() + " range damage: " +
+                        stringBuilder.append(" ,damage: " + ((Warrior)unitsOfTile.get(i1)).getDamage() +
+                                " ,range: " + ((Warrior)unitsOfTile.get(i1)).getRange() + " ,range damage: " +
                                 ((Warrior)unitsOfTile.get(i1)).getRangedCombatDamage() + "\n");
                     }
                 }
@@ -1010,7 +1026,8 @@ public class PlayGameMenuController {
         }
         return stringBuilder;
     }
-    public StringBuilder roadsInfo (ArrayList<Tile> map) {
+
+/*    public StringBuilder roadsInfo (ArrayList<Tile> map) {
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("tiles with road : ");
         StringBuilder stringBuilderRoad = new StringBuilder("");
@@ -1028,7 +1045,7 @@ public class PlayGameMenuController {
         stringBuilderRoad.append(stringBuilderRail);
         stringBuilder.append(stringBuilderRoad);
         return stringBuilder;
-    }
+    }*/
 
     public StringBuilder economicalReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
@@ -1053,6 +1070,7 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
+
     public StringBuilder diplomaticReview(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("your friends :\n");
@@ -1074,6 +1092,7 @@ public class PlayGameMenuController {
         return str;
     }
     */
+    // todo -> comment
     // finds all  the neighbours of a node (tile)
     public void findAllNeighbours(Node[] graph) {
         int column = 0;
@@ -1108,7 +1127,7 @@ public class PlayGameMenuController {
             counter++;
         }
     }
-
+    // todo -> comment
     // set distance of two node (tile) based on destination mp.
     public int distanceOfTwoNode(Node node) {
         Tile tile = node.tile;
@@ -1117,8 +1136,9 @@ public class PlayGameMenuController {
         }
         return tile.getMpCost();
     }
+    // todo -> comment
     // chase an algorithm based on graphs to find the shortest way.
-    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map) {
+    public void findThePath (HashMap<Node, Node> previousNode, HashMap<Node, Integer> distanceFromNode, ArrayList<Node> unreached, Node destinationNode,ArrayList<Tile> map,  Unit unit) {
         while (unreached.size() > 0) {
             Node minimumBranch;
             int index = 0;
@@ -1138,7 +1158,7 @@ public class PlayGameMenuController {
 
             for (int i = 0; i < minimumBranch.neighbours.size(); ++i) {
                 Node neighbourOfBranch = minimumBranch.neighbours.get(i);
-                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch);
+                int mpCost = distanceFromNode.get(minimumBranch) + distanceOfTwoNode(neighbourOfBranch) + enemyUnitEffect(neighbourOfBranch, unit);
                 if (mpCost < distanceFromNode.get(neighbourOfBranch)) {
                     distanceFromNode.replace(neighbourOfBranch, mpCost);
                     previousNode.replace(neighbourOfBranch, minimumBranch);
@@ -1146,6 +1166,17 @@ public class PlayGameMenuController {
             }
         }
     }
+
+    private Integer enemyUnitEffect(Node neighbourOfBranch,  Unit myUnit) {
+        for (Unit unit : neighbourOfBranch.tile.getUnits()) {
+            if ((!unit.isCivilian() && ((!myUnit.isCivilian()) || !unit.getCivilization().equals(myUnit.getCivilization()))) || (unit.isCivilian() && myUnit.isCivilian())) {
+                return 1000000;
+            }
+        }
+        return 0;
+    }
+
+    // todo -> comment
     // find the shortest way from origin to destination based on mp.
     public void findTheShortestPath (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit) {
         for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
@@ -1177,7 +1208,7 @@ public class PlayGameMenuController {
             }
             unreached.add(graph[i]);
         }
-        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map);
+        findThePath(previousNode, distanceFromNode, unreached, destinationNode, map, unit);
 
         if (previousNode.get(destinationNode) == null) {
             for (int i1 = 0; i1 < unit.getPath().size(); i1++) {
@@ -1196,8 +1227,20 @@ public class PlayGameMenuController {
         Collections.reverse(path);
         unit.setPath(path);
     }
+    // todo -> client (done)
     // create parameters like unit or origin or destination for moveUnit function
-    public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) {
+    public String preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        MoveUnitGson moveUnitGson = new MoveUnitGson();
+        moveUnitGson.unit = unit;
+        moveUnitGson.numberOfDestination = numberOfDestination;
+        moveUnitGson.civilization = civilization;
+        moveUnitGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+        String request = gson.toJson(moveUnitGson);
+        CreateHost.dataOutputStream.writeUTF("moveUnit " + request);
+        CreateHost.dataOutputStream.flush();*/
+
         if (numberOfDestination < 0 || numberOfDestination > 71) {
             return "number of destination tile is invalid !";
         }
@@ -1214,6 +1257,7 @@ public class PlayGameMenuController {
         }
         return moveUnit(civilization, origin, destination, map, unit);
     }
+    // todo -> comment
     //return a unit from specific tile
     public Unit getUnitInTile (ArrayList<Unit> units, String unitName) {
         for (int i = 0; i < units.size(); i++) {
@@ -1321,6 +1365,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
+    // todo -> comment
     // check the road for units
     public boolean checkPath (Unit unit) {
         ArrayList<Node> nodes = unit.getPath();
@@ -1336,6 +1381,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     // return the index of specific tile
     public int getTileIndex (Tile tile, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
@@ -1345,6 +1391,7 @@ public class PlayGameMenuController {
         }
         return 0;
     }
+    // todo -> comment
     // check the way for river
     public boolean isRiverOnWay (Tile origin, Tile destination, ArrayList<Tile> map) {
         int originIndex = getTileIndex(origin, map);
@@ -1357,7 +1404,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-
+    // todo -> comment
     // check the technology's name in civilization array of technology if it contains return true
     public boolean isTechnologyAvailable (Civilization civilization, String techName) {
         ArrayList<Technology> technologies = civilization.getTechnologies();
@@ -1366,6 +1413,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     // check origin and destination tiles , if both have same type of way(rail/road) return true
     public boolean isThereRoadOrRail (Tile origin, Tile destination) {
         if (origin.isDoesHaveRoad() && destination.isDoesHaveRoad() &&
@@ -1375,6 +1423,7 @@ public class PlayGameMenuController {
                 !origin.isRailDamaged() && !destination.isRailDamaged()) return true;
         return false;
     }
+    // todo -> comment
     // reset the mp of your civilization units
     public void addMpEveryTurn(Civilization civilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
@@ -1386,12 +1435,12 @@ public class PlayGameMenuController {
             }
         }
     }
-
+    // todo -> comment
     public int mpOfAttribute (Attribute attribute) {
         if (attribute == null) return 0;
         return attribute.getMpCost();
     }
-
+    // todo -> comment
     public String moveUnit (Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map, Unit unit){
         String str;
         if (unit == null) {
@@ -1442,12 +1491,14 @@ public class PlayGameMenuController {
 
             Tile originTile = unit.getPath().get(i).tile;
             Tile destinationTile = unit.getPath().get(i + 1).tile;
+            playGameMenu.updateMapAfterMove();
 
 
             if (unit.getMp() >= 1) {
                 originTile.removeUnit(unit);
                 destinationTile.addUnit(unit);
                 unit.setOrigin(destinationTile);
+                playGameMenu.updateMapAfterMove();
 
                 int newMP;
 
@@ -1490,6 +1541,7 @@ public class PlayGameMenuController {
         }
         return str;
     }
+    // todo -> comment
     // more than one turn moving function for units of playing civilization
     public void moveUnitWithMovesLeft (Civilization playingCivilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
@@ -1501,7 +1553,7 @@ public class PlayGameMenuController {
             }
         }
     }
-
+    // todo -> comment
     // check the necessary technologies for unit
     public boolean checkTechnology (ArrayList<Technology> technologies, String name) {
         for (int i = 0; i < technologies.size(); i++) {
@@ -1509,6 +1561,7 @@ public class PlayGameMenuController {
         }
         return true;
     }
+    // todo -> comment
     public boolean isTechnologyAvailableForUnit (Unit unit, Civilization civilization) {
         Warrior warrior = (Warrior) unit;
         ArrayList<Technology> technologies = civilization.getTechnologies();
@@ -1579,6 +1632,7 @@ public class PlayGameMenuController {
         }
         return true;
     }
+    // todo -> comment
     //check the necessary resources for unit
     public boolean isResourceAvailableForUnit (Unit unit, City city) {
         Warrior warrior = (Warrior) unit;
@@ -1631,6 +1685,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     // if unit is a warrior return true
     public boolean isUnitWarrior (Tile cityCenter) {
         ArrayList<Unit> units = cityCenter.getUnits();
@@ -1639,6 +1694,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     //if unit is a civilian return true
     public boolean isUnitCivilian (Tile cityCenter) {
         ArrayList<Unit> units = cityCenter.getUnits();
@@ -1647,6 +1703,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     // return a city that contains specific tile
     public City findTile (int index, ArrayList<Tile> map, Civilization civilization) {
         Tile tile = map.get(index);
@@ -1661,8 +1718,22 @@ public class PlayGameMenuController {
         }
         return null;
     }
+    // todo -> client (done)
     // it makes parameters for unit maker such as unit or city
-    public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) {
+    public String preUnitMaker (String unitName, int index, Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        UnitMakingGson unitMakingGson = new UnitMakingGson();
+        unitMakingGson.unitName = unitName;
+        unitMakingGson.index = index;
+        unitMakingGson.civilization = civilization;
+        unitMakingGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(unitMakingGson);
+
+        CreateHost.dataOutputStream.writeUTF("unitMaker " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (index < 0 || index > 71) {
             return "number of origin tile is invalid !";
         }
@@ -1677,10 +1748,10 @@ public class PlayGameMenuController {
         int turn = unit.getDuration();
         return createUnit(civilization, city, unit, map, turn);
     }
-
+    // todo -> comment
     public Unit makeUnit (Civilization civilization, Tile tile, ArrayList<Tile> map, String unitName) {
         if (unitName.equals("archer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 70, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 1, 70, false
                     , 0, 4, 2, 6, false, false, true, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1688,7 +1759,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("chariot archer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 1, 60, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 4, 4, 1, 60, false
                     , 0, 3, 2, 6, false, false, false, true,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1704,15 +1775,15 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("settler")) {
-            Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 89, true, false, true);
+            Civilian civilian = new Civilian(civilization, tile, 2, 2, 2, 1, 89, true, false, true);
             return civilian;
         }
         else if (unitName.equals("worker")) {
-            Civilian civilian = new Civilian(civilization, tile, 10, 2, 2, 1, 70, true, true, false);
+            Civilian civilian = new Civilian(civilization, tile, 2, 2, 2, 1, 70, true, true, false);
             return civilian;
         }
         else if (unitName.equals("spearman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 50, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 50, false
                     , 0, 7, -1, -1, false, false, false, false,
                     true, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1720,7 +1791,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("warrior")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 40, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 40, false
                     , 0, 6, -1, -1, false, true, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1728,7 +1799,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("catapult")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 2, 2, 1, 100, false
                     , 0, 4, 2, 14, false, false, false, false,
                     false, true, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1744,7 +1815,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("swordsman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 80, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 2, 80, false
                     , 0, 11, -1, -1, false, false, false, false,
                     false, false, false, true, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1752,7 +1823,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("crossbowman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 120, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 2, 2, 2, 120, false
                     , 0, 6, 2, 12, false, false, false, false,
                     false, false, false, false, true, false, false,
                     false, false, false, false, false, false, false,
@@ -1760,7 +1831,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("knight")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 1, 150, false
+            Warrior warrior = new Warrior(civilization, tile, 8, 3, 3, 1, 150, false
                     , 0, 18, -1, -1, false, false, false, false,
                     false, false, false, false, false, true, false,
                     false, false, false, false, false, false, false,
@@ -1768,7 +1839,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("longswordsman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 3, 150, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 3, 3, 3, 150, false
                     , 0, 18, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, true,
                     false, false, false, false, false, false, false,
@@ -1776,7 +1847,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("pikeman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 1, 100, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 1, 100, false
                     , 0, 10, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     true, false, false, false, false, false, false,
@@ -1784,7 +1855,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("trebuchet")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 170, false
+            Warrior warrior = new Warrior(civilization, tile, 9, 2, 2, 3, 170, false
                     , 0, 6, 2, 20, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, true, false, false, false, false, false,
@@ -1792,7 +1863,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("canon")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 2, 250, false
+            Warrior warrior = new Warrior(civilization, tile, 8, 2, 2, 2, 250, false
                     , 0, 10, 2, 26, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, true, false, false, false, false,
@@ -1800,7 +1871,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("cavalry")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 3, 3, 2, 260, false
+            Warrior warrior = new Warrior(civilization, tile, 4, 3, 3, 2, 260, false
                     , 0, 25, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, true, false, false, false,
@@ -1816,7 +1887,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("musketman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 3, 120, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 3, 120, false
                     , 0, 16, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, true, false,
@@ -1824,7 +1895,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("rifleman")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 200, false
+            Warrior warrior = new Warrior(civilization, tile, 5, 2, 2, 3, 200, false
                     , 0, 25, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, true,
@@ -1832,7 +1903,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("anti-tank gun")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 6, 300, false
+            Warrior warrior = new Warrior(civilization, tile, 6, 2, 2, 6, 300, false
                     , 0, 32, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1840,7 +1911,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("artillery")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 5, 420, false
+            Warrior warrior = new Warrior(civilization, tile, 12, 2, 2, 5, 420, false
                     , 0, 16, 32, 3, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1848,7 +1919,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("infantry")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 2, 2, 4, 300, false
+            Warrior warrior = new Warrior(civilization, tile, 14, 2, 2, 4, 300, false
                     , 0, 36, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1856,7 +1927,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("panzer")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 5, 5, 3, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 14, 5, 5, 5, 450, false
                     , 0, 60, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1864,7 +1935,7 @@ public class PlayGameMenuController {
             return warrior;
         }
         else if (unitName.equals("tank")) {
-            Warrior warrior = new Warrior(civilization, tile, 10, 4, 4, 8, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 15, 4, 4, 6, 450, false
                     , 0, 50, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -1873,6 +1944,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
+    // todo -> comment (next turn bara client kafie)
     // every turn check city center for making new turn
     public void checkForUnitMaking (Civilization civilization) {
         ArrayList<City> cities = civilization.getCities();
@@ -1890,7 +1962,7 @@ public class PlayGameMenuController {
             }
         }
     }
-
+    // todo -> comment
     public boolean isSameUnitOnMakingProgress (Tile tile, Unit unit) {
         HashMap<Unit, Integer> turns = tile.getTurnForUnitMaking();
         for(Map.Entry<Unit,Integer> entry : turns.entrySet()) {
@@ -1898,7 +1970,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
-
+    // todo -> comment
     public String createUnit(Civilization civilization, City city, Unit unit,ArrayList<Tile> map, int turn){
         String str;
 
@@ -1917,15 +1989,15 @@ public class PlayGameMenuController {
             return str;
         }
 
-        if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
-            str = "you don't have necessary technology!";
-            return str;
-        }
-
-        if (!unit.isCivilian() && !isResourceAvailableForUnit (unit, city)) {
-            str = "you don't have necessary resource!";
-            return str;
-        }
+//        if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
+//            str = "you don't have necessary technology!";
+//            return str;
+//        }
+//
+//        if (!unit.isCivilian() && !isResourceAvailableForUnit (unit, city)) {
+//            str = "you don't have necessary resource!";
+//            return str;
+//        }
 
         Tile centerTile = city.getCenterTile();
         if (!unit.isCivilian() && isUnitWarrior (centerTile)) {
@@ -1942,6 +2014,7 @@ public class PlayGameMenuController {
         str = "unit will be created soon !";
         return str;
     }
+    // todo -> estefade nashode
     public String purchaseUnit(Civilization civilization, ArrayList<Tile> map, Matcher matcher){
         matcher.find();
         String unitName = matcher.group("unitName");
@@ -2144,27 +2217,42 @@ public class PlayGameMenuController {
             return "no unit with this name exists!";
         return this.createUnit(civilization, city, unit, map, 1);
     }
-    public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
+    // todo -> useless -> comment
+    /*public String preCreateCity(Matcher matcher, Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         matcher.find();
         int tileNumber = Integer.parseInt(matcher.group("tile"));
         return createCity(civilization,tileNumber,map,civilizations);
-    }
-    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
-        if(tileNumber < 0 || tileNumber >= 72)
+    }*/
+    // todo -> client (done)
+    public String createCity(Civilization civilization, int tileNumber,ArrayList<Tile> map, ArrayList<Civilization> civilizations) throws IOException {
+/*        CreateCityGson createCityGson = new CreateCityGson();
+        createCityGson.civilization = civilization;
+        createCityGson.tileNumber = tileNumber;
+        createCityGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(createCityGson);
+
+        CreateHost.dataOutputStream.writeUTF("createCity" + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+        if (tileNumber < 0 || tileNumber >= 72)
             return "invalid tile number";
 
-        for(Tile tile : map){
-            if(tile.getTileNumber() == tileNumber){
-                for(Unit unit : tile.getUnits()){
-                    if(unit.getCivilization() == civilization){
-                        if(unit.isCivilian()){
+        for (Tile tile : map) {
+            if (tile.getTileNumber() == tileNumber) {
+                for (Unit unit : tile.getUnits()) {
+                    if (unit.getCivilization() == civilization) {
+                        if (unit.isCivilian()) {
                             Civilian civilian = (Civilian) unit;
-                            if(civilian.isSettler()){
-                                if(checkNeighboursForCreateCity(tile,map,civilizations)){
-                                    while(tile.getUnits().size() > 0) {
+                            if (civilian.isSettler()) {
+                                if (checkNeighboursForCreateCity(tile, map, civilizations)) {
+                                    while (tile.getUnits().size() > 0) {
                                         tile.getUnits().remove(0);
                                     }
-                                    City city1 = new City(tile,map);
+                                    City city1 = new City(tile, map);
                                     civilization.getCities().add(city1);
                                     return "city has been created successfully";
                                 }
@@ -2176,6 +2264,7 @@ public class PlayGameMenuController {
         }
         return "you can't create city here";
     }
+    // todo -> comment
     public boolean checkNeighboursForCreateCity(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         for(Tile tempTile : map){
             if(tempTile == tile){
@@ -2197,6 +2286,7 @@ public class PlayGameMenuController {
         }
         return true;
     }
+    // todo -> comment
     public boolean areTilesNeighbour(Tile tile1, Tile tile2){
         double distance = (double)Math.sqrt(Math.pow(tile1.getX() - tile2.getX(), 2) + Math.pow(tile1.getY() - tile2.getY(), 2));
         if(distance < 1.1 * tile1.getRadius() * Math.sqrt(3))
@@ -2204,6 +2294,7 @@ public class PlayGameMenuController {
 
         return false;
     }
+    // todo -> comment
     // return a warrior unit from specific tile
     public Unit getWarriorUnit (int index, ArrayList<Tile> map) {
         ArrayList<Unit> units = map.get(index).getUnits();
@@ -2212,6 +2303,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
+    // todo -> comment
     // get all indexes that are between attackers and defenders
     public void getAllIndexes(int originIndex, int destinationIndex, ArrayList<Integer> indexOfTiles) {
         if (originIndex < destinationIndex) {
@@ -2256,6 +2348,7 @@ public class PlayGameMenuController {
             }
         }
     }
+    // todo -> comment
     // if blockers block attackers vision return true
     public boolean checkTheBlocks (ArrayList<Tile> map, ArrayList<Integer> indexOfTiles) {
         for (int i = 1; i < indexOfTiles.size() - 1; i++) {
@@ -2264,6 +2357,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     // is attacker range enough for distance ?
     public boolean isRangeEnough(Warrior warrior, ArrayList<Integer> indexOfTiles) {
         int distance = indexOfTiles.size() - 1;
@@ -2271,6 +2365,7 @@ public class PlayGameMenuController {
         if (warrior.getRange() != -1 && distance > warrior.getRange()) return false;
         return true;
     }
+    // todo -> comment
     // return civilian unit from specific tile
     public Unit getCivilianUnit (int index, ArrayList<Tile> map) {
         ArrayList<Unit> units = map.get(index).getUnits();
@@ -2279,6 +2374,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
+    // todo -> comment
     // remove a civilization from friends list
     public void addToEnemy (Civilization civilization, Civilization enemy) {
         ArrayList<Civilization> friends = civilization.getFriends();
@@ -2290,6 +2386,7 @@ public class PlayGameMenuController {
             }
         }
     }
+    // todo -> comment
     // if civilization2 is friend return true
     public boolean isFriend(Civilization civilization1, Civilization civilization2) {
         ArrayList<Civilization> friends = civilization1.getFriends();
@@ -2298,13 +2395,28 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     public void sendMessageToDefender (Unit defender, Unit attacker) {
         defender.getCivilization().addMessage("civilization :" + attacker.getCivilization() +
                 "attacked you at turn : " + turn);
     }
-
+    // todo -> client (done)
     // prepare some parameters and return some string
-    public String preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) {
+    public String
+    preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        AttackTileGson attackTileGson = new AttackTileGson();
+        attackTileGson.attacker = attacker;
+        attackTileGson.destinationIndex = destinationIndex;
+        attackTileGson.civilization = civilization;
+        attackTileGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(attackTileGson);
+
+        CreateHost.dataOutputStream.writeUTF("attackTile " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (destinationIndex < 0 || destinationIndex > 71) {
             return "number of destination tile is invalid !";
         }
@@ -2323,10 +2435,10 @@ public class PlayGameMenuController {
         if (defender.getCivilization().equals(civilization)) {
             return "you can't attack your own unit !";
         }
-        if (attacker.getIsOnSleep()|| attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
+        if (attacker.getIsOnSleep() || attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
             return "this unit is not active !";
         }
-        if (((Warrior)attacker).getRange() != -1) {
+        if (((Warrior) attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
         }
         ArrayList<Integer> indexOfTiles = new ArrayList<>();
@@ -2334,10 +2446,10 @@ public class PlayGameMenuController {
         if (indexOfTiles.size() == 0) {
             return "this distance is too long for attack !";
         }
-        if (!isRangeEnough((Warrior)attacker, indexOfTiles)) {
+        if (!isRangeEnough((Warrior) attacker, indexOfTiles)) {
             return "unit 's range is not enough !";
         }
-        if (checkTheBlocks(map,indexOfTiles)) {
+        if (checkTheBlocks(map, indexOfTiles)) {
             return "your unit vision is blocked !";
         }
         if (defender != null && isFriend(civilization, defender.getCivilization())) {
@@ -2348,21 +2460,22 @@ public class PlayGameMenuController {
             defender = getCivilianUnit(destinationIndex, map);
             if (defender == null) return "there is no unit on destination !";
 
-        sendMessageToDefender(defender, attacker);
+            sendMessageToDefender(defender, attacker);
 
             defender.setCivilization(civilization);
-            if (((Warrior)attacker).getRange() == -1) {
+            if (((Warrior) attacker).getRange() == -1) {
                 attacker.setOrigin(map.get(destinationIndex));
                 map.get(destinationIndex).addUnit(attacker);
                 map.get(originIndex).removeUnit(attacker);
             }
             return "you captured civilians of enemy !";
         }
-        if (((Warrior)attacker).getRange() == -1)
+        if (((Warrior) attacker).getRange() == -1)
             return attackTileFromGround(civilization, attacker, defender, originIndex, destinationIndex, map);
         else
             return attackTileFromAir(civilization, attacker, defender, originIndex, destinationIndex, map);
     }
+    // todo -> comment
     // if a city contain that tile , return the city
     public City getCityFromTile (Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
@@ -2374,6 +2487,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
+    // todo -> comment
     // if city is for your civilization return true
     public boolean isCityForCivilization (City city, Civilization civilization) {
         for (City city1 : civilization.getCities()) {
@@ -2381,6 +2495,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     // return the civilization of city
     public Civilization getCivilizationFromCity(City city, ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
@@ -2390,7 +2505,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
-
+    // todo -> comment
     public int getColumn (int index) {
         if (0 <= index && index <= 5) return 0;
         else if (6 <= index && index <= 10) return 1;
@@ -2407,7 +2522,7 @@ public class PlayGameMenuController {
         else if (66 <= index && index <= 71) return 12;
         return 0;
     }
-
+    // todo -> comment
     public boolean checkDistance(Unit unit, int origin, int destination) {
         int range = ((Warrior)unit).getRange();
         int columnO = getColumn(origin);
@@ -2423,12 +2538,25 @@ public class PlayGameMenuController {
         else if (range > 0 && delta - 1 <= range) return true;
         return false;
     }
+    // todo -> client (done)
+    public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) throws IOException {
+/*        AttackCityGson attackCityGson = new AttackCityGson();
+        attackCityGson.attacker = attacker;
+        attackCityGson.destinationIndex = destinationIndex;
+        attackCityGson.civilization = civilization;
+        attackCityGson.member = civilization.getMember();
 
-    public String preAttackCity (Unit attacker, int destinationIndex,  Civilization civilization, ArrayList<Tile> map, ArrayList<Civilization> civilizations) {
-        if (destinationIndex < 0 || destinationIndex> 71) {
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(attackCityGson);
+
+        CreateHost.dataOutputStream.writeUTF("attackCity " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+        if (destinationIndex < 0 || destinationIndex > 71) {
             return "number of destination tile is invalid !";
         }
-        City defenderCity = getCityFromTile (map.get(destinationIndex), map, civilizations);
+        City defenderCity = getCityFromTile(map.get(destinationIndex), map, civilizations);
         int originIndex = getTileIndex(attacker.getOrigin(), map);
         if (attacker == null) {
             return "your unit is not military !";
@@ -2442,26 +2570,27 @@ public class PlayGameMenuController {
         if (defenderCity == null) {
             return "this tile is not for any city !";
         }
-        if (isCityForCivilization (defenderCity, civilization)) {
+        if (isCityForCivilization(defenderCity, civilization)) {
             return "this city is for your civilization !";
         }
         if (attacker.getIsOnSleep() || attacker.isOnBoost() || attacker.isOnBoostTillRecover() || attacker.isOnWarFooting()) {
             return "this unit is not active !";
         }
-        if (((Warrior)attacker).getRange() != -1) {
+        if (((Warrior) attacker).getRange() != -1) {
             return "this unit is not set up for range attack !";
         }
-        if (!checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(),map))) {
+        if (!checkDistance(attacker, originIndex, getTileIndex(defenderCity.getCenterTile(), map))) {
             return "this distance is too long for attack !";
         }
         Civilization defenderCivilization = getCivilizationFromCity(defenderCity, civilizations);
         attacker.setHasOrdered(true);
 
-        if (((Warrior)attacker).getRange() == -1)
+        if (((Warrior) attacker).getRange() == -1)
             return attackCityFromGround(civilization, attacker, defenderCity, originIndex, map, defenderCivilization);
         else
             return attackCityFromAir(civilization, attacker, defenderCity, originIndex, map, defenderCivilization);
     }
+    // todo -> comment
     public String attackCityFromGround(Civilization civilization,Unit attacker, City defenderCity, int originIndex, ArrayList<Tile>map, Civilization defenderCivilization) {
         String str = "";
         int powerOfAttacker = ((Warrior)attacker).getDamage();
@@ -2472,7 +2601,9 @@ public class PlayGameMenuController {
         }
         int powerOfDefender = defenderCity.getDefenceStrength();
         int healthOfDefender = defenderCity.getDamagePoint();
-
+        if (healthOfDefender == 0) {
+            powerOfDefender = 5;
+        }
         healthOfAttacker = healthOfAttacker - powerOfDefender;
         healthOfDefender = healthOfDefender - powerOfAttacker;
 
@@ -2482,6 +2613,8 @@ public class PlayGameMenuController {
                 tiles.get(i).getUnits().clear();
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
+                if (tiles.get(i).getBuilding() != null)
+                    tiles.get(i).getBuilding().setCivilization(attacker.getCivilization());
             }
             defenderCivilization.removeCity(defenderCity);
             civilization.addCity(defenderCity);
@@ -2506,7 +2639,7 @@ public class PlayGameMenuController {
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
             }
-            defenderCity.setDamagePoint(1);
+            defenderCity.setDamagePoint(0);
             map.get(originIndex).removeUnit(attacker);
             attacker = null;
             str = "your unit died and the city became ruin !";
@@ -2518,13 +2651,13 @@ public class PlayGameMenuController {
         }
         return str;
     }
-
+    // todo -> comment
     private void changeCapital(Civilization civilization) {
         for (int i = 0; i < civilization.getCities().size(); i++) {
              civilization.setCapital(civilization.getCities().get(i));
         }
     }
-
+    // todo -> comment
     public String attackCityFromAir(Civilization civilization,Unit attacker, City defenderCity, int originIndex, ArrayList<Tile>map, Civilization defenderCivilization) {
         String str = "";
         int powerOfAttacker = ((Warrior)attacker).getRangedCombatDamage();
@@ -2563,12 +2696,12 @@ public class PlayGameMenuController {
         }
         return str;
     }
-
+    // todo -> comment
     public int attributeCombatChange (Attribute attribute) {
         if (attribute == null) return 0;
         return attribute.getCombatChange();
     }
-
+    // todo -> comment
     public String attackTileFromGround(Civilization civilization, Unit attacker, Unit defender, int originIndex, int destinationIndex,ArrayList<Tile> map){
         String str = "";
         int combatChange = map.get(destinationIndex).getCombatChange() + attributeCombatChange(map.get(destinationIndex).getAttribute());
@@ -2648,6 +2781,7 @@ public class PlayGameMenuController {
         }
         return str;
     }
+    // todo -> comment
     public String attackTileFromAir(Civilization civilization, Unit attacker, Unit defender, int originIndex, int destinationIndex,ArrayList<Tile> map){
         String str;
 
@@ -2687,41 +2821,47 @@ public class PlayGameMenuController {
         }
         return str;
     }
+    // todo -> client (done)
     // makes parameters for unit behaviours functions
-    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) {
+    public String preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command) throws IOException {
+/*        UnitBehaviourGson unitBehaviourGson = new UnitBehaviourGson();
+        unitBehaviourGson.unit = unit;
+        unitBehaviourGson.civilization = civilization;
+        unitBehaviourGson.command = command;
+        unitBehaviourGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(unitBehaviourGson);
+
+        CreateHost.dataOutputStream.writeUTF("unitBehave " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (!unit.getCivilization().equals(civilization)) {
             return "this unit is not for your civilization";
         }
         if (command.equals("sleep")) {
-            return  sleepUnit(civilization, unit, map);
-        }
-        else if (command.equals("alert")) {
+            return sleepUnit(civilization, unit, map);
+        } else if (command.equals("alert")) {
             return WarFootingUnit(civilization, unit, map);
-        }
-        else if (command.equals("fortify")) {
+        } else if (command.equals("fortify")) {
             return boostUnit(civilization, unit, map);
-        }
-        else if (command.equals("heal")) {
+        } else if (command.equals("heal")) {
             return boostTillRecoverUnit(civilization, unit, map);
-        }
-        else if (command.equals("deploy")) {
+        } else if (command.equals("deploy")) {
             return deploymentUnit(civilization, unit, map);
-        }
-        else if (command.equals("range")) {
+        } else if (command.equals("range")) {
             return readyForRangedBattleUnit(civilization, unit, map);
-        }
-        else if (command.equals("wake")) {
+        } else if (command.equals("wake")) {
             return wakeUpUnit(civilization, unit, map);
-        }
-        else if (command.equals("delete")) {
+        } else if (command.equals("delete")) {
             return deleteUnit(civilization, unit, map, unit.getOrigin());
-        }
-        else if (command.equals("recover")) {
+        } else if (command.equals("recover")) {
             return recoverUnit(civilization, unit, map, unit.getOrigin());
         }
         return "";
     }
-
+    // todo -> comment
     public String sleepUnit(Civilization civilization, Unit unit, ArrayList<Tile> map){
         String str;
 
@@ -2744,6 +2884,7 @@ public class PlayGameMenuController {
         str = "selected unit is sleeping";
         return str;
     }
+    // todo -> comment
     public String WarFootingUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2768,6 +2909,7 @@ public class PlayGameMenuController {
         str = "this unit is on standby !";
         return str;
     }
+    // todo -> comment
     public String boostUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
 
@@ -2796,6 +2938,7 @@ public class PlayGameMenuController {
         str = "booster has been activated for this unit !";
         return str;
     }
+    // todo -> comment
     public String boostTillRecoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2823,7 +2966,7 @@ public class PlayGameMenuController {
         str = "booster until full recovery has been activated for this unit !";
         return str;
     }
-
+    // todo -> comment
     //if unit tile is city center (tile) return true
     public boolean isTileCityCenter (Civilization civilization, Unit unit) {
         ArrayList<City> cities = civilization.getCities();
@@ -2833,6 +2976,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     public String deploymentUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2861,6 +3005,7 @@ public class PlayGameMenuController {
         str = "the unit is deployed in city !";
         return str;
     }
+    // todo -> comment
     public String readyForRangedBattleUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2883,7 +3028,21 @@ public class PlayGameMenuController {
         str = "the unit is ready for ranged battle !";
         return str;
     }
-    public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map){
+    // todo -> client (done)
+    public String lootTile(Civilization civilization, int tileNumber, int destinationTileNumber, ArrayList<Tile> map) throws IOException {
+/*        LootTileGson lootTileGson = new LootTileGson();
+        lootTileGson.civilization = civilization;
+        lootTileGson.tileNumber = tileNumber;
+        lootTileGson.destinationTileNumber = destinationTileNumber;
+        lootTileGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(lootTileGson);
+
+        CreateHost.dataOutputStream.writeUTF("lootTile " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         if (tileNumber != destinationTileNumber)
             return "you should move your unit first";
         ArrayList<Unit> allUnits = map.get(tileNumber).getUnits();
@@ -2909,6 +3068,7 @@ public class PlayGameMenuController {
         tile.Loot();
         return "tile has been looted successfully";
     }
+    // todo -> ehtemalan useless
     public String cancelCommand(Civilization civilization, boolean isCivilian,ArrayList<Tile> map, Tile tile){
         String str;
         Unit unit = tile.getUnitInUnitMakingProgress(isCivilian);
@@ -2920,6 +3080,7 @@ public class PlayGameMenuController {
         str = "unit making has been canceled !";
         return str;
     }
+    // todo -> comment
     public String wakeUpUnit(Civilization civilization, Unit unit,ArrayList<Tile> map){
         String str;
         if (unit == null) {
@@ -2942,6 +3103,7 @@ public class PlayGameMenuController {
         str = "selected unit is active";
         return str;
     }
+    // todo -> comment
     public String deleteUnit(Civilization civilization, Unit unit,ArrayList<Tile> map, Tile tile){
         String str;
         if (unit == null) {
@@ -2956,7 +3118,7 @@ public class PlayGameMenuController {
         str = "the unit deleted successfully !";
         return str;
     }
-
+    // todo -> comment
     public boolean tileIsForCity (Civilization civilization, Tile tile) {
         ArrayList<City> cities = civilization.getCities();
         for (int i = 0; i < cities.size(); i++) {
@@ -2967,6 +3129,7 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
     public String recoverUnit(Civilization civilization, Unit unit,ArrayList<Tile> map, Tile tile){
         String str;
         if (unit == null) {
@@ -2999,6 +3162,7 @@ public class PlayGameMenuController {
         str = "unit health increased !";
         return str;
     }
+    // todo -> estefade nashode
     public String preLockCitizen(Matcher matcher,Civilization civilization, ArrayList<Tile> map){
         matcher.find();
         int originTileNumber = Integer.parseInt(matcher.group("origin"));
@@ -3012,6 +3176,7 @@ public class PlayGameMenuController {
         Tile destination = map.get(destinationTileNumber);
         return lockCitizen(civilization,origin,destination,map);
     }
+    // todo -> estefade nashode
     public String lockCitizen(Civilization civilization, Tile origin, Tile destination,ArrayList<Tile> map){//move citizen from origin to destination
         for(City city : civilization.getCities()){
             for(Tile tile1 : city.getTiles()){
@@ -3035,6 +3200,7 @@ public class PlayGameMenuController {
         }
         return "tiles do not belong to your civilization !";
     }
+    // todo -> useless
     public String prePurchaseTile(Matcher matcher, Civilization civilization, ArrayList<Tile> map,ArrayList<Civilization> civilizations){
         matcher.find();
         int tileNumber = Integer.parseInt(matcher.group("tile"));
@@ -3044,6 +3210,7 @@ public class PlayGameMenuController {
         Tile tile = map.get(tileNumber);
         return purchaseTile(civilization,tile,map,civilizations);
     }
+    // todo -> client -> estefade nashode
     public String purchaseTile(Civilization civilization, Tile tile,ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         for(City city : civilization.getCities()){
             for(Tile tempTile : city.getTiles()){
@@ -3066,6 +3233,7 @@ public class PlayGameMenuController {
         }
         return "this tile isn't neighbour with any of your cities";
     }
+    // todo -> comment
     public boolean doesTileBelongToAnyCivilization(Tile tile, ArrayList<Tile> map, ArrayList<Civilization> civilizations){
         for(Civilization civilization : civilizations){
             for(City city : civilization.getCities()){
@@ -3077,6 +3245,7 @@ public class PlayGameMenuController {
         }
         return false;//it doesn't
     }
+    // todo -> useless
     public StringBuilder showTechnologyMenu(Civilization civilization){
         ArrayList<Technology> allTechnologies = civilization.getTechnologies();
         ArrayList<String> technologyNames = new ArrayList<>();
@@ -3151,6 +3320,7 @@ public class PlayGameMenuController {
             stringBuilder.append(possibleTechnologies.get(i) + "\n");
         return stringBuilder;
     }
+    // todo -> comment
     public Technology preChooseTechnologyToLearn(String name){
         if (name.equals("Agriculture")) {
             Technology technology = new Technology(true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
@@ -3342,6 +3512,7 @@ public class PlayGameMenuController {
         }
         return null;
     }
+    // todo -> comment
     public boolean hasPrerequisiteTechs(ArrayList<Technology> allTechnologies, String name){
         for (Technology technology : allTechnologies)
             if (technology.getName().equals(name))
@@ -3796,7 +3967,21 @@ public class PlayGameMenuController {
         }
         return false;
     }
-    public String chooseTechnologyToLearn(Civilization civilization, String technologyName){
+    // todo -> client (done)
+    public String chooseTechnologyToLearn(Civilization civilization, String technologyName) throws IOException {
+/*        ChooseTechnologyGson chooseTechnologyGson = new ChooseTechnologyGson();
+        chooseTechnologyGson.technologyName = technologyName;
+        chooseTechnologyGson.civilization = civilization;
+        chooseTechnologyGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(chooseTechnologyGson);
+
+        CreateHost.dataOutputStream.writeUTF("chooseTechnology " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
             return "no technology with this name exists";
@@ -3813,15 +3998,29 @@ public class PlayGameMenuController {
         if (technology.getCost() > 99) {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
             civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
-        }
-        else {
+        } else {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 1);
             civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
         }
         civilization.setIsLearningTechnology(true);
         return "technology has been added to the learning technologies";
     }
-    public String changeTechnologyToLearn(Civilization civilization, String technologyName){
+
+
+    // todo -> client (done)
+    public String changeTechnologyToLearn(Civilization civilization, String technologyName) throws IOException {
+ /*       ChooseTechnologyGson chooseTechnologyGson = new ChooseTechnologyGson();
+        chooseTechnologyGson.civilization = civilization;
+        chooseTechnologyGson.technologyName = technologyName;
+        chooseTechnologyGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(chooseTechnologyGson);
+
+        CreateHost.dataOutputStream.writeUTF("changeTechnology " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         Technology technology = preChooseTechnologyToLearn(technologyName);
         if (technology == null)
             return "no technology with this name exists";
@@ -3835,13 +4034,16 @@ public class PlayGameMenuController {
         if (technology.getCost() > 99) {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 100) + 2);
             civilization.setSciencePerTurn((int) (technology.getCost() / 100) + 2);
-        }
-        else {
+        } else {
             civilization.addToTechnologyEarnedPercent(technology, (int) (technology.getCost() / 10) - 2);
             civilization.setSciencePerTurn((int) (technology.getCost() / 10) - 1);
         }
         return "technology has been changed successfully";
     }
+
+
+
+    // todo -> estefade nashode
     public String workOnTile(Civilization civilization, int cityNumber, int tileNumber, int tileUnitNumber, ArrayList<Tile> map){
         if (tileNumber != tileUnitNumber || map.get(tileNumber).getCitizen() == null)
             return "you should move your citizen to this tile first";
@@ -3873,7 +4075,24 @@ public class PlayGameMenuController {
         else
             return "this tile isn't your city tiles or city neighbors";
     }
-    public String createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map){
+    // todo -> client (done)
+    public String createImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, String improvementName, ArrayList<Tile> map) throws IOException {
+/*            CreateImprovementGson createImprovementGson = new CreateImprovementGson();
+            createImprovementGson.civilization = civilization;
+            createImprovementGson.tileUnitNumber = tileUnitNumber;
+            createImprovementGson.tileNumber = tileNumber;
+            createImprovementGson.improvementName = improvementName;
+            createImprovementGson.member = civilization.getMember();
+
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            String request = gson.toJson(createImprovementGson);
+
+            CreateHost.dataOutputStream.writeUTF("createImprovement " + request);
+            CreateHost.dataOutputStream.flush();*/
+
+
+
+
         ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
         if (tileUnitNumber != tileNumber)
             return "you should move your unit to this tile first";
@@ -3992,11 +4211,13 @@ public class PlayGameMenuController {
             } else
                 return "no improvement with this name exists!";
             civilian.setWorkingTile(tile);
-            return "improvement created successfully";
-        }
-        else
+            return "improvement will be created soon!";
+        } else
             return "only workers can work on improvements";
     }
+
+
+    // todo -> useless
     public StringBuilder showImprovements(ArrayList<Tile> map){
         StringBuilder panel = new StringBuilder();
         ArrayList<String> improvementPanel = new ArrayList<>();
@@ -4008,6 +4229,7 @@ public class PlayGameMenuController {
             panel.append(improvementPanel.get(i));
         return panel;
     }
+    // todo -> comment
     // after every turn check for road or rail making in your civilization,,, if work is making ->true if it is removing->false
     public void consumeTurnForRoadMaking (Civilization civilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
@@ -4055,7 +4277,7 @@ public class PlayGameMenuController {
             }
         }
     }
-
+    // todo -> comment
     public Unit getWorker (Tile tile) {
         ArrayList<Unit> units = tile.getUnits();
         for (int i = 0; i < units.size(); i++) {
@@ -4065,7 +4287,20 @@ public class PlayGameMenuController {
         }
         return null;
     }
-    public String createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
+    // todo -> client(done)
+    public String createRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+        /*RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("createRoad " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -4080,7 +4315,7 @@ public class PlayGameMenuController {
             str = "unit is on moving !";
             return str;
         }
-        if (!((Civilian)unit).isWorker()) {
+        if (!((Civilian) unit).isWorker()) {
             str = "this unit is not worker !";
             return str;
         }
@@ -4088,18 +4323,31 @@ public class PlayGameMenuController {
             str = "there is already a road on this tile !";
             return str;
         }
-        if (((Civilian)unit).getWorkingTile() != null) {
+        if (((Civilian) unit).getWorkingTile() != null) {
             str = "worker is working on something else !";
             return str;
         }
 
         tile.assignWorkerToRoad(unit, 3);
-        ((Civilian)unit).setWorkingTile(tile);
+        ((Civilian) unit).setWorkingTile(tile);
         str = "the road will be ready in 3 turns";
         return str;
     }
+    // todo -> client(done)
+    public String createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
 
-    public String createRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("createRail " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -4132,6 +4380,7 @@ public class PlayGameMenuController {
         str = "the rail way will be ready in 3 turns";
         return str;
     }
+    // todo -> comment
     public Improvement preRemoveImprovement(String improvementName){
         if (improvementName.equals("camp"))
             return new Improvement(true, false, false, false, false, false, false, false, false, 0, 0, 0);
@@ -4154,7 +4403,22 @@ public class PlayGameMenuController {
         else
             return null;
     }
-    public String removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map){
+    // todo -> client (done)
+    public String removeImprovement(Civilization civilization, Improvement improvement, int tileNumber ,ArrayList<Tile> map) throws IOException {
+/*        RemoveImprovementGson removeImprovementGson = new RemoveImprovementGson();
+        removeImprovementGson.civilization = civilization;
+        removeImprovementGson.improvement = improvement;
+        removeImprovementGson.tileNumber = tileNumber;
+        removeImprovementGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(gson);
+
+        CreateHost.dataOutputStream.writeUTF("removeImprovement " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
         ArrayList<City> cities = civilization.getCities();
         ArrayList<Tile> cityTiles = new ArrayList<>();
         for (int i = 0; i < cities.size(); i++) {
@@ -4174,14 +4438,30 @@ public class PlayGameMenuController {
             return "this tile doesn't belong to your civilization";
         ArrayList<Improvement> improvements = tile.getImprovements();
         for (int i = 0; i < improvements.size(); i++)
-            if (improvements.get(i).equals(improvement)){
+            if (improvements.get(i).equals(improvement)) {
+                improvements.get(i).setVisible(false);
                 improvements.remove(i);
                 tile.setImprovements(improvements);
                 return "improvement deleted successfully";
             }
         return "no such improvement exists!";
     }
-    public String removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
+    // todo -> client(done)
+    public String removeRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("removeRoad " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -4214,7 +4494,23 @@ public class PlayGameMenuController {
         str = "the road will be removed in 3 turns";
         return str;
     }
-    public String removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
+    // todo -> client(done)
+    public String removeRailRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("removeRail " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -4247,15 +4543,33 @@ public class PlayGameMenuController {
         str = "the rail way will be removed in 3 turns";
         return str;
     }
+    // todo -> useless - estefade nashode
     public String cancelImprovementOnProcess(Civilization civilization, Tile tile){
         if (tile.getWorkingOnImprovement() == null)
             return "this tile isn't working on any improvement";
         tile.cancelImprovementOnProcess();
         return "Improvement canceled successfully";
     }
-    public String repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map){
-        String str;
 
+
+    // todo -> client(done)
+    public String repairRoad(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("repairRoad " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
+
+        String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
             str = "this tile doesn't have any worker !";
@@ -4291,7 +4605,25 @@ public class PlayGameMenuController {
         str = "the road way will be repaired in 3 turns";
         return str;
     }
-    public String repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map){
+
+
+    // todo -> client (done)
+    public String repairRail(Civilization civilization, Tile tile,ArrayList<Tile> map) throws IOException {
+/*        RoadFunctionsGson roadFunctionsGson = new RoadFunctionsGson();
+        roadFunctionsGson.civilization = civilization;
+        roadFunctionsGson.tile = tile;
+        roadFunctionsGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(roadFunctionsGson);
+
+        CreateHost.dataOutputStream.writeUTF("repairRail " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
+
         String str;
         Unit unit = getWorker(tile);
         if (unit == null) {
@@ -4328,6 +4660,7 @@ public class PlayGameMenuController {
         str = "the rail way will be repaired in 3 turns";
         return str;
     }
+    // todo -> estefade nashode
     public String repairImprovement(Civilization civilization, int tileUnitNumber, int tileNumber, ArrayList<Tile> map){
         ArrayList<Unit> allUnits = map.get(tileUnitNumber).getUnits();
         if (allUnits.size() == 0)
@@ -4369,9 +4702,24 @@ public class PlayGameMenuController {
         return str;
     }
      */
-
+     // todo -> client (done)
     // get necessary parameters for update warrior
-    public String preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map) {
+    public String preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        UpgradeUnitGson upgradeUnitGson = new UpgradeUnitGson();
+        upgradeUnitGson.oldUnit = oldUnit;
+        upgradeUnitGson.newUnitName = newUnitName;
+        upgradeUnitGson.index = index;
+        upgradeUnitGson.civilization = civilization;
+        upgradeUnitGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(upgradeUnitGson);
+
+        CreateHost.dataOutputStream.writeUTF("upgradeUnit " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
         if (index < 0 || index > 71) {
             return "number of tile is invalid !";
         }
@@ -4379,6 +4727,7 @@ public class PlayGameMenuController {
         City city = findTile(index, map, civilization);
         return updateWarrior(civilization, oldUnit, newUnit, map, map.get(index), city);
     }
+    // todo -> comment
     public String updateWarrior(Civilization civilization, Unit warrior, Unit newWarrior,ArrayList<Tile> map, Tile tile, City city){
         String str;
         if (warrior == null) {
@@ -4420,6 +4769,7 @@ public class PlayGameMenuController {
         str = "unit upgraded successfully !";
         return str;
     }
+    // todo -> estefade nashode
     public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
@@ -4465,6 +4815,7 @@ public class PlayGameMenuController {
 
         return stringBuilder;
     }
+    // todo -> estefade nashode
     public StringBuilder showCitizens(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         for(City city : civilization.getCities()){
@@ -4481,14 +4832,27 @@ public class PlayGameMenuController {
 
     }
      */
-    public String nextTurn(Civilization civilization, ArrayList<Tile> map){
+    // todo -> client (done)
+    public String nextTurn(ArrayList<Civilization> civilizations, Civilization civilization, ArrayList<Tile> map) throws IOException {
+/*        NextTurnGson nextTurnGson = new NextTurnGson();
+        nextTurnGson.civilization = civilization;
+        nextTurnGson.member = civilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(nextTurnGson);
+
+        CreateHost.dataOutputStream.writeUTF("nextTurn " + request);
+        CreateHost.dataOutputStream.flush();*/
+
+
+
+
         //unit actions check
         int tileNumber = unitActionsNextTurnCheck(civilization,map);
         if(tileNumber != -1)
             return "order unit in tile number : " + tileNumber;
-        /*if (civilization.getWorkingOnTechnology() == null)
-            return "choose a technology to learn";*/
-//-----------------------------------------------------------------------------------
+//        if (civilization.getWorkingOnTechnology() == null)
+//            return "choose a technology to learn";
 
         improveImprovementsNextTurn(map);
         checkForUnitMaking(civilization);
@@ -4503,11 +4867,13 @@ public class PlayGameMenuController {
         resetHasOrdered(civilization,map);
         civilization.reduceTechnologyRound();
         increaseCityDamagePoint(civilization);
+        checkZoneOfAllCivilizations(civilizations, map, civilization);
 
 
         //TODO...  also complete historyInformation and showProductionsInProcess
         return "done";
     }
+    // todo -> comment
     public void increasePopulationNextTurn(Civilization civilization,ArrayList<Tile> map){
         if(civilization.getHappiness() < 0)
             return;
@@ -4524,6 +4890,7 @@ public class PlayGameMenuController {
             }
         }
     }
+    // todo -> comment
     public int unitActionsNextTurnCheck(Civilization civilization,ArrayList<Tile> map){
         for(Tile tile : map){
             for(Unit unit : tile.getUnits()){
@@ -4538,6 +4905,7 @@ public class PlayGameMenuController {
         }
         return -1;
     }
+    // todo -> comment
     public void resetHasOrdered(Civilization civilization, ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
             Tile tile = map.get(i);
@@ -4553,14 +4921,17 @@ public class PlayGameMenuController {
             }
         }
     }
+    // todo -> comment
     public void improveImprovementsNextTurn(ArrayList<Tile> map){
         for (Tile tile : map)
             tile.reduceImprovementRound();
     }
+    // todo -> comment
     public void reduceRepairNeedImprovementTurnNextTurn(ArrayList<Tile> map){
         for (Tile tile: map)
             tile.reduceRepairNeedImprovementTurn();
     }
+    // todo -> comment
     public void increaseGoldCivilizationNextTurn(Civilization civilization,ArrayList<Tile> map){
         int finalAsset = 0;
         for(City city : civilization.getCities()){
@@ -4578,6 +4949,7 @@ public class PlayGameMenuController {
         //TODO... Buildings cost
         civilization.setGold(finalAsset);
     }
+    // todo -> comment
     public void increaseFoodCitiesNextTurn(Civilization civilization,ArrayList<Tile> map){
         for(City city : civilization.getCities()){
             int finalAsset = 0;
@@ -4586,6 +4958,7 @@ public class PlayGameMenuController {
             city.setTotalFood(finalAsset);
         }
     }
+    // todo -> comment
     public void increaseProductionCitiesNextTurn(Civilization civilization,ArrayList<Tile> map){
         for(City city : civilization.getCities()){
             int finalAsset = 0;
@@ -4593,6 +4966,7 @@ public class PlayGameMenuController {
             city.setProduction(finalAsset);
         }
     }
+    // todo -> comment
     // increase damage point of your cities by 1 every turn
     public void increaseCityDamagePoint (Civilization civilization) {
         ArrayList<City> cities = civilization.getCities();
@@ -4602,6 +4976,48 @@ public class PlayGameMenuController {
             cities.get(i).setDamagePoint(newDamagePoint);
         }
     }
+
+    // todo -> comment
+    public void checkZoneOfAllCivilizations (ArrayList<Civilization> civilizations, ArrayList<Tile> map, Civilization civilization) {
+        for (Civilization civilization2 : civilizations) {
+            if (!civilization2.equals(civilization)) {
+                checkZone(civilization2, map);
+            }
+        }
+    }
+    // todo -> comment
+    // if an enemy unit is near you send you a message
+    public void checkZone (Civilization civilization, ArrayList<Tile> map) {
+        Node[] graph = new Node[72];
+        for (int i = 0; i < graph.length; i++) {
+            graph[i] = new Node();
+            graph[i].tile = map.get(i);
+        }
+        findAllNeighbours (graph);
+
+        for (int i = 0; i < map.size(); i++) {
+            for (Unit unit : map.get(i).getUnits()) {
+                if (unit.getCivilization().equals(civilization) && !unit.isOnSleep()) {
+                    for (Node neighbour : graph[i].neighbours) {
+                        for (Unit enemyUnit : neighbour.tile.getUnits()) {
+                            if (!enemyUnit.getCivilization().equals(civilization)) {
+                                sendZoneMessage(unit, enemyUnit);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // todo -> comment
+    private void sendZoneMessage(Unit unit, Unit enemyUnit) {
+        String message = "units of civilization : " + enemyUnit.getCivilization() +
+                " are near tile number : " + unit.getOrigin().getTileNumber() + " at turn : " + turn;
+        unit.getCivilization().addMessage(message);
+    }
+
+
+    // todo -> comment
     public void deleteLosers (Civilization civilization, ArrayList<Civilization> civilizations) {
         for (int i = 0; i < civilizations.size(); i++) {
             if (civilizations.get(i).getCities().size() == 0) {
@@ -4610,6 +5026,7 @@ public class PlayGameMenuController {
             }
         }
     }
+    // todo -> comment
     public boolean findWinner (Civilization civilization, ArrayList<Civilization> civilizations) {
         if (civilizations.size() == 1) {
             int point = civilization.getPoint() + 500;
@@ -4618,6 +5035,30 @@ public class PlayGameMenuController {
         }
         return false;
     }
+    // todo -> comment
+    public boolean findWinnerByYear(ArrayList<Civilization> civilizations) {
+        if (turn * 5 != 2050) return false;
+        for (int i = 1; i < civilizations.size(); ++i) {
+            for (int j = 0; j < civilizations.size() - 1; ++j) {
+                if (civilizations.get(j).getPoint() < civilizations.get(j + 1).getPoint()) {
+                    Civilization civilization = civilizations.get(j);
+                    civilizations.set(j, civilizations.get(j + 1));
+                    civilizations.set(j + 1, civilization);
+                }
+                else if (civilizations.get(j).getPoint() == civilizations.get(j + 1).getPoint()) {
+                    if (civilizations.get(j).getScience() < civilizations.get(j + 1).getScience() ||
+                            civilizations.get(j).getHappiness() < civilizations.get(j + 1).getHappiness() ||
+                            civilizations.get(j).getAllWins() < civilizations.get(j + 1).getAllWins()) {
+                        Civilization civilization = civilizations.get(j);
+                        civilizations.set(j, civilizations.get(j + 1));
+                        civilizations.set(j + 1, civilization);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    // todo -> comment
     public void loadOriginTileForUnit (ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
             for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {
@@ -4625,16 +5066,19 @@ public class PlayGameMenuController {
             }
         }
     }
+    // todo -> comment
     public void loadTileForCitizen (ArrayList<Tile> map) {
         for (Tile tile : map) {
             tile.getCitizen().setTile(tile);
         }
     }
+    // todo -> comment
     public void loadTileForBuilding (ArrayList<Tile> map) {
         for (Tile tile : map) {
             tile.getBuilding().setTile(tile);
         }
     }
+    // todo -> comment
     public void loadCivilizationForBuilding (ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
             for (City city : civilization.getCities()) {

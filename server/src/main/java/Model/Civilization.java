@@ -5,8 +5,11 @@ import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Civilization {
+    @Expose
+    public boolean isMyTurn = false;
     @Expose
     private Member member;
     @Expose
@@ -293,5 +296,19 @@ public class Civilization {
 
     public void setCapital(City city) {
         this.capital = city;
+    }
+
+    public boolean equals(Civilization civilization) {
+        if (this.getName().equals(civilization.getName()) &&
+        this.getMember().equals(civilization.getMember())) return true;
+        return false;
+    }
+
+    public int getAllWins() {
+        int wins = 0;
+        for(Map.Entry<Civilization, Integer> entry : winsInUnitsWar.entrySet()) {
+            wins = wins + entry.getValue();
+        }
+        return wins;
     }
 }

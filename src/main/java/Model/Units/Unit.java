@@ -5,6 +5,7 @@ import Model.Technology;
 import Model.Tile;
 import Model.Node;
 import View.PlayGameMenu;
+import View.Room;
 import View.UnitPanel;
 import com.google.gson.annotations.Expose;
 import javafx.event.EventHandler;
@@ -59,6 +60,8 @@ public class Unit extends Rectangle {
     private boolean isOnBoost;
     @Expose
     private boolean isOnBoostTillRecover;
+    @Expose
+    public static PlayGameMenu playGameMenu;
 
     private ArrayList<Node> path = new ArrayList<>(); //the shortest way, it also contains origin and destination
 
@@ -80,25 +83,35 @@ public class Unit extends Rectangle {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (!((Unit) event.getSource()).getCivilization().equals(PlayGameMenu.playingCivilization)) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("selected unit :");
-                    alert.setHeaderText("result :");
-                    alert.setContentText("this unit is not for your civilization !");
-                    alert.showAndWait();
-                } else {
-                    UnitPanel.unit = (Unit) event.getSource();
-                    UnitPanel.stage = Tile.stage;
-                    UnitPanel.infoPanelScene = Tile.scene;
-                    UnitPanel.doesEnteredFromInfoPanel = false;
-                    UnitPanel.map = Tile.map;
-                    UnitPanel.playingCivilization = PlayGameMenu.playingCivilization;
-                    UnitPanel.civilizations = Tile.civilizations;
-                    try {
-                        new UnitPanel().start();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                if (Room.isMyTurn) {
+                    if (!((Unit) event.getSource()).getCivilization().equals(PlayGameMenu.playingCivilization)) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("selected unit :");
+                        alert.setHeaderText("result :");
+                        alert.setContentText("this unit is not for your civilization !");
+                        alert.showAndWait();
+                    } else {
+                        UnitPanel.unit = (Unit) event.getSource();
+                        UnitPanel.stage = Tile.stage;
+                        UnitPanel.infoPanelScene = Tile.scene;
+                        UnitPanel.doesEnteredFromInfoPanel = false;
+                        UnitPanel.map = Tile.map;
+                        UnitPanel.playingCivilization = PlayGameMenu.playingCivilization;
+                        UnitPanel.civilizations = Tile.civilizations;
+                        UnitPanel.playGameMenu = playGameMenu;
+                        try {
+                            new UnitPanel().start();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
+                }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("illegal action");
+                    alert.setHeaderText("result :");
+                    alert.setContentText("it is not your turn");
+                    alert.showAndWait();
                 }
             }
         });
@@ -124,6 +137,7 @@ public class Unit extends Rectangle {
         unitsName.add("Crossbowman");
         unitsName.add("Chariot Archer");
         unitsName.add("Cavalry");
+        unitsName.add("Lancer");
         unitsName.add("Catapult");
         unitsName.add("Cannon");
         unitsName.add("Artillery");
@@ -255,5 +269,11 @@ public class Unit extends Rectangle {
 
     public void setDestination(Tile destination) {
         this.destination = destination;
+    }
+
+    public boolean equals (Unit unit) {
+        if (this.isCivilian == unit.isCivilian &&
+                this.origin.equals(unit.origin)) return true;
+        return false;
     }
 }

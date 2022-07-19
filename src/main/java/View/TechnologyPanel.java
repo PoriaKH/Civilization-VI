@@ -25,6 +25,7 @@ public class TechnologyPanel {
         BorderPane borderPane = FXMLLoader.load(technologyPanelURL);
         technologyPanelScene = new Scene(borderPane);
         TechnologyTree.technologyPanelScene = technologyPanelScene;
+        ResearchInformation.technologyPanelScene = technologyPanelScene;
         stage.setScene(technologyPanelScene);
         stage.show();
     }
@@ -37,8 +38,9 @@ public class TechnologyPanel {
     }
 
     public void moveToResearchInfo(MouseEvent mouseEvent) throws IOException {
-        ResearchInformation.technologyPanelScene = technologyPanelScene;
         ResearchInformation.stage = stage;
+        ResearchInformation.playGameMenuController = playGameMenuController;
+        ResearchInformation.playingCivilization = playingCivilization;
         new ResearchInformation().start();
     }
 

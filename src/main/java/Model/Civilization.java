@@ -1,13 +1,18 @@
 package Model;
 
 import Controller.PlayGameMenuController;
+import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class Civilization {
+    @Expose
+    public boolean isMyTurn = false;
     @Expose
     private Member member;
     @Expose
@@ -294,5 +299,67 @@ public class Civilization {
 
     public void setCapital(City city) {
         this.capital = city;
+    }
+
+    public boolean equals(Civilization civilization) {
+        if (this.getName().equals(civilization.getName()) &&
+                this.getMember().equals(civilization.getMember())) return true;
+        return false;
+    }
+
+    public int getAllWins() {
+        int wins = 0;
+        for(Map.Entry<Civilization, Integer> entry : winsInUnitsWar.entrySet()) {
+            wins = wins + entry.getValue();
+        }
+        return wins;
+    }
+
+    public void copyFieldsOfCivilizations(Civilization civilizationServer) {
+        this.isMyTurn = civilizationServer.isMyTurn;
+        /*this.member;
+        this.firstLetterOfName;
+        this.name;*/
+        this.capital.copyFieldsOfCity(civilizationServer.getCapital());
+        this.science = civilizationServer.getScience();
+        this.sciencePerTurn = civilizationServer.sciencePerTurn;
+        this.technologies = Technology.copyListOfTechnology(this.getTechnologies(), civilizationServer.getTechnologies());
+        this.gold = civilizationServer.getGold();
+        this.goldPerTurn = civilizationServer.getGoldPerTurn();
+        this.happiness = civilizationServer.getHappiness();
+        this.cities = capital.copyCities(this.getCities(), civilizationServer.getCities());
+        this.trades = civilizationServer.getTrades();
+        this.messages = civilizationServer.getMessages();
+        this.winsInUnitsWar = Civilization.getHashMapOfWar(civilizationServer.getWinsInUnitsWar());
+        this.lossesInUnitsWar = Civilization.getHashMapOfWar(civilizationServer.getLossesInUnitsWar());
+        this.point = civilizationServer.getPoint();
+        this.isLearningTechnology = civilizationServer.isLearningTechnology;
+        this.friendlyRequests = Civilization.getFriendsCopy(civilizationServer.getFriendlyRequests());
+        this.friends = Civilization.getFriendsCopy(civilizationServer.getFriends());
+        this.workingOnTechnology = civilizationServer.getWorkingOnTechnology();
+        this.technologyEarnedPercent = civilizationServer.getTechnologyEarnedPercent();
+    }
+
+    private static ArrayList<Civilization> getFriendsCopy(ArrayList<Civilization> friendlyRequests) {
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (Civilization friendlyRequest : friendlyRequests) {
+            civilizations.add(getCivilizationCopy(friendlyRequest));
+        }
+        return civilizations;
+    }
+
+    private static HashMap<Civilization, Integer> getHashMapOfWar(HashMap<Civilization, Integer> winsInUnitsWar) {
+        HashMap<Civilization, Integer> results = new HashMap<>();
+        for (Map.Entry<Civilization, Integer> entry: winsInUnitsWar.entrySet()) {
+            results.put(getCivilizationCopy(entry.getKey()), entry.getValue());
+        }
+        return results;
+    }
+
+    public static Civilization getCivilizationCopy(Civilization key) {
+        for (Civilization civilization : PlayGameMenu.civilizations) {
+            if (civilization.equals(key)) return civilization;
+        }
+       return key;
     }
 }
