@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -23,7 +24,7 @@ public class CommandProcessor {
     public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
     public static ArrayList<GameGroup> gameGroups;
 
-    public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket) throws IOException {
+    public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket, DataInputStream dataInputStream) throws IOException {
         if(command.startsWith("{\"creatorSocket")){
             Gson gson = new GsonBuilder().create();
             GsonRoom gsonRoom = gson.fromJson(command,GsonRoom.class);
@@ -45,6 +46,7 @@ public class CommandProcessor {
                 for(String str : room.nicknames){
                     if(Objects.equals(str, member.getNickname())){
                         room.nicknames.remove(index);
+                        room.members.remove(index);
                         room.sockets.remove(index);
                         break;
                     }
@@ -74,13 +76,17 @@ public class CommandProcessor {
             }
             dataOutputStream.writeUTF("null");
         }
-        else if(command.startsWith("join request:")){
-            Matcher matcher = Pattern.compile("join request:(?<text>.*) (?<nick>.*)").matcher(command);
-            matcher.find();
-            String text = matcher.group("text");
-            String nick = matcher.group("nick");
+        else if(command.startsWith("{\"member")){
+            Gson gson = new GsonBuilder().create();
+            JoinRequestClass joinRequestClass = gson.fromJson(command,JoinRequestClass.class);
+
+            String text = joinRequestClass.text;
+            String nick = joinRequestClass.nick;
+            Member member = joinRequestClass.member;
+
             for(GsonRoom gsonRoom : gsonRoomArray.gsonRooms){
                 if(Objects.equals(text, gsonRoom.creatorMember.getNickname())){
+                    gsonRoom.members.add(member);
                     gsonRoom.nicknames.add(nick);
                     GameSocket gameSocket = new GameSocket(socket.getLocalAddress().toString(),socket.getLocalPort(),socket.getPort());
                     gsonRoom.sockets.add(gameSocket);
@@ -111,6 +117,7 @@ public class CommandProcessor {
                     if(Objects.equals(str, nick)){
                         gsonRoom.sockets.remove(index);
                         gsonRoom.nicknames.remove(index);
+                        gsonRoom.members.remove(index);
                         return;
                     }
                     index++;
@@ -129,13 +136,19 @@ public class CommandProcessor {
                 }
             }
             sockets.add(sockets2);
-            dataOutputStream.writeUTF("salam dodol tala");
+            dataOutputStream.writeUTF("give me members");
+            dataOutputStream.flush();
             // TODO... pouria az inja game shoro she revale dige? in members ro set kon
             ArrayList<Member> members = new ArrayList<>();
+            String str = dataInputStream.readUTF();
+            Gson gson1 = new GsonBuilder().create();
+            GsonRoom gsonRoom = gson1.fromJson(str,GsonRoom.class);
+            members = gsonRoom.members;
 
             GameGroup gameGroup = new GameGroup();
             gameGroup.sockets = sockets2;
             gameGroup.members = members;
+            System.out.println("members = " + members);
 
 
             gameGroup.tiles = playGameMenuController.mapCreator(members.size(),members);

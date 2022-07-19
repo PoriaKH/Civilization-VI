@@ -161,6 +161,17 @@ public class Room {
                         dataOutputStream.flush();
                         //TODO...Koochak add playGameMenu graphic
 
+                        String res = dataInputStream.readUTF();
+                        if(res.equals("give me members")){
+                            Gson gson1 = new GsonBuilder().create();
+                            String txt = gson1.toJson(gsonRoom);
+                            dataOutputStream.writeUTF(txt);
+                            dataOutputStream.flush();
+                        }
+                        else {
+                            System.out.println("something went wrong! Client/Room/Line 169");
+                        }
+
                          while (true) {
                              String txt = dataInputStream.readUTF();
                              System.out.println(txt);

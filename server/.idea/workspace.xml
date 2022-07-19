@@ -4,11 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="converted server project to maven">
-      <change beforePath="$PROJECT_DIR$/../target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Main.class" afterDir="false" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="..">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_19_2022_10_55_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/JoinRequestClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/JoinRequestClass.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/Ruin.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/JoinRequestClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../target/classes/Model/JoinRequestClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GsonRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/GsonRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/GsonRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/GsonRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/GsonRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Hosts.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Hosts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Attribute.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Attribute.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Citizen.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Citizen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/City.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/City.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Civilization.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Civilization.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/GameGroupData.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/GameGroupData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/GsonRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/GsonRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Improvement.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Improvement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Member.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Member.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Resource.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Resource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Ruin.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Ruin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Technology.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Technology.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Unit$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Unit$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/Hosts$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Hosts$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/Hosts.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Hosts.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Lobby.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Lobby.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +85,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -78,6 +120,7 @@
       <workItem from="1657624845949" duration="698000" />
       <workItem from="1657625874166" duration="2636000" />
       <workItem from="1657716485412" duration="3415000" />
+      <workItem from="1658254842186" duration="5070000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -100,7 +143,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657635849988</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="..">
+      <created>1658255043638</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1658255043638</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,6 +172,7 @@
     <MESSAGE value="converted server project to maven" />
     <MESSAGE value="added cheatGson and else if in command processor" />
     <MESSAGE value="done some on teleport" />
-    <option name="LAST_COMMIT_MESSAGE" value="done some on teleport" />
+    <MESSAGE value=".." />
+    <option name="LAST_COMMIT_MESSAGE" value=".." />
   </component>
 </project>
