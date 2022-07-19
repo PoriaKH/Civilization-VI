@@ -163,31 +163,32 @@ public class Room {
 
                          while (true) {
                              String txt = dataInputStream.readUTF();
-                             Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
-                             GameGroupData gameGroupData = gson2.fromJson(txt, GameGroupData.class);
-                             loadExtras(gameGroupData);
-                             if (!gameGroupData.result.equals("newGame")) {
-                                 // TODO ... kian check kon
-                                 root = FXMLLoader.load(GameMenu.gameMenuURL);
-                                 Tile.root = root;
-                                 copyTiles(gameGroupData.tiles);
-                                 copyCivilizations(gameGroupData.civilizations);
-                                 playGameMenu = new PlayGameMenu();
-                                 Unit.playGameMenu = playGameMenu;
-                                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
-                                 playGameMenu.switchToGame(mouseEvent);
-                             }
-                             else {
-                                 startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
-                                 startCivilizations(gameGroupData.civilizations);
-                             }
-                             Civilization civilization = getCivilization(gameGroupData.civilizations);
-                             isMyTurn = civilization.isMyTurn;
-                             if (isMyTurn) {
-                                 PlayGameMenu.playingCivilization = civilization;
-                                 String result = gameGroupData.result;
-                                 showResult(result);
-                             }
+                             System.out.println(txt);
+//                             Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+//                             GameGroupData gameGroupData = gson2.fromJson(txt, GameGroupData.class);
+//                             loadExtras(gameGroupData);
+//                             if (!gameGroupData.result.equals("newGame")) {
+//                                 // TODO ... kian check kon
+//                                 root = FXMLLoader.load(GameMenu.gameMenuURL);
+//                                 Tile.root = root;
+//                                 copyTiles(gameGroupData.tiles);
+//                                 copyCivilizations(gameGroupData.civilizations);
+//                                 playGameMenu = new PlayGameMenu();
+//                                 Unit.playGameMenu = playGameMenu;
+//                                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
+//                                 playGameMenu.switchToGame(mouseEvent);
+//                             }
+//                             else {
+//                                 startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
+//                                 startCivilizations(gameGroupData.civilizations);
+//                             }
+//                             Civilization civilization = getCivilization(gameGroupData.civilizations);
+//                             isMyTurn = civilization.isMyTurn;
+//                             if (isMyTurn) {
+//                                 PlayGameMenu.playingCivilization = civilization;
+//                                 String result = gameGroupData.result;
+//                                 showResult(result);
+//                             }
                          }
                     }
                 } catch (IOException e) {

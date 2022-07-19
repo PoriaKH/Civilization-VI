@@ -129,6 +129,7 @@ public class CommandProcessor {
                 }
             }
             sockets.add(sockets2);
+            dataOutputStream.writeUTF("salam dodol tala");
             // TODO... pouria az inja game shoro she revale dige? in members ro set kon
             ArrayList<Member> members = new ArrayList<>();
 
