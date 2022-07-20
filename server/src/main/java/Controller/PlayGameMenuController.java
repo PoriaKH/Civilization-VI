@@ -5235,19 +5235,22 @@ public class PlayGameMenuController {
     }
     public void loadTileForCitizen (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getCitizen().setTile(tile);
+            if (tile.getCitizen() != null)
+                tile.getCitizen().setTile(tile);
         }
     }
     public void loadTileForBuilding (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getBuilding().setTile(tile);
+            if (tile.getBuilding() != null)
+                tile.getBuilding().setTile(tile);
         }
     }
     public void loadCivilizationForBuilding (ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
             for (City city : civilization.getCities()) {
                 for (Tile tile : city.getTiles()) {
-                    tile.getBuilding().setCivilization(civilization);
+                    if (tile.getBuilding() != null)
+                        tile.getBuilding().setCivilization(civilization);
                 }
             }
         }

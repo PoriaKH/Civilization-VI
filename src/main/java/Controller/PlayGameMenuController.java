@@ -5075,13 +5075,15 @@ public class PlayGameMenuController {
     // todo -> comment
     public void loadTileForCitizen (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getCitizen().setTile(tile);
+            if (tile.getCitizen() != null)
+                tile.getCitizen().setTile(tile);
         }
     }
     // todo -> comment
     public void loadTileForBuilding (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getBuilding().setTile(tile);
+            if (tile.getBuilding() != null)
+                tile.getBuilding().setTile(tile);
         }
     }
     // todo -> comment
@@ -5089,7 +5091,8 @@ public class PlayGameMenuController {
         for (Civilization civilization : civilizations) {
             for (City city : civilization.getCities()) {
                 for (Tile tile : city.getTiles()) {
-                    tile.getBuilding().setCivilization(civilization);
+                    if (tile.getBuilding() != null)
+                        tile.getBuilding().setCivilization(civilization);
                 }
             }
         }

@@ -221,7 +221,7 @@ public class Room {
                                  startCivilizations(gameGroupData.civilizations);
                                  loadExtras(gameGroupData);
                                  PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
-                                 playGameMenu.switchToGame(mouseEvent);
+                                 playGameMenu.switchToGame(event);
                              }
                          }
                     }
@@ -285,8 +285,9 @@ public class Room {
     private void startCivilizations(ArrayList<Civilization> serverCivilizations) {
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for (Civilization serverCivilization : serverCivilizations) {
-            City city = new City();
-            city.copyFieldsOfCity(serverCivilization.getCapital());
+            City city = serverCivilization.getCities().get(0);
+            city.setTiles(city.getCityTiles(serverCivilization.getCities().get(0).getTiles()));
+            city.setCenterTile(city.getCenterForCity(serverCivilization.getCities().get(0).getCenterTile()));
             Civilization civilization = new Civilization(serverCivilization.getMember(), city);
             civilizations.add(civilization);
         }

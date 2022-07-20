@@ -191,7 +191,7 @@ public class City {
         this.sciencePerTurn = city.getSciencePerTurn();
     }
 
-    private ArrayList<Tile> getCityTiles(ArrayList<Tile> tiles) {
+    public ArrayList<Tile> getCityTiles(ArrayList<Tile> tiles) {
         ArrayList<Tile> tilesCity = new ArrayList<>();
         for (Tile tile : PlayGameMenu.tiles) {
             for (Tile tile1 : tiles) {
@@ -204,7 +204,7 @@ public class City {
         return tilesCity;
     }
 
-    private Tile getCenterForCity(Tile centerTile) {
+    public Tile getCenterForCity(Tile centerTile) {
         for (Tile tile : PlayGameMenu.tiles) {
             if (tile.equals(centerTile)) return tile;
         }
@@ -258,5 +258,13 @@ public class City {
             }
         }
         return cities;
+    }
+
+    public void setTiles(ArrayList<Tile> tiles) {
+        this.tiles = tiles;
+    }
+
+    public void setCenterTile(Tile centerForCity) {
+        this.centerTile = centerForCity;
     }
 }
