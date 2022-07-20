@@ -1292,7 +1292,7 @@ public class PlayGameMenuController {
             DataOutputStream dataOutputStream = new DataOutputStream(sockets.get(i).getOutputStream());
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
             String respond = gson.toJson(gameGroupData);
-            dataOutputStream.writeUTF(respond);
+            dataOutputStream.writeBytes(respond);
             dataOutputStream.flush();
         }
     }
