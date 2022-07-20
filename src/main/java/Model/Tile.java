@@ -1650,7 +1650,7 @@ public class Tile extends Polygon {
         this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
         this.resource = copyResource(tile.getResource());
         this.attribute = setAttributeCopy(tile.getAttribute());
-        this.improvements = setImprovementCopy(tile.getImprovements());
+        setImprovementCopy(tile.getImprovements());
         this.isWorking = tile.isWorking;
         this.isOnRepair = tile.isOnRepair;
         this.repairNeedImprovement = tile.getRepairNeedImprovement();
@@ -1661,15 +1661,15 @@ public class Tile extends Polygon {
     private Ruin getRuinCopy(Ruin ruin) {
         if (this.getRuin() == null && ruin != null) {
             Ruin ruin2 = ruin;
-            addRuinPicture(ruin2);
+            //addRuinPicture(ruin2);
             return ruin2;
         }
         else if (this.getRuin() != null && ruin != null) {
-            this.getRuin().copyField(ruin);
+            //this.getRuin().copyField(ruin);
             return this.getRuin();
         }
         else if (this.units.size() > 0) {
-            removeRuinPicture(this.getRuin());
+            //removeRuinPicture(this.getRuin());
             return null;
         }
         return null;
@@ -1678,11 +1678,11 @@ public class Tile extends Polygon {
     private Attribute setAttributeCopy(Attribute attribute) {
         if (this.getAttribute() == null && attribute != null) {
             Attribute attribute2 = new Attribute(attribute.isPlat(), attribute.isJungle(), attribute.isIce(), attribute.isRainForest(), attribute.isMarsh(), attribute.isOasis());
-            addAttributePicture(attribute2);
+            //addAttributePicture(attribute2);
             return attribute2;
         }
         else if (this.getAttribute() != null && attribute != null) {
-            this.getAttribute().copyFields(attribute);
+            //this.getAttribute().copyFields(attribute);
             return this.getAttribute();
         }
         return null;
@@ -1691,32 +1691,33 @@ public class Tile extends Polygon {
     private Resource copyResource(Resource resource) {
         if (this.getResource() == null && resource != null) {
             Resource resource2 = new Resource(resource.getName());
-            addResourcePicture(resource2);
+            //addResourcePicture(resource2);
             return resource2;
         }
         else if (this.getResource() != null && resource != null){
-            this.getResource().copyFields(resource);
+            //this.getResource().copyFields(resource);
             return this.getResource();
         }
         return null;
     }
 
-    private ArrayList<Improvement> setImprovementCopy(ArrayList<Improvement> improvements) {
-        ArrayList<Improvement> improvements2 = new ArrayList<>();
+    private void setImprovementCopy(ArrayList<Improvement> improvements) {
         if (improvements.size() >= 1) {
             Improvement improvementTemp = improvements.get(0);
-            if (this.getImprovements().get(0) == null && improvements.get(0) != null) {
+            if (this.getImprovements().size() == 0 && improvements.get(0) != null) {
                 Improvement improvement = new Improvement(improvementTemp.isCamp(), improvementTemp.isFarm(), improvementTemp.isLumberMill(), improvementTemp.isMine(), improvementTemp.isPaddock(), improvementTemp.isAgriculture(),
                         improvementTemp.isStoneMine(), improvementTemp.isTradingPost(), improvementTemp.isLaboratory(), improvementTemp.getFood(), improvementTemp.getProduction(), improvementTemp.getGold());
-                improvements2.add(improvement);
-                addImprovementPicture(improvement);
-            } else if (this.getImprovements().get(0) != null && improvements.get(0) != null) {
+                this.getImprovements().add(improvement);
+
+                //addImprovementPicture(improvement);
+            }/* else if (this.getImprovements().get(0) != null && improvements.get(0) != null) {
                 this.getImprovements().get(0).copyFields(improvements.get(0));
                 improvements2.add(improvements.get(0));
-                return improvements2;
-            }
+            }*/
         }
-        return improvements2;
+        else if (improvements.size() == 0 && this.getImprovements().size() >= 1) {
+            this.getImprovements().remove(0);
+        }
     }
 
     private ArrayList<Tile> getRoadsTileCopy(ArrayList<Tile> tiles) {
