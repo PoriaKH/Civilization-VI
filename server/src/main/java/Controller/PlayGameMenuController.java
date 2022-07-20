@@ -1,22 +1,18 @@
 package Controller;
 
 import Model.*;
-import Model.FunctionsGson.FriendsListGson;
-import Model.FunctionsGson.GameGroupData;
-import Model.FunctionsGson.ScoreboardGson;
-import Model.FunctionsGson.UnitBehaviourGson;
+import Model.FunctionsGson.*;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import sun.applet.Main;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PlayGameMenuController {
     public static int turn;
@@ -1294,8 +1290,28 @@ public class PlayGameMenuController {
             gameGroupData.tileStatusOfCivilization5 = gameGroup.tileStatusOfCivilization5;
             DataOutputStream dataOutputStream = new DataOutputStream(sockets.get(i).getOutputStream());
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-            String respond = gson.toJson(gameGroupData);
-            dataOutputStream.writeUTF(respond);
+
+            OtherDataGson otherDataGson = new OtherDataGson(gameGroupData);
+
+            String[] civs = new String[gameGroupData.civilizations.size()];
+            for (int i1 = 0; i1 < civs.length; i1++) {
+                civs[i1] = gson.toJson(gameGroupData.civilizations.get(i1));
+            }
+            String[] tiles = new String[72];
+            for (int i1 = 0; i1 < gameGroupData.tiles.size(); i1++) {
+                tiles[i1] = gson.toJson(gameGroupData.tiles.get(i1));
+            }
+            String other = gson.toJson(otherDataGson);
+
+            for (int j = 0; j < civs.length; ++j) {
+                dataOutputStream.writeUTF("civ " + civs[j]);
+                dataOutputStream.flush();
+            }
+            for (int j = 0; j < 72; ++j) {
+                dataOutputStream.writeUTF("tile " + tiles[j]);
+                dataOutputStream.flush();
+            }
+            dataOutputStream.writeUTF("other " + other);
             dataOutputStream.flush();
         }
     }
@@ -4825,59 +4841,6 @@ public class PlayGameMenuController {
         str = "unit upgraded successfully !";
         return str;
     }
-    private Matcher getMatcher(String command, String regex) {
-        Matcher matcher = Pattern.compile(regex).matcher(command);
-        return matcher;
-    }
-    public ArrayList<String> friendsList(FriendsListGson friendsListGson) throws IOException {
-        ArrayList<String> friendsList = new ArrayList<>();
-        File file = new File("src/main/resources/Friends/" + friendsListGson.sender.getUsername() + ".txt");
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String fileRegex = "(?<username>.*)";
-        String line;
-        line = bufferedReader.readLine();
-        while(line != null && !line.equals("")) {
-            Matcher fileMatcher = getMatcher(line, fileRegex);
-            fileMatcher.find();
-            String fileUsername = fileMatcher.group("username");
-            friendsList.add(fileUsername);
-            line = bufferedReader.readLine();
-        }
-        fileReader.close();
-        return friendsList;
-    }
-    public ArrayList<String> scoreBoard(ScoreboardGson scoreboardGson, ArrayList<ArrayList<Member>> members) throws IOException {
-        ArrayList<String> membersScores = new ArrayList<>();
-        ArrayList<Member> allMembers = new ArrayList<>();
-        for (int i = 0; i < members.size(); i++)
-            for (int j = 0; j < members.get(i).size(); j++)
-                allMembers.add(members.get(i).get(j));
-        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
-        File file = new File("users.txt");
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line;
-        line = bufferedReader.readLine();
-        while(line != null && !line.equals("")) {
-            Matcher fileMatcher = getMatcher(line, fileRegex);
-            fileMatcher.find();
-            String fileUsername = fileMatcher.group("username");
-            String fileNickname = fileMatcher.group("nickname");
-            int fileScore = Integer.parseInt(fileMatcher.group("score"));
-            String fileDate = fileMatcher.group("date");
-            String status = "offline";
-            for (Member member : allMembers)
-                if (member.getUsername().equals(fileUsername)) {
-                    status = "online";
-                    break;
-                }
-            membersScores.add(fileUsername + " \\ " + fileNickname + " \\ " + fileScore + " \\ " + fileDate + " \\ " + status);
-            line = bufferedReader.readLine();
-        }
-        fileReader.close();
-        return membersScores;
-    }
     public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder("");
         int[] sortFlag = new int[civilizations.size()];
@@ -5223,13 +5186,17 @@ public class PlayGameMenuController {
     public void deleteLosers (Civilization civilization, ArrayList<Civilization> civilizations) {
         for (int i = 0; i < civilizations.size(); i++) {
             if (civilizations.get(i).getCities().size() == 0) {
-                civilizations.remove(i);
-                i--;
+                civilizations.get(i).doesLoseTheGame = true;
             }
         }
     }
     public boolean findWinner (Civilization civilization, ArrayList<Civilization> civilizations) {
-        if (civilizations.size() == 1) {
+        if (!civilization.doesLoseTheGame) {
+            for (Civilization civilization1 : civilizations) {
+                if (!civilization.equals(civilization1)) {
+                    if (!civilization1.doesLoseTheGame) return false;
+                }
+            }
             int point = civilization.getPoint() + 500;
             civilization.getMember().setScore(point);
             return true;
@@ -5256,6 +5223,7 @@ public class PlayGameMenuController {
                 }
             }
         }
+        civilizations.get(0).doesLoseTheGame = false;
         return true;
     }
     public void loadOriginTileForUnit (ArrayList<Tile> map) {
@@ -5267,21 +5235,31 @@ public class PlayGameMenuController {
     }
     public void loadTileForCitizen (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getCitizen().setTile(tile);
+            if (tile.getCitizen() != null)
+                tile.getCitizen().setTile(tile);
         }
     }
     public void loadTileForBuilding (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getBuilding().setTile(tile);
+            if (tile.getBuilding() != null)
+                tile.getBuilding().setTile(tile);
         }
     }
     public void loadCivilizationForBuilding (ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
             for (City city : civilization.getCities()) {
                 for (Tile tile : city.getTiles()) {
-                    tile.getBuilding().setCivilization(civilization);
+                    if (tile.getBuilding() != null)
+                        tile.getBuilding().setCivilization(civilization);
                 }
             }
         }
+    }
+
+    public Civilization getWinner(ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            if (!civilization.doesLoseTheGame) return civilization;
+        }
+        return null;
     }
 }

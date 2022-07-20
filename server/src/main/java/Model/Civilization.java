@@ -39,9 +39,9 @@ public class Civilization {
     @Expose
     private ArrayList<String> messages; // (int)turn : message
     @Expose
-    private HashMap<Civilization, Integer> winsInUnitsWar = new HashMap<>(); // tamadon shekast khorde va tedad bakht haye on ra neshan mide
+    private HashMap<String, Integer> winsInUnitsWar = new HashMap<>(); // tamadon shekast khorde va tedad bakht haye on ra neshan mide
     @Expose
-    private HashMap<Civilization, Integer> lossesInUnitsWar = new HashMap<>(); // tamadon pirooz va tedad bord haye on ra neshan mide
+    private HashMap<String, Integer> lossesInUnitsWar = new HashMap<>(); // tamadon pirooz va tedad bord haye on ra neshan mide
     @Expose
     private int point;//to compare civilizations
     @Expose
@@ -158,10 +158,10 @@ public class Civilization {
     }
 
     public void updateCountOfUnitWin (Civilization civilization, int count) {
-        winsInUnitsWar.replace(civilization, count);
+        winsInUnitsWar.replace(civilization.getName(), count);
     }
     public void updateCountOfUnitLose (Civilization civilization, int count) {
-        lossesInUnitsWar.replace(civilization, count);
+        lossesInUnitsWar.replace(civilization.getName(), count);
     }
 
     public void setSciencePerTurn(int sciencePerTurn) {
@@ -175,21 +175,21 @@ public class Civilization {
         return lossesInUnitsWar.get(civilization);
     }
     public void addCivilizationToWinsUnit (Civilization civilization) {
-        winsInUnitsWar.put(civilization, 0);
+        winsInUnitsWar.put(civilization.getName(), 0);
     }
     public void addCivilizationToLossesUnit (Civilization civilization) {
-        lossesInUnitsWar.put(civilization, 0);
+        lossesInUnitsWar.put(civilization.getName(), 0);
     }
 
     public ArrayList<Civilization> getFriends() {
         return friends;
     }
 
-    public HashMap<Civilization, Integer> getWinsInUnitsWar() {
+    public HashMap<String, Integer> getWinsInUnitsWar() {
         return winsInUnitsWar;
     }
 
-    public HashMap<Civilization, Integer> getLossesInUnitsWar() {
+    public HashMap<String, Integer> getLossesInUnitsWar() {
         return lossesInUnitsWar;
     }
 
@@ -308,7 +308,7 @@ public class Civilization {
 
     public int getAllWins() {
         int wins = 0;
-        for(Map.Entry<Civilization, Integer> entry : winsInUnitsWar.entrySet()) {
+        for(Map.Entry<String, Integer> entry : winsInUnitsWar.entrySet()) {
             wins = wins + entry.getValue();
         }
         return wins;

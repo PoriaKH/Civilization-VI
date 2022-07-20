@@ -934,15 +934,15 @@ public class PlayGameMenuController {
 
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();
-        HashMap<Civilization, Integer> wins = civilization.getWinsInUnitsWar();
-        HashMap<Civilization, Integer> losses = civilization.getLossesInUnitsWar();
+        HashMap<String, Integer> wins = civilization.getWinsInUnitsWar();
+        HashMap<String, Integer> losses = civilization.getLossesInUnitsWar();
         stringBuilder.append("wins :" + "\n");
-        for(Map.Entry<Civilization, Integer> entry : wins.entrySet()) {
-            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + ",  number of wins : " + entry.getValue() + "\n");
+        for(Map.Entry<String, Integer> entry : wins.entrySet()) {
+            stringBuilder.append("Civilization : " + entry.getKey() + ",  number of wins : " + entry.getValue() + "\n");
         }
         stringBuilder.append("losses :" + "\n");
-        for(Map.Entry<Civilization, Integer> entry : losses.entrySet()) {
-            stringBuilder.append("Civilization : " + entry.getKey().getMember().getUsername() + ",  number of losses : " + entry.getValue() + "\n");
+        for(Map.Entry<String, Integer> entry : losses.entrySet()) {
+            stringBuilder.append("Civilization : " + entry.getKey() + ",  number of losses : " + entry.getValue() + "\n");
         }
         return stringBuilder;
     }
@@ -5075,13 +5075,15 @@ public class PlayGameMenuController {
     // todo -> comment
     public void loadTileForCitizen (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getCitizen().setTile(tile);
+            if (tile.getCitizen() != null)
+                tile.getCitizen().setTile(tile);
         }
     }
     // todo -> comment
     public void loadTileForBuilding (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getBuilding().setTile(tile);
+            if (tile.getBuilding() != null)
+                tile.getBuilding().setTile(tile);
         }
     }
     // todo -> comment
@@ -5089,7 +5091,8 @@ public class PlayGameMenuController {
         for (Civilization civilization : civilizations) {
             for (City city : civilization.getCities()) {
                 for (Tile tile : city.getTiles()) {
-                    tile.getBuilding().setCivilization(civilization);
+                    if (tile.getBuilding() != null)
+                        tile.getBuilding().setCivilization(civilization);
                 }
             }
         }
