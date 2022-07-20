@@ -5,6 +5,7 @@ import Model.Member;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -41,6 +42,7 @@ public class FriendsList {
         String response = CreateHost.dataInputStream.readUTF();
         FriendsListGson friendsListGson1 = gson.fromJson(response, FriendsListGson.class);
         friends = friendsListGson1.friendsUsernames;
+        initializeList();
     }
 
     public void initializeList(){
@@ -63,6 +65,8 @@ public class FriendsList {
             stage.setScene(scene);
             stage.show();
         });
+        mainVBox.setAlignment(Pos.CENTER);
+        vBox.setAlignment(Pos.CENTER);
         mainVBox.getChildren().add(back);
         mainVBox.getChildren().add(container);
         container.setPrefSize(1280, 600);

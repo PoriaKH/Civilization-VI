@@ -115,8 +115,9 @@ public class MainMenu {
 
     public void lobbyClicked(MouseEvent mouseEvent) throws IOException {
         FriendsList.lobbyURL = lobbyURL;
-        SendFriendRequest.lobbyURL = lobbyURL;
         FriendsList.sender = loggedInMember;
+        SendFriendRequest.lobbyURL = lobbyURL;
+        SendFriendRequest.sender = loggedInMember;
         root = FXMLLoader.load(lobbyURL);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);

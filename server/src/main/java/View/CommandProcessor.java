@@ -144,6 +144,11 @@ public class CommandProcessor {
             dataOutputStream.writeUTF(request);
             dataOutputStream.flush();
         }
+        else if (command.startsWith("friendRequest ")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("friendRequest " , "");
+
+        }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();
             GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);
