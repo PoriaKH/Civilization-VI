@@ -143,21 +143,20 @@ public class CommandProcessor {
 
             dataOutputStream.writeUTF("give me members");
             dataOutputStream.flush();
-            // TODO... pouria az inja game shoro she revale dige? in members ro set kon
-            ArrayList<Member> members = new ArrayList<>();
+
             String str = dataInputStream.readUTF();
             Gson gson1 = new GsonBuilder().create();
             GsonRoom gsonRoom = gson1.fromJson(str,GsonRoom.class);
-            members = gsonRoom.members;
+            members2 = gsonRoom.members;
 
             GameGroup gameGroup = new GameGroup();
             gameGroup.sockets = sockets2;
-            gameGroup.members = members;
+            gameGroup.members = members2;
             System.out.println("members = " + members);
 
 
-            gameGroup.tiles = playGameMenuController.mapCreator(members.size(),members);
-            gameGroup.civilizations = playGameMenuController.initializeCivilizations(members.size(), gameGroup.tiles, members);
+            gameGroup.tiles = playGameMenuController.mapCreator(members.size(),members2);
+            gameGroup.civilizations = playGameMenuController.initializeCivilizations(members.size(), gameGroup.tiles, members2);
             gameGroup.civilizations.get(0).isMyTurn = true;
 
 
@@ -191,6 +190,12 @@ public class CommandProcessor {
                 tileStatusOfCivilization4 = playGameMenuController.statusChecker(gameGroup.civilizations.get(3), gameGroup.tiles);
                 tileStatusOfCivilization5 = playGameMenuController.statusChecker(gameGroup.civilizations.get(4), gameGroup.tiles);
             }
+            gameGroup.tileStatusOfCivilization1 = tileStatusOfCivilization1;
+            gameGroup.tileStatusOfCivilization2 = tileStatusOfCivilization2;
+            gameGroup.tileStatusOfCivilization3 = tileStatusOfCivilization3;
+            gameGroup.tileStatusOfCivilization4 = tileStatusOfCivilization4;
+            gameGroup.tileStatusOfCivilization5 = tileStatusOfCivilization5;
+
             /*for (int i = 0; i < 72; i++)
                 gameGroup.tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));*/
 
@@ -205,7 +210,6 @@ public class CommandProcessor {
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
             gameGroupData.result = "newGame";
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
-
         }
 
 
