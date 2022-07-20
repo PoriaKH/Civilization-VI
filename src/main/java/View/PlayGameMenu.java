@@ -188,8 +188,8 @@ public class PlayGameMenu {
             playingCivilization = civilizations.get(0);
             int numOfCivilizations = civilizations.size();
             if (numOfCivilizations == 2) {
-//                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
-//                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+                /*tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);*////   ----> -1 , 1
                 for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
                     tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
                 for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
@@ -225,8 +225,8 @@ public class PlayGameMenu {
 //                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
 //                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);
 //                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);///   ----> -1 , 1
-//                tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
-//                tileStatusOfCivilization5 = playGameMenuController.statusChecker(civilizations.get(4), tiles);
+  //             tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+    //          tileStatusOfCivilization5 = playGameMenuController.statusChecker(civilizations.get(4), tiles);
                 for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
                     tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
                 for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
@@ -520,21 +520,21 @@ public class PlayGameMenu {
                             playGameMenuController.deleteLosers(playingCivilization, civilizations);
                             if (playGameMenuController.findWinner(playingCivilization, civilizations)
                                     || playGameMenuController.findWinnerByYear(civilizations)) {
-                                //TODO .... write array members in file -> pouria ***********
-                                //ToDO ... tabe moshkel dare ehtemalan az while(true) e
+                                Civilization winner = playGameMenuController.getWinner(civilizations);
 
-                         /*try {
-                            increaseFileScore(civilizations.get(0));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }*/
+                                try {
+                                    increaseFileScore(winner);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
                                 if (5 * PlayGameMenuController.turn == 2050) {
                                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                     alert.setTitle("WINNER : ");
                                     alert.setHeaderText("game is over because we are in year 2050 :");
-                                    alert.setContentText("Winner civilization : " + civilizations.get(0).getName());
+                                    alert.setContentText("Winner civilization : " + winner.getName());
 
-                                    playingCivilization = civilizations.get(0);
+                                    playingCivilization = winner;
                                     civName.setText("civilization : " + playingCivilization.getName());
                                     goldAmount.setText(" : " + playingCivilization.getGold());
                                     happinessAmount.setText(" : " + playingCivilization.getHappiness());
@@ -547,7 +547,7 @@ public class PlayGameMenu {
                             }
                             updateMapAfterMove();
                         }
-                    }else {
+                    } else {
                         showError();
                     }
                 }
@@ -566,7 +566,7 @@ public class PlayGameMenu {
     }
 
     private void showError() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("illegal action");
         alert.setHeaderText("result :");
         alert.setContentText("it is not your turn");
@@ -695,6 +695,7 @@ public class PlayGameMenu {
             String fileUsername = fileMatcher.group("username");
 
             if(Objects.equals(fileUsername, civilization.getMember().getUsername())) {
+                line = bufferedReader.readLine();
                 continue;
             }
 

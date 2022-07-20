@@ -2,7 +2,9 @@ package View;
 
 import Controller.PlayGameMenuController;
 import Model.*;
+import Model.FunctionsGson.CivilizationsGson;
 import Model.FunctionsGson.GameGroupData;
+import Model.FunctionsGson.OtherDataGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
@@ -161,34 +163,66 @@ public class Room {
                         dataOutputStream.flush();
                         //TODO...Koochak add playGameMenu graphic
 
+                        String res = dataInputStream.readUTF();
+                        if(res.equals("give me members")){
+                            Gson gson1 = new GsonBuilder().create();
+                            String txt = gson1.toJson(gsonRoom);
+                            dataOutputStream.writeUTF(txt);
+                            dataOutputStream.flush();
+                        }
+                        else {
+                            System.out.println("something went wrong! Client/Room/Line 169");
+                        }
                          while (true) {
-                             String txt = dataInputStream.readUTF();
-                             System.out.println(txt);
-//                             Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
-//                             GameGroupData gameGroupData = gson2.fromJson(txt, GameGroupData.class);
-//                             loadExtras(gameGroupData);
-//                             if (!gameGroupData.result.equals("newGame")) {
-//                                 // TODO ... kian check kon
-//                                 root = FXMLLoader.load(GameMenu.gameMenuURL);
-//                                 Tile.root = root;
-//                                 copyTiles(gameGroupData.tiles);
-//                                 copyCivilizations(gameGroupData.civilizations);
-//                                 playGameMenu = new PlayGameMenu();
-//                                 Unit.playGameMenu = playGameMenu;
-//                                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
-//                                 playGameMenu.switchToGame(mouseEvent);
-//                             }
-//                             else {
-//                                 startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
-//                                 startCivilizations(gameGroupData.civilizations);
-//                             }
-//                             Civilization civilization = getCivilization(gameGroupData.civilizations);
-//                             isMyTurn = civilization.isMyTurn;
-//                             if (isMyTurn) {
-//                                 PlayGameMenu.playingCivilization = civilization;
-//                                 String result = gameGroupData.result;
-//                                 showResult(result);
-//                             }
+                             GameGroupData gameGroupData = new GameGroupData();
+                             CivilizationsGson civilizationsGson = new CivilizationsGson();
+                             OtherDataGson otherDataGson = new OtherDataGson();
+                             Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+
+                            while (true) {
+                                String txt = dataInputStream.readUTF();
+                                if (txt.startsWith("civ ")) {
+                                    txt = txt.replace("civ ", "");
+                                    System.out.println(txt);
+                                    civilizationsGson = gson2.fromJson(txt, CivilizationsGson.class);
+                                } else if (txt.startsWith("tile ")) {
+                                    txt = txt.replace("tile ", "");
+                                    System.out.println(txt);
+                                    Tile tile = gson2.fromJson(txt, Tile.class);
+                                    gameGroupData.tiles.add(tile);
+                                } else if (txt.startsWith("other ")) {
+                                    txt = txt.replace("other ", "");
+                                    System.out.println(txt);
+                                    otherDataGson = gson2.fromJson(txt, OtherDataGson.class);
+                                    setGameGroupData(gameGroupData, civilizationsGson, otherDataGson);
+                                    break;
+                                }
+                            }
+                             if (!gameGroupData.result.equals("newGame")) {
+                                 loadExtras(gameGroupData);
+                                 // TODO ... kian check kon
+                                 root = FXMLLoader.load(GameMenu.gameMenuURL);
+                                 Tile.root = root;
+                                 copyTiles(gameGroupData.tiles);
+                                 copyCivilizations(gameGroupData.civilizations);
+                                 playGameMenu = new PlayGameMenu();
+                                 Unit.playGameMenu = playGameMenu;
+                                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
+                                 playGameMenu.switchToGame(mouseEvent);
+                             }
+                             else {
+                                 System.out.println("start");
+                                 startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
+                                 startCivilizations(gameGroupData.civilizations);
+                             }
+                             Civilization civilization = getCivilization(gameGroupData.civilizations);
+                             isMyTurn = civilization.isMyTurn;
+                             if (isMyTurn) {
+                                 PlayGameMenu.playingCivilization = civilization;
+                                 System.out.println(civilization.getName());
+                                 String result = gameGroupData.result;
+                                 showResult(result);
+                             }
                          }
                     }
                 } catch (IOException e) {
@@ -204,6 +238,17 @@ public class Room {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void setGameGroupData(GameGroupData gameGroupData, CivilizationsGson civilizationsGson, OtherDataGson otherDataGson) {
+        gameGroupData.tileStatusOfCivilization1 = otherDataGson.tileStatusOfCivilization1;
+        gameGroupData.tileStatusOfCivilization2 = otherDataGson.tileStatusOfCivilization2;
+        gameGroupData.tileStatusOfCivilization3 = otherDataGson.tileStatusOfCivilization3;
+        gameGroupData.tileStatusOfCivilization4 = otherDataGson.tileStatusOfCivilization4;
+        gameGroupData.tileStatusOfCivilization5 = otherDataGson.tileStatusOfCivilization5;
+        gameGroupData.index = otherDataGson.index;
+        gameGroupData.result = otherDataGson.result;
+        gameGroupData.civilizations = civilizationsGson.civilizations;
     }
 
     private ArrayList<Integer> getStatusChecker(GameGroupData gameGroupData) {

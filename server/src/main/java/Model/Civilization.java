@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class Civilization {
     @Expose
+    public boolean doesLoseTheGame = false;
+    @Expose
     public boolean isMyTurn = false;
     @Expose
     private Member member;

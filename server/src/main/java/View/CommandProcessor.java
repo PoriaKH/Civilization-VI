@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import sun.applet.Main;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -25,7 +26,7 @@ public class CommandProcessor {
     public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
     public static ArrayList<GameGroup> gameGroups;
 
-    public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket) throws IOException {
+    public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket, DataInputStream dataInputStream) throws IOException {
         if(command.startsWith("{\"creatorSocket")){
             Gson gson = new GsonBuilder().create();
             GsonRoom gsonRoom = gson.fromJson(command,GsonRoom.class);
@@ -47,6 +48,7 @@ public class CommandProcessor {
                 for(String str : room.nicknames){
                     if(Objects.equals(str, member.getNickname())){
                         room.nicknames.remove(index);
+                        room.members.remove(index);
                         room.sockets.remove(index);
                         break;
                     }
@@ -76,13 +78,17 @@ public class CommandProcessor {
             }
             dataOutputStream.writeUTF("null");
         }
-        else if(command.startsWith("join request:")){
-            Matcher matcher = Pattern.compile("join request:(?<text>.*) (?<nick>.*)").matcher(command);
-            matcher.find();
-            String text = matcher.group("text");
-            String nick = matcher.group("nick");
+        else if(command.startsWith("{\"member")){
+            Gson gson = new GsonBuilder().create();
+            JoinRequestClass joinRequestClass = gson.fromJson(command,JoinRequestClass.class);
+
+            String text = joinRequestClass.text;
+            String nick = joinRequestClass.nick;
+            Member member = joinRequestClass.member;
+
             for(GsonRoom gsonRoom : gsonRoomArray.gsonRooms){
                 if(Objects.equals(text, gsonRoom.creatorMember.getNickname())){
+                    gsonRoom.members.add(member);
                     gsonRoom.nicknames.add(nick);
                     GameSocket gameSocket = new GameSocket(socket.getLocalAddress().toString(),socket.getLocalPort(),socket.getPort());
                     gsonRoom.sockets.add(gameSocket);
@@ -113,6 +119,7 @@ public class CommandProcessor {
                     if(Objects.equals(str, nick)){
                         gsonRoom.sockets.remove(index);
                         gsonRoom.nicknames.remove(index);
+                        gsonRoom.members.remove(index);
                         return;
                     }
                     index++;
@@ -132,27 +139,35 @@ public class CommandProcessor {
             Gson gson = new GsonBuilder().create();
             GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);
             ArrayList<Socket> sockets2 = new ArrayList<>();
+            ArrayList<Member> members2 = new ArrayList<>();
             for(GameSocket gameSocket : gameSocketArray.gameSockets){
                 for(Socket socket1 : allSockets){
                     if(gameSocket.socketPort == socket1.getPort()){
                         sockets2.add(socket1);
                     }
                 }
+                members2.add(gameSocket.member);
             }
             sockets.add(sockets2);
-            dataOutputStream.writeUTF("salam dodol tala");
-            // TODO... pouria az inja game shoro she revale dige? in members ro set kon
-            ArrayList<Member> members = new ArrayList<>();
+            members.add(members2);
+
+            dataOutputStream.writeUTF("give me members");
+            dataOutputStream.flush();
+
+            String str = dataInputStream.readUTF();
+            Gson gson1 = new GsonBuilder().create();
+            GsonRoom gsonRoom = gson1.fromJson(str,GsonRoom.class);
+            members2 = gsonRoom.members;
 
             GameGroup gameGroup = new GameGroup();
             gameGroup.sockets = sockets2;
-            gameGroup.members = members;
+            gameGroup.members = members2;
+            System.out.println("members = " + members);
 
 
-            gameGroup.tiles = playGameMenuController.mapCreator(members.size(),members);
-            gameGroup.civilizations = playGameMenuController.initializeCivilizations(members.size(), gameGroup.tiles, members);
+            gameGroup.tiles = playGameMenuController.mapCreator(members.size(),members2);
+            gameGroup.civilizations = playGameMenuController.initializeCivilizations(members.size(), gameGroup.tiles, members2);
             gameGroup.civilizations.get(0).isMyTurn = true;
-
 
             // TODO ... kian sakht map ro check kon
             int numOfCivilizations = gameGroup.civilizations.size();
@@ -184,6 +199,12 @@ public class CommandProcessor {
                 tileStatusOfCivilization4 = playGameMenuController.statusChecker(gameGroup.civilizations.get(3), gameGroup.tiles);
                 tileStatusOfCivilization5 = playGameMenuController.statusChecker(gameGroup.civilizations.get(4), gameGroup.tiles);
             }
+            gameGroup.tileStatusOfCivilization1 = tileStatusOfCivilization1;
+            gameGroup.tileStatusOfCivilization2 = tileStatusOfCivilization2;
+            gameGroup.tileStatusOfCivilization3 = tileStatusOfCivilization3;
+            gameGroup.tileStatusOfCivilization4 = tileStatusOfCivilization4;
+            gameGroup.tileStatusOfCivilization5 = tileStatusOfCivilization5;
+
             /*for (int i = 0; i < 72; i++)
                 gameGroup.tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));*/
 
@@ -198,7 +219,6 @@ public class CommandProcessor {
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
             gameGroupData.result = "newGame";
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
-
         }
 
 

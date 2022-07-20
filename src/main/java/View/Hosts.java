@@ -3,6 +3,7 @@ package View;
 import Model.GameSocket;
 import Model.GsonRoom;
 import Model.GsonRoomArray;
+import Model.JoinRequestClass;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.event.EventHandler;
@@ -73,10 +74,18 @@ public class Hosts {
                     for (GsonRoom gsonRoom : gsonRoomArray.gsonRooms) {
                         if (Objects.equals(gsonRoom.creatorMember.getNickname(), buttonStringHashMap.get(button))) {
                             gsonRoom.nicknames.add(loggedInMember.getNickname());
+                            gsonRoom.members.add(loggedInMember);
                             gsonRoom.sockets.add(gameSocket);
                             //send request to server
                             try {
-                                dataOutputStream.writeUTF("join request:" + gsonRoom.creatorMember.getNickname() + " " + loggedInMember.getNickname());
+                                JoinRequestClass joinRequestClass = new JoinRequestClass(gsonRoom.creatorMember.getNickname(),loggedInMember.getNickname(),loggedInMember);
+                                Gson gson1 = new GsonBuilder().create();
+                                String str = gson1.toJson(joinRequestClass);
+
+//                                dataOutputStream.writeUTF("join request:" + gsonRoom.creatorMember.getNickname() + " " + loggedInMember.getNickname());
+                                dataOutputStream.writeUTF(str);
+                                System.out.println("here we are");
+                                System.out.println(str);
                                 dataOutputStream.flush();
 
 

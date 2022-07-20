@@ -107,7 +107,7 @@ public class Unit extends Rectangle {
                     }
                 }
                 else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("illegal action");
                     alert.setHeaderText("result :");
                     alert.setContentText("it is not your turn");

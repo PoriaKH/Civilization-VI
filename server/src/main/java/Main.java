@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static View.CommandProcessor.allSockets;
 
@@ -31,6 +32,7 @@ public class Main {
         GsonRoomArray gsonRoomArray = new GsonRoomArray();
         CommandProcessor.rooms = rooms;
         CommandProcessor.sockets = sockets;
+        CommandProcessor.members = members;
         CommandProcessor.gameGroups = gameGroups;
         CommandProcessor.members = members;
 
@@ -46,7 +48,7 @@ public class Main {
                         while (true){
                             String input = dataInputStream.readUTF();
                             System.out.println(input);
-                            CommandProcessor.run(input,gsonRoomArray,dataOutputStream,socket);
+                            CommandProcessor.run(input,gsonRoomArray,dataOutputStream,socket,dataInputStream);
 //                            String result = process(input);
 //                            dataOutputStream.writeUTF(result);
                             System.out.println(rooms);
@@ -79,6 +81,7 @@ public class Main {
                 if(gameSocket.socketPort == port){
                     System.out.println("are we in ?");
                     gsonRoom.sockets.remove(gameSocket);
+                    gsonRoom.members.remove(index);
                     gsonRoom.nicknames.remove(index);
                     break;
                 }
