@@ -2,6 +2,7 @@ package View;
 
 import Controller.PlayGameMenuController;
 import Model.Civilization;
+import Model.FunctionsGson.GameGroupData;
 import Model.Member;
 import Model.Tile;
 import Model.Units.Civilian;
@@ -87,6 +88,8 @@ public class PlayGameMenu {
     public static Civilization playingCivilization;
 
     public static ArrayList<Civilization> civilizations;
+
+    public static GameGroupData gameGroupData;
 
     public static ArrayList<Tile> tiles;
     HashMap<Integer, Tile> zeroStatusTilesCivilisation1 = new HashMap<>();
@@ -185,26 +188,55 @@ public class PlayGameMenu {
             playingCivilization = civilizations.get(0);
             int numOfCivilizations = civilizations.size();
             if (numOfCivilizations == 2) {
-                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
-                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+//                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+//                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
+                    tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
+                    tileStatusOfCivilization2.set(i, gameGroupData.tileStatusOfCivilization2.get(i));
             }
             else if (numOfCivilizations == 3) {
-                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
-                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
-                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+//                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+//                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+//                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
+                    tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
+                    tileStatusOfCivilization2.set(i, gameGroupData.tileStatusOfCivilization2.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization3.size(); i++)
+                    tileStatusOfCivilization3.set(i, gameGroupData.tileStatusOfCivilization3.get(i));
             }
             else if (numOfCivilizations == 4) {
-                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
-                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
-                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);
-                tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+//                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+//                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);///   ----> -1 , 1
+//                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);
+//                tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
+                    tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
+                    tileStatusOfCivilization2.set(i, gameGroupData.tileStatusOfCivilization2.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization3.size(); i++)
+                    tileStatusOfCivilization3.set(i, gameGroupData.tileStatusOfCivilization3.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization4.size(); i++)
+                    tileStatusOfCivilization4.set(i, gameGroupData.tileStatusOfCivilization4.get(i));
+
             }
             else if (numOfCivilizations == 5){
-                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
-                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);
-                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);///   ----> -1 , 1
-                tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
-                tileStatusOfCivilization5 = playGameMenuController.statusChecker(civilizations.get(4), tiles);
+//                tileStatusOfCivilization1 = playGameMenuController.statusChecker(civilizations.get(0), tiles);
+//                tileStatusOfCivilization2 = playGameMenuController.statusChecker(civilizations.get(1), tiles);
+//                tileStatusOfCivilization3 = playGameMenuController.statusChecker(civilizations.get(2), tiles);///   ----> -1 , 1
+//                tileStatusOfCivilization4 = playGameMenuController.statusChecker(civilizations.get(3), tiles);
+//                tileStatusOfCivilization5 = playGameMenuController.statusChecker(civilizations.get(4), tiles);
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization1.size(); i++)
+                    tileStatusOfCivilization1.set(i, gameGroupData.tileStatusOfCivilization1.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization2.size(); i++)
+                    tileStatusOfCivilization2.set(i, gameGroupData.tileStatusOfCivilization2.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization3.size(); i++)
+                    tileStatusOfCivilization3.set(i, gameGroupData.tileStatusOfCivilization3.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization4.size(); i++)
+                    tileStatusOfCivilization4.set(i, gameGroupData.tileStatusOfCivilization4.get(i));
+                for (int i = 0; i < gameGroupData.tileStatusOfCivilization5.size(); i++)
+                    tileStatusOfCivilization5.set(i, gameGroupData.tileStatusOfCivilization5.get(i));
             }
             for (int i = 0; i < 72; i++)
                 tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));
@@ -663,6 +695,7 @@ public class PlayGameMenu {
             String fileUsername = fileMatcher.group("username");
 
             if(Objects.equals(fileUsername, civilization.getMember().getUsername())) {
+                line = bufferedReader.readLine();
                 continue;
             }
 

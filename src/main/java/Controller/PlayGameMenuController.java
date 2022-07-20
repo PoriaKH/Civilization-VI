@@ -4439,6 +4439,7 @@ public class PlayGameMenuController {
         ArrayList<Improvement> improvements = tile.getImprovements();
         for (int i = 0; i < improvements.size(); i++)
             if (improvements.get(i).equals(improvement)) {
+                improvements.get(i).setVisible(false);
                 improvements.remove(i);
                 tile.setImprovements(improvements);
                 return "improvement deleted successfully";

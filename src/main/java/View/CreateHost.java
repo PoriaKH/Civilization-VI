@@ -49,6 +49,7 @@ public class CreateHost {
         room.isCreator = true;
 
         GameSocket gameSocket = new GameSocket(host,socket.getPort(),socket.getLocalPort());
+        gameSocket.member = loggedInMember;
         GsonRoom gsonRoom = new GsonRoom(gameSocket,loggedInMember);
 
         Gson gson = new GsonBuilder().create();

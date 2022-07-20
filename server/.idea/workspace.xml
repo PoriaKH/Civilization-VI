@@ -4,32 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="changed gameGroupData on server side">
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/Ruin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Attribute.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Attribute.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Citizen.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Citizen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/City.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/City.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Civilization.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Civilization.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/GameGroupData.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/FunctionsGson/GameGroupData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Improvement.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Improvement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Member.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Member.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Resource.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Resource.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Ruin.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Ruin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Technology.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Technology.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Units/Unit.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="..">
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/GameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/GameSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/GameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/GameSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/CreateHost.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/CreateHost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,14 +28,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="RESET_MODE" value="HARD" />
-  </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -72,15 +46,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="Model" />
       <recent name="Model.FunctionsGson" />
     </key>
   </component>
@@ -108,9 +80,8 @@
       <workItem from="1657624661800" duration="134000" />
       <workItem from="1657624845949" duration="698000" />
       <workItem from="1657625874166" duration="2636000" />
-      <workItem from="1657716485412" duration="3076000" />
-      <workItem from="1657734133379" duration="1737000" />
-      <workItem from="1657995710133" duration="1924000" />
+      <workItem from="1657716485412" duration="3415000" />
+      <workItem from="1658254842186" duration="6659000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -133,182 +104,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657635849988</updated>
     </task>
-    <task id="LOCAL-00004" summary="changed serverController and added addGold">
-      <created>1657777212029</created>
+    <task id="LOCAL-00004" summary="..">
+      <created>1658255043638</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1657777212029</updated>
+      <updated>1658255043638</updated>
     </task>
-    <task id="LOCAL-00005" summary="added cheatCodes">
-      <created>1657777806055</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1657777806055</updated>
-    </task>
-    <task id="LOCAL-00006" summary="added teleport">
-      <created>1657779298611</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1657779298611</updated>
-    </task>
-    <task id="LOCAL-00007" summary="removed cityPanel from server">
-      <created>1657785325386</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1657785325386</updated>
-    </task>
-    <task id="LOCAL-00008" summary="removed diplomatic info from server">
-      <created>1657785387733</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1657785387733</updated>
-    </task>
-    <task id="LOCAL-00009" summary="added moveUnit to server">
-      <created>1657787970785</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1657787970785</updated>
-    </task>
-    <task id="LOCAL-00010" summary="adding unitMaker">
-      <created>1657801356288</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1657801356288</updated>
-    </task>
-    <task id="LOCAL-00011" summary="added unitMaker to server">
-      <created>1657802561938</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1657802561938</updated>
-    </task>
-    <task id="LOCAL-00012" summary="added UnitBehaviour to server">
-      <created>1657807744805</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1657807744805</updated>
-    </task>
-    <task id="LOCAL-00013" summary="added lootTile to server">
-      <created>1657861011709</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1657861011709</updated>
-    </task>
-    <task id="LOCAL-00014" summary="added chooseTechnologyToLearn to server">
-      <created>1657862188153</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1657862188153</updated>
-    </task>
-    <task id="LOCAL-00015" summary="added changeTechnologyToLearn to server">
-      <created>1657862773901</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1657862773901</updated>
-    </task>
-    <task id="LOCAL-00016" summary="added createImprovement to server">
-      <created>1657864531679</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1657864531679</updated>
-    </task>
-    <task id="LOCAL-00017" summary="added upgradeUnit to server">
-      <created>1657873990694</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1657873990694</updated>
-    </task>
-    <task id="LOCAL-00018" summary="deleted mapCreatorGson from server">
-      <created>1657875461592</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1657875461592</updated>
-    </task>
-    <task id="LOCAL-00019" summary="updated server">
-      <created>1657880132261</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1657880132261</updated>
-    </task>
-    <task id="LOCAL-00020" summary="edited nexTurn on server side">
-      <created>1657948411332</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1657948411332</updated>
-    </task>
-    <task id="LOCAL-00021" summary="changed codes in server">
-      <created>1657955135699</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1657955135699</updated>
-    </task>
-    <task id="LOCAL-00022" summary="changed codes in server/client">
-      <created>1657955848307</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1657955848307</updated>
-    </task>
-    <task id="LOCAL-00023" summary="changed codes in server/client">
-      <created>1657971553283</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1657971553283</updated>
-    </task>
-    <task id="LOCAL-00024" summary="changed codes in server/client">
-      <created>1657972294863</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1657972294863</updated>
-    </task>
-    <task id="LOCAL-00025" summary="removed all related things to graphic from server">
-      <created>1658036517456</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1658036517456</updated>
-    </task>
-    <task id="LOCAL-00026" summary="added map and civilizations generator to server">
-      <created>1658038353364</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1658038353364</updated>
-    </task>
-    <task id="LOCAL-00027" summary="added map and civilizations generator to server">
-      <created>1658038401685</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1658038401685</updated>
-    </task>
-    <task id="LOCAL-00028" summary="changed gameGroupData on server side">
-      <created>1658136177243</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1658136177243</updated>
-    </task>
-    <option name="localTasksCounter" value="29" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -327,31 +130,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="converted server project to maven" />
     <MESSAGE value="added cheatGson and else if in command processor" />
     <MESSAGE value="done some on teleport" />
-    <MESSAGE value="changed serverController and added addGold" />
-    <MESSAGE value="added cheatCodes" />
-    <MESSAGE value="added teleport" />
-    <MESSAGE value="removed cityPanel from server" />
-    <MESSAGE value="removed diplomatic info from server" />
-    <MESSAGE value="added moveUnit to server" />
-    <MESSAGE value="adding unitMaker" />
-    <MESSAGE value="added unitMaker to server" />
-    <MESSAGE value="added UnitBehaviour to server" />
-    <MESSAGE value="added lootTile to server" />
-    <MESSAGE value="added chooseTechnologyToLearn to server" />
-    <MESSAGE value="added changeTechnologyToLearn to server" />
-    <MESSAGE value="added createImprovement to server" />
-    <MESSAGE value="added upgradeUnit to server" />
-    <MESSAGE value="deleted mapCreatorGson from server" />
-    <MESSAGE value="updated server" />
-    <MESSAGE value="edited nexTurn on server side" />
-    <MESSAGE value="changed codes in server" />
-    <MESSAGE value="changed codes in server/client" />
-    <MESSAGE value="commit" />
-    <MESSAGE value="removed all related things to graphic from server" />
-    <MESSAGE value="added map and civilizations generator to server" />
-    <MESSAGE value="changed gameGroupData on server side" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed gameGroupData on server side" />
+    <MESSAGE value=".." />
+    <option name="LAST_COMMIT_MESSAGE" value=".." />
   </component>
 </project>

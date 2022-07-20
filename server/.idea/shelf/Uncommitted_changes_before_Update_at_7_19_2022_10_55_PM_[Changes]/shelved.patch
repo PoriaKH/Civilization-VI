@@ -1,0 +1,33 @@
+Index: ../target/classes/fxml/technologyPanel.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../target/classes/fxml/technologyPanel.fxml b/../target/classes/fxml/technologyPanel.fxml
+new file mode 100644
+--- /dev/null	(date 1657716280689)
++++ b/../target/classes/fxml/technologyPanel.fxml	(date 1657716280689)
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import java.lang.*?>
++<?import java.util.*?>
++<?import javafx.scene.*?>
++<?import javafx.scene.control.*?>
++<?import javafx.scene.layout.*?>
++
++<BorderPane xmlns="http://javafx.com/javafx"
++            xmlns:fx="http://javafx.com/fxml"
++            fx:controller="View.TechnologyPanel"
++            prefHeight="720.0" prefWidth="1280.0"
++            stylesheets="@../CSS/style4.css"
++            background="background">
++    <center>
++        <VBox spacing="50">
++            <Button text="technology tree" onMouseClicked="#moveToTechnologyTree"/>
++            <Button text="research information" onMouseClicked="#moveToResearchInfo"/>
++            <Button text="back" fx:id="back" onMouseClicked="#back"/>
++        </VBox>
++    </center>
++
++</BorderPane>
