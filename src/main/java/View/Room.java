@@ -219,6 +219,8 @@ public class Room {
                                  Unit.playGameMenu = playGameMenu;
                                  startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
                                  startCivilizations(gameGroupData.civilizations);
+                                 Tile.map = PlayGameMenu.tiles;
+                                 Tile.civilizations = PlayGameMenu.civilizations;
                                  loadExtras(gameGroupData);
                                  PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
                                  playGameMenu.switchToGame(event);

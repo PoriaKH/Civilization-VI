@@ -254,6 +254,7 @@ public class PlayGameMenu {
         }
     }
     public void switchToGame(MouseEvent mouseEvent) throws IOException {
+        System.out.println("first of switch game");
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
         // Images for buttons and happiness and gold
         Image nextTurnImage = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
@@ -563,6 +564,7 @@ public class PlayGameMenu {
         Tile.scene = scene;
 
         stage.show();
+        System.out.println("enddddddddddddddddddd");
     }
 
     private void showError() {
