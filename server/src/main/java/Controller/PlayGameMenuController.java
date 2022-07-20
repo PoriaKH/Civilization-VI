@@ -1291,19 +1291,22 @@ public class PlayGameMenuController {
             DataOutputStream dataOutputStream = new DataOutputStream(sockets.get(i).getOutputStream());
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
 
-            CivilizationsGson civilizationsGson = new CivilizationsGson(gameGroupData.civilizations);
             OtherDataGson otherDataGson = new OtherDataGson(gameGroupData);
 
-            String civs = gson.toJson(civilizationsGson);
+            String[] civs = new String[gameGroupData.civilizations.size()];
+            for (int i1 = 0; i1 < civs.length; i1++) {
+                civs[i1] = gson.toJson(gameGroupData.civilizations.get(i1));
+            }
             String[] tiles = new String[72];
             for (int i1 = 0; i1 < gameGroupData.tiles.size(); i1++) {
                 tiles[i1] = gson.toJson(gameGroupData.tiles.get(i1));
-                System.out.println(i + tiles[i]);
             }
             String other = gson.toJson(otherDataGson);
 
-            dataOutputStream.writeUTF("civ " + civs);
-            dataOutputStream.flush();
+            for (int j = 0; j < civs.length; ++j) {
+                dataOutputStream.writeUTF("civ " + civs[j]);
+                dataOutputStream.flush();
+            }
             for (int j = 0; j < 72; ++j) {
                 dataOutputStream.writeUTF("tile " + tiles[j]);
                 dataOutputStream.flush();
