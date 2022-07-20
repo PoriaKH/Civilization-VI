@@ -12,6 +12,8 @@ import java.util.function.BiConsumer;
 
 public class Civilization {
     @Expose
+    public boolean doesLoseTheGame = false;
+    @Expose
     public boolean isMyTurn = false;
     @Expose
     private Member member;
@@ -316,6 +318,7 @@ public class Civilization {
     }
 
     public void copyFieldsOfCivilizations(Civilization civilizationServer) {
+        this.doesLoseTheGame = civilizationServer.doesLoseTheGame;
         this.isMyTurn = civilizationServer.isMyTurn;
         /*this.member;
         this.firstLetterOfName;

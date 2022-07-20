@@ -520,9 +520,7 @@ public class PlayGameMenu {
                             playGameMenuController.deleteLosers(playingCivilization, civilizations);
                             if (playGameMenuController.findWinner(playingCivilization, civilizations)
                                     || playGameMenuController.findWinnerByYear(civilizations)) {
-                                //TODO .... write array members in file -> pouria ***********
-                                //ToDO ... tabe moshkel dare ehtemalan az while(true) e
-
+                                Civilization winner = playGameMenuController.getWinner(civilizations);
                          /*try {
                             increaseFileScore(civilizations.get(0));
                         } catch (IOException e) {
@@ -532,9 +530,9 @@ public class PlayGameMenu {
                                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                     alert.setTitle("WINNER : ");
                                     alert.setHeaderText("game is over because we are in year 2050 :");
-                                    alert.setContentText("Winner civilization : " + civilizations.get(0).getName());
+                                    alert.setContentText("Winner civilization : " + winner.getName());
 
-                                    playingCivilization = civilizations.get(0);
+                                    playingCivilization = winner;
                                     civName.setText("civilization : " + playingCivilization.getName());
                                     goldAmount.setText(" : " + playingCivilization.getGold());
                                     happinessAmount.setText(" : " + playingCivilization.getHappiness());
@@ -566,7 +564,7 @@ public class PlayGameMenu {
     }
 
     private void showError() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("illegal action");
         alert.setHeaderText("result :");
         alert.setContentText("it is not your turn");

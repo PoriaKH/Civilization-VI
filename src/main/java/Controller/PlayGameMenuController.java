@@ -5021,14 +5021,18 @@ public class PlayGameMenuController {
     public void deleteLosers (Civilization civilization, ArrayList<Civilization> civilizations) {
         for (int i = 0; i < civilizations.size(); i++) {
             if (civilizations.get(i).getCities().size() == 0) {
-                civilizations.remove(i);
-                i--;
+                civilizations.get(i).doesLoseTheGame = true;
             }
         }
     }
     // todo -> comment
     public boolean findWinner (Civilization civilization, ArrayList<Civilization> civilizations) {
-        if (civilizations.size() == 1) {
+        if (!civilization.doesLoseTheGame) {
+            for (Civilization civilization1 : civilizations) {
+                if (!civilization.equals(civilization1)) {
+                    if (!civilization1.doesLoseTheGame) return false;
+                }
+            }
             int point = civilization.getPoint() + 500;
             civilization.getMember().setScore(point);
             return true;
@@ -5056,6 +5060,7 @@ public class PlayGameMenuController {
                 }
             }
         }
+        civilizations.get(0).doesLoseTheGame = false;
         return true;
     }
     // todo -> comment
@@ -5087,5 +5092,12 @@ public class PlayGameMenuController {
                 }
             }
         }
+    }
+    // todo -> comment
+    public Civilization getWinner(ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            if (!civilization.doesLoseTheGame) return civilization;
+        }
+        return null;
     }
 }
