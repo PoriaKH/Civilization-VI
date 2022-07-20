@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.FunctionsGson.FriendsListGson;
 import Model.FunctionsGson.GameGroupData;
 import Model.FunctionsGson.ScoreboardGson;
 import Model.FunctionsGson.UnitBehaviourGson;
@@ -4827,6 +4828,24 @@ public class PlayGameMenuController {
     private Matcher getMatcher(String command, String regex) {
         Matcher matcher = Pattern.compile(regex).matcher(command);
         return matcher;
+    }
+    public ArrayList<String> friendsList(FriendsListGson friendsListGson) throws IOException {
+        ArrayList<String> friendsList = new ArrayList<>();
+        File file = new File("src/main/resources/Friends/" + friendsListGson.sender.getUsername() + ".txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String fileRegex = "(?<username>.*)";
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            friendsList.add(fileUsername);
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        return friendsList;
     }
     public ArrayList<String> scoreBoard(ScoreboardGson scoreboardGson, ArrayList<ArrayList<Member>> members) throws IOException {
         ArrayList<String> membersScores = new ArrayList<>();

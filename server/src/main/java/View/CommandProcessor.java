@@ -135,6 +135,15 @@ public class CommandProcessor {
             dataOutputStream.writeUTF(request);
             dataOutputStream.flush();
         }
+        else if (command.startsWith("friendsList ")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("friendsList " , "");
+            FriendsListGson friendsListGson = gson.fromJson(command, FriendsListGson.class);
+            friendsListGson.friendsUsernames = playGameMenuController.friendsList(friendsListGson);
+            String request = gson.toJson(friendsListGson);
+            dataOutputStream.writeUTF(request);
+            dataOutputStream.flush();
+        }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();
             GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);
