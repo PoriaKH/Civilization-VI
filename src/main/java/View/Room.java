@@ -23,7 +23,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -171,7 +173,7 @@ public class Room {
                         else {
                             System.out.println("something went wrong! Client/Room/Line 169");
                         }
-
+                        socket.setReceiveBufferSize(99999999);
                          while (true) {
                              String txt = dataInputStream.readUTF();
                              System.out.println(txt);

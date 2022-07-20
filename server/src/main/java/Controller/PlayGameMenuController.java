@@ -9,8 +9,10 @@ import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -1283,6 +1285,7 @@ public class PlayGameMenuController {
     public void sendMessageToAllClients(GameGroup gameGroup, GameGroupData gameGroupData) throws IOException {
         ArrayList<Socket> sockets = gameGroup.sockets;
         for (int i = 0; i < sockets.size(); i++) {
+            sockets.get(i).setSendBufferSize(99999999);
             gameGroupData.index = i;
             gameGroupData.tileStatusOfCivilization1 = gameGroup.tileStatusOfCivilization1;
             gameGroupData.tileStatusOfCivilization2 = gameGroup.tileStatusOfCivilization2;
@@ -1292,7 +1295,7 @@ public class PlayGameMenuController {
             DataOutputStream dataOutputStream = new DataOutputStream(sockets.get(i).getOutputStream());
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
             String respond = gson.toJson(gameGroupData);
-            dataOutputStream.writeBytes(respond);
+            dataOutputStream.writeUTF(respond);
             dataOutputStream.flush();
         }
     }
