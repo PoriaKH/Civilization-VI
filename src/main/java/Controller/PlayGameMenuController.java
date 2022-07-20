@@ -5061,6 +5061,7 @@ public class PlayGameMenuController {
             }
         }
         civilizations.get(0).doesLoseTheGame = false;
+        civilizations.get(0).getMember().setScore(civilizations.get(0).getPoint() + 500);
         return true;
     }
     // todo -> comment
