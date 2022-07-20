@@ -1,7 +1,10 @@
 package View;
 
 import Controller.MainMenuController;
+import Model.FunctionsGson.ScoreboardGson;
 import Model.Member;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -83,11 +86,18 @@ public class MainMenu {
     }
 
     public void scoreboardSwitch(MouseEvent mouseEvent) throws IOException {
-        root = FXMLLoader.load(scoreBoardFxmlURL);
-        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        ScoreboardGson scoreboardGson = new ScoreboardGson();
+        scoreboardGson.member = loggedInMember;
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(scoreboardGson);
+        CreateHost.dataOutputStream.writeUTF("scoreboard " + request);
+        CreateHost.dataOutputStream.flush();
+        String response = CreateHost.dataInputStream.readUTF();
+        ScoreboardGson scoreboardGson1 = gson.fromJson(response, ScoreboardGson.class);
+        ScoreBoard.scoreboardFxmlURL = scoreBoardFxmlURL;
+        ScoreBoard.stage = stage;
+        ScoreBoard scoreBoard = new ScoreBoard();
+        scoreBoard.initialize(scoreboardGson);
     }
 
     public void logout(MouseEvent mouseEvent) throws IOException {

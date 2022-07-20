@@ -7,6 +7,7 @@ import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
+import sun.applet.Main;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class CommandProcessor {
     public static ArrayList<GsonRoom> rooms = new ArrayList<>();
     public static ArrayList<Socket> allSockets = new ArrayList<>();
     public static ArrayList<ArrayList<Socket>> sockets = new ArrayList<>();
+    public static ArrayList<ArrayList<Member>> members = new ArrayList<>();
     public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
     public static ArrayList<GameGroup> gameGroups;
 
@@ -116,6 +118,15 @@ public class CommandProcessor {
                     index++;
                 }
             }
+        }
+        else if (command.startsWith("scoreboard")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("scoreboard " , "");
+            ScoreboardGson scoreboardGson = gson.fromJson(command, ScoreboardGson.class);
+            scoreboardGson.membersScores = playGameMenuController.scoreBoard(scoreboardGson, members);
+            String request = gson.toJson(scoreboardGson);
+            dataOutputStream.writeUTF(request);
+            dataOutputStream.flush();
         }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();

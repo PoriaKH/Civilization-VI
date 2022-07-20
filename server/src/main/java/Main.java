@@ -32,6 +32,7 @@ public class Main {
         CommandProcessor.rooms = rooms;
         CommandProcessor.sockets = sockets;
         CommandProcessor.gameGroups = gameGroups;
+        CommandProcessor.members = members;
 
         try {
             while (true){
