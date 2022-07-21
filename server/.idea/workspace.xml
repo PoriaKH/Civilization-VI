@@ -5,23 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="finished debugging for startGame (found new bug)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/ClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/ClientThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/TechnologyTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/TechnologyTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/UnitPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/TechnologyTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/TechnologyTree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Node.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/UnitPanel.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

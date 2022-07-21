@@ -676,7 +676,9 @@ public class Tile {
     public void setRailDamaged(boolean railDamaged) {
         isRailDamaged = railDamaged;
     }
+    @Expose
     private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
+    @Expose
     private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
 
     public void assignWorkerToRoad (Unit unit, Integer turn) {
