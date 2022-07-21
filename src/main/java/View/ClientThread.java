@@ -234,19 +234,22 @@ public class ClientThread extends Thread {
             tile.deleteUnits();
         }
         for (Tile serverTile : serverTiles) {
-            allServerUnits.addAll(serverTile.getUnits());
+            for (Unit unit : serverTile.getUnits()) {
+                unit.setOrigin(serverTile);
+                allServerUnits.add(unit);
+            }
         }
         ArrayList<Unit> allClientUnits = new ArrayList<>();
         for (Unit allServerUnit : allServerUnits) {
             if (!allServerUnit.isCivilian()) {
-                Warrior warrior = new Warrior(Civilization.getCivilizationCopy(allServerUnit.getCivilization()),Tile.getClientTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
+                Warrior warrior = new Warrior(Civilization.getCivilizationCopyByName(allServerUnit.getCivilizationName()),Tile.getClientTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
                         ((Warrior)allServerUnit).getXp(),((Warrior)allServerUnit).getDamage(),((Warrior)allServerUnit).getRange(),((Warrior)allServerUnit).getRangedCombatDamage(),((Warrior)allServerUnit).isScout(),((Warrior)allServerUnit).isWarrior(),((Warrior)allServerUnit).isArcher(),((Warrior)allServerUnit).isChariotArcher(),
                         ((Warrior)allServerUnit).isSpearman(),((Warrior)allServerUnit).isCatapult(),((Warrior)allServerUnit).isHorseMan(),((Warrior)allServerUnit).isSwordsMan(),((Warrior)allServerUnit).isCrossbowMan(),((Warrior)allServerUnit).isKnight(),((Warrior)allServerUnit).isLongswordMan(),((Warrior)allServerUnit).isPikeMan(),((Warrior)allServerUnit).isTrebuchet(),
                         ((Warrior)allServerUnit).isCanon(),((Warrior)allServerUnit).isCavalry(),((Warrior)allServerUnit).isLancer(),((Warrior)allServerUnit).isMusketMan(),((Warrior)allServerUnit).isRifleMan(),((Warrior)allServerUnit).isAntiTankGun(),((Warrior)allServerUnit).isArtillery(),((Warrior)allServerUnit).isInfantry(),((Warrior)allServerUnit).isPanzer(),((Warrior)allServerUnit).isTank());
                 allClientUnits.add(warrior);
             }
             else {
-                Civilian civilian = new Civilian(Civilization.getCivilizationCopy(allServerUnit.getCivilization()),Tile.getClientTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
+                Civilian civilian = new Civilian(Civilization.getCivilizationCopyByName(allServerUnit.getCivilizationName()),Tile.getClientTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
                         ((Civilian)allServerUnit).isWorker(), ((Civilian)allServerUnit).isSettler());
                 allClientUnits.add(civilian);
             }

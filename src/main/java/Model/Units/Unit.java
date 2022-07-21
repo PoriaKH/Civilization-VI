@@ -23,10 +23,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Unit extends Rectangle {
-    @Expose
     private Civilization civilization;
 
     private Tile origin;
+    @Expose
+    private String civilizationName;
     @Expose
     private int health;
     @Expose
@@ -71,6 +72,7 @@ public class Unit extends Rectangle {
             hasOrdered = true;
 
         this.civilization = civilization;
+        this.civilizationName = civilization.getName();
         this.origin = origin;
         this.health = health;
         this.MP = MP;
@@ -275,5 +277,9 @@ public class Unit extends Rectangle {
         if (this.isCivilian == unit.isCivilian &&
                 this.origin.equals(unit.origin)) return true;
         return false;
+    }
+
+    public String getCivilizationName() {
+        return civilizationName;
     }
 }

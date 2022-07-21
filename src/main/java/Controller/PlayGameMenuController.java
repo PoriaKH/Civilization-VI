@@ -718,14 +718,14 @@ public class PlayGameMenuController {
         stringBuilder.append("technologies that have been learnt:\n");
         for (Technology technology : allTechnologies)
             stringBuilder.append(technology.getName() + "\n");
-        HashMap<Technology, Integer> technologyEarnedPercent = civilization.getTechnologyEarnedPercent();
+        HashMap<String, Integer> technologyEarnedPercent = civilization.getTechnologyEarnedPercent();
         stringBuilder.append("technologies that you haven't been learnt completely:\n");
         if (technologyEarnedPercent.size() == 0){
             stringBuilder.append("nothing\n");
             return stringBuilder;
         }
-        for (Map.Entry<Technology, Integer> technology: technologyEarnedPercent.entrySet())
-            stringBuilder.append(technology.getKey().getName() + "\trounds left: " + technology.getValue().toString() + "\n");
+        for (Map.Entry<String, Integer> technology: technologyEarnedPercent.entrySet())
+            stringBuilder.append(technology.getKey() + "\trounds left: " + technology.getValue().toString() + "\n");
         return stringBuilder;
     }
     // return name of current unit
@@ -3301,13 +3301,13 @@ public class PlayGameMenuController {
             if (hasPrerequisiteTechs(allTechnologies, technologyNames.get(i)))
                 possibleTechnologies.add(technologyNames.get(i));
         StringBuilder stringBuilder = new StringBuilder();
-        HashMap<Technology, Integer> technologyEarnedPercent = civilization.getTechnologyEarnedPercent();
+        HashMap<String, Integer> technologyEarnedPercent = civilization.getTechnologyEarnedPercent();
         stringBuilder.append("technologies that you haven't been learnt completely:\n");
         if (technologyEarnedPercent.size() == 0)
             stringBuilder.append("nothing\n");
         else {
-            for (Map.Entry<Technology, Integer> technology : technologyEarnedPercent.entrySet()) {
-                stringBuilder.append(technology.getKey().getName() + "\trounds left: " + technology.getValue().toString() + "\n");
+            for (Map.Entry<String, Integer> technology : technologyEarnedPercent.entrySet()) {
+                stringBuilder.append(technology.getKey() + "\trounds left: " + technology.getValue().toString() + "\n");
             }
         }
         stringBuilder.append("technologies that you have its prerequisite techs:\n");

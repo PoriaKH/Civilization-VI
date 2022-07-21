@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Unit {
-    @Expose
     private Civilization civilization;
 
     private Tile origin;
+    @Expose
+    private String civilizationName;
     @Expose
     private int health;
     @Expose
@@ -61,6 +62,7 @@ public class Unit {
             hasOrdered = true;
 
         this.civilization = civilization;
+        this.civilizationName = civilization.getName();
         this.origin = origin;
         this.health = health;
         this.MP = MP;

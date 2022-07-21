@@ -1290,17 +1290,19 @@ public class PlayGameMenuController {
             gameGroupData.tileStatusOfCivilization5 = gameGroup.tileStatusOfCivilization5;
             DataOutputStream dataOutputStream = new DataOutputStream(sockets.get(i).getOutputStream());
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-
+            System.out.println("first of convert to json");
             OtherDataGson otherDataGson = new OtherDataGson(gameGroupData);
-
+            System.out.println("after otherGson");
             String[] civs = new String[gameGroupData.civilizations.size()];
             for (int i1 = 0; i1 < civs.length; i1++) {
                 civs[i1] = gson.toJson(gameGroupData.civilizations.get(i1));
             }
+            System.out.println("after all civs");
             String[] tiles = new String[72];
             for (int i1 = 0; i1 < gameGroupData.tiles.size(); i1++) {
                 tiles[i1] = gson.toJson(gameGroupData.tiles.get(i1));
             }
+            System.out.println("after tiles");
             String other = gson.toJson(otherDataGson);
 
             for (int j = 0; j < civs.length; ++j) {
@@ -4909,13 +4911,13 @@ public class PlayGameMenuController {
         //unit actions check
         int tileNumber = unitActionsNextTurnCheck(civilizationServer, gameGroupData.tiles);
         if(tileNumber != -1) {
-            gameGroupData.result = "order unit in tile number : " + tileNumber;
+            gameGroupData.result = "nextTurn : order unit in tile number : " + tileNumber;
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         //check that are you working on a technology
         if (civilizationServer.getWorkingOnTechnology() == null) {
-            gameGroupData.result = "choose a technology to learn";
+            gameGroupData.result = "nextTurn : choose a technology to learn";
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
@@ -4940,7 +4942,7 @@ public class PlayGameMenuController {
 
         //TODO...  also complete historyInformation and showProductionsInProcess
 
-        gameGroupData.result = "done";
+        gameGroupData.result = "nextTurn : done";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 

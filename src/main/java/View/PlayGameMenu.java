@@ -499,20 +499,22 @@ public class PlayGameMenu {
                 @Override
                 public void handle(MouseEvent event) {
                     if (Room.isMyTurn) {
-                        String string = "done";
+                        String string = "";
                         try {
                             playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
+                            string = clientThread.result;
+                            clientThread.isNewResultAvailable = false;
+                            clientThread.result = "";
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if (!string.equals("done")) {
+                        if (!string.equals("nextTurn : done")) {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("next turn");
                             alert.setHeaderText("result :");
                             alert.setContentText(string);
                             alert.showAndWait();
                         } else {
-
                             PlayGameMenuController.turn++;
                             playersCounter++;
                             if (playersCounter == civilizations.size()) {

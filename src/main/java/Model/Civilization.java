@@ -56,7 +56,7 @@ public class Civilization {
     @Expose
     private Technology workingOnTechnology;//if == null -> have to choose
     @Expose
-    private HashMap<Technology, Integer> technologyEarnedPercent;
+    private HashMap<String, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
         this.name = member.getNickname();
@@ -144,7 +144,7 @@ public class Civilization {
         return workingOnTechnology;
     }
 
-    public HashMap<Technology, Integer> getTechnologyEarnedPercent() {
+    public HashMap<String, Integer> getTechnologyEarnedPercent() {
         return technologyEarnedPercent;
     }
 
@@ -244,17 +244,17 @@ public class Civilization {
     }
 
     public void addToTechnologyEarnedPercent(Technology technology, Integer roundLeft){
-        if (!this.technologyEarnedPercent.containsKey(technology))
-            this.technologyEarnedPercent.put(technology, roundLeft);
+        if (!this.technologyEarnedPercent.containsKey(technology.getName()))
+            this.technologyEarnedPercent.put(technology.getName(), roundLeft);
         this.workingOnTechnology = technology;
     }
     public void reduceTechnologyRound(){
         if (workingOnTechnology  == null)
             return;
-        int roundLeft = this.technologyEarnedPercent.get(this.workingOnTechnology) - 1;
+        int roundLeft = this.technologyEarnedPercent.get(this.workingOnTechnology.getName()) - 1;
         if (roundLeft == 0) {
             isLearningTechnology = false;
-            this.technologyEarnedPercent.remove(this.workingOnTechnology);
+            this.technologyEarnedPercent.remove(this.workingOnTechnology.getName());
             this.addTechnology(this.workingOnTechnology);
             String message = "you have learnt " + this.workingOnTechnology.getName();
             messages.add(message);
@@ -262,7 +262,7 @@ public class Civilization {
         }
         // TODO plus one
         setScience(sciencePerTurn / (roundLeft * 2 + 1));
-        this.technologyEarnedPercent.replace(this.workingOnTechnology, roundLeft);
+        this.technologyEarnedPercent.replace(this.workingOnTechnology.getName(), roundLeft);
     }
 
     public void removeFriend (Civilization civilization) {
@@ -363,6 +363,13 @@ public class Civilization {
         for (Civilization civilization : PlayGameMenu.civilizations) {
             if (civilization.equals(key)) return civilization;
         }
-       return key;
+       return null;
+    }
+
+    public static Civilization getCivilizationCopyByName(String key) {
+        for (Civilization civilization : PlayGameMenu.civilizations) {
+            if (civilization.getName().equals(key)) return civilization;
+        }
+        return null;
     }
 }
