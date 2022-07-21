@@ -80,8 +80,8 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "sleep");
-            showNotification(string);
+            playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "sleep");
+            //showNotification(string);
         }
     }
 
@@ -98,8 +98,8 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "alert");
-            showNotification(string);
+            playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "alert");
+            //showNotification(string);
         }
     }
 
@@ -108,8 +108,8 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "fortify");
-            showNotification(string);
+            playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "fortify");
+            //showNotification(string);
         }
     }
 
@@ -118,8 +118,8 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "heal");
-            showNotification(string);
+            playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "heal");
+            //showNotification(string);
         }
     }
 
@@ -128,8 +128,8 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "deploy");
-            showNotification(string);
+            playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "deploy");
+            //showNotification(string);
         }
     }
 
@@ -138,8 +138,8 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "range");
-            showNotification(string);
+            playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "range");
+            //showNotification(string);
         }
     }
 
@@ -148,8 +148,8 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "wake");
-            showNotification(string);
+            playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "wake");
+            //showNotification(string);
         }
     }
 
@@ -158,8 +158,8 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "recover");
-            showNotification(string);
+            playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "recover");
+            //showNotification(string);
         }
     }
 
@@ -168,8 +168,8 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "delete");
-            showNotification(string);
+            playGameMenuController.preUnitBehaviour(unit, playingCivilization, map, "delete");
+            //showNotification(string);
         }
     }
 
@@ -187,9 +187,9 @@ public class UnitPanel {
            }
            else {
                PlayGameMenuController.playGameMenu = playGameMenu;
-               String result = playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
+               playGameMenuController.preMoveUnit(unit, Integer.parseInt(moveDes.getText()),
                        playingCivilization, map);
-               showNotification(result);
+               //showNotification(result);
            }
            moveDes.clear();
         }
@@ -200,10 +200,10 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preAttackCity(unit,
+            playGameMenuController.preAttackCity(unit,
                     Integer.parseInt(attackCityDes.getText()), playingCivilization, map, civilizations);
             attackCityDes.clear();
-            showNotification(string);
+            //showNotification(string);
         }
     }
 
@@ -212,19 +212,19 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preAttackTile(unit, Integer.parseInt(attackTileDes.getText()),
+            playGameMenuController.preAttackTile(unit, Integer.parseInt(attackTileDes.getText()),
                     playingCivilization, map);
             attackTileDes.clear();
-            showNotification(string);
+            //showNotification(string);
         }
     }
 
     public void createUnit(MouseEvent mouseEvent) throws IOException {
-        String string = playGameMenuController.preUnitMaker(unitName.getText(),
+        playGameMenuController.preUnitMaker(unitName.getText(),
                 Integer.parseInt(tileNumber.getText()), playingCivilization, map);
         tileNumber.clear();
         unitName.clear();
-        showNotification(string);
+        //showNotification(string);
     }
 
     public void createRoadUnit(MouseEvent mouseEvent) throws IOException {
@@ -239,9 +239,9 @@ public class UnitPanel {
                 string = "invalid number";
             }
             else {
-                string = playGameMenuController.createRoad(playingCivilization, map.get(index), map);
+                playGameMenuController.createRoad(playingCivilization, map.get(index), map);
             }
-            showNotification(string);
+            //showNotification(string);
         }
     }
 
@@ -257,9 +257,9 @@ public class UnitPanel {
                 string = "invalid number";
             }
             else {
-                string = playGameMenuController.createRailRoad(playingCivilization, map.get(index), map);
+                playGameMenuController.createRailRoad(playingCivilization, map.get(index), map);
             }
-            showNotification(string);
+            //showNotification(string);
         }
     }
     public void removeRailUnit(MouseEvent mouseEvent) throws IOException {
@@ -274,9 +274,9 @@ public class UnitPanel {
                 string = "invalid number";
             }
             else {
-                string = playGameMenuController.removeRailRoad(playingCivilization, map.get(index), map);
+                playGameMenuController.removeRailRoad(playingCivilization, map.get(index), map);
             }
-            showNotification(string);
+            //showNotification(string);
         }
     }
 
@@ -292,9 +292,9 @@ public class UnitPanel {
                 string = "invalid number";
             }
             else {
-                string = playGameMenuController.removeRoad(playingCivilization, map.get(index), map);
+                playGameMenuController.removeRoad(playingCivilization, map.get(index), map);
             }
-            showNotification(string);
+            //showNotification(string);
         }
     }
 
@@ -310,9 +310,9 @@ public class UnitPanel {
                 string = "invalid number";
             }
             else {
-                string = playGameMenuController.repairRoad(playingCivilization, map.get(index), map);
+                playGameMenuController.repairRoad(playingCivilization, map.get(index), map);
             }
-            showNotification(string);
+            //showNotification(string);
         }
     }
 
@@ -328,9 +328,9 @@ public class UnitPanel {
                 string = "invalid number";
             }
             else {
-                string = playGameMenuController.repairRail(playingCivilization, map.get(index), map);
+                playGameMenuController.repairRail(playingCivilization, map.get(index), map);
             }
-            showNotification(string);
+            //showNotification(string);
         }
     }
     public void showError () {
@@ -346,19 +346,19 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.preUpgradeUnit(unit, newUnitName.getText(),
+            playGameMenuController.preUpgradeUnit(unit, newUnitName.getText(),
                     Integer.parseInt(tileIndex.getText()), playingCivilization, map);
             tileIndex.clear();
             newUnitName.clear();
-            showNotification(string);
+            //showNotification(string);
         }
     }
 
     public void createCity(MouseEvent mouseEvent) throws IOException {
-        String string = playGameMenuController.createCity(playingCivilization,
+        playGameMenuController.createCity(playingCivilization,
                 Integer.parseInt(tileNumberForCity.getText()), map, civilizations);
         tileNumberForCity.clear();
-        showNotification(string);
+        //showNotification(string);
     }
 
     public void createImprovement(MouseEvent mouseEvent) throws IOException {
@@ -367,11 +367,11 @@ public class UnitPanel {
         }
         else {
             int index = Integer.parseInt(tileNumberForImprovement.getText());
-            String string = playGameMenuController.createImprovement(playingCivilization, unit.getOrigin().getTileNumber(), index,
+            playGameMenuController.createImprovement(playingCivilization, unit.getOrigin().getTileNumber(), index,
                     improvementName.getText(), map);
             tileNumberForImprovement.clear();
             improvementName.clear();
-            showNotification(string);
+            //showNotification(string);
         }
     }
 
@@ -380,10 +380,10 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.lootTile(playingCivilization, unit.getOrigin().getTileNumber(),
+            playGameMenuController.lootTile(playingCivilization, unit.getOrigin().getTileNumber(),
                     Integer.parseInt(tileNumberForLoot.getText()), map);
             tileNumberForLoot.clear();
-            showNotification(string);
+            //showNotification(string);
         }
     }
 
@@ -392,11 +392,11 @@ public class UnitPanel {
             showError();
         }
         else {
-            String string = playGameMenuController.removeImprovement(playingCivilization, playGameMenuController.preRemoveImprovement(improvementName.getText()),
+            playGameMenuController.removeImprovement(playingCivilization, playGameMenuController.preRemoveImprovement(improvementName.getText()),
                     Integer.parseInt(tileNumberForImprovement.getText()), map);
             tileNumberForImprovement.clear();
             improvementName.clear();
-            showNotification(string);
+            //showNotification(string);
         }
     }
 }

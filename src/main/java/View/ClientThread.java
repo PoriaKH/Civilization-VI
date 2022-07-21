@@ -42,7 +42,7 @@ public class ClientThread extends Thread{
     public PlayGameMenuController playGameMenuController;
     public boolean isGameReady = false;
 
-
+// todo ... add condition if game is over , stop thread
     public ClientThread(Stage stage, MouseEvent event) {
         this.playGameMenu = new PlayGameMenu();
         this.stage = stage;

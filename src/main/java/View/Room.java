@@ -182,6 +182,7 @@ public class Room {
 
 
                         while (true) {
+                            System.out.println(clientThread.isGameReady);
                             if (clientThread.isGameReady) {
                                 clientThread.playGameMenu.switchToGame(event);
                                 break;

@@ -463,7 +463,7 @@ public class PlayGameMenu {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        updateMapAfterMove();
+                        //updateMapAfterMove();
                     } else {
                         showError();
                     }
@@ -495,7 +495,7 @@ public class PlayGameMenu {
                     if (Room.isMyTurn) {
                         String string = null;
                         try {
-                            string = playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
+                            playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -546,7 +546,7 @@ public class PlayGameMenu {
                                 VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
                                 victoryAnimation.play();
                             }
-                            updateMapAfterMove();
+                           // updateMapAfterMove();
                         }
                     } else {
                         showError();
