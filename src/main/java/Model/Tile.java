@@ -181,7 +181,7 @@ public class Tile extends Polygon {
     private ArrayList<Unit> units;
     @Expose
     private Building building;
-    @Expose
+
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
     @Expose
     private Resource resource;
@@ -859,7 +859,7 @@ public class Tile extends Polygon {
     }
     @Expose
     private Improvement workingOnImprovement;//if == null -> null
-    @Expose
+
     private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
     @Expose
     private boolean doesHaveRoad;
@@ -888,9 +888,9 @@ public class Tile extends Polygon {
     public void setRailDamaged(boolean railDamaged) {
         isRailDamaged = railDamaged;
     }
-    @Expose
+
     private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
-    @Expose
+
     private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
 
     public void assignWorkerToRoad (Unit unit, Integer turn) {
@@ -1616,6 +1616,7 @@ public class Tile extends Polygon {
     }
 
     public boolean equals (Tile tile) {
+        if (this == null || tile == null) return false;
         if (this.getX() == tile.getX() &&
                 this.getY() == tile.getY()) return true;
         return false;
@@ -1649,7 +1650,7 @@ public class Tile extends Polygon {
         this.citizen = getCitizenCopy(tile.getCitizen());
         getUnitsListCopy(this, allUnits);
         this.building = setBuildingCopy(tile.getBuilding());
-        this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
+        //this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
         this.resource = copyResource(tile.getResource());
         this.attribute = setAttributeCopy(tile.getAttribute());
         setImprovementCopy(tile.getImprovements());
@@ -1769,14 +1770,20 @@ public class Tile extends Polygon {
     }
 
     private Citizen getCitizenCopy(Citizen citizen) {
-        for (Civilization civilization : PlayGameMenu.civilizations) {
-            for (City city : civilization.getCities()) {
-                for (Citizen cityCitizen : city.getCitizens()) {
-                    if (cityCitizen.equals(citizen)) return cityCitizen;
-                }
-            }
+        if (citizen != null) {
+            Tile tile = getCitizenTile(citizen.getTile());
+            if (tile == null) return null;
+            citizen.setTile(tile);
+            return citizen;
         }
-        return citizen;
+        return null;
+    }
+
+    private Tile getCitizenTile(Tile tile) {
+        for (Tile tile1 : PlayGameMenu.tiles) {
+            if (tile1.equals(tile)) return tile1;
+        }
+        return null;
     }
 
     public void deleteUnits () {

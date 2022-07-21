@@ -19,31 +19,13 @@ public class Citizen {
     }
 
     public static ArrayList<Citizen> copyListOfCitizens(City client, City server) {
-        ArrayList<Citizen> citizens;
-        citizens = updateCitizen(client, server);
-        for (int i = 0; i < client.getCitizens().size(); i++) {
-            for (int i1 = 0; i1 < citizens.size(); i1++) {
-                if (client.getCitizens().get(i).equals(citizens.get(i1))) {
-                    client.getCitizens().get(i).copyCitizen(citizens.get(i1));
-                    break;
-                }
-            }
+        ArrayList<Citizen> citizensServer = server.getCitizens();
+        ArrayList<Citizen> citizensClient = new ArrayList<>();
+        for (Citizen citizen : citizensServer) {
+            citizen.setTile(getCitizenTile(citizen.getTile()));
+            citizensClient.add(citizen);
         }
-        citizens = deleteCitizen(client, server);
-        for (int i = 0; i < client.getCitizens().size(); i++) {
-            for (Citizen citizen : citizens) {
-                if (client.getCitizens().get(i).equals(citizen)) {
-                    client.getCitizens().remove(i);
-                    i--;
-                }
-            }
-        }
-        citizens = newCitizen(client, server);
-        for (Citizen citizen : citizens) {
-            Citizen newCitizen = new Citizen(getTile(citizen));
-            client.getCitizens().add(newCitizen);
-        }
-        return client.getCitizens();
+        return citizensClient;
     }
 
     private static Tile getTile (Citizen citizen) {
@@ -64,12 +46,27 @@ public class Citizen {
     }
 
     public void setTile(Tile tile) {
+        if (tile == null) return;
         this.tile = tile;
         tile.setCitizen(this);
     }
 
     public boolean equals (Citizen citizen) {
-        if (this.tile.equals(citizen.tile)) return true;
+        if (citizen == null) {
+            System.out.println("citizen");
+            return false;
+        }
+        else {
+            System.out.println("tileCitizen : " + citizen.getTile());
+        }
+        if (this == null) {
+            System.out.println("this");
+            return false;
+        }
+        else {
+            System.out.println("tileThis : " + this.getTile());
+        }
+        if (this.getTile().equals(citizen.getTile())) return true;
         return false;
     }
 
@@ -121,5 +118,12 @@ public class Citizen {
             }
         }
         return citizens;
+    }
+
+    private static Tile getCitizenTile(Tile tile) {
+        for (Tile tile1 : PlayGameMenu.tiles) {
+            if (tile1.equals(tile)) return tile1;
+        }
+        return null;
     }
 }

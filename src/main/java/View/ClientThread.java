@@ -24,23 +24,30 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import sun.plugin2.message.Message;
 
+import javax.xml.ws.handler.Handler;
+import javax.xml.ws.handler.MessageContext;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.logging.LogRecord;
 
 import static View.CreateHost.dataInputStream;
 import static View.CreateHost.dataOutputStream;
 import static View.MainMenu.lobbyURL;
 import static View.ProfileMenu.loggedInMember;
 
-public class ClientThread extends Thread{
+public class ClientThread extends Thread {
+
     public PlayGameMenu playGameMenu;
     public Stage stage;
     public MouseEvent event;
     public PlayGameMenuController playGameMenuController;
-    public boolean isGameReady = false;
+    private boolean isGameReady = false;
+    public String result = "";
+    public boolean isNewResultAvailable = false;
 
 // todo ... add condition if game is over , stop thread
     public ClientThread(Stage stage, MouseEvent event) {
@@ -90,9 +97,9 @@ public class ClientThread extends Thread{
                 Room.isMyTurn = civilization.isMyTurn;
                 if (Room.isMyTurn) {
                     PlayGameMenu.playingCivilization = civilization;
-                    System.out.println(civilization.getName());
                     String result = gameGroupData.result;
-                    showResult(result);
+                    this.result = result;
+                    this.isNewResultAvailable = true;
                 }
             }
             else {
@@ -253,5 +260,9 @@ public class ClientThread extends Thread{
         alert.setHeaderText("result :");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public boolean isGameReady() {
+        return isGameReady;
     }
 }

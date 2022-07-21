@@ -13,6 +13,9 @@ import View.Transition.VictoryAnimation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +45,8 @@ import javafx.stage.Stage;
 import jdk.nashorn.internal.parser.JSONParser;
 
 import javax.swing.plaf.metal.MetalMenuBarUI;
+import javax.xml.ws.handler.Handler;
+import javax.xml.ws.handler.MessageContext;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URL;
@@ -60,6 +65,7 @@ import static View.UnitPanel.map;
 import static View.UnitPanel.playGameMenuController;
 
 public class PlayGameMenu {
+    public ClientThread clientThread;
 
     public Pane root;
 
@@ -250,7 +256,7 @@ public class PlayGameMenu {
                 }
             }
 
-            switchToGame(mouseEvent);
+           // switchToGame(mouseEvent);
         }
     }
     public void switchToGame(MouseEvent mouseEvent) throws IOException {
@@ -493,7 +499,7 @@ public class PlayGameMenu {
                 @Override
                 public void handle(MouseEvent event) {
                     if (Room.isMyTurn) {
-                        String string = null;
+                        String string = "done";
                         try {
                             playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
                         } catch (IOException e) {
@@ -553,6 +559,23 @@ public class PlayGameMenu {
                     }
                 }
             });
+
+        // this thread is for showing message , thread task is for sending message to listener
+        // listener show result -> becuase client thread is not javafx thread i did this
+        ThreadTask threadTask = new ThreadTask();
+        threadTask.clientThread = clientThread;
+
+        Thread thread = new Thread(threadTask);
+        thread.setDaemon(true);
+        thread.start();
+
+        threadTask.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                showResult(newValue);
+            }
+        });
+
 
         stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);
@@ -724,6 +747,14 @@ public class PlayGameMenu {
 
         bufferedWriter.close();
     }
+    private void showResult(String result) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("result :");
+        alert.setHeaderText("result :");
+        alert.setContentText(result);
+        alert.showAndWait();
+    }
+
     private void showRepetitiveAlert(int i) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("repetitive username number :" + (i + 1));
@@ -779,7 +810,7 @@ public class PlayGameMenu {
         for (int i = 0; i < 72; i++)
             tiles.get(i).generatingTile(status.get(i));
 
-        switchToGame(mouseEvent);
+        //switchToGame(mouseEvent);
     }
 
     private void loadURLs(SaveGameClass saveGameClass) {

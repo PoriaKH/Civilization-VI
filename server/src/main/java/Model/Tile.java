@@ -160,7 +160,7 @@ public class Tile {
     private ArrayList<Unit> units;
     @Expose
     private Building building;
-    @Expose
+
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
     @Expose
     private Resource resource;
@@ -647,7 +647,7 @@ public class Tile {
     }
     @Expose
     private Improvement workingOnImprovement;//if == null -> null
-    @Expose
+
     private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
     @Expose
     private boolean doesHaveRoad;
@@ -676,9 +676,9 @@ public class Tile {
     public void setRailDamaged(boolean railDamaged) {
         isRailDamaged = railDamaged;
     }
-    @Expose
+
     private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
-    @Expose
+
     private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
 
     public void assignWorkerToRoad (Unit unit, Integer turn) {

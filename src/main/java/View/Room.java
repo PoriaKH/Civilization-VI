@@ -182,8 +182,9 @@ public class Room {
 
 
                         while (true) {
-                            System.out.println(clientThread.isGameReady);
-                            if (clientThread.isGameReady) {
+                            Thread.sleep(1000);
+                            if (clientThread.isGameReady()) {
+                                clientThread.playGameMenu.clientThread = clientThread;
                                 clientThread.playGameMenu.switchToGame(event);
                                 break;
                             }
@@ -243,7 +244,7 @@ public class Room {
                              }
                          }*/
                     }
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -320,7 +321,8 @@ public class Room {
         playGameMenuController.loadCivilizationForBuilding(gameGroupData.civilizations);
     }
 
-    private void showResult(String result) {
+    private void showResult(String result, ClientThread clientThread) {
+            clientThread.isNewResultAvailable = false;
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("result :");
             alert.setHeaderText("result :");
