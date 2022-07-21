@@ -10,6 +10,7 @@ import Model.Units.Unit;
 import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -173,7 +175,20 @@ public class Room {
                         else {
                             System.out.println("something went wrong! Client/Room/Line 169");
                         }
-                         while (true) {
+
+                        ClientThread clientThread = new ClientThread(stage, event);
+                        clientThread.setDaemon(true);
+                        clientThread.start();
+
+
+                        while (true) {
+                            if (clientThread.isGameReady) {
+                                clientThread.playGameMenu.switchToGame(event);
+                                break;
+                            }
+                        }
+
+                        /*while (true) {
                              GameGroupData gameGroupData = new GameGroupData();
                              OtherDataGson otherDataGson = new OtherDataGson();
                              Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
@@ -225,7 +240,7 @@ public class Room {
                                  PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
                                  playGameMenu.switchToGame(event);
                              }
-                         }
+                         }*/
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
