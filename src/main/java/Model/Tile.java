@@ -5,6 +5,7 @@ import Model.Units.Unit;
 import Model.Units.Warrior;
 import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -177,8 +178,12 @@ public class Tile extends Polygon {
     private double h;
     @Expose
     private Citizen citizen = null;
-    @Expose
+
     private ArrayList<Unit> units;
+    @Expose
+    public Warrior warrior;
+    @Expose
+    public Civilian civilian;
     @Expose
     private Building building;
 
@@ -1764,7 +1769,12 @@ public class Tile extends Polygon {
     private void getUnitsListCopy(Tile tile, ArrayList<Unit> allUnits) {
         for (Unit allUnit : allUnits) {
             if (allUnit.getOrigin().equals(tile)) {
-                tile.addUnit2(allUnit);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        tile.addUnit2(allUnit);
+                    }
+                });
             }
         }
     }

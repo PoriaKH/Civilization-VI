@@ -116,6 +116,7 @@ public class ClientThread extends Thread {
                 startCivilizations(gameGroupData.civilizations);
                 Tile.map = PlayGameMenu.tiles;
                 Tile.civilizations = PlayGameMenu.civilizations;
+                //addUnitsToTheirTile()
                 loadExtras(gameGroupData);
                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
                 isGameReady = true;
@@ -234,9 +235,13 @@ public class ClientThread extends Thread {
             tile.deleteUnits();
         }
         for (Tile serverTile : serverTiles) {
-            for (Unit unit : serverTile.getUnits()) {
-                unit.setOrigin(serverTile);
-                allServerUnits.add(unit);
+            if (serverTile.warrior != null) {
+                serverTile.warrior.setOrigin(serverTile);
+                allServerUnits.add(serverTile.warrior);
+            }
+            if (serverTile.civilian != null) {
+                serverTile.civilian.setOrigin(serverTile);
+                allServerUnits.add(serverTile.civilian);
             }
         }
         ArrayList<Unit> allClientUnits = new ArrayList<>();

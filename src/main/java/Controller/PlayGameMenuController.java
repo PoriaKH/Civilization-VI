@@ -5066,8 +5066,10 @@ public class PlayGameMenuController {
     // todo -> comment
     public void loadOriginTileForUnit (ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
-            for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {
-                map.get(i).getUnits().get(i1).setOrigin(map.get(i));
+            if (map.get(i).getUnits() != null) {
+                for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {
+                    map.get(i).getUnits().get(i1).setOrigin(map.get(i));
+                }
             }
         }
     }

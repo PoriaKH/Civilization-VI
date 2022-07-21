@@ -156,8 +156,12 @@ public class Tile {
     private double h;
     @Expose
     private Citizen citizen = null;
-    @Expose
+
     private ArrayList<Unit> units;
+    @Expose
+    public Warrior warrior;
+    @Expose
+    public Civilian civilian;
     @Expose
     private Building building;
 
@@ -1276,5 +1280,16 @@ public class Tile {
         if (this.getX() == tile.getX() &&
         this.getY() == tile.getY()) return true;
         return false;
+    }
+
+    public void setChildUnits() {
+        for (Unit unit : units) {
+            if (unit.isCivilian()) {
+                civilian = (Civilian) unit;
+            }
+            else {
+                warrior = (Warrior) unit;
+            }
+        }
     }
 }

@@ -1300,7 +1300,10 @@ public class PlayGameMenuController {
             System.out.println("after all civs");
             String[] tiles = new String[72];
             for (int i1 = 0; i1 < gameGroupData.tiles.size(); i1++) {
+                gameGroupData.tiles.get(i1).setChildUnits();
                 tiles[i1] = gson.toJson(gameGroupData.tiles.get(i1));
+                gameGroupData.tiles.get(i1).warrior = null;
+                gameGroupData.tiles.get(i1).civilian = null;
             }
             System.out.println("after tiles");
             String other = gson.toJson(otherDataGson);

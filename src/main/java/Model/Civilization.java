@@ -335,7 +335,7 @@ public class Civilization {
         this.messages = civilizationServer.getMessages();
         this.winsInUnitsWar = Civilization.getHashMapOfWar(civilizationServer.getWinsInUnitsWar());
         this.lossesInUnitsWar = Civilization.getHashMapOfWar(civilizationServer.getLossesInUnitsWar());
-        this.point = civilizationServer.getPoint();
+        this.point = civilizationServer.getPoint2();
         this.isLearningTechnology = civilizationServer.isLearningTechnology;
         this.friendlyRequests = Civilization.getFriendsCopy(civilizationServer.getFriendlyRequests());
         this.friends = Civilization.getFriendsCopy(civilizationServer.getFriends());
@@ -371,5 +371,9 @@ public class Civilization {
             if (civilization.getName().equals(key)) return civilization;
         }
         return null;
+    }
+
+    public int getPoint2 () {
+        return this.point;
     }
 }
