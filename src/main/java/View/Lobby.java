@@ -39,4 +39,22 @@ public class Lobby {
     public void hostsClicked(MouseEvent mouseEvent) throws IOException, InterruptedException {
         Hosts.run(mouseEvent);
     }
+
+    public void friendListClicked(MouseEvent mouseEvent) throws IOException {
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        FriendsList.stage = stage;
+        new FriendsList().run();
+    }
+
+    public void sendFriendRequest(MouseEvent mouseEvent) {
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        SendFriendRequest.stage = stage;
+        new SendFriendRequest().run();
+    }
+
+    public void showFriendRequestsList(MouseEvent mouseEvent) {
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        FriendRequestsList.stage = stage;
+        new SendFriendRequest().run();
+    }
 }

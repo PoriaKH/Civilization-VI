@@ -7,6 +7,7 @@ import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
+import sun.applet.Main;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -125,6 +126,47 @@ public class CommandProcessor {
                 }
             }
         }
+        else if (command.startsWith("scoreboard")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("scoreboard " , "");
+            ScoreboardGson scoreboardGson = gson.fromJson(command, ScoreboardGson.class);
+            scoreboardGson.membersScores = playGameMenuController.scoreBoard(scoreboardGson, members);
+            String request = gson.toJson(scoreboardGson);
+            dataOutputStream.writeUTF(request);
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("friendsList ")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("friendsList " , "");
+            FriendsListGson friendsListGson = gson.fromJson(command, FriendsListGson.class);
+            friendsListGson.friendsUsernames = playGameMenuController.friendsList(friendsListGson.sender);
+            String request = gson.toJson(friendsListGson);
+            dataOutputStream.writeUTF(request);
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("friendRequest ")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("friendRequest " , "");
+            FriendRequestGson friendRequestGson = gson.fromJson(command, FriendRequestGson.class);
+            String response = playGameMenuController.addToFriendRequests(friendRequestGson);
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("friend requests list ")){
+            command = command.replace("friend requests list ", "");
+            String response = playGameMenuController.friendRequestsList(command);
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("accept friendRequest ")){
+            command = command.replace("accept friendRequest ", "");
+            playGameMenuController.acceptRequest(command);
+
+        }
+        else if (command.startsWith("deny friendRequest ")){
+            command = command.replace("deny friendRequest ", "");
+            playGameMenuController.denyRequest(command);
+        }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();
             GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);
@@ -143,24 +185,22 @@ public class CommandProcessor {
 
             dataOutputStream.writeUTF("give me members");
             dataOutputStream.flush();
-            // TODO... pouria az inja game shoro she revale dige? in members ro set kon
-            ArrayList<Member> members = new ArrayList<>();
+
             String str = dataInputStream.readUTF();
             Gson gson1 = new GsonBuilder().create();
             GsonRoom gsonRoom = gson1.fromJson(str,GsonRoom.class);
-            members = gsonRoom.members;
+            members2 = gsonRoom.members;
 
             GameGroup gameGroup = new GameGroup();
             gameGroup.sockets = sockets2;
-            gameGroup.members = members;
+            gameGroup.members = members2;
             System.out.println("members = " + members);
 
 
-            gameGroup.tiles = playGameMenuController.mapCreator(members.size(),members);
-            gameGroup.civilizations = playGameMenuController.initializeCivilizations(members.size(), gameGroup.tiles, members);
+            gameGroup.tiles = playGameMenuController.mapCreator(members2.size(),members2);
+            gameGroup.civilizations = playGameMenuController.initializeCivilizations(members2.size(), gameGroup.tiles, members2);
             gameGroup.civilizations.get(0).isMyTurn = true;
-
-
+            gameGroups.add(gameGroup);
             // TODO ... kian sakht map ro check kon
             int numOfCivilizations = gameGroup.civilizations.size();
             ArrayList<Integer> tileStatusOfCivilization1 = new ArrayList<>();
@@ -191,6 +231,12 @@ public class CommandProcessor {
                 tileStatusOfCivilization4 = playGameMenuController.statusChecker(gameGroup.civilizations.get(3), gameGroup.tiles);
                 tileStatusOfCivilization5 = playGameMenuController.statusChecker(gameGroup.civilizations.get(4), gameGroup.tiles);
             }
+            gameGroup.tileStatusOfCivilization1 = tileStatusOfCivilization1;
+            gameGroup.tileStatusOfCivilization2 = tileStatusOfCivilization2;
+            gameGroup.tileStatusOfCivilization3 = tileStatusOfCivilization3;
+            gameGroup.tileStatusOfCivilization4 = tileStatusOfCivilization4;
+            gameGroup.tileStatusOfCivilization5 = tileStatusOfCivilization5;
+
             /*for (int i = 0; i < 72; i++)
                 gameGroup.tiles.get(i).generatingTile(tileStatusOfCivilization1.get(i));*/
 
@@ -205,7 +251,6 @@ public class CommandProcessor {
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
             gameGroupData.result = "newGame";
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
-
         }
 
 
@@ -391,6 +436,13 @@ public class CommandProcessor {
             NextTurnGson nextTurnGson = gson.fromJson(command, NextTurnGson.class);
             GameGroup gameGroup = getGroup(nextTurnGson.member);
             playGameMenuController.nextTurn(nextTurnGson.civilization, gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("EndGame ")) {
+            command = command.replace("EndGame ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            EndGameGson endGameGson = gson.fromJson(command, EndGameGson.class);
+            GameGroup gameGroup = getGroup(endGameGson.member);
+            playGameMenuController.endGame(gameGroup);
         }
 
 

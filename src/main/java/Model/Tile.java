@@ -5,6 +5,7 @@ import Model.Units.Unit;
 import Model.Units.Warrior;
 import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -177,11 +178,15 @@ public class Tile extends Polygon {
     private double h;
     @Expose
     private Citizen citizen = null;
-    @Expose
+
     private ArrayList<Unit> units;
     @Expose
-    private Building building;
+    public Warrior warrior;
     @Expose
+    public Civilian civilian;
+    @Expose
+    private Building building;
+
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
     @Expose
     private Resource resource;
@@ -200,9 +205,9 @@ public class Tile extends Polygon {
     @Expose
     private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);
 
-    @Expose
+
     private ArrayList<Tile> roads;
-    @Expose
+
     private ArrayList<Tile> railRoads;
 
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
@@ -859,7 +864,7 @@ public class Tile extends Polygon {
     }
     @Expose
     private Improvement workingOnImprovement;//if == null -> null
-    @Expose
+
     private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
     @Expose
     private boolean doesHaveRoad;
@@ -888,7 +893,9 @@ public class Tile extends Polygon {
     public void setRailDamaged(boolean railDamaged) {
         isRailDamaged = railDamaged;
     }
+
     private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
+
     private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
 
     public void assignWorkerToRoad (Unit unit, Integer turn) {
@@ -1614,6 +1621,7 @@ public class Tile extends Polygon {
     }
 
     public boolean equals (Tile tile) {
+        if (this == null || tile == null) return false;
         if (this.getX() == tile.getX() &&
                 this.getY() == tile.getY()) return true;
         return false;
@@ -1621,7 +1629,6 @@ public class Tile extends Polygon {
 
     public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits) {
         // todo ... check classes that yall wrote
-        this.ruin = getRuinCopy(tile.getRuin());
         this.cameraSpeed = 30;
         this.isDesert = tile.isDesert;
         this.isMeadow = tile.isMeadow;
@@ -1646,30 +1653,79 @@ public class Tile extends Polygon {
         this.h = tile.getH();
         this.citizen = getCitizenCopy(tile.getCitizen());
         getUnitsListCopy(this, allUnits);
+        this.ruin = getRuinCopy(tile.getRuin());
         this.building = setBuildingCopy(tile.getBuilding());
-        this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
+        //this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
         this.resource = copyResource(tile.getResource());
         this.attribute = setAttributeCopy(tile.getAttribute());
-        this.improvements = setImprovementCopy(tile.getImprovements());
+        setImprovementCopy(tile.getImprovements());
         this.isWorking = tile.isWorking;
         this.isOnRepair = tile.isOnRepair;
         this.repairNeedImprovement = tile.getRepairNeedImprovement();
-        this.roads = getRoadsTileCopy(tile.getRoads());
-        this.railRoads = getRoadsTileCopy(tile.getRailRoads());
+      //  this.roads = getRoadsTileCopy(tile.getRoads());
+      //  this.railRoads = getRoadsTileCopy(tile.getRailRoads());
+        this.doesHaveRoad = setRoadCopy(tile.isDoesHaveRoad());
+        this.doesHaveRailWay = setRailCopy(tile.doesHaveRailWay);
+        this.isRoadDamaged = tile.isRoadDamaged();
+        this.isRailDamaged = tile.isRailDamaged();
+    }
+
+    private boolean setRailCopy(boolean doesHaveRailWay) {
+        if (!this.isDoesHaveRailWay() && doesHaveRailWay) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setDoesHaveRailWay(true);
+                }
+            });
+            return true;
+        }
+        else if (this.isDoesHaveRailWay() && !doesHaveRailWay) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setDoesHaveRailWay(false);
+                }
+            });
+            return false;
+        }
+        return this.isDoesHaveRailWay();
+    }
+
+    private boolean setRoadCopy(boolean doesHaveRoad) {
+        if (!this.isDoesHaveRoad() && doesHaveRoad) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setDoesHaveRoad(true);
+                }
+            });
+            return true;
+        }
+        else if (this.isDoesHaveRoad() && !doesHaveRoad) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setDoesHaveRoad(false);
+                }
+            });
+            return false;
+        }
+        return this.isDoesHaveRoad();
     }
 
     private Ruin getRuinCopy(Ruin ruin) {
         if (this.getRuin() == null && ruin != null) {
             Ruin ruin2 = ruin;
-            addRuinPicture(ruin2);
+            //addRuinPicture(ruin2);
             return ruin2;
         }
         else if (this.getRuin() != null && ruin != null) {
-            this.getRuin().copyField(ruin);
+            //this.getRuin().copyField(ruin);
             return this.getRuin();
         }
         else if (this.units.size() > 0) {
-            removeRuinPicture(this.getRuin());
+            //removeRuinPicture(this.getRuin());
             return null;
         }
         return null;
@@ -1678,11 +1734,11 @@ public class Tile extends Polygon {
     private Attribute setAttributeCopy(Attribute attribute) {
         if (this.getAttribute() == null && attribute != null) {
             Attribute attribute2 = new Attribute(attribute.isPlat(), attribute.isJungle(), attribute.isIce(), attribute.isRainForest(), attribute.isMarsh(), attribute.isOasis());
-            addAttributePicture(attribute2);
+            //addAttributePicture(attribute2);
             return attribute2;
         }
         else if (this.getAttribute() != null && attribute != null) {
-            this.getAttribute().copyFields(attribute);
+            //this.getAttribute().copyFields(attribute);
             return this.getAttribute();
         }
         return null;
@@ -1691,32 +1747,33 @@ public class Tile extends Polygon {
     private Resource copyResource(Resource resource) {
         if (this.getResource() == null && resource != null) {
             Resource resource2 = new Resource(resource.getName());
-            addResourcePicture(resource2);
+            //addResourcePicture(resource2);
             return resource2;
         }
         else if (this.getResource() != null && resource != null){
-            this.getResource().copyFields(resource);
+            //this.getResource().copyFields(resource);
             return this.getResource();
         }
         return null;
     }
 
-    private ArrayList<Improvement> setImprovementCopy(ArrayList<Improvement> improvements) {
-        ArrayList<Improvement> improvements2 = new ArrayList<>();
+    private void setImprovementCopy(ArrayList<Improvement> improvements) {
         if (improvements.size() >= 1) {
             Improvement improvementTemp = improvements.get(0);
-            if (this.getImprovements().get(0) == null && improvements.get(0) != null) {
+            if (this.getImprovements().size() == 0 && improvements.get(0) != null) {
                 Improvement improvement = new Improvement(improvementTemp.isCamp(), improvementTemp.isFarm(), improvementTemp.isLumberMill(), improvementTemp.isMine(), improvementTemp.isPaddock(), improvementTemp.isAgriculture(),
                         improvementTemp.isStoneMine(), improvementTemp.isTradingPost(), improvementTemp.isLaboratory(), improvementTemp.getFood(), improvementTemp.getProduction(), improvementTemp.getGold());
-                improvements2.add(improvement);
-                addImprovementPicture(improvement);
-            } else if (this.getImprovements().get(0) != null && improvements.get(0) != null) {
+                this.getImprovements().add(improvement);
+
+                //addImprovementPicture(improvement);
+            }/* else if (this.getImprovements().get(0) != null && improvements.get(0) != null) {
                 this.getImprovements().get(0).copyFields(improvements.get(0));
                 improvements2.add(improvements.get(0));
-                return improvements2;
-            }
+            }*/
         }
-        return improvements2;
+        else if (improvements.size() == 0 && this.getImprovements().size() >= 1) {
+            this.getImprovements().remove(0);
+        }
     }
 
     private ArrayList<Tile> getRoadsTileCopy(ArrayList<Tile> tiles) {
@@ -1730,7 +1787,12 @@ public class Tile extends Polygon {
     private Building setBuildingCopy(Building building) {
         if (this.getBuilding() == null && building != null) {
             building.setTile(getClientTile(building.getTile()));
-            getClientTile(building.getTile()).addBuilding(building);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    getClientTile(building.getTile()).addBuilding(building);
+                }
+            });
             return building;
         }
         else {
@@ -1742,14 +1804,14 @@ public class Tile extends Polygon {
         HashMap<Unit,Integer> hashMap = new HashMap<>();
         for (Map.Entry<Unit,Integer> entry : turnForUnitMaking.entrySet()) {
             if (!entry.getKey().isCivilian()) {
-                Warrior warrior = new Warrior(Civilization.getCivilizationCopy(entry.getKey().getCivilization()),Tile.getClientTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
+                Warrior warrior = new Warrior(Civilization.getCivilizationCopyByName(entry.getKey().getCivilizationName()),Tile.getClientTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
                         ((Warrior)entry.getKey()).getXp(),((Warrior)entry.getKey()).getDamage(),((Warrior)entry.getKey()).getRange(),((Warrior)entry.getKey()).getRangedCombatDamage(),((Warrior)entry.getKey()).isScout(),((Warrior)entry.getKey()).isWarrior(),((Warrior)entry.getKey()).isArcher(),((Warrior)entry.getKey()).isChariotArcher(),
                         ((Warrior)entry.getKey()).isSpearman(),((Warrior)entry.getKey()).isCatapult(),((Warrior)entry.getKey()).isHorseMan(),((Warrior)entry.getKey()).isSwordsMan(),((Warrior)entry.getKey()).isCrossbowMan(),((Warrior)entry.getKey()).isKnight(),((Warrior)entry.getKey()).isLongswordMan(),((Warrior)entry.getKey()).isPikeMan(),((Warrior)entry.getKey()).isTrebuchet(),
                         ((Warrior)entry.getKey()).isCanon(),((Warrior)entry.getKey()).isCavalry(),((Warrior)entry.getKey()).isLancer(),((Warrior)entry.getKey()).isMusketMan(),((Warrior)entry.getKey()).isRifleMan(),((Warrior)entry.getKey()).isAntiTankGun(),((Warrior)entry.getKey()).isArtillery(),((Warrior)entry.getKey()).isInfantry(),((Warrior)entry.getKey()).isPanzer(),((Warrior)entry.getKey()).isTank());
                 hashMap.put(warrior, entry.getValue());
             }
             else {
-                Civilian civilian = new Civilian(Civilization.getCivilizationCopy(entry.getKey().getCivilization()),Tile.getClientTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
+                Civilian civilian = new Civilian(Civilization.getCivilizationCopyByName(entry.getKey().getCivilizationName()),Tile.getClientTile(entry.getKey().getOrigin()),entry.getKey().getHealth(),entry.getKey().getConstantMP(),entry.getKey().getMp(),entry.getKey().getDuration(),entry.getKey().getGoldCost(),entry.getKey().isCivilian(),
                         ((Civilian)entry.getKey()).isWorker(), ((Civilian)entry.getKey()).isSettler());
                 hashMap.put(civilian, entry.getValue());
             }
@@ -1759,26 +1821,44 @@ public class Tile extends Polygon {
 
     private void getUnitsListCopy(Tile tile, ArrayList<Unit> allUnits) {
         for (Unit allUnit : allUnits) {
-            if (allUnit.getOrigin().equals(tile)) {
-                tile.addUnit2(allUnit);
+            if (allUnit != null && allUnit.getOriginNumber() == tile.getTileNumber()) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        tile.addUnit2(allUnit);
+                    }
+                });
             }
         }
     }
 
     private Citizen getCitizenCopy(Citizen citizen) {
-        for (Civilization civilization : PlayGameMenu.civilizations) {
-            for (City city : civilization.getCities()) {
-                for (Citizen cityCitizen : city.getCitizens()) {
-                    if (cityCitizen.equals(citizen)) return cityCitizen;
-                }
-            }
+        if (citizen != null) {
+            Tile tile = getCitizenTile(citizen.getTile());
+            if (tile == null) return null;
+            citizen.setTile(tile);
+            return citizen;
         }
-        return citizen;
+        return null;
+    }
+
+    private Tile getCitizenTile(Tile tile) {
+        for (Tile tile1 : PlayGameMenu.tiles) {
+            if (tile1.equals(tile)) return tile1;
+        }
+        return null;
     }
 
     public void deleteUnits () {
         for (Unit unit : units) {
-            if (root.getChildren().contains(unit)) root.getChildren().remove(unit);
+            if (root.getChildren().contains(unit)) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        root.getChildren().remove(unit);
+                    }
+                });
+            }
         }
         units.clear();
     }

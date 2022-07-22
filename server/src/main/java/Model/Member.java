@@ -2,6 +2,8 @@ package Model;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.ArrayList;
+
 public class Member {
     @Expose
     private String username;

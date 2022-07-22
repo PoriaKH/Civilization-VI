@@ -3,6 +3,7 @@ package Model;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Member {
     @Expose
@@ -17,6 +18,8 @@ public class Member {
     private String date;
     @Expose
     private int imageNumber;
+    @Expose
+    private ArrayList<Member> friends;
 
     public Member(String username, String nickname,String password, int score,int imageNumber,String date){
         this.username = username;
@@ -25,6 +28,7 @@ public class Member {
         this.score = score;
         this.date = date;
         this.imageNumber = imageNumber;
+        friends = new ArrayList<>();
     }
 
     public Member() {

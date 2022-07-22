@@ -1,19 +1,21 @@
 package Controller;
 
 import Model.*;
-import Model.FunctionsGson.GameGroupData;
-import Model.FunctionsGson.UnitBehaviourGson;
+import Model.FunctionsGson.*;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.CommandProcessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayGameMenuController {
     public static int turn;
@@ -212,14 +214,10 @@ public class PlayGameMenuController {
             }
         }
         serverCiv.setGold(amount);
-        for (Socket socket : gameGroup.sockets) {
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
-            gameGroupData.result = "cheat code activated successfully";
-            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
-            dataOutputStream.flush();
-        }
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        gameGroupData.result = "cheat code activated successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+
     }
     public void cheatIncreaseFood(Civilization civilization,int amount, GameGroup gameGroup) throws IOException {
         ArrayList<Civilization> civilizations = gameGroup.civilizations;
@@ -230,17 +228,14 @@ public class PlayGameMenuController {
                 break;
             }
         }
-        for(City city : serverCiv.getCities()){
+        for (City city : serverCiv.getCities()) {
             city.setTotalFood(amount);
         }
-        for (Socket socket : gameGroup.sockets) {
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
-            gameGroupData.result = "cheat code activated successfully";
-            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
-            dataOutputStream.flush();
-        }
+
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        gameGroupData.result = "cheat code activated successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+
     }
     public void cheatIncreaseTechnology(Civilization civilization,int amount, GameGroup gameGroup) throws IOException {
         ArrayList<Civilization> civilizations = gameGroup.civilizations;
@@ -252,14 +247,10 @@ public class PlayGameMenuController {
             }
         }
         serverCiv.setScience(amount);
-        for (Socket socket : gameGroup.sockets) {
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
-            gameGroupData.result = "cheat code activated successfully";
-            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
-            dataOutputStream.flush();
-        }
+
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        gameGroupData.result = "cheat code activated successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public void cheatIncreaseHappiness(Civilization civilization, int amount, GameGroup gameGroup) throws IOException {
         ArrayList<Civilization> civilizations = gameGroup.civilizations;
@@ -271,14 +262,10 @@ public class PlayGameMenuController {
             }
         }
         serverCiv.setHappiness(amount);
-        for (Socket socket : gameGroup.sockets) {
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            GameGroupData gameGroupData = new GameGroupData(civilizations, gameGroup.tiles);
-            gameGroupData.result = "cheat code activated successfully";
-            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-            dataOutputStream.writeUTF(gson.toJson(gameGroupData));
-            dataOutputStream.flush();
-        }
+
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        gameGroupData.result = "cheat code activated successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
     public void cheatTeleportUnit (Unit unit, int numberOfDestination,  Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
         String str;
@@ -323,6 +310,7 @@ public class PlayGameMenuController {
         origin.removeUnit(unitServer);
         destination.addUnit(unitServer);
         unitServer.setOrigin(destination);
+        unitServer.updateOriginNumber();
         unitServer.setHasOrdered(true);
         gameGroupData.result = "unit teleported to destination !";
         sendMessageToAllClients(gameGroup, gameGroupData);
@@ -1247,12 +1235,13 @@ public class PlayGameMenuController {
     // create parameters like unit or origin or destination for moveUnit function
     public void preMoveUnit (Unit unit, int numberOfDestination, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        unit.setOrigin(gameGroup.tiles.get(unit.getOriginNumber()));
         if (numberOfDestination < 0 || numberOfDestination > 71) {
             gameGroupData.result = "number of destination tile is invalid !";
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
-        if (!unit.getCivilization().equals(civilization)) {
+        if (!unit.getCivilizationName().equals(civilization.getName())) {
             gameGroupData.result = "this unit is not for your civilization";
             try {
                 sendMessageToAllClients(gameGroup, gameGroupData);
@@ -1263,6 +1252,11 @@ public class PlayGameMenuController {
         }
 
         Unit serverUnit = getUnitServer(gameGroupData.tiles, unit);
+        if (serverUnit == null) {
+            gameGroupData.result = "invalid tile/unit number !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
         Tile origin = serverUnit.getOrigin();
         Tile destination = gameGroupData.tiles.get(numberOfDestination);
 
@@ -1291,8 +1285,33 @@ public class PlayGameMenuController {
             gameGroupData.tileStatusOfCivilization5 = gameGroup.tileStatusOfCivilization5;
             DataOutputStream dataOutputStream = new DataOutputStream(sockets.get(i).getOutputStream());
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-            String respond = gson.toJson(gameGroupData);
-            dataOutputStream.writeUTF(respond);
+            System.out.println("first of convert to json");
+            OtherDataGson otherDataGson = new OtherDataGson(gameGroupData);
+            System.out.println("after otherGson");
+            String[] civs = new String[gameGroupData.civilizations.size()];
+            for (int i1 = 0; i1 < civs.length; i1++) {
+                civs[i1] = gson.toJson(gameGroupData.civilizations.get(i1));
+            }
+            System.out.println("after all civs");
+            String[] tiles = new String[72];
+            for (int i1 = 0; i1 < gameGroupData.tiles.size(); i1++) {
+                gameGroupData.tiles.get(i1).setChildUnits();
+                tiles[i1] = gson.toJson(gameGroupData.tiles.get(i1));
+                gameGroupData.tiles.get(i1).warrior = null;
+                gameGroupData.tiles.get(i1).civilian = null;
+            }
+            System.out.println("after tiles");
+            String other = gson.toJson(otherDataGson);
+
+            for (int j = 0; j < civs.length; ++j) {
+                dataOutputStream.writeUTF("civ " + civs[j]);
+                dataOutputStream.flush();
+            }
+            for (int j = 0; j < 72; ++j) {
+                dataOutputStream.writeUTF("tile " + tiles[j]);
+                dataOutputStream.flush();
+            }
+            dataOutputStream.writeUTF("other " + other);
             dataOutputStream.flush();
         }
     }
@@ -1509,15 +1528,18 @@ public class PlayGameMenuController {
         }
         if (unit.getPath().size() == 0) {
             str = "there is no way to the destination !";
+            unit.doesHavePath = false;
             return str;
         }
         if (checkPath(unit) || isSameUnitOnMakingProgress(destination, unit)) {
             unit.setOrigin(unit.getPath().get(0).tile);
             unit.setDestination(null);
             unit.getPath().clear();
+            unit.doesHavePath = false;
             str = "there is another civilization on the way !";
             return str;
         }
+        unit.doesHavePath = true;
         unit.setHasOrdered(true);
         unit.setOrigin(origin);
         unit.setDestination(destination);
@@ -1526,6 +1548,7 @@ public class PlayGameMenuController {
             if (unit.getPath().size() == 1) {
                 unit.getPath().clear();
                 unit.setDestination(null);
+                unit.doesHavePath = false;
                 str = "unit reached the destination !";
                 break;
             }
@@ -1538,6 +1561,7 @@ public class PlayGameMenuController {
                 originTile.removeUnit(unit);
                 destinationTile.addUnit(unit);
                 unit.setOrigin(destinationTile);
+                unit.updateOriginNumber();
 
                 int newMP;
 
@@ -2411,11 +2435,13 @@ public class PlayGameMenuController {
     // prepare some parameters and return some string
     public void preAttackTile (Unit attacker, int destinationIndex , Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+
         if (destinationIndex < 0 || destinationIndex > 71) {
             gameGroupData.result = "number of destination tile is invalid !";
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
+        attacker.setOrigin(gameGroup.tiles.get(attacker.getOriginNumber()));
 
         Unit attackerServer = getUnitServer(gameGroupData.tiles, attacker);
         int originIndex = getTileIndex(attackerServer.getOrigin(), gameGroupData.tiles);
@@ -2569,6 +2595,8 @@ public class PlayGameMenuController {
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
+        attacker.setOrigin(gameGroup.tiles.get(attacker.getOriginNumber()));
+
         Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
         Unit attackerServer = getUnitServer(gameGroupData.tiles, attacker);
         City defenderCity = getCityFromTile(gameGroupData.tiles.get(destinationIndex), gameGroupData.tiles, gameGroupData.civilizations);
@@ -2656,6 +2684,7 @@ public class PlayGameMenuController {
             map.get(originIndex).removeUnit(attacker);
             defenderCity.getCenterTile().addUnit(attacker);
             attacker.setOrigin(defenderCity.getCenterTile());
+            attacker.updateOriginNumber();
             changeCapital(defenderCivilization);
             str = "your unit conquered the city !";
         }
@@ -2774,6 +2803,7 @@ public class PlayGameMenuController {
             map.get(destinationIndex).removeUnit(defender);
             map.get(destinationIndex).addUnit(attacker);
             attacker.setOrigin(map.get(destinationIndex));
+            attacker.updateOriginNumber();
             str = "you won this attack !";
             defender = null;
         }
@@ -2793,6 +2823,7 @@ public class PlayGameMenuController {
             map.get(destinationIndex).removeUnit(defender);
             map.get(originIndex).addUnit(defender);
             defender.setOrigin(map.get(originIndex));
+            defender.updateOriginNumber();
             str = "you lost this attack !";
             attacker = null;
         }
@@ -2856,6 +2887,7 @@ public class PlayGameMenuController {
     // makes parameters for unit behaviours functions
     public void preUnitBehaviour (Unit unit, Civilization civilization, ArrayList<Tile> map, String command, GameGroup gameGroup) throws IOException {
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        unit.setOrigin(gameGroup.tiles.get(unit.getOriginNumber()));
         Unit unitServer = getUnitServer(gameGroupData.tiles, unit);
         Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
 
@@ -4769,6 +4801,7 @@ public class PlayGameMenuController {
     public void preUpgradeUnit (Unit oldUnit, String newUnitName, int index, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
+        oldUnit.setOrigin(gameGroup.tiles.get(oldUnit.getOriginNumber()));
         Unit oldUnitServer = getUnitServer(gameGroupData.tiles, oldUnit);
         if (index < 0 || index > 71) {
             gameGroupData.result = "number of tile is invalid !";
@@ -4821,6 +4854,153 @@ public class PlayGameMenuController {
         tile.addUnit2(newWarrior);
         str = "unit upgraded successfully !";
         return str;
+    }
+    private Matcher getMatcher(String command, String regex) {
+        Matcher matcher = Pattern.compile(regex).matcher(command);
+        return matcher;
+    }
+    public ArrayList<String> scoreBoard(ScoreboardGson scoreboardGson, ArrayList<ArrayList<Member>> members) throws IOException {
+        ArrayList<String> membersScores = new ArrayList<>();
+        ArrayList<Member> allMembers = new ArrayList<>();
+        for (int i = 0; i < members.size(); i++)
+            for (int j = 0; j < members.get(i).size(); j++)
+                allMembers.add(members.get(i).get(j));
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        File file = new File("users.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            String fileNickname = fileMatcher.group("nickname");
+            int fileScore = Integer.parseInt(fileMatcher.group("score"));
+            String fileDate = fileMatcher.group("date");
+            String status = "offline";
+            for (Member member : allMembers)
+                if (member.getUsername().equals(fileUsername)) {
+                    status = "online";
+                    break;
+                }
+            membersScores.add(fileUsername + " \\ " + fileNickname + " \\ " + fileScore + " \\ " + fileDate + " \\ " + status);
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        return membersScores;
+    }
+    public ArrayList<String> friendsList(Member sender) throws IOException {
+        ArrayList<String> friendsList = new ArrayList<>();
+        File file = new File("src/main/resources/Friends/" + sender.getUsername() + ".txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String fileRegex = "(?<username>.*)";
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            friendsList.add(fileUsername);
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        return friendsList;
+    }
+    public String friendRequestsList(String username) throws IOException {
+        ArrayList<String> friendsList = new ArrayList<>();
+        File file = new File("src/main/resources/FriendRequests/" + username + ".txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String fileRegex = "(?<username>.*)";
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            friendsList.add(fileUsername);
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        String result = "";
+        for (int i = 0; i < friendsList.size(); i++)
+            result += friendsList.get(i) + "\n";
+        return result;
+    }
+    //TODO when users.txt added to resources check if the username exists
+    public String addToFriendRequests(FriendRequestGson friendRequestGson) throws IOException {
+        ArrayList<String> friendsUsernames = friendsList(friendRequestGson.sender);
+        for (int i = 0; i < friendsUsernames.size(); i++)
+            if (friendsUsernames.get(i).equals(friendRequestGson.receiverUsername))
+                return "this user is already your friend";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        File file = new File("users.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String line;
+        line = bufferedReader.readLine();
+        boolean exists = false;
+        ArrayList<String> allMembers = new ArrayList<>();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            if (friendRequestGson.receiverUsername.equals(fileUsername)){
+                File file1 = new File("src/main/resources/FriendRequests/" + friendRequestGson.receiverUsername + ".txt");
+                FileWriter fileWriter = new FileWriter(file1, true);
+                fileWriter.write(friendRequestGson.sender.getUsername() + "\n");
+                fileWriter.close();
+                fileReader.close();
+                return "friend request has been sent successfully";
+            }
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        if (!exists)
+            return "no such username exists";
+        return "";
+    }
+    private void removeFromFriendRequestList(String fileUsername) throws IOException {
+        File file = new File("src/main/resources/FriendRequests/" + fileUsername + ".txt");
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+
+        String fileRegex = "(?<username>.*)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+
+            String username = fileMatcher.group("username");
+
+            if(!Objects.equals(fileUsername, username)) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            line = bufferedReader.readLine();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+        bufferedWriter.write(String.valueOf(stringBuilder));
+        bufferedWriter.newLine();
+        bufferedWriter.close();
+    }
+    private void addToFriendsList(String username) throws IOException {
+        File file = new File("src/main/resources/FriendRequests/" + username + ".txt");
+        FileWriter fileWriter = new FileWriter(file, true);
+        fileWriter.write(username + "\n");
+    }
+    public void acceptRequest(String username) throws IOException {
+        removeFromFriendRequestList(username);
+        addToFriendsList(username);
+    }
+    public void denyRequest(String username) throws IOException {
+        removeFromFriendRequestList(username);
     }
     public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder("");
@@ -4890,16 +5070,16 @@ public class PlayGameMenuController {
         //unit actions check
         int tileNumber = unitActionsNextTurnCheck(civilizationServer, gameGroupData.tiles);
         if(tileNumber != -1) {
-            gameGroupData.result = "order unit in tile number : " + tileNumber;
+            gameGroupData.result = "nextTurn : order unit in tile number : " + tileNumber;
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
         //check that are you working on a technology
-        if (civilizationServer.getWorkingOnTechnology() == null) {
-            gameGroupData.result = "choose a technology to learn";
+        /*if (civilizationServer.getWorkingOnTechnology() == null) {
+            gameGroupData.result = "nextTurn : choose a technology to learn";
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
-        }
+        }*/
 
         improveImprovementsNextTurn(gameGroupData.tiles);
         checkForUnitMaking(civilizationServer);
@@ -4921,7 +5101,7 @@ public class PlayGameMenuController {
 
         //TODO...  also complete historyInformation and showProductionsInProcess
 
-        gameGroupData.result = "done";
+        gameGroupData.result = "nextTurn : done";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
@@ -5027,7 +5207,9 @@ public class PlayGameMenuController {
                     i = 0;
                 }
                 civilizations.get(i).isMyTurn = true;
-                break;
+                if (!civilizations.get(i).doesLoseTheGame) {
+                    break;
+                }
             }
         }
     }
@@ -5167,13 +5349,17 @@ public class PlayGameMenuController {
     public void deleteLosers (Civilization civilization, ArrayList<Civilization> civilizations) {
         for (int i = 0; i < civilizations.size(); i++) {
             if (civilizations.get(i).getCities().size() == 0) {
-                civilizations.remove(i);
-                i--;
+                civilizations.get(i).doesLoseTheGame = true;
             }
         }
     }
     public boolean findWinner (Civilization civilization, ArrayList<Civilization> civilizations) {
-        if (civilizations.size() == 1) {
+        if (!civilization.doesLoseTheGame) {
+            for (Civilization civilization1 : civilizations) {
+                if (!civilization.equals(civilization1)) {
+                    if (!civilization1.doesLoseTheGame) return false;
+                }
+            }
             int point = civilization.getPoint() + 500;
             civilization.getMember().setScore(point);
             return true;
@@ -5200,9 +5386,10 @@ public class PlayGameMenuController {
                 }
             }
         }
+        civilizations.get(0).doesLoseTheGame = false;
         return true;
     }
-    public void loadOriginTileForUnit (ArrayList<Tile> map) {
+    public void loadOriginTileForUnits(ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
             for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {
                 map.get(i).getUnits().get(i1).setOrigin(map.get(i));
@@ -5211,21 +5398,48 @@ public class PlayGameMenuController {
     }
     public void loadTileForCitizen (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getCitizen().setTile(tile);
+            if (tile.getCitizen() != null)
+                tile.getCitizen().setTile(tile);
         }
     }
     public void loadTileForBuilding (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            tile.getBuilding().setTile(tile);
+            if (tile.getBuilding() != null)
+                tile.getBuilding().setTile(tile);
         }
     }
     public void loadCivilizationForBuilding (ArrayList<Civilization> civilizations) {
         for (Civilization civilization : civilizations) {
             for (City city : civilization.getCities()) {
                 for (Tile tile : city.getTiles()) {
-                    tile.getBuilding().setCivilization(civilization);
+                    if (tile.getBuilding() != null)
+                        tile.getBuilding().setCivilization(civilization);
                 }
             }
         }
     }
+
+    public Civilization getWinner(ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            if (!civilization.doesLoseTheGame) return civilization;
+        }
+        return null;
+    }
+
+    public void endGame(GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        gameGroupData.result = "end game Winner is : " + getWinner(gameGroup.civilizations);
+        sendMessageToAllClients(gameGroup, gameGroupData);
+        removeFinishedGameGroup(gameGroup);
+    }
+
+    private void removeFinishedGameGroup(GameGroup gameGroup) {
+        for (int i = 0; i < CommandProcessor.gameGroups.size(); i++) {
+            if (CommandProcessor.gameGroups.get(i).equals(gameGroup)) {
+                CommandProcessor.gameGroups.remove(i);
+                break;
+            }
+        }
+    }
+
 }

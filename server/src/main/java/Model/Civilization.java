@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class Civilization {
     @Expose
+    public boolean doesLoseTheGame = false;
+    @Expose
     public boolean isMyTurn = false;
     @Expose
     private Member member;
@@ -37,9 +39,9 @@ public class Civilization {
     @Expose
     private ArrayList<String> messages; // (int)turn : message
     @Expose
-    private HashMap<Civilization, Integer> winsInUnitsWar = new HashMap<>(); // tamadon shekast khorde va tedad bakht haye on ra neshan mide
+    private HashMap<String, Integer> winsInUnitsWar = new HashMap<>(); // tamadon shekast khorde va tedad bakht haye on ra neshan mide
     @Expose
-    private HashMap<Civilization, Integer> lossesInUnitsWar = new HashMap<>(); // tamadon pirooz va tedad bord haye on ra neshan mide
+    private HashMap<String, Integer> lossesInUnitsWar = new HashMap<>(); // tamadon pirooz va tedad bord haye on ra neshan mide
     @Expose
     private int point;//to compare civilizations
     @Expose
@@ -51,7 +53,7 @@ public class Civilization {
     @Expose
     private Technology workingOnTechnology;//if == null -> have to choose
     @Expose
-    private HashMap<Technology, Integer> technologyEarnedPercent;
+    private HashMap<String, Integer> technologyEarnedPercent;
 
     public Civilization(Member member, City capital){
         this.name = member.getNickname();
@@ -139,7 +141,7 @@ public class Civilization {
         return workingOnTechnology;
     }
 
-    public HashMap<Technology, Integer> getTechnologyEarnedPercent() {
+    public HashMap<String, Integer> getTechnologyEarnedPercent() {
         return technologyEarnedPercent;
     }
 
@@ -156,10 +158,10 @@ public class Civilization {
     }
 
     public void updateCountOfUnitWin (Civilization civilization, int count) {
-        winsInUnitsWar.replace(civilization, count);
+        winsInUnitsWar.replace(civilization.getName(), count);
     }
     public void updateCountOfUnitLose (Civilization civilization, int count) {
-        lossesInUnitsWar.replace(civilization, count);
+        lossesInUnitsWar.replace(civilization.getName(), count);
     }
 
     public void setSciencePerTurn(int sciencePerTurn) {
@@ -173,21 +175,21 @@ public class Civilization {
         return lossesInUnitsWar.get(civilization);
     }
     public void addCivilizationToWinsUnit (Civilization civilization) {
-        winsInUnitsWar.put(civilization, 0);
+        winsInUnitsWar.put(civilization.getName(), 0);
     }
     public void addCivilizationToLossesUnit (Civilization civilization) {
-        lossesInUnitsWar.put(civilization, 0);
+        lossesInUnitsWar.put(civilization.getName(), 0);
     }
 
     public ArrayList<Civilization> getFriends() {
         return friends;
     }
 
-    public HashMap<Civilization, Integer> getWinsInUnitsWar() {
+    public HashMap<String, Integer> getWinsInUnitsWar() {
         return winsInUnitsWar;
     }
 
-    public HashMap<Civilization, Integer> getLossesInUnitsWar() {
+    public HashMap<String, Integer> getLossesInUnitsWar() {
         return lossesInUnitsWar;
     }
 
@@ -239,17 +241,17 @@ public class Civilization {
     }
 
     public void addToTechnologyEarnedPercent(Technology technology, Integer roundLeft){
-        if (!this.technologyEarnedPercent.containsKey(technology))
-            this.technologyEarnedPercent.put(technology, roundLeft);
+        if (!this.technologyEarnedPercent.containsKey(technology.getName()))
+            this.technologyEarnedPercent.put(technology.getName(), roundLeft);
         this.workingOnTechnology = technology;
     }
     public void reduceTechnologyRound(){
         if (workingOnTechnology  == null)
             return;
-        int roundLeft = this.technologyEarnedPercent.get(this.workingOnTechnology) - 1;
+        int roundLeft = this.technologyEarnedPercent.get(this.workingOnTechnology.getName()) - 1;
         if (roundLeft == 0) {
             isLearningTechnology = false;
-            this.technologyEarnedPercent.remove(this.workingOnTechnology);
+            this.technologyEarnedPercent.remove(this.workingOnTechnology.getName());
             this.addTechnology(this.workingOnTechnology);
             String message = "you have learnt " + this.workingOnTechnology.getName();
             messages.add(message);
@@ -257,7 +259,12 @@ public class Civilization {
         }
         // TODO plus one
         setScience(sciencePerTurn / (roundLeft * 2 + 1));
-        this.technologyEarnedPercent.replace(this.workingOnTechnology, roundLeft);
+        if (workingOnTechnology == null) {
+            this.technologyEarnedPercent.replace(null, roundLeft);
+        }
+        else {
+            this.technologyEarnedPercent.replace(this.workingOnTechnology.getName(), roundLeft);
+        }
     }
 
     public void removeFriend (Civilization civilization) {
@@ -306,7 +313,7 @@ public class Civilization {
 
     public int getAllWins() {
         int wins = 0;
-        for(Map.Entry<Civilization, Integer> entry : winsInUnitsWar.entrySet()) {
+        for(Map.Entry<String, Integer> entry : winsInUnitsWar.entrySet()) {
             wins = wins + entry.getValue();
         }
         return wins;

@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="edited a field in unit">
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/FriendRequestsList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/FriendRequestsList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/lobby.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/lobby.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,7 +78,7 @@
       <workItem from="1657624845949" duration="698000" />
       <workItem from="1657625874166" duration="2636000" />
       <workItem from="1657716485412" duration="3415000" />
-      <workItem from="1658254842186" duration="6881000" />
+      <workItem from="1658254842186" duration="6659000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -103,7 +108,56 @@
       <option name="project" value="LOCAL" />
       <updated>1658255043638</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added status checker to gameGroup server side">
+      <created>1658293739298</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1658293739298</updated>
+    </task>
+    <task id="LOCAL-00006" summary="still debugging">
+      <created>1658306642684</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1658306642684</updated>
+    </task>
+    <task id="LOCAL-00007" summary="debugging coping fields">
+      <created>1658320836173</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1658320836173</updated>
+    </task>
+    <task id="LOCAL-00008" summary="finished debugging for startGame (found new bug)">
+      <created>1658322170897</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1658322170897</updated>
+    </task>
+    <task id="LOCAL-00009" summary="debug">
+      <created>1658386649546</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1658386649546</updated>
+    </task>
+    <task id="LOCAL-00010" summary="edited a field in unit">
+      <created>1658473910294</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1658473910294</updated>
+    </task>
+    <task id="LOCAL-00011" summary="accept or deny FriendRequest">
+      <created>1658497998609</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1658497998609</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,6 +180,13 @@
     <MESSAGE value="added cheatGson and else if in command processor" />
     <MESSAGE value="done some on teleport" />
     <MESSAGE value=".." />
-    <option name="LAST_COMMIT_MESSAGE" value=".." />
+    <MESSAGE value="added status checker to gameGroup server side" />
+    <MESSAGE value="still debugging" />
+    <MESSAGE value="debugging coping fields" />
+    <MESSAGE value="finished debugging for startGame (found new bug)" />
+    <MESSAGE value="debug" />
+    <MESSAGE value="edited a field in unit" />
+    <MESSAGE value="accept or deny FriendRequest" />
+    <option name="LAST_COMMIT_MESSAGE" value="accept or deny FriendRequest" />
   </component>
 </project>

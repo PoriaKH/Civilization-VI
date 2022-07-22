@@ -156,11 +156,15 @@ public class Tile {
     private double h;
     @Expose
     private Citizen citizen = null;
-    @Expose
+
     private ArrayList<Unit> units;
     @Expose
-    private Building building;
+    public Warrior warrior;
     @Expose
+    public Civilian civilian;
+    @Expose
+    private Building building;
+
     private HashMap<Unit, Integer> turnForUnitMaking = new HashMap<>();
     @Expose
     private Resource resource;
@@ -179,9 +183,8 @@ public class Tile {
     @Expose
     private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);*/
 
-    @Expose
     private ArrayList<Tile> roads;
-    @Expose
+
     private ArrayList<Tile> railRoads;
 
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
@@ -647,7 +650,7 @@ public class Tile {
     }
     @Expose
     private Improvement workingOnImprovement;//if == null -> null
-    @Expose
+
     private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
     @Expose
     private boolean doesHaveRoad;
@@ -676,7 +679,9 @@ public class Tile {
     public void setRailDamaged(boolean railDamaged) {
         isRailDamaged = railDamaged;
     }
+
     private HashMap<Unit, Integer> workingOnRoadUntilFinish = new HashMap<>();
+
     private HashMap<Unit, Integer> workingOnRailUntilFinish = new HashMap<>();
 
     public void assignWorkerToRoad (Unit unit, Integer turn) {
@@ -1271,8 +1276,19 @@ public class Tile {
         return hasRuin;
     }
     public boolean equals (Tile tile) {
-        if (this.getX() == tile.getX() &&
-        this.getY() == tile.getY()) return true;
+        if ((this.getX() == tile.getX() &&
+        this.getY() == tile.getY()) || this.getTileNumber() == tile.getTileNumber()) return true;
         return false;
+    }
+
+    public void setChildUnits() {
+        for (Unit unit : units) {
+            if (unit.isCivilian()) {
+                civilian = (Civilian) unit;
+            }
+            else {
+                warrior = (Warrior) unit;
+            }
+        }
     }
 }
