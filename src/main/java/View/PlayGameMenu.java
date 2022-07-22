@@ -533,8 +533,12 @@ public class PlayGameMenu {
                             playGameMenuController.deleteLosers(playingCivilization, civilizations);
                             if (playGameMenuController.findWinner(playingCivilization, civilizations)
                                     || playGameMenuController.findWinnerByYear(civilizations)) {
+                                try {
+                                    playGameMenuController.sendEndedGameMessage(playingCivilization);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 Civilization winner = playGameMenuController.getWinner(civilizations);
-
                                 try {
                                     increaseFileScore(winner);
                                 } catch (IOException e) {
@@ -579,6 +583,11 @@ public class PlayGameMenu {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 showResult(newValue);
+                if (newValue.startsWith("end ")) {
+                    VictoryAnimation.stage = stage;
+                    VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
+                    victoryAnimation.play();
+                }
             }
         });
 
