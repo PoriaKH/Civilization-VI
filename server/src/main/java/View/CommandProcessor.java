@@ -26,7 +26,7 @@ public class CommandProcessor {
     public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
     public static ArrayList<GameGroup> gameGroups;
 
-    public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket, DataInputStream dataInputStream) throws IOException {
+    public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket, DataInputStream dataInputStream) throws IOException, InterruptedException {
         if(command.startsWith("{\"creatorSocket")){
             Gson gson = new GsonBuilder().create();
             GsonRoom gsonRoom = gson.fromJson(command,GsonRoom.class);
@@ -232,6 +232,7 @@ public class CommandProcessor {
             }
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
             gameGroupData.result = "newGame";
+            Thread.sleep(500);
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
         }
 
