@@ -5,6 +5,7 @@ import Model.FunctionsGson.*;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.CommandProcessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -5403,4 +5404,21 @@ public class PlayGameMenuController {
         }
         return null;
     }
+
+    public void endGame(GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        gameGroupData.result = "end game Winner is : " + getWinner(gameGroup.civilizations);
+        sendMessageToAllClients(gameGroup, gameGroupData);
+        removeFinishedGameGroup(gameGroup);
+    }
+
+    private void removeFinishedGameGroup(GameGroup gameGroup) {
+        for (int i = 0; i < CommandProcessor.gameGroups.size(); i++) {
+            if (CommandProcessor.gameGroups.get(i).equals(gameGroup)) {
+                CommandProcessor.gameGroups.remove(i);
+                break;
+            }
+        }
+    }
+
 }

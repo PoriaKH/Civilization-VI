@@ -430,6 +430,13 @@ public class CommandProcessor {
             GameGroup gameGroup = getGroup(nextTurnGson.member);
             playGameMenuController.nextTurn(nextTurnGson.civilization, gameGroup.tiles, gameGroup);
         }
+        else if (command.startsWith("EndGame ")) {
+            command = command.replace("EndGame ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            EndGameGson endGameGson = gson.fromJson(command, EndGameGson.class);
+            GameGroup gameGroup = getGroup(endGameGson.member);
+            playGameMenuController.endGame(gameGroup);
+        }
 
 
 

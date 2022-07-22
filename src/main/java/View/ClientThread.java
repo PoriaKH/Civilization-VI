@@ -91,22 +91,27 @@ public class ClientThread extends Thread {
                 }
             }
             if (!gameGroupData.result.equals("newGame")) {
-                copyTiles(gameGroupData.tiles);
-                copyCivilizations(gameGroupData.civilizations);
-                loadExtras(gameGroupData);
-                Civilization civilization = getCivilization(gameGroupData.civilizations);
-                boolean wasPreviousTurnMine = Room.isMyTurn;
-                Room.isMyTurn = civilization.isMyTurn;
-                PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
-                if (Room.isMyTurn) {
+                if (gameGroupData.result.startsWith("end ")) {
                     String result = gameGroupData.result;
                     this.result = result;
                     this.isNewResultAvailable = true;
-                }
-                else if (!Room.isMyTurn && wasPreviousTurnMine) {
-                    String result = gameGroupData.result;
-                    this.result = result;
-                    this.isNewResultAvailable = true;
+                } else {
+                    copyTiles(gameGroupData.tiles);
+                    copyCivilizations(gameGroupData.civilizations);
+                    loadExtras(gameGroupData);
+                    Civilization civilization = getCivilization(gameGroupData.civilizations);
+                    boolean wasPreviousTurnMine = Room.isMyTurn;
+                    Room.isMyTurn = civilization.isMyTurn;
+                    PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
+                    if (Room.isMyTurn) {
+                        String result = gameGroupData.result;
+                        this.result = result;
+                        this.isNewResultAvailable = true;
+                    } else if (!Room.isMyTurn && wasPreviousTurnMine) {
+                        String result = gameGroupData.result;
+                        this.result = result;
+                        this.isNewResultAvailable = true;
+                    }
                 }
             }
             else {

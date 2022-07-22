@@ -5105,4 +5105,15 @@ public class PlayGameMenuController {
         }
         return null;
     }
+
+    public void sendEndedGameMessage(Civilization playingCivilization) throws IOException {
+        EndGameGson endGameGson = new EndGameGson();
+        endGameGson.member = playingCivilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(endGameGson);
+
+        CreateHost.dataOutputStream.writeUTF("EndGame " + request);
+        CreateHost.dataOutputStream.flush();
+    }
 }
