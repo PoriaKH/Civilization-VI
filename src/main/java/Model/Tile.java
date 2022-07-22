@@ -205,9 +205,9 @@ public class Tile extends Polygon {
     @Expose
     private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);
 
-    @Expose
+
     private ArrayList<Tile> roads;
-    @Expose
+
     private ArrayList<Tile> railRoads;
 
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
@@ -1662,8 +1662,8 @@ public class Tile extends Polygon {
         this.isWorking = tile.isWorking;
         this.isOnRepair = tile.isOnRepair;
         this.repairNeedImprovement = tile.getRepairNeedImprovement();
-        this.roads = getRoadsTileCopy(tile.getRoads());
-        this.railRoads = getRoadsTileCopy(tile.getRailRoads());
+      //  this.roads = getRoadsTileCopy(tile.getRoads());
+      //  this.railRoads = getRoadsTileCopy(tile.getRailRoads());
         this.doesHaveRoad = setRoadCopy(tile.isDoesHaveRoad());
         this.doesHaveRailWay = setRailCopy(tile.doesHaveRailWay);
         this.isRoadDamaged = tile.isRoadDamaged();

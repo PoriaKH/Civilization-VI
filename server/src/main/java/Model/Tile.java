@@ -183,9 +183,8 @@ public class Tile {
     @Expose
     private Rectangle rail = new Rectangle(x - 160, y - 30, 40, 20);*/
 
-    @Expose
     private ArrayList<Tile> roads;
-    @Expose
+
     private ArrayList<Tile> railRoads;
 
     public Tile(int tileNumber, boolean isDesert, boolean isMeadow, boolean isHill, boolean isMountain, boolean isOcean, boolean isPlain, boolean isSnow, boolean isTundra, float x, float y){
@@ -1277,8 +1276,8 @@ public class Tile {
         return hasRuin;
     }
     public boolean equals (Tile tile) {
-        if (this.getX() == tile.getX() &&
-        this.getY() == tile.getY()) return true;
+        if ((this.getX() == tile.getX() &&
+        this.getY() == tile.getY()) || this.getTileNumber() == tile.getTileNumber()) return true;
         return false;
     }
 

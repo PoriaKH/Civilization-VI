@@ -13,7 +13,7 @@ public class Civilian extends Unit {
     private boolean isWorker;
     @Expose
     private boolean isSettler;
-    @Expose
+
     private Tile workingTile; // tile e ke dare roosh kar mikone ro neshoon mide age null bashe mitoone move va ... kone
 
     public Tile getWorkingTile() {
