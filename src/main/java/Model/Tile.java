@@ -1629,7 +1629,6 @@ public class Tile extends Polygon {
 
     public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits) {
         // todo ... check classes that yall wrote
-        this.ruin = getRuinCopy(tile.getRuin());
         this.cameraSpeed = 30;
         this.isDesert = tile.isDesert;
         this.isMeadow = tile.isMeadow;
@@ -1654,6 +1653,7 @@ public class Tile extends Polygon {
         this.h = tile.getH();
         this.citizen = getCitizenCopy(tile.getCitizen());
         getUnitsListCopy(this, allUnits);
+        this.ruin = getRuinCopy(tile.getRuin());
         this.building = setBuildingCopy(tile.getBuilding());
         //this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
         this.resource = copyResource(tile.getResource());
