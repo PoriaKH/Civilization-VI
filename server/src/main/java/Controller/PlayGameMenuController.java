@@ -4908,6 +4908,27 @@ public class PlayGameMenuController {
         fileReader.close();
         return friendsList;
     }
+    public String friendRequestsList(String username) throws IOException {
+        ArrayList<String> friendsList = new ArrayList<>();
+        File file = new File("src/main/resources/FriendRequests/" + username + ".txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String fileRegex = "(?<username>.*)";
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            friendsList.add(fileUsername);
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        String result = "";
+        for (int i = 0; i < friendsList.size(); i++)
+            result += friendsList.get(i) + "\n";
+        return result;
+    }
     //TODO when users.txt added to resources check if the username exists
     public String addToFriendRequests(FriendRequestGson friendRequestGson) throws IOException {
         ArrayList<String> friendsUsernames = friendsList(friendRequestGson.sender);

@@ -51,4 +51,10 @@ public class Lobby {
         SendFriendRequest.stage = stage;
         new SendFriendRequest().run();
     }
+
+    public void showFriendRequestsList(MouseEvent mouseEvent) {
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        FriendRequestsList.stage = stage;
+        new SendFriendRequest().run();
+    }
 }

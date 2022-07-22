@@ -152,9 +152,16 @@ public class CommandProcessor {
             dataOutputStream.writeUTF(response);
             dataOutputStream.flush();
         }
+        else if (command.startsWith("friend requests list ")){
+            command = command.replace("friend requests list ", "");
+            String response = playGameMenuController.friendRequestsList(command);
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
         else if (command.startsWith("accept friendRequest ")){
             command = command.replace("accept friendRequest ", "");
             playGameMenuController.acceptRequest(command);
+
         }
         else if (command.startsWith("deny friendRequest ")){
             command = command.replace("deny friendRequest ", "");

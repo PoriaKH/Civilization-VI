@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class FriendRequestsList {
+    public static Member member;
     public static Stage stage;
     public Scene scene;
     public static URL lobbyURL;
@@ -35,7 +36,7 @@ public class FriendRequestsList {
 
     public void run(){
         vBox.setAlignment(Pos.CENTER);
-        String request = "friend requests list";
+        String request = "friend requests list " + member.getUsername();
         String response = "";
         try {
             CreateHost.dataOutputStream.writeUTF(request);

@@ -16,6 +16,7 @@
             <Button styleClass="backButton" text="Hosts" onMouseClicked="#hostsClicked"/>
             <Button styleClass="backButton" text="Friends List" onMouseClicked="#friendListClicked"/>
             <Button styleClass="backButton" text="Send Friend Request" onMouseClicked="#sendFriendRequest"/>
+            <Button styleClass="backButton" text="Friend Requests List" onMouseClicked="#showFriendRequestsList"/>
             <Button styleClass="backButton" text="Back" onMouseClicked="#backClicked"/>
 
         </VBox>
