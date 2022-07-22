@@ -9,11 +9,11 @@ import View.CommandProcessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.*;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayGameMenuController {
     public static int turn;
@@ -4852,6 +4852,59 @@ public class PlayGameMenuController {
         tile.addUnit2(newWarrior);
         str = "unit upgraded successfully !";
         return str;
+    }
+    private Matcher getMatcher(String command, String regex) {
+        Matcher matcher = Pattern.compile(regex).matcher(command);
+        return matcher;
+    }
+    public ArrayList<String> scoreBoard(ScoreboardGson scoreboardGson, ArrayList<ArrayList<Member>> members) throws IOException {
+        ArrayList<String> membersScores = new ArrayList<>();
+        ArrayList<Member> allMembers = new ArrayList<>();
+        for (int i = 0; i < members.size(); i++)
+            for (int j = 0; j < members.get(i).size(); j++)
+                allMembers.add(members.get(i).get(j));
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        File file = new File("users.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            String fileNickname = fileMatcher.group("nickname");
+            int fileScore = Integer.parseInt(fileMatcher.group("score"));
+            String fileDate = fileMatcher.group("date");
+            String status = "offline";
+            for (Member member : allMembers)
+                if (member.getUsername().equals(fileUsername)) {
+                    status = "online";
+                    break;
+                }
+            membersScores.add(fileUsername + " \\ " + fileNickname + " \\ " + fileScore + " \\ " + fileDate + " \\ " + status);
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        return membersScores;
+    }
+    public ArrayList<String> friendsList(FriendsListGson friendsListGson) throws IOException {
+        ArrayList<String> friendsList = new ArrayList<>();
+        File file = new File("src/main/resources/Friends/" + friendsListGson.sender.getUsername() + ".txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String fileRegex = "(?<username>.*)";
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            friendsList.add(fileUsername);
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        return friendsList;
     }
     public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder("");

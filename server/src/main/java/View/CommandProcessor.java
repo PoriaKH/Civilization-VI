@@ -7,6 +7,7 @@ import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
+import sun.applet.Main;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -124,6 +125,29 @@ public class CommandProcessor {
                     index++;
                 }
             }
+        }
+        else if (command.startsWith("scoreboard")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("scoreboard " , "");
+            ScoreboardGson scoreboardGson = gson.fromJson(command, ScoreboardGson.class);
+            scoreboardGson.membersScores = playGameMenuController.scoreBoard(scoreboardGson, members);
+            String request = gson.toJson(scoreboardGson);
+            dataOutputStream.writeUTF(request);
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("friendsList ")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("friendsList " , "");
+            FriendsListGson friendsListGson = gson.fromJson(command, FriendsListGson.class);
+            friendsListGson.friendsUsernames = playGameMenuController.friendsList(friendsListGson);
+            String request = gson.toJson(friendsListGson);
+            dataOutputStream.writeUTF(request);
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("friendRequest ")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("friendRequest " , "");
+
         }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();
