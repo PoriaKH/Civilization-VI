@@ -1664,6 +1664,54 @@ public class Tile extends Polygon {
         this.repairNeedImprovement = tile.getRepairNeedImprovement();
         this.roads = getRoadsTileCopy(tile.getRoads());
         this.railRoads = getRoadsTileCopy(tile.getRailRoads());
+        this.doesHaveRoad = setRoadCopy(tile.isDoesHaveRoad());
+        this.doesHaveRailWay = setRailCopy(tile.doesHaveRailWay);
+        this.isRoadDamaged = tile.isRoadDamaged();
+        this.isRailDamaged = tile.isRailDamaged();
+    }
+
+    private boolean setRailCopy(boolean doesHaveRailWay) {
+        if (!this.isDoesHaveRailWay() && doesHaveRailWay) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setDoesHaveRailWay(true);
+                }
+            });
+            return true;
+        }
+        else if (this.isDoesHaveRailWay() && !doesHaveRailWay) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setDoesHaveRailWay(false);
+                }
+            });
+            return false;
+        }
+        return this.isDoesHaveRailWay();
+    }
+
+    private boolean setRoadCopy(boolean doesHaveRoad) {
+        if (!this.isDoesHaveRoad() && doesHaveRoad) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setDoesHaveRoad(true);
+                }
+            });
+            return true;
+        }
+        else if (this.isDoesHaveRoad() && !doesHaveRoad) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setDoesHaveRoad(false);
+                }
+            });
+            return false;
+        }
+        return this.isDoesHaveRoad();
     }
 
     private Ruin getRuinCopy(Ruin ruin) {
@@ -1739,7 +1787,12 @@ public class Tile extends Polygon {
     private Building setBuildingCopy(Building building) {
         if (this.getBuilding() == null && building != null) {
             building.setTile(getClientTile(building.getTile()));
-            getClientTile(building.getTile()).addBuilding(building);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    getClientTile(building.getTile()).addBuilding(building);
+                }
+            });
             return building;
         }
         else {
@@ -1768,7 +1821,7 @@ public class Tile extends Polygon {
 
     private void getUnitsListCopy(Tile tile, ArrayList<Unit> allUnits) {
         for (Unit allUnit : allUnits) {
-            if (allUnit.getOrigin().equals(tile)) {
+            if (allUnit != null && allUnit.getOriginNumber() == tile.getTileNumber()) {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
@@ -1798,7 +1851,14 @@ public class Tile extends Polygon {
 
     public void deleteUnits () {
         for (Unit unit : units) {
-            if (root.getChildren().contains(unit)) root.getChildren().remove(unit);
+            if (root.getChildren().contains(unit)) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        root.getChildren().remove(unit);
+                    }
+                });
+            }
         }
         units.clear();
     }

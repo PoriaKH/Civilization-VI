@@ -502,25 +502,28 @@ public class PlayGameMenu {
                         String string = "";
                         try {
                             playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
+                            try {
+                                Thread.sleep(250);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             string = clientThread.result;
                             clientThread.isNewResultAvailable = false;
                             clientThread.result = "";
+                            System.out.println("result :          " + string);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                         if (!string.equals("nextTurn : done")) {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("next turn");
-                            alert.setHeaderText("result :");
-                            alert.setContentText(string);
-                            alert.showAndWait();
+
                         } else {
-                            PlayGameMenuController.turn++;
+                            /*PlayGameMenuController.turn++;
                             playersCounter++;
                             if (playersCounter == civilizations.size()) {
                                 playersCounter = 0;
                             }
-                            playingCivilization = civilizations.get(playersCounter);
+                            playingCivilization = civilizations.get(playersCounter);*/
+                            playingCivilization = clientThread.getPlayingCivilization(civilizations);
                             civName.setText("civilization : " + playingCivilization.getName());
                             goldAmount.setText(" : " + playingCivilization.getGold());
                             happinessAmount.setText(" : " + playingCivilization.getHappiness());

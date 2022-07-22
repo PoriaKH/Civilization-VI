@@ -10,6 +10,7 @@ public class ThreadTask extends Task<String> {
         while (true) {
             Thread.sleep(500);
             if (clientThread.isNewResultAvailable) {
+                System.out.println(clientThread.result);
                 updateValue(clientThread.result);
                 if (!clientThread.result.contains("nextTurn")) {
                     clientThread.isNewResultAvailable = false;

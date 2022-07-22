@@ -93,10 +93,17 @@ public class ClientThread extends Thread {
             if (!gameGroupData.result.equals("newGame")) {
                 copyTiles(gameGroupData.tiles);
                 copyCivilizations(gameGroupData.civilizations);
+                loadExtras(gameGroupData);
                 Civilization civilization = getCivilization(gameGroupData.civilizations);
+                boolean wasPreviousTurnMine = Room.isMyTurn;
                 Room.isMyTurn = civilization.isMyTurn;
+                PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
                 if (Room.isMyTurn) {
-                    PlayGameMenu.playingCivilization = civilization;
+                    String result = gameGroupData.result;
+                    this.result = result;
+                    this.isNewResultAvailable = true;
+                }
+                else if (!Room.isMyTurn && wasPreviousTurnMine) {
                     String result = gameGroupData.result;
                     this.result = result;
                     this.isNewResultAvailable = true;
@@ -116,12 +123,18 @@ public class ClientThread extends Thread {
                 startCivilizations(gameGroupData.civilizations);
                 Tile.map = PlayGameMenu.tiles;
                 Tile.civilizations = PlayGameMenu.civilizations;
-                //addUnitsToTheirTile()
                 loadExtras(gameGroupData);
                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
                 isGameReady = true;
             }
         }
+    }
+
+    public Civilization getPlayingCivilization(ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            if (civilization.isMyTurn) return civilization;
+        }
+        return null;
     }
 
     private void setGameGroupData(GameGroupData gameGroupData,OtherDataGson otherDataGson) {
@@ -247,14 +260,14 @@ public class ClientThread extends Thread {
         ArrayList<Unit> allClientUnits = new ArrayList<>();
         for (Unit allServerUnit : allServerUnits) {
             if (!allServerUnit.isCivilian()) {
-                Warrior warrior = new Warrior(Civilization.getCivilizationCopyByName(allServerUnit.getCivilizationName()),Tile.getClientTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
+                Warrior warrior = new Warrior(Civilization.getCivilizationCopyByName(allServerUnit.getCivilizationName()),PlayGameMenu.tiles.get(allServerUnit.getOriginNumber()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
                         ((Warrior)allServerUnit).getXp(),((Warrior)allServerUnit).getDamage(),((Warrior)allServerUnit).getRange(),((Warrior)allServerUnit).getRangedCombatDamage(),((Warrior)allServerUnit).isScout(),((Warrior)allServerUnit).isWarrior(),((Warrior)allServerUnit).isArcher(),((Warrior)allServerUnit).isChariotArcher(),
                         ((Warrior)allServerUnit).isSpearman(),((Warrior)allServerUnit).isCatapult(),((Warrior)allServerUnit).isHorseMan(),((Warrior)allServerUnit).isSwordsMan(),((Warrior)allServerUnit).isCrossbowMan(),((Warrior)allServerUnit).isKnight(),((Warrior)allServerUnit).isLongswordMan(),((Warrior)allServerUnit).isPikeMan(),((Warrior)allServerUnit).isTrebuchet(),
                         ((Warrior)allServerUnit).isCanon(),((Warrior)allServerUnit).isCavalry(),((Warrior)allServerUnit).isLancer(),((Warrior)allServerUnit).isMusketMan(),((Warrior)allServerUnit).isRifleMan(),((Warrior)allServerUnit).isAntiTankGun(),((Warrior)allServerUnit).isArtillery(),((Warrior)allServerUnit).isInfantry(),((Warrior)allServerUnit).isPanzer(),((Warrior)allServerUnit).isTank());
                 allClientUnits.add(warrior);
             }
             else {
-                Civilian civilian = new Civilian(Civilization.getCivilizationCopyByName(allServerUnit.getCivilizationName()),Tile.getClientTile(allServerUnit.getOrigin()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
+                Civilian civilian = new Civilian(Civilization.getCivilizationCopyByName(allServerUnit.getCivilizationName()),PlayGameMenu.tiles.get(allServerUnit.getOriginNumber()),allServerUnit.getHealth(),allServerUnit.getConstantMP(),allServerUnit.getMp(),allServerUnit.getDuration(),allServerUnit.getGoldCost(),allServerUnit.isCivilian(),
                         ((Civilian)allServerUnit).isWorker(), ((Civilian)allServerUnit).isSettler());
                 allClientUnits.add(civilian);
             }

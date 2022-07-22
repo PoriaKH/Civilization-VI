@@ -19,6 +19,8 @@ public class Unit {
 
     private Tile origin;
     @Expose
+    private int originNumber;
+    @Expose
     private String civilizationName;
     @Expose
     private int health;
@@ -64,6 +66,7 @@ public class Unit {
         this.civilization = civilization;
         this.civilizationName = civilization.getName();
         this.origin = origin;
+        this.originNumber = origin.getTileNumber();
         this.health = health;
         this.MP = MP;
         this.mp = mp;

@@ -5051,7 +5051,9 @@ public class PlayGameMenuController {
                     i = 0;
                 }
                 civilizations.get(i).isMyTurn = true;
-                break;
+                if (!civilizations.get(i).doesLoseTheGame) {
+                    break;
+                }
             }
         }
     }
