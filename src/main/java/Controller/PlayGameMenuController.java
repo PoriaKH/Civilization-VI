@@ -1006,7 +1006,7 @@ public class PlayGameMenuController {
                 if (unitsOfTile.get(i1).getCivilization().equals(civilization)) {
                     String name = getUnitsName(unitsOfTile.get(i1));
                     String move ;
-                    if (unitsOfTile.get(i1).getPath().size() == 0) {
+                    if (!unitsOfTile.get(i1).doesHavePath) {
                         move = "unit doesn't any path !";
                     }
                     else {

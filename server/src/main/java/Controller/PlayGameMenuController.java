@@ -1525,15 +1525,18 @@ public class PlayGameMenuController {
         }
         if (unit.getPath().size() == 0) {
             str = "there is no way to the destination !";
+            unit.doesHavePath = false;
             return str;
         }
         if (checkPath(unit) || isSameUnitOnMakingProgress(destination, unit)) {
             unit.setOrigin(unit.getPath().get(0).tile);
             unit.setDestination(null);
             unit.getPath().clear();
+            unit.doesHavePath = false;
             str = "there is another civilization on the way !";
             return str;
         }
+        unit.doesHavePath = true;
         unit.setHasOrdered(true);
         unit.setOrigin(origin);
         unit.setDestination(destination);
@@ -1542,6 +1545,7 @@ public class PlayGameMenuController {
             if (unit.getPath().size() == 1) {
                 unit.getPath().clear();
                 unit.setDestination(null);
+                unit.doesHavePath = false;
                 str = "unit reached the destination !";
                 break;
             }

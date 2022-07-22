@@ -57,7 +57,8 @@ public class Unit {
     private boolean isOnBoostTillRecover;
 
     private ArrayList<Node> path = new ArrayList<>(); //the shortest way, it also contains origin and destination
-
+    @Expose
+    public boolean doesHavePath = false;
     public Unit(Civilization civilization, Tile origin, int health, int MP, int mp, int duration, int goldCost, boolean isCivilian) {
         this.hasOrdered = false;
         if(isCivilian)
