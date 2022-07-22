@@ -11,6 +11,8 @@ import com.google.gson.GsonBuilder;
 
 import java.io.*;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -4888,9 +4890,9 @@ public class PlayGameMenuController {
         fileReader.close();
         return membersScores;
     }
-    public ArrayList<String> friendsList(FriendsListGson friendsListGson) throws IOException {
+    public ArrayList<String> friendsList(Member sender) throws IOException {
         ArrayList<String> friendsList = new ArrayList<>();
-        File file = new File("src/main/resources/Friends/" + friendsListGson.sender.getUsername() + ".txt");
+        File file = new File("src/main/resources/Friends/" + sender.getUsername() + ".txt");
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String fileRegex = "(?<username>.*)";
@@ -4905,6 +4907,100 @@ public class PlayGameMenuController {
         }
         fileReader.close();
         return friendsList;
+    }
+    public String friendRequestsList(String username) throws IOException {
+        ArrayList<String> friendsList = new ArrayList<>();
+        File file = new File("src/main/resources/FriendRequests/" + username + ".txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String fileRegex = "(?<username>.*)";
+        String line;
+        line = bufferedReader.readLine();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            friendsList.add(fileUsername);
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        String result = "";
+        for (int i = 0; i < friendsList.size(); i++)
+            result += friendsList.get(i) + "\n";
+        return result;
+    }
+    //TODO when users.txt added to resources check if the username exists
+    public String addToFriendRequests(FriendRequestGson friendRequestGson) throws IOException {
+        ArrayList<String> friendsUsernames = friendsList(friendRequestGson.sender);
+        for (int i = 0; i < friendsUsernames.size(); i++)
+            if (friendsUsernames.get(i).equals(friendRequestGson.receiverUsername))
+                return "this user is already your friend";
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        File file = new File("users.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String line;
+        line = bufferedReader.readLine();
+        boolean exists = false;
+        ArrayList<String> allMembers = new ArrayList<>();
+        while(line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+            if (friendRequestGson.receiverUsername.equals(fileUsername)){
+                File file1 = new File("src/main/resources/FriendRequests/" + friendRequestGson.receiverUsername + ".txt");
+                FileWriter fileWriter = new FileWriter(file1, true);
+                fileWriter.write(friendRequestGson.sender.getUsername() + "\n");
+                fileWriter.close();
+                fileReader.close();
+                return "friend request has been sent successfully";
+            }
+            line = bufferedReader.readLine();
+        }
+        fileReader.close();
+        if (!exists)
+            return "no such username exists";
+        return "";
+    }
+    private void removeFromFriendRequestList(String fileUsername) throws IOException {
+        File file = new File("src/main/resources/FriendRequests/" + fileUsername + ".txt");
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+
+        String fileRegex = "(?<username>.*)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+
+            String username = fileMatcher.group("username");
+
+            if(!Objects.equals(fileUsername, username)) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            line = bufferedReader.readLine();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+        bufferedWriter.write(String.valueOf(stringBuilder));
+        bufferedWriter.newLine();
+        bufferedWriter.close();
+    }
+    private void addToFriendsList(String username) throws IOException {
+        File file = new File("src/main/resources/FriendRequests/" + username + ".txt");
+        FileWriter fileWriter = new FileWriter(file, true);
+        fileWriter.write(username + "\n");
+    }
+    public void acceptRequest(String username) throws IOException {
+        removeFromFriendRequestList(username);
+        addToFriendsList(username);
+    }
+    public void denyRequest(String username) throws IOException {
+        removeFromFriendRequestList(username);
     }
     public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder("");

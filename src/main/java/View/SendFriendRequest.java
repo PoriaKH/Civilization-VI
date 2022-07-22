@@ -30,7 +30,7 @@ public class SendFriendRequest {
     private VBox vBox = new VBox(50);
     private TextField textField = new TextField();
     public void run(){
-
+        initialize();
     }
 
     private void initialize(){
@@ -82,9 +82,10 @@ public class SendFriendRequest {
         stage.show();
         send.setOnMouseClicked(event -> {
             String username = textField.getText();
+            textField.clear();
             FriendRequestGson friendRequestGson = new FriendRequestGson();
             friendRequestGson.sender = sender;
-            friendRequestGson.receiverUsername = "";
+            friendRequestGson.receiverUsername = username;
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
             String request = gson.toJson(friendRequestGson);
             String response = "";
@@ -97,9 +98,9 @@ public class SendFriendRequest {
             }
             if (response.equals("no such username exists"))
                 label.setText("no such username exists");
-            else if (response.equals("this username is already your friend"))
-                label.setText("this username is already your friend");
-            else
+            else if (response.equals("this user is already your friend"))
+                label.setText("this user is already your friend");
+            else if (response.equals("friend request has been sent successfully"))
                 label.setText("friend request has been sent successfully");
         });
     }

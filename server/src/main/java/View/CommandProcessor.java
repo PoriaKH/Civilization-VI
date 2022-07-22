@@ -25,6 +25,7 @@ public class CommandProcessor {
     public static ArrayList<ArrayList<Member>> members = new ArrayList<>();
     public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
     public static ArrayList<GameGroup> gameGroups;
+    public static ArrayList<Member> startedGameMembers = new ArrayList<>();
 
     public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket, DataInputStream dataInputStream) throws IOException, InterruptedException {
         if(command.startsWith("{\"creatorSocket")){
@@ -78,7 +79,8 @@ public class CommandProcessor {
             }
             dataOutputStream.writeUTF("null");
         }
-        else if(command.startsWith("{\"member")){
+        else if(command.startsWith("{\"member\":")){
+            System.out.println("still got it...");
             Gson gson = new GsonBuilder().create();
             JoinRequestClass joinRequestClass = gson.fromJson(command,JoinRequestClass.class);
 
@@ -95,6 +97,19 @@ public class CommandProcessor {
                     break;
                 }
             }
+        }
+        else if(command.startsWith("{\"members\":")){
+            Gson gson = new GsonBuilder().create();
+            MemberArray memberArray = gson.fromJson(command,MemberArray.class);
+            startedGameMembers.addAll(memberArray.members);
+        }
+        else if(command.equals("give me startedGameMembers")){
+            Gson gson = new GsonBuilder().create();
+            MemberArray memberArray = new MemberArray();
+            memberArray.members = startedGameMembers;
+            String out = gson.toJson(memberArray);
+            dataOutputStream.writeUTF(out);
+            System.out.println("out =" + out);
         }
         else if(command.equals("amIKicked")){
             System.out.println("socket.getPort = " + socket.getPort());
@@ -139,7 +154,7 @@ public class CommandProcessor {
             Gson gson = new GsonBuilder().create();
             command = command.replace("friendsList " , "");
             FriendsListGson friendsListGson = gson.fromJson(command, FriendsListGson.class);
-            friendsListGson.friendsUsernames = playGameMenuController.friendsList(friendsListGson);
+            friendsListGson.friendsUsernames = playGameMenuController.friendsList(friendsListGson.sender);
             String request = gson.toJson(friendsListGson);
             dataOutputStream.writeUTF(request);
             dataOutputStream.flush();
@@ -147,7 +162,25 @@ public class CommandProcessor {
         else if (command.startsWith("friendRequest ")){
             Gson gson = new GsonBuilder().create();
             command = command.replace("friendRequest " , "");
+            FriendRequestGson friendRequestGson = gson.fromJson(command, FriendRequestGson.class);
+            String response = playGameMenuController.addToFriendRequests(friendRequestGson);
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("friend requests list ")){
+            command = command.replace("friend requests list ", "");
+            String response = playGameMenuController.friendRequestsList(command);
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("accept friendRequest ")){
+            command = command.replace("accept friendRequest ", "");
+            playGameMenuController.acceptRequest(command);
 
+        }
+        else if (command.startsWith("deny friendRequest ")){
+            command = command.replace("deny friendRequest ", "");
+            playGameMenuController.denyRequest(command);
         }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();

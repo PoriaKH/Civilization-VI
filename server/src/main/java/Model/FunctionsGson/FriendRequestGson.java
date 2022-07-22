@@ -7,5 +7,5 @@ public class FriendRequestGson {
     @Expose
     public Member sender;
     @Expose
-    public Member receiver;
+    public String receiverUsername;
 }
