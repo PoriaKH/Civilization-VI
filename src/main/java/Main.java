@@ -39,6 +39,7 @@ public class Main extends Application {
         CreateHost.host = host;
         Room.creatorSocket = socket;
         UnitPanel.playGameMenuController = new PlayGameMenuController();
+        UnitPanel.cursorURL = new URL(Main.class.getResource("pictures/cursor.png").toExternalForm());
         UnitPanel.untPanelURL = new URL(Main.class.getResource("fxml/unitPanel.fxml").toExternalForm());
         Tile.roadURL = new URL(Main.class.getResource("pictures/Road.png").toExternalForm());
         Tile.railURL = new URL(Main.class.getResource("pictures/Railroad.png").toExternalForm());

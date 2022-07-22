@@ -186,7 +186,7 @@ public class City {
         this.citizens = Citizen.copyListOfCitizens(this, city);
         this.centerTile = getCenterForCity(city.getCenterTile());
         this.tiles = getCityTiles(city.getTiles());
-        this.defenceStrength = city.getDefenceStrength();
+        this.defenceStrength = city.getDefenceStrength2();
         this.damagePoint = city.getDamagePoint();
         this.sciencePerTurn = city.getSciencePerTurn();
     }
@@ -266,5 +266,9 @@ public class City {
 
     public void setCenterTile(Tile centerForCity) {
         this.centerTile = centerForCity;
+    }
+
+    public int getDefenceStrength2() {
+        return this.defenceStrength;
     }
 }

@@ -13,10 +13,14 @@ import View.Transition.VictoryAnimation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -42,6 +46,8 @@ import javafx.stage.Stage;
 import jdk.nashorn.internal.parser.JSONParser;
 
 import javax.swing.plaf.metal.MetalMenuBarUI;
+import javax.xml.ws.handler.Handler;
+import javax.xml.ws.handler.MessageContext;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URL;
@@ -60,6 +66,7 @@ import static View.UnitPanel.map;
 import static View.UnitPanel.playGameMenuController;
 
 public class PlayGameMenu {
+    public ClientThread clientThread;
 
     public Pane root;
 
@@ -250,10 +257,11 @@ public class PlayGameMenu {
                 }
             }
 
-            switchToGame(mouseEvent);
+           // switchToGame(mouseEvent);
         }
     }
     public void switchToGame(MouseEvent mouseEvent) throws IOException {
+        System.out.println("first of switch game");
         PlayGameMenuController playGameMenuController = new PlayGameMenuController();
         // Images for buttons and happiness and gold
         Image nextTurnImage = new Image(getClass().getResource("/pictures/Turn.png").toExternalForm());
@@ -462,7 +470,7 @@ public class PlayGameMenu {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        updateMapAfterMove();
+                        //updateMapAfterMove();
                     } else {
                         showError();
                     }
@@ -491,27 +499,32 @@ public class PlayGameMenu {
             nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (Room.isMyTurn) {
-                        String string = null;
+                    if (true) {
+                        String string = "";
                         try {
-                            string = playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
+                            playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            string = clientThread.result;
+                            clientThread.isNewResultAvailable = false;
+                            clientThread.result = "";
+                            System.out.println("result :          " + string);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if (!string.equals("done")) {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("next turn");
-                            alert.setHeaderText("result :");
-                            alert.setContentText(string);
-                            alert.showAndWait();
-                        } else {
+                        if (!string.equals("nextTurn : done")) {
 
+                        } else {
                             PlayGameMenuController.turn++;
-                            playersCounter++;
+                            /*playersCounter++;
                             if (playersCounter == civilizations.size()) {
                                 playersCounter = 0;
                             }
-                            playingCivilization = civilizations.get(playersCounter);
+                            playingCivilization = civilizations.get(playersCounter);*/
+                            playingCivilization = clientThread.getPlayingCivilization(civilizations);
                             civName.setText("civilization : " + playingCivilization.getName());
                             goldAmount.setText(" : " + playingCivilization.getGold());
                             happinessAmount.setText(" : " + playingCivilization.getHappiness());
@@ -545,13 +558,30 @@ public class PlayGameMenu {
                                 VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
                                 victoryAnimation.play();
                             }
-                            updateMapAfterMove();
+                           // updateMapAfterMove();
                         }
                     } else {
                         showError();
                     }
                 }
             });
+
+        // this thread is for showing message , thread task is for sending message to listener
+        // listener show result -> becuase client thread is not javafx thread i did this
+        ThreadTask threadTask = new ThreadTask();
+        threadTask.clientThread = clientThread;
+
+        Thread thread = new Thread(threadTask);
+        thread.setDaemon(true);
+        thread.start();
+
+        threadTask.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                showResult(newValue);
+            }
+        });
+
 
         stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);
@@ -563,6 +593,7 @@ public class PlayGameMenu {
         Tile.scene = scene;
 
         stage.show();
+        System.out.println("enddddddddddddddddddd");
     }
 
     private void showError() {
@@ -722,6 +753,14 @@ public class PlayGameMenu {
 
         bufferedWriter.close();
     }
+    private void showResult(String result) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("result :");
+        alert.setHeaderText("result :");
+        alert.setContentText(result);
+        alert.showAndWait();
+    }
+
     private void showRepetitiveAlert(int i) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("repetitive username number :" + (i + 1));
@@ -777,7 +816,7 @@ public class PlayGameMenu {
         for (int i = 0; i < 72; i++)
             tiles.get(i).generatingTile(status.get(i));
 
-        switchToGame(mouseEvent);
+        //switchToGame(mouseEvent);
     }
 
     private void loadURLs(SaveGameClass saveGameClass) {

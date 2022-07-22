@@ -23,10 +23,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Unit extends Rectangle {
-    @Expose
     private Civilization civilization;
 
     private Tile origin;
+    @Expose
+    private int originNumber;
+    @Expose
+    private String civilizationName;
     @Expose
     private int health;
     @Expose
@@ -64,14 +67,17 @@ public class Unit extends Rectangle {
     public static PlayGameMenu playGameMenu;
 
     private ArrayList<Node> path = new ArrayList<>(); //the shortest way, it also contains origin and destination
-
+    @Expose
+    public boolean doesHavePath;
     public Unit(Civilization civilization, Tile origin, int health, int MP, int mp, int duration, int goldCost, boolean isCivilian) {
         this.hasOrdered = false;
         if(isCivilian)
             hasOrdered = true;
 
         this.civilization = civilization;
+        this.civilizationName = civilization.getName();
         this.origin = origin;
+        this.originNumber = origin.getTileNumber();
         this.health = health;
         this.MP = MP;
         this.mp = mp;
@@ -275,5 +281,13 @@ public class Unit extends Rectangle {
         if (this.isCivilian == unit.isCivilian &&
                 this.origin.equals(unit.origin)) return true;
         return false;
+    }
+
+    public String getCivilizationName() {
+        return civilizationName;
+    }
+
+    public int getOriginNumber() {
+        return originNumber;
     }
 }

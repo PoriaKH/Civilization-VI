@@ -10,6 +10,7 @@ import Model.Units.Unit;
 import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -173,7 +175,22 @@ public class Room {
                         else {
                             System.out.println("something went wrong! Client/Room/Line 169");
                         }
-                         while (true) {
+
+                        ClientThread clientThread = new ClientThread(stage, event);
+                        clientThread.setDaemon(true);
+                        clientThread.start();
+
+
+                        while (true) {
+                            Thread.sleep(1000);
+                            if (clientThread.isGameReady()) {
+                                clientThread.playGameMenu.clientThread = clientThread;
+                                clientThread.playGameMenu.switchToGame(event);
+                                break;
+                            }
+                        }
+
+                        /*while (true) {
                              GameGroupData gameGroupData = new GameGroupData();
                              OtherDataGson otherDataGson = new OtherDataGson();
                              Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
@@ -219,13 +236,15 @@ public class Room {
                                  Unit.playGameMenu = playGameMenu;
                                  startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
                                  startCivilizations(gameGroupData.civilizations);
+                                 Tile.map = PlayGameMenu.tiles;
+                                 Tile.civilizations = PlayGameMenu.civilizations;
                                  loadExtras(gameGroupData);
                                  PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
                                  playGameMenu.switchToGame(event);
                              }
-                         }
+                         }*/
                     }
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -302,7 +321,8 @@ public class Room {
         playGameMenuController.loadCivilizationForBuilding(gameGroupData.civilizations);
     }
 
-    private void showResult(String result) {
+    private void showResult(String result, ClientThread clientThread) {
+            clientThread.isNewResultAvailable = false;
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("result :");
             alert.setHeaderText("result :");

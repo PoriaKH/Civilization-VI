@@ -100,13 +100,12 @@ public class TechnologyTree {
         learn.setOnMouseClicked(event -> {
             String technologyName = technologyField.getText();
             technologyField.clear();
-            String result = null;
             try {
-                result = playGameMenuController.chooseTechnologyToLearn(playingCivilization, technologyName);
+                playGameMenuController.chooseTechnologyToLearn(playingCivilization, technologyName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            technologyLabel.setText(result);
+            //technologyLabel.setText(result);
         });
         learn.setStyle("-fx-pref-width: 200;\n" +
                 "    -fx-pref-height: 20;\n" +
@@ -124,13 +123,13 @@ public class TechnologyTree {
         change.setOnMouseClicked(event -> {
             String technologyName = technologyField.getText();
             technologyField.clear();
-            String result = null;
+
             try {
-                result = playGameMenuController.changeTechnologyToLearn(playingCivilization, technologyName);
+                playGameMenuController.changeTechnologyToLearn(playingCivilization, technologyName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            technologyLabel.setText(result);
+            //technologyLabel.setText(result);
         });
         change.setStyle("-fx-pref-width: 200;\n" +
                 "    -fx-pref-height: 20;\n" +
