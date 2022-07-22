@@ -7,10 +7,13 @@ import Model.Units.Unit;
 import Model.Units.Warrior;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -34,6 +37,7 @@ public class UnitPanel {
     public static PlayGameMenu playGameMenu;
     public static ArrayList<Civilization> civilizations;
     public static boolean doesEnteredFromInfoPanel;
+    public static URL cursorURL;
     public TextField moveDes;
     public TextField attackTileDes;
     public TextField attackCityDes;
@@ -57,6 +61,8 @@ public class UnitPanel {
         BorderPane borderPane = FXMLLoader.load(untPanelURL);
         if (!doesEnteredFromInfoPanel) showUnitName();
         scene = new Scene(borderPane);
+        Image image = new Image(cursorURL.toExternalForm());
+        scene.setCursor(new ImageCursor(image));
         stage.setScene(scene);
         stage.show();
     }
@@ -71,8 +77,16 @@ public class UnitPanel {
 
 
     public void back(MouseEvent mouseEvent) throws IOException {
-        if (doesEnteredFromInfoPanel) new InfoPanel().start();
-        else stage.setScene(infoPanelScene);
+        if (doesEnteredFromInfoPanel) {
+            if (scene != null)
+                scene.setCursor(Cursor.DEFAULT);
+            new InfoPanel().start();
+        }
+        else {
+            if (scene != null)
+                scene.setCursor(Cursor.DEFAULT);
+            stage.setScene(infoPanelScene);
+        }
     }
 
     public void sleepUnit(MouseEvent mouseEvent) throws IOException {
