@@ -139,7 +139,7 @@ public class CommandProcessor {
             Gson gson = new GsonBuilder().create();
             command = command.replace("friendsList " , "");
             FriendsListGson friendsListGson = gson.fromJson(command, FriendsListGson.class);
-            friendsListGson.friendsUsernames = playGameMenuController.friendsList(friendsListGson);
+            friendsListGson.friendsUsernames = playGameMenuController.friendsList(friendsListGson.sender);
             String request = gson.toJson(friendsListGson);
             dataOutputStream.writeUTF(request);
             dataOutputStream.flush();
@@ -147,7 +147,18 @@ public class CommandProcessor {
         else if (command.startsWith("friendRequest ")){
             Gson gson = new GsonBuilder().create();
             command = command.replace("friendRequest " , "");
-
+            FriendRequestGson friendRequestGson = gson.fromJson(command, FriendRequestGson.class);
+            String response = playGameMenuController.addToFriendRequests(friendRequestGson);
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("accept friendRequest ")){
+            command = command.replace("accept friendRequest ", "");
+            playGameMenuController.acceptRequest(command);
+        }
+        else if (command.startsWith("deny friendRequest ")){
+            command = command.replace("deny friendRequest ", "");
+            playGameMenuController.denyRequest(command);
         }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();
