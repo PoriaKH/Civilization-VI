@@ -25,6 +25,7 @@ public class CommandProcessor {
     public static ArrayList<ArrayList<Member>> members = new ArrayList<>();
     public static PlayGameMenuController playGameMenuController = new PlayGameMenuController();
     public static ArrayList<GameGroup> gameGroups;
+    public static ArrayList<Member> startedGameMembers = new ArrayList<>();
 
     public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket, DataInputStream dataInputStream) throws IOException {
         if(command.startsWith("{\"creatorSocket")){
@@ -78,7 +79,8 @@ public class CommandProcessor {
             }
             dataOutputStream.writeUTF("null");
         }
-        else if(command.startsWith("{\"member")){
+        else if(command.startsWith("{\"member\":")){
+            System.out.println("still got it...");
             Gson gson = new GsonBuilder().create();
             JoinRequestClass joinRequestClass = gson.fromJson(command,JoinRequestClass.class);
 
@@ -95,6 +97,19 @@ public class CommandProcessor {
                     break;
                 }
             }
+        }
+        else if(command.startsWith("{\"members\":")){
+            Gson gson = new GsonBuilder().create();
+            MemberArray memberArray = gson.fromJson(command,MemberArray.class);
+            startedGameMembers.addAll(memberArray.members);
+        }
+        else if(command.equals("give me startedGameMembers")){
+            Gson gson = new GsonBuilder().create();
+            MemberArray memberArray = new MemberArray();
+            memberArray.members = startedGameMembers;
+            String out = gson.toJson(memberArray);
+            dataOutputStream.writeUTF(out);
+            System.out.println("out =" + out);
         }
         else if(command.equals("amIKicked")){
             System.out.println("socket.getPort = " + socket.getPort());

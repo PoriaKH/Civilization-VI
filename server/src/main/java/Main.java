@@ -27,6 +27,7 @@ public class Main {
     public static ArrayList<GsonRoom> rooms = new ArrayList<>();
     // todo
     public static ArrayList<GameGroup> gameGroups = new ArrayList<>();
+    public static ArrayList<Member> startedGameMembers = new ArrayList<>();
 
     public static void main(String[] args) {
         GsonRoomArray gsonRoomArray = new GsonRoomArray();
@@ -35,6 +36,7 @@ public class Main {
         CommandProcessor.members = members;
         CommandProcessor.gameGroups = gameGroups;
         CommandProcessor.members = members;
+        CommandProcessor.startedGameMembers = startedGameMembers;
 
         try {
             while (true){

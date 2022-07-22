@@ -4,6 +4,7 @@ import Controller.PlayGameMenuController;
 import Model.*;
 import Model.FunctionsGson.CivilizationsGson;
 import Model.FunctionsGson.GameGroupData;
+import Model.FunctionsGson.MemberArray;
 import Model.FunctionsGson.OtherDataGson;
 import Model.Units.Civilian;
 import Model.Units.Unit;
@@ -38,6 +39,7 @@ import static View.MainMenu.lobbyURL;
 import static View.ProfileMenu.loggedInMember;
 
 public class Room {
+    public boolean isGameStarted = false;
     public boolean amIKicked = false;
     public static boolean isMyTurn = true; // todo felan bara test graphic true e
 
@@ -121,6 +123,8 @@ public class Room {
                     refreshThePage(vBox,event);
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -175,20 +179,29 @@ public class Room {
                         else {
                             System.out.println("something went wrong! Client/Room/Line 169");
                         }
+                        MemberArray memberArray = new MemberArray();
+                        memberArray.members = gsonRoom.members;
 
-                        ClientThread clientThread = new ClientThread(stage, event);
-                        clientThread.setDaemon(true);
-                        clientThread.start();
+                        Gson gson1 = new GsonBuilder().create();
+                        String txt = gson1.toJson(memberArray);
+                        dataOutputStream.writeUTF(txt);
+                        dataOutputStream.flush();
 
+//                        refreshThePage(vBox,event);
 
-                        while (true) {
-                            Thread.sleep(1000);
-                            if (clientThread.isGameReady()) {
-                                clientThread.playGameMenu.clientThread = clientThread;
-                                clientThread.playGameMenu.switchToGame(event);
-                                break;
-                            }
-                        }
+//                        ClientThread clientThread = new ClientThread(stage, event);
+//                        clientThread.setDaemon(true);
+//                        clientThread.start();
+//
+//
+//                        while (true) {
+//                            Thread.sleep(1000);
+//                            if (clientThread.isGameReady()) {
+//                                clientThread.playGameMenu.clientThread = clientThread;
+//                                clientThread.playGameMenu.switchToGame(event);
+//                                break;
+//                            }
+//                        }
 
                         /*while (true) {
                              GameGroupData gameGroupData = new GameGroupData();
@@ -397,14 +410,33 @@ public class Room {
         dataOutputStream.writeUTF(send);
         dataOutputStream.flush();
     }
-    public void refreshThePage(VBox vBox,Event event) throws IOException {
+    public void refreshThePage(VBox vBox,Event event) throws IOException, InterruptedException {
         kickButtons = new ArrayList<>();
         buttonStringHashMap = new HashMap<>();
         try {
+            setIsGameStarted();
             setAmIKicked();
             setGsonRoom();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if(isGameStarted){
+            //Start the game ...
+            ClientThread clientThread = new ClientThread(stage, (MouseEvent) event);
+            clientThread.setDaemon(true);
+            clientThread.start();
+
+
+            while (true) {
+                Thread.sleep(1000);
+                if (clientThread.isGameReady()) {
+                    clientThread.playGameMenu.clientThread = clientThread;
+                    clientThread.playGameMenu.switchToGame((MouseEvent) event);
+                    break;
+                }
+            }
+
+
         }
         if(amIKicked){
             root = FXMLLoader.load(lobbyURL);
@@ -444,6 +476,20 @@ public class Room {
         }
         listenForKickButtons(vBox);
     }
+    public void setIsGameStarted() throws IOException {
+        dataOutputStream.writeUTF("give me startedGameMembers");
+        dataOutputStream.flush();
+        String in = dataInputStream.readUTF();
+        System.out.println("in =" + in);
+        Gson gson = new GsonBuilder().create();
+        MemberArray memberArray = gson.fromJson(in,MemberArray.class);
+        for(Member member : memberArray.members){
+            if(Objects.equals(member.getUsername(), loggedInMember.getUsername())){
+                isGameStarted = true;
+                break;
+            }
+        }
+    }
     public void listenForKickButtons(VBox vBox){
         for(Button button : kickButtons){
             button.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -454,7 +500,7 @@ public class Room {
                         dataOutputStream.writeUTF("kick:" + nick);
                         dataOutputStream.flush();
                         refreshThePage(vBox,event);
-                    } catch (IOException e) {
+                    } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
