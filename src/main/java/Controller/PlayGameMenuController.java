@@ -2233,7 +2233,7 @@ public class PlayGameMenuController {
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String request = gson.toJson(createCityGson);
 
-        CreateHost.dataOutputStream.writeUTF("createCity" + request);
+        CreateHost.dataOutputStream.writeUTF("createCity " + request);
         CreateHost.dataOutputStream.flush();
 
 

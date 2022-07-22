@@ -85,6 +85,8 @@ public class UnitPanel {
         else {
             if (scene != null)
                 scene.setCursor(Cursor.DEFAULT);
+            if (infoPanelScene != null)
+                infoPanelScene.setCursor(Cursor.DEFAULT);
             stage.setScene(infoPanelScene);
         }
     }
