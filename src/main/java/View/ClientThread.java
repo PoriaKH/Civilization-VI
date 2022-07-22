@@ -253,6 +253,7 @@ public class ClientThread extends Thread {
                 allServerUnits.add(serverTile.warrior);
             }
             if (serverTile.civilian != null) {
+                System.out.println("tile number      " + serverTile.getTileNumber());
                 serverTile.civilian.setOrigin(serverTile);
                 allServerUnits.add(serverTile.civilian);
             }

@@ -498,12 +498,12 @@ public class PlayGameMenu {
             nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (Room.isMyTurn) {
+                    if (true) {
                         String string = "";
                         try {
                             playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
                             try {
-                                Thread.sleep(250);
+                                Thread.sleep(1000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -517,8 +517,8 @@ public class PlayGameMenu {
                         if (!string.equals("nextTurn : done")) {
 
                         } else {
-                            /*PlayGameMenuController.turn++;
-                            playersCounter++;
+                            PlayGameMenuController.turn++;
+                            /*playersCounter++;
                             if (playersCounter == civilizations.size()) {
                                 playersCounter = 0;
                             }

@@ -260,4 +260,16 @@ public class Unit {
         this.origin.equals(unit.origin)) return true;
         return false;
     }
+
+    public String getCivilizationName() {
+        return civilizationName;
+    }
+
+    public int getOriginNumber() {
+        return originNumber;
+    }
+
+    public void updateOriginNumber() {
+        this.originNumber = origin.getTileNumber();
+    }
 }
