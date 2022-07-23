@@ -53,6 +53,10 @@ public class LoginMenu {
     }
 
     public void loginMouseAction(ActionEvent event) throws IOException {
+        if(usernameTF.getText().length() <= 0 || passwordTF.getText().length() <= 0){
+            message.setText("Username and password did not match!");
+            return;
+        }
         Gson gson = new GsonBuilder().create();
         UserPassTF userPassTF = new UserPassTF(usernameTF.getText(),passwordTF.getText());
         String out = gson.toJson(userPassTF);
