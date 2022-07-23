@@ -27,7 +27,7 @@ public class CommandProcessor {
     public static ArrayList<GameGroup> gameGroups;
     public static ArrayList<Member> startedGameMembers = new ArrayList<>();
 
-    public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket, DataInputStream dataInputStream) throws IOException {
+    public static void run(String command, GsonRoomArray gsonRoomArray, DataOutputStream dataOutputStream, Socket socket, DataInputStream dataInputStream) throws IOException, InterruptedException {
         if(command.startsWith("{\"creatorSocket")){
             Gson gson = new GsonBuilder().create();
             GsonRoom gsonRoom = gson.fromJson(command,GsonRoom.class);
@@ -205,6 +205,8 @@ public class CommandProcessor {
             Gson gson1 = new GsonBuilder().create();
             GsonRoom gsonRoom = gson1.fromJson(str,GsonRoom.class);
             members2 = gsonRoom.members;
+
+            sendGuestOK(sockets2);
 
             GameGroup gameGroup = new GameGroup();
             gameGroup.sockets = sockets2;
@@ -466,6 +468,13 @@ public class CommandProcessor {
 
     }
 
+    private static void sendGuestOK(ArrayList<Socket> sockets2) throws IOException {
+        for (int i = 1; i < sockets2.size(); i++) {
+            DataOutputStream dataOutputStream = new DataOutputStream(sockets2.get(i).getOutputStream());
+            dataOutputStream.writeUTF("ok");
+            dataOutputStream.flush();
+        }
+    }
 
 
     // get game group of a member

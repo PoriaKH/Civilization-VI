@@ -1,8 +1,10 @@
 package Model;
 
+import Model.FunctionsGson.GameGroupData;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
+import View.ClientThread;
 import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
 import javafx.application.Platform;
@@ -688,8 +690,14 @@ public class Tile extends Polygon {
                 resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
             else if (resource.isWheat())
                 resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
-            if (!root.getChildren().contains(resource))
-                root.getChildren().add(resource);
+            if (!root.getChildren().contains(resource)) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        root.getChildren().add(resource);
+                    }
+                });
+            }
         }
 
         //improvement
@@ -716,8 +724,14 @@ public class Tile extends Polygon {
                 improvements.get(0).setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
             else if (improvements.get(0).isLaboratory())
                 improvements.get(0).setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
-            if (!root.getChildren().contains(improvements.get(0)))
-                root.getChildren().add(improvements.get(0));
+            if (!root.getChildren().contains(improvements.get(0))) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        root.getChildren().add(improvements.get(0));
+                    }
+                });
+            }
         }
 
         //ruin
@@ -730,8 +744,180 @@ public class Tile extends Polygon {
             ruin.setX(x11 - 10);
             ruin.setY(y11 - 10);
             ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
-            if (!root.getChildren().contains(ruin))
+            if (!root.getChildren().contains(ruin)) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        root.getChildren().add(ruin);
+                    }
+                });
+            }
+            if (units.size() > 0) {
+                Unit unit = units.get(0);
+                ArrayList<String> techNames = new ArrayList<>();
+                for (Technology t : unit.getCivilization().getTechnologies())
+                    techNames.add(t.getName());
+                if (!techNames.contains(ruin.getFreeTechnology().getName()))
+                    unit.getCivilization().addTechnology(ruin.getFreeTechnology());
+                unit.getCivilization().addGold(ruin.getFreeGold());
+                Tile citizenTile = unit.getCivilization().getCapital().getCenterTile();
+                Citizen ruinCitizen = new Citizen(citizenTile);
+                unit.getCivilization().getCapital().getCitizens().add(ruinCitizen);
+                ruin.setVisible(false);
+                ruinDiscovered = true;
+                hasRuin = false;
+            }
+        }
+    }
+
+    public void generatingTileCopy (int status) {
+        if (status == -1){
+            this.setFill(new ImagePattern(new Image(fogOfWar.toExternalForm())));
+            if (root.getChildren().contains(resource))
+                resource.setVisible(false);
+            if (improvements.size() > 0 && root.getChildren().contains(improvements.get(0)))
+                improvements.get(0).setVisible(false);
+            if (root.getChildren().contains(building))
+                building.setVisible(false);
+            if (root.getChildren().contains(ruin))
+                ruin.setVisible(false);
+            if (units.size() >= 1 && root.getChildren().contains(units.get(0)))
+                units.get(0).setVisible(false);
+            if (units.size() >= 2 && root.getChildren().contains(units.get(1)))
+                units.get(1).setVisible(false);
+            return;
+        }
+        if (root.getChildren().contains(resource))
+            resource.setVisible(true);
+        if (improvements.size() > 0 && root.getChildren().contains(improvements.get(0)))
+            improvements.get(0).setVisible(true);
+        if (root.getChildren().contains(ruin))
+            ruin.setVisible(true);
+        if (root.getChildren().contains(building))
+            building.setVisible(true);
+        if (units.size() >= 1 && root.getChildren().contains(units.get(0)))
+            units.get(0).setVisible(true);
+        if (units.size() >= 2 && root.getChildren().contains(units.get(1)))
+            units.get(1).setVisible(true);
+        //land type
+        if  (isDesert)
+            this.setFill(new ImagePattern(new Image(dessert.toExternalForm())));
+        else if (isHill)
+            this.setFill(new ImagePattern(new Image(hill.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isIce())
+            this.setFill(new ImagePattern(new Image(ice.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isJungle())
+            this.setFill(new ImagePattern(new Image(jungle.toExternalForm())));
+        else if (isMeadow)
+            this.setFill(new ImagePattern(new Image(meadow.toExternalForm())));
+        else if (isMountain)
+            this.setFill(new ImagePattern(new Image(mountain.toExternalForm())));
+        else if (isPlain)
+            this.setFill(new ImagePattern(new Image(plain.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isRainForest())
+            this.setFill(new ImagePattern(new Image(rainforest.toExternalForm())));
+        else if (isSnow)
+            this.setFill(new ImagePattern(new Image(snow.toExternalForm())));
+        else if (isTundra)
+            this.setFill(new ImagePattern(new Image(tundra.toExternalForm())));
+        else if (getAttribute() != null && getAttribute().isMarsh())
+            this.setFill(new ImagePattern(new Image(marsh.toExternalForm())));
+        else if (isOcean)
+            this.setFill(new ImagePattern(new Image(ocean.toExternalForm())));
+
+        //resources
+        if (getResource() != null) {
+            double y11 = this.getY();
+            double x11 = this.getX() + 70;
+            resource.setX(x11);
+            resource.setY(y11);
+            resource.setWidth(40);
+            resource.setHeight(40);
+            if (resource.isBanana())
+                resource.setFill(new ImagePattern(new Image(banana.toExternalForm())));
+            else if (resource.isCoal())
+                resource.setFill(new ImagePattern(new Image(coal.toExternalForm())));
+            else if (resource.isColor())
+                resource.setFill(new ImagePattern(new Image(color.toExternalForm())));
+            else if (resource.isCotton())
+                resource.setFill(new ImagePattern(new Image(cotton.toExternalForm())));
+            else if (resource.isCow())
+                resource.setFill(new ImagePattern(new Image(cow.toExternalForm())));
+            else if (resource.isFur())
+                resource.setFill(new ImagePattern(new Image(fur.toExternalForm())));
+            else if (resource.isGas())
+                resource.setFill(new ImagePattern(new Image(gas.toExternalForm())));
+            else if (resource.isGazelle())
+                resource.setFill(new ImagePattern(new Image(gazelle.toExternalForm())));
+            else if (resource.isGem())
+                resource.setFill(new ImagePattern(new Image(gem.toExternalForm())));
+            else if (resource.isGold())
+                resource.setFill(new ImagePattern(new Image(golds.toExternalForm())));
+            else if (resource.isHorse())
+                resource.setFill(new ImagePattern(new Image(horse.toExternalForm())));
+            else if (resource.isMarble())
+                resource.setFill(new ImagePattern(new Image(marble.toExternalForm())));
+            else if (resource.isMetal())
+                resource.setFill(new ImagePattern(new Image(metal.toExternalForm())));
+            else if (resource.isSheep())
+                resource.setFill(new ImagePattern(new Image(sheep.toExternalForm())));
+            else if (resource.isSilk())
+                resource.setFill(new ImagePattern(new Image(silk.toExternalForm())));
+            else if (resource.isSilver())
+                resource.setFill(new ImagePattern(new Image(silver.toExternalForm())));
+            else if (resource.isSugar())
+                resource.setFill(new ImagePattern(new Image(sugar.toExternalForm())));
+            else if (resource.isTusk())
+                resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
+            else if (resource.isWheat())
+                resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
+            if (!root.getChildren().contains(resource)) {
+                root.getChildren().add(resource);
+            }
+        }
+
+        //improvement
+        if (improvements.size() > 0) {
+            double y22 = this.getY() + 30;
+            double x22 = this.getX() + 30;
+            improvements.get(0).setX(x22);
+            improvements.get(0).setY(y22);
+            if (improvements.get(0).isCamp())
+                improvements.get(0).setFill(new ImagePattern(new Image(camp.toExternalForm())));
+            else if (improvements.get(0).isFarm())
+                improvements.get(0).setFill(new ImagePattern(new Image(farm.toExternalForm())));
+            else if (improvements.get(0).isLumberMill())
+                improvements.get(0).setFill(new ImagePattern(new Image(lumberMill.toExternalForm())));
+            else if (improvements.get(0).isMine())
+                improvements.get(0).setFill(new ImagePattern(new Image(mine.toExternalForm())));
+            else if (improvements.get(0).isPaddock())
+                improvements.get(0).setFill(new ImagePattern(new Image(paddock.toExternalForm())));
+            else if (improvements.get(0).isAgriculture())
+                improvements.get(0).setFill(new ImagePattern(new Image(agriculture.toExternalForm())));
+            else if (improvements.get(0).isStoneMine())
+                improvements.get(0).setFill(new ImagePattern(new Image(stoneMine.toExternalForm())));
+            else if (improvements.get(0).isTradingPost())
+                improvements.get(0).setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
+            else if (improvements.get(0).isLaboratory())
+                improvements.get(0).setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
+            if (!root.getChildren().contains(improvements.get(0))) {
+                root.getChildren().add(improvements.get(0));
+            }
+        }
+
+        //ruin
+        if (hasRuin && !ruinDiscovered) {
+            double y11 = this.getY();
+            double x11 = this.getX();
+            ruin.setVisible(true);
+            ruin.setWidth(40);
+            ruin.setHeight(40);
+            ruin.setX(x11 - 10);
+            ruin.setY(y11 - 10);
+            ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
+            if (!root.getChildren().contains(ruin)) {
                 root.getChildren().add(ruin);
+            }
             if (units.size() > 0) {
                 Unit unit = units.get(0);
                 ArrayList<String> techNames = new ArrayList<>();
@@ -1545,6 +1731,7 @@ public class Tile extends Polygon {
             improvements.get(0).setX(this.getX() + 50);
             improvements.get(0).setY(this.getY() + 30);
         }
+        System.out.println("tile number : " + this.getTileNumber() + "  x : " + this.getX() + " Y : " + this.getY());
     }
     public void moveDown(){
         double x1,y1;
@@ -1622,12 +1809,11 @@ public class Tile extends Polygon {
 
     public boolean equals (Tile tile) {
         if (this == null || tile == null) return false;
-        if (this.getX() == tile.getX() &&
-                this.getY() == tile.getY()) return true;
+        if (this.getTileNumber() == tile.getTileNumber()) return true;
         return false;
     }
 
-    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits) {
+    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits, ClientThread clientThread, GameGroupData gameGroupData) {
         // todo ... check classes that yall wrote
         this.cameraSpeed = 30;
         this.isDesert = tile.isDesert;
@@ -1647,8 +1833,6 @@ public class Tile extends Polygon {
         this.combatChange = tile.getCombatChange();
         this.mpCost = tile.getMpCost();
         this.tileNumber = tile.getTileNumber();
-        this.x = tile.getX();
-        this.y = tile.getY();
         this.radius = tile.getRadius();
         this.h = tile.getH();
         this.citizen = getCitizenCopy(tile.getCitizen());
@@ -1656,7 +1840,7 @@ public class Tile extends Polygon {
         this.ruin = getRuinCopy(tile.getRuin());
         this.building = setBuildingCopy(tile.getBuilding());
         //this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
-        this.resource = copyResource(tile.getResource());
+        this.resource = copyResource(tile.getResource(), clientThread, gameGroupData);
         this.attribute = setAttributeCopy(tile.getAttribute());
         setImprovementCopy(tile.getImprovements());
         this.isWorking = tile.isWorking;
@@ -1744,13 +1928,15 @@ public class Tile extends Polygon {
         return null;
     }
 
-    private Resource copyResource(Resource resource) {
+    private Resource copyResource(Resource resource, ClientThread clientThread, GameGroupData gameGroupData) {
         if (this.getResource() == null && resource != null) {
             Resource resource2 = new Resource(resource.getName());
+            //generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
             //addResourcePicture(resource2);
             return resource2;
         }
         else if (this.getResource() != null && resource != null){
+            //generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
             //this.getResource().copyFields(resource);
             return this.getResource();
         }

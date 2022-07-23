@@ -470,7 +470,7 @@ public class PlayGameMenu {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        //updateMapAfterMove();
+                        updateMapAfterMove();
                     } else {
                         showError();
                     }
@@ -562,7 +562,7 @@ public class PlayGameMenu {
                                 VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
                                 victoryAnimation.play();
                             }
-                           // updateMapAfterMove();
+                            updateMapAfterMove();
                         }
                     } else {
                         showError();
@@ -582,11 +582,26 @@ public class PlayGameMenu {
         threadTask.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                showResult(newValue);
-                if (newValue.startsWith("end ")) {
-                    VictoryAnimation.stage = stage;
-                    VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
-                    victoryAnimation.play();
+                if (clientThread.isNewResultAvailable || !clientThread.result.equals("")) {
+                    System.out.println("in the iffffffff");
+                    showResult(newValue);
+
+                    if (clientThread.result.contains("nextTurn ")) {
+                        playingCivilization = clientThread.getPlayingCivilization(civilizations);
+                        civName.setText("civilization : " + playingCivilization.getName());
+                        goldAmount.setText(" : " + playingCivilization.getGold());
+                        happinessAmount.setText(" : " + playingCivilization.getHappiness());
+                        if (!clientThread.wasPreviousTurnMine) {
+                            clientThread.isNewResultAvailable = false;
+                            clientThread.result = "";
+                        }
+                    }
+
+                    if (newValue.startsWith("end ")) {
+                        VictoryAnimation.stage = stage;
+                        VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
+                        victoryAnimation.play();
+                    }
                 }
             }
         });
@@ -614,7 +629,7 @@ public class PlayGameMenu {
     }
 
     //TODO... koochak bebar to server
-    public void updateMapAfterMove(){
+    public void updateMapAfterMove() {
         ArrayList<Integer> civilization1new = new ArrayList<>();
         ArrayList<Integer> civilization2new = new ArrayList<>();   ///---> -1, 1
         ArrayList<Integer> civilization3new = new ArrayList<>();
