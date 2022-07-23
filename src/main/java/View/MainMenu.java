@@ -118,6 +118,7 @@ public class MainMenu {
         FriendsList.sender = loggedInMember;
         SendFriendRequest.lobbyURL = lobbyURL;
         SendFriendRequest.sender = loggedInMember;
+        FriendRequestsList.member = loggedInMember;
         root = FXMLLoader.load(lobbyURL);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
