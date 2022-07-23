@@ -1580,8 +1580,8 @@ public class Tile extends Polygon {
             rail.setY(this.y - 30);
         }
         if (resource != null){
-            double y11 = this.getY();
-            double x11 = this.getX() + 70;
+            float y11 = this.getY();
+            float x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
         }
@@ -1649,8 +1649,8 @@ public class Tile extends Polygon {
             rail.setY(this.y - 30);
         }
         if (resource != null){
-            double y11 = this.getY();
-            double x11 = this.getX() + 70;
+            float y11 = this.getY();
+            float x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
         }
@@ -1718,8 +1718,8 @@ public class Tile extends Polygon {
             rail.setY(this.y - 30);
         }
         if (resource != null){
-            double y11 = this.getY();
-            double x11 = this.getX() + 70;
+            float y11 = this.getY();
+            float x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
         }
@@ -1731,7 +1731,6 @@ public class Tile extends Polygon {
             improvements.get(0).setX(this.getX() + 50);
             improvements.get(0).setY(this.getY() + 30);
         }
-        //System.out.println("tile number : " + this.getTileNumber() + "  x : " + this.getX() + " Y : " + this.getY());
     }
     public void moveDown(){
         double x1,y1;
@@ -1788,8 +1787,8 @@ public class Tile extends Polygon {
             rail.setY(this.y - 30);
         }
         if (resource != null){
-            double y11 = this.getY();
-            double x11 = this.getX() + 70;
+            float y11 = this.getY();
+            float x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
         }
@@ -1931,12 +1930,12 @@ public class Tile extends Polygon {
     private Resource copyResource(Resource resource, ClientThread clientThread, GameGroupData gameGroupData) {
         if (this.getResource() == null && resource != null) {
             Resource resource2 = new Resource(resource.getName());
-            //generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
+            generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
             //addResourcePicture(resource2);
             return resource2;
         }
-        else if (this.getResource() != null && resource != null){
-            //generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
+        else if ((this.getResource() != null && resource != null) || (this.getResource() != null && resource == null)){
+            generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
             //this.getResource().copyFields(resource);
             return this.getResource();
         }

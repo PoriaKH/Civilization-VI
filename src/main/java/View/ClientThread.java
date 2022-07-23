@@ -72,6 +72,7 @@ public class ClientThread extends Thread {
                     System.out.println(txt);
                     otherDataGson = gson2.fromJson(txt, OtherDataGson.class);
                     setGameGroupData(gameGroupData, otherDataGson);
+                    PlayGameMenu.gameGroupData = gameGroupData;
                     break;
                 }
             }
