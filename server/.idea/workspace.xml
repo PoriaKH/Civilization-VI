@@ -5,7 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="..">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/GotoMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/UserPassTF.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/GotoMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/UserPassTF.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/LoginMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/ClientThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/ClientThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/LoginMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/LoginMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +60,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -76,6 +96,8 @@
       <workItem from="1657625874166" duration="2636000" />
       <workItem from="1657716485412" duration="3415000" />
       <workItem from="1658254842186" duration="6659000" />
+      <workItem from="1658571296489" duration="174000" />
+      <workItem from="1658571521186" duration="3313000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>

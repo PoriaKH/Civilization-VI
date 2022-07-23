@@ -7,12 +7,13 @@ import Model.Units.Unit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TextField;
 import sun.applet.Main;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -461,6 +462,49 @@ public class CommandProcessor {
             GameGroup gameGroup = getGroup(endGameGson.member);
             playGameMenuController.endGame(gameGroup);
         }
+        else if(command.startsWith("login")){
+            command = command.substring(5);
+            Gson gson = new GsonBuilder().create();
+            UserPassTF userPassTF = gson.fromJson(command,UserPassTF.class);
+            System.out.println("userTF = " + userPassTF.getUsernameTF());
+            System.out.println("passTF = " + userPassTF.getPasswordTF());
+            String usernameTF = userPassTF.getUsernameTF();
+            String passwordTF = userPassTF.getPasswordTF();
+//            System.out.println(command);
+            String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+            File file = new File("users2.txt");
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            line = bufferedReader.readLine();
+            while(line != null && !line.equals(""))
+            {
+                Matcher fileMatcher = getMatcher(line, fileRegex);
+                fileMatcher.find();
+                String fileUsername = fileMatcher.group("username");
+                String fileNickname = fileMatcher.group("nickname");
+                String filePassword = fileMatcher.group("password");
+                String fileDate = fileMatcher.group("date");
+                int fileImage = Integer.parseInt(fileMatcher.group("image"));
+
+                if(Objects.equals(fileUsername, usernameTF)){
+                    if(Objects.equals(filePassword, passwordTF)){
+                        int score = Integer.parseInt(fileMatcher.group("score"));
+                        changeDate(fileUsername,fileNickname,filePassword,score,fileImage);
+                        GotoMain gotoMain = new GotoMain(fileNickname,score,fileImage,fileDate);
+                        Gson gson1 = new GsonBuilder().create();
+                        String out = gson1.toJson(gotoMain);
+                        dataOutputStream.writeUTF("gotoMain" + out);
+                        return;
+                    }
+                    dataOutputStream.writeUTF("Username and password did not match!");
+                    return;
+                }
+
+                line = bufferedReader.readLine();
+            }
+            fileReader.close();
+        }
 
 
 
@@ -486,5 +530,43 @@ public class CommandProcessor {
             }
         }
         return null;
+    }
+    private static Matcher getMatcher(String command, String regex) {
+        Matcher matcher = Pattern.compile(regex).matcher(command);
+        return matcher;
+    }
+    private static void changeDate(String fileUsername, String fileNickname, String filePassword, int score, int imageNumber) throws IOException {
+        File file = new File("users2.txt");
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+
+            String username = fileMatcher.group("username");
+
+            if(!Objects.equals(fileUsername, username)) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            line = bufferedReader.readLine();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+        bufferedWriter.write(String.valueOf(stringBuilder));
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        bufferedWriter.write(fileUsername + " " + fileNickname + " " + filePassword + " " + score + " " + imageNumber + " " + dtf.format(now));
+
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
     }
 }
