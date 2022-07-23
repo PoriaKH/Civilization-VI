@@ -4,8 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="..">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="moved registerMenu to Server">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/ChangeNickname.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/ChangePassword.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/ChangePassword.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/ChangeNickname.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/ChangePassword.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/LoginMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/ProfileMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/LoginMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/LoginMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/ProfileMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/ProfileMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +90,7 @@
       <workItem from="1657716485412" duration="3415000" />
       <workItem from="1658254842186" duration="6659000" />
       <workItem from="1658571296489" duration="174000" />
-      <workItem from="1658571521186" duration="3313000" />
+      <workItem from="1658571521186" duration="6939000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -163,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658505996793</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="moved registerMenu to Server">
+      <created>1658575984365</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1658575984365</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,7 +213,7 @@
     <MESSAGE value="edited a field in unit" />
     <MESSAGE value="accept or deny FriendRequest" />
     <MESSAGE value=".." />
-    <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="moved registerMenu to Server" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved registerMenu to Server" />
   </component>
 </project>
