@@ -48,15 +48,15 @@ public class MainMenu {
 
     public void initialize(){
         if(mediaPlayer != null){
-           // mediaPlayer.play();
+            mediaPlayer.play();
         }
         if(mediaPlayer == null) {
-            /*Media media = new Media(mainMenuSoundURL.toString());
+            Media media = new Media(mainMenuSoundURL.toString());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setVolume(20);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            SettingPanel.mediaPlayer = mediaPlayer;*/
+            SettingPanel.mediaPlayer = mediaPlayer;
         }
     }
 
