@@ -1,5 +1,8 @@
 package View;
 
+import Model.FunctionsGson.RegisterTF;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,6 +23,9 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static View.CreateHost.dataInputStream;
+import static View.CreateHost.dataOutputStream;
 
 
 public class RegisterMenu {
@@ -44,46 +50,18 @@ public class RegisterMenu {
             message.setText("invalid username or password");
             return;
         }
+        RegisterTF registerTF = new RegisterTF(usernameTF.getText(),nicknameTF.getText(),passwordTF.getText());
+        Gson gson = new GsonBuilder().create();
+        String out = gson.toJson(registerTF);
+        dataOutputStream.writeUTF("register" + out);
+        dataOutputStream.flush();
 
-        File file = new File("users.txt");
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        StringBuilder stringBuilder = new StringBuilder("");
-        String line = bufferedReader.readLine();
+        String ans = dataInputStream.readUTF();
 
-        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
-        while (line != null && !line.equals("")) {
-            Matcher fileMatcher = getMatcher(line, fileRegex);
-            fileMatcher.find();
-            String fileUsername = fileMatcher.group("username");
-
-            if(Objects.equals(fileUsername, usernameTF.getText())) {
-                message.setText("username already exists");
-                return;
-            }
-
-            stringBuilder.append(line);
-            stringBuilder.append("\n");
-
-            line = bufferedReader.readLine();
+        if(ans.startsWith("setMessage")){
+            ans = ans.substring(10);
+            message.setText(ans);
         }
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
-        bufferedWriter.write(String.valueOf(stringBuilder));
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-
-        Random rand = new Random();
-        int upperbound = 4;
-        int int_random = rand.nextInt(upperbound);
-
-        bufferedWriter.write(usernameTF.getText() + " " + nicknameTF.getText() + " " + passwordTF.getText() + " 0 " + int_random + " " + dtf.format(now));
-        bufferedWriter.newLine();
-
-        message.setText("user registered successfully");
-
-        bufferedWriter.close();
     }
 
     public void backClicked(ActionEvent event) throws IOException {

@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -505,11 +506,54 @@ public class CommandProcessor {
             }
             fileReader.close();
         }
+        else if(command.startsWith("register")){
+            command = command.substring(8);
+            Gson gson = new GsonBuilder().create();
+            RegisterTF registerTF = gson.fromJson(command,RegisterTF.class);
+            String usernameTF = registerTF.usernameTF;
+            String passwordTF = registerTF.passwordTF;
+            String nicknameTF = registerTF.nicknameTF;
 
+            File file = new File("users2.txt");
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringBuilder stringBuilder = new StringBuilder("");
+            String line = bufferedReader.readLine();
 
+            String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+            while (line != null && !line.equals("")) {
+                Matcher fileMatcher = getMatcher(line, fileRegex);
+                fileMatcher.find();
+                String fileUsername = fileMatcher.group("username");
 
+                if(Objects.equals(fileUsername, usernameTF)) {
+                    dataOutputStream.writeUTF("setMessageusername already exists");
+                    return;
+                }
 
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
 
+                line = bufferedReader.readLine();
+            }
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+            bufferedWriter.write(String.valueOf(stringBuilder));
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+
+            Random rand = new Random();
+            int upperbound = 4;
+            int int_random = rand.nextInt(upperbound);
+
+            bufferedWriter.write(usernameTF + " " + nicknameTF + " " + passwordTF + " 0 " + int_random + " " + dtf.format(now));
+            bufferedWriter.newLine();
+
+            dataOutputStream.writeUTF("setMessageuser registered successfully");
+
+            bufferedWriter.close();
+        }
     }
 
     private static void sendGuestOK(ArrayList<Socket> sockets2) throws IOException {
