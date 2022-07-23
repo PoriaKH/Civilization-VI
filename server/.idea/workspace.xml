@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="commit">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="..">
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/CivilizationsGson.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/EndGameGson.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/FriendRequestGson.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/FriendsListGson.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/MemberArray.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/OtherDataGson.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/ScoreboardGson.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/ClientThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/ClientThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,14 +154,21 @@
       <option name="project" value="LOCAL" />
       <updated>1658473910294</updated>
     </task>
-    <task id="LOCAL-00011" summary="commit">
-      <created>1658568839232</created>
+    <task id="LOCAL-00011" summary="accept or deny FriendRequest">
+      <created>1658497998609</created>
       <option name="number" value="00011" />
       <option name="presentableId" value="LOCAL-00011" />
       <option name="project" value="LOCAL" />
-      <updated>1658568839232</updated>
+      <updated>1658497998609</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="..">
+      <created>1658505996793</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1658505996793</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,14 +190,14 @@
     <MESSAGE value="converted server project to maven" />
     <MESSAGE value="added cheatGson and else if in command processor" />
     <MESSAGE value="done some on teleport" />
-    <MESSAGE value=".." />
     <MESSAGE value="added status checker to gameGroup server side" />
     <MESSAGE value="still debugging" />
     <MESSAGE value="debugging coping fields" />
     <MESSAGE value="finished debugging for startGame (found new bug)" />
     <MESSAGE value="debug" />
     <MESSAGE value="edited a field in unit" />
-    <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="accept or deny FriendRequest" />
+    <MESSAGE value=".." />
+    <option name="LAST_COMMIT_MESSAGE" value=".." />
   </component>
 </project>
