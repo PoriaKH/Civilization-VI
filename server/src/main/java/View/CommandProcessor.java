@@ -177,15 +177,23 @@ public class CommandProcessor {
             dataOutputStream.writeUTF(response);
             dataOutputStream.flush();
         }
+        else if (command.startsWith("friend profile ")){
+            command = command.replace("friend profile ", "");
+            String response = playGameMenuController.infoReader(command);
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
         else if (command.startsWith("accept friendRequest ")){
             command = command.replace("accept friendRequest ", "");
-            System.out.println("accept friend request");
-            playGameMenuController.acceptRequest(command);
+            String[] splitParts = command.split(" # ");
+            System.out.println("parts: " + splitParts[0] + "\t" + splitParts[1]);
+            playGameMenuController.acceptRequest(splitParts[0], splitParts[1]);
 
         }
         else if (command.startsWith("deny friendRequest ")){
             command = command.replace("deny friendRequest ", "");
-            playGameMenuController.denyRequest(command);
+            String[] splitParts = command.split(" # ");
+            playGameMenuController.denyRequest(splitParts[0], splitParts[1]);
         }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();

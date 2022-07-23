@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -23,19 +24,20 @@ import java.util.ArrayList;
 public class FriendsList {
     public static Stage stage;
     public static URL lobbyURL;
-    private Pane pane = new Pane();
+    public static URL friendsListURL;
+    private BorderPane pane = new BorderPane();
     private Scene scene;
     private Button back = new Button("back");
     private Label label = new Label("your friends :");
     private ScrollPane container = new ScrollPane();
     private VBox vBox = new VBox(50);
     private VBox mainVBox = new VBox(50);
-    private Label spacing = new Label("             ");
+    private Label spacing = new Label("                         ");
     public static Member sender;
     private ArrayList<String> friends = new ArrayList<>();
 
     public void run() throws IOException {
-        pane.setPrefSize(1280, 720);
+        pane = FXMLLoader.load(friendsListURL);
         FriendsListGson friendsListGson = new FriendsListGson();
         friendsListGson.sender = sender;
         friendsListGson.friendsUsernames = friends;
@@ -82,12 +84,12 @@ public class FriendsList {
         container.setPrefSize(1280, 600);
         container.setContent(vBox);
         ArrayList<HBox> hBoxes = new ArrayList<>();
-        ArrayList<Text> friendsText = new ArrayList<>();
+        ArrayList<Label> friendsText = new ArrayList<>();
         ArrayList<Button> profileButtons = new ArrayList<>();
         if (friends.size() == 0) {
             hBoxes.add(new HBox(50));
             hBoxes.get(0).getChildren().add(spacing);
-            friendsText.add(new Text("you have no friends! how dark :( "));
+            friendsText.add(new Label("you have no friends! how dark :( "));
             friendsText.get(0).setStyle("-fx-font-size: 25;\n" +
                     "    -fx-border-color: #4d0000;\n" +
                     "    -fx-background-color: #8f0202;");
@@ -96,17 +98,34 @@ public class FriendsList {
         }
         for (int i = 0; i < friends.size(); i++) {
             hBoxes.add(new HBox(50));
-            friendsText.add(new Text(friends.get(i)));
-            friendsText.get(i).setStyle("-fx-font-size: 25;\n" +
-                    "    -fx-border-color: #4d0000;\n" +
-                    "    -fx-background-color: #8f0202;");
+            friendsText.add(new Label(friends.get(i)));
             profileButtons.add(new Button("profile"));
+            int finalI = i;
+            profileButtons.get(i).setOnMouseClicked(event -> {
+                String response = "";
+                try {
+                    CreateHost.dataOutputStream.writeUTF("friend profile " + friends.get(finalI));
+                    CreateHost.dataOutputStream.flush();
+                    response = CreateHost.dataInputStream.readUTF();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String[] userInfo = response.split(" ");
+                FriendProfile friendProfile = new FriendProfile();
+                FriendProfile.stage = stage;
+                friendProfile.friendsList = this;
+                try {
+                    friendProfile.run(userInfo);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
             hBoxes.get(i).getChildren().add(spacing);
             hBoxes.get(i).getChildren().add(friendsText.get(i));
             hBoxes.get(i).getChildren().add(profileButtons.get(i));
             vBox.getChildren().add(hBoxes.get(i));
         }
-        pane.getChildren().add(mainVBox);
+        pane.setCenter(mainVBox);
         scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();
