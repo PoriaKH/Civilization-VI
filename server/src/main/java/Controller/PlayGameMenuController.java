@@ -5068,12 +5068,12 @@ public class PlayGameMenuController {
         Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
 
         //unit actions check
-        int tileNumber = unitActionsNextTurnCheck(civilizationServer, gameGroupData.tiles);
+        /*int tileNumber = unitActionsNextTurnCheck(civilizationServer, gameGroupData.tiles);
         if(tileNumber != -1) {
             gameGroupData.result = "nextTurn : order unit in tile number : " + tileNumber;
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
-        }
+        }*/
         //check that are you working on a technology
         /*if (civilizationServer.getWorkingOnTechnology() == null) {
             gameGroupData.result = "nextTurn : choose a technology to learn";

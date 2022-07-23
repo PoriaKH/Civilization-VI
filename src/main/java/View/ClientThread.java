@@ -88,7 +88,6 @@ public class ClientThread extends Thread {
                     System.out.println(txt);
                     otherDataGson = gson2.fromJson(txt, OtherDataGson.class);
                     setGameGroupData(gameGroupData, otherDataGson);
-                    isGameEnded = true;
                     break;
                 }
             }
@@ -97,6 +96,7 @@ public class ClientThread extends Thread {
                     String result = gameGroupData.result;
                     this.result = result;
                     this.isNewResultAvailable = true;
+                    isGameEnded = true;
                     break;
                 } else {
                     copyTiles(gameGroupData.tiles);
