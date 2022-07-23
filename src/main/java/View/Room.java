@@ -179,29 +179,31 @@ public class Room {
                         else {
                             System.out.println("something went wrong! Client/Room/Line 169");
                         }
-                        MemberArray memberArray = new MemberArray();
+
+
+                        /*MemberArray memberArray = new MemberArray();
                         memberArray.members = gsonRoom.members;
 
                         Gson gson1 = new GsonBuilder().create();
                         String txt = gson1.toJson(memberArray);
                         dataOutputStream.writeUTF(txt);
-                        dataOutputStream.flush();
+                        dataOutputStream.flush();*/
 
 //                        refreshThePage(vBox,event);
 
-//                        ClientThread clientThread = new ClientThread(stage, event);
-//                        clientThread.setDaemon(true);
-//                        clientThread.start();
-//
-//
-//                        while (true) {
-//                            Thread.sleep(1000);
-//                            if (clientThread.isGameReady()) {
-//                                clientThread.playGameMenu.clientThread = clientThread;
-//                                clientThread.playGameMenu.switchToGame(event);
-//                                break;
-//                            }
-//                        }
+                       ClientThread clientThread = new ClientThread(stage, event);
+                       clientThread.setDaemon(true);
+                       clientThread.start();
+
+
+                       while (true) {
+                           Thread.sleep(1000);
+                           if (clientThread.isGameReady()) {
+                               clientThread.playGameMenu.clientThread = clientThread;
+                                clientThread.playGameMenu.switchToGame(event);
+                             break;
+                           }
+                        }
 
                         /*while (true) {
                              GameGroupData gameGroupData = new GameGroupData();
@@ -263,7 +265,50 @@ public class Room {
             }
         });
 
+        Button guestButton = new Button("Guest Start");
+        startButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        if (isCreator)
+            guestButton.setDisable(true);
+
+        guestButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                while (true) {
+                    try {
+                        String respond = dataInputStream.readUTF();
+                        if (respond.equals("ok")) break;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                ClientThread clientThread = new ClientThread(stage, event);
+                clientThread.setDaemon(true);
+                clientThread.start();
+
+
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (clientThread.isGameReady()) {
+                        clientThread.playGameMenu.clientThread = clientThread;
+                        try {
+                            clientThread.playGameMenu.switchToGame(event);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                }
+            }
+        });
+
+
+
         hBox.getChildren().add(startButton);
+        hBox.getChildren().add(guestButton);
         hBox.setSpacing(15);
         root.setBottom(hBox);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
@@ -414,13 +459,12 @@ public class Room {
         kickButtons = new ArrayList<>();
         buttonStringHashMap = new HashMap<>();
         try {
-            setIsGameStarted();
             setAmIKicked();
             setGsonRoom();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(isGameStarted){
+        /*if(isGameStarted){
             //Start the game ...
             ClientThread clientThread = new ClientThread(stage, (MouseEvent) event);
             clientThread.setDaemon(true);
@@ -434,10 +478,8 @@ public class Room {
                     clientThread.playGameMenu.switchToGame((MouseEvent) event);
                     break;
                 }
-            }
+            }*/
 
-
-        }
         if(amIKicked){
             root = FXMLLoader.load(lobbyURL);
             stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -476,7 +518,7 @@ public class Room {
         }
         listenForKickButtons(vBox);
     }
-    public void setIsGameStarted() throws IOException {
+/*    public void setIsGameStarted() throws IOException {
         dataOutputStream.writeUTF("give me startedGameMembers");
         dataOutputStream.flush();
         String in = dataInputStream.readUTF();
@@ -489,7 +531,7 @@ public class Room {
                 break;
             }
         }
-    }
+    }*/
     public void listenForKickButtons(VBox vBox){
         for(Button button : kickButtons){
             button.setOnMouseClicked(new EventHandler<MouseEvent>() {

@@ -206,6 +206,8 @@ public class CommandProcessor {
             GsonRoom gsonRoom = gson1.fromJson(str,GsonRoom.class);
             members2 = gsonRoom.members;
 
+            sendGuestOK(sockets2);
+
             GameGroup gameGroup = new GameGroup();
             gameGroup.sockets = sockets2;
             gameGroup.members = members2;
@@ -265,7 +267,6 @@ public class CommandProcessor {
             }
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
             gameGroupData.result = "newGame";
-            Thread.sleep(500);
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
         }
 
@@ -467,6 +468,13 @@ public class CommandProcessor {
 
     }
 
+    private static void sendGuestOK(ArrayList<Socket> sockets2) throws IOException {
+        for (int i = 1; i < sockets2.size(); i++) {
+            DataOutputStream dataOutputStream = new DataOutputStream(sockets2.get(i).getOutputStream());
+            dataOutputStream.writeUTF("ok");
+            dataOutputStream.flush();
+        }
+    }
 
 
     // get game group of a member
