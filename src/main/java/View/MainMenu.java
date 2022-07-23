@@ -47,17 +47,17 @@ public class MainMenu {
     public Scene scene;
 
     public void initialize(){
-        if(mediaPlayer != null){
-            mediaPlayer.play();
-        }
-        if(mediaPlayer == null) {
-            Media media = new Media(mainMenuSoundURL.toString());
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setVolume(20);
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            SettingPanel.mediaPlayer = mediaPlayer;
-        }
+//        if(mediaPlayer != null){
+//            mediaPlayer.play();
+//        }
+//        if(mediaPlayer == null) {
+//            Media media = new Media(mainMenuSoundURL.toString());
+//            mediaPlayer = new MediaPlayer(media);
+//            mediaPlayer.setAutoPlay(true);
+//            mediaPlayer.setVolume(20);
+//            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+//            SettingPanel.mediaPlayer = mediaPlayer;
+//        }
     }
 
     public void gameMenuSwitch(MouseEvent mouseEvent) throws IOException {
