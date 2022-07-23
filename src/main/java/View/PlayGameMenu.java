@@ -499,7 +499,7 @@ public class PlayGameMenu {
             nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (true) {
+                    if (Room.isMyTurn) {
                         String string = "";
                         try {
                             playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);

@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="moved registerMenu to Server">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/ChangeNickname.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/FunctionsGson/ChangePassword.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/ChangePassword.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/ChangeNickname.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/Model/FunctionsGson/ChangePassword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/LoginMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/ProfileMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/LoginMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/LoginMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/ProfileMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/ProfileMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
-    </list>
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="moved registerMenu to Server" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
