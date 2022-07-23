@@ -5430,6 +5430,7 @@ public class PlayGameMenuController {
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
         gameGroupData.result = "end game Winner is : " + getWinner(gameGroup.civilizations);
         sendMessageToAllClients(gameGroup, gameGroupData);
+        increaseFileScore(getWinner(gameGroup.civilizations));
         removeFinishedGameGroup(gameGroup);
     }
 
@@ -5440,6 +5441,48 @@ public class PlayGameMenuController {
                 break;
             }
         }
+    }
+
+    public void increaseFileScore(Civilization civilization) throws IOException {
+        File file = new File("users2.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+            String fileUsername = fileMatcher.group("username");
+
+            if(Objects.equals(fileUsername, civilization.getMember().getUsername())) {
+                line = bufferedReader.readLine();
+                continue;
+            }
+
+            stringBuilder.append(line);
+            stringBuilder.append("\n");
+
+            line = bufferedReader.readLine();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+        bufferedWriter.write(String.valueOf(stringBuilder));
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        Random rand = new Random();
+        int upperbound = 4;
+        int int_random = rand.nextInt(upperbound);
+
+        int newScore = civilization.getMember().getScore() + 500;
+        bufferedWriter.write(civilization.getMember().getUsername() + " " + civilization.getMember().getNickname() + " " + civilization.getMember().getPassword() + " " + newScore + " " + int_random + " " + dtf.format(now));
+        bufferedWriter.newLine();
+
+
+        bufferedWriter.close();
     }
 
 }
