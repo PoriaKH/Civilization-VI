@@ -6,14 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="moved registerMenu to Server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FriendRequests/v.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FriendRequests/v.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/City.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/ClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/ClientThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/ClientThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/ClientThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/FriendRequestsList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/FriendRequestsList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/City.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/City.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

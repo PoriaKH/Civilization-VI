@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,10 +24,11 @@ import java.util.ArrayList;
 public class FriendRequestsList {
     public static Member member;
     public static Stage stage;
-    public Scene scene;
+
     public static URL lobbyURL;
     public static URL friendRequestsListURL;
     private BorderPane pane = new BorderPane();
+    public Scene scene = new Scene(pane);
     private Button back = new Button("back");
     private ArrayList<Button> accept = new ArrayList<>();
     private ArrayList<Button> deny = new ArrayList<>();
@@ -38,17 +40,18 @@ public class FriendRequestsList {
     private Label spacing = new Label("             ");
 
     public void run() throws IOException {
-        vBox.getChildren().removeAll();
-        mainVBox.getChildren().removeAll();
-        pane.getChildren().removeAll();
-        pane = new BorderPane();
-        accept = new ArrayList<>();
-        deny = new ArrayList<>();
-        hBoxes = new ArrayList<>();
-        usernamesLabel = new ArrayList<>();
-        vBox = new VBox(50);
-        mainVBox = new VBox(50);
-        container = new ScrollPane();
+        System.out.println("fisrt");
+        pane.getChildren().clear();
+        vBox.getChildren().clear();
+        mainVBox.getChildren().clear();
+        //pane = new BorderPane();
+        accept.clear();
+        deny.clear();
+        hBoxes.clear();
+        usernamesLabel.clear();
+        //vBox.getChildren().removeAll();
+        //ainVBox.getChildren().removeAll();
+        container.setContent(null);
         pane = FXMLLoader.load(friendRequestsListURL);
         vBox.setAlignment(Pos.CENTER);
         String request = "friend requests list " + member.getUsername();
@@ -93,6 +96,7 @@ public class FriendRequestsList {
                 }
                 try {
                     this.run();
+                    System.out.println("hi");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -143,8 +147,9 @@ public class FriendRequestsList {
         mainVBox.getChildren().add(back);
         mainVBox.getChildren().add(container);
         pane.setCenter(mainVBox);
-        scene = new Scene(pane);
+        scene.setRoot(pane);
         stage.setScene(scene);
         stage.show();
+        System.out.println("endddd");
     }
 }
