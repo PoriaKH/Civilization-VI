@@ -1,5 +1,6 @@
 package View;
 
+import Model.Member;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -46,15 +47,15 @@ public class Lobby {
         new FriendsList().run();
     }
 
-    public void sendFriendRequest(MouseEvent mouseEvent) {
+    public void sendFriendRequest(MouseEvent mouseEvent) throws IOException {
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         SendFriendRequest.stage = stage;
         new SendFriendRequest().run();
     }
 
-    public void showFriendRequestsList(MouseEvent mouseEvent) {
+    public void showFriendRequestsList(MouseEvent mouseEvent) throws IOException {
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         FriendRequestsList.stage = stage;
-        new SendFriendRequest().run();
+        new FriendRequestsList().run();
     }
 }

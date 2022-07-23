@@ -13,6 +13,7 @@ import sun.applet.Main;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -144,7 +145,7 @@ public class CommandProcessor {
                 }
             }
         }
-        else if (command.startsWith("scoreboard")){
+        else if (command.startsWith("scoreboard ")){
             Gson gson = new GsonBuilder().create();
             command = command.replace("scoreboard " , "");
             ScoreboardGson scoreboardGson = gson.fromJson(command, ScoreboardGson.class);
@@ -178,6 +179,7 @@ public class CommandProcessor {
         }
         else if (command.startsWith("accept friendRequest ")){
             command = command.replace("accept friendRequest ", "");
+            System.out.println("accept friend request");
             playGameMenuController.acceptRequest(command);
 
         }

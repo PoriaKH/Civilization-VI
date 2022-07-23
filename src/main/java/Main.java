@@ -177,6 +177,9 @@ public class Main extends Application {
 
         SettingPanel.settingPanelURL = new URL(Main.class.getResource("fxml/settingPanel.fxml").toExternalForm());
 
+        SendFriendRequest.sendFriendRequestURL = new URL(Main.class.getResource("fxml/sendFriendRequest.fxml").toExternalForm());
+        FriendRequestsList.friendRequestsListURL = new URL(Main.class.getResource("fxml/friendRequestsList.fxml").toExternalForm());
+
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();
         for (int i = 0; i < Unit.unitsName.size(); i++) {

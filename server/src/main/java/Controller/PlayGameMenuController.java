@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -4866,7 +4867,7 @@ public class PlayGameMenuController {
             for (int j = 0; j < members.get(i).size(); j++)
                 allMembers.add(members.get(i).get(j));
         String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
-        File file = new File("users.txt");
+        File file = new File("users2.txt");
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line;
@@ -4893,6 +4894,7 @@ public class PlayGameMenuController {
     public ArrayList<String> friendsList(Member sender) throws IOException {
         ArrayList<String> friendsList = new ArrayList<>();
         File file = new File("src/main/resources/Friends/" + sender.getUsername() + ".txt");
+        boolean check = file.createNewFile();
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String fileRegex = "(?<username>.*)";
@@ -4911,6 +4913,7 @@ public class PlayGameMenuController {
     public String friendRequestsList(String username) throws IOException {
         ArrayList<String> friendsList = new ArrayList<>();
         File file = new File("src/main/resources/FriendRequests/" + username + ".txt");
+        boolean check = file.createNewFile();
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String fileRegex = "(?<username>.*)";
@@ -4936,7 +4939,7 @@ public class PlayGameMenuController {
             if (friendsUsernames.get(i).equals(friendRequestGson.receiverUsername))
                 return "this user is already your friend";
         String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
-        File file = new File("users.txt");
+        File file = new File("users2.txt");
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line;
@@ -4992,6 +4995,7 @@ public class PlayGameMenuController {
     }
     private void addToFriendsList(String username) throws IOException {
         File file = new File("src/main/resources/FriendRequests/" + username + ".txt");
+        boolean check = file.createNewFile();
         FileWriter fileWriter = new FileWriter(file, true);
         fileWriter.write(username + "\n");
     }

@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -24,7 +25,8 @@ public class FriendRequestsList {
     public static Stage stage;
     public Scene scene;
     public static URL lobbyURL;
-    private Pane pane = new Pane();
+    public static URL friendRequestsListURL;
+    private BorderPane pane = new BorderPane();
     private Button back = new Button("back");
     private ArrayList<Button> accept = new ArrayList<>();
     private ArrayList<Button> deny = new ArrayList<>();
@@ -33,8 +35,21 @@ public class FriendRequestsList {
     private VBox vBox = new VBox(50);
     private VBox mainVBox = new VBox(50);
     private ScrollPane container = new ScrollPane();
+    private Label spacing = new Label("             ");
 
-    public void run(){
+    public void run() throws IOException {
+        vBox.getChildren().removeAll();
+        mainVBox.getChildren().removeAll();
+        pane.getChildren().removeAll();
+        pane = new BorderPane();
+        accept = new ArrayList<>();
+        deny = new ArrayList<>();
+        hBoxes = new ArrayList<>();
+        usernamesLabel = new ArrayList<>();
+        vBox = new VBox(50);
+        mainVBox = new VBox(50);
+        container = new ScrollPane();
+        pane = FXMLLoader.load(friendRequestsListURL);
         vBox.setAlignment(Pos.CENTER);
         String request = "friend requests list " + member.getUsername();
         String response = "";
@@ -76,11 +91,11 @@ public class FriendRequestsList {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                accept = new ArrayList<>();
-                deny = new ArrayList<>();
-                hBoxes = new ArrayList<>();
-                usernamesLabel = new ArrayList<>();
-                this.run();
+                try {
+                    this.run();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             deny.get(i).setOnMouseClicked(event -> {
                 try {
@@ -89,13 +104,14 @@ public class FriendRequestsList {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                accept = new ArrayList<>();
-                deny = new ArrayList<>();
-                hBoxes = new ArrayList<>();
-                usernamesLabel = new ArrayList<>();
-                this.run();
+                try {
+                    this.run();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             hBoxes.add(new HBox(50));
+            hBoxes.get(i).getChildren().add(spacing);
             hBoxes.get(i).getChildren().add(usernamesLabel.get(i));
             hBoxes.get(i).getChildren().add(accept.get(i));
             hBoxes.get(i).getChildren().add(deny.get(i));
@@ -111,20 +127,22 @@ public class FriendRequestsList {
                 "            #31a3e0,\n" +
                 "            radial-gradient(center 50% 50%, radius 100%, rgba(255, 84, 84, 0.7), #f11111);");
         back.setOnMouseClicked(event -> {
+            Pane mainPane = new Pane();
             try {
-                pane = FXMLLoader.load(lobbyURL);
+                mainPane = FXMLLoader.load(lobbyURL);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            scene = new Scene(pane);
+            scene = new Scene(mainPane);
             stage.setScene(scene);
             stage.show();
         });
         container.setPrefSize(1280, 600);
         container.setContent(vBox);
+        mainVBox.setAlignment(Pos.CENTER);
         mainVBox.getChildren().add(back);
-        mainVBox.getChildren().add(vBox);
-        pane.getChildren().add(mainVBox);
+        mainVBox.getChildren().add(container);
+        pane.setCenter(mainVBox);
         scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();
