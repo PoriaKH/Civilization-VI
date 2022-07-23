@@ -842,7 +842,7 @@ public class PlayGameMenuController {
                 stringBuilder.append("\n");
                 for (int i = 0; i < tempCivilization.getCities().size(); i++) {
                     City tempCity = tempCivilization.getCities().get(i);
-                    if (tempCity != tempCivilization.getCapital()) {
+                    if (!tempCity.equals(tempCivilization.getCapital())) {
                         stringBuilder.append("City ").append(i + 1).append("  : ");
                         for (Tile tile : tempCity.getTiles()) {
                             stringBuilder.append(tile.getTileNumber()).append(" ");
