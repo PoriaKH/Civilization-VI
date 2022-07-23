@@ -109,12 +109,12 @@ public class ClientThread extends Thread {
                     PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
                     if (Room.isMyTurn) {
                         String result = gameGroupData.result;
-                        this.result = result;
                         this.isNewResultAvailable = true;
+                        this.result = result;
                     } else if (!Room.isMyTurn && wasPreviousTurnMine) {
                         String result = gameGroupData.result;
-                        this.result = result;
                         this.isNewResultAvailable = true;
+                        this.result = result;
                     }
                 }
             }

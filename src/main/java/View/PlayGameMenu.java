@@ -582,8 +582,9 @@ public class PlayGameMenu {
         threadTask.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (clientThread.isNewResultAvailable) {
-                    showResult(clientThread.result);
+                if (clientThread.isNewResultAvailable || !clientThread.result.equals("")) {
+                    System.out.println("in the iffffffff");
+                    showResult(newValue);
 
                     if (clientThread.result.contains("nextTurn ")) {
                         playingCivilization = clientThread.getPlayingCivilization(civilizations);

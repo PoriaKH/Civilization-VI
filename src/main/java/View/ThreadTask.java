@@ -11,10 +11,10 @@ public class ThreadTask extends Task<String> {
             Thread.sleep(500);
            // if (clientThread.isNewResultAvailable) {
                 updateValue(clientThread.result);
-                if (!clientThread.result.contains("nextTurn")) {
+                /*if (!clientThread.result.contains("nextTurn")) {
                     clientThread.isNewResultAvailable = false;
                     clientThread.result = "";
-                }
+                }*/
             //}
         }
     }
