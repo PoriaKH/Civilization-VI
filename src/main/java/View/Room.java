@@ -416,12 +416,12 @@ public class Room {
         return civilizations;
     }
 
-    private void copyTiles (ArrayList<Tile> serverTiles) {
+    /*private void copyTiles (ArrayList<Tile> serverTiles) {
         ArrayList<Unit> units = getAllUnits(serverTiles);
         for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
-            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units);
+            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units, this);
         }
-    }
+    }*/
 
     private ArrayList<Unit> getAllUnits(ArrayList<Tile> serverTiles) {
         ArrayList<Unit> allServerUnits = new ArrayList<>();

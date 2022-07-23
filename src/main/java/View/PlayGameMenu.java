@@ -470,7 +470,7 @@ public class PlayGameMenu {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        //updateMapAfterMove();
+                        updateMapAfterMove();
                     } else {
                         showError();
                     }
@@ -562,7 +562,7 @@ public class PlayGameMenu {
                                 VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
                                 victoryAnimation.play();
                             }
-                           // updateMapAfterMove();
+                            updateMapAfterMove();
                         }
                     } else {
                         showError();
@@ -629,7 +629,7 @@ public class PlayGameMenu {
     }
 
     //TODO... koochak bebar to server
-    public void updateMapAfterMove(){
+    public void updateMapAfterMove() {
         ArrayList<Integer> civilization1new = new ArrayList<>();
         ArrayList<Integer> civilization2new = new ArrayList<>();   ///---> -1, 1
         ArrayList<Integer> civilization3new = new ArrayList<>();

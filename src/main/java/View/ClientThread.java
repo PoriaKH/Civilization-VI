@@ -11,32 +11,15 @@ import Model.Units.Unit;
 import Model.Units.Warrior;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import sun.plugin2.message.Message;
 
-import javax.xml.ws.handler.Handler;
-import javax.xml.ws.handler.MessageContext;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.logging.LogRecord;
 
 import static View.CreateHost.dataInputStream;
-import static View.CreateHost.dataOutputStream;
-import static View.MainMenu.lobbyURL;
 import static View.ProfileMenu.loggedInMember;
 
 public class ClientThread extends Thread {
@@ -100,7 +83,7 @@ public class ClientThread extends Thread {
                     isGameEnded = true;
                     break;
                 } else {
-                    copyTiles(gameGroupData.tiles);
+                    copyTiles(gameGroupData.tiles, gameGroupData);
                     copyCivilizations(gameGroupData.civilizations);
                     loadExtras(gameGroupData);
                     Civilization civilization = getCivilization(gameGroupData.civilizations);
@@ -133,6 +116,7 @@ public class ClientThread extends Thread {
                 Tile.map = PlayGameMenu.tiles;
                 Tile.civilizations = PlayGameMenu.civilizations;
                 loadExtras(gameGroupData);
+                setStatusCheckersForGameBeginning(otherDataGson);
                 Civilization civilization = getCivilization(gameGroupData.civilizations);
                 Room.isMyTurn = civilization.isMyTurn;
                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
@@ -140,6 +124,14 @@ public class ClientThread extends Thread {
             }
             if (isGameEnded) break;
         }
+    }
+
+    private void setStatusCheckersForGameBeginning(OtherDataGson otherDataGson) {
+        playGameMenu.tileStatusOfCivilization1 = otherDataGson.tileStatusOfCivilization1;
+        playGameMenu.tileStatusOfCivilization2 = otherDataGson.tileStatusOfCivilization2;
+        playGameMenu.tileStatusOfCivilization3 = otherDataGson.tileStatusOfCivilization3;
+        playGameMenu.tileStatusOfCivilization4 = otherDataGson.tileStatusOfCivilization4;
+        playGameMenu.tileStatusOfCivilization5 = otherDataGson.tileStatusOfCivilization5;
     }
 
     public Civilization getPlayingCivilization(ArrayList<Civilization> civilizations) {
@@ -159,7 +151,7 @@ public class ClientThread extends Thread {
         gameGroupData.result = otherDataGson.result;
     }
 
-    private ArrayList<Integer> getStatusChecker(GameGroupData gameGroupData) {
+    public ArrayList<Integer> getStatusChecker(GameGroupData gameGroupData) {
         if (gameGroupData.index == 0) {
             return gameGroupData.tileStatusOfCivilization1;
         }
@@ -247,10 +239,14 @@ public class ClientThread extends Thread {
         return civilizations;
     }
 
-    private void copyTiles (ArrayList<Tile> serverTiles) {
+    private void copyTiles (ArrayList<Tile> serverTiles, GameGroupData gameGroupData) {
         ArrayList<Unit> units = getAllUnits(serverTiles);
         for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
-            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units);
+            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units, this, gameGroupData);
+        }
+        ArrayList<Integer> statusChecker = getStatusChecker(gameGroupData);
+        for (int i = 0; i < statusChecker.size(); i++) {
+            PlayGameMenu.tiles.get(i).generatingTile(statusChecker.get(i));
         }
     }
 
