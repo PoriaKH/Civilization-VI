@@ -1053,9 +1053,9 @@ public class Tile extends Polygon {
 
     private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
     @Expose
-    private boolean doesHaveRoad;
+    private boolean doesHaveRoad = false;
     @Expose
-    private boolean doesHaveRailWay;
+    private boolean doesHaveRailWay = false;
     @Expose
     private boolean isRoadDamaged; // if a unit attack to road/rail it is true
     @Expose
@@ -1731,7 +1731,7 @@ public class Tile extends Polygon {
             improvements.get(0).setX(this.getX() + 50);
             improvements.get(0).setY(this.getY() + 30);
         }
-        System.out.println("tile number : " + this.getTileNumber() + "  x : " + this.getX() + " Y : " + this.getY());
+        //System.out.println("tile number : " + this.getTileNumber() + "  x : " + this.getX() + " Y : " + this.getY());
     }
     public void moveDown(){
         double x1,y1;
