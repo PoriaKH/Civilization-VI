@@ -4,47 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="fix resources">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/FriendRequests/b.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/FriendRequests/v.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Friends/a.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/FriendRequests/b.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/FriendRequests/v.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Friends/a.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/fxml/friendRequestsList.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/fxml/sendFriendRequest.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/FriendRequests/a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/FriendRequests/a.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FriendRequests/a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FriendRequests/a.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/FriendRequestsList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/FriendRequestsList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/FriendsList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/FriendsList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/SendFriendRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/SendFriendRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$10.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$9.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/FriendRequestsList.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/FriendRequestsList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/FriendsList.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/FriendsList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/Lobby.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Lobby.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/SendFriendRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/SendFriendRequest.class" afterDir="false" />
-    </list>
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="moved registerMenu to Server" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,8 +76,6 @@
       <workItem from="1658254842186" duration="6659000" />
       <workItem from="1658571296489" duration="174000" />
       <workItem from="1658571521186" duration="6939000" />
-      <workItem from="1658585643271" duration="13000" />
-      <workItem from="1658585683853" duration="5270000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>

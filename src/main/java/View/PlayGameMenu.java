@@ -499,7 +499,7 @@ public class PlayGameMenu {
             nextTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (true) {
+                    if (Room.isMyTurn) {
                         String string = "";
                         try {
                             playGameMenuController.nextTurn(civilizations, playingCivilization, tiles);
@@ -539,11 +539,6 @@ public class PlayGameMenu {
                                     e.printStackTrace();
                                 }
                                 Civilization winner = playGameMenuController.getWinner(civilizations);
-                                try {
-                                    increaseFileScore(winner);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
 
                                 if (5 * PlayGameMenuController.turn == 2050) {
                                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
