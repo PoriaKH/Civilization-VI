@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="moved registerMenu to Server" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="friendship" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -199,6 +199,7 @@
     <MESSAGE value="accept or deny FriendRequest" />
     <MESSAGE value=".." />
     <MESSAGE value="moved registerMenu to Server" />
-    <option name="LAST_COMMIT_MESSAGE" value="moved registerMenu to Server" />
+    <MESSAGE value="friendship" />
+    <option name="LAST_COMMIT_MESSAGE" value="friendship" />
   </component>
 </project>
