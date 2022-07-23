@@ -653,9 +653,9 @@ public class Tile {
 
     private HashMap<Improvement, Integer> improvementEarnedPercent = new HashMap<>();
     @Expose
-    private boolean doesHaveRoad;
+    private boolean doesHaveRoad = false;
     @Expose
-    private boolean doesHaveRailWay;
+    private boolean doesHaveRailWay = false;
     @Expose
     private boolean isRoadDamaged; // if a unit attack to road/rail it is true
     @Expose
