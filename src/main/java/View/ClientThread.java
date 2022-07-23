@@ -49,6 +49,7 @@ public class ClientThread extends Thread {
     public String result = "";
     public boolean isNewResultAvailable = false;
     public boolean isGameEnded = false;
+    public boolean wasPreviousTurnMine = false;
 
 // todo ... add condition if game is over , stop thread
     public ClientThread(Stage stage, MouseEvent event) {
@@ -103,8 +104,7 @@ public class ClientThread extends Thread {
                     copyCivilizations(gameGroupData.civilizations);
                     loadExtras(gameGroupData);
                     Civilization civilization = getCivilization(gameGroupData.civilizations);
-                    System.out.println("each client : " + civilization.getName() + "  turn : " + civilization.isMyTurn);
-                    boolean wasPreviousTurnMine = Room.isMyTurn;
+                    wasPreviousTurnMine = Room.isMyTurn;
                     Room.isMyTurn = civilization.isMyTurn;
                     PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
                     if (Room.isMyTurn) {

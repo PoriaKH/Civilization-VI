@@ -582,22 +582,25 @@ public class PlayGameMenu {
         threadTask.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println("first of listener");
-                threadTask.value = clientThread.result;
-                showResult(clientThread.result);
-                if (clientThread.result.contains("nextTurn")) {
-                    System.out.println("in the ifffff");
-                    playingCivilization = clientThread.getPlayingCivilization(civilizations);
-                    civName.setText("civilization : " + playingCivilization.getName());
-                    goldAmount.setText(" : " + playingCivilization.getGold());
-                    happinessAmount.setText(" : " + playingCivilization.getHappiness());
-                    clientThread.isNewResultAvailable = false;
-                    clientThread.result = "";
-                }
-                if (newValue.startsWith("end ")) {
-                    VictoryAnimation.stage = stage;
-                    VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
-                    victoryAnimation.play();
+                if (clientThread.isNewResultAvailable) {
+                    showResult(clientThread.result);
+
+                    if (clientThread.result.contains("nextTurn ")) {
+                        playingCivilization = clientThread.getPlayingCivilization(civilizations);
+                        civName.setText("civilization : " + playingCivilization.getName());
+                        goldAmount.setText(" : " + playingCivilization.getGold());
+                        happinessAmount.setText(" : " + playingCivilization.getHappiness());
+                        if (!clientThread.wasPreviousTurnMine) {
+                            clientThread.isNewResultAvailable = false;
+                            clientThread.result = "";
+                        }
+                    }
+
+                    if (newValue.startsWith("end ")) {
+                        VictoryAnimation.stage = stage;
+                        VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
+                        victoryAnimation.play();
+                    }
                 }
             }
         });
