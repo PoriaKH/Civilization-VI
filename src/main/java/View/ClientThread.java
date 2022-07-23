@@ -48,6 +48,7 @@ public class ClientThread extends Thread {
     private boolean isGameReady = false;
     public String result = "";
     public boolean isNewResultAvailable = false;
+    public boolean isGameEnded = false;
 
 // todo ... add condition if game is over , stop thread
     public ClientThread(Stage stage, MouseEvent event) {
@@ -87,6 +88,7 @@ public class ClientThread extends Thread {
                     System.out.println(txt);
                     otherDataGson = gson2.fromJson(txt, OtherDataGson.class);
                     setGameGroupData(gameGroupData, otherDataGson);
+                    isGameEnded = true;
                     break;
                 }
             }
@@ -95,6 +97,7 @@ public class ClientThread extends Thread {
                     String result = gameGroupData.result;
                     this.result = result;
                     this.isNewResultAvailable = true;
+                    break;
                 } else {
                     copyTiles(gameGroupData.tiles);
                     copyCivilizations(gameGroupData.civilizations);
@@ -129,9 +132,12 @@ public class ClientThread extends Thread {
                 Tile.map = PlayGameMenu.tiles;
                 Tile.civilizations = PlayGameMenu.civilizations;
                 loadExtras(gameGroupData);
+                Civilization civilization = getCivilization(gameGroupData.civilizations);
+                Room.isMyTurn = civilization.isMyTurn;
                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
                 isGameReady = true;
             }
+            if (isGameEnded) break;
         }
     }
 

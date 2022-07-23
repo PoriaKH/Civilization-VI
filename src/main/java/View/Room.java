@@ -41,7 +41,7 @@ import static View.ProfileMenu.loggedInMember;
 public class Room {
     public boolean isGameStarted = false;
     public boolean amIKicked = false;
-    public static boolean isMyTurn = true; // todo felan bara test graphic true e
+    public static boolean isMyTurn = false;
 
     public boolean isCreator = false;
     public GsonRoom gsonRoom;
