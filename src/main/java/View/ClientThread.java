@@ -220,24 +220,10 @@ public class ClientThread extends Thread {
     }
 
     private void copyCivilizations (ArrayList<Civilization> serverCivilizations) {
-        PlayGameMenu.civilizations = deleteCivilization(serverCivilizations);
         for (int i = 0; i < PlayGameMenu.civilizations.size(); i++) {
             PlayGameMenu.civilizations.get(i).copyFieldsOfCivilizations(serverCivilizations.get(i));
         }
         playGameMenuController.loadCivilizationForBuilding(PlayGameMenu.civilizations);
-    }
-
-    private ArrayList<Civilization> deleteCivilization(ArrayList<Civilization> serverCivilizations) {
-        ArrayList<Civilization> civilizations = new ArrayList<>();
-        for (Civilization serverCivilization : serverCivilizations) {
-            for (Civilization civilization : PlayGameMenu.civilizations) {
-                if (civilization.equals(serverCivilization)) {
-                    civilizations.add(civilization);
-                    break;
-                }
-            }
-        }
-        return civilizations;
     }
 
     private void copyTiles (ArrayList<Tile> serverTiles, GameGroupData gameGroupData) {

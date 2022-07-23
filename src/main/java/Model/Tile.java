@@ -218,8 +218,8 @@ public class Tile extends Polygon {
         this.repairNeedImprovement = 0;
         this.roads = new ArrayList<>();
         this.railRoads = new ArrayList<>();
-        this.units = new ArrayList<>();
         this.improvements = new ArrayList<>();
+        this.units = new ArrayList<>();
         this.isDesert = isDesert;
         this.isMeadow = isMeadow;
         this.isHill = isHill;
