@@ -179,6 +179,16 @@ public class Main extends Application {
 
         SendFriendRequest.sendFriendRequestURL = new URL(Main.class.getResource("fxml/sendFriendRequest.fxml").toExternalForm());
         FriendRequestsList.friendRequestsListURL = new URL(Main.class.getResource("fxml/friendRequestsList.fxml").toExternalForm());
+        FriendRequestsList.lobbyURL = new URL(Main.class.getResource("fxml/lobby.fxml").toExternalForm());
+        SendFriendRequest.lobbyURL = new URL(Main.class.getResource("fxml/lobby.fxml").toExternalForm());
+        FriendsList.lobbyURL = new URL(Main.class.getResource("fxml/lobby.fxml").toExternalForm());
+
+        FriendProfile.firstImageURL = new URL(Main.class.getResource("pictures/0.png").toExternalForm());
+        FriendProfile.secondImageURL = new URL(Main.class.getResource("pictures/1.png").toExternalForm());
+        FriendProfile.thirdImageURL = new URL(Main.class.getResource("pictures/2.png").toExternalForm());
+        FriendProfile.forthImageURL = new URL(Main.class.getResource("pictures/3.png").toExternalForm());
+        FriendProfile.friendProfileURL = new URL(Main.class.getResource("fxml/friendProfile.fxml").toExternalForm());
+        FriendsList.friendsListURL = new URL(Main.class.getResource("fxml/friendsList.fxml").toExternalForm());
 
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();

@@ -4952,6 +4952,7 @@ public class PlayGameMenuController {
             String fileUsername = fileMatcher.group("username");
             if (friendRequestGson.receiverUsername.equals(fileUsername)){
                 File file1 = new File("src/main/resources/FriendRequests/" + friendRequestGson.receiverUsername + ".txt");
+                boolean check = file1.createNewFile();
                 FileWriter fileWriter = new FileWriter(file1, true);
                 fileWriter.write(friendRequestGson.sender.getUsername() + "\n");
                 fileWriter.close();
@@ -4965,8 +4966,29 @@ public class PlayGameMenuController {
             return "no such username exists";
         return "";
     }
-    private void removeFromFriendRequestList(String fileUsername) throws IOException {
-        File file = new File("src/main/resources/FriendRequests/" + fileUsername + ".txt");
+    public String infoReader(String username) throws IOException {
+        File file = new File("users2.txt");
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+
+            String fileUsername = fileMatcher.group("username");
+
+            if(Objects.equals(fileUsername, username))
+                return line;
+            line = bufferedReader.readLine();
+        }
+        return "";
+    }
+    private void removeFromFriendRequestList(String fileUsername, String fileName) throws IOException {
+        File file = new File("src/main/resources/FriendRequests/" + fileName + ".txt");
 
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -4989,22 +5011,49 @@ public class PlayGameMenuController {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
 
+        fileReader = new FileReader(file);
+        bufferedReader = new BufferedReader(fileReader);
+        stringBuilder = new StringBuilder("");
+        line = bufferedReader.readLine();
+
+        fileRegex = "(?<username>.*)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+
+            String username = fileMatcher.group("username");
+
+            if(!Objects.equals(fileUsername, username) && !username.equals("\n")) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            line = bufferedReader.readLine();
+        }
+        fileOutputStream = new FileOutputStream(file);
+        bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
         bufferedWriter.write(String.valueOf(stringBuilder));
         bufferedWriter.newLine();
         bufferedWriter.close();
     }
-    private void addToFriendsList(String username) throws IOException {
-        File file = new File("src/main/resources/FriendRequests/" + username + ".txt");
+    private void addToFriendsList(String username, String fileName) throws IOException {
+        File file = new File("src/main/resources/Friends/" + fileName + ".txt");
         boolean check = file.createNewFile();
         FileWriter fileWriter = new FileWriter(file, true);
         fileWriter.write(username + "\n");
+        File file1 = new File("src/main/resources/Friends/" + username + ".txt");
+        boolean check1 = file1.createNewFile();
+        FileWriter fileWriter1 = new FileWriter(file1, true);
+        fileWriter1.write(fileName + "\n");
+        fileWriter.close();
+        fileWriter1.close();
     }
-    public void acceptRequest(String username) throws IOException {
-        removeFromFriendRequestList(username);
-        addToFriendsList(username);
+    public void acceptRequest(String username, String fileName) throws IOException {
+        removeFromFriendRequestList(username, fileName);
+        addToFriendsList(username, fileName);
     }
-    public void denyRequest(String username) throws IOException {
-        removeFromFriendRequestList(username);
+    public void denyRequest(String username, String fileName) throws IOException {
+        removeFromFriendRequestList(username, fileName);
     }
     public StringBuilder showCurrentScore(ArrayList<Civilization> civilizations,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder("");

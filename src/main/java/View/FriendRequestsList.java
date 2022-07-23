@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class FriendRequestsList {
     private VBox vBox = new VBox(50);
     private VBox mainVBox = new VBox(50);
     private ScrollPane container = new ScrollPane();
-    private Label spacing = new Label("             ");
+    private Label spacing = new Label("                 ");
 
     public void run() throws IOException {
         System.out.println("fisrt");
@@ -64,8 +65,24 @@ public class FriendRequestsList {
             e.printStackTrace();
         }
         String[] usernames = response.split("\n");
+        String[] usernameCopy = new String[usernames.length];
+        int j = 0;
         for (int i = 0; i < usernames.length; i++) {
-            usernamesLabel.add(new Label(usernames[i]));
+            if (!usernames[i].equals("\\s") && !usernames[i].equals(""))
+                usernameCopy[j++] = usernames[i];
+        }
+        if (j == 0){
+            hBoxes.add(new HBox(50));
+            Text friendsText = new Text("there is no friend requests!");
+            friendsText.setStyle("-fx-font-size: 25;\n" +
+                    "    -fx-border-color: #4d0000;\n" +
+                    "    -fx-background-color: #8f0202;");
+            hBoxes.get(0).getChildren().add(spacing);
+            hBoxes.get(0).getChildren().add(friendsText);
+            vBox.getChildren().add(hBoxes.get(0));
+        }
+        for (int i = 0; i < j; i++) {
+            usernamesLabel.add(new Label(usernameCopy[i]));
             accept.add(new Button("accept"));
             deny.add(new Button("deny"));
             accept.get(i).setStyle("-fx-pref-width: 200;\n" +
@@ -89,7 +106,7 @@ public class FriendRequestsList {
             int finalI = i;
             accept.get(i).setOnMouseClicked(event -> {
                 try {
-                    CreateHost.dataOutputStream.writeUTF("accept friendRequest " + usernames[finalI]);
+                    CreateHost.dataOutputStream.writeUTF("accept friendRequest " + usernames[finalI] + " # " + member.getUsername());
                     CreateHost.dataOutputStream.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -103,7 +120,7 @@ public class FriendRequestsList {
             });
             deny.get(i).setOnMouseClicked(event -> {
                 try {
-                    CreateHost.dataOutputStream.writeUTF("deny friendRequest " + usernames[finalI]);
+                    CreateHost.dataOutputStream.writeUTF("deny friendRequest " + usernames[finalI] + " # " + member.getUsername());
                     CreateHost.dataOutputStream.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
