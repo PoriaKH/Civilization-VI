@@ -582,11 +582,26 @@ public class PlayGameMenu {
         threadTask.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                showResult(newValue);
-                if (newValue.startsWith("end ")) {
-                    VictoryAnimation.stage = stage;
-                    VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
-                    victoryAnimation.play();
+                if (clientThread.isNewResultAvailable || !clientThread.result.equals("")) {
+                    System.out.println("in the iffffffff");
+                    showResult(newValue);
+
+                    if (clientThread.result.contains("nextTurn ")) {
+                        playingCivilization = clientThread.getPlayingCivilization(civilizations);
+                        civName.setText("civilization : " + playingCivilization.getName());
+                        goldAmount.setText(" : " + playingCivilization.getGold());
+                        happinessAmount.setText(" : " + playingCivilization.getHappiness());
+                        if (!clientThread.wasPreviousTurnMine) {
+                            clientThread.isNewResultAvailable = false;
+                            clientThread.result = "";
+                        }
+                    }
+
+                    if (newValue.startsWith("end ")) {
+                        VictoryAnimation.stage = stage;
+                        VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
+                        victoryAnimation.play();
+                    }
                 }
             }
         });

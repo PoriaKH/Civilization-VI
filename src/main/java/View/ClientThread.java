@@ -48,6 +48,8 @@ public class ClientThread extends Thread {
     private boolean isGameReady = false;
     public String result = "";
     public boolean isNewResultAvailable = false;
+    public boolean isGameEnded = false;
+    public boolean wasPreviousTurnMine = false;
 
 // todo ... add condition if game is over , stop thread
     public ClientThread(Stage stage, MouseEvent event) {
@@ -95,22 +97,24 @@ public class ClientThread extends Thread {
                     String result = gameGroupData.result;
                     this.result = result;
                     this.isNewResultAvailable = true;
+                    isGameEnded = true;
+                    break;
                 } else {
                     copyTiles(gameGroupData.tiles);
                     copyCivilizations(gameGroupData.civilizations);
                     loadExtras(gameGroupData);
                     Civilization civilization = getCivilization(gameGroupData.civilizations);
-                    boolean wasPreviousTurnMine = Room.isMyTurn;
+                    wasPreviousTurnMine = Room.isMyTurn;
                     Room.isMyTurn = civilization.isMyTurn;
                     PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
                     if (Room.isMyTurn) {
                         String result = gameGroupData.result;
-                        this.result = result;
                         this.isNewResultAvailable = true;
+                        this.result = result;
                     } else if (!Room.isMyTurn && wasPreviousTurnMine) {
                         String result = gameGroupData.result;
-                        this.result = result;
                         this.isNewResultAvailable = true;
+                        this.result = result;
                     }
                 }
             }
@@ -129,9 +133,12 @@ public class ClientThread extends Thread {
                 Tile.map = PlayGameMenu.tiles;
                 Tile.civilizations = PlayGameMenu.civilizations;
                 loadExtras(gameGroupData);
+                Civilization civilization = getCivilization(gameGroupData.civilizations);
+                Room.isMyTurn = civilization.isMyTurn;
                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
                 isGameReady = true;
             }
+            if (isGameEnded) break;
         }
     }
 

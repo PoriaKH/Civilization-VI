@@ -2042,7 +2042,7 @@ public class PlayGameMenuController {
             return str;
         }
 
-        if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
+        /*if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
             str = "you don't have necessary technology!";
             return str;
         }
@@ -2050,7 +2050,7 @@ public class PlayGameMenuController {
         if (!unit.isCivilian() && !isResourceAvailableForUnit (unit, city)) {
             str = "you don't have necessary resource!";
             return str;
-        }
+        }*/
 
         Tile centerTile = city.getCenterTile();
         if (!unit.isCivilian() && isUnitWarrior (centerTile)) {
@@ -5068,12 +5068,12 @@ public class PlayGameMenuController {
         Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
 
         //unit actions check
-        int tileNumber = unitActionsNextTurnCheck(civilizationServer, gameGroupData.tiles);
+        /*int tileNumber = unitActionsNextTurnCheck(civilizationServer, gameGroupData.tiles);
         if(tileNumber != -1) {
             gameGroupData.result = "nextTurn : order unit in tile number : " + tileNumber;
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
-        }
+        }*/
         //check that are you working on a technology
         /*if (civilizationServer.getWorkingOnTechnology() == null) {
             gameGroupData.result = "nextTurn : choose a technology to learn";
