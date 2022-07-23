@@ -2042,7 +2042,7 @@ public class PlayGameMenuController {
             return str;
         }
 
-        if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
+        /*if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
             str = "you don't have necessary technology!";
             return str;
         }
@@ -2050,7 +2050,7 @@ public class PlayGameMenuController {
         if (!unit.isCivilian() && !isResourceAvailableForUnit (unit, city)) {
             str = "you don't have necessary resource!";
             return str;
-        }
+        }*/
 
         Tile centerTile = city.getCenterTile();
         if (!unit.isCivilian() && isUnitWarrior (centerTile)) {

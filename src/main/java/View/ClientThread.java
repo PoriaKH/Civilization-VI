@@ -103,6 +103,7 @@ public class ClientThread extends Thread {
                     copyCivilizations(gameGroupData.civilizations);
                     loadExtras(gameGroupData);
                     Civilization civilization = getCivilization(gameGroupData.civilizations);
+                    System.out.println("each client : " + civilization.getName() + "  turn : " + civilization.isMyTurn);
                     boolean wasPreviousTurnMine = Room.isMyTurn;
                     Room.isMyTurn = civilization.isMyTurn;
                     PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);

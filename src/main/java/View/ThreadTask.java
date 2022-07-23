@@ -4,6 +4,7 @@ import javafx.concurrent.Task;
 
 public class ThreadTask extends Task<String> {
     public ClientThread clientThread;
+    public String value = "";
 
     @Override
     protected String call() throws Exception {
@@ -16,7 +17,9 @@ public class ThreadTask extends Task<String> {
                     clientThread.isNewResultAvailable = false;
                     clientThread.result = "";
                 }
+                if (clientThread.result.startsWith("end ")) break;
             }
         }
+        return value;
     }
 }
