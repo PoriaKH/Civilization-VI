@@ -5,16 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="edited a field in unit">
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/CivilizationsGson.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/EndGameGson.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/FriendRequestGson.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/FriendsListGson.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/MemberArray.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/OtherDataGson.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Model/FunctionsGson/ScoreboardGson.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/ClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/ClientThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/ClientThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/ClientThread.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/PlayGameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../users.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
