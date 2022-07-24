@@ -1812,7 +1812,7 @@ public class Tile extends Polygon {
         return false;
     }
 
-    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits, ClientThread clientThread, GameGroupData gameGroupData) {
+    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits, ArrayList<Integer> status) {
         // todo ... check classes that yall wrote
         this.cameraSpeed = 30;
         this.isDesert = tile.isDesert;
@@ -1839,7 +1839,7 @@ public class Tile extends Polygon {
         this.ruin = getRuinCopy(tile.getRuin());
         this.building = setBuildingCopy(tile.getBuilding());
         //this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
-        this.resource = copyResource(tile.getResource(), clientThread, gameGroupData);
+        this.resource = copyResource(tile.getResource(), status);
         this.attribute = setAttributeCopy(tile.getAttribute());
         setImprovementCopy(tile.getImprovements());
         this.isWorking = tile.isWorking;
@@ -1927,15 +1927,15 @@ public class Tile extends Polygon {
         return null;
     }
 
-    private Resource copyResource(Resource resource, ClientThread clientThread, GameGroupData gameGroupData) {
+    private Resource copyResource(Resource resource, ArrayList<Integer> status) {
         if (this.getResource() == null && resource != null) {
             Resource resource2 = new Resource(resource.getName());
-            generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
+            generatingTile(status.get(this.getTileNumber()));
             //addResourcePicture(resource2);
             return resource2;
         }
         else if ((this.getResource() != null && resource != null) || (this.getResource() != null && resource == null)){
-            generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
+            generatingTile(status.get(this.getTileNumber()));
             //this.getResource().copyFields(resource);
             return this.getResource();
         }

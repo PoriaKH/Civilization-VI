@@ -100,6 +100,11 @@ public class ClientThread extends Thread {
                         this.isNewResultAvailable = true;
                         this.result = result;
                     }
+                    else if (gameGroupData.result.equals("saveGame")) {
+                        String result = gameGroupData.result;
+                        this.isNewResultAvailable = true;
+                        this.result = result;
+                    }
                 }
             }
             else {
@@ -229,7 +234,7 @@ public class ClientThread extends Thread {
     private void copyTiles (ArrayList<Tile> serverTiles, GameGroupData gameGroupData) {
         ArrayList<Unit> units = getAllUnits(serverTiles);
         for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
-            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units, this, gameGroupData);
+            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units, getStatusChecker(gameGroupData));
         }
         ArrayList<Integer> statusChecker = getStatusChecker(gameGroupData);
         for (int i = 0; i < statusChecker.size(); i++) {

@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -281,6 +282,14 @@ public class CommandProcessor {
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
             gameGroupData.result = "newGame";
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
+        }
+
+        else if (command.startsWith("saveGame ")) {
+            command = command.replace("saveGame ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            EndGameGson endGameGson = gson.fromJson(command, EndGameGson.class);
+            GameGroup gameGroup = getGroup(endGameGson.member);
+            playGameMenuController.saveGame(gameGroup);
         }
 
 

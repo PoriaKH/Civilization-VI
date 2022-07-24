@@ -1,6 +1,7 @@
 package View;
 
 import Model.*;
+import Model.FunctionsGson.EndGameGson;
 import Model.Units.Civilian;
 import Model.Units.SaveGameClass;
 import Model.Units.Unit;
@@ -131,10 +132,12 @@ public class InfoPanel {
     }
 
     public void saveTheGame(MouseEvent mouseEvent) throws IOException {
-        for (Civilization civilization : civilizations) {
-            System.out.println(civilization.getName());
-        }
-        saveGame();
+        EndGameGson endGameGson = new EndGameGson();
+        endGameGson.member = PlayGameMenu.playingCivilization.getMember();
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(endGameGson);
+        CreateHost.dataOutputStream.writeUTF("saveGame " + request);
+        CreateHost.dataOutputStream.flush();
 
         Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
         Scene scene = new Scene(root);
