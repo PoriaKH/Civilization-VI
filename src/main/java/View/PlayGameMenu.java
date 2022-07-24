@@ -581,6 +581,18 @@ public class PlayGameMenu {
                     System.out.println("in the iffffffff");
                     showResult(newValue);
 
+                    if (clientThread.result.contains("saveGame")) {
+                        Parent root = null;
+                        try {
+                            root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                    }
+
                     if (clientThread.result.contains("nextTurn ")) {
                         playingCivilization = clientThread.getPlayingCivilization(civilizations);
                         civName.setText("civilization : " + playingCivilization.getName());

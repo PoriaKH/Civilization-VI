@@ -1,7 +1,6 @@
 package Model.Units;
 
 import Model.Civilization;
-import Model.Technology;
 import Model.Tile;
 import Model.Node;
 import View.PlayGameMenu;
@@ -10,14 +9,10 @@ import View.UnitPanel;
 import com.google.gson.annotations.Expose;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-import java.awt.*;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -28,6 +28,7 @@
             <Button text="save game" onMouseClicked="#saveTheGame"/>
             <Button text="units information panel" onMouseClicked="#unitsInfo"/>
             <Button text="back" onMouseClicked="#backClicked"/>
+            <Button text="Exit the game" onMouseClicked="#autoSave"/>
         </VBox>
     </center>
 

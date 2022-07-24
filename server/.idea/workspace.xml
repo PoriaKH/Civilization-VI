@@ -4,8 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="friendship">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added saveData to file to server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GameGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GameGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/InfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/infoPanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/infoPanel.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +51,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -81,8 +92,7 @@
       <workItem from="1658598500522" duration="68000" />
       <workItem from="1658598596810" duration="2479000" />
       <workItem from="1658602379116" duration="128000" />
-      <workItem from="1658602532494" duration="2789000" />
-      <workItem from="1658656598580" duration="292000" />
+      <workItem from="1658602532494" duration="2740000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -175,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658575984365</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="added saveData to file to server">
+      <created>1658626462038</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1658626462038</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -206,6 +223,7 @@
     <MESSAGE value="accept or deny FriendRequest" />
     <MESSAGE value=".." />
     <MESSAGE value="moved registerMenu to Server" />
-    <option name="LAST_COMMIT_MESSAGE" value="moved registerMenu to Server" />
+    <MESSAGE value="added saveData to file to server" />
+    <option name="LAST_COMMIT_MESSAGE" value="added saveData to file to server" />
   </component>
 </project>

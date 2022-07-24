@@ -17,6 +17,8 @@ public class Member {
     private String date;
     @Expose
     private int imageNumber;
+    @Expose
+    public boolean isAutoSaveActive = false;
 
     public Member(String username, String nickname,String password, int score,int imageNumber,String date){
         this.username = username;

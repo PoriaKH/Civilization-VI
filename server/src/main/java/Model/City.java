@@ -161,4 +161,98 @@ public class City {
     public void setProduction(int amount){
         production += amount;
     }
+
+    public void copyFieldsOfCity(City city, GameGroup gameGroup) {
+        this.gold = city.getGold();
+        this.food = city.getFood();
+        this.production = city.getProduction();
+        this.totalFood = city.getTotalFood();
+        this.citizens = Citizen.copyListOfCitizens(this, city, gameGroup);
+        this.centerTile = getCenterForCity(city.getCenterTile(), gameGroup);
+        this.tiles = getCityTiles(city.getTiles(), gameGroup);
+        System.out.println("centerTile : " + this.centerTile.getTileNumber() + "  units : " + this.centerTile.getUnits());
+        for (Tile tile : this.tiles) {
+            System.out.println("tiles : " + tile.getTileNumber() + "  units : " + tile.getUnits() );
+        }
+        this.defenceStrength = city.getDefenceStrength2();
+        this.damagePoint = city.getDamagePoint();
+        this.sciencePerTurn = city.getSciencePerTurn();
+    }
+
+    public ArrayList<Tile> getCityTiles(ArrayList<Tile> tiles, GameGroup gameGroup) {
+        ArrayList<Tile> tilesCity = new ArrayList<>();
+        for (Tile tile : gameGroup.tiles) {
+            for (Tile tile1 : tiles) {
+                if (tile.equals(tile1)) {
+                    tilesCity.add(tile);
+                    break;
+                }
+            }
+        }
+        return tilesCity;
+    }
+
+    public Tile getCenterForCity(Tile centerTile, GameGroup gameGroup) {
+        for (Tile tile : gameGroup.tiles) {
+            if (tile.equals(centerTile)) return tile;
+        }
+        return null;
+    }
+
+    public ArrayList<City> copyCities(ArrayList<City> clientCities, ArrayList<City> serverCities, GameGroup gameGroup) {
+        ArrayList<City> answer = new ArrayList<>();
+        ArrayList<City> newCities;
+        newCities = newCities(clientCities, serverCities);
+        for (City newCity : newCities) {
+            City city = new City(getCenterForCity(newCity.getCenterTile(), gameGroup), gameGroup.tiles);
+            city.copyFieldsOfCity(newCity, gameGroup);
+            answer.add(city);
+        }
+        newCities = updateCities(clientCities, serverCities);
+        for (City newCity : newCities) {
+            for (City clientCity : clientCities) {
+                if (clientCity.equals(newCity)) {
+                    clientCity.copyFieldsOfCity(newCity, gameGroup);
+                    answer.add(clientCity);
+                    break;
+                }
+            }
+        }
+
+        return answer;
+    }
+
+    public ArrayList<City> newCities(ArrayList<City> clientCities, ArrayList<City> serverCities) {
+        ArrayList<City> cities = new ArrayList<>();
+        boolean doesExist = false;
+        for (City serverCity : serverCities) {
+            for (City clientCity : clientCities) {
+                if (serverCity.equals(clientCity)) {
+                    doesExist = true;
+                    break;
+                }
+            }
+            if (doesExist) doesExist = false;
+            else cities.add(serverCity);
+        }
+        return cities;
+    }
+
+    public ArrayList<City> updateCities(ArrayList<City> clientCities, ArrayList<City> serverCities) {
+        ArrayList<City> cities = new ArrayList<>();
+        for (City serverCity : serverCities) {
+            for (City clientCity : clientCities) {
+                if (serverCity.equals(clientCity)) {
+                    cities.add(serverCity);
+                    break;
+                }
+            }
+        }
+        return cities;
+    }
+
+    public int getDefenceStrength2() {
+        return this.defenceStrength;
+    }
+
 }
