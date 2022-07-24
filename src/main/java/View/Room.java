@@ -42,6 +42,7 @@ public class Room {
     public boolean isGameStarted = false;
     public boolean amIKicked = false;
     public static boolean isMyTurn = false;
+    public boolean decision = false;
 
 
     public boolean isCreator = false;
@@ -165,6 +166,7 @@ public class Room {
                         Gson gson = new GsonBuilder().create();
                         GameSocketArray gameSocketArray = new GameSocketArray();
                         gameSocketArray.gameSockets = gsonRoom.sockets;
+                        gameSocketArray.isAutoSaveActive = decision;
                         String str = gson.toJson(gameSocketArray);
                         dataOutputStream.writeUTF(str);
                         dataOutputStream.flush();
@@ -262,6 +264,7 @@ public class Room {
                         Gson gson = new GsonBuilder().create();
                         GameSocketArray gameSocketArray = new GameSocketArray();
                         gameSocketArray.gameSockets = gsonRoom.sockets;
+                        gameSocketArray.isAutoSaveActive = decision;
                         String str = gson.toJson(gameSocketArray);
                         dataOutputStream.writeUTF("continueSave " + str);
                         dataOutputStream.flush();
@@ -307,8 +310,8 @@ public class Room {
         autoSaveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                boolean decision = !loggedInMember.isAutoSaveActive;
-                loggedInMember.isAutoSaveActive = decision;
+                decision = !loggedInMember.isAutoSaveActive;
+
                 String message = "auto save is ";
                 if (decision) {
                     message = message + "activated";

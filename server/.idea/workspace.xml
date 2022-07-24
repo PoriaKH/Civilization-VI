@@ -4,11 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="fixed a bug in teleport">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="fixed a bug in attack tile and winning against others worked well">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Civilization.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Civilization.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Model/Civilization.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Civilization.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/civs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/civs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GameSocketArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/GameSocketArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/GameSocketArray.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/GameSocketArray.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiles.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tiles.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/GameSocketArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/GameSocketArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/GameSocketArray.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/GameSocketArray.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658670322868</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fixed a bug in attack tile and winning against others worked well">
+      <created>1658673325975</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1658673325975</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,6 +264,7 @@
     <MESSAGE value="move chatBox to server-client" />
     <MESSAGE value="PreChatBox.fxml" />
     <MESSAGE value="fixed a bug in teleport" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug in teleport" />
+    <MESSAGE value="fixed a bug in attack tile and winning against others worked well" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug in attack tile and winning against others worked well" />
   </component>
 </project>

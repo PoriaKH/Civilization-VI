@@ -5131,6 +5131,7 @@ public class PlayGameMenuController {
         updateMapAfterMove(gameGroup);
         turn++;
         changeTurn(gameGroupData.civilizations);
+        System.out.println("+++++++++++" + gameGroup.isAutoSaveActivated);
         if (gameGroup.isAutoSaveActivated) {
             autoSaveTheGame(gameGroup, gameGroupData);
         }
@@ -5708,14 +5709,11 @@ public class PlayGameMenuController {
         gameGroupData.tileStatusOfCivilization5 = gameGroup.tileStatusOfCivilization5;
 
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-        System.out.println("first of convert to json");
         OtherDataGson otherDataGson = new OtherDataGson(gameGroupData);
-        System.out.println("after otherGson");
         String[] civs = new String[gameGroupData.civilizations.size()];
         for (int i1 = 0; i1 < civs.length; i1++) {
             civs[i1] = gson.toJson(gameGroupData.civilizations.get(i1));
         }
-        System.out.println("after all civs");
         String[] tiles = new String[72];
         for (int i1 = 0; i1 < gameGroupData.tiles.size(); i1++) {
             gameGroupData.tiles.get(i1).setChildUnits();
@@ -5723,7 +5721,6 @@ public class PlayGameMenuController {
             gameGroupData.tiles.get(i1).warrior = null;
             gameGroupData.tiles.get(i1).civilian = null;
         }
-        System.out.println("after tiles");
         String other = gson.toJson(otherDataGson);
 
 
@@ -5754,5 +5751,6 @@ public class PlayGameMenuController {
         } catch (IOException ignored) {
 
         }
+        System.out.println("end of auto save");
     }
 }
