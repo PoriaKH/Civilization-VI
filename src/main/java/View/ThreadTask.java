@@ -8,14 +8,12 @@ public class ThreadTask extends Task<String> {
     @Override
     protected String call() throws Exception {
         while (true) {
-            Thread.sleep(500);
-           // if (clientThread.isNewResultAvailable) {
+                Thread.sleep(500);
                 updateValue(clientThread.result);
                 /*if (!clientThread.result.contains("nextTurn")) {
                     clientThread.isNewResultAvailable = false;
                     clientThread.result = "";
                 }*/
-            //}
         }
     }
 }

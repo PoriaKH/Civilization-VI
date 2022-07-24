@@ -250,7 +250,7 @@ public class CommandProcessor {
             gameGroup.sockets = sockets2;
             gameGroup.members = members2;
             System.out.println("members = " + members);
-            gameGroup.isAutoSaveActivated = members2.get(0).isAutoSaveActive;
+            gameGroup.isAutoSaveActivated = gameSocketArray.isAutoSaveActive;
 
             gameGroup.tiles = playGameMenuController.mapCreator(members2.size(),members2);
             gameGroup.civilizations = playGameMenuController.initializeCivilizations(members2.size(), gameGroup.tiles, members2);
@@ -355,7 +355,7 @@ public class CommandProcessor {
             gameGroup.sockets = sockets2;
             gameGroup.members = members2;
             System.out.println("members = " + members);
-            gameGroup.isAutoSaveActivated = members2.get(0).isAutoSaveActive;;
+            gameGroup.isAutoSaveActivated = gameSocketArray.isAutoSaveActive;
             gameGroups.add(gameGroup);
 
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
@@ -762,6 +762,8 @@ public class CommandProcessor {
                 dataOutputStream.writeUTF("false");
         }
     }
+
+
     public static void changeProf(int imageNumber,Member loggedInMember) throws IOException {
         String username = loggedInMember.getUsername();
         File file = new File("users2.txt");
@@ -847,5 +849,13 @@ public class CommandProcessor {
         bufferedWriter.newLine();
 
         bufferedWriter.close();
+    }
+
+    private static boolean isAutoSaveValid(ArrayList<Member> members2) {
+        for (Member member : members2) {
+            System.out.println("name : " + member.getUsername() + "  " + member.isAutoSaveActive);
+            if (member.isAutoSaveActive) return true;
+        }
+        return false;
     }
 }

@@ -49,7 +49,8 @@ public class Building extends Rectangle { /// what is civilization ?
     public Building(String name,Civilization civilization,Tile tile){
         this.civilization = civilization;
         this.tile = tile;
-        this.tileNumber = tile.getTileNumber();
+        if (tile != null)
+            this.tileNumber = tile.getTileNumber();
 
         gold = 0;
         science = 0;

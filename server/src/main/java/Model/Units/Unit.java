@@ -258,7 +258,7 @@ public class Unit {
 
     public boolean equals (Unit unit) {
         if (this.isCivilian == unit.isCivilian &&
-        this.origin.equals(unit.origin)) return true;
+            this.getOriginNumber() == unit.getOriginNumber()) return true;
         return false;
     }
 

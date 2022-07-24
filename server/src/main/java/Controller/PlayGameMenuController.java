@@ -218,7 +218,7 @@ public class PlayGameMenuController {
         }
         serverCiv.setGold(amount);
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
-        gameGroupData.result = "cheat code activated successfully";
+        gameGroupData.result = "gold cheat code activated successfully";
         sendMessageToAllClients(gameGroup, gameGroupData);
 
     }
@@ -237,7 +237,7 @@ public class PlayGameMenuController {
         }
 
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
-        gameGroupData.result = "cheat code activated successfully";
+        gameGroupData.result = "food cheat code activated successfully";
         sendMessageToAllClients(gameGroup, gameGroupData);
 
     }
@@ -254,7 +254,7 @@ public class PlayGameMenuController {
         serverCiv.setScience(amount);
 
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
-        gameGroupData.result = "cheat code activated successfully";
+        gameGroupData.result = "technology cheat code activated successfully";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
@@ -270,7 +270,7 @@ public class PlayGameMenuController {
         serverCiv.setHappiness(amount);
 
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
-        gameGroupData.result = "cheat code activated successfully";
+        gameGroupData.result = "happiness cheat code activated successfully";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
@@ -1976,7 +1976,7 @@ public class PlayGameMenuController {
                     false, false, false, true, false);
             return warrior;
         } else if (unitName.equals("tank")) {
-            Warrior warrior = new Warrior(civilization, tile, 15, 4, 4, 6, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 15, 4, 4, 1, 450, false
                     , 0, 50, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,
@@ -2666,7 +2666,8 @@ public class PlayGameMenuController {
                 tiles.get(i).getUnits().clear();
                 tiles.get(i).removeAllUnitFromMakingProgress();
                 tiles.get(i).removeRoadsMakingProgress();
-                tiles.get(i).getBuilding().setCivilization(attacker.getCivilization());
+                if (tiles.get(i).getBuilding() != null)
+                    tiles.get(i).getBuilding().setCivilization(attacker.getCivilization());
             }
             defenderCivilization.removeCity(defenderCity);
             civilization.addCity(defenderCity);
@@ -5130,6 +5131,7 @@ public class PlayGameMenuController {
         updateMapAfterMove(gameGroup);
         turn++;
         changeTurn(gameGroupData.civilizations);
+        System.out.println("+++++++++++" + gameGroup.isAutoSaveActivated);
         if (gameGroup.isAutoSaveActivated) {
             autoSaveTheGame(gameGroup, gameGroupData);
         }
@@ -5707,14 +5709,11 @@ public class PlayGameMenuController {
         gameGroupData.tileStatusOfCivilization5 = gameGroup.tileStatusOfCivilization5;
 
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-        System.out.println("first of convert to json");
         OtherDataGson otherDataGson = new OtherDataGson(gameGroupData);
-        System.out.println("after otherGson");
         String[] civs = new String[gameGroupData.civilizations.size()];
         for (int i1 = 0; i1 < civs.length; i1++) {
             civs[i1] = gson.toJson(gameGroupData.civilizations.get(i1));
         }
-        System.out.println("after all civs");
         String[] tiles = new String[72];
         for (int i1 = 0; i1 < gameGroupData.tiles.size(); i1++) {
             gameGroupData.tiles.get(i1).setChildUnits();
@@ -5722,7 +5721,6 @@ public class PlayGameMenuController {
             gameGroupData.tiles.get(i1).warrior = null;
             gameGroupData.tiles.get(i1).civilian = null;
         }
-        System.out.println("after tiles");
         String other = gson.toJson(otherDataGson);
 
 
@@ -5753,5 +5751,6 @@ public class PlayGameMenuController {
         } catch (IOException ignored) {
 
         }
+        System.out.println("end of auto save");
     }
 }

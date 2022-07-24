@@ -40,14 +40,14 @@ public class CheatMenu {
         Matcher matcher = pattern.matcher(input);
         return matcher;
     }
-    // TODO check if it is not number show error
+
     public void goldCheat(MouseEvent mouseEvent) throws IOException {
         String str = gold.getText();
         if (getMatcher(str).matches()) {
             int amount = Integer.parseInt(str);
             new PlayGameMenuController().cheatIncreaseGold(InfoPanel.currentCivilization, amount);
-            if (doesEnteredFromInfoPanel) new InfoPanel().start();
-            else stage.setScene(infoPanelScene);
+            /*if (doesEnteredFromInfoPanel) new InfoPanel().start();
+            else stage.setScene(infoPanelScene);*/
         }
         else showError("gold");
     }
@@ -57,8 +57,8 @@ public class CheatMenu {
         if (getMatcher(str).matches()) {
             int amount = Integer.parseInt(str);
             new PlayGameMenuController().cheatIncreaseFood(InfoPanel.currentCivilization, amount);
-            if (doesEnteredFromInfoPanel) new InfoPanel().start();
-            else stage.setScene(infoPanelScene);
+            /*if (doesEnteredFromInfoPanel) new InfoPanel().start();
+            else stage.setScene(infoPanelScene);*/
         }
         else showError("food");
     }
@@ -68,8 +68,8 @@ public class CheatMenu {
         if (getMatcher(str).matches()) {
             int amount = Integer.parseInt(str);
             new PlayGameMenuController().cheatIncreaseTechnology(InfoPanel.currentCivilization, amount);
-            if (doesEnteredFromInfoPanel) new InfoPanel().start();
-            else stage.setScene(infoPanelScene);
+            /*if (doesEnteredFromInfoPanel) new InfoPanel().start();
+            else stage.setScene(infoPanelScene);*/
         }
         else showError("science");
     }
@@ -79,8 +79,8 @@ public class CheatMenu {
         if (getMatcher(str).matches()) {
             int amount = Integer.parseInt(str);
             new PlayGameMenuController().cheatIncreaseHappiness(InfoPanel.currentCivilization, amount);
-            if (doesEnteredFromInfoPanel) new InfoPanel().start();
-            else stage.setScene(infoPanelScene);
+            /*if (doesEnteredFromInfoPanel) new InfoPanel().start();
+            else stage.setScene(infoPanelScene);*/
         }
         else showError("happiness");
     }
