@@ -12,6 +12,9 @@ public class Building extends Rectangle { /// what is civilization ?
     private Tile tile;
 
     @Expose
+    public int tileNumber;
+
+    @Expose
     public boolean isAncientEra = false;
     @Expose
     public boolean isClassicalEra = false;
@@ -46,6 +49,7 @@ public class Building extends Rectangle { /// what is civilization ?
     public Building(String name,Civilization civilization,Tile tile){
         this.civilization = civilization;
         this.tile = tile;
+        this.tileNumber = tile.getTileNumber();
 
         gold = 0;
         science = 0;
@@ -346,9 +350,12 @@ public class Building extends Rectangle { /// what is civilization ?
     public void setTile(Tile tile) {
         this.tile = tile;
     }
+
     public void setCivilization(Civilization civilization) {
         this.civilization = civilization;
     }
 
-
+    public int getTileNumber() {
+        return tileNumber;
+    }
 }

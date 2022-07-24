@@ -34,7 +34,7 @@ public class ClientThread extends Thread {
     public boolean isGameEnded = false;
     public boolean wasPreviousTurnMine = false;
 
-// todo ... add condition if game is over , stop thread
+    // todo ... add condition if game is over , stop thread
     public ClientThread(Stage stage, MouseEvent event) {
         this.playGameMenu = new PlayGameMenu();
         this.stage = stage;
@@ -76,52 +76,61 @@ public class ClientThread extends Thread {
                     break;
                 }
             }
-            if (!gameGroupData.result.equals("newGame")) {
-                if (gameGroupData.result.startsWith("end ")) {
+
+            if (gameGroupData.result.equals("startSaveGame")) {
+                playGameMenu = new PlayGameMenu();
+                playGameMenu.stage = stage;
+                try {
+                    playGameMenu.root = FXMLLoader.load(GameMenu.gameMenuURL);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Tile.root = playGameMenu.root;
+                Unit.playGameMenu = playGameMenu;
+
+                startSaveGameTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
+                startSaveGameCivilizations(gameGroupData.civilizations, gameGroupData.tiles, getStatusChecker(gameGroupData));
+                loadExtras(gameGroupData);
+                Tile.map = PlayGameMenu.tiles;
+                Tile.civilizations = PlayGameMenu.civilizations;
+                setStatusCheckersForGameBeginning(otherDataGson);
+                Civilization civilization = getCivilization(gameGroupData.civilizations);
+                Room.isMyTurn = civilization.isMyTurn;
+                PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
+                isGameReady = true;
+            }
+
+            else if (!gameGroupData.result.equals("newGame")) {
+                if (gameGroupData.result.startsWith("end ") || gameGroupData.result.equals("saveGame")) {
                     String result = gameGroupData.result;
                     this.result = result;
                     this.isNewResultAvailable = true;
                     isGameEnded = true;
                     break;
                 } else {
-                    if (gameGroupData.result.equals("saveGame")) {
-                        playGameMenu = new PlayGameMenu();
-                        playGameMenu.stage = stage;
-                        try {
-                            playGameMenu.root = FXMLLoader.load(GameMenu.gameMenuURL);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Tile.root = playGameMenu.root;
-                        Unit.playGameMenu = playGameMenu;
-                        startSaveGameTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
-                        startCivilizations(gameGroupData.civilizations);
-                    }
-                    else {
-                        copyTiles(gameGroupData.tiles, gameGroupData);
-                        copyCivilizations(gameGroupData.civilizations);
-                    }
-                    loadExtras(gameGroupData);
-                    Civilization civilization = getCivilization(gameGroupData.civilizations);
-                    wasPreviousTurnMine = Room.isMyTurn;
-                    Room.isMyTurn = civilization.isMyTurn;
-                    PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
-                    if (Room.isMyTurn) {
-                        String result = gameGroupData.result;
-                        this.isNewResultAvailable = true;
-                        this.result = result;
-                    } else if (!Room.isMyTurn && wasPreviousTurnMine) {
-                        String result = gameGroupData.result;
-                        this.isNewResultAvailable = true;
-                        this.result = result;
-                    }
-                    else if (gameGroupData.result.equals("saveGame")) {
-                        String result = gameGroupData.result;
-                        this.isNewResultAvailable = true;
-                        this.result = result;
-                    }
+                    copyTiles(gameGroupData.tiles, gameGroupData);
+                    copyCivilizations(gameGroupData.civilizations);
+                }
+                loadExtras(gameGroupData);
+                Civilization civilization = getCivilization(gameGroupData.civilizations);
+                wasPreviousTurnMine = Room.isMyTurn;
+                Room.isMyTurn = civilization.isMyTurn;
+                PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
+                if (Room.isMyTurn) {
+                    String result = gameGroupData.result;
+                    this.isNewResultAvailable = true;
+                    this.result = result;
+                } else if (!Room.isMyTurn && wasPreviousTurnMine) {
+                    String result = gameGroupData.result;
+                    this.isNewResultAvailable = true;
+                    this.result = result;
+                } else if (gameGroupData.result.equals("saveGame")) {
+                    String result = gameGroupData.result;
+                    this.isNewResultAvailable = true;
+                    this.result = result;
                 }
             }
+
             else {
                 playGameMenu = new PlayGameMenu();
                 playGameMenu.stage = stage;
@@ -146,6 +155,7 @@ public class ClientThread extends Thread {
             if (isGameEnded) break;
         }
     }
+
 
     private void setStatusCheckersForGameBeginning(OtherDataGson otherDataGson) {
         playGameMenu.tileStatusOfCivilization1 = otherDataGson.tileStatusOfCivilization1;
@@ -211,14 +221,31 @@ public class ClientThread extends Thread {
                     tile.isOcean(), tile.isPlain(), tile.isSnow(), tile.isTundra(), tile.getX(), tile.getY());
             map.add(tileMap);
         }
-        for (int i = 0; i < map.size(); i++) {
-            map.get(i).generatingTile(tileStatusOfCivilization.get(i));
-        }
+
         PlayGameMenu.tiles = map;
+
+    }
+
+    public void startSaveGameCivilizations(ArrayList<Civilization> serverCivilizations, ArrayList<Tile> tiles, ArrayList<Integer> tileStatusOfCivilization) {
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (Civilization serverCivilization : serverCivilizations) {
+            City city = serverCivilization.getCities().get(0);
+            city.setTiles(city.getCityTiles(serverCivilization.getCities().get(0).getTiles()));
+            city.setCenterTile(city.getCenterForCity(serverCivilization.getCities().get(0).getCenterTile()));
+            Civilization civilization = new Civilization(serverCivilization.getMember(), city);
+            civilizations.add(civilization);
+        }
+        playGameMenuController.loadCivilizationForBuilding(civilizations);
+        PlayGameMenu.civilizations = civilizations;
+
         ArrayList<Unit> units = getAllUnits(tiles);
 
+        for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
+            PlayGameMenu.tiles.get(i).generatingTile(tileStatusOfCivilization.get(i));
+        }
+
         for (int i = 0; i < tiles.size(); i++) {
-            map.get(i).copyFieldsOfTile(tiles.get(i), units, tileStatusOfCivilization);
+            PlayGameMenu.tiles.get(i).copyFieldsOfTile(tiles.get(i), units, tileStatusOfCivilization);
         }
     }
 

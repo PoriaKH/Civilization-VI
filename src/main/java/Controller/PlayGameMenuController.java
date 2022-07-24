@@ -5083,8 +5083,10 @@ public class PlayGameMenuController {
     // todo -> comment
     public void loadTileForBuilding (ArrayList<Tile> map) {
         for (Tile tile : map) {
-            if (tile.getBuilding() != null)
+            if (tile.getBuilding() != null) {
+                tile.getBuilding().tileNumber = tile.getTileNumber();
                 tile.getBuilding().setTile(tile);
+            }
         }
     }
     // todo -> comment

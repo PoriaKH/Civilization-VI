@@ -298,6 +298,10 @@ public class CommandProcessor {
             playGameMenuController.loadCivilizationForBuilding(gameGroup.civilizations);
             playGameMenuController.loadOriginTileForUnits(gameGroup.tiles);
 
+            for (Tile tile : gameGroup.tiles) {
+                System.out.println(tile.getTileNumber() + "++++++" + tile.getBuilding());
+            }
+
             Gson gson = new GsonBuilder().create();
             GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);
             ArrayList<Socket> sockets2 = new ArrayList<>();
@@ -330,7 +334,7 @@ public class CommandProcessor {
             gameGroups.add(gameGroup);
 
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
-            gameGroupData.result = "saveGame";
+            gameGroupData.result = "startSaveGame";
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
         }
 

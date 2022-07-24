@@ -690,11 +690,13 @@ public class Tile extends Polygon {
                 resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
             else if (resource.isWheat())
                 resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
-            if (!root.getChildren().contains(resource)) {
+            if (!root.getChildren().contains(resource) && resource != null) {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        root.getChildren().add(resource);
+                        if (!root.getChildren().contains(resource) && resource != null) {
+                            root.getChildren().add(resource);
+                        }
                     }
                 });
             }
@@ -724,11 +726,13 @@ public class Tile extends Polygon {
                 improvements.get(0).setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
             else if (improvements.get(0).isLaboratory())
                 improvements.get(0).setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
-            if (!root.getChildren().contains(improvements.get(0))) {
+            if (!root.getChildren().contains(improvements.get(0)) && improvements.get(0) != null) {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        root.getChildren().add(improvements.get(0));
+                        if (!root.getChildren().contains(improvements.get(0)) && improvements.get(0) != null) {
+                            root.getChildren().add(improvements.get(0));
+                        }
                     }
                 });
             }
@@ -744,11 +748,13 @@ public class Tile extends Polygon {
             ruin.setX(x11 - 10);
             ruin.setY(y11 - 10);
             ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
-            if (!root.getChildren().contains(ruin)) {
+            if (!root.getChildren().contains(ruin) && ruin != null) {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        root.getChildren().add(ruin);
+                        if (!root.getChildren().contains(ruin) && ruin != null) {
+                            root.getChildren().add(ruin);
+                        }
                     }
                 });
             }
@@ -2049,6 +2055,7 @@ public class Tile extends Polygon {
     }
 
     public static Tile getClientTile(Tile tile) {
+        System.out.println("tiel : " + tile);
         for (Tile tile2 : PlayGameMenu.tiles) {
             if (tile.equals(tile2)) return tile2;
         }

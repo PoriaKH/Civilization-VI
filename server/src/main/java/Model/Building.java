@@ -12,6 +12,9 @@ public class Building {
     private Tile tile;
 
     @Expose
+    public int tileNumber;
+
+    @Expose
     public boolean isAncientEra = false;
     @Expose
     public boolean isClassicalEra = false;
@@ -46,6 +49,7 @@ public class Building {
     public Building(String name, Civilization civilization, Tile tile){
         this.civilization = civilization;
         this.tile = tile;
+        this.tileNumber = tile.getTileNumber();
 
         gold = 0;
         science = 0;
