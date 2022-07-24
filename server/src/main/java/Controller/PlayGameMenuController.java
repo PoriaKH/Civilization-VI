@@ -8,6 +8,7 @@ import Model.Units.Warrior;
 import View.CommandProcessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.scene.control.Label;
 
 import java.io.*;
 import java.net.Socket;
@@ -4894,6 +4895,69 @@ public class PlayGameMenuController {
             line = bufferedReader.readLine();
         }
         return "";
+    }
+
+    public StringBuilder allUsers() throws IOException {
+        File file = new File("users2.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        StringBuilder stringBuilder = new StringBuilder("");
+        String line = bufferedReader.readLine();
+        String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
+        while (line != null && !line.equals("")) {
+            Matcher fileMatcher = getMatcher(line, fileRegex);
+            fileMatcher.find();
+
+            String fileUsername = fileMatcher.group("username");
+            stringBuilder.append(fileUsername + "\n");
+            line = bufferedReader.readLine();
+        }
+        return stringBuilder;
+    }
+
+    public StringBuilder readFromPublicChat() throws FileNotFoundException {
+        StringBuilder message = new StringBuilder();
+
+        File file = new File("src/main/resources/messageFile.txt");
+        Scanner fileScanner = new Scanner(file);
+        while (fileScanner.hasNextLine())
+            message.append(fileScanner.nextLine() + "\n");
+        fileScanner.close();
+        return message;
+    }
+
+    public void writeToPublicChat(String message){
+        File file = new File("src/main/resources/messageFile.txt");
+        try {
+            FileWriter writer = new FileWriter(file, false);
+            writer.write(message);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public StringBuilder readFromPrivateChat(String fileName) throws IOException {
+        StringBuilder response = new StringBuilder();
+        File file = new File("src/main/resources/PrivateMessages/" + fileName  + ".txt");
+        boolean check = file.createNewFile();
+        Scanner fileScanner = new Scanner(file);
+        while (fileScanner.hasNextLine())
+            response.append(fileScanner.nextLine() + "\n");
+        fileScanner.close();
+        return response;
+    }
+
+    public void writeToPrivateChat(String message, String fileName){
+        File file = new File("src/main/resources/PrivateMessages/" + fileName + ".txt");
+        try {
+            FileWriter writer = new FileWriter(file, false);
+            writer.write(message);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void removeFromFriendRequestList(String fileUsername, String fileName) throws IOException {

@@ -77,14 +77,6 @@ public class MainMenu {
         stage.show();
     }
 
-    public void chatBoxSwitch(MouseEvent mouseEvent) throws IOException {
-        PreChatBox preChatBox = new PreChatBox();
-        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        preChatBox.stage = this.stage;
-        PreChatBox.loggedInMember = MainMenu.loggedInMember;
-        preChatBox.run();
-    }
-
     public void scoreboardSwitch(MouseEvent mouseEvent) throws IOException {
         ScoreboardGson scoreboardGson = new ScoreboardGson();
         scoreboardGson.member = loggedInMember;
@@ -119,6 +111,7 @@ public class MainMenu {
         SendFriendRequest.lobbyURL = lobbyURL;
         SendFriendRequest.sender = loggedInMember;
         FriendRequestsList.member = loggedInMember;
+        PreChatBox.loggedInMember = MainMenu.loggedInMember;
         root = FXMLLoader.load(lobbyURL);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);

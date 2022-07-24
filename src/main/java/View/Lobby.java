@@ -58,4 +58,11 @@ public class Lobby {
         FriendRequestsList.stage = stage;
         new FriendRequestsList().run();
     }
+
+    public void switchToChatBox(MouseEvent mouseEvent) throws IOException {
+        PreChatBox preChatBox = new PreChatBox();
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        preChatBox.stage = this.stage;
+        preChatBox.run();
+    }
 }

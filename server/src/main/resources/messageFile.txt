@@ -1,6 +1,6 @@
 a : hi
 a : how you doin
-a : 
+a :
 f : this is a really long long long long long long long long long long line that should be wrapped after this and try to be a test sample
 f : this is a really long long long long long long long long long long line that should be wrapped after this and try to be a test sample
 h : this is a really long long long long long long long long long long line that should be wrapped after this and try to be a test sample
@@ -12,5 +12,3 @@ c : hi
 c : heeeeeeeeeeey
 c : helo
 c : no way
-c : mmmmmmmmmmmmmm
-a : mmd khar nmiznd
