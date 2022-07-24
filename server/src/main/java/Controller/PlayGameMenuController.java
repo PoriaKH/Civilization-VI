@@ -217,7 +217,7 @@ public class PlayGameMenuController {
         }
         serverCiv.setGold(amount);
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
-        gameGroupData.result = "cheat code activated successfully";
+        gameGroupData.result = "gold cheat code activated successfully";
         sendMessageToAllClients(gameGroup, gameGroupData);
 
     }
@@ -236,7 +236,7 @@ public class PlayGameMenuController {
         }
 
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
-        gameGroupData.result = "cheat code activated successfully";
+        gameGroupData.result = "food cheat code activated successfully";
         sendMessageToAllClients(gameGroup, gameGroupData);
 
     }
@@ -253,7 +253,7 @@ public class PlayGameMenuController {
         serverCiv.setScience(amount);
 
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
-        gameGroupData.result = "cheat code activated successfully";
+        gameGroupData.result = "technology cheat code activated successfully";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
@@ -269,7 +269,7 @@ public class PlayGameMenuController {
         serverCiv.setHappiness(amount);
 
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
-        gameGroupData.result = "cheat code activated successfully";
+        gameGroupData.result = "happiness cheat code activated successfully";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
 
