@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="PreChatBox.fxml">
-      <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="fix keyPressed">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +82,7 @@
       <workItem from="1658598596810" duration="2479000" />
       <workItem from="1658602379116" duration="128000" />
       <workItem from="1658602532494" duration="2740000" />
+      <workItem from="1658679428049" duration="40000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -196,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658662671044</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="fix keyPressed">
+      <created>1658663040642</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1658663040642</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,6 +237,7 @@
     <MESSAGE value="added saveData to file to server" />
     <MESSAGE value="move chatBox to server-client" />
     <MESSAGE value="PreChatBox.fxml" />
-    <option name="LAST_COMMIT_MESSAGE" value="PreChatBox.fxml" />
+    <MESSAGE value="fix keyPressed" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix keyPressed" />
   </component>
 </project>
