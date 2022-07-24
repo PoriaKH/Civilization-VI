@@ -226,7 +226,7 @@ public class CommandProcessor {
             gameGroup.sockets = sockets2;
             gameGroup.members = members2;
             System.out.println("members = " + members);
-
+            gameGroup.isAutoSaveActivated = members2.get(0).isAutoSaveActive;
 
             gameGroup.tiles = playGameMenuController.mapCreator(members2.size(),members2);
             gameGroup.civilizations = playGameMenuController.initializeCivilizations(members2.size(), gameGroup.tiles, members2);
@@ -284,6 +284,7 @@ public class CommandProcessor {
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
         }
 
+
         else if (command.startsWith("continueSave ")) {
             command = command.replace("continueSave ", "");
             GameGroup gameGroup = new GameGroup();
@@ -330,7 +331,7 @@ public class CommandProcessor {
             gameGroup.sockets = sockets2;
             gameGroup.members = members2;
             System.out.println("members = " + members);
-
+            gameGroup.isAutoSaveActivated = members2.get(0).isAutoSaveActive;;
             gameGroups.add(gameGroup);
 
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
@@ -344,6 +345,14 @@ public class CommandProcessor {
             EndGameGson endGameGson = gson.fromJson(command, EndGameGson.class);
             GameGroup gameGroup = getGroup(endGameGson.member);
             playGameMenuController.saveGame(gameGroup);
+        }
+
+        else if (command.startsWith("autoSave ")) {
+            command = command.replace("autoSave ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            EndGameGson endGameGson = gson.fromJson(command, EndGameGson.class);
+            GameGroup gameGroup = getGroup(endGameGson.member);
+            playGameMenuController.autoSave(gameGroup);
         }
 
 

@@ -5066,12 +5066,17 @@ public class PlayGameMenuController {
         updateMapAfterMove(gameGroup);
         turn++;
         changeTurn(gameGroupData.civilizations);
+        if (gameGroup.isAutoSaveActivated) {
+            autoSaveTheGame(gameGroup, gameGroupData);
+        }
+
 
         //TODO...  also complete historyInformation and showProductionsInProcess
 
         gameGroupData.result = "nextTurn : done";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
 
     public void updateMapAfterMove(GameGroup gameGroup) {
         ArrayList<Integer> civilization1new = new ArrayList<>();
@@ -5619,6 +5624,70 @@ public class PlayGameMenuController {
     public void copyCitizens(GameGroup gameGroup) {
         for (int i = 0; i < gameGroup.tiles.size(); i++) {
             gameGroup.tiles.get(i).setCitizen(gameGroup.tiles.get(i).getCitizenCopy(gameGroup.tiles.get(i).getCitizen(), gameGroup));
+        }
+    }
+
+    public void autoSave(GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        gameGroupData.result = "saveGame";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+        removeFinishedGameGroup(gameGroup);
+    }
+
+    private void autoSaveTheGame(GameGroup gameGroup, GameGroupData gameGroupData) {
+        gameGroupData.result = "newGame";
+        gameGroupData.tileStatusOfCivilization1 = gameGroup.tileStatusOfCivilization1;
+        gameGroupData.tileStatusOfCivilization2 = gameGroup.tileStatusOfCivilization2;
+        gameGroupData.tileStatusOfCivilization3 = gameGroup.tileStatusOfCivilization3;
+        gameGroupData.tileStatusOfCivilization4 = gameGroup.tileStatusOfCivilization4;
+        gameGroupData.tileStatusOfCivilization5 = gameGroup.tileStatusOfCivilization5;
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        System.out.println("first of convert to json");
+        OtherDataGson otherDataGson = new OtherDataGson(gameGroupData);
+        System.out.println("after otherGson");
+        String[] civs = new String[gameGroupData.civilizations.size()];
+        for (int i1 = 0; i1 < civs.length; i1++) {
+            civs[i1] = gson.toJson(gameGroupData.civilizations.get(i1));
+        }
+        System.out.println("after all civs");
+        String[] tiles = new String[72];
+        for (int i1 = 0; i1 < gameGroupData.tiles.size(); i1++) {
+            gameGroupData.tiles.get(i1).setChildUnits();
+            tiles[i1] = gson.toJson(gameGroupData.tiles.get(i1));
+            gameGroupData.tiles.get(i1).warrior = null;
+            gameGroupData.tiles.get(i1).civilian = null;
+        }
+        System.out.println("after tiles");
+        String other = gson.toJson(otherDataGson);
+
+
+        File f1 = new File("civs.txt");
+        try (FileOutputStream fos = new FileOutputStream(f1); BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));) {
+            for (int j = 0; j < civs.length; ++j) {
+                bw.write(civs[j]);
+                bw.newLine();
+            }
+        } catch (IOException ignored) {
+
+        }
+
+
+        File f2 = new File("tiles.txt");
+        try (FileOutputStream fos = new FileOutputStream(f2); BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));) {
+            for (int j = 0; j < 72; ++j) {
+                bw.write(tiles[j]);
+                bw.newLine();
+            }
+        } catch (IOException ignored) {
+
+        }
+
+        File f3 = new File("other.txt");
+        try (FileOutputStream fos = new FileOutputStream(f3); BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));) {
+            bw.write(other);
+        } catch (IOException ignored) {
+
         }
     }
 }

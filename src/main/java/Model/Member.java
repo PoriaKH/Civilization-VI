@@ -20,6 +20,8 @@ public class Member {
     private int imageNumber;
     @Expose
     private ArrayList<Member> friends;
+    @Expose
+    public boolean isAutoSaveActive = false;
 
     public Member(String username, String nickname,String password, int score,int imageNumber,String date){
         this.username = username;

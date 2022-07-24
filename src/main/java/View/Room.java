@@ -92,7 +92,7 @@ public class Room {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(15);
         Button exitButton = new Button("Exit");
-        exitButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        exitButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
         exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -116,7 +116,7 @@ public class Room {
             }
         }
         Button refresh = new Button("refresh");
-        refresh.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #cf32dc;");
+        refresh.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #cf32dc;");
         refresh.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -144,7 +144,7 @@ public class Room {
         hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().add(exitButton);
         Button startButton = new Button("Start");
-        startButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        startButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
         if(!isCreator)
             startButton.setDisable(true);
 
@@ -203,7 +203,7 @@ public class Room {
         });
 
         Button guestButton = new Button("Guest Start");
-        startButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        startButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
         if (isCreator)
             guestButton.setDisable(true);
 
@@ -244,7 +244,7 @@ public class Room {
 
 
         Button saveGameButton = new Button("continue save game");
-        saveGameButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        saveGameButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
         saveGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -299,11 +299,37 @@ public class Room {
             }
         });
 
+        Button autoSaveButton = new Button("activate auto save");
+        autoSaveButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        if (!isCreator)
+            autoSaveButton.setDisable(true);
+
+        autoSaveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                boolean decision = !loggedInMember.isAutoSaveActive;
+                loggedInMember.isAutoSaveActive = decision;
+                String message = "auto save is ";
+                if (decision) {
+                    message = message + "activated";
+                }
+                else {
+                    message = message + "disabled";
+                }
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("result :");
+                alert.setHeaderText("result :");
+                alert.setContentText(message);
+                alert.showAndWait();
+            }
+        });
 
 
         hBox.getChildren().add(startButton);
-        hBox.getChildren().add(guestButton);
         hBox.getChildren().add(saveGameButton);
+        hBox.getChildren().add(autoSaveButton);
+        hBox.getChildren().add(guestButton);
 
         hBox.setSpacing(15);
         root.setBottom(hBox);

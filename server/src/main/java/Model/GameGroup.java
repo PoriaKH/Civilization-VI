@@ -4,6 +4,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class GameGroup {
+    public boolean isAutoSaveActivated = false;
     public ArrayList<Civilization> civilizations = new ArrayList<>();
     public ArrayList<Tile> tiles = new ArrayList<>();
     public ArrayList<Socket> sockets = new ArrayList<>();
