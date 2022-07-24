@@ -1976,7 +1976,7 @@ public class PlayGameMenuController {
                     false, false, false, true, false);
             return warrior;
         } else if (unitName.equals("tank")) {
-            Warrior warrior = new Warrior(civilization, tile, 15, 4, 4, 6, 450, false
+            Warrior warrior = new Warrior(civilization, tile, 15, 4, 4, 1, 450, false
                     , 0, 50, -1, -1, false, false, false, false,
                     false, false, false, false, false, false, false,
                     false, false, false, false, false, false, false,

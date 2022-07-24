@@ -34,6 +34,7 @@ public class ClientThread extends Thread {
     public boolean isGameEnded = false;
     public boolean wasPreviousTurnMine = false;
 
+
     // todo ... add condition if game is over , stop thread
     public ClientThread(Stage stage, MouseEvent event) {
         this.playGameMenu = new PlayGameMenu();

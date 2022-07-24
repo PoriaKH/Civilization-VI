@@ -580,7 +580,7 @@ public class PlayGameMenu {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (clientThread.isNewResultAvailable || !clientThread.result.equals("")) {
                     System.out.println("in the iffffffff");
-                    showResult(newValue);
+                    showResult(clientThread.result);
 
                     if (clientThread.result.contains("saveGame")) {
                         Parent root = null;
@@ -599,10 +599,6 @@ public class PlayGameMenu {
                         civName.setText("civilization : " + playingCivilization.getName());
                         goldAmount.setText(" : " + playingCivilization.getGold());
                         happinessAmount.setText(" : " + playingCivilization.getHappiness());
-                        if (!clientThread.wasPreviousTurnMine) {
-                            clientThread.isNewResultAvailable = false;
-                            clientThread.result = "";
-                        }
                     }
 
                     if (newValue.startsWith("end ")) {
@@ -610,6 +606,8 @@ public class PlayGameMenu {
                         VictoryAnimation victoryAnimation = new VictoryAnimation(root, scene);
                         victoryAnimation.play();
                     }
+                    clientThread.isNewResultAvailable = false;
+                    clientThread.result = "";
                 }
             }
         });
