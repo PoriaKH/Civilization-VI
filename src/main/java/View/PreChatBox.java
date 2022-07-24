@@ -22,11 +22,25 @@ public class PreChatBox {
     public static URL mainMenuFxmlURL;
     public static URL preChatFxmlURL;
     public static Member loggedInMember;
-    public static ArrayList<Member> players;
+    public ArrayList<String> playersUsername;
     public Scene scene;
     public Stage stage;
     public Label chatLabel;
     public TextField privateChatTF;
+
+    public PreChatBox(){
+        playersUsername = new ArrayList<>();
+        try {
+            CreateHost.dataOutputStream.writeUTF("pre chat box usernames");
+            CreateHost.dataOutputStream.flush();
+            String result = CreateHost.dataInputStream.readUTF();
+            String[] usernames = result.split("\n");
+            for (int i = 0; i < usernames.length; i++)
+                playersUsername.add(usernames[i]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void run() throws IOException {
         BorderPane root = FXMLLoader.load(preChatFxmlURL);
@@ -35,7 +49,7 @@ public class PreChatBox {
         stage.show();
     }
 
-    public void privateChat(MouseEvent mouseEvent) throws FileNotFoundException {
+    public void privateChat(MouseEvent mouseEvent) throws IOException {
         if (privateChatTF.getText() == null) {
             chatLabel.setText("enter a player");
             return;
@@ -44,11 +58,22 @@ public class PreChatBox {
             chatLabel.setText("you can't chat with yourself!!!!!");
             return;
         }
-        for (int i = 0; i < players.size(); i++) {
-            if (privateChatTF.getText().equals(players.get(i).getUsername())){
-                File file = new File("src/main/resources/privateMessages/" + loggedInMember.getUsername() + "-" + players.get(i).getUsername()+ ".txt");
+        for (int i = 0; i < playersUsername.size(); i++) {
+            if (privateChatTF.getText().equals(playersUsername.get(i))){
+                String fileName = "";
+                if (loggedInMember.getUsername().compareTo(playersUsername.get(i)) >= 0)
+                    fileName = loggedInMember.getUsername() + "-" + playersUsername.get(i);
+                else
+                    fileName = playersUsername.get(i) + "-" + loggedInMember.getUsername();
+                CreateHost.dataOutputStream.writeUTF("private chat " + fileName);
+                CreateHost.dataOutputStream.flush();
+                String response = CreateHost.dataInputStream.readUTF();
+                String[] oldMessages = response.split("\n");
                 ChatBox chatBox = new ChatBox();
-                chatBox.file = file;
+                chatBox.fileName = fileName;
+                chatBox.oldMessage = new ArrayList<>();
+                for (int j = 0; j < oldMessages.length; j++)
+                    chatBox.oldMessage.add(oldMessages[j]);
                 stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
                 chatBox.stage = this.stage;
                 ChatBox.loggedInMember = MainMenu.loggedInMember;
@@ -65,10 +90,16 @@ public class PreChatBox {
         stage.show();
     }
 
-    public void publicChat(MouseEvent mouseEvent) throws FileNotFoundException {
-        File file = new File("src/main/resources/messageFile.txt");
+    public void publicChat(MouseEvent mouseEvent) throws IOException {
+        CreateHost.dataOutputStream.writeUTF("public chat");
+        CreateHost.dataOutputStream.flush();
         ChatBox chatBox = new ChatBox();
-        chatBox.file = file;
+        chatBox.fileName = "messageFile";
+        String response = CreateHost.dataInputStream.readUTF();
+        String[] oldMessages = response.split("\n");
+        chatBox.oldMessage = new ArrayList<>();
+        for (int i = 0; i < oldMessages.length; i++)
+            chatBox.oldMessage.add(oldMessages[i]);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         chatBox.stage = this.stage;
         ChatBox.loggedInMember = MainMenu.loggedInMember;

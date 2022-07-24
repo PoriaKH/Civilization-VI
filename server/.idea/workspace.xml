@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added saveData to file to server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
@@ -16,6 +17,11 @@
       <change beforePath="$PROJECT_DIR$/../target/classes/Model/Building.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Building.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/Model/Member.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Member.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/fxml/infoPanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/fxml/infoPanel.fxml" afterDir="false" />
+=======
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="PreChatBox.fxml">
+      <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PlayGameMenu.java" afterDir="false" />
+>>>>>>> 2327e6c258dd596d9fbbcb38ee88767ed50076f0
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +197,21 @@
       <option name="project" value="LOCAL" />
       <updated>1658626462038</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="move chatBox to server-client">
+      <created>1658662649351</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1658662649351</updated>
+    </task>
+    <task id="LOCAL-00016" summary="PreChatBox.fxml">
+      <created>1658662671044</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1658662671044</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,6 +243,8 @@
     <MESSAGE value=".." />
     <MESSAGE value="moved registerMenu to Server" />
     <MESSAGE value="added saveData to file to server" />
-    <option name="LAST_COMMIT_MESSAGE" value="added saveData to file to server" />
+    <MESSAGE value="move chatBox to server-client" />
+    <MESSAGE value="PreChatBox.fxml" />
+    <option name="LAST_COMMIT_MESSAGE" value="PreChatBox.fxml" />
   </component>
 </project>

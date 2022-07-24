@@ -416,6 +416,7 @@ public class PlayGameMenu {
                 CheatMenu.stage = stage;
                 CheatMenu.doesEnteredFromInfoPanel = false;
                 try {
+                    keysPressed[4] = false;
                     new CheatMenu().start();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -196,6 +196,30 @@ public class CommandProcessor {
             String[] splitParts = command.split(" # ");
             playGameMenuController.denyRequest(splitParts[0], splitParts[1]);
         }
+        else if (command.startsWith("pre chat box usernames")){
+            dataOutputStream.writeUTF(String.valueOf(playGameMenuController.allUsers()));
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("public chat")){
+            StringBuilder response = playGameMenuController.readFromPublicChat();
+            dataOutputStream.writeUTF(String.valueOf(response));
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("private chat ")){
+            command  = command.replace("private chat ", "");
+            dataOutputStream.writeUTF(String.valueOf(playGameMenuController.readFromPrivateChat(command)));
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("write to public chat ")){
+            command = command.replace("write to public chat ", "");
+            playGameMenuController.writeToPublicChat(command);
+        }
+        else if (command.startsWith("write to private chat ")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("write to private chat ", "");
+            PrivateChatGson privateChatGson = gson.fromJson(command, PrivateChatGson.class);
+            playGameMenuController.writeToPrivateChat(privateChatGson.message, privateChatGson.fileName);
+        }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();
             GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);

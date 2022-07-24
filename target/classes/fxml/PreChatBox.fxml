@@ -15,7 +15,7 @@
 
     <center>
         <VBox spacing="20" alignment="CENTER" maxWidth="400">
-            <Label fx:id="chatLabel" text=" " prefWidth="400" alignment="CENTER" />
+            <Label fx:id="chatLabel" text=" " prefWidth="400" alignment="CENTER" styleClass="secondLabel"/>
             <TextField promptText="enter player's id to chat privately" prefWidth="200" fx:id="privateChatTF" />
             <Button text="private chat" onMouseClicked="#privateChat" />
             <Button text="public chat" onMouseClicked="#publicChat" />
