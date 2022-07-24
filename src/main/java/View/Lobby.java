@@ -1,6 +1,9 @@
 package View;
 
+import Model.FunctionsGson.ScoreboardGson;
 import Model.Member;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -15,6 +18,8 @@ import java.net.URL;
 public class Lobby {
     public static URL createHostURL;
     public static URL hostsURL;
+    public static URL scoreBoardFxmlURL;
+    public static Member member;
 
     public Pane root;
     public Stage stage;
@@ -64,5 +69,21 @@ public class Lobby {
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         preChatBox.stage = this.stage;
         preChatBox.run();
+    }
+
+    public void switchToScoreboard(MouseEvent mouseEvent) throws IOException {
+        ScoreboardGson scoreboardGson = new ScoreboardGson();
+        scoreboardGson.member = member;
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(scoreboardGson);
+        CreateHost.dataOutputStream.writeUTF("scoreboard " + request);
+        CreateHost.dataOutputStream.flush();
+        String response = CreateHost.dataInputStream.readUTF();
+        ScoreboardGson scoreboardGson1 = gson.fromJson(response, ScoreboardGson.class);
+        ScoreBoard.scoreboardFxmlURL = scoreBoardFxmlURL;
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        ScoreBoard.stage = stage;
+        ScoreBoard scoreBoard = new ScoreBoard();
+        scoreBoard.initialize(scoreboardGson1);
     }
 }

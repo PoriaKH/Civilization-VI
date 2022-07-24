@@ -4772,6 +4772,9 @@ public class PlayGameMenuController {
         for (int i = 0; i < members.size(); i++)
             for (int j = 0; j < members.get(i).size(); j++)
                 allMembers.add(members.get(i).get(j));
+        for (int i = 0; i < allMembers.size(); i++) {
+            System.out.println("--" + allMembers.get(i).getUsername());
+        }
         String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
         File file = new File("users2.txt");
         FileReader fileReader = new FileReader(file);
@@ -4787,11 +4790,11 @@ public class PlayGameMenuController {
             String fileDate = fileMatcher.group("date");
             String status = "offline";
             for (Member member : allMembers)
-                if (member.getUsername().equals(fileUsername)) {
+                if (member.getUsername().equals(fileUsername) || member.getUsername().equals(scoreboardGson.member.getUsername())) {
                     status = "online";
                     break;
                 }
-            membersScores.add(fileUsername + " \\ " + fileNickname + " \\ " + fileScore + " \\ " + fileDate + " \\ " + status);
+            membersScores.add(fileUsername + " ## " + fileNickname + " ## " + fileScore + " ## " + fileDate + " ## " + status);
             line = bufferedReader.readLine();
         }
         fileReader.close();
