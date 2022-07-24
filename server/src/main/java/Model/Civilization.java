@@ -169,10 +169,10 @@ public class Civilization {
     }
 
     public Integer getCountOfWins (Civilization civilization) {
-        return winsInUnitsWar.get(civilization);
+        return winsInUnitsWar.get(civilization.getName());
     }
     public Integer getCountOfLosses (Civilization civilization) {
-        return lossesInUnitsWar.get(civilization);
+        return lossesInUnitsWar.get(civilization.getName());
     }
     public void addCivilizationToWinsUnit (Civilization civilization) {
         winsInUnitsWar.put(civilization.getName(), 0);
