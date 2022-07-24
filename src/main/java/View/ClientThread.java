@@ -84,8 +84,23 @@ public class ClientThread extends Thread {
                     isGameEnded = true;
                     break;
                 } else {
-                    copyTiles(gameGroupData.tiles, gameGroupData);
-                    copyCivilizations(gameGroupData.civilizations);
+                    if (gameGroupData.result.equals("saveGame")) {
+                        playGameMenu = new PlayGameMenu();
+                        playGameMenu.stage = stage;
+                        try {
+                            playGameMenu.root = FXMLLoader.load(GameMenu.gameMenuURL);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Tile.root = playGameMenu.root;
+                        Unit.playGameMenu = playGameMenu;
+                        startSaveGameTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
+                        startCivilizations(gameGroupData.civilizations);
+                    }
+                    else {
+                        copyTiles(gameGroupData.tiles, gameGroupData);
+                        copyCivilizations(gameGroupData.civilizations);
+                    }
                     loadExtras(gameGroupData);
                     Civilization civilization = getCivilization(gameGroupData.civilizations);
                     wasPreviousTurnMine = Room.isMyTurn;
@@ -187,6 +202,24 @@ public class ClientThread extends Thread {
             map.get(i).generatingTile(tileStatusOfCivilization.get(i));
         }
         PlayGameMenu.tiles = map;
+    }
+
+    private void startSaveGameTiles(ArrayList<Tile> tiles, ArrayList<Integer> tileStatusOfCivilization) {
+        ArrayList<Tile> map = new ArrayList<>();
+        for (Tile tile : tiles) {
+            Tile tileMap = new Tile(tile.getTileNumber(), tile.isDesert(), tile.isMeadow(), tile.isHill(), tile.isMountain(),
+                    tile.isOcean(), tile.isPlain(), tile.isSnow(), tile.isTundra(), tile.getX(), tile.getY());
+            map.add(tileMap);
+        }
+        for (int i = 0; i < map.size(); i++) {
+            map.get(i).generatingTile(tileStatusOfCivilization.get(i));
+        }
+        PlayGameMenu.tiles = map;
+        ArrayList<Unit> units = getAllUnits(tiles);
+
+        for (int i = 0; i < tiles.size(); i++) {
+            map.get(i).copyFieldsOfTile(tiles.get(i), units, tileStatusOfCivilization);
+        }
     }
 
     private void startCivilizations(ArrayList<Civilization> serverCivilizations) {

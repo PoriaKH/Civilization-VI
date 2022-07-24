@@ -11,7 +11,6 @@ import com.google.gson.GsonBuilder;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -1751,9 +1750,9 @@ public class PlayGameMenuController {
     //if unit is a civilian return true
     public boolean isUnitCivilian(Tile cityCenter) {
         ArrayList<Unit> units = cityCenter.getUnits();
-        for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).isCivilian()) return true;
-        }
+            for (int i = 0; i < units.size(); i++) {
+                if (units.get(i).isCivilian()) return true;
+            }
         return false;
     }
 
@@ -1775,6 +1774,9 @@ public class PlayGameMenuController {
     // it makes parameters for unit maker such as unit or city
     public void preUnitMaker(String unitName, int index, Civilization civilization, ArrayList<Tile> map, GameGroup gameGroup) throws IOException {
         GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        for (Tile tile : gameGroup.tiles) {
+            System.out.println(tile.getUnits());
+        }
         if (index < 0 || index > 71) {
             gameGroupData.result = "number of origin tile is invalid !";
             sendMessageToAllClients(gameGroup, gameGroupData);
@@ -1783,17 +1785,28 @@ public class PlayGameMenuController {
 
         Civilization civilizationServer = getServerCivilization(civilization, gameGroupData.civilizations);
         City city = findTile(index, gameGroupData.tiles, civilizationServer);
-
+        for (Tile tile : gameGroup.tiles) {
+            System.out.println(tile.getUnits());
+        }
         if (city == null) {
             gameGroupData.result = "there is no city !";
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
         }
+        for (Tile tile : gameGroup.tiles) {
+            System.out.println(tile.getUnits());
+        }
         Unit unit = makeUnit(civilizationServer, city.getCenterTile(), gameGroupData.tiles, unitName);
+        for (Tile tile : gameGroup.tiles) {
+            System.out.println(tile.getUnits());
+        }
         if (unit == null) {
             gameGroupData.result = "there is no unit with this name !";
             sendMessageToAllClients(gameGroup, gameGroupData);
             return;
+        }
+        for (Tile tile : gameGroup.tiles) {
+            System.out.println(tile.getUnits());
         }
         int turn = unit.getDuration();
         gameGroupData.result = createUnit(civilizationServer, city, unit, gameGroupData.tiles, turn);
@@ -1991,30 +2004,40 @@ public class PlayGameMenuController {
 
     public boolean isSameUnitOnMakingProgress(Tile tile, Unit unit) {
         HashMap<Unit, Integer> turns = tile.getTurnForUnitMaking();
-        for (Map.Entry<Unit, Integer> entry : turns.entrySet()) {
-            if (unit.isCivilian() == entry.getKey().isCivilian()) return true;
+        if (turns != null) {
+            for (Map.Entry<Unit, Integer> entry : turns.entrySet()) {
+                if (unit.isCivilian() == entry.getKey().isCivilian()) return true;
+            }
         }
         return false;
     }
 
     public String createUnit(Civilization civilization, City city, Unit unit, ArrayList<Tile> map, int turn) {
         String str;
-
+        for (Tile tile : map) {
+            System.out.println(tile.getUnits());
+        }
         if (unit == null) {
             str = "this unit name doesn't exist!";
             return str;
         }
-
+        for (Tile tile : map) {
+            System.out.println(tile.getUnits());
+        }
         if (city == null) {
             str = "this tile does not belong to your cities!";
             return str;
         }
-
+        for (Tile tile : map) {
+            System.out.println(tile.getUnits());
+        }
         if (isSameUnitOnMakingProgress(city.getCenterTile(), unit)) {
             str = "this tile is making same type of unit !";
             return str;
         }
-
+        for (Tile tile : map) {
+            System.out.println(tile.getUnits());
+        }
         /*if (!unit.isCivilian() && !isTechnologyAvailableForUnit (unit, civilization)) {
             str = "you don't have necessary technology!";
             return str;
@@ -2026,18 +2049,26 @@ public class PlayGameMenuController {
         }*/
 
         Tile centerTile = city.getCenterTile();
+        System.out.println("center tile : "  + centerTile.getTileNumber() + "+++ " + centerTile.getUnits());
         if (!unit.isCivilian() && isUnitWarrior(centerTile)) {
             str = "there is a military unit!";
             return str;
         }
-
+        for (Tile tile : map) {
+            System.out.println(tile.getUnits());
+        }
         if (unit.isCivilian() && isUnitCivilian(centerTile)) {
             str = "there is a civilian unit!";
             return str;
         }
-
+        for (Tile tile : map) {
+            System.out.println(tile.getUnits());
+        }
         centerTile.addUnitToMakingProgress(unit, turn);
         str = "unit will be created soon !";
+        for (Tile tile : map) {
+            System.out.println(tile.getUnits());
+        }
         return str;
     }
 
@@ -5334,8 +5365,10 @@ public class PlayGameMenuController {
 
     public void loadOriginTileForUnits(ArrayList<Tile> map) {
         for (int i = 0; i < map.size(); i++) {
-            for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {
-                map.get(i).getUnits().get(i1).setOrigin(map.get(i));
+            if (map.get(i).getUnits() != null) {
+                for (int i1 = 0; i1 < map.get(i).getUnits().size(); i1++) {
+                    map.get(i).getUnits().get(i1).setOrigin(map.get(i));
+                }
             }
         }
     }
@@ -5489,5 +5522,103 @@ public class PlayGameMenuController {
         }
         gameGroupData.result = "saveGame";
         sendMessageToAllClients(gameGroup, gameGroupData);
+        removeFinishedGameGroup(gameGroup);
+    }
+
+    public void readGameFromFile(GameGroup gameGroup) {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        ArrayList<String> civilizationsString = readCivilizationsFromFile();
+        ArrayList<String> tilesString = readTilesFromFile();
+        ArrayList<String> otherString = readOtherDataFromFile();
+
+        for (String s : civilizationsString) {
+            Civilization civilization = gson.fromJson(s, Civilization.class);
+            gameGroup.civilizations.add(civilization);
+        }
+
+        for (String s : tilesString) {
+            Tile tile = gson.fromJson(s, Tile.class);
+            gameGroup.tiles.add(tile);
+        }
+
+        OtherDataGson otherDataGson = gson.fromJson(otherString.get(0), OtherDataGson.class);
+        gameGroup.tileStatusOfCivilization1 = otherDataGson.tileStatusOfCivilization1;
+        gameGroup.tileStatusOfCivilization2 = otherDataGson.tileStatusOfCivilization2;
+        gameGroup.tileStatusOfCivilization3 = otherDataGson.tileStatusOfCivilization3;
+        gameGroup.tileStatusOfCivilization4 = otherDataGson.tileStatusOfCivilization4;
+        gameGroup.tileStatusOfCivilization5 = otherDataGson.tileStatusOfCivilization5;
+    }
+
+    public ArrayList<String> readCivilizationsFromFile() {
+        ArrayList<String> civilizations = new ArrayList<>();
+        try {
+            File file=new File("civs.txt");
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    civilizations.add(line);
+                }
+            }
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+        return civilizations;
+    }
+
+    public ArrayList<String> readTilesFromFile() {
+        ArrayList<String> tiles = new ArrayList<>();
+        try {
+            File file=new File("tiles.txt");
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    tiles.add(line);
+                }
+            }
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+        return tiles;
+    }
+    public ArrayList<String> readOtherDataFromFile() {
+        ArrayList<String> other = new ArrayList<>();
+        try {
+            File file=new File("other.txt");
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    other.add(line);
+                }
+            }
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+        return other;
+    }
+
+    public void setUnitsForTiles(ArrayList<Tile> tiles) {
+        for (int i = 0; i < tiles.size(); i++) {
+            tiles.get(i).newUnits();
+            tiles.get(i).newImprovementPercent();
+            tiles.get(i).newRoads();
+            tiles.get(i).newTurnForUnitsMaking();
+            if (tiles.get(i).warrior != null) tiles.get(i).addUnit2(tiles.get(i).warrior);
+            if (tiles.get(i).civilian != null) tiles.get(i).addUnit2(tiles.get(i).civilian);
+        }
+    }
+
+    public void copyCivilizations(ArrayList<Civilization> serverCivilizations, GameGroup gameGroup) {
+        for (int i = 0; i < gameGroup.civilizations.size(); i++) {
+            gameGroup.civilizations.get(i).copyFieldsOfCivilizations(serverCivilizations.get(i), gameGroup);
+        }
+    }
+
+    public void copyCitizens(GameGroup gameGroup) {
+        for (int i = 0; i < gameGroup.tiles.size(); i++) {
+            gameGroup.tiles.get(i).setCitizen(gameGroup.tiles.get(i).getCitizenCopy(gameGroup.tiles.get(i).getCitizen(), gameGroup));
+        }
     }
 }

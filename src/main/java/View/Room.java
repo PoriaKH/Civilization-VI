@@ -243,11 +243,67 @@ public class Room {
         });
 
 
+        Button saveGameButton = new Button("continue save game");
+        saveGameButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        saveGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    refreshThePage(vBox,event);
+                    if(gsonRoom.nicknames.size() > 5){
+                        showAlert("capacity over limit !");
+                    }
+                    else if(gsonRoom.nicknames.size() == 1){
+                        showAlert("the game must have more than one player to start !");
+                    }
+                    else {
+                        //start the game...
+
+                        Gson gson = new GsonBuilder().create();
+                        GameSocketArray gameSocketArray = new GameSocketArray();
+                        gameSocketArray.gameSockets = gsonRoom.sockets;
+                        String str = gson.toJson(gameSocketArray);
+                        dataOutputStream.writeUTF("continueSave " + str);
+                        dataOutputStream.flush();
+                        //TODO...Koochak add playGameMenu graphic
+
+                        String res = dataInputStream.readUTF();
+                        if(res.equals("give me members")){
+                            Gson gson1 = new GsonBuilder().create();
+                            String txt = gson1.toJson(gsonRoom);
+                            dataOutputStream.writeUTF(txt);
+                            dataOutputStream.flush();
+                        }
+                        else {
+                            System.out.println("something went wrong! Client/Room/Line 169");
+                        }
+
+
+                        ClientThread clientThread = new ClientThread(stage, event);
+                        clientThread.setDaemon(true);
+                        clientThread.start();
+
+
+                        while (true) {
+                            Thread.sleep(1000);
+                            if (clientThread.isGameReady()) {
+                                clientThread.playGameMenu.clientThread = clientThread;
+                                clientThread.playGameMenu.switchToGame(event);
+                                break;
+                            }
+                        }
+                    }
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
 
         hBox.getChildren().add(startButton);
         hBox.getChildren().add(guestButton);
+        hBox.getChildren().add(saveGameButton);
 
         hBox.setSpacing(15);
         root.setBottom(hBox);

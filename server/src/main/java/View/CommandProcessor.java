@@ -284,6 +284,56 @@ public class CommandProcessor {
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
         }
 
+        else if (command.startsWith("continueSave ")) {
+            command = command.replace("continueSave ", "");
+            GameGroup gameGroup = new GameGroup();
+            playGameMenuController.readGameFromFile(gameGroup);
+
+            playGameMenuController.loadTileForCitizen(gameGroup.tiles);
+            //playGameMenuController.copyCitizens(gameGroup);
+            playGameMenuController.copyCivilizations(gameGroup.civilizations, gameGroup);
+
+            playGameMenuController.setUnitsForTiles(gameGroup.tiles);
+            playGameMenuController.loadTileForBuilding(gameGroup.tiles);
+            playGameMenuController.loadCivilizationForBuilding(gameGroup.civilizations);
+            playGameMenuController.loadOriginTileForUnits(gameGroup.tiles);
+
+            Gson gson = new GsonBuilder().create();
+            GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);
+            ArrayList<Socket> sockets2 = new ArrayList<>();
+            ArrayList<Member> members2 = new ArrayList<>();
+            for(GameSocket gameSocket : gameSocketArray.gameSockets){
+                for(Socket socket1 : allSockets){
+                    if(gameSocket.socketPort == socket1.getPort()){
+                        sockets2.add(socket1);
+                    }
+                }
+                members2.add(gameSocket.member);
+            }
+            sockets.add(sockets2);
+            members.add(members2);
+
+            dataOutputStream.writeUTF("give me members");
+            dataOutputStream.flush();
+
+            String str = dataInputStream.readUTF();
+            Gson gson1 = new GsonBuilder().create();
+            GsonRoom gsonRoom = gson1.fromJson(str,GsonRoom.class);
+            members2 = gsonRoom.members;
+
+            sendGuestOK(sockets2);
+
+            gameGroup.sockets = sockets2;
+            gameGroup.members = members2;
+            System.out.println("members = " + members);
+
+            gameGroups.add(gameGroup);
+
+            GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+            gameGroupData.result = "saveGame";
+            playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
+        }
+
         else if (command.startsWith("saveGame ")) {
             command = command.replace("saveGame ", "");
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();

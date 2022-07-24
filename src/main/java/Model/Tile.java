@@ -2019,7 +2019,7 @@ public class Tile extends Polygon {
 
     private Citizen getCitizenCopy(Citizen citizen) {
         if (citizen != null) {
-            Tile tile = getCitizenTile(citizen.getTile());
+            Tile tile = PlayGameMenu.tiles.get(citizen.getTileNumber());
             if (tile == null) return null;
             citizen.setTile(tile);
             return citizen;
