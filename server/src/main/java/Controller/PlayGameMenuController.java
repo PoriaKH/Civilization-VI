@@ -5966,4 +5966,32 @@ public class PlayGameMenuController {
         gameGroupData.result = "friendly request declined";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
+    public void changeGold(String civilizationName, int amount, GameGroup gameGroup) {
+        Civilization serverCivilization = getServerCivilizationByName(civilizationName, gameGroup.civilizations);
+        serverCivilization.setGold(amount);
+    }
+
+    public void changeFood(String civilizationName, int amount, GameGroup gameGroup) {
+        Civilization serverCivilization = getServerCivilizationByName(civilizationName, gameGroup.civilizations);
+        for(City city : serverCivilization.getCities()){
+            city.setTotalFood(amount / serverCivilization.getCities().size());
+        }
+    }
+
+    public void changeResource(String resourceName, int tileNumber, GameGroup gameGroup) {
+        Tile tile = gameGroup.tiles.get(tileNumber);
+        Resource resource;
+        if (resourceName == null) resource = null;
+        else resource = new Resource(resourceName);
+        tile.addResource(resource);
+    }
+
+    public void addRejectMessage(String civilization, String messageCivilization, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilizationByName(civilization, gameGroup.civilizations);
+        serverCivilization.getMessages().add(PlayGameMenuController.turn + " : " + messageCivilization + "- rejected your trade request !");
+        gameGroupData.result = "trade rejected";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+    }
 }

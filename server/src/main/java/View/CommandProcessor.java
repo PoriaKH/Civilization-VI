@@ -611,6 +611,34 @@ public class CommandProcessor {
             playGameMenuController.declineDiplo(requestAnswerGson.civilization, requestAnswerGson.civilizationName,
                     gameGroup);
         }
+        else if (command.startsWith("changeGold ")) {
+            command = command.replace("changeGold ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChangeGoldAmountGson changeGoldAmountGson = gson.fromJson(command, ChangeGoldAmountGson.class);
+            GameGroup gameGroup = getGroup(changeGoldAmountGson.member);
+            playGameMenuController.changeGold(changeGoldAmountGson.civilizationName,changeGoldAmountGson.amount,gameGroup);
+        }
+        else if (command.startsWith("changeFood ")) {
+            command = command.replace("changeFood ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChangeFoodAmountGson changeFoodAmountGson = gson.fromJson(command, ChangeFoodAmountGson.class);
+            GameGroup gameGroup = getGroup(changeFoodAmountGson.member);
+            playGameMenuController.changeFood(changeFoodAmountGson.civilizationName,changeFoodAmountGson.amount,gameGroup);
+        }
+        else if (command.startsWith("changeResource ")) {
+            command = command.replace("changeResource ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChangeResourceGson changeResourceGson = gson.fromJson(command, ChangeResourceGson.class);
+            GameGroup gameGroup = getGroup(changeResourceGson.member);
+            playGameMenuController.changeResource(changeResourceGson.resourceName, changeResourceGson.tileNumber, gameGroup);
+        }
+        else if (command.startsWith("reject ")) {
+            command = command.replace("reject ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RejectMessageGson rejectMessageGson = gson.fromJson(command, RejectMessageGson.class);
+            GameGroup gameGroup = getGroup(rejectMessageGson.member);
+            playGameMenuController.addRejectMessage(rejectMessageGson.civilization, rejectMessageGson.messageCivilization, gameGroup);
+        }
 
 
 
