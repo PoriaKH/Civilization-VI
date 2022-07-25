@@ -1282,9 +1282,10 @@ public class Tile extends Polygon {
         return roads;
     }
     public void addBuilding(Building building){
+        System.out.println("first of add building  ");
         this.building = building;
 
-        building.getCivilization().setScience(building.getScience());
+        /*building.getCivilization().setScience(building.getScience());
         building.getCivilization().setHappiness(building.getHappiness());
         for(City city : building.getCivilization().getCities()){
             for(Tile tile : city.getTiles()){
@@ -1302,7 +1303,7 @@ public class Tile extends Polygon {
                     city.setTotalFood(building.getFood());
                 }
             }
-        }
+        }*/
         double y1 = y - h;
         double x1 = x - radius / 2;
         building.setX(x1);
@@ -1321,6 +1322,8 @@ public class Tile extends Polygon {
         else if(building.isIndustrialEra)
             building.setFill(new ImagePattern(new Image(String.valueOf(building5URL))));
 
+
+        System.out.println("+++++++++" + building.buildingName + "   " + building);
         root.getChildren().add(building);
     }
 
@@ -1975,13 +1978,13 @@ public class Tile extends Polygon {
         return clientTiles;
     }
 
-    private Building setBuildingCopy(Building building) {
-        if (this.getBuilding() == null && building != null) {
-            building.setTile(getClientTile(building.getTile()));
+    private Building setBuildingCopy(Building newBuilding) {
+        if (this.getBuilding() == null && newBuilding != null) {
+            Building building2 = new Building(newBuilding.buildingName, newBuilding.getCivilization(), PlayGameMenu.tiles.get(newBuilding.getTileNumber()));
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    getClientTile(building.getTile()).addBuilding(building);
+                    getClientTile(building2.getTile()).addBuilding(building2);
                 }
             });
             return building;

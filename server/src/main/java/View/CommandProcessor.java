@@ -639,14 +639,6 @@ public class CommandProcessor {
             GameGroup gameGroup = getGroup(rejectMessageGson.member);
             playGameMenuController.addRejectMessage(rejectMessageGson.civilization, rejectMessageGson.messageCivilization, gameGroup);
         }
-
-
-
-
-
-
-
-
         else if (command.startsWith("nextTurn ")) {
             command = command.replace("nextTurn ", "");
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
