@@ -1,6 +1,9 @@
 package View;
 
 import Model.FunctionsGson.ScoreboardGson;
+import Model.GsonRoom;
+import Model.GsonRoomArray;
+import Model.Member;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -34,7 +37,7 @@ import static View.LoginMenu.mainMenuFxmlURL;
 
 public class ScoreBoard {
     public static Stage stage;
-    public static URL lobbyURL;
+    public Room room;
     public static URL scoreboardFxmlURL;
     private BorderPane pane;
     private ScrollPane container = new ScrollPane();
@@ -61,6 +64,7 @@ public class ScoreBoard {
 
     public void showScoreboard(ArrayList<String> usernames, ArrayList<String> nickNames, ArrayList<String> scores, ArrayList<String> dates, ArrayList<String> statuses) throws IOException {
         scoreHBox.setPadding(new Insets(10, 10, 10, 300));
+        scoreHBox.setAlignment(Pos.CENTER);
         pane = FXMLLoader.load(scoreboardFxmlURL);
         VBox mainVbox = new VBox(20);
         back.setStyle("-fx-pref-width: 200;\n" +
@@ -73,14 +77,11 @@ public class ScoreBoard {
                 "            #31a3e0,\n" +
                 "            radial-gradient(center 50% 50%, radius 100%, rgba(255, 84, 84, 0.7), #f11111);");
         back.setOnMouseClicked(event -> {
-            Pane root = null;
             try {
-                root = FXMLLoader.load(lobbyURL);
+                room.run(event);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
         });
         container.setPrefSize(1280, 720);
         container.setContent(scoreHBox);

@@ -150,7 +150,7 @@ public class CommandProcessor {
             Gson gson = new GsonBuilder().create();
             command = command.replace("scoreboard " , "");
             ScoreboardGson scoreboardGson = gson.fromJson(command, ScoreboardGson.class);
-            scoreboardGson.membersScores = playGameMenuController.scoreBoard(scoreboardGson, members);
+            scoreboardGson.membersScores = playGameMenuController.scoreBoard(scoreboardGson, gsonRoomArray);
             String request = gson.toJson(scoreboardGson);
             dataOutputStream.writeUTF(request);
             dataOutputStream.flush();

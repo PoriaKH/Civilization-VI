@@ -4,23 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="debug ChatBox">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="debug ScoreBoard">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/messageFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/messageFile.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/View/ScoreBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/ScoreBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/lobby.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/lobby.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/mainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/mainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/resources/fxml/scoreBoard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/fxml/scoreBoard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/ChatBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/ChatBox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Lobby.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Lobby.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/MainMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$5.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/Room$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room$7.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/Room.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/View/ScoreBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/ScoreBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/fxml/mainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/fxml/mainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/fxml/scoreBoard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/fxml/scoreBoard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +65,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -98,7 +108,11 @@
       <workItem from="1658602379116" duration="128000" />
       <workItem from="1658602532494" duration="2740000" />
       <workItem from="1658680062612" duration="72000" />
-      <workItem from="1658684331440" duration="3006000" />
+      <workItem from="1658684331440" duration="3382000" />
+      <workItem from="1658725381361" duration="16000" />
+      <workItem from="1658725424568" duration="3149000" />
+      <workItem from="1658730757111" duration="14000" />
+      <workItem from="1658730798774" duration="293000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -226,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658673325975</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="debug ScoreBoard">
+      <created>1658687951320</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1658687951320</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,6 +283,7 @@
     <MESSAGE value="PreChatBox.fxml" />
     <MESSAGE value="fixed a bug in teleport" />
     <MESSAGE value="fixed a bug in attack tile and winning against others worked well" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug in attack tile and winning against others worked well" />
+    <MESSAGE value="debug ScoreBoard" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug ScoreBoard" />
   </component>
 </project>

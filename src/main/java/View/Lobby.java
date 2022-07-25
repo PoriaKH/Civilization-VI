@@ -70,20 +70,4 @@ public class Lobby {
         preChatBox.stage = this.stage;
         preChatBox.run();
     }
-
-    public void switchToScoreboard(MouseEvent mouseEvent) throws IOException {
-        ScoreboardGson scoreboardGson = new ScoreboardGson();
-        scoreboardGson.member = member;
-        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-        String request = gson.toJson(scoreboardGson);
-        CreateHost.dataOutputStream.writeUTF("scoreboard " + request);
-        CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        ScoreboardGson scoreboardGson1 = gson.fromJson(response, ScoreboardGson.class);
-        ScoreBoard.scoreboardFxmlURL = scoreBoardFxmlURL;
-        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        ScoreBoard.stage = stage;
-        ScoreBoard scoreBoard = new ScoreBoard();
-        scoreBoard.initialize(scoreboardGson1);
-    }
 }

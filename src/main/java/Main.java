@@ -189,6 +189,7 @@ public class Main extends Application {
         FriendProfile.forthImageURL = new URL(Main.class.getResource("pictures/3.png").toExternalForm());
         FriendProfile.friendProfileURL = new URL(Main.class.getResource("fxml/friendProfile.fxml").toExternalForm());
         FriendsList.friendsListURL = new URL(Main.class.getResource("fxml/friendsList.fxml").toExternalForm());
+        ScoreBoard.scoreboardFxmlURL = new URL(Main.class.getResource("fxml/scoreBoard.fxml").toExternalForm());
 
         URL address_login_page = new URL(Main.class.getResource("fxml/loginMenu.fxml").toExternalForm());
         Unit.setNames();

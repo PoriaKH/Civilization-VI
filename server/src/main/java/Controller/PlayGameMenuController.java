@@ -4766,15 +4766,12 @@ public class PlayGameMenuController {
         return matcher;
     }
 
-    public ArrayList<String> scoreBoard(ScoreboardGson scoreboardGson, ArrayList<ArrayList<Member>> members) throws IOException {
+    public ArrayList<String> scoreBoard(ScoreboardGson scoreboardGson, GsonRoomArray gsonRoomArray) throws IOException {
         ArrayList<String> membersScores = new ArrayList<>();
         ArrayList<Member> allMembers = new ArrayList<>();
-        for (int i = 0; i < members.size(); i++)
-            for (int j = 0; j < members.get(i).size(); j++)
-                allMembers.add(members.get(i).get(j));
-        for (int i = 0; i < allMembers.size(); i++) {
-            System.out.println("--" + allMembers.get(i).getUsername());
-        }
+        for (GsonRoom gsonRoom : gsonRoomArray.gsonRooms)
+            for (Member member : gsonRoom.members)
+                allMembers.add(member);
         String fileRegex = "(?<username>.*) (?<nickname>.*) (?<password>.*) (?<score>\\d+) (?<image>\\d) (?<date>.+)";
         File file = new File("users2.txt");
         FileReader fileReader = new FileReader(file);
@@ -4790,7 +4787,7 @@ public class PlayGameMenuController {
             String fileDate = fileMatcher.group("date");
             String status = "offline";
             for (Member member : allMembers)
-                if (member.getUsername().equals(fileUsername) || member.getUsername().equals(scoreboardGson.member.getUsername())) {
+                if (member.getUsername().equals(fileUsername)) {
                     status = "online";
                     break;
                 }
