@@ -162,7 +162,7 @@ public class ChatBox {
         StringBuilder stringBuilder = new StringBuilder();
         for (Label label : messages)
             stringBuilder.append(label.getText()).append("\n");
-        if (fileName.equals("public chat")){
+        if (fileName.equals("messageFile")){
             CreateHost.dataOutputStream.writeUTF("write to public chat " + String.valueOf(stringBuilder));
             CreateHost.dataOutputStream.flush();
         }

@@ -77,21 +77,6 @@ public class MainMenu {
         stage.show();
     }
 
-    public void scoreboardSwitch(MouseEvent mouseEvent) throws IOException {
-        ScoreboardGson scoreboardGson = new ScoreboardGson();
-        scoreboardGson.member = loggedInMember;
-        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
-        String request = gson.toJson(scoreboardGson);
-        CreateHost.dataOutputStream.writeUTF("scoreboard " + request);
-        CreateHost.dataOutputStream.flush();
-        String response = CreateHost.dataInputStream.readUTF();
-        ScoreboardGson scoreboardGson1 = gson.fromJson(response, ScoreboardGson.class);
-        ScoreBoard.scoreboardFxmlURL = scoreBoardFxmlURL;
-        ScoreBoard.stage = stage;
-        ScoreBoard scoreBoard = new ScoreBoard();
-        scoreBoard.initialize(scoreboardGson);
-    }
-
     public void logout(MouseEvent mouseEvent) throws IOException {
         loggedInMember = null;
         mediaPlayer.stop();
@@ -112,6 +97,9 @@ public class MainMenu {
         SendFriendRequest.sender = loggedInMember;
         FriendRequestsList.member = loggedInMember;
         PreChatBox.loggedInMember = MainMenu.loggedInMember;
+        Lobby.member = loggedInMember;
+        Lobby.scoreBoardFxmlURL = scoreBoardFxmlURL;
+        ScoreBoard.lobbyURL = lobbyURL;
         root = FXMLLoader.load(lobbyURL);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);

@@ -3,11 +3,13 @@ package View;
 import Model.FunctionsGson.ScoreboardGson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -32,7 +34,7 @@ import static View.LoginMenu.mainMenuFxmlURL;
 
 public class ScoreBoard {
     public static Stage stage;
-    public static Scene lobbyScene;
+    public static URL lobbyURL;
     public static URL scoreboardFxmlURL;
     private BorderPane pane;
     private ScrollPane container = new ScrollPane();
@@ -47,7 +49,7 @@ public class ScoreBoard {
         ArrayList<String> dates = new ArrayList<>();
         ArrayList<String> statuses = new ArrayList<>();
         for (int i = 0; i < memberScores.size(); i++) {
-            String[] split = memberScores.get(i).split(" \\ ");
+            String[] split = memberScores.get(i).split(" ## ");
             userNames.add(split[0]);
             nickNames.add(split[1]);
             scores.add(split[2]);
@@ -58,6 +60,7 @@ public class ScoreBoard {
     }
 
     public void showScoreboard(ArrayList<String> usernames, ArrayList<String> nickNames, ArrayList<String> scores, ArrayList<String> dates, ArrayList<String> statuses) throws IOException {
+        scoreHBox.setPadding(new Insets(10, 10, 10, 300));
         pane = FXMLLoader.load(scoreboardFxmlURL);
         VBox mainVbox = new VBox(20);
         back.setStyle("-fx-pref-width: 200;\n" +
@@ -70,15 +73,22 @@ public class ScoreBoard {
                 "            #31a3e0,\n" +
                 "            radial-gradient(center 50% 50%, radius 100%, rgba(255, 84, 84, 0.7), #f11111);");
         back.setOnMouseClicked(event -> {
-            stage.setScene(lobbyScene);
+            Pane root = null;
+            try {
+                root = FXMLLoader.load(lobbyURL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
         });
         container.setPrefSize(1280, 720);
         container.setContent(scoreHBox);
-        ArrayList<Text> usernameTexts = new ArrayList<>();
-        ArrayList<Text> nicknameTexts = new ArrayList<>();
-        ArrayList<Text> scoreTexts = new ArrayList<>();
-        ArrayList<Text> dateTexts = new ArrayList<>();
-        ArrayList<Text> statusTexts = new ArrayList<>();
+        ArrayList<Label> usernameTexts = new ArrayList<>();
+        ArrayList<Label> nicknameTexts = new ArrayList<>();
+        ArrayList<Label> scoreTexts = new ArrayList<>();
+        ArrayList<Label> dateTexts = new ArrayList<>();
+        ArrayList<Label> statusTexts = new ArrayList<>();
         VBox usernameVbox = new VBox(30);
         VBox nicknameVbox = new VBox(30);
         VBox scoreVbox = new VBox(30);
@@ -86,22 +96,52 @@ public class ScoreBoard {
         VBox statusVbox = new VBox(30);
         mainVbox.setAlignment(Pos.CENTER);
         scoreHBox.setAlignment(Pos.CENTER);
-        Text text1 = new Text("username");
-        Text text2 = new Text("nickname");
-        Text text3 = new Text("score");
-        Text text4 = new Text("last login");
-        Text text5 = new Text("status");
+        Label text1 = new Label("username");
+        Label text2 = new Label("nickname");
+        Label text3 = new Label("score");
+        Label text4 = new Label("last login");
+        Label text5 = new Label("status");
+        text1.setStyle("-fx-font-size: 20;\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );;");
+        text2.setStyle("-fx-font-size: 20;\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );");
+        text3.setStyle("-fx-font-size: 20;\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );");
+        text4.setStyle("-fx-font-size: 20;\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );");
+        text5.setStyle("-fx-font-size: 20;\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );");
         usernameVbox.getChildren().add(text1);
         nicknameVbox.getChildren().add(text2);
         scoreVbox.getChildren().add(text3);
         dateVbox.getChildren().add(text4);
         statusVbox.getChildren().add(text5);
         for (int i = 0; i < usernames.size(); i++) {
-            usernameTexts.add(new Text(usernames.get(i)));
-            nicknameTexts.add(new Text(nickNames.get(i)));
-            scoreTexts.add(new Text(scores.get(i)));
-            scoreTexts.add(new Text(dates.get(i)));
-            statusTexts.add(new Text(statuses.get(i)));
+            usernameTexts.add(new Label(usernames.get(i)));
+            nicknameTexts.add(new Label(nickNames.get(i)));
+            scoreTexts.add(new Label(scores.get(i)));
+            dateTexts.add(new Label(dates.get(i)));
+            statusTexts.add(new Label(statuses.get(i)));
+            usernameTexts.get(i).setStyle("-fx-font-size: 20;\n" +
+                    "    -fx-font-weight: bold;\n" +
+                    "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );");
+            nicknameTexts.get(i).setStyle("-fx-font-size: 20;\n" +
+                    "    -fx-font-weight: bold;\n" +
+                    "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );");
+            scoreTexts.get(i).setStyle("-fx-font-size: 20;\n" +
+                    "    -fx-font-weight: bold;\n" +
+                    "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );");
+            dateTexts.get(i).setStyle("-fx-font-size: 20;\n" +
+                    "    -fx-font-weight: bold;\n" +
+                    "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );");
+            statusTexts.get(i).setStyle("-fx-font-size: 20;\n" +
+                    "    -fx-font-weight: bold;\n" +
+                    "    -fx-effect: innershadow( three-pass-box , rgb(175, 27, 27), 6, 0.0 , 0 , 2 );");
             usernameVbox.getChildren().add(usernameTexts.get(i));
             nicknameVbox.getChildren().add(nicknameTexts.get(i));
             scoreVbox.getChildren().add(scoreTexts.get(i));
@@ -115,7 +155,7 @@ public class ScoreBoard {
         scoreHBox.getChildren().add(statusVbox);
         mainVbox.getChildren().add(back);
         mainVbox.getChildren().add(container);
-        pane.getChildren().add(mainVbox);
+        pane.setCenter(mainVbox);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();
