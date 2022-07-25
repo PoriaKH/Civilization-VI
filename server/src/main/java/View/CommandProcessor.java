@@ -556,6 +556,39 @@ public class CommandProcessor {
             playGameMenuController.preUpgradeUnit(upgradeUnitGson.oldUnit, upgradeUnitGson.newUnitName,
                     upgradeUnitGson.index, upgradeUnitGson.civilization, gameGroup.tiles, gameGroup);
         }
+        else if (command.startsWith("purchaseBuilding ")) {
+            command = command.replace("purchaseBuilding ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            PurchaseBuildingGson purchaseBuildingGson = gson.fromJson(command, PurchaseBuildingGson.class);
+            GameGroup gameGroup = getGroup(purchaseBuildingGson.member);
+            playGameMenuController.purchaseBuilding(purchaseBuildingGson.civilization, purchaseBuildingGson.tileNumber,
+                    purchaseBuildingGson.buildingName, gameGroup);
+        }
+        else if (command.startsWith("tradeRequest ")) {
+            command = command.replace("tradeRequest ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            TradeRequestGson tradeRequestGson = gson.fromJson(command, TradeRequestGson.class);
+            GameGroup gameGroup = getGroup(tradeRequestGson.member);
+            playGameMenuController.tradeRequest(tradeRequestGson.selectedGive, tradeRequestGson.civilization,
+                    tradeRequestGson.selectedCivilizationName, tradeRequestGson.giveAmount, tradeRequestGson.needAmount,
+                    tradeRequestGson.giveName, tradeRequestGson.needName, gameGroup);
+        }
+        else if (command.startsWith("citizenWork ")) {
+            command = command.replace("citizenWork ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            CitizenWorkGson citizenWorkGson = gson.fromJson(command, CitizenWorkGson.class);
+            GameGroup gameGroup = getGroup(citizenWorkGson.member);
+            playGameMenuController.assignCitizenToWork(citizenWorkGson.tileNumbers, citizenWorkGson.cityIndex,
+                    citizenWorkGson.civilization, gameGroup);
+        }
+
+
+
+
+
+
+
+
         else if (command.startsWith("nextTurn ")) {
             command = command.replace("nextTurn ", "");
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();

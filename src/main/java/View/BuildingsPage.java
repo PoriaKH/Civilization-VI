@@ -1,6 +1,9 @@
 package View;
 
 import Model.*;
+import Model.FunctionsGson.PurchaseBuildingGson;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -344,7 +347,7 @@ public class BuildingsPage {
         }
     }
 
-    public void purchaseClicked(MouseEvent mouseEvent) {
+    public void purchaseClicked(MouseEvent mouseEvent) throws IOException {
         if(selected == -1){
             message.setText("please first select a building");
             return;
@@ -361,6 +364,25 @@ public class BuildingsPage {
             message.setText("invalid tile number");
             return;
         }
+
+
+        PurchaseBuildingGson purchaseBuildingGson = new PurchaseBuildingGson();
+        purchaseBuildingGson.buildingName = buttons.get(selected).getText();
+        purchaseBuildingGson.tileNumber = Integer.parseInt(tileNumber.getText());
+        purchaseBuildingGson.civilization = InfoPanel.currentCivilization;
+        purchaseBuildingGson.member = InfoPanel.currentCivilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(purchaseBuildingGson);
+
+        CreateHost.dataOutputStream.writeUTF("purchaseBuilding " + request);
+        CreateHost.dataOutputStream.flush();
+        selected = -1;
+
+
+
+
+/*
         else if(!doesTileBelongToCivilization(Integer.parseInt(tileNumber.getText()))){
             message.setText("this tile doesn't belong to your civilization !");
             return;
@@ -376,7 +398,7 @@ public class BuildingsPage {
             selected = -1;
             gold.setText("Gold : " + String.valueOf(InfoPanel.currentCivilization.getGold()));
             message.setText("purchase successful !");
-        }
+        }*/
     }
 
     private boolean doesBuildingAlreadyExists(int number) {

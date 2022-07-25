@@ -8,7 +8,6 @@ import Model.Units.Warrior;
 import View.CommandProcessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.scene.control.Label;
 
 import java.io.*;
 import java.net.Socket;
@@ -5752,5 +5751,141 @@ public class PlayGameMenuController {
 
         }
         System.out.println("end of auto save");
+    }
+
+    public void purchaseBuilding (Civilization civilization, int tileNumber, String buildingName, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if(!doesTileBelongToCivilization(tileNumber, serverCivilization)) {
+            gameGroupData.result = "this tile doesn't belong to your civilization !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
+        else if(doesBuildingAlreadyExists(tileNumber, gameGroupData.tiles)) {
+            gameGroupData.result = "a building already exists in this tile";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        else {
+            Building building = new Building(buildingName, serverCivilization, gameGroupData.tiles.get(tileNumber));
+            serverCivilization.setGold(-building.getCost());
+            gameGroupData.tiles.get(tileNumber).addBuilding(building);
+            gameGroupData.result = "purchase building successful !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        }
+    }
+
+    private boolean doesBuildingAlreadyExists(int number, ArrayList<Tile> tiles) {
+        for(Tile tile : tiles){
+            if(tile.getTileNumber() == number){
+                if(tile.getBuilding() != null)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean doesTileBelongToCivilization(int number, Civilization civilization) {
+        for(City city : civilization.getCities()){
+            for(Tile tile : city.getTiles()){
+                if(tile.getTileNumber() == number)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public void tradeRequest(int selectedGive, Civilization civilization, String selectedCivilizationName, int giveAmount, int needAmount, String giveName, String needName, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+
+
+        if(selectedGive == 0){//Food
+            int allFood = 0;
+            for(City city : serverCivilization.getCities()){
+                allFood += city.getTotalFood();
+            }
+            if(allFood < giveAmount){
+                gameGroupData.result = "you don't have this much food!";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        }
+        if(selectedGive == 1){//Gold
+            if(serverCivilization.getGold() < giveAmount){
+                gameGroupData.result = "you don't have this much gold!";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        }
+        if(selectedGive == 2){
+            boolean flag = false;
+
+            for(City city : serverCivilization.getCities()){
+                for(Tile tile : city.getTiles()){
+                    if(tile.getResource() != null) {
+                        if (Objects.equals(tile.getResource().getName(), giveAmount)) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(!flag){
+                gameGroupData.result = "you don't have this resource!";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        }
+
+        //finding index
+        int index = 0;
+        for(int i = 0; i < gameGroupData.civilizations.size(); i++){
+            if(Objects.equals(gameGroup.civilizations.get(i).getName(), selectedCivilizationName)){
+                index = i;
+                break;
+            }
+        }
+        //
+        gameGroupData.civilizations.get(index).getTrades().add(serverCivilization.getName() + "- " + "Need : " + needName + "(" + needAmount + ") Payment : " + giveName + "(" + giveAmount + ")");
+        gameGroupData.result = "your request has been sent successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+    }
+
+    public void assignCitizenToWork(ArrayList<Integer> tileNumbers, int cityIndex, Civilization civilization, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+        City city = serverCivilization.getCities().get(cityIndex);
+
+        for(int i = 0; i < tileNumbers.size(); i++){
+            for(int j = 0; j < tileNumbers.size(); j++){
+                if(j == i)
+                    continue;
+                if(Objects.equals(tileNumbers.get(i), tileNumbers.get(j))){
+                    gameGroupData.result = "tile numbers can't be the same !";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
+            }
+        }
+
+        ArrayList<Citizen> citizens = city.getCitizens();
+        for(Tile tile : city.getTiles()){
+            if(tile.getCitizen() != null){
+                tile.setCitizen(null);
+            }
+        }
+
+        int counter = 0;
+        for(Integer integer : tileNumbers){
+            gameGroupData.tiles.get(integer).setCitizen(citizens.get(counter));
+            citizens.get(counter).setTile(gameGroupData.tiles.get(integer));
+            counter++;
+        }
+
+        gameGroupData.result = "citizen assigned to work !";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
 }
