@@ -1990,13 +1990,19 @@ public class PlayGameMenuController {
         ArrayList<City> cities = civilization.getCities();
         for (int i = 0; i < cities.size(); i++) {
             HashMap<Unit, Integer> units = cities.get(i).getCenterTile().getTurnForUnitMaking();
+            ArrayList<Unit> units2 = new ArrayList<>();
+            ArrayList<Integer> turns = new ArrayList<>();
             for (Map.Entry<Unit, Integer> entry : units.entrySet()) {
-                int turn = entry.getValue() - 1;
+                units2.add(entry.getKey());
+                turns.add(entry.getValue());
+            }
+            for (int i1 = 0; i1 < units2.size(); i1++) {
+                int turn = turns.get(i1) - 1;
                 if (turn == 0) {
-                    cities.get(i).getCenterTile().addUnit(entry.getKey());
-                    cities.get(i).getCenterTile().removeUnitFromMakingProgress(entry.getKey());
+                    cities.get(i).getCenterTile().addUnit(units2.get(i1));
+                    cities.get(i).getCenterTile().removeUnitFromMakingProgress(units2.get(i1));
                 } else {
-                    cities.get(i).getCenterTile().setTurnForUnit(entry.getKey(), turn);
+                    cities.get(i).getCenterTile().setTurnForUnit(units2.get(i1), turn);
                 }
             }
         }
