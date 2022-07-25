@@ -2,10 +2,7 @@ package View;
 
 import Controller.PlayGameMenuController;
 import Model.*;
-import Model.FunctionsGson.CivilizationsGson;
-import Model.FunctionsGson.GameGroupData;
-import Model.FunctionsGson.MemberArray;
-import Model.FunctionsGson.OtherDataGson;
+import Model.FunctionsGson.*;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
@@ -130,12 +127,38 @@ public class Room {
                 }
             }
         });
+        Button scoreBoardButton = new Button("scoreboard");
+        scoreBoardButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #cf32dc;");
+        scoreBoardButton.setOnMouseClicked(event -> {
+            ScoreboardGson scoreboardGson = new ScoreboardGson();
+            scoreboardGson.member = loggedInMember;
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            String request = gson.toJson(scoreboardGson);
+            String response = "";
+            try {
+                CreateHost.dataOutputStream.writeUTF("scoreboard " + request);
+                CreateHost.dataOutputStream.flush();
+                response = CreateHost.dataInputStream.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ScoreboardGson scoreboardGson1 = gson.fromJson(response, ScoreboardGson.class);
+            ScoreBoard.stage = stage;
+            ScoreBoard scoreBoard = new ScoreBoard();
+            scoreBoard.room = this;
+            try {
+                scoreBoard.initialize(scoreboardGson1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         listenForKickButtons(vBox);
 
-        HBox hBox2 = new HBox();
+        HBox hBox2 = new HBox(50);
         hBox2.setAlignment(Pos.CENTER);
         hBox2.getChildren().add(refresh);
+        hBox2.getChildren().add(scoreBoardButton);
 
 
         root = FXMLLoader.load(roomURL);

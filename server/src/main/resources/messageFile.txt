@@ -12,3 +12,4 @@ c : hi
 c : heeeeeeeeeeey
 c : helo
 c : no way
+a : alavi oskole

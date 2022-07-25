@@ -99,7 +99,6 @@ public class MainMenu {
         PreChatBox.loggedInMember = MainMenu.loggedInMember;
         Lobby.member = loggedInMember;
         Lobby.scoreBoardFxmlURL = scoreBoardFxmlURL;
-        ScoreBoard.lobbyURL = lobbyURL;
         root = FXMLLoader.load(lobbyURL);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
