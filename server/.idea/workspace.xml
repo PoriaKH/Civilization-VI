@@ -4,25 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="added assign citizen to work">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
-=======
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="merge">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-=======
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="merge">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
       <change beforePath="$PROJECT_DIR$/src/main/resources/messageFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messageFile.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/CommandProcessor.class" afterDir="false" />
@@ -35,26 +18,7 @@
       <change beforePath="$PROJECT_DIR$/../target/classes/View/CityPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/CityPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/View/SendTradeRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/SendTradeRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../target/classes/fxml/lobby.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/fxml/lobby.fxml" afterDir="false" />
-<<<<<<< HEAD
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
-=======
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
     </list>
-=======
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -135,17 +99,8 @@
       <workItem from="1658725381361" duration="16000" />
       <workItem from="1658725424568" duration="3149000" />
       <workItem from="1658730757111" duration="14000" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <workItem from="1658730798774" duration="630000" />
-=======
       <workItem from="1658730798774" duration="1237000" />
       <workItem from="1658732064503" duration="581000" />
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
-=======
-      <workItem from="1658730798774" duration="1237000" />
-      <workItem from="1658732064503" duration="581000" />
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -280,58 +235,12 @@
       <option name="project" value="LOCAL" />
       <updated>1658687951320</updated>
     </task>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <task id="LOCAL-00020" summary="added assign citizen to work">
-      <created>1658722785301</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1658722785301</updated>
-=======
-=======
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
-=======
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
     <task id="LOCAL-00020" summary="set status for ScoreBoard members">
       <created>1658731425779</created>
       <option name="number" value="00020" />
       <option name="presentableId" value="LOCAL-00020" />
       <option name="project" value="LOCAL" />
       <updated>1658731425779</updated>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-    </task>
-    <option name="localTasksCounter" value="21" />
-=======
-=======
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
     </task>
     <task id="LOCAL-00021" summary="merge">
       <created>1658731462929</created>
@@ -341,10 +250,6 @@
       <updated>1658731462929</updated>
     </task>
     <option name="localTasksCounter" value="22" />
-<<<<<<< HEAD
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
-=======
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,52 +285,9 @@
     <MESSAGE value="PreChatBox.fxml" />
     <MESSAGE value="fixed a bug in teleport" />
     <MESSAGE value="fixed a bug in attack tile and winning against others worked well" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <MESSAGE value="commit" />
-    <MESSAGE value="added sendRequestTrade to server" />
-    <MESSAGE value="added assign citizen to work" />
-    <option name="LAST_COMMIT_MESSAGE" value="added assign citizen to work" />
-=======
-    <MESSAGE value="debug ScoreBoard" />
-    <MESSAGE value="set status for ScoreBoard members" />
-    <option name="LAST_COMMIT_MESSAGE" value="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
-    <MESSAGE value="debug ScoreBoard" />
-    <MESSAGE value="set status for ScoreBoard members" />
-    <option name="LAST_COMMIT_MESSAGE" value="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
-    <MESSAGE value="debug ScoreBoard" />
-    <MESSAGE value="set status for ScoreBoard members" />
-    <option name="LAST_COMMIT_MESSAGE" value="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
-    <MESSAGE value="debug ScoreBoard" />
-    <MESSAGE value="set status for ScoreBoard members" />
-    <option name="LAST_COMMIT_MESSAGE" value="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
-    <MESSAGE value="debug ScoreBoard" />
-    <MESSAGE value="set status for ScoreBoard members" />
-    <option name="LAST_COMMIT_MESSAGE" value="set status for ScoreBoard members" />
->>>>>>> 87ecfc6edde1bdbdc96f3e094693fb062c83fb86
-=======
-=======
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
     <MESSAGE value="debug ScoreBoard" />
     <MESSAGE value="set status for ScoreBoard members" />
     <MESSAGE value="merge" />
     <option name="LAST_COMMIT_MESSAGE" value="merge" />
-<<<<<<< HEAD
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
-=======
->>>>>>> ac266751157c9b71e3c0b80d0bf1670e630e94e8
   </component>
 </project>
