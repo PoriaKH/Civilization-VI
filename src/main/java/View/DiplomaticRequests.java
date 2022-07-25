@@ -1,6 +1,9 @@
 package View;
 
 import Model.Civilization;
+import Model.FunctionsGson.RequestAnswerGson;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -76,10 +79,18 @@ public class DiplomaticRequests {
                 @Override
                 public void handle(MouseEvent event) {
                     if(Objects.equals(button.getText(), "Accept")){
-                        acceptClicked(button);
+                        try {
+                            acceptClicked(button);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     else {
-                        rejectClicked(button);
+                        try {
+                            rejectClicked(button);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
@@ -92,12 +103,36 @@ public class DiplomaticRequests {
         stage.show();
     }
 
-    public void acceptClicked(Button button) {
-        InfoPanel.currentCivilization.acceptFriendlyRequest(buttonCivilizationHashMap.get(button));
+    public void acceptClicked(Button button) throws IOException {
+        RequestAnswerGson requestAnswerGson = new RequestAnswerGson();
+        requestAnswerGson.civilization = InfoPanel.currentCivilization;
+        requestAnswerGson.civilizationName = buttonCivilizationHashMap.get(button).getName();
+        requestAnswerGson.member = InfoPanel.currentCivilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(requestAnswerGson);
+
+        CreateHost.dataOutputStream.writeUTF("acceptRequest " + request);
+        CreateHost.dataOutputStream.flush();
+
+        //InfoPanel.currentCivilization.acceptFriendlyRequest(buttonCivilizationHashMap.get(button));
+
         removeRequest(button);
     }
-    public void rejectClicked(Button button){
-        InfoPanel.currentCivilization.denyFriendlyRequest(buttonCivilizationHashMap.get(button));
+    public void rejectClicked(Button button) throws IOException {
+        RequestAnswerGson requestAnswerGson = new RequestAnswerGson();
+        requestAnswerGson.civilization = InfoPanel.currentCivilization;
+        requestAnswerGson.civilizationName = buttonCivilizationHashMap.get(button).getName();
+        requestAnswerGson.member = InfoPanel.currentCivilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(requestAnswerGson);
+
+        CreateHost.dataOutputStream.writeUTF("declineRequest " + request);
+        CreateHost.dataOutputStream.flush();
+
+        //InfoPanel.currentCivilization.denyFriendlyRequest(buttonCivilizationHashMap.get(button));
+
         removeRequest(button);
     }
     public void removeRequest(Button button){

@@ -5939,4 +5939,31 @@ public class PlayGameMenuController {
         gameGroupData.result = "successful breaking the OATH";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
+    public void acceptDiplo(Civilization civilization, String civilizationName, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+        Civilization serverCivilization2 = getServerCivilizationByName(civilizationName, gameGroupData.civilizations);
+        serverCivilization.acceptFriendlyRequest(serverCivilization2);
+
+        gameGroupData.result = "friendly request accepted";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+    }
+
+    private Civilization getServerCivilizationByName(String civilization, ArrayList<Civilization> civilizations) {
+        for (Civilization civilization1 : civilizations) {
+            if (civilization1.getName().equals(civilization)) return civilization1;
+        }
+        return null;
+    }
+
+    public void declineDiplo(Civilization civilization, String civilizationName, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+        Civilization serverCivilization2 = getServerCivilizationByName(civilizationName, gameGroupData.civilizations);
+        serverCivilization.denyFriendlyRequest(serverCivilization2);
+
+        gameGroupData.result = "friendly request declined";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+    }
 }

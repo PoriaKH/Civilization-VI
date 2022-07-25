@@ -595,6 +595,22 @@ public class CommandProcessor {
             GameGroup gameGroup = getGroup(diplomacyGson.member);
             playGameMenuController.breakOath(diplomacyGson.civilization, diplomacyGson.selectedCivilization, gameGroup);
         }
+        else if (command.startsWith("acceptRequest ")) {
+            command = command.replace("acceptRequest ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RequestAnswerGson requestAnswerGson = gson.fromJson(command, RequestAnswerGson.class);
+            GameGroup gameGroup = getGroup(requestAnswerGson.member);
+            playGameMenuController.acceptDiplo(requestAnswerGson.civilization, requestAnswerGson.civilizationName,
+                    gameGroup);
+        }
+        else if (command.startsWith("declineRequest ")) {
+            command = command.replace("declineRequest ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RequestAnswerGson requestAnswerGson = gson.fromJson(command, RequestAnswerGson.class);
+            GameGroup gameGroup = getGroup(requestAnswerGson.member);
+            playGameMenuController.declineDiplo(requestAnswerGson.civilization, requestAnswerGson.civilizationName,
+                    gameGroup);
+        }
 
 
 
