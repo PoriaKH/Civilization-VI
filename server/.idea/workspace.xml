@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="moved registerMenu to Server">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="fixed a bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,7 +23,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-    <option name="RESET_MODE" value="HARD" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -78,9 +79,18 @@
       <workItem from="1657716485412" duration="3415000" />
       <workItem from="1658254842186" duration="6659000" />
       <workItem from="1658571296489" duration="174000" />
-      <workItem from="1658571521186" duration="7768000" />
-      <workItem from="1658761894377" duration="16000" />
-      <workItem from="1658761953455" duration="727000" />
+      <workItem from="1658571521186" duration="6939000" />
+      <workItem from="1658598500522" duration="68000" />
+      <workItem from="1658598596810" duration="2479000" />
+      <workItem from="1658602379116" duration="128000" />
+      <workItem from="1658602532494" duration="2740000" />
+      <workItem from="1658680062612" duration="72000" />
+      <workItem from="1658684331440" duration="3382000" />
+      <workItem from="1658725381361" duration="16000" />
+      <workItem from="1658725424568" duration="3149000" />
+      <workItem from="1658730757111" duration="14000" />
+      <workItem from="1658730798774" duration="1237000" />
+      <workItem from="1658732064503" duration="581000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -173,7 +183,91 @@
       <option name="project" value="LOCAL" />
       <updated>1658575984365</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="added saveData to file to server">
+      <created>1658626462038</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1658626462038</updated>
+    </task>
+    <task id="LOCAL-00015" summary="move chatBox to server-client">
+      <created>1658662649351</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1658662649351</updated>
+    </task>
+    <task id="LOCAL-00016" summary="PreChatBox.fxml">
+      <created>1658662671044</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1658662671044</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fixed a bug in teleport">
+      <created>1658670322868</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1658670322868</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fixed a bug in attack tile and winning against others worked well">
+      <created>1658673325975</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1658673325975</updated>
+    </task>
+    <task id="LOCAL-00019" summary="debug ScoreBoard">
+      <created>1658687951320</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1658687951320</updated>
+    </task>
+    <task id="LOCAL-00020" summary="set status for ScoreBoard members">
+      <created>1658731425779</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1658731425779</updated>
+    </task>
+    <task id="LOCAL-00021" summary="merge">
+      <created>1658731462929</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1658731462929</updated>
+    </task>
+    <task id="LOCAL-00022" summary="added diplomaticRequests to server">
+      <created>1658740309479</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1658740309479</updated>
+    </task>
+    <task id="LOCAL-00023" summary="debugged diplomacy and worked well">
+      <created>1658761831641</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1658761831641</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fixed a bug">
+      <created>1658762564118</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1658762564118</updated>
+    </task>
+    <task id="LOCAL-00025" summary="fixed a bug">
+      <created>1658762600405</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1658762600405</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,6 +298,17 @@
     <MESSAGE value="accept or deny FriendRequest" />
     <MESSAGE value=".." />
     <MESSAGE value="moved registerMenu to Server" />
-    <option name="LAST_COMMIT_MESSAGE" value="moved registerMenu to Server" />
+    <MESSAGE value="added saveData to file to server" />
+    <MESSAGE value="move chatBox to server-client" />
+    <MESSAGE value="PreChatBox.fxml" />
+    <MESSAGE value="fixed a bug in teleport" />
+    <MESSAGE value="fixed a bug in attack tile and winning against others worked well" />
+    <MESSAGE value="debug ScoreBoard" />
+    <MESSAGE value="set status for ScoreBoard members" />
+    <MESSAGE value="merge" />
+    <MESSAGE value="added diplomaticRequests to server" />
+    <MESSAGE value="debugged diplomacy and worked well" />
+    <MESSAGE value="fixed a bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug" />
   </component>
 </project>
