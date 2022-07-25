@@ -556,6 +556,23 @@ public class CommandProcessor {
             playGameMenuController.preUpgradeUnit(upgradeUnitGson.oldUnit, upgradeUnitGson.newUnitName,
                     upgradeUnitGson.index, upgradeUnitGson.civilization, gameGroup.tiles, gameGroup);
         }
+        else if (command.startsWith("purchaseBuilding ")) {
+            command = command.replace("purchaseBuilding ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            PurchaseBuildingGson purchaseBuildingGson = gson.fromJson(command, PurchaseBuildingGson.class);
+            GameGroup gameGroup = getGroup(purchaseBuildingGson.member);
+            playGameMenuController.purchaseBuilding(purchaseBuildingGson.civilization, purchaseBuildingGson.tileNumber,
+                    purchaseBuildingGson.buildingName, gameGroup);
+        }
+
+
+
+
+
+
+
+
+
         else if (command.startsWith("nextTurn ")) {
             command = command.replace("nextTurn ", "");
             Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();

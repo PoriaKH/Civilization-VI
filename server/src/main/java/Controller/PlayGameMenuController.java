@@ -5756,4 +5756,48 @@ public class PlayGameMenuController {
         }
         System.out.println("end of auto save");
     }
+
+    public void purchaseBuilding (Civilization civilization, int tileNumber, String buildingName, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if(!doesTileBelongToCivilization(tileNumber, serverCivilization)) {
+            gameGroupData.result = "this tile doesn't belong to your civilization !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
+        else if(doesBuildingAlreadyExists(tileNumber, gameGroupData.tiles)) {
+            gameGroupData.result = "a building already exists in this tile";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+        else {
+            Building building = new Building(buildingName, serverCivilization, gameGroupData.tiles.get(tileNumber));
+            serverCivilization.setGold(-building.getCost());
+            gameGroupData.tiles.get(tileNumber).addBuilding(building);
+            gameGroupData.result = "purchase building successful !";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+        }
+    }
+
+    private boolean doesBuildingAlreadyExists(int number, ArrayList<Tile> tiles) {
+        for(Tile tile : tiles){
+            if(tile.getTileNumber() == number){
+                if(tile.getBuilding() != null)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean doesTileBelongToCivilization(int number, Civilization civilization) {
+        for(City city : civilization.getCities()){
+            for(Tile tile : city.getTiles()){
+                if(tile.getTileNumber() == number)
+                    return true;
+            }
+        }
+        return false;
+    }
 }
