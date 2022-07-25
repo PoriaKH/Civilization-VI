@@ -5856,4 +5856,39 @@ public class PlayGameMenuController {
         gameGroupData.result = "your request has been sent successfully";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
+    public void assignCitizenToWork(ArrayList<Integer> tileNumbers, int cityIndex, Civilization civilization, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+        City city = serverCivilization.getCities().get(cityIndex);
+
+        for(int i = 0; i < tileNumbers.size(); i++){
+            for(int j = 0; j < tileNumbers.size(); j++){
+                if(j == i)
+                    continue;
+                if(Objects.equals(tileNumbers.get(i), tileNumbers.get(j))){
+                    gameGroupData.result = "tile numbers can't be the same !";
+                    sendMessageToAllClients(gameGroup, gameGroupData);
+                    return;
+                }
+            }
+        }
+
+        ArrayList<Citizen> citizens = city.getCitizens();
+        for(Tile tile : city.getTiles()){
+            if(tile.getCitizen() != null){
+                tile.setCitizen(null);
+            }
+        }
+
+        int counter = 0;
+        for(Integer integer : tileNumbers){
+            gameGroupData.tiles.get(integer).setCitizen(citizens.get(counter));
+            citizens.get(counter).setTile(gameGroupData.tiles.get(integer));
+            counter++;
+        }
+
+        gameGroupData.result = "citizen assigned to work !";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+    }
 }

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 
 public class CityPanel {
     public static URL cityPanelURL;
@@ -96,6 +97,7 @@ public class CityPanel {
     public void buttonClicked(Button button) throws IOException {
         int index = buttonStringHashMap.get(button);
         CityPage.city = InfoPanel.currentCivilization.getCities().get(index);
+        CityPage.cityIndex = index;
         CityPage.cityPanelScene = cityPanelScene;
         CityPage.stage = stage;
         new CityPage().start();

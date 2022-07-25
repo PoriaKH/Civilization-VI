@@ -573,7 +573,14 @@ public class CommandProcessor {
                     tradeRequestGson.selectedCivilizationName, tradeRequestGson.giveAmount, tradeRequestGson.needAmount,
                     tradeRequestGson.giveName, tradeRequestGson.needName, gameGroup);
         }
-
+        else if (command.startsWith("citizenWork ")) {
+            command = command.replace("citizenWork ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            CitizenWorkGson citizenWorkGson = gson.fromJson(command, CitizenWorkGson.class);
+            GameGroup gameGroup = getGroup(citizenWorkGson.member);
+            playGameMenuController.assignCitizenToWork(citizenWorkGson.tileNumbers, citizenWorkGson.cityIndex,
+                    citizenWorkGson.civilization, gameGroup);
+        }
 
 
 
