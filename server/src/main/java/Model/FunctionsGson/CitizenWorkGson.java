@@ -15,5 +15,4 @@ public class CitizenWorkGson {
     public Civilization civilization;
     @Expose
     public Member member;
-
 }
