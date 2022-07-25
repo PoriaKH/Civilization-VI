@@ -564,6 +564,15 @@ public class CommandProcessor {
             playGameMenuController.purchaseBuilding(purchaseBuildingGson.civilization, purchaseBuildingGson.tileNumber,
                     purchaseBuildingGson.buildingName, gameGroup);
         }
+        else if (command.startsWith("tradeRequest ")) {
+            command = command.replace("tradeRequest ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            TradeRequestGson tradeRequestGson = gson.fromJson(command, TradeRequestGson.class);
+            GameGroup gameGroup = getGroup(tradeRequestGson.member);
+            playGameMenuController.tradeRequest(tradeRequestGson.selectedGive, tradeRequestGson.civilization,
+                    tradeRequestGson.selectedCivilizationName, tradeRequestGson.giveAmount, tradeRequestGson.needAmount,
+                    tradeRequestGson.giveName, tradeRequestGson.needName, gameGroup);
+        }
 
 
 

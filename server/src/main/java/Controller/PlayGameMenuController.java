@@ -8,7 +8,6 @@ import Model.Units.Warrior;
 import View.CommandProcessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.scene.control.Label;
 
 import java.io.*;
 import java.net.Socket;
@@ -5799,5 +5798,62 @@ public class PlayGameMenuController {
             }
         }
         return false;
+    }
+
+    public void tradeRequest(int selectedGive, Civilization civilization, String selectedCivilizationName, int giveAmount, int needAmount, String giveName, String needName, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+
+
+        if(selectedGive == 0){//Food
+            int allFood = 0;
+            for(City city : serverCivilization.getCities()){
+                allFood += city.getTotalFood();
+            }
+            if(allFood < giveAmount){
+                gameGroupData.result = "you don't have this much food!";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        }
+        if(selectedGive == 1){//Gold
+            if(serverCivilization.getGold() < giveAmount){
+                gameGroupData.result = "you don't have this much gold!";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        }
+        if(selectedGive == 2){
+            boolean flag = false;
+
+            for(City city : serverCivilization.getCities()){
+                for(Tile tile : city.getTiles()){
+                    if(tile.getResource() != null) {
+                        if (Objects.equals(tile.getResource().getName(), giveAmount)) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(!flag){
+                gameGroupData.result = "you don't have this resource!";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        }
+
+        //finding index
+        int index = 0;
+        for(int i = 0; i < gameGroupData.civilizations.size(); i++){
+            if(Objects.equals(gameGroup.civilizations.get(i).getName(), selectedCivilizationName)){
+                index = i;
+                break;
+            }
+        }
+        //
+        gameGroupData.civilizations.get(index).getTrades().add(serverCivilization.getName() + "- " + "Need : " + needName + "(" + needAmount + ") Payment : " + giveName + "(" + giveAmount + ")");
+        gameGroupData.result = "your request has been sent successfully";
+        sendMessageToAllClients(gameGroup, gameGroupData);
     }
 }
