@@ -5888,4 +5888,55 @@ public class PlayGameMenuController {
         gameGroupData.result = "citizen assigned to work !";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
+
+    public void diplomacy(Civilization civilization, Civilization selectedCivilization, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if(selectedCivilization == null){
+            gameGroupData.result = "you must choose the civilization first";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
+        Civilization serverSelectedCivilization = getServerCivilization(selectedCivilization, gameGroupData.civilizations);
+
+        for(Civilization tempCiv : serverSelectedCivilization.getFriendlyRequests()){
+            if(tempCiv.equals(serverCivilization)) {
+                gameGroupData.result = "you have already sent this request";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        }
+        for(Civilization tempCiv : serverSelectedCivilization.getFriends()){
+            if(tempCiv.equals(serverCivilization)){
+                gameGroupData.result = "this civilization is already your allie";
+                sendMessageToAllClients(gameGroup, gameGroupData);
+                return;
+            }
+        }
+        serverSelectedCivilization.getFriendlyRequests().add(serverCivilization);
+        gameGroupData.result = "diplomacy done !";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+    }
+
+    public void breakOath(Civilization civilization, Civilization selectedCivilization, GameGroup gameGroup) throws IOException {
+        GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+
+
+        Civilization serverCivilization = getServerCivilization(civilization, gameGroupData.civilizations);
+
+        if(selectedCivilization == null){
+            gameGroupData.result = "you must choose the civilization you want to break oath with!";
+            sendMessageToAllClients(gameGroup, gameGroupData);
+            return;
+        }
+
+        Civilization serverSelectedCivilization = getServerCivilization(selectedCivilization, gameGroupData.civilizations);
+
+
+        serverCivilization.breakTheOath(serverSelectedCivilization);
+        gameGroupData.result = "successful breaking the OATH";
+        sendMessageToAllClients(gameGroup, gameGroupData);
+    }
 }

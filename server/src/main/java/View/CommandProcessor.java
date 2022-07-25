@@ -581,6 +581,20 @@ public class CommandProcessor {
             playGameMenuController.assignCitizenToWork(citizenWorkGson.tileNumbers, citizenWorkGson.cityIndex,
                     citizenWorkGson.civilization, gameGroup);
         }
+        else if (command.startsWith("diplomacy ")) {
+            command = command.replace("diplomacy ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            DiplomacyGson diplomacyGson = gson.fromJson(command, DiplomacyGson.class);
+            GameGroup gameGroup = getGroup(diplomacyGson.member);
+            playGameMenuController.diplomacy(diplomacyGson.civilization, diplomacyGson.selectedCivilization, gameGroup);
+        }
+        else if (command.startsWith("breakOath ")) {
+            command = command.replace("breakOath ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            DiplomacyGson diplomacyGson = gson.fromJson(command, DiplomacyGson.class);
+            GameGroup gameGroup = getGroup(diplomacyGson.member);
+            playGameMenuController.breakOath(diplomacyGson.civilization, diplomacyGson.selectedCivilization, gameGroup);
+        }
 
 
 

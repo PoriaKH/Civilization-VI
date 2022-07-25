@@ -2,6 +2,9 @@ package View;
 
 import Controller.PlayGameMenuController;
 import Model.Civilization;
+import Model.FunctionsGson.DiplomacyGson;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -97,7 +100,24 @@ public class Diplomacy {
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(selectedCiv == null){
+                DiplomacyGson diplomacyGson = new DiplomacyGson();
+                diplomacyGson.civilization = InfoPanel.currentCivilization;
+                diplomacyGson.selectedCivilization = selectedCiv;
+                diplomacyGson.member = InfoPanel.currentCivilization.getMember();
+
+                Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+                String request = gson.toJson(diplomacyGson);
+
+                try {
+                    CreateHost.dataOutputStream.writeUTF("diplomacy " + request);
+                    CreateHost.dataOutputStream.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                /*if(selectedCiv == null){
                     showAlert("you must choose the civilization first");
                     return;
                 }
@@ -113,7 +133,8 @@ public class Diplomacy {
                         return;
                     }
                 }
-                selectedCiv.getFriendlyRequests().add(InfoPanel.currentCivilization);
+                selectedCiv.getFriendlyRequests().add(InfoPanel.currentCivilization);*/
+
                 try {
                     new Diplomatics().start();
                 } catch (IOException e) {
@@ -131,12 +152,24 @@ public class Diplomacy {
         stage.show();
     }
     public void breakOathClicked() throws IOException {
-        if(selectedOathBreak == null) {
+        DiplomacyGson diplomacyGson = new DiplomacyGson();
+        diplomacyGson.civilization = InfoPanel.currentCivilization;
+        diplomacyGson.selectedCivilization = selectedOathBreak;
+        diplomacyGson.member = InfoPanel.currentCivilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(diplomacyGson);
+
+        CreateHost.dataOutputStream.writeUTF("breakOath " + request);
+        CreateHost.dataOutputStream.flush();
+
+
+        /*if(selectedOathBreak == null) {
             showAlert("you must choose the civilization you want to break oath with!");
             return;
         }
 
-        InfoPanel.currentCivilization.breakTheOath(selectedOathBreak);
+        InfoPanel.currentCivilization.breakTheOath(selectedOathBreak);*/
         new Diplomatics().start();
     }
 
@@ -147,6 +180,8 @@ public class Diplomacy {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
     public void backClicked(MouseEvent mouseEvent) throws IOException {
         new Diplomatics().start();
     }

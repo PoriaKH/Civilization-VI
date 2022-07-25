@@ -306,8 +306,11 @@ public class Civilization {
     }
 
     public boolean equals(Civilization civilization) {
+        if (civilization == null) return false;
+
         if (this.getName().equals(civilization.getName()) &&
         this.getMember().equals(civilization.getMember())) return true;
+
         return false;
     }
 
