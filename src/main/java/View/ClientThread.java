@@ -34,7 +34,8 @@ public class ClientThread extends Thread {
     public boolean isGameEnded = false;
     public boolean wasPreviousTurnMine = false;
 
-// todo ... add condition if game is over , stop thread
+
+    // todo ... add condition if game is over , stop thread
     public ClientThread(Stage stage, MouseEvent event) {
         this.playGameMenu = new PlayGameMenu();
         this.stage = stage;
@@ -72,11 +73,36 @@ public class ClientThread extends Thread {
                     System.out.println(txt);
                     otherDataGson = gson2.fromJson(txt, OtherDataGson.class);
                     setGameGroupData(gameGroupData, otherDataGson);
+                    PlayGameMenu.gameGroupData = gameGroupData;
                     break;
                 }
             }
-            if (!gameGroupData.result.equals("newGame")) {
-                if (gameGroupData.result.startsWith("end ")) {
+
+            if (gameGroupData.result.equals("startSaveGame")) {
+                playGameMenu = new PlayGameMenu();
+                playGameMenu.stage = stage;
+                try {
+                    playGameMenu.root = FXMLLoader.load(GameMenu.gameMenuURL);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Tile.root = playGameMenu.root;
+                Unit.playGameMenu = playGameMenu;
+
+                startSaveGameTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
+                startSaveGameCivilizations(gameGroupData.civilizations, gameGroupData.tiles, getStatusChecker(gameGroupData));
+                loadExtras(gameGroupData);
+                Tile.map = PlayGameMenu.tiles;
+                Tile.civilizations = PlayGameMenu.civilizations;
+                setStatusCheckersForGameBeginning(otherDataGson);
+                Civilization civilization = getCivilization(gameGroupData.civilizations);
+                Room.isMyTurn = civilization.isMyTurn;
+                PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
+                isGameReady = true;
+            }
+
+            else if (!gameGroupData.result.equals("newGame")) {
+                if (gameGroupData.result.startsWith("end ") || gameGroupData.result.equals("saveGame")) {
                     String result = gameGroupData.result;
                     this.result = result;
                     this.isNewResultAvailable = true;
@@ -85,22 +111,27 @@ public class ClientThread extends Thread {
                 } else {
                     copyTiles(gameGroupData.tiles, gameGroupData);
                     copyCivilizations(gameGroupData.civilizations);
-                    loadExtras(gameGroupData);
-                    Civilization civilization = getCivilization(gameGroupData.civilizations);
-                    wasPreviousTurnMine = Room.isMyTurn;
-                    Room.isMyTurn = civilization.isMyTurn;
-                    PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
-                    if (Room.isMyTurn) {
-                        String result = gameGroupData.result;
-                        this.isNewResultAvailable = true;
-                        this.result = result;
-                    } else if (!Room.isMyTurn && wasPreviousTurnMine) {
-                        String result = gameGroupData.result;
-                        this.isNewResultAvailable = true;
-                        this.result = result;
-                    }
+                }
+                loadExtras(gameGroupData);
+                Civilization civilization = getCivilization(gameGroupData.civilizations);
+                wasPreviousTurnMine = Room.isMyTurn;
+                Room.isMyTurn = civilization.isMyTurn;
+                PlayGameMenu.playingCivilization = getPlayingCivilization(gameGroupData.civilizations);
+                if (Room.isMyTurn) {
+                    String result = gameGroupData.result;
+                    this.isNewResultAvailable = true;
+                    this.result = result;
+                } else if (!Room.isMyTurn && wasPreviousTurnMine) {
+                    String result = gameGroupData.result;
+                    this.isNewResultAvailable = true;
+                    this.result = result;
+                } else if (gameGroupData.result.equals("saveGame")) {
+                    String result = gameGroupData.result;
+                    this.isNewResultAvailable = true;
+                    this.result = result;
                 }
             }
+
             else {
                 playGameMenu = new PlayGameMenu();
                 playGameMenu.stage = stage;
@@ -125,6 +156,7 @@ public class ClientThread extends Thread {
             if (isGameEnded) break;
         }
     }
+
 
     private void setStatusCheckersForGameBeginning(OtherDataGson otherDataGson) {
         playGameMenu.tileStatusOfCivilization1 = otherDataGson.tileStatusOfCivilization1;
@@ -183,6 +215,41 @@ public class ClientThread extends Thread {
         PlayGameMenu.tiles = map;
     }
 
+    private void startSaveGameTiles(ArrayList<Tile> tiles, ArrayList<Integer> tileStatusOfCivilization) {
+        ArrayList<Tile> map = new ArrayList<>();
+        for (Tile tile : tiles) {
+            Tile tileMap = new Tile(tile.getTileNumber(), tile.isDesert(), tile.isMeadow(), tile.isHill(), tile.isMountain(),
+                    tile.isOcean(), tile.isPlain(), tile.isSnow(), tile.isTundra(), tile.getX(), tile.getY());
+            map.add(tileMap);
+        }
+
+        PlayGameMenu.tiles = map;
+
+    }
+
+    public void startSaveGameCivilizations(ArrayList<Civilization> serverCivilizations, ArrayList<Tile> tiles, ArrayList<Integer> tileStatusOfCivilization) {
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (Civilization serverCivilization : serverCivilizations) {
+            City city = serverCivilization.getCities().get(0);
+            city.setTiles(city.getCityTiles(serverCivilization.getCities().get(0).getTiles()));
+            city.setCenterTile(city.getCenterForCity(serverCivilization.getCities().get(0).getCenterTile()));
+            Civilization civilization = new Civilization(serverCivilization.getMember(), city);
+            civilizations.add(civilization);
+        }
+        playGameMenuController.loadCivilizationForBuilding(civilizations);
+        PlayGameMenu.civilizations = civilizations;
+
+        ArrayList<Unit> units = getAllUnits(tiles);
+
+        for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
+            PlayGameMenu.tiles.get(i).generatingTile(tileStatusOfCivilization.get(i));
+        }
+
+        for (int i = 0; i < tiles.size(); i++) {
+            PlayGameMenu.tiles.get(i).copyFieldsOfTile(tiles.get(i), units, tileStatusOfCivilization);
+        }
+    }
+
     private void startCivilizations(ArrayList<Civilization> serverCivilizations) {
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for (Civilization serverCivilization : serverCivilizations) {
@@ -201,6 +268,7 @@ public class ClientThread extends Thread {
         playGameMenuController.loadTileForBuilding(gameGroupData.tiles);
         playGameMenuController.loadOriginTileForUnit(gameGroupData.tiles);
         playGameMenuController.loadCivilizationForBuilding(gameGroupData.civilizations);
+        loadFriends(PlayGameMenu.civilizations);
     }
 
     private void showResult(String result) {
@@ -219,30 +287,16 @@ public class ClientThread extends Thread {
     }
 
     private void copyCivilizations (ArrayList<Civilization> serverCivilizations) {
-        PlayGameMenu.civilizations = deleteCivilization(serverCivilizations);
         for (int i = 0; i < PlayGameMenu.civilizations.size(); i++) {
             PlayGameMenu.civilizations.get(i).copyFieldsOfCivilizations(serverCivilizations.get(i));
         }
         playGameMenuController.loadCivilizationForBuilding(PlayGameMenu.civilizations);
     }
 
-    private ArrayList<Civilization> deleteCivilization(ArrayList<Civilization> serverCivilizations) {
-        ArrayList<Civilization> civilizations = new ArrayList<>();
-        for (Civilization serverCivilization : serverCivilizations) {
-            for (Civilization civilization : PlayGameMenu.civilizations) {
-                if (civilization.equals(serverCivilization)) {
-                    civilizations.add(civilization);
-                    break;
-                }
-            }
-        }
-        return civilizations;
-    }
-
     private void copyTiles (ArrayList<Tile> serverTiles, GameGroupData gameGroupData) {
         ArrayList<Unit> units = getAllUnits(serverTiles);
         for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
-            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units, this, gameGroupData);
+            PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units, getStatusChecker(gameGroupData));
         }
         ArrayList<Integer> statusChecker = getStatusChecker(gameGroupData);
         for (int i = 0; i < statusChecker.size(); i++) {
@@ -261,7 +315,7 @@ public class ClientThread extends Thread {
                 allServerUnits.add(serverTile.warrior);
             }
             if (serverTile.civilian != null) {
-                System.out.println("tile number      " + serverTile.getTileNumber());
+                //System.out.println("tile number      " + serverTile.getTileNumber());
                 serverTile.civilian.setOrigin(serverTile);
                 allServerUnits.add(serverTile.civilian);
             }
@@ -296,5 +350,28 @@ public class ClientThread extends Thread {
 
     public boolean isGameReady() {
         return isGameReady;
+    }
+    public void loadFriends(ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            civilization.getFriendlyRequests().clear();
+            for (String s : civilization.friendlyRequestsString) {
+                System.out.println("request : " + s);
+                civilization.getFriendlyRequests().add(getCivilizationByName(s, civilizations));
+            }
+        }
+
+        for (Civilization civilization : civilizations) {
+            civilization.getFriends().clear();
+            for (String s : civilization.friendsString) {
+                System.out.println("friend : " + s);
+                civilization.getFriends().add(getCivilizationByName(s, civilizations));
+            }
+        }
+    }
+    private Civilization getCivilizationByName(String civilization, ArrayList<Civilization> civilizations) {
+        for (Civilization civilization1 : civilizations) {
+            if (civilization1.getName().equals(civilization)) return civilization1;
+        }
+        return null;
     }
 }

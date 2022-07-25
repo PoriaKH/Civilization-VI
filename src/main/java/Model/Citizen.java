@@ -8,9 +8,12 @@ import java.util.ArrayList;
 
 public class Citizen {
     private Tile tile;
+    @Expose
+    public int tileNumber;
 
     public Citizen(Tile tile){
         this.tile = tile;
+        this.tileNumber = tile.getTileNumber();
         tile.setCitizen(this);
     }
 
@@ -22,7 +25,7 @@ public class Citizen {
         ArrayList<Citizen> citizensServer = server.getCitizens();
         ArrayList<Citizen> citizensClient = new ArrayList<>();
         for (Citizen citizen : citizensServer) {
-            citizen.setTile(getCitizenTile(citizen.getTile()));
+            citizen.setTile(PlayGameMenu.tiles.get(citizen.getTileNumber()));
             citizensClient.add(citizen);
         }
         return citizensClient;
@@ -43,6 +46,10 @@ public class Citizen {
                 break;
             }
         }
+    }
+
+    public int getTileNumber() {
+        return tileNumber;
     }
 
     public void setTile(Tile tile) {
@@ -66,7 +73,7 @@ public class Citizen {
         else {
             System.out.println("tileThis : " + this.getTile());
         }
-        if (this.getTile().equals(citizen.getTile())) return true;
+        if (this.getTileNumber() == citizen.getTileNumber()) return true;
         return false;
     }
 

@@ -4,7 +4,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Model.FunctionsGson.PrivateChatGson;
 import Model.Member;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -29,7 +32,7 @@ public class ChatBox {
     public Pane root = new Pane();
     public Scene scene;
     public Stage stage;
-    public File file;
+    public String fileName;
 
     private final Button add = new Button("Add");
     private final Button exit = new Button("Exit");
@@ -37,7 +40,7 @@ public class ChatBox {
     private final TextField textField = new TextField();
     private ArrayList<Label> messages = new ArrayList<>();
     private ArrayList<Button> editButtons = new ArrayList<>();
-    private ArrayList<String> oldMessage = new ArrayList<>();
+    public ArrayList<String> oldMessage;
     private ScrollPane container = new ScrollPane();
     private int index = 0;
 
@@ -67,7 +70,11 @@ public class ChatBox {
         container.vvalueProperty().bind(chatBox.heightProperty());
         fileReading();
         exit.setOnMouseClicked(event -> {
-            addToFile();
+            try {
+                addToFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             try {
                 root = FXMLLoader.load(mainMenuFxmlURL);
             } catch (IOException e) {
@@ -114,11 +121,8 @@ public class ChatBox {
     }
 
     private void fileReading() throws FileNotFoundException {
-        //File file = new File("src/main/resources/messageFile.txt");
-        Scanner fileScanner = new Scanner(file);
-        while (fileScanner.hasNextLine())
-            oldMessage.add(fileScanner.nextLine());
-        fileScanner.close();
+        if (oldMessage.get(0).equals(""))
+            return;
         for (int i = 0; i < oldMessage.size(); i++) {
             messages.add(new Label(oldMessage.get(i)));
             if (oldMessage.get(i).substring(0, oldMessage.get(i).indexOf(" :")).equals(loggedInMember.getUsername()))
@@ -154,16 +158,22 @@ public class ChatBox {
         }
     }
 
-    private void addToFile(){
-        try {
-            FileWriter writer = new FileWriter(file, false);
-            StringBuilder stringBuilder = new StringBuilder();
-            for (Label label : messages)
-                stringBuilder.append(label.getText()).append("\n");
-            writer.write(String.valueOf(stringBuilder));
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void addToFile() throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Label label : messages)
+            stringBuilder.append(label.getText()).append("\n");
+        if (fileName.equals("messageFile")){
+            CreateHost.dataOutputStream.writeUTF("write to public chat " + String.valueOf(stringBuilder));
+            CreateHost.dataOutputStream.flush();
+        }
+        else {
+            PrivateChatGson privateChatGson = new PrivateChatGson();
+            privateChatGson.fileName = fileName;
+            privateChatGson.message = String.valueOf(stringBuilder);
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            String request = gson.toJson(privateChatGson);
+            CreateHost.dataOutputStream.writeUTF("write to private chat " + request);
+            CreateHost.dataOutputStream.flush();
         }
     }
 }

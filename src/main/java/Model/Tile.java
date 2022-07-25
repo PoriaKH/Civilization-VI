@@ -218,8 +218,8 @@ public class Tile extends Polygon {
         this.repairNeedImprovement = 0;
         this.roads = new ArrayList<>();
         this.railRoads = new ArrayList<>();
-        this.units = new ArrayList<>();
         this.improvements = new ArrayList<>();
+        this.units = new ArrayList<>();
         this.isDesert = isDesert;
         this.isMeadow = isMeadow;
         this.isHill = isHill;
@@ -690,11 +690,13 @@ public class Tile extends Polygon {
                 resource.setFill(new ImagePattern(new Image(tusk.toExternalForm())));
             else if (resource.isWheat())
                 resource.setFill(new ImagePattern(new Image(wheat.toExternalForm())));
-            if (!root.getChildren().contains(resource)) {
+            if (!root.getChildren().contains(resource) && resource != null) {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        root.getChildren().add(resource);
+                        if (!root.getChildren().contains(resource) && resource != null) {
+                            root.getChildren().add(resource);
+                        }
                     }
                 });
             }
@@ -724,11 +726,13 @@ public class Tile extends Polygon {
                 improvements.get(0).setFill(new ImagePattern(new Image(tradingPost.toExternalForm())));
             else if (improvements.get(0).isLaboratory())
                 improvements.get(0).setFill(new ImagePattern(new Image(laboratory.toExternalForm())));
-            if (!root.getChildren().contains(improvements.get(0))) {
+            if (!root.getChildren().contains(improvements.get(0)) && improvements.get(0) != null) {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        root.getChildren().add(improvements.get(0));
+                        if (!root.getChildren().contains(improvements.get(0)) && improvements.get(0) != null) {
+                            root.getChildren().add(improvements.get(0));
+                        }
                     }
                 });
             }
@@ -744,11 +748,13 @@ public class Tile extends Polygon {
             ruin.setX(x11 - 10);
             ruin.setY(y11 - 10);
             ruin.setFill(new ImagePattern(new Image(ruinURL.toExternalForm())));
-            if (!root.getChildren().contains(ruin)) {
+            if (!root.getChildren().contains(ruin) && ruin != null) {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        root.getChildren().add(ruin);
+                        if (!root.getChildren().contains(ruin) && ruin != null) {
+                            root.getChildren().add(ruin);
+                        }
                     }
                 });
             }
@@ -1276,9 +1282,10 @@ public class Tile extends Polygon {
         return roads;
     }
     public void addBuilding(Building building){
+        System.out.println("first of add building  ");
         this.building = building;
 
-        building.getCivilization().setScience(building.getScience());
+        /*building.getCivilization().setScience(building.getScience());
         building.getCivilization().setHappiness(building.getHappiness());
         for(City city : building.getCivilization().getCities()){
             for(Tile tile : city.getTiles()){
@@ -1296,7 +1303,7 @@ public class Tile extends Polygon {
                     city.setTotalFood(building.getFood());
                 }
             }
-        }
+        }*/
         double y1 = y - h;
         double x1 = x - radius / 2;
         building.setX(x1);
@@ -1315,6 +1322,8 @@ public class Tile extends Polygon {
         else if(building.isIndustrialEra)
             building.setFill(new ImagePattern(new Image(String.valueOf(building5URL))));
 
+
+        System.out.println("+++++++++" + building.buildingName + "   " + building);
         root.getChildren().add(building);
     }
 
@@ -1580,8 +1589,8 @@ public class Tile extends Polygon {
             rail.setY(this.y - 30);
         }
         if (resource != null){
-            double y11 = this.getY();
-            double x11 = this.getX() + 70;
+            float y11 = this.getY();
+            float x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
         }
@@ -1649,8 +1658,8 @@ public class Tile extends Polygon {
             rail.setY(this.y - 30);
         }
         if (resource != null){
-            double y11 = this.getY();
-            double x11 = this.getX() + 70;
+            float y11 = this.getY();
+            float x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
         }
@@ -1718,8 +1727,8 @@ public class Tile extends Polygon {
             rail.setY(this.y - 30);
         }
         if (resource != null){
-            double y11 = this.getY();
-            double x11 = this.getX() + 70;
+            float y11 = this.getY();
+            float x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
         }
@@ -1731,7 +1740,6 @@ public class Tile extends Polygon {
             improvements.get(0).setX(this.getX() + 50);
             improvements.get(0).setY(this.getY() + 30);
         }
-        //System.out.println("tile number : " + this.getTileNumber() + "  x : " + this.getX() + " Y : " + this.getY());
     }
     public void moveDown(){
         double x1,y1;
@@ -1788,8 +1796,8 @@ public class Tile extends Polygon {
             rail.setY(this.y - 30);
         }
         if (resource != null){
-            double y11 = this.getY();
-            double x11 = this.getX() + 70;
+            float y11 = this.getY();
+            float x11 = this.getX() + 70;
             resource.setX(x11);
             resource.setY(y11);
         }
@@ -1813,7 +1821,7 @@ public class Tile extends Polygon {
         return false;
     }
 
-    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits, ClientThread clientThread, GameGroupData gameGroupData) {
+    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits, ArrayList<Integer> status) {
         // todo ... check classes that yall wrote
         this.cameraSpeed = 30;
         this.isDesert = tile.isDesert;
@@ -1840,7 +1848,7 @@ public class Tile extends Polygon {
         this.ruin = getRuinCopy(tile.getRuin());
         this.building = setBuildingCopy(tile.getBuilding());
         //this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
-        this.resource = copyResource(tile.getResource(), clientThread, gameGroupData);
+        this.resource = copyResource(tile.getResource(), status);
         this.attribute = setAttributeCopy(tile.getAttribute());
         setImprovementCopy(tile.getImprovements());
         this.isWorking = tile.isWorking;
@@ -1928,15 +1936,15 @@ public class Tile extends Polygon {
         return null;
     }
 
-    private Resource copyResource(Resource resource, ClientThread clientThread, GameGroupData gameGroupData) {
+    private Resource copyResource(Resource resource, ArrayList<Integer> status) {
         if (this.getResource() == null && resource != null) {
             Resource resource2 = new Resource(resource.getName());
-            //generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
+            generatingTile(status.get(this.getTileNumber()));
             //addResourcePicture(resource2);
             return resource2;
         }
-        else if (this.getResource() != null && resource != null){
-            //generatingTile(clientThread.getStatusChecker(gameGroupData).get(this.getTileNumber()));
+        else if ((this.getResource() != null && resource != null) || (this.getResource() != null && resource == null)){
+            generatingTile(status.get(this.getTileNumber()));
             //this.getResource().copyFields(resource);
             return this.getResource();
         }
@@ -1970,13 +1978,13 @@ public class Tile extends Polygon {
         return clientTiles;
     }
 
-    private Building setBuildingCopy(Building building) {
-        if (this.getBuilding() == null && building != null) {
-            building.setTile(getClientTile(building.getTile()));
+    private Building setBuildingCopy(Building newBuilding) {
+        if (this.getBuilding() == null && newBuilding != null) {
+            Building building2 = new Building(newBuilding.buildingName, newBuilding.getCivilization(), PlayGameMenu.tiles.get(newBuilding.getTileNumber()));
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    getClientTile(building.getTile()).addBuilding(building);
+                    getClientTile(building2.getTile()).addBuilding(building2);
                 }
             });
             return building;
@@ -2020,7 +2028,7 @@ public class Tile extends Polygon {
 
     private Citizen getCitizenCopy(Citizen citizen) {
         if (citizen != null) {
-            Tile tile = getCitizenTile(citizen.getTile());
+            Tile tile = PlayGameMenu.tiles.get(citizen.getTileNumber());
             if (tile == null) return null;
             citizen.setTile(tile);
             return citizen;
@@ -2050,6 +2058,7 @@ public class Tile extends Polygon {
     }
 
     public static Tile getClientTile(Tile tile) {
+        System.out.println("tiel : " + tile);
         for (Tile tile2 : PlayGameMenu.tiles) {
             if (tile.equals(tile2)) return tile2;
         }

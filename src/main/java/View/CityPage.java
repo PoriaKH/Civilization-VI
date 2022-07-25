@@ -4,7 +4,10 @@ import Controller.PlayGameMenuController;
 import Model.Citizen;
 import Model.City;
 import Model.Civilization;
+import Model.FunctionsGson.CitizenWorkGson;
 import Model.Tile;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +46,7 @@ public class CityPage {
     public static URL cityPageURL;
     public static Scene cityPanelScene;
     public static Stage stage;
+    public static int cityIndex;
 
     public Scene cityPageScene;
 
@@ -187,7 +191,21 @@ public class CityPage {
                 return;
             }
         }
-        for(int i = 0; i < tileNumbers.size(); i++){
+
+        CitizenWorkGson citizenWorkGson = new CitizenWorkGson();
+        citizenWorkGson.tileNumbers = tileNumbers;
+        citizenWorkGson.cityIndex = cityIndex;
+        citizenWorkGson.civilization = InfoPanel.currentCivilization;
+        citizenWorkGson.member = InfoPanel.currentCivilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(citizenWorkGson);
+
+        CreateHost.dataOutputStream.writeUTF("citizenWork " + request);
+        CreateHost.dataOutputStream.flush();
+
+
+        /*for(int i = 0; i < tileNumbers.size(); i++){
             for(int j = 0; j < tileNumbers.size(); j++){
                 if(j == i)
                     continue;
@@ -208,7 +226,8 @@ public class CityPage {
             InfoPanel.tiles.get(integer).setCitizen(citizens.get(counter));
             citizens.get(counter).setTile(InfoPanel.tiles.get(integer));
             counter++;
-        }
+        }*/
+
         new CityPanel().start();
     }
     public void showAlert(String message){

@@ -2,10 +2,7 @@ package View;
 
 import Controller.PlayGameMenuController;
 import Model.*;
-import Model.FunctionsGson.CivilizationsGson;
-import Model.FunctionsGson.GameGroupData;
-import Model.FunctionsGson.MemberArray;
-import Model.FunctionsGson.OtherDataGson;
+import Model.FunctionsGson.*;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
@@ -42,6 +39,8 @@ public class Room {
     public boolean isGameStarted = false;
     public boolean amIKicked = false;
     public static boolean isMyTurn = false;
+    public boolean decision = false;
+
 
     public boolean isCreator = false;
     public GsonRoom gsonRoom;
@@ -91,7 +90,7 @@ public class Room {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(15);
         Button exitButton = new Button("Exit");
-        exitButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        exitButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
         exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -115,7 +114,7 @@ public class Room {
             }
         }
         Button refresh = new Button("refresh");
-        refresh.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #cf32dc;");
+        refresh.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #cf32dc;");
         refresh.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -128,12 +127,38 @@ public class Room {
                 }
             }
         });
+        Button scoreBoardButton = new Button("scoreboard");
+        scoreBoardButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #cf32dc;");
+        scoreBoardButton.setOnMouseClicked(event -> {
+            ScoreboardGson scoreboardGson = new ScoreboardGson();
+            scoreboardGson.member = loggedInMember;
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            String request = gson.toJson(scoreboardGson);
+            String response = "";
+            try {
+                CreateHost.dataOutputStream.writeUTF("scoreboard " + request);
+                CreateHost.dataOutputStream.flush();
+                response = CreateHost.dataInputStream.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ScoreboardGson scoreboardGson1 = gson.fromJson(response, ScoreboardGson.class);
+            ScoreBoard.stage = stage;
+            ScoreBoard scoreBoard = new ScoreBoard();
+            scoreBoard.room = this;
+            try {
+                scoreBoard.initialize(scoreboardGson1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         listenForKickButtons(vBox);
 
-        HBox hBox2 = new HBox();
+        HBox hBox2 = new HBox(50);
         hBox2.setAlignment(Pos.CENTER);
         hBox2.getChildren().add(refresh);
+        hBox2.getChildren().add(scoreBoardButton);
 
 
         root = FXMLLoader.load(roomURL);
@@ -143,7 +168,7 @@ public class Room {
         hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().add(exitButton);
         Button startButton = new Button("Start");
-        startButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        startButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
         if(!isCreator)
             startButton.setDisable(true);
 
@@ -164,6 +189,7 @@ public class Room {
                         Gson gson = new GsonBuilder().create();
                         GameSocketArray gameSocketArray = new GameSocketArray();
                         gameSocketArray.gameSockets = gsonRoom.sockets;
+                        gameSocketArray.isAutoSaveActive = decision;
                         String str = gson.toJson(gameSocketArray);
                         dataOutputStream.writeUTF(str);
                         dataOutputStream.flush();
@@ -181,16 +207,6 @@ public class Room {
                         }
 
 
-                        /*MemberArray memberArray = new MemberArray();
-                        memberArray.members = gsonRoom.members;
-
-                        Gson gson1 = new GsonBuilder().create();
-                        String txt = gson1.toJson(memberArray);
-                        dataOutputStream.writeUTF(txt);
-                        dataOutputStream.flush();*/
-
-//                        refreshThePage(vBox,event);
-
                        ClientThread clientThread = new ClientThread(stage, event);
                        clientThread.setDaemon(true);
                        clientThread.start();
@@ -204,60 +220,6 @@ public class Room {
                              break;
                            }
                         }
-
-                        /*while (true) {
-                             GameGroupData gameGroupData = new GameGroupData();
-                             OtherDataGson otherDataGson = new OtherDataGson();
-                             Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
-
-                            while (true) {
-                                String txt = dataInputStream.readUTF();
-                                if (txt.startsWith("civ ")) {
-                                    txt = txt.replace("civ ", "");
-                                    System.out.println(txt);
-                                    Civilization civilization = gson2.fromJson(txt, Civilization.class);
-                                    gameGroupData.civilizations.add(civilization);
-
-                                } else if (txt.startsWith("tile ")) {
-                                    txt = txt.replace("tile ", "");
-                                    Tile tile = gson2.fromJson(txt, Tile.class);
-                                    gameGroupData.tiles.add(tile);
-
-                                } else if (txt.startsWith("other ")) {
-                                    txt = txt.replace("other ", "");
-                                    System.out.println(txt);
-                                    otherDataGson = gson2.fromJson(txt, OtherDataGson.class);
-                                    setGameGroupData(gameGroupData, otherDataGson);
-                                    break;
-                                }
-                            }
-                             if (!gameGroupData.result.equals("newGame")) {
-                                 copyTiles(gameGroupData.tiles);
-                                 copyCivilizations(gameGroupData.civilizations);
-                                 Civilization civilization = getCivilization(gameGroupData.civilizations);
-                                 isMyTurn = civilization.isMyTurn;
-                                 if (isMyTurn) {
-                                     PlayGameMenu.playingCivilization = civilization;
-                                     System.out.println(civilization.getName());
-                                     String result = gameGroupData.result;
-                                     showResult(result);
-                                 }
-                             }
-                             else {
-                                 playGameMenu = new PlayGameMenu();
-                                 playGameMenu.stage = stage;
-                                 playGameMenu.root = FXMLLoader.load(GameMenu.gameMenuURL);
-                                 Tile.root = playGameMenu.root;
-                                 Unit.playGameMenu = playGameMenu;
-                                 startTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
-                                 startCivilizations(gameGroupData.civilizations);
-                                 Tile.map = PlayGameMenu.tiles;
-                                 Tile.civilizations = PlayGameMenu.civilizations;
-                                 loadExtras(gameGroupData);
-                                 PlayGameMenu.playingCivilization = PlayGameMenu.civilizations.get(0);
-                                 playGameMenu.switchToGame(event);
-                             }
-                         }*/
                     }
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
@@ -266,7 +228,7 @@ public class Room {
         });
 
         Button guestButton = new Button("Guest Start");
-        startButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 350;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        startButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
         if (isCreator)
             guestButton.setDisable(true);
 
@@ -306,9 +268,95 @@ public class Room {
         });
 
 
+        Button saveGameButton = new Button("continue save game");
+        saveGameButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        saveGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    refreshThePage(vBox,event);
+                    if(gsonRoom.nicknames.size() > 5){
+                        showAlert("capacity over limit !");
+                    }
+                    else if(gsonRoom.nicknames.size() == 1){
+                        showAlert("the game must have more than one player to start !");
+                    }
+                    else {
+                        //start the game...
+
+                        Gson gson = new GsonBuilder().create();
+                        GameSocketArray gameSocketArray = new GameSocketArray();
+                        gameSocketArray.gameSockets = gsonRoom.sockets;
+                        gameSocketArray.isAutoSaveActive = decision;
+                        String str = gson.toJson(gameSocketArray);
+                        dataOutputStream.writeUTF("continueSave " + str);
+                        dataOutputStream.flush();
+                        //TODO...Koochak add playGameMenu graphic
+
+                        String res = dataInputStream.readUTF();
+                        if(res.equals("give me members")){
+                            Gson gson1 = new GsonBuilder().create();
+                            String txt = gson1.toJson(gsonRoom);
+                            dataOutputStream.writeUTF(txt);
+                            dataOutputStream.flush();
+                        }
+                        else {
+                            System.out.println("something went wrong! Client/Room/Line 169");
+                        }
+
+
+                        ClientThread clientThread = new ClientThread(stage, event);
+                        clientThread.setDaemon(true);
+                        clientThread.start();
+
+
+                        while (true) {
+                            Thread.sleep(1000);
+                            if (clientThread.isGameReady()) {
+                                clientThread.playGameMenu.clientThread = clientThread;
+                                clientThread.playGameMenu.switchToGame(event);
+                                break;
+                            }
+                        }
+                    }
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Button autoSaveButton = new Button("activate auto save");
+        autoSaveButton.setStyle("-fx-pref-height: 35;-fx-font-size: 16; -fx-pref-width: 250;-fx-border-radius: 5; -fx-background-color: #56d079;");
+        if (!isCreator)
+            autoSaveButton.setDisable(true);
+
+        autoSaveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                decision = !loggedInMember.isAutoSaveActive;
+
+                String message = "auto save is ";
+                if (decision) {
+                    message = message + "activated";
+                }
+                else {
+                    message = message + "disabled";
+                }
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("result :");
+                alert.setHeaderText("result :");
+                alert.setContentText(message);
+                alert.showAndWait();
+            }
+        });
+
 
         hBox.getChildren().add(startButton);
+        hBox.getChildren().add(saveGameButton);
+        hBox.getChildren().add(autoSaveButton);
         hBox.getChildren().add(guestButton);
+
         hBox.setSpacing(15);
         root.setBottom(hBox);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();

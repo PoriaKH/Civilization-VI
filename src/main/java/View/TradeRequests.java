@@ -3,8 +3,14 @@ package View;
 import Controller.PlayGameMenuController;
 import Model.City;
 import Model.Civilization;
+import Model.FunctionsGson.ChangeFoodAmountGson;
+import Model.FunctionsGson.ChangeGoldAmountGson;
+import Model.FunctionsGson.ChangeResourceGson;
+import Model.FunctionsGson.RejectMessageGson;
 import Model.Resource;
 import Model.Tile;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,6 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,7 +88,11 @@ public class TradeRequests {
             button.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    buttonClicked(button);
+                    try {
+                        buttonClicked(button);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }
@@ -92,7 +103,7 @@ public class TradeRequests {
         stage.show();
     }
 
-    public void buttonClicked(Button button){
+    public void buttonClicked(Button button) throws IOException {
         String regex = "(?<civilization>.*)- Need : (?<giveName>.*)\\((?<giveAmount>.*)\\) Payment : (?<needName>.*)\\((?<needAmount>.*)\\)";
         Matcher matcher = Pattern.compile(regex).matcher(buttonStringHashMap.get(button));
         matcher.find();
@@ -147,7 +158,7 @@ public class TradeRequests {
                             return;
                         }
                     }
-
+                    //todo
                     if(Objects.equals(needName, "Gold")){
                         int need = Integer.parseInt(needAmount);
                         if(civilization.getGold() < need){
@@ -159,6 +170,17 @@ public class TradeRequests {
                             int give = Integer.parseInt(giveAmount);
                             InfoPanel.currentCivilization.setGold(need - give);
                             civilization.setGold(give - need);
+
+                            ChangeGoldAmountGson changeGoldAmountGson = new ChangeGoldAmountGson();
+                            changeGoldAmountGson.amount = need - give;
+                            changeGoldAmountGson.civilizationName = InfoPanel.currentCivilization.getName();
+                            changeGoldAmountGson.member = InfoPanel.currentCivilization.getMember();
+                            goldRequest("changeGold", changeGoldAmountGson);
+
+                            changeGoldAmountGson.amount = give - need;
+                            changeGoldAmountGson.civilizationName = civilization.getName();
+                            goldRequest("changeGold", changeGoldAmountGson);
+
                             removeRequest(button,true);
                             return;
                         }
@@ -171,6 +193,18 @@ public class TradeRequests {
                                 city.setTotalFood(-give / civilization.getCities().size());
                             }
                             InfoPanel.currentCivilization.setGold(need);
+
+                            ChangeFoodAmountGson changeFoodAmountGson = new ChangeFoodAmountGson();
+                            changeFoodAmountGson.amount = give;
+                            changeFoodAmountGson.civilizationName = civilization.getName();
+                            changeFoodAmountGson.member = InfoPanel.currentCivilization.getMember();
+                            foodRequest("changeFood", changeFoodAmountGson);
+
+                            ChangeGoldAmountGson changeGoldAmountGson = new ChangeGoldAmountGson();
+                            changeGoldAmountGson.amount = need;
+                            changeGoldAmountGson.civilizationName = InfoPanel.currentCivilization.getName();
+                            goldRequest("changeGold", changeGoldAmountGson);
+
                             removeRequest(button,true);
                             return;
                         }
@@ -184,13 +218,33 @@ public class TradeRequests {
                                             for(City city1 : civilization.getCities()){
                                                 for(Tile tile1 : city1.getTiles()){
                                                     if(tile1.getResource() == null) {
+                                                        ChangeResourceGson changeResourceGson = new ChangeResourceGson();
+                                                        changeResourceGson.tileNumber = tile1.getTileNumber();
+                                                        changeResourceGson.resourceName = tile.getResource().getName();
+                                                        changeResourceGson.member = InfoPanel.currentCivilization.getMember();
+                                                        resourceRequest("changeResource", changeResourceGson);
                                                         tile1.addResource(new Resource(tile.getResource().getName()));
                                                         break;
                                                     }
                                                 }
                                                 tile.addResource(null);
-                                                InfoPanel.currentCivilization.setGold(need);
+                                                ChangeResourceGson changeResourceGson = new ChangeResourceGson();
+                                                changeResourceGson.tileNumber = tile.getTileNumber();
+                                                changeResourceGson.resourceName = null;
+                                                changeResourceGson.member = InfoPanel.currentCivilization.getMember();
+                                                resourceRequest("changeResource", changeResourceGson);
+
+                                                InfoPanel.currentCivilization.setGold (need);
+                                                ChangeGoldAmountGson changeGoldAmountGson = new ChangeGoldAmountGson();
+                                                changeGoldAmountGson.amount = need;
+                                                changeGoldAmountGson.civilizationName = InfoPanel.currentCivilization.getName();
+                                                changeGoldAmountGson.member = InfoPanel.currentCivilization.getMember();
+                                                goldRequest("changeGold", changeGoldAmountGson);
                                                 civilization.setGold(-need);
+                                                changeGoldAmountGson.amount = -need;
+                                                changeGoldAmountGson.civilizationName = civilization.getName();
+                                                goldRequest("changeGold", changeGoldAmountGson);
+
                                                 removeRequest(button,true);
                                                 return;
                                             }
@@ -205,6 +259,7 @@ public class TradeRequests {
                             }
                         }
                     }
+                    //todo
                     else if(Objects.equals(needName, "Food")){
                         int need = Integer.parseInt(needAmount);
                         int totalFood = 0;
@@ -223,9 +278,29 @@ public class TradeRequests {
                             for(City city : InfoPanel.currentCivilization.getCities()){
                                 city.setTotalFood(need / civilization.getCities().size());
                             }
+                            ChangeFoodAmountGson changeFoodAmountGson = new ChangeFoodAmountGson();
+                            changeFoodAmountGson.amount = -need;
+                            changeFoodAmountGson.civilizationName = civilization.getName();
+                            changeFoodAmountGson.member = InfoPanel.currentCivilization.getMember();
+                            foodRequest("changeFood", changeFoodAmountGson);
+
+                            changeFoodAmountGson.amount = need;
+                            changeFoodAmountGson.civilizationName = InfoPanel.currentCivilization.getName();
+                            foodRequest("changeFood", changeFoodAmountGson);
+
                             int give = Integer.parseInt(giveAmount);
                             InfoPanel.currentCivilization.setGold(-give);
                             civilization.setGold(give);
+                            ChangeGoldAmountGson changeGoldAmountGson = new ChangeGoldAmountGson();
+                            changeGoldAmountGson.amount = -give;
+                            changeGoldAmountGson.civilizationName = InfoPanel.currentCivilization.getName();
+                            changeGoldAmountGson.member = InfoPanel.currentCivilization.getMember();
+                            goldRequest("changeGold", changeGoldAmountGson);
+
+                            changeGoldAmountGson.amount = give;
+                            changeGoldAmountGson.civilizationName = civilization.getName();
+                            goldRequest("changeGold", changeGoldAmountGson);
+
                             removeRequest(button,true);
                             return;
                         }
@@ -238,6 +313,17 @@ public class TradeRequests {
                             for(City city : InfoPanel.currentCivilization.getCities()){
                                 city.setTotalFood(need - give / civilization.getCities().size());
                             }
+
+                            ChangeFoodAmountGson changeFoodAmountGson = new ChangeFoodAmountGson();
+                            changeFoodAmountGson.amount = -need + give;
+                            changeFoodAmountGson.civilizationName = civilization.getName();
+                            changeFoodAmountGson.member = InfoPanel.currentCivilization.getMember();
+                            foodRequest("changeFood", changeFoodAmountGson);
+
+                            changeFoodAmountGson.amount = need - give;
+                            changeFoodAmountGson.civilizationName = InfoPanel.currentCivilization.getName();
+                            foodRequest("changeFood", changeFoodAmountGson);
+
                             removeRequest(button,true);
                             return;
                         }
@@ -248,6 +334,17 @@ public class TradeRequests {
                             for(City city : InfoPanel.currentCivilization.getCities()){
                                 city.setTotalFood(need / civilization.getCities().size());
                             }
+
+                            ChangeFoodAmountGson changeFoodAmountGson = new ChangeFoodAmountGson();
+                            changeFoodAmountGson.amount = -need;
+                            changeFoodAmountGson.civilizationName = civilization.getName();
+                            changeFoodAmountGson.member = InfoPanel.currentCivilization.getMember();
+                            foodRequest("changeFood", changeFoodAmountGson);
+
+                            changeFoodAmountGson.amount = need;
+                            changeFoodAmountGson.civilizationName = InfoPanel.currentCivilization.getName();
+                            foodRequest("changeFood", changeFoodAmountGson);
+
                             boolean flag = false;
                             for(City city : InfoPanel.currentCivilization.getCities()){
                                 for(Tile tile : city.getTiles()){
@@ -257,11 +354,21 @@ public class TradeRequests {
                                             for(City city1 : civilization.getCities()){
                                                 for(Tile tile1 : city1.getTiles()){
                                                     if(tile1.getResource() == null) {
+                                                        ChangeResourceGson changeResourceGson = new ChangeResourceGson();
+                                                        changeResourceGson.tileNumber = tile1.getTileNumber();
+                                                        changeResourceGson.resourceName = tile.getResource().getName();
+                                                        changeResourceGson.member = InfoPanel.currentCivilization.getMember();
+                                                        resourceRequest("changeResource", changeResourceGson);
                                                         tile1.addResource(new Resource(tile.getResource().getName()));
                                                         break;
                                                     }
                                                 }
                                                 tile.addResource(null);
+                                                ChangeResourceGson changeResourceGson = new ChangeResourceGson();
+                                                changeResourceGson.tileNumber = tile.getTileNumber();
+                                                changeResourceGson.resourceName = null;
+                                                changeResourceGson.member = InfoPanel.currentCivilization.getMember();
+                                                resourceRequest("changeResource", changeResourceGson);
                                                 removeRequest(button,true);
                                                 return;
                                             }
@@ -276,6 +383,7 @@ public class TradeRequests {
                             }
                         }
                     }
+                    //todo
                     else if(Objects.equals(needName, "Resource")){
                         boolean flag = false;
                         for(City city : civilization.getCities()){
@@ -286,11 +394,21 @@ public class TradeRequests {
                                         for(City city1 : InfoPanel.currentCivilization.getCities()){
                                             for(Tile tile1 : city1.getTiles()){
                                                 if(tile1.getResource() == null) {
+                                                    ChangeResourceGson changeResourceGson = new ChangeResourceGson();
+                                                    changeResourceGson.tileNumber = tile1.getTileNumber();
+                                                    changeResourceGson.resourceName = tile.getResource().getName();
+                                                    changeResourceGson.member = InfoPanel.currentCivilization.getMember();
+                                                    resourceRequest("changeResource", changeResourceGson);
                                                     tile1.addResource(new Resource(tile.getResource().getName()));
                                                     break;
                                                 }
                                             }
                                             tile.addResource(null);
+                                            ChangeResourceGson changeResourceGson = new ChangeResourceGson();
+                                            changeResourceGson.tileNumber = tile.getTileNumber();
+                                            changeResourceGson.resourceName = null;
+                                            changeResourceGson.member = InfoPanel.currentCivilization.getMember();
+                                            resourceRequest("changeResource", changeResourceGson);
                                             removeRequest(button,true);
                                             return;
                                         }
@@ -306,6 +424,17 @@ public class TradeRequests {
                         if(Objects.equals(giveName, "Gold")){
                             int give = Integer.parseInt(giveAmount);
                             InfoPanel.currentCivilization.setGold(-give);
+
+                            ChangeGoldAmountGson changeGoldAmountGson = new ChangeGoldAmountGson();
+                            changeGoldAmountGson.amount = -give;
+                            changeGoldAmountGson.civilizationName = InfoPanel.currentCivilization.getName();
+                            changeGoldAmountGson.member = InfoPanel.currentCivilization.getMember();
+                            goldRequest("changeGold", changeGoldAmountGson);
+
+                            changeGoldAmountGson.amount = give;
+                            changeGoldAmountGson.civilizationName = civilization.getName();
+                            goldRequest("changeGold", changeGoldAmountGson);
+
                             civilization.setGold(give);
                             removeRequest(button,true);
                             return;
@@ -319,6 +448,16 @@ public class TradeRequests {
                             for(City city : InfoPanel.currentCivilization.getCities()){
                                 city.setTotalFood(-give / civilization.getCities().size());
                             }
+                            ChangeFoodAmountGson changeFoodAmountGson = new ChangeFoodAmountGson();
+                            changeFoodAmountGson.amount = give;
+                            changeFoodAmountGson.civilizationName = civilization.getName();
+                            changeFoodAmountGson.member = InfoPanel.currentCivilization.getMember();
+                            foodRequest("changeFood", changeFoodAmountGson);
+
+                            changeFoodAmountGson.amount = -give;
+                            changeFoodAmountGson.civilizationName = InfoPanel.currentCivilization.getName();
+                            foodRequest("changeFood", changeFoodAmountGson);
+
                             removeRequest(button,true);
                             return;
                         }
@@ -332,11 +471,21 @@ public class TradeRequests {
                                             for(City city1 : civilization.getCities()){
                                                 for(Tile tile1 : city1.getTiles()){
                                                     if(tile1.getResource() == null) {
+                                                        ChangeResourceGson changeResourceGson = new ChangeResourceGson();
+                                                        changeResourceGson.tileNumber = tile1.getTileNumber();
+                                                        changeResourceGson.resourceName = tile.getResource().getName();
+                                                        changeResourceGson.member = InfoPanel.currentCivilization.getMember();
+                                                        resourceRequest("changeResource", changeResourceGson);
                                                         tile1.addResource(new Resource(tile.getResource().getName()));
                                                         break;
                                                     }
                                                 }
                                                 tile.addResource(null);
+                                                ChangeResourceGson changeResourceGson = new ChangeResourceGson();
+                                                changeResourceGson.tileNumber = tile.getTileNumber();
+                                                changeResourceGson.resourceName = null;
+                                                changeResourceGson.member = InfoPanel.currentCivilization.getMember();
+                                                resourceRequest("changeResource", changeResourceGson);
                                                 removeRequest(button,true);
                                                 return;
                                             }
@@ -357,7 +506,19 @@ public class TradeRequests {
         else {//Reject Clicked
             for(Civilization civilization : InfoPanel.civilizations){
                 if(Objects.equals(civilization.getName(), matcher.group("civilization"))){
+                    RejectMessageGson rejectMessageGson = new RejectMessageGson();
+                    rejectMessageGson.civilization = civilization.getName();
+                    rejectMessageGson.messageCivilization = InfoPanel.currentCivilization.getName();
+                    rejectMessageGson.member = InfoPanel.currentCivilization.getMember();
+
+                    Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+                    String request = gson.toJson(rejectMessageGson);
+
+                    CreateHost.dataOutputStream.writeUTF("reject " + request);
+                    CreateHost.dataOutputStream.flush();
+/*
                     civilization.getMessages().add(PlayGameMenuController.turn + " : " + InfoPanel.currentCivilization.getName() + "- rejected your trade request !");
+*/
                     break;
                 }
             }
@@ -404,5 +565,29 @@ public class TradeRequests {
 
     public void backClicked(MouseEvent mouseEvent) throws IOException {
         new TradePage().start();
+    }
+
+    public void goldRequest (String functionName, ChangeGoldAmountGson changeGoldAmountGson) throws IOException {
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(changeGoldAmountGson);
+
+        CreateHost.dataOutputStream.writeUTF(functionName + " " + request);
+        CreateHost.dataOutputStream.flush();
+    }
+
+    public void foodRequest (String functionName, ChangeFoodAmountGson changeFoodAmountGson) throws IOException {
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(changeFoodAmountGson);
+
+        CreateHost.dataOutputStream.writeUTF(functionName + " " + request);
+        CreateHost.dataOutputStream.flush();
+    }
+
+    public void resourceRequest (String functionName, ChangeResourceGson changeResourceGson) throws IOException {
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(changeResourceGson);
+
+        CreateHost.dataOutputStream.writeUTF(functionName + " " + request);
+        CreateHost.dataOutputStream.flush();
     }
 }

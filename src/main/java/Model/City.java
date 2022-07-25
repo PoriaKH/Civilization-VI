@@ -73,6 +73,7 @@ public class City {
         int hillEffect = 0;
         //add units strength
         for(Tile tile : getTiles()){
+            //System.out.println("tile number : " + tile.getTileNumber());
             if(tile.getBuilding() != null){
                 this.defenceStrength += tile.getBuilding().getDefence();
             }
@@ -172,9 +173,7 @@ public class City {
     }
 
     public boolean equals(City city) {
-        if (this.centerTile.equals(city.getCenterTile()) &&
-                this.defenceStrength == city.damagePoint &&
-                this.damagePoint == city.getDamagePoint()) return true;
+        if (this.centerTile.equals(city.getCenterTile())) return true;
         return false;
     }
 
@@ -186,6 +185,10 @@ public class City {
         this.citizens = Citizen.copyListOfCitizens(this, city);
         this.centerTile = getCenterForCity(city.getCenterTile());
         this.tiles = getCityTiles(city.getTiles());
+        /*System.out.println("centerTile : " + this.centerTile.getTileNumber() + "  units : " + this.centerTile.getUnits());
+        for (Tile tile : this.tiles) {
+            System.out.println("tiles : " + tile.getTileNumber() + "  units : " + tile.getUnits() );
+        }*/
         this.defenceStrength = city.getDefenceStrength2();
         this.damagePoint = city.getDamagePoint();
         this.sciencePerTurn = city.getSciencePerTurn();
@@ -254,7 +257,10 @@ public class City {
         ArrayList<City> cities = new ArrayList<>();
         for (City serverCity : serverCities) {
             for (City clientCity : clientCities) {
-                if (serverCity.equals(clientCity)) cities.add(serverCity);
+                if (serverCity.equals(clientCity)) {
+                    cities.add(serverCity);
+                    break;
+                }
             }
         }
         return cities;

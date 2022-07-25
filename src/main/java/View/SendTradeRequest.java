@@ -2,8 +2,11 @@ package View;
 
 import Model.City;
 import Model.Civilization;
+import Model.FunctionsGson.TradeRequestGson;
 import Model.Technology;
 import Model.Tile;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -221,7 +224,28 @@ public class SendTradeRequest {
         needError.setText("");
         giveError.setText("");
 
-        if(selectedGive == 0){//Food
+        TradeRequestGson tradeRequestGson = new TradeRequestGson();
+        tradeRequestGson.selectedGive = selectedGive;
+        tradeRequestGson.civilization = InfoPanel.currentCivilization;
+        tradeRequestGson.selectedCivilizationName = selectedCivilizationName;
+        tradeRequestGson.giveAmount = Integer.parseInt(giveTextField.getText());
+        tradeRequestGson.needAmount = Integer.parseInt(needTextField.getText());
+        tradeRequestGson.giveName = selectedGiveName;
+        tradeRequestGson.needName = selectedNeedName;
+        tradeRequestGson.member = InfoPanel.currentCivilization.getMember();
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(tradeRequestGson);
+
+        CreateHost.dataOutputStream.writeUTF("tradeRequest " + request);
+        CreateHost.dataOutputStream.flush();
+
+
+
+
+
+
+       /* if(selectedGive == 0){//Food
             int allFood = 0;
             for(City city : InfoPanel.currentCivilization.getCities()){
                 allFood += city.getTotalFood();
@@ -267,7 +291,7 @@ public class SendTradeRequest {
         //
         InfoPanel.civilizations.get(index).getTrades().add(InfoPanel.currentCivilization.getName() + "- " + "Need : " + selectedNeedName + "(" + needTextField.getText() + ") Payment : " + selectedGiveName + "(" + giveTextField.getText() + ")");
         System.out.println(InfoPanel.civilizations.get(index).getTrades().get(InfoPanel.civilizations.get(index).getTrades().size() - 1));
-        finalMessage.setText("your request has been sent successfully");
+        finalMessage.setText("your request has been sent successfully");*/
 
         new TradePage().start();
     }

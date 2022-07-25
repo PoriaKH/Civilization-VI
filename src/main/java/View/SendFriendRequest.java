@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,22 +19,25 @@ import java.io.IOException;
 import java.net.URL;
 
 public class SendFriendRequest {
+    public static URL sendFriendRequestURL;
     public static Member sender;
     public static Stage stage;
     public Scene scene;
     public static URL lobbyURL;
-    private Pane pane = new Pane();
+    private BorderPane pane = new BorderPane();
     private Button back = new Button("back");
     private Button send = new Button("add");
     private Label label = new Label();
     private Label empty = new Label();
     private VBox vBox = new VBox(50);
     private TextField textField = new TextField();
-    public void run(){
+    public void run() throws IOException {
         initialize();
     }
 
-    private void initialize(){
+    private void initialize() throws IOException {
+        pane = FXMLLoader.load(sendFriendRequestURL);
+        pane.setPrefSize(1280, 720);
         back.setStyle("-fx-pref-width: 200;\n" +
                 "    -fx-pref-height: 20;\n" +
                 "    -fx-effect: dropshadow( one-pass-box , #d54444, 8 , 0.0 , 2 , 0 );\n" +
@@ -73,10 +77,11 @@ public class SendFriendRequest {
         vBox.getChildren().add(empty);
         vBox.getChildren().add(label);
         textField.setPromptText("enter the username you want to send request");
+        textField.setMaxWidth(500);
         vBox.getChildren().add(textField);
         vBox.getChildren().add(send);
         vBox.getChildren().add(back);
-        pane.getChildren().add(vBox);
+        pane.setCenter(vBox);
         scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();

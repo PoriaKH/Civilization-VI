@@ -13,9 +13,11 @@ import sun.applet.Main;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -144,11 +146,11 @@ public class CommandProcessor {
                 }
             }
         }
-        else if (command.startsWith("scoreboard")){
+        else if (command.startsWith("scoreboard ")){
             Gson gson = new GsonBuilder().create();
             command = command.replace("scoreboard " , "");
             ScoreboardGson scoreboardGson = gson.fromJson(command, ScoreboardGson.class);
-            scoreboardGson.membersScores = playGameMenuController.scoreBoard(scoreboardGson, members);
+            scoreboardGson.membersScores = playGameMenuController.scoreBoard(scoreboardGson, gsonRoomArray);
             String request = gson.toJson(scoreboardGson);
             dataOutputStream.writeUTF(request);
             dataOutputStream.flush();
@@ -176,14 +178,47 @@ public class CommandProcessor {
             dataOutputStream.writeUTF(response);
             dataOutputStream.flush();
         }
+        else if (command.startsWith("friend profile ")){
+            command = command.replace("friend profile ", "");
+            String response = playGameMenuController.infoReader(command);
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
         else if (command.startsWith("accept friendRequest ")){
             command = command.replace("accept friendRequest ", "");
-            playGameMenuController.acceptRequest(command);
+            String[] splitParts = command.split(" # ");
+            System.out.println("parts: " + splitParts[0] + "\t" + splitParts[1]);
+            playGameMenuController.acceptRequest(splitParts[0], splitParts[1]);
 
         }
         else if (command.startsWith("deny friendRequest ")){
             command = command.replace("deny friendRequest ", "");
-            playGameMenuController.denyRequest(command);
+            String[] splitParts = command.split(" # ");
+            playGameMenuController.denyRequest(splitParts[0], splitParts[1]);
+        }
+        else if (command.startsWith("pre chat box usernames")){
+            dataOutputStream.writeUTF(String.valueOf(playGameMenuController.allUsers()));
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("public chat")){
+            StringBuilder response = playGameMenuController.readFromPublicChat();
+            dataOutputStream.writeUTF(String.valueOf(response));
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("private chat ")){
+            command  = command.replace("private chat ", "");
+            dataOutputStream.writeUTF(String.valueOf(playGameMenuController.readFromPrivateChat(command)));
+            dataOutputStream.flush();
+        }
+        else if (command.startsWith("write to public chat ")){
+            command = command.replace("write to public chat ", "");
+            playGameMenuController.writeToPublicChat(command);
+        }
+        else if (command.startsWith("write to private chat ")){
+            Gson gson = new GsonBuilder().create();
+            command = command.replace("write to private chat ", "");
+            PrivateChatGson privateChatGson = gson.fromJson(command, PrivateChatGson.class);
+            playGameMenuController.writeToPrivateChat(privateChatGson.message, privateChatGson.fileName);
         }
         else if(command.startsWith("{\"gameSockets")){
             Gson gson = new GsonBuilder().create();
@@ -215,7 +250,7 @@ public class CommandProcessor {
             gameGroup.sockets = sockets2;
             gameGroup.members = members2;
             System.out.println("members = " + members);
-
+            gameGroup.isAutoSaveActivated = gameSocketArray.isAutoSaveActive;
 
             gameGroup.tiles = playGameMenuController.mapCreator(members2.size(),members2);
             gameGroup.civilizations = playGameMenuController.initializeCivilizations(members2.size(), gameGroup.tiles, members2);
@@ -271,6 +306,78 @@ public class CommandProcessor {
             GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
             gameGroupData.result = "newGame";
             playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
+        }
+
+
+        else if (command.startsWith("continueSave ")) {
+            command = command.replace("continueSave ", "");
+            GameGroup gameGroup = new GameGroup();
+            playGameMenuController.readGameFromFile(gameGroup);
+
+            playGameMenuController.loadTileForCitizen(gameGroup.tiles);
+            //playGameMenuController.copyCitizens(gameGroup);
+            playGameMenuController.copyCivilizations(gameGroup.civilizations, gameGroup);
+
+            playGameMenuController.setUnitsForTiles(gameGroup.tiles);
+            playGameMenuController.loadTileForBuilding(gameGroup.tiles);
+            playGameMenuController.loadCivilizationForBuilding(gameGroup.civilizations);
+            playGameMenuController.loadOriginTileForUnits(gameGroup.tiles);
+            playGameMenuController.loadFriends(gameGroup.civilizations);
+
+            for (Tile tile : gameGroup.tiles) {
+                System.out.println(tile.getTileNumber() + "++++++" + tile.getBuilding());
+            }
+
+            Gson gson = new GsonBuilder().create();
+            GameSocketArray gameSocketArray = gson.fromJson(command,GameSocketArray.class);
+            ArrayList<Socket> sockets2 = new ArrayList<>();
+            ArrayList<Member> members2 = new ArrayList<>();
+            for(GameSocket gameSocket : gameSocketArray.gameSockets){
+                for(Socket socket1 : allSockets){
+                    if(gameSocket.socketPort == socket1.getPort()){
+                        sockets2.add(socket1);
+                    }
+                }
+                members2.add(gameSocket.member);
+            }
+            sockets.add(sockets2);
+            members.add(members2);
+
+            dataOutputStream.writeUTF("give me members");
+            dataOutputStream.flush();
+
+            String str = dataInputStream.readUTF();
+            Gson gson1 = new GsonBuilder().create();
+            GsonRoom gsonRoom = gson1.fromJson(str,GsonRoom.class);
+            members2 = gsonRoom.members;
+
+            sendGuestOK(sockets2);
+
+            gameGroup.sockets = sockets2;
+            gameGroup.members = members2;
+            System.out.println("members = " + members);
+            gameGroup.isAutoSaveActivated = gameSocketArray.isAutoSaveActive;
+            gameGroups.add(gameGroup);
+
+            GameGroupData gameGroupData = new GameGroupData(gameGroup.civilizations, gameGroup.tiles);
+            gameGroupData.result = "startSaveGame";
+            playGameMenuController.sendMessageToAllClients(gameGroup, gameGroupData);
+        }
+
+        else if (command.startsWith("saveGame ")) {
+            command = command.replace("saveGame ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            EndGameGson endGameGson = gson.fromJson(command, EndGameGson.class);
+            GameGroup gameGroup = getGroup(endGameGson.member);
+            playGameMenuController.saveGame(gameGroup);
+        }
+
+        else if (command.startsWith("autoSave ")) {
+            command = command.replace("autoSave ", "");
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+            EndGameGson endGameGson = gson.fromJson(command, EndGameGson.class);
+            GameGroup gameGroup = getGroup(endGameGson.member);
+            playGameMenuController.autoSave(gameGroup);
         }
 
 
@@ -449,6 +556,89 @@ public class CommandProcessor {
             GameGroup gameGroup = getGroup(upgradeUnitGson.member);
             playGameMenuController.preUpgradeUnit(upgradeUnitGson.oldUnit, upgradeUnitGson.newUnitName,
                     upgradeUnitGson.index, upgradeUnitGson.civilization, gameGroup.tiles, gameGroup);
+        }
+        else if (command.startsWith("purchaseBuilding ")) {
+            command = command.replace("purchaseBuilding ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            PurchaseBuildingGson purchaseBuildingGson = gson.fromJson(command, PurchaseBuildingGson.class);
+            GameGroup gameGroup = getGroup(purchaseBuildingGson.member);
+            playGameMenuController.purchaseBuilding(purchaseBuildingGson.civilization, purchaseBuildingGson.tileNumber,
+                    purchaseBuildingGson.buildingName, gameGroup);
+        }
+        else if (command.startsWith("tradeRequest ")) {
+            command = command.replace("tradeRequest ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            TradeRequestGson tradeRequestGson = gson.fromJson(command, TradeRequestGson.class);
+            GameGroup gameGroup = getGroup(tradeRequestGson.member);
+            playGameMenuController.tradeRequest(tradeRequestGson.selectedGive, tradeRequestGson.civilization,
+                    tradeRequestGson.selectedCivilizationName, tradeRequestGson.giveAmount, tradeRequestGson.needAmount,
+                    tradeRequestGson.giveName, tradeRequestGson.needName, gameGroup);
+        }
+        else if (command.startsWith("citizenWork ")) {
+            command = command.replace("citizenWork ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            CitizenWorkGson citizenWorkGson = gson.fromJson(command, CitizenWorkGson.class);
+            GameGroup gameGroup = getGroup(citizenWorkGson.member);
+            playGameMenuController.assignCitizenToWork(citizenWorkGson.tileNumbers, citizenWorkGson.cityIndex,
+                    citizenWorkGson.civilization, gameGroup);
+        }
+        else if (command.startsWith("diplomacy ")) {
+            command = command.replace("diplomacy ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            DiplomacyGson diplomacyGson = gson.fromJson(command, DiplomacyGson.class);
+            GameGroup gameGroup = getGroup(diplomacyGson.member);
+            playGameMenuController.diplomacy(diplomacyGson.civilization, diplomacyGson.selectedCivilization, gameGroup);
+        }
+        else if (command.startsWith("breakOath ")) {
+            command = command.replace("breakOath ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            DiplomacyGson diplomacyGson = gson.fromJson(command, DiplomacyGson.class);
+            GameGroup gameGroup = getGroup(diplomacyGson.member);
+            playGameMenuController.breakOath(diplomacyGson.civilization, diplomacyGson.selectedCivilization, gameGroup);
+        }
+        else if (command.startsWith("acceptRequest ")) {
+            command = command.replace("acceptRequest ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RequestAnswerGson requestAnswerGson = gson.fromJson(command, RequestAnswerGson.class);
+            GameGroup gameGroup = getGroup(requestAnswerGson.member);
+            playGameMenuController.acceptDiplo(requestAnswerGson.civilization, requestAnswerGson.civilizationName,
+                    gameGroup);
+        }
+        else if (command.startsWith("declineRequest ")) {
+            command = command.replace("declineRequest ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RequestAnswerGson requestAnswerGson = gson.fromJson(command, RequestAnswerGson.class);
+            GameGroup gameGroup = getGroup(requestAnswerGson.member);
+            playGameMenuController.declineDiplo(requestAnswerGson.civilization, requestAnswerGson.civilizationName,
+                    gameGroup);
+        }
+        else if (command.startsWith("changeGold ")) {
+            command = command.replace("changeGold ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChangeGoldAmountGson changeGoldAmountGson = gson.fromJson(command, ChangeGoldAmountGson.class);
+            GameGroup gameGroup = getGroup(changeGoldAmountGson.member);
+            playGameMenuController.changeGold(changeGoldAmountGson.civilizationName,changeGoldAmountGson.amount,gameGroup);
+        }
+        else if (command.startsWith("changeFood ")) {
+            command = command.replace("changeFood ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChangeFoodAmountGson changeFoodAmountGson = gson.fromJson(command, ChangeFoodAmountGson.class);
+            GameGroup gameGroup = getGroup(changeFoodAmountGson.member);
+            playGameMenuController.changeFood(changeFoodAmountGson.civilizationName,changeFoodAmountGson.amount,gameGroup);
+        }
+        else if (command.startsWith("changeResource ")) {
+            command = command.replace("changeResource ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            ChangeResourceGson changeResourceGson = gson.fromJson(command, ChangeResourceGson.class);
+            GameGroup gameGroup = getGroup(changeResourceGson.member);
+            playGameMenuController.changeResource(changeResourceGson.resourceName, changeResourceGson.tileNumber, gameGroup);
+        }
+        else if (command.startsWith("reject ")) {
+            command = command.replace("reject ", "");
+            Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+            RejectMessageGson rejectMessageGson = gson.fromJson(command, RejectMessageGson.class);
+            GameGroup gameGroup = getGroup(rejectMessageGson.member);
+            playGameMenuController.addRejectMessage(rejectMessageGson.civilization, rejectMessageGson.messageCivilization, gameGroup);
         }
         else if (command.startsWith("nextTurn ")) {
             command = command.replace("nextTurn ", "");
@@ -656,6 +846,8 @@ public class CommandProcessor {
                 dataOutputStream.writeUTF("false");
         }
     }
+
+
     public static void changeProf(int imageNumber,Member loggedInMember) throws IOException {
         String username = loggedInMember.getUsername();
         File file = new File("users2.txt");
@@ -741,5 +933,13 @@ public class CommandProcessor {
         bufferedWriter.newLine();
 
         bufferedWriter.close();
+    }
+
+    private static boolean isAutoSaveValid(ArrayList<Member> members2) {
+        for (Member member : members2) {
+            System.out.println("name : " + member.getUsername() + "  " + member.isAutoSaveActive);
+            if (member.isAutoSaveActive) return true;
+        }
+        return false;
     }
 }

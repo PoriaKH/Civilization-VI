@@ -1,5 +1,9 @@
 package View;
 
+import Model.FunctionsGson.ScoreboardGson;
+import Model.Member;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -14,6 +18,8 @@ import java.net.URL;
 public class Lobby {
     public static URL createHostURL;
     public static URL hostsURL;
+    public static URL scoreBoardFxmlURL;
+    public static Member member;
 
     public Pane root;
     public Stage stage;
@@ -46,15 +52,22 @@ public class Lobby {
         new FriendsList().run();
     }
 
-    public void sendFriendRequest(MouseEvent mouseEvent) {
+    public void sendFriendRequest(MouseEvent mouseEvent) throws IOException {
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         SendFriendRequest.stage = stage;
         new SendFriendRequest().run();
     }
 
-    public void showFriendRequestsList(MouseEvent mouseEvent) {
+    public void showFriendRequestsList(MouseEvent mouseEvent) throws IOException {
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         FriendRequestsList.stage = stage;
-        new SendFriendRequest().run();
+        new FriendRequestsList().run();
+    }
+
+    public void switchToChatBox(MouseEvent mouseEvent) throws IOException {
+        PreChatBox preChatBox = new PreChatBox();
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        preChatBox.stage = this.stage;
+        preChatBox.run();
     }
 }

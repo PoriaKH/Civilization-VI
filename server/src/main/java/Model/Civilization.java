@@ -46,9 +46,13 @@ public class Civilization {
     private int point;//to compare civilizations
     @Expose
     private boolean isLearningTechnology = false;
-    @Expose
+
     private ArrayList<Civilization> friendlyRequests;
     @Expose
+    public ArrayList<String> friendlyRequestsString = new ArrayList<>();
+    @Expose
+    public ArrayList<String> friendsString = new ArrayList<>();
+
     private ArrayList<Civilization> friends;
     @Expose
     private Technology workingOnTechnology;//if == null -> have to choose
@@ -79,21 +83,29 @@ public class Civilization {
 
     public void acceptFriendlyRequest(Civilization civilization){
         this.friendlyRequests.remove(civilization);
+        this.friendlyRequestsString.remove(civilization.getName());
         civilization.friendlyRequests.remove(this);
+        this.friendlyRequestsString.remove(this.getName());
         this.friends.add(civilization);
+        this.friendsString.add(civilization.getName());
         civilization.friends.add(this);
+        civilization.friendsString.add(this.getName());
         String message = PlayGameMenuController.turn + " : " + this.name + " : accepted your friendly request, now you are allies";
         civilization.addMessage(message);
     }
     public void denyFriendlyRequest(Civilization civilization){
         this.friendlyRequests.remove(civilization);
+        this.friendlyRequestsString.remove(civilization.getName());
         civilization.friendlyRequests.remove(this);
+        civilization.friendlyRequestsString.remove(this.getName());
         String message = PlayGameMenuController.turn + " : " + this.name + " : denied your friendly request !";
         civilization.addMessage(message);
     }
     public void breakTheOath(Civilization civilization){
         this.friends.remove(civilization);
+        this.friendsString.remove(civilization.getName());
         civilization.friends.remove(this);
+        civilization.friendsString.remove(this.getName());
         String message = PlayGameMenuController.turn + " : " + this.name + " : broke the oath, now you are enemies";
         civilization.messages.add(message);
     }
@@ -169,10 +181,10 @@ public class Civilization {
     }
 
     public Integer getCountOfWins (Civilization civilization) {
-        return winsInUnitsWar.get(civilization);
+        return winsInUnitsWar.get(civilization.getName());
     }
     public Integer getCountOfLosses (Civilization civilization) {
-        return lossesInUnitsWar.get(civilization);
+        return lossesInUnitsWar.get(civilization.getName());
     }
     public void addCivilizationToWinsUnit (Civilization civilization) {
         winsInUnitsWar.put(civilization.getName(), 0);
@@ -274,6 +286,12 @@ public class Civilization {
                 break;
             }
         }
+        for (int i = 0; i < friendsString.size(); i++) {
+            if (friendsString.get(i).equals(civilization.getName())) {
+                friendsString.remove(i);
+                break;
+            }
+        }
     }
 
     public ArrayList<String> getMessages() {
@@ -306,8 +324,11 @@ public class Civilization {
     }
 
     public boolean equals(Civilization civilization) {
+        if (civilization == null) return false;
+
         if (this.getName().equals(civilization.getName()) &&
         this.getMember().equals(civilization.getMember())) return true;
+
         return false;
     }
 
@@ -317,5 +338,65 @@ public class Civilization {
             wins = wins + entry.getValue();
         }
         return wins;
+    }
+
+    public void copyFieldsOfCivilizations(Civilization civilizationServer, GameGroup gameGroup) {
+        this.doesLoseTheGame = civilizationServer.doesLoseTheGame;
+        this.isMyTurn = civilizationServer.isMyTurn;
+        /*this.member;
+        this.firstLetterOfName;
+        this.name;*/
+        this.capital.copyFieldsOfCity(civilizationServer.getCapital(), gameGroup);
+        this.science = civilizationServer.getScience();
+        this.sciencePerTurn = civilizationServer.sciencePerTurn;
+        this.technologies = Technology.copyListOfTechnology(this.getTechnologies(), civilizationServer.getTechnologies());
+        this.gold = civilizationServer.getGold();
+        this.goldPerTurn = civilizationServer.getGoldPerTurn();
+        this.happiness = civilizationServer.getHappiness();
+        this.cities = capital.copyCities(this.getCities(), civilizationServer.getCities(), gameGroup);
+        this.trades = civilizationServer.getTrades();
+        this.messages = civilizationServer.getMessages();
+        this.winsInUnitsWar = Civilization.getHashMapOfWar(civilizationServer.getWinsInUnitsWar());
+        this.lossesInUnitsWar = Civilization.getHashMapOfWar(civilizationServer.getLossesInUnitsWar());
+        this.point = civilizationServer.getPoint2();
+        this.isLearningTechnology = civilizationServer.isLearningTechnology;
+        this.friendlyRequestsString = civilizationServer.friendlyRequestsString;
+        this.friendsString = civilizationServer.friendsString;
+        this.workingOnTechnology = civilizationServer.getWorkingOnTechnology();
+        this.technologyEarnedPercent = civilizationServer.getTechnologyEarnedPercent();
+    }
+
+    private static ArrayList<Civilization> getFriendsCopy(ArrayList<Civilization> friendlyRequests, GameGroup gameGroup) {
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (Civilization friendlyRequest : friendlyRequests) {
+            civilizations.add(getCivilizationCopy(friendlyRequest, gameGroup));
+        }
+        return civilizations;
+    }
+
+    private static HashMap<String, Integer> getHashMapOfWar(HashMap<String, Integer> winsInUnitsWar) {
+        HashMap<String, Integer> results = new HashMap<>();
+        for (Map.Entry<String, Integer> entry: winsInUnitsWar.entrySet()) {
+            results.put(entry.getKey(), entry.getValue());
+        }
+        return results;
+    }
+
+    public static Civilization getCivilizationCopy(Civilization key, GameGroup gameGroup) {
+        for (Civilization civilization : gameGroup.civilizations) {
+            if (civilization.equals(key)) return civilization;
+        }
+        return null;
+    }
+
+    public static Civilization getCivilizationCopyByName(String key, GameGroup gameGroup) {
+        for (Civilization civilization : gameGroup.civilizations) {
+            if (civilization.getName().equals(key)) return civilization;
+        }
+        return null;
+    }
+
+    public int getPoint2 () {
+        return this.point;
     }
 }

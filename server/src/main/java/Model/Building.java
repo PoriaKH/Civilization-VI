@@ -12,6 +12,12 @@ public class Building {
     private Tile tile;
 
     @Expose
+    public String buildingName;
+
+    @Expose
+    public int tileNumber;
+
+    @Expose
     public boolean isAncientEra = false;
     @Expose
     public boolean isClassicalEra = false;
@@ -44,8 +50,11 @@ public class Building {
     private int production;//will add to city(setProduction)
 
     public Building(String name, Civilization civilization, Tile tile){
+        this.buildingName = name;
         this.civilization = civilization;
         this.tile = tile;
+        if (tile != null)
+            this.tileNumber = tile.getTileNumber();
 
         gold = 0;
         science = 0;

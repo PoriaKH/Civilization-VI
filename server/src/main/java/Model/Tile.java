@@ -1291,4 +1291,37 @@ public class Tile {
             }
         }
     }
+
+    public void newUnits() {
+        this.units = new ArrayList<>();
+    }
+    public void newTurnForUnitsMaking () {
+        this.turnForUnitMaking = new HashMap<>();
+    }
+    public void newRoads () {
+        this.roads = new ArrayList<>();
+        this.railRoads = new ArrayList<>();
+        this.workingOnRoadUntilFinish = new HashMap<>();
+        this.workingOnRailUntilFinish = new HashMap<>();
+    }
+    public void newImprovementPercent () {
+        this.improvementEarnedPercent = new HashMap<>();
+    }
+
+    public Citizen getCitizenCopy(Citizen citizen, GameGroup gameGroup) {
+        if (citizen != null) {
+            Tile tile = getCitizenTile(citizen.getTile(), gameGroup);
+            if (tile == null) return null;
+            citizen.setTile(tile);
+            return citizen;
+        }
+        return null;
+    }
+
+    private Tile getCitizenTile(Tile tile, GameGroup gameGroup) {
+        for (Tile tile1 : gameGroup.tiles) {
+            if (tile1.equals(tile)) return tile1;
+        }
+        return null;
+    }
 }

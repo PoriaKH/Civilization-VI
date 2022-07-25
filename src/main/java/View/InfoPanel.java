@@ -1,6 +1,7 @@
 package View;
 
 import Model.*;
+import Model.FunctionsGson.EndGameGson;
 import Model.Units.Civilian;
 import Model.Units.SaveGameClass;
 import Model.Units.Unit;
@@ -131,76 +132,36 @@ public class InfoPanel {
     }
 
     public void saveTheGame(MouseEvent mouseEvent) throws IOException {
-        for (Civilization civilization : civilizations) {
-            System.out.println(civilization.getName());
-        }
-        saveGame();
+        EndGameGson endGameGson = new EndGameGson();
+        endGameGson.member = PlayGameMenu.playingCivilization.getMember();
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(endGameGson);
+        CreateHost.dataOutputStream.writeUTF("saveGame " + request);
+        CreateHost.dataOutputStream.flush();
 
         Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-    public void saveGame () throws FileNotFoundException {
-        File file = new File("saveGame.txt");
-
-/*        GsonBuilder gsonBuilder = new GsonBuilder();
-        new GraphAdapterBuilder().addType(Civilian.class).addType(Unit.class).addType(Warrior.class)
-                .addType(Attribute.class).addType(Building.class).addType(Citizen.class).addType(City.class)
-                .addType(Civilization.class).addType(Improvement.class).addType(Member.class).addType(Node.class)
-                .addType(Resource.class).addType(Technology.class).addType(Tile.class).registerOn(gsonBuilder);
-        Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();*/
-
-        SaveGameClass saveGameClass = new SaveGameClass();
-        saveGameClass.civilizations = civilizations;
-        saveGameClass.tiles = tiles;
-        saveURLs(saveGameClass);
-
-        /*XStream xStream = new XStream(new DomDriver());
-        xStream.addPermission(AnyTypePermission.ANY);
-        String data = xStream.toXML(saveGameClass);*/
-
-       // String data = JsonStream.serialize(saveGameClass);
-
-        /*Kryo kryo = new Kryo();
-        Output output = new Output(new FileOutputStream("saveGame.txt"));
-        kryo.writeObject(output, saveGameClass);
-        output.close();*/
-
-        /*System.out.println("civ : " + data);
-        PrintWriter printWriter = new PrintWriter(file);
-        printWriter.write(data);*/
-        /*printWriter.close();*/
-    }
-
-    private void saveURLs(SaveGameClass saveGameClass) {
-        saveGameClass.dessert = Tile.dessert;
-        saveGameClass.fogOfWar = Tile.fogOfWar;
-        saveGameClass.hill = Tile.hill;
-        saveGameClass.ice = Tile.ice;
-        saveGameClass.jungle = Tile.jungle;
-        saveGameClass.meadow = Tile.meadow;
-        saveGameClass.mountain = Tile.mountain;
-        saveGameClass.plain = Tile.plain;
-        saveGameClass.rainforest = Tile.rainforest;
-        saveGameClass.snow = Tile.snow;
-        saveGameClass.tundra = Tile.tundra;
-        saveGameClass.marsh = Tile.marsh;
-        saveGameClass.ocean = Tile.ocean;
-        saveGameClass.building1URL = Tile.building1URL;
-        saveGameClass.building2URL = Tile.building2URL;
-        saveGameClass.building3URL = Tile.building3URL;
-        saveGameClass.building4URL = Tile.building4URL;
-        saveGameClass.building5URL = Tile.building5URL;
-        saveGameClass.roadURL = Tile.roadURL;
-        saveGameClass.railURL = Tile.railURL;
-        saveGameClass.unitsURL = Unit.unitsURL;
-        saveGameClass.unitsName = Unit.unitsName;
-    }
 
     public void unitsInfo(MouseEvent mouseEvent) {
         UnitInformationPanel.playingCivilization = currentCivilization;
         UnitInformationPanel.stage = stage;
         new UnitInformationPanel().initializePanelTree();
+    }
+
+    public void autoSave(MouseEvent mouseEvent) throws IOException {
+        EndGameGson endGameGson = new EndGameGson();
+        endGameGson.member = PlayGameMenu.playingCivilization.getMember();
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String request = gson.toJson(endGameGson);
+        CreateHost.dataOutputStream.writeUTF("autoSave " + request);
+        CreateHost.dataOutputStream.flush();
+
+        Parent root = FXMLLoader.load(LoginMenu.mainMenuFxmlURL);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
