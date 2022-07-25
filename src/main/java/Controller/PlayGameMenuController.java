@@ -892,7 +892,7 @@ public class PlayGameMenuController {
         return stringBuilder;
     }
     // todo -> estefade nashode
-    public StringBuilder showFriendlyRequests(Civilization civilization){
+    /*public StringBuilder showFriendlyRequests(Civilization civilization){
         StringBuilder stringBuilder = new StringBuilder("");
         int i = 1;
         for(Civilization tempCivilization : civilization.getFriendlyRequests()){
@@ -900,9 +900,9 @@ public class PlayGameMenuController {
             i++;
         }
         return stringBuilder;
-    }
+    }*/
     // todo -> estefade nashode
-    public String acceptFriendlyRequest(Civilization civilization,String name){
+    /*public String acceptFriendlyRequest(Civilization civilization,String name){
         for(Civilization tempCivilization : civilization.getFriendlyRequests()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
                 civilization.acceptFriendlyRequest(tempCivilization);
@@ -910,9 +910,9 @@ public class PlayGameMenuController {
             }
         }
         return "there is no friendly request with this name";
-    }
+    }*/
     // todo -> estefade nashode
-    public String denyFriendlyRequest(Civilization civilization,String name){
+    /*public String denyFriendlyRequest(Civilization civilization,String name){
         for(Civilization tempCivilization : civilization.getFriendlyRequests()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
                 civilization.denyFriendlyRequest(tempCivilization);
@@ -920,9 +920,9 @@ public class PlayGameMenuController {
             }
         }
         return "there is no friendly request with this name";
-    }
+    }*/
     // todo -> estefade nashode
-    public String breakTheOath(Civilization civilization,String name){//this will cut the friendship between you and your allie
+   /* public String breakTheOath(Civilization civilization,String name){//this will cut the friendship between you and your allie
         for(Civilization tempCivilization : civilization.getFriends()){
             if(Objects.equals(tempCivilization.getMember().getNickname(), name)){
                 civilization.breakTheOath(tempCivilization);
@@ -930,7 +930,7 @@ public class PlayGameMenuController {
             }
         }
         return "you don't have any allie with this name";
-    }
+    }*/
 
     public StringBuilder victoryImprovement(Civilization civilization,ArrayList<Tile> map){
         StringBuilder stringBuilder = new StringBuilder();

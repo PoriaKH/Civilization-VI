@@ -5916,6 +5916,8 @@ public class PlayGameMenuController {
             }
         }
         serverSelectedCivilization.getFriendlyRequests().add(serverCivilization);
+        serverSelectedCivilization.friendlyRequestsString.add(serverCivilization.getName());
+
         gameGroupData.result = "diplomacy done !";
         sendMessageToAllClients(gameGroup, gameGroupData);
     }
@@ -5993,5 +5995,19 @@ public class PlayGameMenuController {
         serverCivilization.getMessages().add(PlayGameMenuController.turn + " : " + messageCivilization + "- rejected your trade request !");
         gameGroupData.result = "trade rejected";
         sendMessageToAllClients(gameGroup, gameGroupData);
+    }
+
+    public void loadFriends(ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            for (String s : civilization.friendlyRequestsString) {
+                civilization.getFriendlyRequests().add(getServerCivilizationByName(s, civilizations));
+            }
+        }
+
+        for (Civilization civilization : civilizations) {
+            for (String s : civilization.friendsString) {
+                civilization.getFriends().add(getServerCivilizationByName(s, civilizations));
+            }
+        }
     }
 }

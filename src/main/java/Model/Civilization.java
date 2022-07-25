@@ -49,9 +49,13 @@ public class Civilization {
     private int point;//to compare civilizations
     @Expose
     private boolean isLearningTechnology = false;
-    @Expose
+
     private ArrayList<Civilization> friendlyRequests;
     @Expose
+    public ArrayList<String> friendlyRequestsString = new ArrayList<>();
+    @Expose
+    public ArrayList<String> friendsString = new ArrayList<>();
+
     private ArrayList<Civilization> friends;
     @Expose
     private Technology workingOnTechnology;//if == null -> have to choose
@@ -337,8 +341,8 @@ public class Civilization {
         this.lossesInUnitsWar = Civilization.getHashMapOfWar(civilizationServer.getLossesInUnitsWar());
         this.point = civilizationServer.getPoint2();
         this.isLearningTechnology = civilizationServer.isLearningTechnology;
-        this.friendlyRequests = Civilization.getFriendsCopy(civilizationServer.getFriendlyRequests());
-        this.friends = Civilization.getFriendsCopy(civilizationServer.getFriends());
+        this.friendlyRequestsString = civilizationServer.friendlyRequestsString;
+        this.friendsString = civilizationServer.friendsString;
         this.workingOnTechnology = civilizationServer.getWorkingOnTechnology();
         this.technologyEarnedPercent = civilizationServer.getTechnologyEarnedPercent();
     }

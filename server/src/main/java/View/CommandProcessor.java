@@ -322,6 +322,7 @@ public class CommandProcessor {
             playGameMenuController.loadTileForBuilding(gameGroup.tiles);
             playGameMenuController.loadCivilizationForBuilding(gameGroup.civilizations);
             playGameMenuController.loadOriginTileForUnits(gameGroup.tiles);
+            playGameMenuController.loadFriends(gameGroup.civilizations);
 
             for (Tile tile : gameGroup.tiles) {
                 System.out.println(tile.getTileNumber() + "++++++" + tile.getBuilding());

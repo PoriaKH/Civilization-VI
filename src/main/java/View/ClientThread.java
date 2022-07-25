@@ -268,6 +268,7 @@ public class ClientThread extends Thread {
         playGameMenuController.loadTileForBuilding(gameGroupData.tiles);
         playGameMenuController.loadOriginTileForUnit(gameGroupData.tiles);
         playGameMenuController.loadCivilizationForBuilding(gameGroupData.civilizations);
+        loadFriends(PlayGameMenu.civilizations);
     }
 
     private void showResult(String result) {
@@ -314,7 +315,7 @@ public class ClientThread extends Thread {
                 allServerUnits.add(serverTile.warrior);
             }
             if (serverTile.civilian != null) {
-                System.out.println("tile number      " + serverTile.getTileNumber());
+                //System.out.println("tile number      " + serverTile.getTileNumber());
                 serverTile.civilian.setOrigin(serverTile);
                 allServerUnits.add(serverTile.civilian);
             }
@@ -349,5 +350,28 @@ public class ClientThread extends Thread {
 
     public boolean isGameReady() {
         return isGameReady;
+    }
+    public void loadFriends(ArrayList<Civilization> civilizations) {
+        for (Civilization civilization : civilizations) {
+            civilization.getFriendlyRequests().clear();
+            for (String s : civilization.friendlyRequestsString) {
+                System.out.println("request : " + s);
+                civilization.getFriendlyRequests().add(getCivilizationByName(s, civilizations));
+            }
+        }
+
+        for (Civilization civilization : civilizations) {
+            civilization.getFriends().clear();
+            for (String s : civilization.friendsString) {
+                System.out.println("friend : " + s);
+                civilization.getFriends().add(getCivilizationByName(s, civilizations));
+            }
+        }
+    }
+    private Civilization getCivilizationByName(String civilization, ArrayList<Civilization> civilizations) {
+        for (Civilization civilization1 : civilizations) {
+            if (civilization1.getName().equals(civilization)) return civilization1;
+        }
+        return null;
     }
 }
