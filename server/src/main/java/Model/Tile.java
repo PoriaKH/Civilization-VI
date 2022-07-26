@@ -1324,4 +1324,16 @@ public class Tile {
         }
         return null;
     }
+
+    public Ruin getRuin() {
+        return ruin;
+    }
+
+    public void setIsRuinDiscovered(boolean b) {
+        this.ruinDiscovered = b;
+    }
+
+    public void setHasRuin(boolean b) {
+        this.hasRuin = b;
+    }
 }

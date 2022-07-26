@@ -4,14 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="merge">
+    <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/PrivateMessages/c-a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/PrivateMessages/c-a.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Tile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/Tile.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/PrivateMessages/c-a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PrivateMessages/c-a.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/messageFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/messageFile.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Model/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/View/ClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/ClientThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/Model/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/Model/Tile.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +53,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -94,11 +101,7 @@
       <workItem from="1658725424568" duration="3149000" />
       <workItem from="1658730757111" duration="14000" />
       <workItem from="1658730798774" duration="1237000" />
-      <workItem from="1658732064503" duration="2657000" />
-      <workItem from="1658739934035" duration="1203000" />
-      <workItem from="1658782992944" duration="1246000" />
-      <workItem from="1658784787461" duration="1168000" />
-      <workItem from="1658845059708" duration="588000" />
+      <workItem from="1658732064503" duration="581000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
@@ -247,21 +250,49 @@
       <option name="project" value="LOCAL" />
       <updated>1658731462929</updated>
     </task>
-    <task id="LOCAL-00022" summary="debug">
-      <created>1658734388564</created>
+    <task id="LOCAL-00022" summary="added diplomaticRequests to server">
+      <created>1658740309479</created>
       <option name="number" value="00022" />
       <option name="presentableId" value="LOCAL-00022" />
       <option name="project" value="LOCAL" />
-      <updated>1658734388564</updated>
+      <updated>1658740309479</updated>
     </task>
-    <task id="LOCAL-00023" summary="merge">
-      <created>1658734407611</created>
+    <task id="LOCAL-00023" summary="debugged diplomacy and worked well">
+      <created>1658761831641</created>
       <option name="number" value="00023" />
       <option name="presentableId" value="LOCAL-00023" />
       <option name="project" value="LOCAL" />
-      <updated>1658734407611</updated>
+      <updated>1658761831641</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fixed a bug">
+      <created>1658762564118</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1658762564118</updated>
+    </task>
+    <task id="LOCAL-00025" summary="fixed a bug">
+      <created>1658762600405</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1658762600405</updated>
+    </task>
+    <task id="LOCAL-00026" summary="last debug enshaallah">
+      <created>1658763393950</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1658763393950</updated>
+    </task>
+    <task id="LOCAL-00027" summary="commit">
+      <created>1658809071799</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1658809071799</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,6 +318,7 @@
     <MESSAGE value="still debugging" />
     <MESSAGE value="debugging coping fields" />
     <MESSAGE value="finished debugging for startGame (found new bug)" />
+    <MESSAGE value="debug" />
     <MESSAGE value="edited a field in unit" />
     <MESSAGE value="accept or deny FriendRequest" />
     <MESSAGE value=".." />
@@ -298,8 +330,12 @@
     <MESSAGE value="fixed a bug in attack tile and winning against others worked well" />
     <MESSAGE value="debug ScoreBoard" />
     <MESSAGE value="set status for ScoreBoard members" />
-    <MESSAGE value="debug" />
     <MESSAGE value="merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge" />
+    <MESSAGE value="added diplomaticRequests to server" />
+    <MESSAGE value="debugged diplomacy and worked well" />
+    <MESSAGE value="fixed a bug" />
+    <MESSAGE value="last debug enshaallah" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
 </project>

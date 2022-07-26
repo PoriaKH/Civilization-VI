@@ -2409,6 +2409,15 @@ public class PlayGameMenuController {
                 break;
             }
         }
+
+        ArrayList<String> fireindsString = civilization.friendsString;
+        for (int i = 0; i < fireindsString.size(); i++) {
+            if (fireindsString.get(i).equals(enemy.getName())) {
+                civilization.friendsString.remove(enemy.getName());
+                enemy.friendsString.remove(civilization.getName());
+                break;
+            }
+        }
     }
 
     // if civilization2 is friend return true
@@ -5146,6 +5155,7 @@ public class PlayGameMenuController {
         resetHasOrdered(civilizationServer, gameGroupData.tiles);
         civilizationServer.reduceTechnologyRound();
         increaseCityDamagePoint(civilizationServer);
+        checkForRuin(gameGroupData.tiles);
         checkZoneOfAllCivilizations(gameGroupData.civilizations, gameGroupData.tiles, civilizationServer);
         updateMapAfterMove(gameGroup);
         turn++;
@@ -5160,6 +5170,16 @@ public class PlayGameMenuController {
 
         gameGroupData.result = "nextTurn : done";
         sendMessageToAllClients(gameGroup, gameGroupData);
+    }
+
+    private void checkForRuin(ArrayList<Tile> tiles) {
+        for (Tile tile : tiles) {
+            if (tile.getRuin() != null && tile.getUnits().size() > 0) {
+                tile.setIsRuinDiscovered(true);
+                tile.setHasRuin(false);
+                tile.ruin = null;
+            }
+        }
     }
 
 

@@ -90,7 +90,11 @@ public class ClientThread extends Thread {
                 Unit.playGameMenu = playGameMenu;
 
                 startSaveGameTiles(gameGroupData.tiles, getStatusChecker(gameGroupData));
-                startSaveGameCivilizations(gameGroupData.civilizations, gameGroupData.tiles, getStatusChecker(gameGroupData));
+                try {
+                    startSaveGameCivilizations(gameGroupData.civilizations, gameGroupData.tiles, getStatusChecker(gameGroupData));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 loadExtras(gameGroupData);
                 Tile.map = PlayGameMenu.tiles;
                 Tile.civilizations = PlayGameMenu.civilizations;
@@ -109,7 +113,11 @@ public class ClientThread extends Thread {
                     isGameEnded = true;
                     break;
                 } else {
-                    copyTiles(gameGroupData.tiles, gameGroupData);
+                    try {
+                        copyTiles(gameGroupData.tiles, gameGroupData);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     copyCivilizations(gameGroupData.civilizations);
                 }
                 loadExtras(gameGroupData);
@@ -227,7 +235,7 @@ public class ClientThread extends Thread {
 
     }
 
-    public void startSaveGameCivilizations(ArrayList<Civilization> serverCivilizations, ArrayList<Tile> tiles, ArrayList<Integer> tileStatusOfCivilization) {
+    public void startSaveGameCivilizations(ArrayList<Civilization> serverCivilizations, ArrayList<Tile> tiles, ArrayList<Integer> tileStatusOfCivilization) throws IOException {
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for (Civilization serverCivilization : serverCivilizations) {
             City city = serverCivilization.getCities().get(0);
@@ -293,7 +301,7 @@ public class ClientThread extends Thread {
         playGameMenuController.loadCivilizationForBuilding(PlayGameMenu.civilizations);
     }
 
-    private void copyTiles (ArrayList<Tile> serverTiles, GameGroupData gameGroupData) {
+    private void copyTiles (ArrayList<Tile> serverTiles, GameGroupData gameGroupData) throws IOException {
         ArrayList<Unit> units = getAllUnits(serverTiles);
         for (int i = 0; i < PlayGameMenu.tiles.size(); i++) {
             PlayGameMenu.tiles.get(i).copyFieldsOfTile(serverTiles.get(i), units, getStatusChecker(gameGroupData));
