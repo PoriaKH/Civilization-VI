@@ -1,6 +1,8 @@
 package View;
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -125,7 +127,9 @@ public class ChatBox {
             }
         });
         add.setOnAction(evt -> {
-            messages.add(new Label(loggedInMember.getUsername() + " : " + textField.getText()));
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            messages.add(new Label(loggedInMember.getUsername() + " : " + textField.getText() + "\t(" + dtf.format(now) + ")"));
             messages.get(index).getStyleClass().add("secondLabel");
             messages.get(index).setPadding(new Insets(0, 0, 0, 5));
             messages.get(index).setAlignment(Pos.CENTER_LEFT);
