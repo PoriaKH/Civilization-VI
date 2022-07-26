@@ -71,6 +71,7 @@ public class PreChatBox {
                 String[] oldMessages = response.split("\n");
                 ChatBox chatBox = new ChatBox();
                 chatBox.fileName = fileName;
+                chatBox.isPublic = false;
                 chatBox.oldMessage = new ArrayList<>();
                 for (int j = 0; j < oldMessages.length; j++)
                     chatBox.oldMessage.add(oldMessages[j]);
@@ -102,6 +103,7 @@ public class PreChatBox {
             chatBox.oldMessage.add(oldMessages[i]);
         stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         chatBox.stage = this.stage;
+        chatBox.isPublic = true;
         ChatBox.loggedInMember = MainMenu.loggedInMember;
         chatBox.run();
     }

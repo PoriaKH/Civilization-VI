@@ -33,11 +33,13 @@ public class ChatBox {
     public Scene scene;
     public Stage stage;
     public String fileName;
+    public boolean isPublic;
 
-    private final Button add = new Button("Add");
-    private final Button exit = new Button("Exit");
-    private final VBox chatBox = new VBox(10);
-    private final TextField textField = new TextField();
+    private Button add = new Button("Add");
+    private Button exit = new Button("Exit");
+    private Button refresh = new Button("refresh");
+    private VBox chatBox = new VBox(10);
+    private TextField textField = new TextField();
     private ArrayList<Label> messages = new ArrayList<>();
     private ArrayList<Button> editButtons = new ArrayList<>();
     public ArrayList<String> oldMessage;
@@ -52,10 +54,12 @@ public class ChatBox {
         add.setTranslateY(450);
         exit.setTranslateX(900);
         exit.setTranslateY(450);
+        refresh.setTranslateX(475);
+        refresh.setTranslateY(450);
         initChatBox();
         root.getStylesheets().add(chatCSS.toExternalForm());
         root.getChildren().add(textField);
-        root.getChildren().addAll(container, add, exit);
+        root.getChildren().addAll(container, add, refresh, exit);
         scene = new Scene(root, 1280, 720);
         stage.setScene(scene);
         stage.show();
@@ -84,6 +88,41 @@ public class ChatBox {
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+        });
+        refresh.setOnMouseClicked(event -> {
+            try {
+                root = new Pane();
+                messages = new ArrayList<>();
+                editButtons = new ArrayList<>();
+                container = new ScrollPane();
+                add = new Button("Add");
+                exit = new Button("Exit");
+                refresh = new Button("refresh");
+                chatBox = new VBox(10);
+                textField = new TextField();
+                index = 0;
+                if (isPublic){
+                    CreateHost.dataOutputStream.writeUTF("public chat");
+                    CreateHost.dataOutputStream.flush();
+                    String response = CreateHost.dataInputStream.readUTF();
+                    String[] oldMessages = response.split("\n");
+                    oldMessage = new ArrayList<>();
+                    for (int i = 0; i < oldMessages.length; i++)
+                        oldMessage.add(oldMessages[i]);
+                }
+                else {
+                    CreateHost.dataOutputStream.writeUTF("private chat " + fileName);
+                    CreateHost.dataOutputStream.flush();
+                    String response = CreateHost.dataInputStream.readUTF();
+                    String[] oldMessages = response.split("\n");
+                    oldMessage = new ArrayList<>();
+                    for (int j = 0; j < oldMessages.length; j++)
+                        oldMessage.add(oldMessages[j]);
+                }
+                this.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         add.setOnAction(evt -> {
             messages.add(new Label(loggedInMember.getUsername() + " : " + textField.getText()));
@@ -117,6 +156,11 @@ public class ChatBox {
             temp.setPrefHeight(30);
             temp.getChildren().addAll(group, editButtons.get(index++));
             chatBox.getChildren().add(temp);
+            try {
+                addToFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
