@@ -13,3 +13,6 @@ c : heeeeeeeeeeey
 c : helo
 c : no way
 a : alavi oskole
+a : test
+a : test refresh button
+c : test button
