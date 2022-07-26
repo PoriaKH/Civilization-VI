@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52ba087-e167-4a67-9dff-9e6dd1f4dcf8" name="Changes" comment="merge">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/FriendRequests/v.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Friends/v.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Friends/a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Friends/a.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayGameMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/PrivateMessages/c-a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/PrivateMessages/c-a.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messageFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messageFile.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Friends/a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Friends/a.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayGameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PrivateMessages/c-a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PrivateMessages/c-a.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/messageFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/messageFile.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/ChatBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/ChatBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/View/PreChatBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/View/PreChatBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/resources/CSS/chatBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/CSS/chatBox.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/View/ChatBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/View/ChatBox.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,6 +97,8 @@
       <workItem from="1658732064503" duration="2657000" />
       <workItem from="1658739934035" duration="1203000" />
       <workItem from="1658782992944" duration="1246000" />
+      <workItem from="1658784787461" duration="1168000" />
+      <workItem from="1658845059708" duration="588000" />
     </task>
     <task id="LOCAL-00001" summary="converted server project to maven">
       <created>1657443839399</created>
