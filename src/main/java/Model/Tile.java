@@ -1,10 +1,8 @@
 package Model;
 
-import Model.FunctionsGson.GameGroupData;
 import Model.Units.Civilian;
 import Model.Units.Unit;
 import Model.Units.Warrior;
-import View.ClientThread;
 import View.PlayGameMenu;
 import com.google.gson.annotations.Expose;
 import javafx.application.Platform;
@@ -17,6 +15,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -739,7 +738,7 @@ public class Tile extends Polygon {
         }
 
         //ruin
-        if (hasRuin && !ruinDiscovered) {
+        if (hasRuin && !ruinDiscovered && ruin != null) {
             double y11 = this.getY();
             double x11 = this.getX();
             ruin.setVisible(true);
@@ -1821,7 +1820,7 @@ public class Tile extends Polygon {
         return false;
     }
 
-    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits, ArrayList<Integer> status) {
+    public void copyFieldsOfTile(Tile tile, ArrayList<Unit> allUnits, ArrayList<Integer> status) throws IOException {
         // todo ... check classes that yall wrote
         this.cameraSpeed = 30;
         this.isDesert = tile.isDesert;
@@ -1845,7 +1844,7 @@ public class Tile extends Polygon {
         this.h = tile.getH();
         this.citizen = getCitizenCopy(tile.getCitizen());
         getUnitsListCopy(this, allUnits);
-        this.ruin = getRuinCopy(tile.getRuin());
+        this.ruin = getRuinCopy(tile.getRuin(), status);
         this.building = setBuildingCopy(tile.getBuilding());
         //this.turnForUnitMaking = getTurnForUnitMakingListCopy(tile.getTurnForUnitMaking());
         this.resource = copyResource(tile.getResource(), status);
@@ -1906,19 +1905,22 @@ public class Tile extends Polygon {
         return this.isDoesHaveRoad();
     }
 
-    private Ruin getRuinCopy(Ruin ruin) {
-        if (this.getRuin() == null && ruin != null) {
-            Ruin ruin2 = ruin;
+    private Ruin getRuinCopy(Ruin ruinCopy, ArrayList<Integer> status) throws IOException {
+        if (this.getRuin() == null && ruinCopy != null) {
+            Ruin ruin2 = ruinCopy;
+            generatingTile(status.get(this.getTileNumber()));
             //addRuinPicture(ruin2);
             return ruin2;
         }
-        else if (this.getRuin() != null && ruin != null) {
-            //this.getRuin().copyField(ruin);
-            return this.getRuin();
-        }
-        else if (this.units.size() > 0) {
+        else if (this.getUnits().size() > 0) {
+            generatingTile(status.get(this.getTileNumber()));
             //removeRuinPicture(this.getRuin());
             return null;
+        }
+        else if (this.getRuin() != null && ruinCopy != null) {
+            generatingTile(status.get(this.getTileNumber()));
+            //this.getRuin().copyField(ruin);
+            return this.getRuin();
         }
         return null;
     }

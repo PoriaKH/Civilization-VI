@@ -2409,6 +2409,15 @@ public class PlayGameMenuController {
                 break;
             }
         }
+
+        ArrayList<String> fireindsString = civilization.friendsString;
+        for (int i = 0; i < fireindsString.size(); i++) {
+            if (fireindsString.get(i).equals(enemy.getName())) {
+                civilization.friendsString.remove(enemy.getName());
+                enemy.friendsString.remove(civilization.getName());
+                break;
+            }
+        }
     }
 
     // if civilization2 is friend return true
@@ -4774,6 +4783,7 @@ public class PlayGameMenuController {
     public ArrayList<String> scoreBoard(ScoreboardGson scoreboardGson, GsonRoomArray gsonRoomArray) throws IOException {
         ArrayList<String> membersScores = new ArrayList<>();
         ArrayList<Member> allMembers = new ArrayList<>();
+        ArrayList<Integer> scores = new ArrayList<>();
         for (GsonRoom gsonRoom : gsonRoomArray.gsonRooms)
             for (Member member : gsonRoom.members)
                 allMembers.add(member);
@@ -4789,6 +4799,7 @@ public class PlayGameMenuController {
             String fileUsername = fileMatcher.group("username");
             String fileNickname = fileMatcher.group("nickname");
             int fileScore = Integer.parseInt(fileMatcher.group("score"));
+            scores.add(fileScore);
             String fileDate = fileMatcher.group("date");
             String status = "offline";
             for (Member member : allMembers)
@@ -4800,7 +4811,19 @@ public class PlayGameMenuController {
             line = bufferedReader.readLine();
         }
         fileReader.close();
-        return membersScores;
+        ArrayList<String> result = new ArrayList<>();
+        Collections.sort(scores);
+        for (int i = scores.size() - 1 ;i > -1; i--) {
+            for (int j = 0; j < membersScores.size(); j++) {
+                if (membersScores.get(j).split(" ## ")[2].equals(scores.get(i).toString())){
+                    result.add(membersScores.get(j));
+                    scores.remove(i);
+                    membersScores.remove(j);
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     public ArrayList<String> friendsList(Member sender) throws IOException {
@@ -5132,6 +5155,7 @@ public class PlayGameMenuController {
         resetHasOrdered(civilizationServer, gameGroupData.tiles);
         civilizationServer.reduceTechnologyRound();
         increaseCityDamagePoint(civilizationServer);
+        checkForRuin(gameGroupData.tiles);
         checkZoneOfAllCivilizations(gameGroupData.civilizations, gameGroupData.tiles, civilizationServer);
         updateMapAfterMove(gameGroup);
         turn++;
@@ -5146,6 +5170,16 @@ public class PlayGameMenuController {
 
         gameGroupData.result = "nextTurn : done";
         sendMessageToAllClients(gameGroup, gameGroupData);
+    }
+
+    private void checkForRuin(ArrayList<Tile> tiles) {
+        for (Tile tile : tiles) {
+            if (tile.getRuin() != null && tile.getUnits().size() > 0) {
+                tile.setIsRuinDiscovered(true);
+                tile.setHasRuin(false);
+                tile.ruin = null;
+            }
+        }
     }
 
 
