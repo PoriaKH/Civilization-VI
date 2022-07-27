@@ -1,4 +1,2 @@
-a : hello
-a : ap project
-a : test
-c : hi
+a : hi	(2022/07/26 20:05:16)
+c : how r u	(2022/07/26 20:05:47)
